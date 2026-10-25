@@ -1,13 +1,18 @@
 package org.refactoringminer.astDiff.graph.cluster.representation;
 
+import com.github.gumtreediff.tree.Tree;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.graph.Context;
 import org.refactoringminer.astDiff.graph.Edge;
 import org.refactoringminer.astDiff.graph.EdgeType;
 import org.refactoringminer.astDiff.graph.Node;
 import org.refactoringminer.astDiff.graph.NodeType;
+import org.refactoringminer.astDiff.graph.RMInfo;
+import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLOperation;
 import org.refactoringminer.astDiff.graph.cluster.traverse.TraversalPattern;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,15 +36,7 @@ public class MergeGroup {
   }
 
   public static Set<Map<Node, Set<Node>>> aggregateByContextMapping(List<Node> nodes, Graph<Node, Edge> graph) {
-    Set<Node> contexts = new HashSet<>();
-    for (Node node : nodes) {
-      List<Node> nodeContexts = node.getSemanticContexts(graph);
-      if (nodeContexts.isEmpty()) {
-        continue;
-      }
-
-      contexts.add(nodeContexts.get(0));
-    }
+    Set<Node> contexts = new HashSet<>(statementContexts(nodes, graph).values());
 
     Set<Node> parentContexts = new HashSet<>();
     for (Node subject : contexts) {
@@ -135,6 +132,79 @@ public class MergeGroup {
     result.addAll(aggregateBySuccession(contextlessNodes, graph));
 
     return result;
+  }
+
+  // The nearest semantic context of each node, except that the changes of one statement whose nearest contexts are
+  // apart meet at the nearest context they share within that statement, so the statement reads as one
+  private static Map<Node, Node> statementContexts(List<Node> nodes, Graph<Node, Edge> graph) {
+    Map<Node, List<Node>> chains = new LinkedHashMap<>();
+    Map<Node, Node> contexts = new LinkedHashMap<>();
+    for (Node node : nodes) {
+      List<Node> nodeContexts = node.getSemanticContexts(graph);
+      if (nodeContexts.isEmpty()) {
+        continue;
+      }
+
+      chains.put(node, nodeContexts);
+      contexts.put(node, nodeContexts.get(0));
+    }
+
+    Map<Tree, List<Node>> statementsNodes = new IdentityHashMap<>();
+    for (Node node : contexts.keySet()) {
+      Tree statement = node.getRM().statementTree();
+      if (statement != null) {
+        statementsNodes.computeIfAbsent(statement, tree -> new ArrayList<>()).add(node);
+      }
+    }
+
+    for (Map.Entry<Tree, List<Node>> statementNodes : statementsNodes.entrySet()) {
+      List<Node> located = statementNodes.getValue();
+      boolean widened = true;
+      while (widened) {
+        widened = false;
+        for (int i = 0; i < located.size(); i++) {
+          for (int j = i + 1; j < located.size(); j++) {
+            Node subject = located.get(i);
+            Node object = located.get(j);
+            Node subjectContext = contexts.get(subject);
+            Node objectContext = contexts.get(object);
+            if (subjectContext.equals(objectContext) || subjectContext.isDescendantOf(objectContext)
+                    || objectContext.isDescendantOf(subjectContext)) {
+              continue;
+            }
+
+            Node shared = sharedContext(chains.get(subject), subjectContext, chains.get(object), objectContext,
+                    statementNodes.getKey());
+            if (shared == null) {
+              continue;
+            }
+
+            contexts.put(subject, shared);
+            contexts.put(object, shared);
+            widened = true;
+          }
+        }
+      }
+    }
+
+    return contexts;
+  }
+
+  @Nullable
+  private static Node sharedContext(List<Node> subjectChain, Node subjectContext, List<Node> objectChain, Node objectContext,
+                                    Tree statement) {
+    List<Node> objectCandidates = objectChain.subList(objectChain.indexOf(objectContext), objectChain.size());
+    for (Node candidate : subjectChain.subList(subjectChain.indexOf(subjectContext), subjectChain.size())) {
+      Tree tree = candidate.getTree();
+      if (tree != statement && !tree.getParents().contains(statement)) {
+        return null;
+      }
+      if (objectCandidates.contains(candidate)) {
+        return candidate;
+      }
+    }
+
+    return null;
   }
 
   public static Set<Map<Node, Set<Node>>> aggregateBySuccession(List<Node> nodes, Graph<Node, Edge> graph) {
@@ -246,12 +316,21 @@ public class MergeGroup {
   public static List<MergeGroup> getAllMergeGroups(List<Node> mains, Graph<Node, Edge> graph) {
     List<MergeGroup> groups = new ArrayList<>();
 
-    groups.addAll(mappingGroups(mains, graph));
+    List<MergeGroup> mappingGroups = mappingGroups(mains, graph);
+    groups.addAll(mappingGroups);
 
-    Set<Map<Node, Set<Node>>> contextMappingGroups = aggregateByContextMapping(mains, graph);
+    // A mapped source is not a main, but its context is printed with the changes of its group, so two groups
+    // sharing that context would print it twice
+    Set<Node> contextNodes = new LinkedHashSet<>(mains);
+    for (MergeGroup mappingGroup : mappingGroups) {
+      contextNodes.addAll(mappingGroup.nodes);
+    }
+    Set<Map<Node, Set<Node>>> contextMappingGroups = aggregateByContextMapping(new ArrayList<>(contextNodes), graph);
     groups.addAll(contextMappingGroups.stream()
             .map(contextAggregatedNodes ->
                     new MergeGroup(contextAggregatedNodes.values().stream().flatMap(Set::stream).collect(Collectors.toSet()))).toList());
+    groups.addAll(memberGroups(new ArrayList<>(contextNodes)));
+    groups.addAll(headerGroups(new ArrayList<>(contextNodes)));
 
     List<Set<Node>> mergedGroups = new ArrayList<>();
     for (MergeGroup group : groups) {
@@ -271,6 +350,46 @@ public class MergeGroup {
     }
 
     return mergedGroups.stream().map(MergeGroup::new).collect(Collectors.toCollection(ArrayList::new));
+  }
+
+  // The changes of one method read together, one after the other, rather than wherever what they rely on puts each
+  private static List<MergeGroup> memberGroups(List<Node> nodes) {
+    Map<String, Set<Node>> memberNodes = new LinkedHashMap<>();
+    for (Node node : nodes) {
+      UMLOperation member = node.getRM().operation();
+      if (member != null) {
+        memberNodes.computeIfAbsent(node.getSrcDst() + node.getPath() + "@" + member.getLocationInfo().getStartOffset(),
+                key -> new HashSet<>()).add(node);
+      }
+    }
+
+    return memberNodes.values().stream().filter(group -> group.size() > 1).map(MergeGroup::new).toList();
+  }
+
+  // The changes of the header of one type read together too, as the changes of a signature do
+  private static List<MergeGroup> headerGroups(List<Node> nodes) {
+    Map<String, Set<Node>> headerNodes = new LinkedHashMap<>();
+    for (Node node : nodes) {
+      UMLClass type = node.getRM().type();
+      if (type != null && RMInfo.headerChild(node.getTree(), node.getRM().typeHeader()) != null) {
+        headerNodes.computeIfAbsent(node.getSrcDst() + node.getPath() + "@" + type.getLocationInfo().getStartOffset(),
+                key -> new HashSet<>()).add(node);
+      }
+    }
+
+    return headerNodes.values().stream().filter(group -> group.size() > 1).map(MergeGroup::new).toList();
+  }
+
+  // The header of a declaration, which reads as one diff ending at the line declaring it: the header of a class, or all
+  // of an operation but its body (its doc comment, annotations, modifiers and signature), as RM gives them
+  public static List<Tree> declarationHeader(Node declaration) {
+    return declaration.getRM().header();
+  }
+
+  // The part of the header of the declaration that the tree lies in
+  @Nullable
+  public static Tree headerChild(Tree tree, Node declaration) {
+    return RMInfo.headerChild(tree, declaration.getRM().header());
   }
 
   public static List<Map<Node, Set<Node>>> orderContextGroups(Set<Map<Node, Set<Node>>> contextGroups,
@@ -347,7 +466,7 @@ public class MergeGroup {
 
       placed.computeIfAbsent(index, i -> new ArrayList<>()).add(dependency);
     }
-    placed.replaceAll((index, deps) -> deps.stream().sorted(Node.COMPARATOR).toList());
+    placed.replaceAll((index, deps) -> deps.stream().sorted(Node.DEPENDENCY_COMPARATOR).toList());
 
     return placed;
   }

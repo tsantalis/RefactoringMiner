@@ -2,6 +2,7 @@ package org.refactoringminer.astDiff.graph.cluster.traverse;
 
 import com.google.gson.JsonObject;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import org.refactoringminer.astDiff.graph.Node;
@@ -16,7 +17,7 @@ public class TraversalComponent extends AggregatorPattern {
     public TraversalComponent(List<TraversalPattern> components, ReasonType reasonType) {
         nodeType = NodeType.COMPONENT;
         this.components = components;
-        subs = new HashSet<>(components);
+        subs = new LinkedHashSet<>(components);
         this.reasonType = reasonType;
     }
 

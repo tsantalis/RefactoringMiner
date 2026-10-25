@@ -47,4 +47,8 @@ public enum NodeType {
         }
         return null;
     }
+
+    public boolean isUpdate() {
+        return this.equals(NodeType.SRC_UPDATE) || this.equals(NodeType.DST_UPDATE);
+    }
 }

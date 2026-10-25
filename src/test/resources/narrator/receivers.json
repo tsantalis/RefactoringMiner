@@ -1,0 +1,1589 @@
+[
+  {
+    "dataset": "spring-projects_spring-boot_19960",
+    "repository": "spring-projects/spring-boot",
+    "commit": "e56186554a44744c9d2e6b7a66a558102e2941e1",
+    "files": [
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoClientDependsOnBeanFactoryPostProcessor.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoDataAutoConfiguration.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoDbFactoryConfiguration.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoDbFactoryDependentConfiguration.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoAutoConfiguration.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactory.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactorySupport.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoProperties.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/ReactiveMongoClientFactory.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/embedded/EmbeddedMongoAutoConfiguration.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/data/mongo/MongoDataAutoConfigurationTests.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfigurationTests.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/mongo/MongoAutoConfigurationTests.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactoryTests.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/mongo/MongoPropertiesTests.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/mongo/MongoReactiveAutoConfigurationTests.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/mongo/ReactiveMongoClientFactoryTests.java",
+      "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/mongo/embedded/EmbeddedMongoAutoConfigurationTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "parameter",
+        "kind": "invocation",
+        "file": "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoDbFactoryConfiguration.java",
+        "line": 49,
+        "code": "properties.getMongoClientDatabase()",
+        "type": "MongoProperties",
+        "files": [
+          "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoProperties.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "this.field",
+        "kind": "invocation",
+        "file": "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactorySupport.java",
+        "line": 76,
+        "code": "this.properties.determineUri()",
+        "type": "MongoProperties",
+        "files": [
+          "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoProperties.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "return type outside the repository",
+        "kind": "invocation",
+        "file": "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactorySupport.java",
+        "line": 76,
+        "code": "this.properties.determineUri().equals(MongoProperties.DEFAULT_URI)",
+        "type": "String",
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "static field of a type of the same package",
+        "kind": "variable",
+        "file": "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactorySupport.java",
+        "line": 76,
+        "code": "MongoProperties.DEFAULT_URI",
+        "type": "MongoProperties",
+        "files": [
+          "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoProperties.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "enhanced-for variable",
+        "kind": "invocation",
+        "file": "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactorySupport.java",
+        "line": 105,
+        "code": "customizer.customize(builder)",
+        "type": "MongoClientSettingsBuilderCustomizer",
+        "files": [
+          "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientSettingsBuilderCustomizer.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "implicit receiver: method of a superclass in the model",
+        "kind": "invocation",
+        "file": "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactory.java",
+        "line": 49,
+        "code": "driverInformation()",
+        "type": "MongoClientFactorySupport",
+        "files": [
+          "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/MongoClientFactorySupport.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "TeamNewPipe_NewPipe_2018",
+    "repository": "TeamNewPipe/NewPipe",
+    "commit": "93782c736908a806421d2ecede313d8a6524385a",
+    "files": [
+      "app/src/main/java/org/schabi/newpipe/RouterActivity.java",
+      "app/src/main/java/org/schabi/newpipe/download/DownloadDialog.java",
+      "app/src/main/java/org/schabi/newpipe/download/DownloadSetting.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/detail/VideoDetailFragment.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/list/playlist/PlaylistFragment.java",
+      "app/src/main/java/org/schabi/newpipe/util/NavigationHelper.java",
+      "app/src/main/java/us/shandian/giga/service/DownloadManagerService.java"
+    ],
+    "receivers": [
+      {
+        "description": "local variable",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/util/NavigationHelper.java",
+        "line": 173,
+        "code": "queueItem.getStream()",
+        "type": "PlayQueueItem",
+        "files": [
+          "app/src/main/java/org/schabi/newpipe/player/playqueue/PlayQueueItem.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "method reference on a variable",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/util/NavigationHelper.java",
+        "line": 175,
+        "code": "activity::onError",
+        "type": "PlaylistFragment",
+        "files": [
+          "app/src/main/java/org/schabi/newpipe/fragments/list/playlist/PlaylistFragment.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "catch parameter",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/util/NavigationHelper.java",
+        "line": 190,
+        "code": "e.printStackTrace()",
+        "type": "Exception",
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "field without this",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/download/DownloadDialog.java",
+        "line": 826,
+        "code": "audioStreamsAdapter.getItem(selectedAudioIndex)",
+        "type": "StreamItemAdapter<AudioStream,Stream>",
+        "files": [
+          "app/src/main/java/org/schabi/newpipe/util/StreamItemAdapter.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "return type of a method of another model class",
+        "kind": "invocation",
+        "file": "app/src/main/java/us/shandian/giga/service/DownloadManagerService.java",
+        "line": 382,
+        "code": "downloadSetting.getStoredFileHelper().getParentUri()",
+        "type": "StoredFileHelper",
+        "files": [
+          "app/src/main/java/us/shandian/giga/io/StoredFileHelper.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_12064",
+    "repository": "bazelbuild/bazel",
+    "commit": "ac76ab6add1781e0d03dd72832cfc868465c2345",
+    "files": [
+      "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+      "src/test/java/com/google/devtools/build/lib/remote/RemoteModuleTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "field access on a variable",
+        "kind": "variable",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 202,
+        "code": "executionOptions.verboseFailures",
+        "type": "ExecutionOptions",
+        "files": [
+          "src/main/java/com/google/devtools/build/lib/exec/ExecutionOptions.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "implicit receiver: field of the class",
+        "kind": "variable",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 877,
+        "code": "actionContextProvider",
+        "type": "RemoteModule",
+        "files": [
+          "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_109167",
+    "repository": "elastic/elasticsearch",
+    "commit": "776c5ba6704fb3ac688580b8ffe07fd9a5ec6483",
+    "files": [
+      "server/src/internalClusterTest/java/org/elasticsearch/reservedstate/service/FileSettingsServiceIT.java",
+      "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/XPackClientPlugin.java",
+      "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/security/authz/RoleMappingMetadata.java",
+      "x-pack/plugin/security/src/internalClusterTest/java/org/elasticsearch/integration/RoleMappingFileSettingsIT.java",
+      "x-pack/plugin/security/src/internalClusterTest/java/org/elasticsearch/xpack/security/FileSettingsRoleMappingsRestartIT.java",
+      "x-pack/plugin/security/src/test/java/org/elasticsearch/xpack/security/authc/RoleMappingMetadataXContentSerializationTests.java",
+      "x-pack/plugin/security/src/test/java/org/elasticsearch/xpack/security/authc/support/mapper/ExpressionRoleMappingTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "object creation",
+        "kind": "invocation",
+        "file": "x-pack/plugin/security/src/test/java/org/elasticsearch/xpack/security/authc/RoleMappingMetadataXContentSerializationTests.java",
+        "line": 58,
+        "code": "new XPackClientPlugin().getNamedWriteables()",
+        "type": "XPackClientPlugin",
+        "files": [
+          "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/XPackClientPlugin.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "method reference on a type",
+        "kind": "invocation",
+        "file": "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/XPackClientPlugin.java",
+        "line": 388,
+        "code": "RoleMappingMetadata::fromXContent",
+        "type": "RoleMappingMetadata",
+        "files": [
+          "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/security/authz/RoleMappingMetadata.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "implicit receiver: method of an unloaded superclass",
+        "kind": "invocation",
+        "file": "server/src/internalClusterTest/java/org/elasticsearch/reservedstate/service/FileSettingsServiceIT.java",
+        "line": 370,
+        "code": "internalCluster()",
+        "type": "ESIntegTestCase",
+        "files": [
+          "test/framework/src/main/java/org/elasticsearch/test/ESIntegTestCase.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "redisson_redisson_802",
+    "repository": "redisson/redisson",
+    "commit": "a3c206d86e1b4be1d4717b7f15b6b850e50169d6",
+    "files": [
+      "redisson/src/main/java/org/redisson/config/Config.java",
+      "redisson/src/main/java/org/redisson/config/ConfigSupport.java",
+      "redisson/src/main/java/org/redisson/extension/aws/ElastiCacheReplicatedServersConnectionManager.java",
+      "redisson/src/main/java/org/redisson/extension/aws/ElasticCacheReplicationGroupServersConfig.java"
+    ],
+    "receivers": [
+      {
+        "description": "super",
+        "kind": "invocation",
+        "file": "redisson/src/main/java/org/redisson/extension/aws/ElastiCacheReplicatedServersConnectionManager.java",
+        "line": 105,
+        "code": "super.create(cfg)",
+        "type": "MasterSlaveConnectionManager",
+        "files": [
+          "redisson/src/main/java/org/redisson/connection/MasterSlaveConnectionManager.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "cast",
+        "kind": "invocation",
+        "file": "redisson/src/main/java/org/redisson/extension/aws/ElastiCacheReplicatedServersConnectionManager.java",
+        "line": 106,
+        "code": "((ElasticCacheReplicationGroupServersConfig)cfg).getDatabase()",
+        "type": "ElasticCacheReplicationGroupServersConfig",
+        "files": [
+          "redisson/src/main/java/org/redisson/extension/aws/ElasticCacheReplicationGroupServersConfig.java"
+        ],
+        "intermediates": [],
+        "rmGap": {
+          "item": 8,
+          "id": "gap8-cast-receiver",
+          "workaround": true
+        }
+      },
+      {
+        "description": "enum constant of a nested type imported",
+        "kind": "variable",
+        "file": "redisson/src/main/java/org/redisson/extension/aws/ElastiCacheReplicatedServersConnectionManager.java",
+        "line": 189,
+        "code": "FreezeReason.MANAGER",
+        "type": "FreezeReason",
+        "files": [
+          "redisson/src/main/java/org/redisson/connection/ClientConnectionsEntry.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_10360",
+    "repository": "netty/netty",
+    "commit": "a97aaeb9548039924c55ea51893f0d11704fcf60",
+    "files": [
+      "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+      "codec-http/src/test/java/io/netty/handler/codec/http/multipart/DiskFileUploadTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "type imported from outside the repository",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 167,
+        "code": "fileChannel.position()",
+        "type": "FileChannel",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-framework_29958",
+    "repository": "spring-projects/spring-framework",
+    "commit": "bfe945c2f29e914846d687b337f2d5a9ceea8752",
+    "files": [
+      "spring-test/src/main/java/org/springframework/mock/http/client/reactive/MockClientHttpRequest.java",
+      "spring-test/src/main/java/org/springframework/test/web/reactive/server/DefaultWebTestClientBuilder.java",
+      "spring-test/src/main/java/org/springframework/test/web/reactive/server/HttpHandlerConnector.java",
+      "spring-test/src/main/java/org/springframework/test/web/reactive/server/WebTestClient.java",
+      "spring-test/src/main/java/org/springframework/test/web/reactive/server/WiretapConnector.java",
+      "spring-test/src/main/java/org/springframework/test/web/servlet/client/MockMvcHttpConnector.java",
+      "spring-test/src/test/java/org/springframework/test/web/reactive/server/WiretapConnectorTests.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/AbstractClientHttpRequest.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/ClientHttpConnector.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/ClientHttpRequest.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/ClientHttpRequestDecorator.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/HttpComponentsClientHttpConnector.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/HttpComponentsClientHttpRequest.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/JdkClientHttpConnector.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/JdkClientHttpRequest.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/JettyClientHttpConnector.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/JettyClientHttpRequest.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/ReactorClientHttpConnector.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/ReactorClientHttpRequest.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/ReactorNetty2ClientHttpConnector.java",
+      "spring-web/src/main/java/org/springframework/http/client/reactive/ReactorNetty2ClientHttpRequest.java",
+      "spring-web/src/testFixtures/java/org/springframework/web/testfixture/http/client/reactive/MockClientHttpRequest.java",
+      "spring-webflux/src/main/java/org/springframework/web/reactive/function/client/DefaultClientRequestBuilder.java",
+      "spring-webflux/src/main/java/org/springframework/web/reactive/function/client/DefaultWebClientBuilder.java",
+      "spring-webflux/src/main/java/org/springframework/web/reactive/function/client/WebClient.java",
+      "spring-webflux/src/test/java/org/springframework/web/reactive/function/client/WebClientIntegrationTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "instanceof pattern variable",
+        "kind": "invocation",
+        "file": "spring-webflux/src/test/java/org/springframework/web/reactive/function/client/WebClientIntegrationTests.java",
+        "line": 223,
+        "code": "nativeReq.channel()",
+        "type": "ChannelOperations<?,?>",
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "variable with a fully qualified type",
+        "kind": "invocation",
+        "file": "spring-webflux/src/test/java/org/springframework/web/reactive/function/client/WebClientIntegrationTests.java",
+        "line": 233,
+        "code": "nativeReq.channel()",
+        "type": "reactor.netty5.channel.ChannelOperations<?,?>",
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "enum constant of a nested type of the same file",
+        "kind": "invocation",
+        "file": "spring-web/src/main/java/org/springframework/http/client/reactive/AbstractClientHttpRequest.java",
+        "line": 124,
+        "code": "State.COMMITTED.equals(this.state.get())",
+        "type": "State",
+        "files": [
+          "spring-web/src/main/java/org/springframework/http/client/reactive/AbstractClientHttpRequest.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_11934",
+    "repository": "netty/netty",
+    "commit": "1588e59a2dc86f3d4641c263ef2ba88998b65a4b",
+    "files": [
+      "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+      "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "class literal",
+        "kind": "invocation",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 249,
+        "code": "InternalThreadLocalMap.class.getDeclaredField(\"nextIndex\")",
+        "type": "Class<InternalThreadLocalMap>",
+        "files": [
+          "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "static call returning its own class",
+        "kind": "invocation",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 280,
+        "code": "InternalThreadLocalMap.get().setIndexedVariable(expand_threshold,null)",
+        "type": "InternalThreadLocalMap",
+        "files": [
+          "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_10091",
+    "repository": "netty/netty",
+    "commit": "c579b7bb84b7b40d647be11416925fcc571921d7",
+    "files": [
+      "transport-selector/src/main/java/io/netty/transport/selector/TransportSelector.java",
+      "transport-selector/src/main/java/io/netty/transport/selector/package-info.java"
+    ],
+    "receivers": [
+      {
+        "description": "static call on an imported type of another module",
+        "kind": "invocation",
+        "file": "transport-selector/src/main/java/io/netty/transport/selector/TransportSelector.java",
+        "line": 62,
+        "code": "Epoll.isAvailable()",
+        "type": "Epoll",
+        "files": [
+          "transport-native-epoll/src/main/java/io/netty/channel/epoll/Epoll.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "bumptech_glide_1753",
+    "repository": "bumptech/glide",
+    "commit": "28f31106c746e00f1f5ce12348f557e2a76c47ab",
+    "files": [
+      "library/src/main/java/com/bumptech/glide/Glide.java",
+      "library/src/test/java/com/bumptech/glide/GlideTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "type arguments of the receiver type are not attached",
+        "kind": "invocation",
+        "file": "library/src/test/java/com/bumptech/glide/GlideTest.java",
+        "line": 570,
+        "code": "modelLoaders.size()",
+        "type": "List<ModelLoader<GlideUrl,?>>",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "bumptech_glide_30",
+    "repository": "bumptech/glide",
+    "commit": "f83b7e59356f490c19d154d29b1007ff82f58a06",
+    "files": [
+      "library/src/com/bumptech/glide/Glide.java",
+      "library/tests/src/com/bumptech/glide/GlideTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "this in a nested class",
+        "kind": "variable",
+        "file": "library/src/com/bumptech/glide/Glide.java",
+        "line": 642,
+        "code": "this.exceptionHandler",
+        "type": "Request",
+        "files": [
+          "library/src/com/bumptech/glide/Glide.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "field of a nested class without this",
+        "kind": "invocation",
+        "file": "library/src/com/bumptech/glide/Glide.java",
+        "line": 753,
+        "code": "exceptionHandler.onException(e,model,target)",
+        "type": "ExceptionHandler<T>",
+        "files": [
+          "library/src/com/bumptech/glide/Glide.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_7262",
+    "repository": "bazelbuild/bazel",
+    "commit": "52cf982bfad2836f7b7239a67ee322d90f43c4d5",
+    "files": [
+      "src/main/java/com/google/devtools/build/lib/packages/PackageFactory.java",
+      "src/main/java/com/google/devtools/build/lib/packages/RuleClass.java",
+      "src/main/java/com/google/devtools/build/lib/packages/RuleFactory.java",
+      "src/main/java/com/google/devtools/build/lib/packages/SkylarkSemanticsOptions.java",
+      "src/main/java/com/google/devtools/build/lib/syntax/SkylarkSemantics.java",
+      "src/test/java/com/google/devtools/build/lib/packages/PackageFactoryTest.java",
+      "src/test/java/com/google/devtools/build/lib/packages/RuleClassTest.java",
+      "src/test/java/com/google/devtools/build/lib/packages/SkylarkSemanticsConsistencyTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "qualified nested type of a variable",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/packages/PackageFactory.java",
+        "line": 739,
+        "code": "pkgBuilder.getDefaultLicense()",
+        "type": "Package.Builder",
+        "files": [
+          "src/main/java/com/google/devtools/build/lib/packages/Package.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "field inherited from an unloaded superclass",
+        "kind": "invocation",
+        "file": "src/test/java/com/google/devtools/build/lib/packages/PackageFactoryTest.java",
+        "line": 379,
+        "code": "scratch.file(\"/third_party/foo/BUILD\",\"# line 1\",\"cc_library(name='bar')\",\"# line 3\")",
+        "type": "Scratch",
+        "files": [
+          "src/test/java/com/google/devtools/build/lib/testutil/Scratch.java"
+        ],
+        "intermediates": [
+          "src/test/java/com/google/devtools/build/lib/packages/util/PackageFactoryTestBase.java"
+        ]
+      },
+      {
+        "description": "implicit receiver: field of an unloaded superclass",
+        "kind": "variable",
+        "file": "src/test/java/com/google/devtools/build/lib/packages/PackageFactoryTest.java",
+        "line": 379,
+        "code": "scratch",
+        "type": "PackageFactoryTestBase",
+        "files": [
+          "src/test/java/com/google/devtools/build/lib/packages/util/PackageFactoryTestBase.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_1553",
+    "repository": "oracle/graal",
+    "commit": "b2b3913608240d3ffc0124999b051c938e7bd516",
+    "files": [
+      "substratevm/src/com.oracle.svm.hosted/src/com/oracle/svm/hosted/snippets/ReflectionPlugins.java"
+    ],
+    "receivers": [
+      {
+        "description": "array length",
+        "kind": "variable",
+        "file": "substratevm/src/com.oracle.svm.hosted/src/com/oracle/svm/hosted/snippets/ReflectionPlugins.java",
+        "line": 289,
+        "code": "fields.length",
+        "type": "Field[]",
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "static field of an unloaded class typed by another file",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.hosted/src/com/oracle/svm/hosted/snippets/ReflectionPlugins.java",
+        "line": 296,
+        "code": "NativeImageOptions.ReportUnsupportedElementsAtRuntime.getValue()",
+        "type": "HostedOptionKey<Boolean>",
+        "files": [
+          "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/option/HostedOptionKey.java"
+        ],
+        "intermediates": [
+          "substratevm/src/com.oracle.svm.hosted/src/com/oracle/svm/hosted/NativeImageOptions.java"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_4469",
+    "repository": "oracle/graal",
+    "commit": "b33565df54cfe4978a28eaabacba1c09b4110b93",
+    "files": [
+      "substratevm/src/com.oracle.svm.core.genscavenge/src/com/oracle/svm/core/genscavenge/JfrGCEventSupport.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/JfrNativeEventSetting.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/SubstrateJVM.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/EndChunkNativePeriodicEvents.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/EveryChunkNativePeriodicEvents.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/ExecuteVMOperationEvent.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/ExecutionSampleEvent.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/SafepointBeginEvent.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/SafepointEndEvent.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/ThreadEndEvent.java",
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/ThreadStartEvent.java"
+    ],
+    "receivers": [
+      {
+        "description": "array element",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/SubstrateJVM.java",
+        "line": 500,
+        "code": "eventSettings[(int)eventTypeId].setLarge(large)",
+        "type": "JfrNativeEventSetting",
+        "files": [
+          "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/JfrNativeEventSetting.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "enum constant of an unloaded enum",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/EndChunkNativePeriodicEvents.java",
+        "line": 75,
+        "code": "JfrEvent.InitialEnvironmentVariable.getId()",
+        "type": "JfrEvent",
+        "files": [
+          "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/JfrEvent.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-framework_29132",
+    "repository": "spring-projects/spring-framework",
+    "commit": "f2c2374b588e428575f5db347b7aa5cca19ff3e2",
+    "files": [
+      "spring-test/src/main/java/org/springframework/test/util/TestSocketUtils.java",
+      "spring-test/src/test/java/org/springframework/test/util/TestSocketUtilsTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "try-with-resources variable",
+        "kind": "invocation",
+        "file": "spring-test/src/test/java/org/springframework/test/util/TestSocketUtilsTests.java",
+        "line": 47,
+        "code": "mockedServerSocketFactory.when(ServerSocketFactory::getDefault)",
+        "type": "MockedStatic<ServerSocketFactory>",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "TeamNewPipe_NewPipe_3156",
+    "repository": "TeamNewPipe/NewPipe",
+    "commit": "c4230c63ef794cd1791bf0c4883583f41aa59aa2",
+    "files": [
+      "app/src/main/java/org/schabi/newpipe/MainActivity.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/detail/VideoDetailFragment.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/list/BaseListFragment.java"
+    ],
+    "receivers": [
+      {
+        "description": "static field of a type outside the repository",
+        "kind": "variable",
+        "file": "app/src/main/java/org/schabi/newpipe/MainActivity.java",
+        "line": 503,
+        "code": "GravityCompat.START",
+        "type": "GravityCompat",
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "generated resource class",
+        "kind": "variable",
+        "file": "app/src/main/java/org/schabi/newpipe/MainActivity.java",
+        "line": 153,
+        "code": "R.id.menu_tabs_group",
+        "type": "R.id",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "TeamNewPipe_NewPipe_9833",
+    "repository": "TeamNewPipe/NewPipe",
+    "commit": "8b29b120809822786828d6e28e6a5f27a9256ce2",
+    "files": [
+      "app/src/main/java/org/schabi/newpipe/RouterActivity.java",
+      "app/src/main/java/org/schabi/newpipe/error/ErrorActivity.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/detail/VideoDetailFragment.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/list/channel/ChannelFragment.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/list/playlist/PlaylistFragment.java",
+      "app/src/main/java/org/schabi/newpipe/info_list/dialog/StreamDialogDefaultEntry.java",
+      "app/src/main/java/org/schabi/newpipe/player/ui/VideoPlayerUi.java",
+      "app/src/main/java/org/schabi/newpipe/util/NavigationHelper.java",
+      "app/src/main/java/org/schabi/newpipe/util/external_communication/ShareUtils.java",
+      "app/src/main/java/us/shandian/giga/ui/adapter/MissionAdapter.java"
+    ],
+    "receivers": [
+      {
+        "description": "inherited field typed by a class type parameter bound in the extends clause",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/fragments/list/channel/ChannelFragment.java",
+        "line": 214,
+        "code": "currentInfo.getOriginalUrl()",
+        "type": "ChannelInfo",
+        "files": [],
+        "intermediates": [
+          "app/src/main/java/org/schabi/newpipe/fragments/list/BaseListInfoFragment.java"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_77657",
+    "repository": "elastic/elasticsearch",
+    "commit": "a1f7ef4d54a2e52f54f3c6329d655213b3a5aa47",
+    "files": [
+      "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ilm/GenerateSnapshotNameStep.java",
+      "x-pack/plugin/core/src/test/java/org/elasticsearch/xpack/core/ilm/GenerateSnapshotNameStepTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "return typed by a method type parameter inferred from an argument",
+        "kind": "invocation",
+        "file": "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ilm/GenerateSnapshotNameStep.java",
+        "line": 71,
+        "code": "clusterState.metadata().custom(RepositoriesMetadata.TYPE,RepositoriesMetadata.EMPTY).repository(snapshotRepository)",
+        "type": "RepositoriesMetadata",
+        "files": [
+          "server/src/main/java/org/elasticsearch/cluster/metadata/RepositoriesMetadata.java"
+        ],
+        "intermediates": [
+          "server/src/main/java/org/elasticsearch/cluster/ClusterState.java",
+          "server/src/main/java/org/elasticsearch/cluster/metadata/Metadata.java"
+        ]
+      },
+      {
+        "description": "string concatenation",
+        "kind": "invocation",
+        "file": "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ilm/GenerateSnapshotNameStep.java",
+        "line": 81,
+        "code": "(\"<{now/d}-\" + index.getName() + \"-\" + policy + \">\").toLowerCase(Locale.ROOT)",
+        "type": "String",
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "unqualified call of an inherited method",
+        "kind": "invocation",
+        "file": "x-pack/plugin/core/src/test/java/org/elasticsearch/xpack/core/ilm/GenerateSnapshotNameStepTests.java",
+        "line": 72,
+        "code": "settings(Version.CURRENT).put(LifecycleSettings.LIFECYCLE_NAME,policyName)",
+        "type": "Settings.Builder",
+        "files": [
+          "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+        ],
+        "intermediates": [
+          "x-pack/plugin/core/src/test/java/org/elasticsearch/xpack/core/ilm/AbstractStepTestCase.java",
+          "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_9512",
+    "repository": "netty/netty",
+    "commit": "f02ae4f53335890771ceffafa5e96b126dd85bae",
+    "files": [
+      "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/DeflateDecoder.java",
+      "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/DeflateEncoder.java",
+      "codec-http/src/test/java/io/netty/handler/codec/http/websocketx/extensions/compression/PerMessageDeflateDecoderTest.java",
+      "codec-http/src/test/java/io/netty/handler/codec/http/websocketx/extensions/compression/PerMessageDeflateEncoderTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "method of java.lang.Object",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/DeflateDecoder.java",
+        "line": 90,
+        "code": "msg.getClass().getName()",
+        "type": "java.lang.Class<?>",
+        "files": [],
+        "intermediates": [
+          "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketFrame.java"
+        ]
+      },
+      {
+        "description": "call chain through unloaded classes",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/DeflateDecoder.java",
+        "line": 124,
+        "code": "ctx.alloc().compositeBuffer()",
+        "type": "ByteBufAllocator",
+        "files": [
+          "buffer/src/main/java/io/netty/buffer/ByteBufAllocator.java"
+        ],
+        "intermediates": [
+          "transport/src/main/java/io/netty/channel/ChannelHandlerContext.java"
+        ]
+      },
+      {
+        "description": "field imported by an on-demand static import",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/DeflateEncoder.java",
+        "line": 93,
+        "code": "EMPTY_DEFLATE_BLOCK.duplicate()",
+        "type": "ByteBuf",
+        "files": [
+          "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
+        ],
+        "intermediates": [
+          "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/PerMessageDeflateDecoder.java"
+        ]
+      },
+      {
+        "description": "implicit receiver: field imported on demand, declared in a superclass of the imported class",
+        "kind": "variable",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/DeflateEncoder.java",
+        "line": 93,
+        "code": "EMPTY_DEFLATE_BLOCK",
+        "type": "DeflateDecoder",
+        "files": [
+          "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/DeflateDecoder.java"
+        ],
+        "intermediates": [
+          "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/extensions/compression/PerMessageDeflateDecoder.java"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_3668",
+    "repository": "oracle/graal",
+    "commit": "db33eeb0a81ec9096d3b1124b94a5485c6d5fb39",
+    "files": [
+      "substratevm/src/com.oracle.svm.core.posix/src/com/oracle/svm/core/posix/PosixStat.java",
+      "substratevm/src/com.oracle.svm.core.posix/src/com/oracle/svm/core/posix/headers/darwin/DarwinStat.java"
+    ],
+    "receivers": [
+      {
+        "description": "nested class accessed statically",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.core.posix/src/com/oracle/svm/core/posix/PosixStat.java",
+        "line": 66,
+        "code": "DarwinStat.NoTransitions.fstat(fd,stat)",
+        "type": "DarwinStat.NoTransitions",
+        "files": [
+          "substratevm/src/com.oracle.svm.core.posix/src/com/oracle/svm/core/posix/headers/darwin/DarwinStat.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_3662",
+    "repository": "oracle/graal",
+    "commit": "74964161962d4111a715f95f6d475315e59e691b",
+    "files": [
+      "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrEventSubstitution.java",
+      "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java"
+    ],
+    "receivers": [
+      {
+        "description": "method reference on this",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java",
+        "line": 189,
+        "code": "this::registerEventHandler",
+        "type": "JfrFeature",
+        "files": [
+          "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-framework_28774",
+    "repository": "spring-projects/spring-framework",
+    "commit": "85bf884c69977bb27ef0a62fa64eef58096a9a80",
+    "files": [
+      "spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java",
+      "spring-context/src/test/java/org/springframework/context/annotation/configuration/AutowiredConfigurationTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "method inherited by an unloaded receiver class",
+        "kind": "invocation",
+        "file": "spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java",
+        "line": 1356,
+        "code": "mbd.getBeanClass().isRecord()",
+        "type": "Class<?>",
+        "files": [],
+        "intermediates": [
+          "spring-beans/src/main/java/org/springframework/beans/factory/support/RootBeanDefinition.java",
+          "spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractBeanDefinition.java"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-framework_26366",
+    "repository": "spring-projects/spring-framework",
+    "commit": "27f58716dc4a3aad18561610009a789fb32fa595",
+    "files": [
+      "spring-web/src/main/java/org/springframework/web/method/HandlerMethod.java",
+      "spring-web/src/test/java/org/springframework/web/method/support/InvocableHandlerMethodTests.java",
+      "spring-webmvc/src/main/java/org/springframework/web/servlet/mvc/method/annotation/ExceptionHandlerExceptionResolver.java",
+      "spring-webmvc/src/test/java/org/springframework/web/servlet/mvc/method/annotation/ExceptionHandlerExceptionResolverTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "unqualified call of a method of the class",
+        "kind": "invocation",
+        "file": "spring-web/src/test/java/org/springframework/web/method/support/InvocableHandlerMethodTests.java",
+        "line": 168,
+        "code": "getInvocable(IOException.class).invokeForRequest(request,null,matchedThrowable)",
+        "type": "InvocableHandlerMethod",
+        "files": [
+          "spring-web/src/main/java/org/springframework/web/method/support/InvocableHandlerMethod.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "unqualified call of a varargs method",
+        "kind": "invocation",
+        "file": "spring-web/src/test/java/org/springframework/web/method/support/InvocableHandlerMethodTests.java",
+        "line": 191,
+        "code": "getInvocable(Exception.class,IOException.class).invokeForRequest(request,null,matchedThrowable)",
+        "type": "InvocableHandlerMethod",
+        "files": [
+          "spring-web/src/main/java/org/springframework/web/method/support/InvocableHandlerMethod.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "field inherited through the superclass chain before interfaces",
+        "kind": "invocation",
+        "file": "spring-webmvc/src/main/java/org/springframework/web/servlet/mvc/method/annotation/ExceptionHandlerExceptionResolver.java",
+        "line": 427,
+        "code": "logger.isWarnEnabled()",
+        "type": "Log",
+        "files": [
+          "spring-jcl/src/main/java/org/apache/commons/logging/Log.java"
+        ],
+        "intermediates": [
+          "spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMethodExceptionResolver.java",
+          "spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerExceptionResolver.java"
+        ]
+      },
+      {
+        "description": "implicit receiver: method of the class",
+        "kind": "invocation",
+        "file": "spring-web/src/test/java/org/springframework/web/method/support/InvocableHandlerMethodTests.java",
+        "line": 168,
+        "code": "getInvocable(IOException.class)",
+        "type": "InvocableHandlerMethodTests",
+        "files": [
+          "spring-web/src/test/java/org/springframework/web/method/support/InvocableHandlerMethodTests.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-boot_34590",
+    "repository": "spring-projects/spring-boot",
+    "commit": "f7e29fc313120c2bd71daeeee49583d75ab06c3e",
+    "files": [
+      "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/JavaBeanPropertyDescriptor.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/PropertyDescriptorResolver.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessorTests.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/JavaBeanPropertyDescriptorTests.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/MergeMetadataGenerationTests.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/PropertyDescriptorResolverTests.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationsample/simple/SimpleProperties.java"
+    ],
+    "receivers": [
+      {
+        "description": "method imported statically from outside the repository",
+        "kind": "invocation",
+        "file": "spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/JavaBeanPropertyDescriptorTests.java",
+        "line": 119,
+        "code": "assertThat(property.getName()).isEqualTo(\"number\")",
+        "type": null,
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_99588",
+    "repository": "elastic/elasticsearch",
+    "commit": "2a234e617f5108599906117c58c8ae39f2099ead",
+    "files": [
+      "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/lucene/UnsupportedValueSource.java",
+      "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/lucene/ValueSources.java",
+      "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/LocalPhysicalPlanOptimizer.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/AnalyzerTests.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/LocalLogicalPlanOptimizerTests.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/PhysicalPlanOptimizerTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "fully qualified type accessed statically",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/lucene/ValueSources.java",
+        "line": 112,
+        "code": "org.elasticsearch.index.fielddata.FieldData.emptySortedNumericDoubles()",
+        "type": "org.elasticsearch.index.fielddata.FieldData",
+        "files": [
+          "server/src/main/java/org/elasticsearch/index/fielddata/FieldData.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "pattern variable inside a lambda",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/LocalPhysicalPlanOptimizer.java",
+        "line": 286,
+        "code": "fa.getExactInfo()",
+        "type": "FieldAttribute",
+        "files": [
+          "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/FieldAttribute.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "variable typed by a generic method inferred from an argument",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/PhysicalPlanOptimizerTests.java",
+        "line": 1694,
+        "code": "limit.child()",
+        "type": "LimitExec",
+        "files": [
+          "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/LimitExec.java"
+        ],
+        "intermediates": [
+          "x-pack/plugin/esql/qa/testFixtures/src/main/java/org/elasticsearch/xpack/esql/EsqlTestUtils.java"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_2603",
+    "repository": "oracle/graal",
+    "commit": "f9bf83d6234f6c8547dcad8558a82af47cb0f4dc",
+    "files": [
+      "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/SubstrateOptions.java"
+    ],
+    "receivers": [
+      {
+        "description": "field imported by a single static import",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/SubstrateOptions.java",
+        "line": 484,
+        "code": "TrackNodeSourcePosition.update(values,true)",
+        "type": "OptionKey<Boolean>",
+        "files": [
+          "compiler/src/org.graalvm.compiler.options/src/org/graalvm/compiler/options/OptionKey.java"
+        ],
+        "intermediates": [
+          "compiler/src/org.graalvm.compiler.core.common/src/org/graalvm/compiler/core/common/GraalOptions.java"
+        ]
+      },
+      {
+        "description": "static field of a JDK class",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/SubstrateOptions.java",
+        "line": 483,
+        "code": "Boolean.TRUE.equals(values.get(TrackNodeSourcePosition))",
+        "type": "java.lang.Boolean",
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "implicit receiver: field imported by a single static import",
+        "kind": "variable",
+        "file": "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/SubstrateOptions.java",
+        "line": 483,
+        "code": "TrackNodeSourcePosition",
+        "type": "GraalOptions",
+        "files": [
+          "compiler/src/org.graalvm.compiler.core.common/src/org/graalvm/compiler/core/common/GraalOptions.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_102388",
+    "repository": "elastic/elasticsearch",
+    "commit": "7ae2e004926402c9183f6d4d41ef697d8007ed1b",
+    "files": [
+      "qa/ccs-common-rest/src/yamlRestTest/java/org/elasticsearch/test/rest/yaml/CcsCommonYamlTestSuiteIT.java",
+      "server/src/internalClusterTest/java/org/elasticsearch/action/search/PointInTimeIT.java",
+      "server/src/main/java/org/elasticsearch/TransportVersions.java",
+      "server/src/main/java/org/elasticsearch/action/search/OpenPointInTimeRequest.java",
+      "server/src/main/java/org/elasticsearch/action/search/RestOpenPointInTimeAction.java",
+      "server/src/main/java/org/elasticsearch/action/search/TransportOpenPointInTimeAction.java"
+    ],
+    "receivers": [
+      {
+        "description": "method declared in an interface of the receiver class",
+        "kind": "invocation",
+        "file": "server/src/internalClusterTest/java/org/elasticsearch/action/search/PointInTimeIT.java",
+        "line": 170,
+        "code": "client().execute(OpenPointInTimeAction.INSTANCE,request).actionGet()",
+        "type": "ActionFuture<Response>",
+        "files": [
+          "server/src/main/java/org/elasticsearch/action/ActionFuture.java"
+        ],
+        "intermediates": [
+          "test/framework/src/main/java/org/elasticsearch/test/ESIntegTestCase.java",
+          "server/src/main/java/org/elasticsearch/client/internal/Client.java",
+          "server/src/main/java/org/elasticsearch/client/internal/ElasticsearchClient.java"
+        ]
+      },
+      {
+        "description": "field of the enclosing class used in an inner class",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/action/search/TransportOpenPointInTimeAction.java",
+        "line": 149,
+        "code": "searchService.getCoordinatorRewriteContextProvider(timeProvider::absoluteStartMillis)",
+        "type": "SearchService",
+        "files": [
+          "server/src/main/java/org/elasticsearch/search/SearchService.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "implicit receiver: method imported by a single static import",
+        "kind": "invocation",
+        "file": "server/src/internalClusterTest/java/org/elasticsearch/action/search/PointInTimeIT.java",
+        "line": 190,
+        "code": "assertNoFailures(resp)",
+        "type": "ElasticsearchAssertions",
+        "files": [
+          "test/framework/src/main/java/org/elasticsearch/test/hamcrest/ElasticsearchAssertions.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_6188",
+    "repository": "apache/rocketmq",
+    "commit": "511c6c047e7ad29f560705dac23fca1b983fde93",
+    "files": [
+      "remoting/src/main/java/org/apache/rocketmq/remoting/common/RemotingHelper.java",
+      "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRemotingAbstract.java",
+      "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/RemotingSysResponseCode.java"
+    ],
+    "receivers": [
+      {
+        "description": "method of java.lang.Object on a type outside the repository",
+        "kind": "invocation",
+        "file": "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRemotingAbstract.java",
+        "line": 340,
+        "code": "e.getClass().getSimpleName()",
+        "type": "java.lang.Class<?>",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_6700",
+    "repository": "oracle/graal",
+    "commit": "58d72d8e5fe10e1815216442c22504c747d6545d",
+    "files": [
+      "substratevm/src/com.oracle.svm.hosted/src/com/oracle/svm/hosted/NativeImageOptions.java"
+    ],
+    "receivers": [
+      {
+        "description": "return typed by a type argument of the receiver type",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.hosted/src/com/oracle/svm/hosted/NativeImageOptions.java",
+        "line": 179,
+        "code": "CStandard.getValue().toUpperCase()",
+        "type": "String",
+        "files": [],
+        "intermediates": [
+          "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/option/HostedOptionKey.java"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_20557",
+    "repository": "bazelbuild/bazel",
+    "commit": "4f28357d76c1574469e71786f3ea221ac9daad02",
+    "files": [
+      "src/main/java/com/google/devtools/build/lib/remote/AbstractActionInputPrefetcher.java",
+      "src/main/java/com/google/devtools/build/lib/remote/util/Utils.java",
+      "src/test/java/com/google/devtools/build/lib/remote/ActionInputPrefetcherTestBase.java"
+    ],
+    "receivers": [
+      {
+        "description": "var in an enhanced for over a generic collection",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/util/Utils.java",
+        "line": 635,
+        "code": "transfer.get()",
+        "type": "ListenableFuture<Void>",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_10135",
+    "repository": "oracle/graal",
+    "commit": "8d1285e2614ff332c5a78187c0eab2d6d15bb6a5",
+    "files": [
+      "truffle/src/com.oracle.truffle.compiler/src/com/oracle/truffle/compiler/TruffleCompilerRuntime.java",
+      "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/BackgroundCompileQueue.java",
+      "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/EngineData.java",
+      "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/OptimizedCallTarget.java",
+      "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/OptimizedRuntimeOptions.java",
+      "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/OptimizedTruffleRuntime.java",
+      "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/hotspot/HotSpotTruffleRuntime.java"
+    ],
+    "receivers": [
+      {
+        "description": "local typed by a bounded method type parameter",
+        "kind": "invocation",
+        "file": "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/OptimizedTruffleRuntime.java",
+        "line": 348,
+        "code": "bestFactory.getEngineOptions()",
+        "type": "OptimizedRuntimeServiceProvider",
+        "files": [
+          "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/OptimizedRuntimeServiceProvider.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_2167",
+    "repository": "oracle/graal",
+    "commit": "86c00b448875fa952ed686b859d23974b9933360",
+    "files": [
+      "substratevm/src/com.oracle.svm.hosted/src/com/oracle/svm/hosted/NativeImageGenerator.java"
+    ],
+    "receivers": [
+      {
+        "description": "string literal",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.hosted/src/com/oracle/svm/hosted/NativeImageGenerator.java",
+        "line": 851,
+        "code": "\"llvm\".equals(SubstrateOptions.CompilerBackend.getValue())",
+        "type": "String",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_6571",
+    "repository": "apache/rocketmq",
+    "commit": "8b48688c08b585432d3ad9ba3f40be717c8b612d",
+    "files": [
+      "common/src/main/java/org/apache/rocketmq/common/message/MessageExtBrokerInner.java",
+      "store/src/main/java/org/apache/rocketmq/store/CommitLog.java",
+      "store/src/main/java/org/apache/rocketmq/store/ConsumeQueue.java",
+      "store/src/main/java/org/apache/rocketmq/store/DefaultMessageStore.java",
+      "store/src/main/java/org/apache/rocketmq/store/MessageExtEncoder.java",
+      "store/src/main/java/org/apache/rocketmq/store/MessageStore.java",
+      "store/src/main/java/org/apache/rocketmq/store/MultiDispatch.java",
+      "store/src/main/java/org/apache/rocketmq/store/dledger/DLedgerCommitLog.java",
+      "store/src/main/java/org/apache/rocketmq/store/plugin/AbstractPluginMessageStore.java",
+      "store/src/main/java/org/apache/rocketmq/store/queue/BatchConsumeQueue.java",
+      "store/src/main/java/org/apache/rocketmq/store/queue/ConsumeQueueInterface.java",
+      "store/src/main/java/org/apache/rocketmq/store/queue/ConsumeQueueStore.java",
+      "store/src/test/java/org/apache/rocketmq/store/AppendCallbackTest.java",
+      "store/src/test/java/org/apache/rocketmq/store/DefaultMessageStoreCleanFilesTest.java",
+      "store/src/test/java/org/apache/rocketmq/store/MultiDispatchTest.java",
+      "store/src/test/java/org/apache/rocketmq/store/kv/CompactionLogTest.java",
+      "store/src/test/java/org/apache/rocketmq/store/queue/SparseConsumeQueueTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "field of the enclosing class through a qualified this",
+        "kind": "invocation",
+        "file": "store/src/main/java/org/apache/rocketmq/store/CommitLog.java",
+        "line": 1765,
+        "code": "CommitLog.this.multiDispatch.updateMultiQueueOffset(msgInner)",
+        "type": "MultiDispatch",
+        "files": [
+          "store/src/main/java/org/apache/rocketmq/store/MultiDispatch.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "implicit receiver: field of the enclosing class",
+        "kind": "variable",
+        "file": "store/src/main/java/org/apache/rocketmq/store/CommitLog.java",
+        "line": 1643,
+        "code": "multiDispatch",
+        "type": "CommitLog",
+        "files": [
+          "store/src/main/java/org/apache/rocketmq/store/CommitLog.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "implicit receiver: method of the enclosing class",
+        "kind": "invocation",
+        "file": "store/src/main/java/org/apache/rocketmq/store/CommitLog.java",
+        "line": 1696,
+        "code": "isInnerBatchMsg(msgInner)",
+        "type": "CommitLog",
+        "files": [
+          "store/src/main/java/org/apache/rocketmq/store/CommitLog.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_100766",
+    "repository": "elastic/elasticsearch",
+    "commit": "ff680d4cedad55b05eb836ca003ce1c032bbbecd",
+    "files": [
+      "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/scalar/math/Round.java",
+      "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/predicate/operator/arithmetic/DateTimeArithmeticOperation.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/expression/function/scalar/math/RoundTests.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/expression/predicate/operator/arithmetic/AddTests.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/expression/predicate/operator/arithmetic/SubTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "default method of an interface through Interface.super",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/scalar/math/Round.java",
+        "line": 72,
+        "code": "EvaluatorMapper.super.fold()",
+        "type": "EvaluatorMapper",
+        "files": [
+          "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/evaluator/mapper/EvaluatorMapper.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "TeamNewPipe_NewPipe_8221",
+    "repository": "TeamNewPipe/NewPipe",
+    "commit": "6526ff1612ad430325a5bf8af7b425055306a0e6",
+    "files": [
+      "app/src/main/java/org/schabi/newpipe/NewPipeDatabase.java",
+      "app/src/main/java/org/schabi/newpipe/database/AppDatabase.java",
+      "app/src/main/java/org/schabi/newpipe/database/Migrations.java",
+      "app/src/main/java/org/schabi/newpipe/database/playlist/PlaylistLocalItem.java",
+      "app/src/main/java/org/schabi/newpipe/database/playlist/PlaylistMetadataEntry.java",
+      "app/src/main/java/org/schabi/newpipe/database/playlist/dao/PlaylistDAO.java",
+      "app/src/main/java/org/schabi/newpipe/database/playlist/dao/PlaylistRemoteDAO.java",
+      "app/src/main/java/org/schabi/newpipe/database/playlist/dao/PlaylistStreamDAO.java",
+      "app/src/main/java/org/schabi/newpipe/database/playlist/model/PlaylistEntity.java",
+      "app/src/main/java/org/schabi/newpipe/database/playlist/model/PlaylistRemoteEntity.java",
+      "app/src/main/java/org/schabi/newpipe/local/LocalItemListAdapter.java",
+      "app/src/main/java/org/schabi/newpipe/local/bookmark/BookmarkFragment.java",
+      "app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistAppendDialog.java",
+      "app/src/main/java/org/schabi/newpipe/local/holder/LocalBookmarkPlaylistItemHolder.java",
+      "app/src/main/java/org/schabi/newpipe/local/holder/LocalPlaylistItemHolder.java",
+      "app/src/main/java/org/schabi/newpipe/local/holder/RemoteBookmarkPlaylistItemHolder.java",
+      "app/src/main/java/org/schabi/newpipe/local/holder/RemotePlaylistItemHolder.java",
+      "app/src/main/java/org/schabi/newpipe/local/playlist/LocalPlaylistFragment.java",
+      "app/src/main/java/org/schabi/newpipe/local/playlist/LocalPlaylistManager.java",
+      "app/src/main/java/org/schabi/newpipe/local/playlist/RemotePlaylistManager.java",
+      "app/src/main/java/org/schabi/newpipe/util/DebounceSavable.java",
+      "app/src/main/java/org/schabi/newpipe/util/DebounceSaver.java",
+      "app/src/test/java/org/schabi/newpipe/database/playlist/PlaylistLocalItemTest.java"
+    ],
+    "receivers": [
+      {
+        "description": "generic JDK method returning a type argument of the receiver",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/database/playlist/PlaylistLocalItem.java",
+        "line": 37,
+        "code": "remotePlaylists.get(j).getDisplayIndex()",
+        "type": "PlaylistRemoteEntity",
+        "files": [
+          "app/src/main/java/org/schabi/newpipe/database/playlist/model/PlaylistRemoteEntity.java"
+        ],
+        "intermediates": []
+      },
+      {
+        "description": "implicit receiver: method of an unloaded superclass two levels up",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/local/bookmark/BookmarkFragment.java",
+        "line": 333,
+        "code": "showError(new ErrorInfo(throwable,UserAction.REQUESTED_BOOKMARK,\"Changing playlist name\"))",
+        "type": "BaseStateFragment",
+        "files": [
+          "app/src/main/java/org/schabi/newpipe/fragments/BaseStateFragment.java"
+        ],
+        "intermediates": [
+          "app/src/main/java/org/schabi/newpipe/local/BaseLocalListFragment.java"
+        ]
+      },
+      {
+        "description": "implicit receiver: field of an unloaded superclass three levels up",
+        "kind": "variable",
+        "file": "app/src/main/java/org/schabi/newpipe/local/bookmark/BookmarkFragment.java",
+        "line": 326,
+        "code": "DEBUG",
+        "type": "BaseFragment",
+        "files": [
+          "app/src/main/java/org/schabi/newpipe/BaseFragment.java"
+        ],
+        "intermediates": [
+          "app/src/main/java/org/schabi/newpipe/local/BaseLocalListFragment.java",
+          "app/src/main/java/org/schabi/newpipe/fragments/BaseStateFragment.java"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-boot_31477",
+    "repository": "spring-projects/spring-boot",
+    "commit": "4133ba697acc0cf9d19118dad6ca35eb99678bd5",
+    "files": [
+      "spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/tunnel/payload/HttpTunnelPayload.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-buildpack-platform/src/main/java/org/springframework/boot/buildpack/platform/docker/type/VolumeName.java",
+      "spring-boot-project/spring-boot-tools/spring-boot-loader-tools/src/main/java/org/springframework/boot/loader/tools/Digest.java"
+    ],
+    "receivers": [
+      {
+        "description": "static method of a JDK class",
+        "kind": "invocation",
+        "file": "spring-boot-project/spring-boot-tools/spring-boot-buildpack-platform/src/main/java/org/springframework/boot/buildpack/platform/docker/type/VolumeName.java",
+        "line": 129,
+        "code": "HexFormat.of().formatHex(digest,0,digestLength)",
+        "type": "java.util.HexFormat",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_7226",
+    "repository": "bazelbuild/bazel",
+    "commit": "4bc2c6f1c31da49a4a3ad9d36d2adb9f33082d75",
+    "files": [
+      "src/main/java/com/google/devtools/build/lib/skyframe/RegisteredToolchainsCycleReporter.java",
+      "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java"
+    ],
+    "receivers": [
+      {
+        "description": "implicitly typed lambda parameter (List.forEach)",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+        "line": 1334,
+        "code": "config.reportInvalidOptions(nosyEventHandler)",
+        "type": "BuildConfiguration",
+        "files": [
+          "src/main/java/com/google/devtools/build/lib/analysis/config/BuildConfiguration.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_104354",
+    "repository": "elastic/elasticsearch",
+    "commit": "0b713e59fc77e0202fd97bd135706e3c5d0bf2f9",
+    "files": [
+      "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java"
+    ],
+    "receivers": [
+      {
+        "description": "field of an anonymous class created in a lambda",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "line": 347,
+        "code": "newEntry.snapshot()",
+        "type": "SnapshotsInProgress.Entry",
+        "files": [
+          "server/src/main/java/org/elasticsearch/cluster/SnapshotsInProgress.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_111973",
+    "repository": "elastic/elasticsearch",
+    "commit": "b71d5c0826dff12af573ad412fdd7f0ee2fd6ce4",
+    "files": [
+      "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/InvalidMappedField.java",
+      "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlCapabilities.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "implicitly typed lambda parameter (Stream<DataType>.filter)",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+        "line": 508,
+        "code": "dt.isNumeric()",
+        "type": "DataType",
+        "files": [
+          "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/DataType.java"
+        ],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_10490",
+    "repository": "netty/netty",
+    "commit": "c4f599a7a158a8624e1be364195316204709aaf5",
+    "files": [
+      "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+      "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolverBuilder.java",
+      "resolver-dns/src/main/java/io/netty/resolver/dns/LoggingDnsQueryLifeCycleObserverFactory.java",
+      "resolver-dns/src/main/java/io/netty/resolver/dns/LoggingDnsQueryLifecycleObserver.java"
+    ],
+    "receivers": [
+      {
+        "description": "super in an anonymous class: the type the anonymous class extends",
+        "kind": "invocation",
+        "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+        "line": 198,
+        "code": "super.decodeResponse(ctx,packet)",
+        "type": "DatagramDnsResponseDecoder",
+        "files": [
+          "codec-dns/src/main/java/io/netty/handler/codec/dns/DatagramDnsResponseDecoder.java"
+        ],
+        "intermediates": [],
+        "rmGap": {
+          "item": 7,
+          "id": "gap7-anonymous-super-call",
+          "workaround": true
+        }
+      }
+    ]
+  },
+  {
+    "dataset": "TeamNewPipe_NewPipe_7341",
+    "repository": "TeamNewPipe/NewPipe",
+    "commit": "e588abd4e7414faa8ee0a02e895f404ff5f32e41",
+    "files": [
+      "app/src/main/java/org/schabi/newpipe/player/Player.java",
+      "app/src/main/java/org/schabi/newpipe/player/playback/PlayerMediaSession.java"
+    ],
+    "receivers": [
+      {
+        "description": "conditional expression: the interface both branches implement",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/player/Player.java",
+        "line": 3276,
+        "code": "(isAudioOnly ? audioResolver : videoResolver).resolve(info)",
+        "type": "PlaybackResolver",
+        "files": [
+          "app/src/main/java/org/schabi/newpipe/player/resolver/PlaybackResolver.java"
+        ],
+        "intermediates": [
+          "app/src/main/java/org/schabi/newpipe/player/resolver/AudioPlaybackResolver.java",
+          "app/src/main/java/org/schabi/newpipe/player/resolver/VideoPlaybackResolver.java"
+        ]
+      }
+    ]
+  }
+]

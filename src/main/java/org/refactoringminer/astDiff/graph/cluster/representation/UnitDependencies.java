@@ -48,8 +48,8 @@ class UnitDependencies {
         }
       }
 
-      globalSides.add(elementGlobalSides.stream().sorted(Node.COMPARATOR).toList());
-      localSides.add(elementLocalSides.stream().sorted(Node.COMPARATOR).toList());
+      globalSides.add(elementGlobalSides.stream().sorted(Node.DEPENDENCY_COMPARATOR).toList());
+      localSides.add(elementLocalSides.stream().sorted(Node.DEPENDENCY_COMPARATOR).toList());
     }
   }
 

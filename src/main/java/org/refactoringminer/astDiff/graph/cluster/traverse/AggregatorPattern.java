@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 public class AggregatorPattern extends TraversalPattern {
 
-    Set<TraversalPattern> subs = new HashSet<>();
+    Set<TraversalPattern> subs = new LinkedHashSet<>();
 
     @Override
     public List<Node> getMains() {

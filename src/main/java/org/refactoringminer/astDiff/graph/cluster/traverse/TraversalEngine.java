@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,7 +26,7 @@ public class TraversalEngine {
     private final Util util;
     private final Graph<Node, Edge> graph;
     private final List<TraversalPattern> components = new ArrayList<>();
-    private final Set<UsagePattern> usagePatterns = new HashSet<>();
+    private final Set<UsagePattern> usagePatterns = new LinkedHashSet<>();
     private final HashMap<Node, SingularPattern> singularPatternsLeads = new HashMap<>();
 
     public TraversalEngine(Cluster cluster) {
@@ -86,10 +88,10 @@ public class TraversalEngine {
             return;
         }
 
-        // TODO: Implement a more robust check: if the node is src which has some mappings
-        // and its usedNodes are extensions AND all of those extension used nodes are 
-        // a mapping of an extension used node for the mapping of the src node.
-        if (node.isSrc() && !util.getMappingTargets(node).isEmpty()) {
+        // A source mapped to targets is presented with them, through what they use, unless it uses what none of them
+        // uses: code the change carries over uses nothing anew (see HunkNetwork#carriesOver), so a deleted wrapper may
+        // rely on what its carried over code does not
+        if (node.isSrc() && !util.getMappingTargets(node).isEmpty() && targetsUseWhatItUses(node)) {
             return;
         }
 
@@ -126,6 +128,29 @@ public class TraversalEngine {
                 usageComponent.addRequirement(usedNode, existingSingularComponent);
             }
         }
+    }
+
+    // Whether one of its targets uses each declaration the source uses: the same code of an unchanged declaration, or
+    // the counterpart of a change
+    private boolean targetsUseWhatItUses(Node source) {
+        Set<Node> targetsUsedNodes = new HashSet<>();
+        for (Node target : util.getMappingTargets(source)) {
+            targetsUsedNodes.addAll(util.getUsedNodes(target));
+        }
+
+        for (Node usedNode : util.getUsedNodes(source)) {
+            if (usedNode.isContext()) {
+                continue;
+            }
+            boolean used = usedNode.isExtension()
+                    ? targetsUsedNodes.stream().anyMatch(targetUsedNode -> targetUsedNode.isExtension()
+                            && targetUsedNode.getPath().equals(usedNode.getPath()) && targetUsedNode.getContent().equals(usedNode.getContent()))
+                    : util.getMappingTargets(usedNode).stream().anyMatch(targetsUsedNodes::contains);
+            if (!used) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void addSuccessiveComponents() {
@@ -211,9 +236,9 @@ public class TraversalEngine {
     }
 
     private Set<Pair<Set<Node>, TraversalPattern>> mergeByContext() {
-        Set<Pair<Set<Node>, TraversalPattern>> traversalComponentsTracker = new HashSet<>();
+        Set<Pair<Set<Node>, TraversalPattern>> traversalComponentsTracker = new LinkedHashSet<>();
 
-        Map<TraversalPattern, ComponentContexts> componentsContexts = new HashMap<>();
+        Map<TraversalPattern, ComponentContexts> componentsContexts = new LinkedHashMap<>();
         for (TraversalPattern component : components) {
             componentsContexts.put(component,
                     new ComponentContexts(component,
@@ -507,9 +532,9 @@ public class TraversalEngine {
     }
 
     private void mergeByUsageChain() {
-        Map<UsagePattern, Set<TraversalPattern>> usageRequirements = new HashMap<>();
+        Map<UsagePattern, Set<TraversalPattern>> usageRequirements = new LinkedHashMap<>();
         for (UsagePattern usagePattern : usagePatterns) {
-            usageRequirements.put(usagePattern, new HashSet<>(usagePattern.getRequirements().values()));
+            usageRequirements.put(usagePattern, new LinkedHashSet<>(usagePattern.getRequirements().values()));
         }
 
         while (!usageRequirements.isEmpty()) {
@@ -528,7 +553,7 @@ public class TraversalEngine {
 
             List<TraversalPattern> useComponents = components.stream()
                     .filter(component -> component.containsNode(useNode)).toList();
-            HashSet<TraversalPattern> mergeComponents = new HashSet<>(useComponents);
+            Set<TraversalPattern> mergeComponents = new LinkedHashSet<>(useComponents);
             List<TraversalPattern> usedComponents = components.stream()
                     .filter(component -> usedNodes.stream().anyMatch(component::containsNode))
                     .toList();

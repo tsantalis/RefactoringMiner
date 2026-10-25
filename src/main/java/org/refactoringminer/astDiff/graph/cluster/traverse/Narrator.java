@@ -229,7 +229,8 @@ public class Narrator {
         List<TraversalPattern> chapters = getNarrative(level);
         if (chapters == null) return Collections.emptyList();
 
-        List<NarrativeElement> elements = chapters.stream().map(TraversalPattern::getElements).flatMap(List::stream).toList();
+        List<NarrativeElement> elements = orderByReliance(chapters.stream().map(TraversalPattern::getElements)
+                .flatMap(List::stream).toList());
 
         Map<Node, DiffNode> changeDiffNodes = RawRepresentation.changeDiffNodes(elements, length);
 
@@ -253,6 +254,57 @@ public class Narrator {
 
         flatCache.put(level, flatGroups);
         return flatGroups;
+    }
+
+    // An element is placed where its latest leaf is, so a change of it can come after another element relying on it;
+    // the elements are kept in order but moved after every element whose changes they rely on
+    private static List<NarrativeElement> orderByReliance(List<NarrativeElement> elements) {
+        Map<Node, Integer> mainElements = new HashMap<>();
+        for (int i = 0; i < elements.size(); i++) {
+            for (Node main : elements.get(i).getMainsToSides().keySet()) {
+                mainElements.putIfAbsent(main, i);
+            }
+        }
+
+        List<Set<Integer>> reliedElements = new ArrayList<>();
+        for (int i = 0; i < elements.size(); i++) {
+            Set<Integer> relied = new HashSet<>();
+            for (Set<Node> sides : elements.get(i).getMainsToSides().values()) {
+                for (Node side : sides) {
+                    Integer element = mainElements.get(side);
+                    if (element != null && element != i) {
+                        relied.add(element);
+                    }
+                }
+            }
+            reliedElements.add(relied);
+        }
+
+        List<NarrativeElement> ordered = new ArrayList<>();
+        Set<Integer> placed = new HashSet<>();
+        while (placed.size() < elements.size()) {
+            int next = -1;
+            for (int i = 0; i < elements.size(); i++) {
+                if (!placed.contains(i) && placed.containsAll(reliedElements.get(i))) {
+                    next = i;
+                    break;
+                }
+            }
+            // Elements relying on each other keep their order
+            if (next == -1) {
+                for (int i = 0; i < elements.size(); i++) {
+                    if (!placed.contains(i)) {
+                        next = i;
+                        break;
+                    }
+                }
+            }
+
+            placed.add(next);
+            ordered.add(elements.get(next));
+        }
+
+        return ordered;
     }
 
     public int getProgress(GrainLevel grainLevel) {

@@ -1,6 +1,7 @@
 package org.refactoringminer.astDiff.graph;
 
 import com.github.gumtreediff.actions.TreeClassifier;
+import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
@@ -16,6 +17,7 @@ import javax.annotation.Nullable;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.builder.GraphTypeBuilder;
+import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.graph.cluster.traverse.Util;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -27,7 +29,8 @@ public class HunkNetwork {
   private final Util util;
   private final Map<String, Node> idNodeMap = new HashMap<>();
   private final UMLModelDiff modelDiff;
-  private final UMLsGenerator umlsGenerator;
+  private final RMIndex rmIndex;
+  private final RMLinks rmLinks;
   private final ContentsContexts contentsContexts;
   private final Set<ImportTree> srcTrees = new HashSet<>();
   private final Set<ImportTree> dstTrees = new HashSet<>();
@@ -36,6 +39,8 @@ public class HunkNetwork {
   private final Set<String> pairedDstPaths = new HashSet<>();
   @Nullable
   private final MemberUsageFinder memberUsageFinder;
+  @Nullable
+  private final ReceiverTypeResolver receiverTypeResolver;
 
   public HunkNetwork(UMLModelDiff modelDiff, Map<String, String> srcContents, Map<String, String> dstContents) {
     this(modelDiff, srcContents, dstContents, null);
@@ -49,13 +54,14 @@ public class HunkNetwork {
     this.modelDiff = modelDiff;
     Map<String, String> networkSrcContents = new LinkedHashMap<>(srcContents);
     Map<String, String> networkDstContents = new LinkedHashMap<>(dstContents);
-    this.umlsGenerator = new UMLsGenerator(modelDiff, networkSrcContents, networkDstContents);
     this.contentsContexts = new ContentsContexts(networkSrcContents, networkDstContents,
             modelDiff.getParentModel().getTreeContextMap(), modelDiff.getChildModel().getTreeContextMap());
-    ReceiverTypeResolver receiverTypeResolver = repositoryStateFiles == null ? null
+    this.rmIndex = new RMIndex(modelDiff, contentsContexts);
+    this.rmLinks = new RMLinks(modelDiff);
+    this.receiverTypeResolver = repositoryStateFiles == null ? null
             : new ReceiverTypeResolver(modelDiff, repositoryStateFiles, contentsContexts);
     this.memberUsageFinder = receiverTypeResolver == null ? null : new MemberUsageFinder(receiverTypeResolver,
-            (umlModel, location) -> isInChange(umlModel == modelDiff.getParentModel() ? SrcDst.SRC : SrcDst.DST, location));
+            (umlModel, location) -> overlapsChange(umlModel == modelDiff.getParentModel() ? SrcDst.SRC : SrcDst.DST, location));
   }
 
   public void importFiles() {
@@ -97,6 +103,8 @@ public class HunkNetwork {
 
     srcTrees.addAll(getValidTrees(srcPath, classifier.getMovedSrcs()).stream()
             .map(tree -> new ImportTree(tree, NodeType.SRC_MOVE, srcPath, SrcDst.SRC)).toList());
+    srcTrees.addAll(getValidTrees(srcPath, multiMovedTrees(diff, SrcDst.SRC)).stream()
+            .map(tree -> new ImportTree(tree, NodeType.SRC_MOVE, srcPath, SrcDst.SRC)).toList());
     if (complete) {
       srcTrees.addAll(getValidTrees(srcPath, classifier.getDeletedSrcs()).stream()
               .map(tree -> new ImportTree(tree, NodeType.DELETION, srcPath, SrcDst.SRC)).toList());
@@ -106,12 +114,31 @@ public class HunkNetwork {
 
     dstTrees.addAll(getValidTrees(dstPath, classifier.getMovedDsts()).stream()
             .map(tree -> new ImportTree(tree, NodeType.DST_MOVE, dstPath, SrcDst.DST)).toList());
+    dstTrees.addAll(getValidTrees(dstPath, multiMovedTrees(diff, SrcDst.DST)).stream()
+            .map(tree -> new ImportTree(tree, NodeType.DST_MOVE, dstPath, SrcDst.DST)).toList());
     if (complete) {
       dstTrees.addAll(getValidTrees(dstPath, classifier.getInsertedDsts()).stream()
               .map(tree -> new ImportTree(tree, NodeType.ADDITION, dstPath, SrcDst.DST)).toList());
       dstTrees.addAll(getValidTrees(dstPath, classifier.getUpdatedDsts()).stream()
               .map(tree -> new ImportTree(tree, NodeType.DST_UPDATE, dstPath, SrcDst.DST)).toList());
     }
+  }
+
+  private static Set<Tree> multiMovedTrees(ASTDiff diff, SrcDst srcDst) {
+    Set<Tree> trees = new HashSet<>();
+
+    boolean src = srcDst.equals(SrcDst.SRC);
+    ExtendedTreeClassifier classifier = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
+    MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
+    Tree root = src ? diff.src.getRoot() : diff.dst.getRoot();
+    for (Tree tree : (src ? classifier.getMultiMapSrc() : classifier.getMultiMapDst()).keySet()) {
+      Tree counterpart = src ? mappingStore.getDstForSrc(tree) : mappingStore.getSrcForDst(tree);
+      if (counterpart == null && (tree == root || tree.getParents().contains(root))) {
+        trees.add(tree);
+      }
+    }
+
+    return trees;
   }
 
   private static boolean mapsWholeFilePair(ASTDiff diff) {
@@ -131,6 +158,20 @@ public class HunkNetwork {
         return constants.isSemanticallyInsignificant(treeType);
       });
     }).collect(Collectors.toSet());
+  }
+
+  // A tree both moved and updated is classified as both, but it is one change, of which the update is the content
+  private static Set<ImportTree> distinctTrees(Set<ImportTree> importTrees) {
+    Map<Tree, ImportTree> distinct = new IdentityHashMap<>();
+    for (ImportTree importTree : importTrees) {
+      distinct.merge(importTree.tree(), importTree, (existing, other) -> isUpdate(other.type()) ? other : existing);
+    }
+
+    return new HashSet<>(distinct.values());
+  }
+
+  private static boolean isUpdate(NodeType nodeType) {
+    return nodeType.equals(NodeType.SRC_UPDATE) || nodeType.equals(NodeType.DST_UPDATE);
   }
 
   private HashMap<ImportTree, Set<ImportTree>> aggregateTrees(Set<ImportTree> importTrees) {
@@ -170,20 +211,23 @@ public class HunkNetwork {
     return result;
   }
 
+  // The trees are imported in the order of their files and positions, which the order of the nodes of the graph follows
   private void importTrees(HashMap<ImportTree, Set<ImportTree>> trees) {
-    trees.entrySet().stream().map(entry -> {
+    trees.entrySet().stream().sorted(Comparator.comparing((Entry<ImportTree, Set<ImportTree>> entry) -> entry.getKey().srcDst())
+            .thenComparing(entry -> entry.getKey().path()).thenComparingInt(entry -> entry.getKey().tree().getPos())
+            .thenComparingInt(entry -> -entry.getKey().tree().getEndPos())).map(entry -> {
       ImportTree parent = entry.getKey();
       Set<ImportTree> subs = entry.getValue();
       Set<Node> subsNode = subs.stream()
-              .map(sub -> new Node(contentsContexts, sub.path, parent.srcDst, sub.tree, null, sub.type)).collect(Collectors.toSet());
+              .map(sub -> new Node(contentsContexts, rmIndex, sub.path, parent.srcDst, sub.tree, null, sub.type)).collect(Collectors.toSet());
 
-      return new Node(contentsContexts, parent.path, parent.srcDst, parent.tree, subsNode, parent.type);
+      return new Node(contentsContexts, rmIndex, parent.path, parent.srcDst, parent.tree, subsNode, parent.type);
     }).forEach(this::addNode);
   }
 
   private Node addExtensionNode(Tree extensionTree, Node extendedNode) {
     String path = contentsContexts.getPath(extendedNode.getSrcDst(), extensionTree);
-    Node node = new Node(contentsContexts, path, extendedNode.getSrcDst(), extensionTree, null, NodeType.EXTENSION);
+    Node node = new Node(contentsContexts, rmIndex, path, extendedNode.getSrcDst(), extensionTree, null, NodeType.EXTENSION);
     return addNode(node);
   }
 
@@ -205,7 +249,7 @@ public class HunkNetwork {
 
     graph.addVertex(node);
     idNodeMap.put(node.getId(), node);
-    node.setUMLs(umlsGenerator.getUMLs(node.getTree(), node.getSrcDst(), node.getPath(), false));
+    node.setUMLs(rmIndex.umls(node.getSrcDst(), node.getPath(), node.getTree(), false));
 
     addNodeContexts(node);
 
@@ -216,18 +260,18 @@ public class HunkNetwork {
     String path = node.getPath();
     SrcDst srcDst = node.getSrcDst();
 
-    List<Pair<Tree, NodeType>> contexts = Context.get(node.getPath(), node.getTree());
+    List<Pair<Tree, NodeType>> contexts = Context.get(node.getPath(), node.getTree(), node.isBase(), node.getFileContent());
     for (Pair<Tree, NodeType> context : contexts) {
       String potentialContextId = Node.formatId(path, srcDst, context.second, context.first);
 
       if (!idNodeMap.containsKey(potentialContextId)) {
-        Node contextNode = new Node(contentsContexts, path, srcDst, context.first, null, context.second);
+        Node contextNode = new Node(contentsContexts, rmIndex, path, srcDst, context.first, null, context.second);
         graph.addVertex(contextNode);
         idNodeMap.put(contextNode.getId(), contextNode);
       }
 
       Node contextNode = idNodeMap.get(potentialContextId);
-      contextNode.setUMLs(umlsGenerator.getUMLs(contextNode.getTree(), contextNode.getSrcDst(), contextNode.getPath(), true));
+      contextNode.setUMLs(rmIndex.umls(contextNode.getSrcDst(), contextNode.getPath(), contextNode.getTree(), true));
       injectContextNode(contextNode);
     }
 
@@ -276,8 +320,8 @@ public class HunkNetwork {
   }
 
   public void process() {
-    importTrees(aggregateTrees(srcTrees));
-    importTrees(aggregateTrees(dstTrees));
+    importTrees(aggregateTrees(distinctTrees(srcTrees)));
+    importTrees(aggregateTrees(distinctTrees(dstTrees)));
 
     if (memberUsageFinder != null) {
       memberUsageFinder.bindChanges(modelDiff.getParentModel());
@@ -286,6 +330,7 @@ public class HunkNetwork {
 
     processDefUse();
     processClassLevelRelations();
+    processOverrides();
 
     processExtensions(SrcDst.SRC);
     processExtensions(SrcDst.DST);
@@ -299,12 +344,166 @@ public class HunkNetwork {
     assignPromptIds();
   }
 
-  private boolean isInChange(SrcDst srcDst, LocationInfo location) {
-    List<Node> enclosingChanges = util.findOverlappingNodes(location.getFilePath(), srcDst, location.getStartOffset(),
-            location.getEndOffset(), n -> !n.isContext() && !n.isExtension()
-                    && n.getTree().getPos() <= location.getStartOffset()
-                    && location.getEndOffset() <= n.getTree().getEndPos());
-    return !enclosingChanges.isEmpty();
+  private boolean overlapsChange(SrcDst srcDst, LocationInfo location) {
+    return !findReachedChanges(location.getFilePath(), srcDst, location.getStartOffset(), location.getEndOffset()).isEmpty();
+  }
+
+  // Code reaches the changes it overlaps, not only the one enclosing it: an argument changed in an unchanged call
+  // relies on the parameter it is passed to. The body of a lambda or an anonymous class within the code is not used by
+  // it, so the changes inside such a body are not reached
+  private List<Node> findReachedChanges(String path, SrcDst srcDst, int startOffset, int endOffset) {
+    return util.findOverlappingNodes(path, srcDst, startOffset, endOffset, n -> !n.isContext() && !n.isExtension()
+            && n.getTree().getPos() < endOffset && startOffset < n.getTree().getEndPos()
+            && !isInBodyWithin(srcDst, path, n.getTree(), startOffset, endOffset));
+  }
+
+  private List<Node> editingNodes(List<Node> changes, LocationInfo use, boolean editing) {
+    if (!editing) {
+      return changes;
+    }
+    return changes.stream().filter(change -> !carriesOver(change, use.getStartOffset(), use.getEndOffset())).toList();
+  }
+
+  // Whether the use lies in code the change carries over as it is, such as a statement out of a removed try, a chain
+  // extended by a new call or an expression passed to a new call: that code is unchanged where it is, so it uses
+  // nothing anew. The code that is the whole change carries over every use overlapping it.
+  private boolean carriesOver(Node change, int startOffset, int endOffset) {
+    Tree tree = change.getTree();
+    if (isCarriedOver(change, tree)) {
+      return true;
+    }
+
+    while (tree.getPos() <= startOffset && endOffset <= tree.getEndPos()) {
+      Tree holding = null;
+      for (Tree child : tree.getChildren()) {
+        if (child.getPos() <= startOffset && endOffset <= child.getEndPos()) {
+          holding = child;
+          break;
+        }
+      }
+      if (holding == null) {
+        return false;
+      }
+      if (isCarriedOver(change, holding)) {
+        return true;
+      }
+      tree = holding;
+    }
+
+    return false;
+  }
+
+  // Code is carried over when the other revision holds it as it is (but its layout) under another parent, within the
+  // code that holds it in both revisions below the member it is in: it got a new parent in place. It is either whole
+  // statements, code staying in its statement, or code RM gives as staying in its statement in place (see isRestated);
+  // code moved to another member or taken out to a new statement is not, as what it uses then works with other code.
+  // Nor is code a new or a removed parent runs on a condition, in a loop or later (a lambda, an anonymous class): what
+  // it uses then runs differently, which the change relies on.
+  private boolean isCarriedOver(Node change, Tree tree) {
+    for (ASTDiff diff : diffs) {
+      boolean src = change.isSrc();
+      if (!(src ? diff.getSrcPath() : diff.getDstPath()).equals(change.getPath())) {
+        continue;
+      }
+
+      MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
+      Function<Tree, Tree> counterpartOf = src ? mappingStore::getDstForSrc : mappingStore::getSrcForDst;
+      Tree counterpart = counterpartOf.apply(tree);
+      // The mappings of a diff may reach trees of other files, whose content is not the one of its other path
+      Tree counterpartRoot = src ? diff.dst.getRoot() : diff.src.getRoot();
+      if (counterpart == null || (counterpart != counterpartRoot && !counterpart.getParents().contains(counterpartRoot))) {
+        continue;
+      }
+
+      // Code re-wrapped over other lines, as a chain a new step is appended to, is the same code
+      if (!tree.isIsomorphicTo(counterpart)) {
+        return false;
+      }
+
+      Constants constants = new Constants(change.getPath());
+      SrcDst srcDst = src ? SrcDst.SRC : SrcDst.DST;
+      SrcDst counterpartSrcDst = src ? SrcDst.DST : SrcDst.SRC;
+      String counterpartPath = src ? diff.getDstPath() : diff.getSrcPath();
+      if (isRestated(tree, counterpart, counterpartOf, srcDst, change.getPath(), counterpartSrcDst, counterpartPath)) {
+        return true;
+      }
+
+      Tree holder = tree.getParent();
+      Tree holderCounterpart = holder == null ? null : counterpartOf.apply(holder);
+      if (holderCounterpart == counterpart.getParent()) {
+        return false;
+      }
+      while (holder != null && holderCounterpart == null) {
+        holder = holder.getParent();
+        holderCounterpart = holder == null ? null : counterpartOf.apply(holder);
+      }
+
+      if (holder == null || constants.isType(holder.getType().name) || constants.isRoot(holder.getType().name)
+              || !counterpart.getParents().contains(holderCounterpart)
+              || runsDifferently(srcDst, change.getPath(), tree, holder)
+              || runsDifferently(counterpartSrcDst, counterpartPath, counterpart, holderCounterpart)) {
+        return false;
+      }
+
+      // A whole statement, or code staying in the statement RM gives as the same in both revisions
+      RMLinks.Statement statement = rmLinks.held(srcDst, change.getPath(), tree);
+      return statement != null && (statement.isWhole(tree)
+              || statement.isSameAs(rmLinks.held(counterpartSrcDst, counterpartPath, counterpart)));
+    }
+
+    return false;
+  }
+
+  // Whether RM gives the statements holding the tree and its counterpart as the same statement although the AST diff
+  // does not map them, at the same place: a statement mapped to one of another kind, as a returned creation assigned to a
+  // variable instead or the expression body of a lambda becoming the returned value of its block body, or the value of
+  // an extracted (inlined) variable and a statement it is replaced in. The value is computed where it was, only kept or
+  // handed on differently
+  private boolean isRestated(Tree tree, Tree counterpart, Function<Tree, Tree> counterpartOf, SrcDst srcDst, String path,
+                             SrcDst counterpartSrcDst, String counterpartPath) {
+    RMLinks.Statement statement = rmLinks.held(srcDst, path, tree);
+    RMLinks.Statement counterpartStatement = rmLinks.held(counterpartSrcDst, counterpartPath, counterpart);
+    if (statement == null || counterpartStatement == null || !statement.isSameAs(counterpartStatement)) {
+      return false;
+    }
+
+    Tree statementTree = statement.outermostWithin(tree);
+    Tree counterpartStatementTree = counterpartStatement.outermostWithin(counterpart);
+    if (counterpartOf.apply(statementTree) == counterpartStatementTree) {
+      return false;
+    }
+
+    Tree holder = statementTree.getParent();
+    Tree holderCounterpart = holder == null ? null : counterpartOf.apply(holder);
+    while (holder != null && holderCounterpart == null) {
+      holder = holder.getParent();
+      holderCounterpart = holder == null ? null : counterpartOf.apply(holder);
+    }
+    return holder != null && counterpartStatementTree.getParents().contains(holderCounterpart)
+            && !runsDifferently(srcDst, path, tree, holder)
+            && !runsDifferently(counterpartSrcDst, counterpartPath, counterpart, holderCounterpart);
+  }
+
+  // Whether code below the holder, as RM gives it, runs the tree on a condition, in a loop or later
+  private boolean runsDifferently(SrcDst srcDst, String path, Tree tree, Tree holder) {
+    for (RMIndex.RunScope scope : rmIndex.runScopes(srcDst, path)) {
+      if (scope.holdsBelow(tree.getPos(), tree.getEndPos()) && holder.getPos() <= scope.start() && scope.end() <= holder.getEndPos()
+              && (holder.getPos() != scope.start() || holder.getEndPos() != scope.end())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Whether the tree is in the body of a lambda or an anonymous class, as RM gives them, within the code at the range
+  private boolean isInBodyWithin(SrcDst srcDst, String path, Tree tree, int startOffset, int endOffset) {
+    for (RMIndex.RunScope scope : rmIndex.runScopes(srcDst, path)) {
+      if (scope.later() && scope.holdsBelow(tree.getPos(), tree.getEndPos())
+              && (startOffset < scope.start() || scope.end() < endOffset)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void assignPromptIds() {
@@ -390,8 +589,16 @@ public class HunkNetwork {
 
       Set<Node> mappedDstNodes = new HashSet<>();
       for (Node srcOrSub : srcOrSubs) {
-        List<Tree> dstTrees = srcOrSub.getDiffs().stream()
-                .map(diff -> diff.getAllMappings().getMonoMappingStore().getDstForSrc(srcOrSub.getTree())).toList();
+        // A tree no tree is mapped to alone may be mapped to several (see multiMovedTrees)
+        List<Tree> dstTrees = new ArrayList<>();
+        for (ASTDiff diff : srcOrSub.getDiffs()) {
+          Tree dstTree = diff.getAllMappings().getMonoMappingStore().getDstForSrc(srcOrSub.getTree());
+          if (dstTree != null) {
+            dstTrees.add(dstTree);
+          } else if (diff.getAllMappings().getDsts(srcOrSub.getTree()) != null) {
+            dstTrees.addAll(diff.getAllMappings().getDsts(srcOrSub.getTree()));
+          }
+        }
         List<Node> srcOrSubMappedDstNodes = dstNodes.stream().filter(dstNode -> dstNode.trees.stream().anyMatch(dstTrees::contains))
                 .map(dstNode -> dstNode.node).toList();
         if (srcNode.isContext()) {
@@ -431,18 +638,18 @@ public class HunkNetwork {
 
       for (UMLOperation operation : umls.umlOperations) {
         node.addIdentifier(operation.getName());
-        defUseTargets.addAll(getInvocationNodes(operation, node.getSrcDst()));
+        defUseTargets.addAll(getInvocationNodes(operation, node.getSrcDst(), false));
       }
 
       for (UMLAttribute attribute : umls.umlAttributes) {
         node.addIdentifier(attribute.getVariableDeclaration().getVariableName());
-        defUseTargets.addAll(getAccessNodes(attribute, node.getSrcDst()));
+        defUseTargets.addAll(getAccessNodes(attribute, node.getSrcDst(), false));
       }
 
       for (VariableDeclaration variableDeclaration : umls.variableDeclarations) {
         node.addIdentifier(variableDeclaration.getVariableName());
         defUseTargets.addAll(findAccessNodes(variableDeclaration.getVariableName(),
-                variableDeclaration.getScope().getStatementsInScopeUsingVariable(), node.getSrcDst()));
+                variableDeclaration.getScope().getStatementsInScopeUsingVariable(), node.getSrcDst(), false));
       }
 
       for (Entry<UMLOperation, Set<VariableDeclaration>> operationParameters : umls.operationParameters.entrySet()) {
@@ -460,72 +667,137 @@ public class HunkNetwork {
 
   // TODO: recursive extensions (from a non-extension to a non-extension OR to a terminal)
   // TODO: forward extensions (being used) in addition to the current backward extension (using)
+  // TODO: noisy dependencies. Every declaration a change uses becomes a dependency printed whole, so the useful ones
+  //  (e.g. the callee whose contract the change relies on) are buried among others which tell a reviewer nothing:
+  //  - Trivial accessors and fluent APIs: getters returning a field (BrokerController#getMessageStore), builder
+  //    steps and every overload of them used by a chain (Settings.builder(), the three Settings.Builder#put of one
+  //    chain, RestClient#get/uri/build). Idea: print a declaration whose body is a single return of a field or of
+  //    `this` by its signature only, and print the overloads of one name once.
+  //  - Declarations far longer than what they tell: constructors and methods carrying long annotations
+  //    (DateExtract's @FunctionInfo/@Param descriptions, ~30 lines before the signature) and multi-paragraph
+  //    javadoc. Idea: drop annotation argument values and keep the first javadoc sentence, unless the change
+  //    touches them.
+  //  - Test framework helpers used by changed tests (ESTestCase#assertThat, randomFrom).
+  //    Idea: leave out declarations of test-support code (test source sets of other modules, test frameworks)
+  //    that the changes reach only from test code, unless that code is changed itself.
+  //  - Dependencies of deleted code only (the metrics constants of removed latency recording, the old revision's
+  //    log field). Idea: keep a dependency relied on by deleted code only when it is a callee or a member whose
+  //    removal changes behavior (an invocation, a field written), and drop the constants and loggers it read.
   private void processExtensions(SrcDst srcDst) {
-    HashMap<Node, Set<Node>> nodesExtensions = new HashMap<>();
+    HashMap<Node, Set<Node>> usesUsedNodes = new HashMap<>();
 
     UMLModel umlModel = srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
     for (UMLClass umlClass : umlModel.getClassList()) {
-      for (UMLAttribute fieldDeclaration : umlClass.getAttributes()) {
+      // An enum constant is a field of its enum, as a case label naming it shows
+      List<UMLAttribute> fieldDeclarations = new ArrayList<>(umlClass.getAttributes());
+      fieldDeclarations.addAll(umlClass.getEnumConstants());
+      for (UMLAttribute fieldDeclaration : fieldDeclarations) {
         LocationInfo declarationLocation = fieldDeclaration.getLocationInfo();
-        Set<Node> accessNodes = getAccessNodes(fieldDeclaration, srcDst);
-        pushNodesExtensions(nodesExtensions, accessNodes, declarationLocation, Tree::getParent, srcDst);
+        Set<Node> accessNodes = getAccessNodes(fieldDeclaration, srcDst, false);
+        Set<Node> editingAccessNodes = getAccessNodes(fieldDeclaration, srcDst, true);
+        // A field is declared by its field declaration, which holds its type; an enum constant by itself
+        pushUsedNodes(usesUsedNodes, accessNodes, editingAccessNodes, declarationLocation,
+                fieldDeclaration instanceof UMLEnumConstant ? null : Tree::getParent, false, srcDst);
       }
 
       for (UMLOperation operation : umlClass.getOperations()) {
         LocationInfo operationLocation = operation.getLocationInfo();
-        Set<Node> invocationNodes = getInvocationNodes(operation, srcDst);
-        pushNodesExtensions(nodesExtensions, invocationNodes, operationLocation, null, srcDst);
+        Set<Node> invocationNodes = getInvocationNodes(operation, srcDst, false);
+        Set<Node> editingInvocationNodes = getInvocationNodes(operation, srcDst, true);
+        pushUsedNodes(usesUsedNodes, invocationNodes, editingInvocationNodes, operationLocation, null, false, srcDst);
 
-        for (VariableDeclaration variableDeclaration : operation.getAllVariableDeclarations()) {
-          LocationInfo declarationLocation = variableDeclaration.getLocationInfo();
-          Set<Node> accessNodes = findAccessNodes(variableDeclaration.getVariableName(),
-                  variableDeclaration.getScope().getStatementsInScopeUsingVariable(), srcDst);
-          pushNodesExtensions(nodesExtensions, accessNodes, declarationLocation, null, srcDst);
-        }
+        pushLocalUsedNodes(usesUsedNodes, operation, umlModel, srcDst);
       }
 
       for (UMLInitializer initializer : umlClass.getInitializers()) {
-        for (VariableDeclaration variableDeclaration : initializer.getAllVariableDeclarations()) {
-          LocationInfo declarationLocation = variableDeclaration.getLocationInfo();
-          Set<Node> accessNodes = findAccessNodes(variableDeclaration.getVariableName(),
-                  variableDeclaration.getScope().getStatementsInScopeUsingVariable(), srcDst);
-          pushNodesExtensions(nodesExtensions, accessNodes, declarationLocation, null, srcDst);
+        pushLocalUsedNodes(usesUsedNodes, initializer, umlModel, srcDst);
+      }
+
+      // The locals of the methods of anonymous classes, which the variables of the members declaring them leave out
+      for (UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
+        for (UMLOperation operation : anonymousClass.getOperations()) {
+          pushLocalUsedNodes(usesUsedNodes, operation, umlModel, srcDst);
         }
       }
     }
 
-    for (Entry<Node, Set<Node>> nodeExtensions : nodesExtensions.entrySet()) {
-      for (Node extension : nodeExtensions.getValue()) {
-        addEdge(extension, nodeExtensions.getKey(), EdgeType.DEF_USE);
+    for (Entry<Node, Set<Node>> useUsedNodes : usesUsedNodes.entrySet()) {
+      for (Node usedNode : useUsedNodes.getValue()) {
+        boolean related = graph.getAllEdges(usedNode, useUsedNodes.getKey()).stream()
+                .anyMatch(edge -> edge.getType().equals(EdgeType.DEF_USE));
+        if (!related) {
+          addEdge(usedNode, useUsedNodes.getKey(), EdgeType.DEF_USE);
+        }
       }
     }
   }
 
-  private void pushNodesExtensions(HashMap<Node, Set<Node>> nodesExtensions,
-                                   Set<Node> useNodes, LocationInfo usedLocation, Function<Tree, Tree> treeTransformer,
-                                   SrcDst srcDst) {
-    if (useNodes.isEmpty()) {
-      return;
+  // A local is used by the statements RM finds in its scope, and by the code of anonymous classes that refers to it
+  // deeper than the anonymous classes those statements create. An implicitly typed lambda parameter is a bare name,
+  // which tells nothing of what it holds
+  private void pushLocalUsedNodes(HashMap<Node, Set<Node>> usesUsedNodes, VariableDeclarationContainer container,
+                                  UMLModel umlModel, SrcDst srcDst) {
+    for (VariableDeclaration local : container.getAllVariableDeclarations()) {
+      LocationInfo declarationLocation = local.getLocationInfo();
+      Set<AbstractCodeFragment> fragments = local.getScope().getStatementsInScopeUsingVariable();
+      Set<Node> accessNodes = findAccessNodes(local.getVariableName(), fragments, srcDst, false);
+      Set<Node> editingAccessNodes = findAccessNodes(local.getVariableName(), fragments, srcDst, true);
+      if (memberUsageFinder != null) {
+        for (LeafExpression access : memberUsageFinder.findAnonymousClassAccesses(local, umlModel)) {
+          LocationInfo accessLocation = access.getLocationInfo();
+          List<Node> overlappingNodes = util.findOverlappingNodes(accessLocation.getFilePath(), srcDst, accessLocation.getStartOffset(),
+                  accessLocation.getEndOffset(), n -> !n.isContext() && !n.isExtension());
+          accessNodes.addAll(overlappingNodes);
+          editingAccessNodes.addAll(editingNodes(overlappingNodes, accessLocation, true));
+        }
+      }
+      String path = declarationLocation.getFilePath();
+      pushUsedNodes(usesUsedNodes, accessNodes, editingAccessNodes, declarationLocation,
+              tree -> rmIndex.declaringTree(srcDst, path, tree),
+              rmIndex.isLambdaParameter(srcDst, path, local) && local.getType() == null, srcDst);
     }
+  }
 
-    List<Node> usedNodes = util.findOverlappingNodes(usedLocation.getFilePath(), srcDst,
-            usedLocation.getStartOffset(), usedLocation.getEndOffset(),
-            (n) -> !n.isContext() && !n.isExtension());
-    if (!usedNodes.isEmpty()) {
+  // A change carrying code over as it is uses the declarations of that code anew only when the declaration is changed;
+  // an unchanged declaration is an extension of the changes editing a use of it only, unless it is a bare name
+  private void pushUsedNodes(HashMap<Node, Set<Node>> usesUsedNodes, Set<Node> useNodes, Set<Node> editingUseNodes,
+                             LocationInfo usedLocation, Function<Tree, Tree> treeTransformer, boolean bareName, SrcDst srcDst) {
+    if (useNodes.isEmpty()) {
       return;
     }
 
     Tree usedRootTree = contentsContexts.getRoot(srcDst, usedLocation.getFilePath());
     Tree usedTree = TreeUtilFunctions.findByLocationInfo(usedRootTree, usedLocation, new Constants(usedLocation.getFilePath()));
-    if (treeTransformer != null) {
+    if (usedTree != null && treeTransformer != null) {
       usedTree = treeTransformer.apply(usedTree);
     }
+    int usedStart = usedTree == null ? usedLocation.getStartOffset() : usedTree.getPos();
+    int usedEnd = usedTree == null ? usedLocation.getEndOffset() : usedTree.getEndPos();
 
-    for (Node useNode : useNodes) {
+    List<Node> usedNodes = util.findOverlappingNodes(usedLocation.getFilePath(), srcDst, usedStart, usedEnd,
+            (n) -> !n.isContext() && !n.isExtension() && n.getTree().getPos() < usedEnd && usedStart < n.getTree().getEndPos());
+    if (!usedNodes.isEmpty()) {
+      // A changed declaration is no extension, but its uses outside it rely on its changes as they would on it
+      for (Node useNode : useNodes) {
+        if (useNode.getPath().equals(usedLocation.getFilePath()) && usedStart <= useNode.getTree().getPos()
+                && useNode.getTree().getEndPos() <= usedEnd) {
+          continue;
+        }
+
+        usesUsedNodes.computeIfAbsent(useNode, node -> new HashSet<>()).addAll(usedNodes);
+      }
+      return;
+    }
+
+    if (bareName) {
+      return;
+    }
+
+    for (Node useNode : editingUseNodes) {
       Node usedExtensionNode = addExtensionNode(usedTree, useNode);
 
-      nodesExtensions.putIfAbsent(useNode, new HashSet<>());
-      nodesExtensions.get(useNode).add(usedExtensionNode);
+      usesUsedNodes.putIfAbsent(useNode, new HashSet<>());
+      usesUsedNodes.get(useNode).add(usedExtensionNode);
     }
   }
 
@@ -556,8 +828,7 @@ public class HunkNetwork {
 
       int startOffset = invocationLocation.getStartOffset() + argumentIndex;
       int endOffset = startOffset + parameterArgumentStr.length();
-      result.addAll(util.findOverlappingNodes(invocationLocation.getFilePath(), srcDst, startOffset, endOffset,
-              (n) -> !n.isContext() && !n.isExtension()));
+      result.addAll(findReachedChanges(invocationLocation.getFilePath(), srcDst, startOffset, endOffset));
     }
 
     return result;
@@ -593,6 +864,23 @@ public class HunkNetwork {
         createdClasses.add(createdClass);
       }
 
+      // A class literal hands the class to the code using it, as a creation does
+      for (UMLOperation umlOperation : node.getUMLs().umlOperations) {
+        if (umlOperation.getBody() == null) {
+          continue;
+        }
+        for (AbstractCodeFragment statement : umlOperation.getBody().getCompositeStatement().getAllStatements()) {
+          for (LeafExpression typeLiteral : statement.getTypeLiterals()) {
+            String literalClassName = typeLiteral.getString().replaceFirst("\\.class$", "");
+            UMLAbstractClass literalClass = node.isSrc() ?
+                    modelDiff.findClassInParentModel(literalClassName) : modelDiff.findClassInChildModel(literalClassName);
+            if (literalClass != null) {
+              createdClasses.add(literalClass);
+            }
+          }
+        }
+      }
+
       Set<Node> classNodes = new HashSet<>();
 
       for (UMLAbstractClass createdClass : createdClasses) {
@@ -608,11 +896,99 @@ public class HunkNetwork {
       }
     }
 
+    processCreations(SrcDst.SRC);
+    processCreations(SrcDst.DST);
+
     // extends and implements
     processGeneralizations(SrcDst.SRC);
     processRealizations(SrcDst.SRC);
     processGeneralizations(SrcDst.DST);
     processRealizations(SrcDst.DST);
+  }
+
+  // A creation in changed code relies on the class it creates as a whole changed member creating it does, so a changed
+  // class declaration is used by the changes holding a creation of it, such as removed code creating a removed record
+  private void processCreations(SrcDst srcDst) {
+    UMLModel umlModel = srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
+    for (UMLClass umlClass : umlModel.getClassList()) {
+      List<AbstractCall> creations = new ArrayList<>();
+      for (UMLOperation operation : umlClass.getOperations()) {
+        creations.addAll(operation.getAllCreations());
+      }
+      for (UMLAttribute attribute : umlClass.getAttributes()) {
+        creations.addAll(attribute.getAllCreations());
+      }
+
+      for (AbstractCall creation : creations) {
+        UMLAbstractClass createdClass = srcDst.equals(SrcDst.SRC) ? modelDiff.findClassInParentModel(creation.getName())
+                : modelDiff.findClassInChildModel(creation.getName());
+        Node classNode = createdClass == null ? null : getClassNode(createdClass, srcDst);
+        if (classNode == null || classNode.isContext()) {
+          continue;
+        }
+
+        LocationInfo location = creation.getLocationInfo();
+        for (Node creatingChange : findReachedChanges(location.getFilePath(), srcDst, location.getStartOffset(), location.getEndOffset())) {
+          if (!creatingChange.isDescendantOf(classNode)) {
+            addDefUse(classNode, creatingChange);
+          }
+        }
+      }
+    }
+  }
+
+  // A changed method of the new revision overriding or implementing a changed method relies on it as a caller does: it
+  // fulfills the contract the overridden method declares. An old override relies on nothing the change needs.
+  // TODO: an unchanged overridden method is no extension of the changes of the overriding one yet, though its contract
+  //  (an interface method and its javadoc) is what a reviewer judges an implementation against
+  private void processOverrides() {
+    if (receiverTypeResolver == null) {
+      return;
+    }
+
+    SrcDst srcDst = SrcDst.DST;
+    UMLModel umlModel = modelDiff.getChildModel();
+    for (UMLClass umlClass : umlModel.getClassList()) {
+      for (UMLOperation operation : umlClass.getOperations()) {
+        List<Node> overridingChanges = declarationChanges(operation, srcDst);
+        if (overridingChanges.isEmpty()) {
+          continue;
+        }
+
+        for (UMLOperation overridden : receiverTypeResolver.findOverridden(operation, umlClass, umlModel)) {
+          for (Node overriddenChange : declarationChanges(overridden, srcDst)) {
+            for (Node overridingChange : overridingChanges) {
+              addDefUse(overriddenChange, overridingChange);
+            }
+          }
+
+          // A call of the overridden method may run the changed override, as a test calling it through the interface
+          // its subject implements does; but a call the override relies on, as a template method of the class declaring
+          // the hook it implements, reads before it
+          for (Node invocationChange : getInvocationNodes(overridden, srcDst, false)) {
+            for (Node overridingChange : overridingChanges) {
+              if (graph.getAllEdges(invocationChange, overridingChange).stream().noneMatch(edge -> edge.getType().equals(EdgeType.DEF_USE))) {
+                addDefUse(overridingChange, invocationChange);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private void addDefUse(Node used, Node using) {
+    boolean related = graph.getAllEdges(used, using).stream().anyMatch(edge -> edge.getType().equals(EdgeType.DEF_USE));
+    if (!related) {
+      addEdge(used, using, EdgeType.DEF_USE);
+    }
+  }
+
+  private List<Node> declarationChanges(UMLOperation operation, SrcDst srcDst) {
+    LocationInfo location = operation.getLocationInfo();
+    return util.findOverlappingNodes(location.getFilePath(), srcDst, location.getStartOffset(), location.getEndOffset(),
+            n -> !n.isContext() && !n.isExtension() && n.getTree().getPos() < location.getEndOffset()
+                    && location.getStartOffset() < n.getTree().getEndPos());
   }
 
   private void processGeneralizations(SrcDst srcDst) {
@@ -681,15 +1057,15 @@ public class HunkNetwork {
     return classNode;
   }
 
-  private Set<Node> getInvocationNodes(UMLOperation operation, SrcDst srcDst) {
+  // The changes reached by the invocations of the operation; when editing, only those whose own code holds an invocation
+  // (see isCarriedOver)
+  private Set<Node> getInvocationNodes(UMLOperation operation, SrcDst srcDst, boolean editing) {
     Set<Node> result = new HashSet<>();
 
     for (AbstractCall invocation : findInvocations(operation, srcDst)) {
       LocationInfo invocationLocationInfo = invocation.getLocationInfo();
-      List<Node> overlappingNodes = util.findOverlappingNodes(invocationLocationInfo.getFilePath(), srcDst,
-              invocationLocationInfo.getStartOffset(), invocationLocationInfo.getEndOffset(),
-              n -> !n.isContext() && !n.isExtension());
-      result.addAll(overlappingNodes);
+      result.addAll(editingNodes(findReachedChanges(invocationLocationInfo.getFilePath(), srcDst,
+              invocationLocationInfo.getStartOffset(), invocationLocationInfo.getEndOffset()), invocationLocationInfo, editing));
     }
 
     return result;
@@ -703,24 +1079,23 @@ public class HunkNetwork {
     return memberUsageFinder.findInvocations(operation, srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel());
   }
 
-  private Set<Node> getAccessNodes(UMLAttribute attribute, SrcDst srcDst) {
+  private Set<Node> getAccessNodes(UMLAttribute attribute, SrcDst srcDst, boolean editing) {
     if (memberUsageFinder == null) {
       return findAccessNodes(attribute.getName(), srcDst.equals(SrcDst.SRC) ? modelDiff.findFieldAccessesInParentModel(attribute)
-              : modelDiff.findFieldAccessesInChildModel(attribute), srcDst);
+              : modelDiff.findFieldAccessesInChildModel(attribute), srcDst, editing);
     }
 
     Set<Node> result = new HashSet<>();
     UMLModel umlModel = srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
     for (LeafExpression access : memberUsageFinder.findAccesses(attribute, umlModel)) {
       LocationInfo accessLocation = access.getLocationInfo();
-      result.addAll(util.findOverlappingNodes(accessLocation.getFilePath(), srcDst, accessLocation.getStartOffset(),
-              accessLocation.getEndOffset(), n -> !n.isContext() && !n.isExtension()));
+      result.addAll(editingNodes(util.findOverlappingNodes(accessLocation.getFilePath(), srcDst, accessLocation.getStartOffset(),
+              accessLocation.getEndOffset(), n -> !n.isContext() && !n.isExtension()), accessLocation, editing));
     }
     return result;
   }
 
-  private Set<Node> findAccessNodes(String name, Set<AbstractCodeFragment> accessFragments,
-                                    SrcDst srcDst) {
+  private Set<Node> findAccessNodes(String name, Set<AbstractCodeFragment> accessFragments, SrcDst srcDst, boolean editing) {
     Set<Node> result = new HashSet<>();
 
     for (AbstractCodeFragment accessFragment : accessFragments) {
@@ -733,7 +1108,7 @@ public class HunkNetwork {
         List<Node> overlappingNodes = util.findOverlappingNodes(useVariableLocation.getFilePath(),
                 srcDst, useVariableLocation.getStartOffset(), useVariableLocation.getEndOffset(),
                 n -> !n.isContext() && !n.isExtension());
-        result.addAll(overlappingNodes);
+        result.addAll(editingNodes(overlappingNodes, useVariableLocation, editing));
       }
     }
 

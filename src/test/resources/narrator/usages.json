@@ -1,0 +1,1970 @@
+[
+  {
+    "dataset": "netty_netty_10360",
+    "repository": "netty/netty",
+    "commit": "a97aaeb9548039924c55ea51893f0d11704fcf60",
+    "files": [
+      "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+      "codec-http/src/test/java/io/netty/handler/codec/http/multipart/DiskFileUploadTest.java"
+    ],
+    "usages": [
+      {
+        "description": "super constructor call",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 47,
+        "code": "super(name,charset,size);",
+        "target": {
+          "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractHttpData.java",
+          "className": "io.netty.handler.codec.http.multipart.AbstractHttpData",
+          "member": "AbstractHttpData(String,Charset,long)"
+        },
+        "aspects": [
+          "form:super(...)",
+          "target:superclass (class outside the changed files)"
+        ]
+      },
+      {
+        "description": "overload chosen by argument types among three 4-argument overloads",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 167,
+        "code": "buffer.getBytes(buffer.readerIndex(),fileChannel,fileChannel.position(),localsize)",
+        "target": {
+          "file": "buffer/src/main/java/io/netty/buffer/ByteBuf.java",
+          "className": "io.netty.buffer.ByteBuf",
+          "member": "getBytes(int,FileChannel,long,int)"
+        },
+        "aspects": [
+          "form:qualified on a parameter",
+          "overload:argument type picks among candidates of the same arity"
+        ]
+      },
+      {
+        "description": "overload: a catch parameter picks Throwable over Object",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 252,
+        "code": "logger.warn(\"Failed to force.\",e)",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/logging/InternalLogger.java",
+          "className": "io.netty.util.internal.logging.InternalLogger",
+          "member": "warn(String,Throwable)"
+        },
+        "aspects": [
+          "overload:Throwable over Object"
+        ]
+      },
+      {
+        "description": "overload: a File picks Object, fixed arity before varargs",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 237,
+        "code": "logger.warn(\"Failed to delete: {}\",file)",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/logging/InternalLogger.java",
+          "className": "io.netty.util.internal.logging.InternalLogger",
+          "member": "warn(String,Object)"
+        },
+        "aspects": [
+          "overload:fixed arity before varargs"
+        ]
+      },
+      {
+        "description": "static on-demand import, byte[] over byte[]...",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 286,
+        "code": "wrappedBuffer(array)",
+        "target": {
+          "file": "buffer/src/main/java/io/netty/buffer/Unpooled.java",
+          "className": "io.netty.buffer.Unpooled",
+          "member": "wrappedBuffer(byte[])"
+        },
+        "aspects": [
+          "form:on-demand static import",
+          "overload:T[] over T[]..."
+        ]
+      },
+      {
+        "description": "unqualified call of an own method",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 213,
+        "code": "delete()",
+        "target": {
+          "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+          "className": "io.netty.handler.codec.http.multipart.AbstractDiskHttpData",
+          "member": "delete()"
+        },
+        "aspects": [
+          "form:unqualified",
+          "target:own class"
+        ]
+      },
+      {
+        "description": "negative: same name as an own method, receiver is java.io.File",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 236,
+        "code": "file.delete()",
+        "target": null,
+        "aspects": [
+          "neg:JDK receiver while an own member has the name"
+        ]
+      },
+      {
+        "description": "static call with a generic parameter",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 211,
+        "code": "ObjectUtil.checkNotNull(inputStream,\"inputStream\")",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/ObjectUtil.java",
+          "className": "io.netty.util.internal.ObjectUtil",
+          "member": "checkNotNull(T,String)"
+        },
+        "aspects": [
+          "form:static through the class name",
+          "generics:method type parameter"
+        ]
+      },
+      {
+        "description": "negative: JDK constructor",
+        "kind": "invocation",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 216,
+        "code": "new RandomAccessFile(file,\"rw\")",
+        "target": null,
+        "aspects": [
+          "neg:JDK constructor"
+        ]
+      },
+      {
+        "description": "constructor chosen by arity with null arguments",
+        "kind": "invocation",
+        "file": "codec-http/src/test/java/io/netty/handler/codec/http/multipart/DiskFileUploadTest.java",
+        "line": 48,
+        "code": "new DiskFileUpload(\"d1\",\"d1\",\"application/json\",null,null,100,baseDir.getAbsolutePath(),false)",
+        "target": {
+          "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/DiskFileUpload.java",
+          "className": "io.netty.handler.codec.http.multipart.DiskFileUpload",
+          "member": "DiskFileUpload(String,String,String,String,Charset,long,String,boolean)"
+        },
+        "aspects": [
+          "form:creation",
+          "overload:arity",
+          "overload:null arguments"
+        ]
+      },
+      {
+        "description": "inherited overload chosen by the type of a static field argument",
+        "kind": "invocation",
+        "file": "codec-http/src/test/java/io/netty/handler/codec/http/multipart/DiskFileUploadTest.java",
+        "line": 51,
+        "code": "f.setContent(Unpooled.EMPTY_BUFFER)",
+        "target": {
+          "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+          "className": "io.netty.handler.codec.http.multipart.AbstractDiskHttpData",
+          "member": "setContent(ByteBuf)"
+        },
+        "aspects": [
+          "overload:argument typed by a field",
+          "target:superclass (changed file)"
+        ]
+      },
+      {
+        "description": "negative: JDK method on the return of a model method",
+        "kind": "invocation",
+        "file": "codec-http/src/test/java/io/netty/handler/codec/http/multipart/DiskFileUploadTest.java",
+        "line": 53,
+        "code": "f.getFile().getAbsolutePath()",
+        "target": null,
+        "aspects": [
+          "neg:JDK receiver",
+          "receiver:return of a model method"
+        ]
+      },
+      {
+        "description": "this.field of an inherited field",
+        "kind": "access",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 200,
+        "code": "this.size",
+        "target": {
+          "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractHttpData.java",
+          "className": "io.netty.handler.codec.http.multipart.AbstractHttpData",
+          "member": "size"
+        },
+        "aspects": [
+          "form:this.field",
+          "target:superclass (class outside the changed files)"
+        ]
+      },
+      {
+        "description": "negative: local variable shadowing an inherited field",
+        "kind": "access",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 199,
+        "code": "size",
+        "target": null,
+        "aspects": [
+          "neg:local shadows the field"
+        ]
+      },
+      {
+        "description": "this.field of an own field",
+        "kind": "access",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 204,
+        "code": "this.file",
+        "target": {
+          "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+          "className": "io.netty.handler.codec.http.multipart.AbstractDiskHttpData",
+          "member": "file"
+        },
+        "aspects": [
+          "form:this.field",
+          "target:own class"
+        ]
+      },
+      {
+        "description": "negative: parameter shadowing a field",
+        "kind": "access",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 204,
+        "code": "file",
+        "target": null,
+        "aspects": [
+          "neg:parameter"
+        ]
+      },
+      {
+        "description": "static field through a static on-demand import",
+        "kind": "access",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 283,
+        "code": "EMPTY_BUFFER",
+        "target": {
+          "file": "buffer/src/main/java/io/netty/buffer/Unpooled.java",
+          "className": "io.netty.buffer.Unpooled",
+          "member": "EMPTY_BUFFER"
+        },
+        "aspects": [
+          "form:on-demand static import"
+        ]
+      },
+      {
+        "description": "negative: the member name of a qualified name is not bound again",
+        "kind": "access",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 275,
+        "code": "EMPTY_BYTES",
+        "target": null,
+        "aspects": [
+          "neg:member name inside a qualified name"
+        ]
+      },
+      {
+        "description": "negative: class name",
+        "kind": "access",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 275,
+        "code": "EmptyArrays",
+        "target": null,
+        "aspects": [
+          "neg:class name"
+        ]
+      },
+      {
+        "description": "negative: catch parameter",
+        "kind": "access",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
+        "line": 252,
+        "code": "e",
+        "target": null,
+        "aspects": [
+          "neg:catch parameter"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_11934",
+    "repository": "netty/netty",
+    "commit": "1588e59a2dc86f3d4641c263ef2ba88998b65a4b",
+    "files": [
+      "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+      "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java"
+    ],
+    "usages": [
+      {
+        "description": "single overload with an assignment argument (type unknown)",
+        "kind": "invocation",
+        "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+        "line": 112,
+        "code": "thread.setThreadLocalMap(threadLocalMap=new InternalThreadLocalMap())",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/concurrent/FastThreadLocalThread.java",
+          "className": "io.netty.util.concurrent.FastThreadLocalThread",
+          "member": "setThreadLocalMap(InternalThreadLocalMap)"
+        },
+        "aspects": [
+          "overload:single candidate, argument of unknown type"
+        ]
+      },
+      {
+        "description": "constructor of a same-package class outside the changed files",
+        "kind": "invocation",
+        "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+        "line": 266,
+        "code": "new ThreadLocalRandom()",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/ThreadLocalRandom.java",
+          "className": "io.netty.util.internal.ThreadLocalRandom",
+          "member": "ThreadLocalRandom()"
+        },
+        "aspects": [
+          "form:creation",
+          "target:class outside the changed files"
+        ]
+      },
+      {
+        "description": "overload chosen by an int constant; a field has the same name",
+        "kind": "invocation",
+        "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+        "line": 240,
+        "code": "arrayList(DEFAULT_ARRAY_LIST_INITIAL_CAPACITY)",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+          "className": "io.netty.util.internal.InternalThreadLocalMap",
+          "member": "arrayList(int)"
+        },
+        "aspects": [
+          "overload:primitive constant",
+          "name:a field has the method's name"
+        ]
+      },
+      {
+        "description": "negative: JDK static call",
+        "kind": "invocation",
+        "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+        "line": 158,
+        "code": "Arrays.fill(array,UNSET)",
+        "target": null,
+        "aspects": [
+          "neg:JDK static call"
+        ]
+      },
+      {
+        "description": "field with the same name as a method",
+        "kind": "access",
+        "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+        "line": 245,
+        "code": "arrayList",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+          "className": "io.netty.util.internal.InternalThreadLocalMap",
+          "member": "arrayList"
+        },
+        "aspects": [
+          "form:unqualified",
+          "name:a method has the field's name"
+        ]
+      },
+      {
+        "description": "negative: length of an array",
+        "kind": "access",
+        "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+        "line": 316,
+        "code": "lookup.length",
+        "target": null,
+        "aspects": [
+          "neg:array length"
+        ]
+      },
+      {
+        "description": "this.field assigned from a parameter of the same name",
+        "kind": "access",
+        "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+        "line": 260,
+        "code": "this.futureListenerStackDepth",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
+          "className": "io.netty.util.internal.InternalThreadLocalMap",
+          "member": "futureListenerStackDepth"
+        },
+        "aspects": [
+          "form:this.field",
+          "name:a parameter has the field's name"
+        ]
+      },
+      {
+        "description": "in an anonymous class: captured local of a model type, overload by arity",
+        "kind": "invocation",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 114,
+        "code": "threadLocal.set(\"1\")",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/concurrent/FastThreadLocal.java",
+          "className": "io.netty.util.concurrent.FastThreadLocal",
+          "member": "set(V)"
+        },
+        "aspects": [
+          "context:anonymous class in a method",
+          "receiver:captured local",
+          "overload:arity"
+        ]
+      },
+      {
+        "description": "negative: in an anonymous FastThreadLocal (which has set(V)), JDK method on a captured local",
+        "kind": "invocation",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 70,
+        "code": "removed.set(true)",
+        "target": null,
+        "aspects": [
+          "neg:JDK receiver",
+          "name:a supertype has the name"
+        ]
+      },
+      {
+        "description": "creation of an anonymous class invokes the superclass constructor",
+        "kind": "invocation",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 48,
+        "code": "new FastThreadLocal<Boolean>(){ @Override protected Boolean initialValue(){ return Boolean.TRUE; } } ",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/concurrent/FastThreadLocal.java",
+          "className": "io.netty.util.concurrent.FastThreadLocal",
+          "member": "FastThreadLocal()"
+        },
+        "aspects": [
+          "form:creation of an anonymous class",
+          "target:superclass (class outside the changed files)"
+        ]
+      },
+      {
+        "description": "negative: creation of an anonymous class of a JDK interface",
+        "kind": "invocation",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 111,
+        "code": "new Runnable(){ @Override public void run(){ threadLocal.set(\"1\"); threadLocal.remove(); threadLocal.set(\"2\"); threadLocal.remove(); } } ",
+        "target": null,
+        "aspects": [
+          "neg:creation of an anonymous class of a JDK interface"
+        ]
+      },
+      {
+        "description": "negative: implicit default constructor of a nested class",
+        "kind": "invocation",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 195,
+        "code": "new TestFastThreadLocal()",
+        "target": null,
+        "aspects": [
+          "neg:implicit constructor"
+        ]
+      },
+      {
+        "description": "field of a nested class through a local",
+        "kind": "access",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 220,
+        "code": "threadLocal.onRemovalCalled",
+        "target": {
+          "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+          "className": "io.netty.util.concurrent.FastThreadLocalTest.TestFastThreadLocal",
+          "member": "onRemovalCalled"
+        },
+        "aspects": [
+          "form:field through a local",
+          "target:nested class"
+        ]
+      },
+      {
+        "description": "own field in a nested class",
+        "kind": "access",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 241,
+        "code": "onRemovalCalled",
+        "target": {
+          "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+          "className": "io.netty.util.concurrent.FastThreadLocalTest.TestFastThreadLocal",
+          "member": "onRemovalCalled"
+        },
+        "aspects": [
+          "form:unqualified",
+          "context:nested class"
+        ]
+      },
+      {
+        "description": "negative: JDK constant",
+        "kind": "access",
+        "file": "common/src/test/java/io/netty/util/concurrent/FastThreadLocalTest.java",
+        "line": 247,
+        "code": "Integer.MAX_VALUE",
+        "target": null,
+        "aspects": [
+          "neg:JDK constant"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_12064",
+    "repository": "bazelbuild/bazel",
+    "commit": "ac76ab6add1781e0d03dd72832cfc868465c2345",
+    "files": [
+      "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+      "src/test/java/com/google/devtools/build/lib/remote/RemoteModuleTest.java"
+    ],
+    "usages": [
+      {
+        "description": "chain of three calls",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 196,
+        "code": "env.getRuntime().getFileSystem().getDigestFunction()",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/vfs/FileSystem.java",
+          "className": "com.google.devtools.build.lib.vfs.FileSystem",
+          "member": "getDigestFunction()"
+        },
+        "aspects": [
+          "receiver:chain of calls"
+        ]
+      },
+      {
+        "description": "overload with a string concatenation argument (String, not PathFragment)",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 241,
+        "code": "env.getOutputBase().getRelative(env.getRuntime().getProductName() + \"-remote-logs\")",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/vfs/Path.java",
+          "className": "com.google.devtools.build.lib.vfs.Path",
+          "member": "getRelative(String)"
+        },
+        "aspects": [
+          "overload:string concatenation argument (RM gap)"
+        ]
+      },
+      {
+        "description": "static overload chosen by arity, argument returned by a JDK method",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 238,
+        "code": "Event.info(String.format(\"Invocation ID: %s\",invocationId))",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/events/Event.java",
+          "className": "com.google.devtools.build.lib.events.Event",
+          "member": "info(String)"
+        },
+        "aspects": [
+          "form:static through the class name",
+          "overload:arity",
+          "receiver:return of a JDK method"
+        ]
+      },
+      {
+        "description": "method of a super-interface of the receiver type",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 766,
+        "code": "env.getOptions().getOptions(RemoteOptions.class)",
+        "target": {
+          "file": "src/main/java/com/google/devtools/common/options/OptionsProvider.java",
+          "className": "com.google.devtools.common.options.OptionsProvider",
+          "member": "getOptions(Class<O>)"
+        },
+        "aspects": [
+          "target:super-interface (class outside the changed files)"
+        ]
+      },
+      {
+        "description": "method of an enum on a local",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 768,
+        "code": "remoteOutputsMode.downloadAllOutputs()",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/remote/options/RemoteOutputsMode.java",
+          "className": "com.google.devtools.build.lib.remote.options.RemoteOutputsMode",
+          "member": "downloadAllOutputs()"
+        },
+        "aspects": [
+          "receiver:local of an enum type"
+        ]
+      },
+      {
+        "description": "negative: static call of a generated class outside the repository",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 770,
+        "code": "RequestMetadata.newBuilder()",
+        "target": null,
+        "aspects": [
+          "neg:generated class"
+        ]
+      },
+      {
+        "description": "negative: static call of a library class",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 142,
+        "code": "Strings.isNullOrEmpty(options.remoteExecutor)",
+        "target": null,
+        "aspects": [
+          "neg:library static call"
+        ]
+      },
+      {
+        "description": "own field assigned from another class's field of the same name",
+        "kind": "access",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 193,
+        "code": "remoteOutputsMode",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+          "className": "com.google.devtools.build.lib.remote.RemoteModule",
+          "member": "remoteOutputsMode"
+        },
+        "aspects": [
+          "form:unqualified",
+          "name:another class's field has the name"
+        ]
+      },
+      {
+        "description": "field of another class with the name of an own field",
+        "kind": "access",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
+        "line": 193,
+        "code": "remoteOptions.remoteOutputsMode",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/remote/options/RemoteOptions.java",
+          "className": "com.google.devtools.build.lib.remote.options.RemoteOptions",
+          "member": "remoteOutputsMode"
+        },
+        "aspects": [
+          "form:field through a local",
+          "name:an own field has the name"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_3662",
+    "repository": "oracle/graal",
+    "commit": "74964161962d4111a715f95f6d475315e59e691b",
+    "files": [
+      "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrEventSubstitution.java",
+      "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java"
+    ],
+    "usages": [
+      {
+        "description": "method reference to a static method through the class name",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrEventSubstitution.java",
+        "line": 68,
+        "code": "JfrEventSubstitution::initEventClass",
+        "target": {
+          "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrEventSubstitution.java",
+          "className": "com.oracle.svm.jfr.JfrEventSubstitution",
+          "member": "initEventClass(ResolvedJavaType)"
+        },
+        "aspects": [
+          "form:method reference through the class name"
+        ]
+      },
+      {
+        "description": "method reference on a local",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java",
+        "line": 156,
+        "code": "manager::setup",
+        "target": {
+          "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrManager.java",
+          "className": "com.oracle.svm.jfr.JfrManager",
+          "member": "setup()"
+        },
+        "aspects": [
+          "form:method reference on a local"
+        ]
+      },
+      {
+        "description": "method reference on this",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java",
+        "line": 189,
+        "code": "this::registerEventHandler",
+        "target": {
+          "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java",
+          "className": "com.oracle.svm.jfr.JfrFeature",
+          "member": "registerEventHandler(Class)"
+        },
+        "aspects": [
+          "form:method reference on this"
+        ]
+      },
+      {
+        "description": "negative: the method name of a method reference is not a field",
+        "kind": "access",
+        "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java",
+        "line": 156,
+        "code": "setup",
+        "target": null,
+        "aspects": [
+          "neg:method name of a method reference"
+        ]
+      },
+      {
+        "description": "single overload with a method reference argument",
+        "kind": "invocation",
+        "file": "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java",
+        "line": 156,
+        "code": "runtime.addStartupHook(manager::setup)",
+        "target": {
+          "file": "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jdk/RuntimeSupport.java",
+          "className": "com.oracle.svm.core.jdk.RuntimeSupport",
+          "member": "addStartupHook(Runnable)"
+        },
+        "aspects": [
+          "overload:single candidate, method reference argument"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "redisson_redisson_802",
+    "repository": "redisson/redisson",
+    "commit": "a3c206d86e1b4be1d4717b7f15b6b850e50169d6",
+    "files": [
+      "redisson/src/main/java/org/redisson/config/Config.java",
+      "redisson/src/main/java/org/redisson/config/ConfigSupport.java",
+      "redisson/src/main/java/org/redisson/extension/aws/ElastiCacheReplicatedServersConnectionManager.java",
+      "redisson/src/main/java/org/redisson/extension/aws/ElasticCacheReplicationGroupServersConfig.java"
+    ],
+    "usages": [
+      {
+        "description": "super call of a method the class overrides",
+        "kind": "invocation",
+        "file": "redisson/src/main/java/org/redisson/extension/aws/ElastiCacheReplicatedServersConnectionManager.java",
+        "line": 105,
+        "code": "super.create(cfg)",
+        "target": {
+          "file": "redisson/src/main/java/org/redisson/connection/MasterSlaveConnectionManager.java",
+          "className": "org.redisson.connection.MasterSlaveConnectionManager",
+          "member": "create(BaseMasterSlaveServersConfig<?>)"
+        },
+        "aspects": [
+          "form:super.m()",
+          "name:the class overrides the method"
+        ]
+      },
+      {
+        "description": "argument is a call returning boolean",
+        "kind": "invocation",
+        "file": "redisson/src/main/java/org/redisson/config/Config.java",
+        "line": 95,
+        "code": "setUseLinuxNativeEpoll(oldConf.isUseLinuxNativeEpoll())",
+        "target": {
+          "file": "redisson/src/main/java/org/redisson/config/Config.java",
+          "className": "org.redisson.config.Config",
+          "member": "setUseLinuxNativeEpoll(boolean)"
+        },
+        "aspects": [
+          "overload:argument returned by a call"
+        ]
+      },
+      {
+        "description": "private field of another instance of the same class",
+        "kind": "access",
+        "file": "redisson/src/main/java/org/redisson/config/Config.java",
+        "line": 108,
+        "code": "oldConf.redissonReferenceEnabled",
+        "target": {
+          "file": "redisson/src/main/java/org/redisson/config/Config.java",
+          "className": "org.redisson.config.Config",
+          "member": "redissonReferenceEnabled"
+        },
+        "aspects": [
+          "form:private field of another instance of the same class"
+        ]
+      },
+      {
+        "description": "call on a cast to a model type",
+        "kind": "invocation",
+        "file": "redisson/src/main/java/org/redisson/extension/aws/ElastiCacheReplicatedServersConnectionManager.java",
+        "line": 106,
+        "code": "((ElasticCacheReplicationGroupServersConfig)cfg).getDatabase()",
+        "target": {
+          "file": "redisson/src/main/java/org/redisson/extension/aws/ElasticCacheReplicationGroupServersConfig.java",
+          "className": "org.redisson.extension.aws.ElasticCacheReplicationGroupServersConfig",
+          "member": "getDatabase()"
+        },
+        "aspects": [
+          "receiver:cast"
+        ],
+        "rmGap": {
+          "item": 8,
+          "id": "gap8-cast-receiver",
+          "workaround": true
+        }
+      }
+    ]
+  },
+  {
+    "dataset": "bumptech_glide_30",
+    "repository": "bumptech/glide",
+    "commit": "f83b7e59356f490c19d154d29b1007ff82f58a06",
+    "files": [
+      "library/src/com/bumptech/glide/Glide.java",
+      "library/tests/src/com/bumptech/glide/GlideTest.java"
+    ],
+    "usages": [
+      {
+        "description": "this(...) in a generic static nested class, chosen by arity",
+        "kind": "invocation",
+        "file": "library/src/com/bumptech/glide/Glide.java",
+        "line": 490,
+        "code": "this(model,GLIDE.getFactory(model));",
+        "target": {
+          "file": "library/src/com/bumptech/glide/Glide.java",
+          "className": "com.bumptech.glide.Glide.Request",
+          "member": "Request(T,ModelLoaderFactory<T>)"
+        },
+        "aspects": [
+          "form:this(...)",
+          "context:generic nested class",
+          "overload:arity"
+        ]
+      },
+      {
+        "description": "overload chosen by the interface a created class implements",
+        "kind": "invocation",
+        "file": "library/src/com/bumptech/glide/Glide.java",
+        "line": 548,
+        "code": "transform(new CenterCrop<T>())",
+        "target": {
+          "file": "library/src/com/bumptech/glide/Glide.java",
+          "className": "com.bumptech.glide.Glide.Request",
+          "member": "transform(TransformationLoader<T>)"
+        },
+        "aspects": [
+          "overload:interface implemented by the argument's class"
+        ]
+      },
+      {
+        "description": "method on the element of a JDK generic list field",
+        "kind": "invocation",
+        "file": "library/src/com/bumptech/glide/Glide.java",
+        "line": 778,
+        "code": "transformationLoaders.get(0).getId()",
+        "target": {
+          "file": "library/src/com/bumptech/glide/loader/transformation/TransformationLoader.java",
+          "className": "com.bumptech.glide.loader.transformation.TransformationLoader",
+          "member": "getId()"
+        },
+        "aspects": [
+          "generics:element of a JDK generic collection"
+        ]
+      },
+      {
+        "description": "method on a static field of a class outside the changed files",
+        "kind": "invocation",
+        "file": "library/src/com/bumptech/glide/Glide.java",
+        "line": 776,
+        "code": "Transformation.NONE.getId()",
+        "target": {
+          "file": "library/src/com/bumptech/glide/resize/load/Transformation.java",
+          "className": "com.bumptech.glide.resize.load.Transformation",
+          "member": "getId()"
+        },
+        "aspects": [
+          "receiver:static field of a class outside the changed files"
+        ]
+      },
+      {
+        "description": "static field of a class outside the changed files",
+        "kind": "access",
+        "file": "library/src/com/bumptech/glide/Glide.java",
+        "line": 524,
+        "code": "Downsampler.NONE",
+        "target": {
+          "file": "library/src/com/bumptech/glide/resize/load/Downsampler.java",
+          "className": "com.bumptech.glide.resize.load.Downsampler",
+          "member": "NONE"
+        },
+        "aspects": [
+          "form:static through the class name",
+          "target:class outside the changed files"
+        ]
+      },
+      {
+        "description": "generic method with a cast argument",
+        "kind": "invocation",
+        "file": "library/src/com/bumptech/glide/Glide.java",
+        "line": 262,
+        "code": "loaderFactory.getFactory((Class<T>)model.getClass())",
+        "target": {
+          "file": "library/src/com/bumptech/glide/loader/model/GenericLoaderFactory.java",
+          "className": "com.bumptech.glide.loader.model.GenericLoaderFactory",
+          "member": "getFactory(Class<T>)"
+        },
+        "aspects": [
+          "generics:Class<T> parameter",
+          "receiver:cast"
+        ]
+      },
+      {
+        "description": "negative: super call to a library superclass",
+        "kind": "invocation",
+        "file": "library/tests/src/com/bumptech/glide/GlideTest.java",
+        "line": 30,
+        "code": "super.setUp()",
+        "target": null,
+        "aspects": [
+          "neg:super call to a library superclass"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "TeamNewPipe_NewPipe_3156",
+    "repository": "TeamNewPipe/NewPipe",
+    "commit": "c4230c63ef794cd1791bf0c4883583f41aa59aa2",
+    "files": [
+      "app/src/main/java/org/schabi/newpipe/MainActivity.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/detail/VideoDetailFragment.java",
+      "app/src/main/java/org/schabi/newpipe/fragments/list/BaseListFragment.java"
+    ],
+    "usages": [
+      {
+        "description": "negative: in an anonymous class, method reference to a library method through Outer.this",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/MainActivity.java",
+        "line": 210,
+        "code": "MainActivity.this::recreate",
+        "target": null,
+        "aspects": [
+          "neg:method reference to a library method",
+          "form:method reference through Outer.this"
+        ]
+      },
+      {
+        "description": "super call declared two levels up",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/fragments/detail/VideoDetailFragment.java",
+        "line": 213,
+        "code": "super.onCreate(savedInstanceState)",
+        "target": {
+          "file": "app/src/main/java/org/schabi/newpipe/BaseFragment.java",
+          "className": "org.schabi.newpipe.BaseFragment",
+          "member": "onCreate(Bundle)"
+        },
+        "aspects": [
+          "form:super.m()",
+          "target:two or more superclasses up"
+        ]
+      },
+      {
+        "description": "negative: Android method inherited from a library class",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/fragments/detail/VideoDetailFragment.java",
+        "line": 310,
+        "code": "getString(R.string.show_next_video_key)",
+        "target": null,
+        "aspects": [
+          "neg:unqualified call inherited from a library superclass"
+        ]
+      },
+      {
+        "description": "negative: field of the generated R class",
+        "kind": "access",
+        "file": "app/src/main/java/org/schabi/newpipe/MainActivity.java",
+        "line": 312,
+        "code": "R.id.menu_services_group",
+        "target": null,
+        "aspects": [
+          "neg:generated class"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-framework_28774",
+    "repository": "spring-projects/spring-framework",
+    "commit": "85bf884c69977bb27ef0a62fa64eef58096a9a80",
+    "files": [
+      "spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java",
+      "spring-context/src/test/java/org/springframework/context/annotation/configuration/AutowiredConfigurationTests.java"
+    ],
+    "usages": [
+      {
+        "description": "static overload: an Object argument picks (Object), not (Class<?>)",
+        "kind": "invocation",
+        "file": "spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java",
+        "line": 332,
+        "code": "ClassUtils.getUserClass(existingBean)",
+        "target": {
+          "file": "spring-core/src/main/java/org/springframework/util/ClassUtils.java",
+          "className": "org.springframework.util.ClassUtils",
+          "member": "getUserClass(Object)"
+        },
+        "aspects": [
+          "overload:Object over Class<?>"
+        ]
+      },
+      {
+        "description": "constant inherited from an interface the superclass implements",
+        "kind": "access",
+        "file": "spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java",
+        "line": 324,
+        "code": "SCOPE_PROTOTYPE",
+        "target": {
+          "file": "spring-beans/src/main/java/org/springframework/beans/factory/config/ConfigurableBeanFactory.java",
+          "className": "org.springframework.beans.factory.config.ConfigurableBeanFactory",
+          "member": "SCOPE_PROTOTYPE"
+        },
+        "aspects": [
+          "form:unqualified",
+          "target:interface constant inherited through the superclass"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-framework_26366",
+    "repository": "spring-projects/spring-framework",
+    "commit": "27f58716dc4a3aad18561610009a789fb32fa595",
+    "files": [
+      "spring-web/src/main/java/org/springframework/web/method/HandlerMethod.java",
+      "spring-web/src/test/java/org/springframework/web/method/support/InvocableHandlerMethodTests.java",
+      "spring-webmvc/src/main/java/org/springframework/web/servlet/mvc/method/annotation/ExceptionHandlerExceptionResolver.java",
+      "spring-webmvc/src/test/java/org/springframework/web/servlet/mvc/method/annotation/ExceptionHandlerExceptionResolverTests.java"
+    ],
+    "usages": [
+      {
+        "description": "static overload: a Class<?> argument picks the more specific (Class<?>)",
+        "kind": "invocation",
+        "file": "spring-web/src/main/java/org/springframework/web/method/HandlerMethod.java",
+        "line": 145,
+        "code": "ClassUtils.getUserClass(beanType)",
+        "target": {
+          "file": "spring-core/src/main/java/org/springframework/util/ClassUtils.java",
+          "className": "org.springframework.util.ClassUtils",
+          "member": "getUserClass(Class<?>)"
+        },
+        "aspects": [
+          "overload:Class<?> over Object (more specific)"
+        ]
+      },
+      {
+        "description": "this.field of a field shadowed by a local",
+        "kind": "access",
+        "file": "spring-web/src/main/java/org/springframework/web/method/HandlerMethod.java",
+        "line": 145,
+        "code": "this.beanType",
+        "target": {
+          "file": "spring-web/src/main/java/org/springframework/web/method/HandlerMethod.java",
+          "className": "org.springframework.web.method.HandlerMethod",
+          "member": "beanType"
+        },
+        "aspects": [
+          "form:this.field",
+          "name:a local shadows the field"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_7226",
+    "repository": "bazelbuild/bazel",
+    "commit": "4bc2c6f1c31da49a4a3ad9d36d2adb9f33082d75",
+    "files": [
+      "src/main/java/com/google/devtools/build/lib/skyframe/RegisteredToolchainsCycleReporter.java",
+      "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java"
+    ],
+    "usages": [
+      {
+        "description": "method of a nested class on a this.field",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+        "line": 420,
+        "code": "this.artifactFactory.set(skyframeBuildView.getArtifactFactory())",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+          "className": "com.google.devtools.build.lib.skyframe.SkyframeExecutor.MutableArtifactFactorySupplier",
+          "member": "set(ArtifactFactory)"
+        },
+        "aspects": [
+          "form:this.field",
+          "target:nested class"
+        ]
+      },
+      {
+        "description": "negative: JDK set on a this.field, the same name as a nested class's method",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+        "line": 1206,
+        "code": "this.tsgm.set(tsgm)",
+        "target": null,
+        "aspects": [
+          "neg:JDK receiver",
+          "name:a nested class has the name"
+        ]
+      },
+      {
+        "description": "method of a generic class of the model, typed by the field's type argument",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+        "line": 962,
+        "code": "buildId.set(commandId)",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/skyframe/MutableSupplier.java",
+          "className": "com.google.devtools.build.lib.skyframe.MutableSupplier",
+          "member": "set(T)"
+        },
+        "aspects": [
+          "generics:class type parameter bound by the receiver's type argument"
+        ]
+      },
+      {
+        "description": "method on the return typed by a type argument of a model class",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+        "line": 2240,
+        "code": "result.get(key).getPackage()",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/skyframe/PackageValue.java",
+          "className": "com.google.devtools.build.lib.skyframe.PackageValue",
+          "member": "getPackage()"
+        },
+        "aspects": [
+          "generics:return typed by a type argument"
+        ]
+      },
+      {
+        "description": "constructor with a lambda argument",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+        "line": 552,
+        "code": "new ArtifactFunction(() -> !skyframeActionExecutor.usesActionFileSystem())",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/skyframe/ArtifactFunction.java",
+          "className": "com.google.devtools.build.lib.skyframe.ArtifactFunction",
+          "member": "ArtifactFunction(Supplier<Boolean>)"
+        },
+        "aspects": [
+          "form:creation",
+          "overload:single candidate, lambda argument"
+        ]
+      },
+      {
+        "description": "call inside a lambda body, on a field",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+        "line": 552,
+        "code": "skyframeActionExecutor.usesActionFileSystem()",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeActionExecutor.java",
+          "className": "com.google.devtools.build.lib.skyframe.SkyframeActionExecutor",
+          "member": "usesActionFileSystem()"
+        },
+        "aspects": [
+          "context:lambda",
+          "form:qualified on a field"
+        ]
+      },
+      {
+        "description": "method on an implicitly typed lambda parameter (List.forEach)",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java",
+        "line": 1334,
+        "code": "config.reportInvalidOptions(nosyEventHandler)",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/analysis/config/BuildConfiguration.java",
+          "className": "com.google.devtools.build.lib.analysis.config.BuildConfiguration",
+          "member": "reportInvalidOptions(EventHandler)"
+        },
+        "aspects": [
+          "receiver:implicitly typed lambda parameter (gap)"
+        ]
+      },
+      {
+        "description": "negative: library method on a field of a library type",
+        "kind": "invocation",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/RegisteredToolchainsCycleReporter.java",
+        "line": 71,
+        "code": "printer.apply(configuredTargetKey.get())",
+        "target": null,
+        "aspects": [
+          "neg:library receiver"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_104354",
+    "repository": "elastic/elasticsearch",
+    "commit": "0b713e59fc77e0202fd97bd135706e3c5d0bf2f9",
+    "files": [
+      "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java"
+    ],
+    "usages": [
+      {
+        "description": "own field of an anonymous class created in a lambda",
+        "kind": "access",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "line": 340,
+        "code": "newEntry",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+          "className": "org.elasticsearch.snapshots.SnapshotsService.createSnapshotLegacy.executeConsistentStateUpdate.new ClusterStateUpdateTask",
+          "member": "newEntry"
+        },
+        "aspects": [
+          "context:anonymous class in a lambda",
+          "target:own field of the anonymous class"
+        ]
+      },
+      {
+        "description": "method on an own field of an anonymous class",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "line": 347,
+        "code": "newEntry.snapshot()",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/cluster/SnapshotsInProgress.java",
+          "className": "org.elasticsearch.cluster.SnapshotsInProgress.Entry",
+          "member": "snapshot()"
+        },
+        "aspects": [
+          "receiver:own field of an anonymous class"
+        ]
+      },
+      {
+        "description": "in an anonymous class in a lambda: method of the enclosing class",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "line": 350,
+        "code": "beginSnapshot(newState,newEntry,request.partial(),indices,repository,new ActionListener<Snapshot>(){ @Override public void onResponse( final Snapshot snapshot){ initializingSnapshots.remove(snapshot); listener.onResponse(snapshot); } @Override public void onFailure( final Exception e){ initializingSnapshots.remove(current); listener.onFailure(e); } })",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+          "className": "org.elasticsearch.snapshots.SnapshotsService",
+          "member": "beginSnapshot(ClusterState,SnapshotsInProgress.Entry,boolean,List<String>,Repository,ActionListener<Snapshot>)"
+        },
+        "aspects": [
+          "context:anonymous class in a lambda",
+          "target:enclosing class"
+        ]
+      },
+      {
+        "description": "in an anonymous class nested in another and a lambda: field of the outermost class",
+        "kind": "access",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "line": 353,
+        "code": "initializingSnapshots",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+          "className": "org.elasticsearch.snapshots.SnapshotsService",
+          "member": "initializingSnapshots"
+        },
+        "aspects": [
+          "context:anonymous class nested in an anonymous class",
+          "target:enclosing class"
+        ]
+      },
+      {
+        "description": "negative: JDK method on a field of the outermost class",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "line": 353,
+        "code": "initializingSnapshots.remove(snapshot)",
+        "target": null,
+        "aspects": [
+          "neg:JDK receiver",
+          "context:anonymous class nested in an anonymous class"
+        ]
+      },
+      {
+        "description": "in an anonymous listener: the same method name on a captured parameter, not the own method",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "line": 354,
+        "code": "listener.onResponse(snapshot)",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/action/ActionListener.java",
+          "className": "org.elasticsearch.action.ActionListener",
+          "member": "onResponse(Response)"
+        },
+        "aspects": [
+          "name:the anonymous class's own method name, on a captured parameter"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_111973",
+    "repository": "elastic/elasticsearch",
+    "commit": "b71d5c0826dff12af573ad412fdd7f0ee2fd6ce4",
+    "files": [
+      "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/InvalidMappedField.java",
+      "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlCapabilities.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java"
+    ],
+    "usages": [
+      {
+        "description": "this(...) among six constructors: three arguments, one a diamond creation",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/InvalidMappedField.java",
+        "line": 44,
+        "code": "this(name,errorMessage,new TreeMap<>());",
+        "target": {
+          "file": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/InvalidMappedField.java",
+          "className": "org.elasticsearch.xpack.esql.core.type.InvalidMappedField",
+          "member": "InvalidMappedField(String,String,Map<String,EsField>)"
+        },
+        "aspects": [
+          "form:this(...)",
+          "overload:argument is a diamond creation"
+        ]
+      },
+      {
+        "description": "overload chosen by arity, arguments are a method reference and a lambda",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/InvalidMappedField.java",
+        "line": 65,
+        "code": "in.readImmutableMap(StreamInput::readString,i -> i.readNamedWriteable(EsField.class))",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java",
+          "className": "org.elasticsearch.common.io.stream.StreamInput",
+          "member": "readImmutableMap(Writeable.Reader<K>,Writeable.Reader<V>)"
+        },
+        "aspects": [
+          "overload:arity",
+          "overload:method reference argument naming a non-void method"
+        ]
+      },
+      {
+        "description": "method with the name of the enclosing method, on a field of another type",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlCapabilities.java",
+        "line": 264,
+        "code": "featureFlag.isEnabled()",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/common/util/FeatureFlag.java",
+          "className": "org.elasticsearch.common.util.FeatureFlag",
+          "member": "isEnabled()"
+        },
+        "aspects": [
+          "name:the enclosing method's name, on a receiver of another type"
+        ]
+      },
+      {
+        "description": "method of a nested enum on a loop variable",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlCapabilities.java",
+        "line": 277,
+        "code": "cap.isEnabled()",
+        "target": {
+          "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlCapabilities.java",
+          "className": "org.elasticsearch.xpack.esql.action.EsqlCapabilities.Cap",
+          "member": "isEnabled()"
+        },
+        "aspects": [
+          "receiver:loop variable",
+          "context:enum"
+        ]
+      },
+      {
+        "description": "varargs: (String, Analyzer, Object...) is more specific than (String, Object...)",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+        "line": 232,
+        "code": "error(\"from test* | where unsupported is null\",analyzer)",
+        "target": {
+          "file": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+          "className": "org.elasticsearch.xpack.esql.analysis.VerifierTests",
+          "member": "error(String,Analyzer,Object[])"
+        },
+        "aspects": [
+          "overload:varargs against varargs"
+        ]
+      },
+      {
+        "description": "an explicit array for a varargs parameter",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+        "line": 595,
+        "code": "error(\"from test | where emp_no == ?\",new Object[]{null})",
+        "target": {
+          "file": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+          "className": "org.elasticsearch.xpack.esql.analysis.VerifierTests",
+          "member": "error(String,Object[])"
+        },
+        "aspects": [
+          "overload:explicit array for varargs"
+        ]
+      },
+      {
+        "description": "negative: implicit canonical constructor of a record",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+        "line": 885,
+        "code": "new QueryParam(null,null,NULL)",
+        "target": null,
+        "aspects": [
+          "neg:implicit canonical constructor of a record"
+        ]
+      },
+      {
+        "description": "enum constant through a single static import",
+        "kind": "access",
+        "file": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+        "line": 885,
+        "code": "NULL",
+        "target": {
+          "file": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/DataType.java",
+          "className": "org.elasticsearch.xpack.esql.core.type.DataType",
+          "member": "NULL"
+        },
+        "aspects": [
+          "form:single static import",
+          "target:enum constant"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_116496",
+    "repository": "elastic/elasticsearch",
+    "commit": "ba83c001f897609f9bf0e2f2dc75e070b97cda1b",
+    "files": [
+      "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/FieldAttribute.java",
+      "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/MetadataAttribute.java",
+      "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/ReferenceAttribute.java",
+      "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/tree/EsqlNodeSubclassTests.java"
+    ],
+    "usages": [
+      {
+        "description": "this(...) of a private deprecated constructor, arguments cast to an intersection type",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/FieldAttribute.java",
+        "line": 117,
+        "code": "this(Source.readFrom((StreamInput & PlanStreamInput)in),readParentName(in),readCachedStringWithVersionCheck(in),DataType.readFrom(in),EsField.readFrom(in),in.readOptionalString(),in.readEnum(Nullability.class),NameId.readFrom((StreamInput & PlanStreamInput)in),in.readBoolean());",
+        "target": {
+          "file": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/FieldAttribute.java",
+          "className": "org.elasticsearch.xpack.esql.core.expression.FieldAttribute",
+          "member": "FieldAttribute(Source,String,String,DataType,EsField,String,Nullability,NameId,boolean)"
+        },
+        "aspects": [
+          "form:this(...)",
+          "receiver:cast to an intersection type"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_10490",
+    "repository": "netty/netty",
+    "commit": "c4f599a7a158a8624e1be364195316204709aaf5",
+    "files": [
+      "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+      "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolverBuilder.java",
+      "resolver-dns/src/main/java/io/netty/resolver/dns/LoggingDnsQueryLifeCycleObserverFactory.java",
+      "resolver-dns/src/main/java/io/netty/resolver/dns/LoggingDnsQueryLifecycleObserver.java"
+    ],
+    "usages": [
+      {
+        "description": "overload: a JDK subtype argument (InetSocketAddress) for a JDK parameter (SocketAddress)",
+        "kind": "invocation",
+        "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+        "line": 1239,
+        "code": "bs.connect(res.sender())",
+        "target": {
+          "file": "transport/src/main/java/io/netty/bootstrap/Bootstrap.java",
+          "className": "io.netty.bootstrap.Bootstrap",
+          "member": "connect(SocketAddress)"
+        },
+        "aspects": [
+          "overload:JDK subtype argument"
+        ]
+      },
+      {
+        "description": "varargs among five overloads: four arguments",
+        "kind": "invocation",
+        "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+        "line": 1218,
+        "code": "logger.debug(\"{} RECEIVED: UDP [{}: {}], {}\",ch,queryId,res.sender(),res)",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/logging/InternalLogger.java",
+          "className": "io.netty.util.internal.logging.InternalLogger",
+          "member": "debug(String,Object[])"
+        },
+        "aspects": [
+          "overload:varargs with many arguments"
+        ]
+      },
+      {
+        "description": "interface method inherited by an interface (Channel from ChannelOutboundInvoker)",
+        "kind": "invocation",
+        "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+        "line": 1301,
+        "code": "channel.close()",
+        "target": {
+          "file": "transport/src/main/java/io/netty/channel/ChannelOutboundInvoker.java",
+          "className": "io.netty.channel.ChannelOutboundInvoker",
+          "member": "close()"
+        },
+        "aspects": [
+          "target:interface inherited by an interface"
+        ]
+      },
+      {
+        "description": "in an anonymous class in a field initializer: field of the enclosing class",
+        "kind": "access",
+        "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+        "line": 238,
+        "code": "dnsServerAddressStreamProvider",
+        "target": {
+          "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+          "className": "io.netty.resolver.dns.DnsNameResolver",
+          "member": "dnsServerAddressStreamProvider"
+        },
+        "aspects": [
+          "context:anonymous class in a field initializer",
+          "target:enclosing class"
+        ]
+      },
+      {
+        "description": "unqualified call in a static nested class",
+        "kind": "invocation",
+        "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+        "line": 1410,
+        "code": "sender()",
+        "target": {
+          "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+          "className": "io.netty.resolver.dns.DnsNameResolver.AddressedEnvelopeAdapter",
+          "member": "sender()"
+        },
+        "aspects": [
+          "form:unqualified",
+          "context:nested class"
+        ]
+      },
+      {
+        "description": "same name on a local of a generic interface type",
+        "kind": "invocation",
+        "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+        "line": 1411,
+        "code": "that.sender()",
+        "target": {
+          "file": "transport/src/main/java/io/netty/channel/AddressedEnvelope.java",
+          "className": "io.netty.channel.AddressedEnvelope",
+          "member": "sender()"
+        },
+        "aspects": [
+          "form:qualified on a local",
+          "generics:generic interface",
+          "name:own member has the name"
+        ]
+      },
+      {
+        "description": "in an anonymous class: super call to the anonymous class's superclass",
+        "kind": "invocation",
+        "file": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
+        "line": 198,
+        "code": "super.decodeResponse(ctx,packet)",
+        "target": {
+          "file": "codec-dns/src/main/java/io/netty/handler/codec/dns/DatagramDnsResponseDecoder.java",
+          "className": "io.netty.handler.codec.dns.DatagramDnsResponseDecoder",
+          "member": "decodeResponse(ChannelHandlerContext,DatagramPacket)"
+        },
+        "aspects": [
+          "context:anonymous class in a field initializer",
+          "form:super.m() in an anonymous class"
+        ],
+        "rmGap": {
+          "item": 7,
+          "id": "gap7-anonymous-super-call",
+          "workaround": true
+        }
+      }
+    ]
+  },
+  {
+    "dataset": "TeamNewPipe_NewPipe_7341",
+    "repository": "TeamNewPipe/NewPipe",
+    "commit": "e588abd4e7414faa8ee0a02e895f404ff5f32e41",
+    "files": [
+      "app/src/main/java/org/schabi/newpipe/player/Player.java",
+      "app/src/main/java/org/schabi/newpipe/player/playback/PlayerMediaSession.java"
+    ],
+    "usages": [
+      {
+        "description": "in an anonymous class of a library class: method of the enclosing class",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/player/Player.java",
+        "line": 1094,
+        "code": "onBroadcastReceived(intent)",
+        "target": {
+          "file": "app/src/main/java/org/schabi/newpipe/player/Player.java",
+          "className": "org.schabi.newpipe.player.Player",
+          "member": "onBroadcastReceived(Intent)"
+        },
+        "aspects": [
+          "context:anonymous class of a library class",
+          "target:enclosing class"
+        ]
+      },
+      {
+        "description": "in an anonymous class of a nested interface: method of the enclosing class",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/player/Player.java",
+        "line": 421,
+        "code": "videoPlayerSelected()",
+        "target": {
+          "file": "app/src/main/java/org/schabi/newpipe/player/Player.java",
+          "className": "org.schabi.newpipe.player.Player",
+          "member": "videoPlayerSelected()"
+        },
+        "aspects": [
+          "context:anonymous class of a nested interface",
+          "target:enclosing class"
+        ]
+      },
+      {
+        "description": "constant through a single static import, in a case label of a switch on a String",
+        "kind": "access",
+        "file": "app/src/main/java/org/schabi/newpipe/player/Player.java",
+        "line": 1133,
+        "code": "ACTION_CLOSE",
+        "target": {
+          "file": "app/src/main/java/org/schabi/newpipe/player/MainPlayer.java",
+          "className": "org.schabi.newpipe.player.MainPlayer",
+          "member": "ACTION_CLOSE"
+        },
+        "aspects": [
+          "form:case label of a String switch",
+          "form:single static import"
+        ]
+      },
+      {
+        "description": "negative: Android constant in a case label",
+        "kind": "access",
+        "file": "app/src/main/java/org/schabi/newpipe/player/Player.java",
+        "line": 1130,
+        "code": "AudioManager.ACTION_AUDIO_BECOMING_NOISY",
+        "target": null,
+        "aspects": [
+          "neg:library constant"
+        ]
+      },
+      {
+        "description": "method of the interface both branches of a conditional receiver implement",
+        "kind": "invocation",
+        "file": "app/src/main/java/org/schabi/newpipe/player/Player.java",
+        "line": 3276,
+        "code": "(isAudioOnly ? audioResolver : videoResolver).resolve(info)",
+        "target": {
+          "file": "app/src/main/java/org/schabi/newpipe/player/resolver/Resolver.java",
+          "className": "org.schabi.newpipe.player.resolver.Resolver",
+          "member": "resolve(Source)"
+        },
+        "aspects": [
+          "receiver:conditional expression"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_6680",
+    "repository": "apache/rocketmq",
+    "commit": "330a467ed0868d7317ca1e9fd05148948f961169",
+    "files": [
+      "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerManager.java",
+      "broker/src/test/java/org/apache/rocketmq/broker/client/ConsumerManagerTest.java",
+      "client/src/main/java/org/apache/rocketmq/client/impl/consumer/RebalancePushImpl.java",
+      "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/heartbeat/SubscriptionData.java"
+    ],
+    "usages": [
+      {
+        "description": "overload: an argument of a library type (Channel) against String and Channel parameters",
+        "kind": "invocation",
+        "file": "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerManager.java",
+        "line": 78,
+        "code": "consumerGroupInfo.findChannel(channel)",
+        "target": {
+          "file": "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerGroupInfo.java",
+          "className": "org.apache.rocketmq.broker.client.ConsumerGroupInfo",
+          "member": "findChannel(Channel)"
+        },
+        "aspects": [
+          "overload:library-type argument"
+        ]
+      },
+      {
+        "description": "overload: a String argument against String and Channel parameters",
+        "kind": "invocation",
+        "file": "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerManager.java",
+        "line": 70,
+        "code": "consumerGroupInfo.findChannel(clientId)",
+        "target": {
+          "file": "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerGroupInfo.java",
+          "className": "org.apache.rocketmq.broker.client.ConsumerGroupInfo",
+          "member": "findChannel(String)"
+        },
+        "aspects": [
+          "overload:final JDK class against a library type"
+        ]
+      },
+      {
+        "description": "in an anonymous class: inherited method through Outer.this",
+        "kind": "invocation",
+        "file": "client/src/main/java/org/apache/rocketmq/client/impl/consumer/RebalancePushImpl.java",
+        "line": 135,
+        "code": "RebalancePushImpl.this.unlock(mq,true)",
+        "target": {
+          "file": "client/src/main/java/org/apache/rocketmq/client/impl/consumer/RebalanceImpl.java",
+          "className": "org.apache.rocketmq.client.impl.consumer.RebalanceImpl",
+          "member": "unlock(MessageQueue,boolean)"
+        },
+        "aspects": [
+          "form:Outer.this",
+          "context:anonymous class in a method",
+          "target:superclass (class outside the changed files)"
+        ]
+      },
+      {
+        "description": "enum constant in a case label of a switch on the enum",
+        "kind": "access",
+        "file": "client/src/main/java/org/apache/rocketmq/client/impl/consumer/RebalancePushImpl.java",
+        "line": 175,
+        "code": "CONSUME_FROM_LAST_OFFSET",
+        "target": {
+          "file": "common/src/main/java/org/apache/rocketmq/common/consumer/ConsumeFromWhere.java",
+          "className": "org.apache.rocketmq.common.consumer.ConsumeFromWhere",
+          "member": "CONSUME_FROM_LAST_OFFSET"
+        },
+        "aspects": [
+          "form:case label of an enum switch"
+        ]
+      },
+      {
+        "description": "method of another changed class on a field",
+        "kind": "invocation",
+        "file": "broker/src/test/java/org/apache/rocketmq/broker/client/ConsumerManagerTest.java",
+        "line": 206,
+        "code": "consumerManager.removeExpireConsumerGroupInfo()",
+        "target": {
+          "file": "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerManager.java",
+          "className": "org.apache.rocketmq.broker.client.ConsumerManager",
+          "member": "removeExpireConsumerGroupInfo()"
+        },
+        "aspects": [
+          "target:another changed class"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_15426",
+    "repository": "bazelbuild/bazel",
+    "commit": "7f69ffc846d0059a2272a247a537fdf47c47c97e",
+    "files": [
+      "src/main/java/com/google/devtools/build/lib/skyframe/AspectFunction.java"
+    ],
+    "usages": [
+      {
+        "description": "field at the end of a lowercase name chain, in an assignment",
+        "kind": "access",
+        "file": "src/main/java/com/google/devtools/build/lib/skyframe/AspectFunction.java",
+        "line": 184,
+        "code": "state.initialValues.aspect",
+        "target": {
+          "file": "src/main/java/com/google/devtools/build/lib/skyframe/AspectFunction.java",
+          "className": "com.google.devtools.build.lib.skyframe.AspectFunction.InitialValues",
+          "member": "aspect"
+        },
+        "aspects": [
+          "form:name chain a.b.c in an assignment"
+        ],
+        "rmGap": {
+          "item": 1,
+          "id": "gap1-name-chain-assignment",
+          "workaround": false
+        }
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_112626",
+    "repository": "elastic/elasticsearch",
+    "commit": "8c58585ee9dcd3b04fc93e07f7aeb93791ca0c3c",
+    "files": [
+      "server/src/main/java/org/elasticsearch/threadpool/Scheduler.java",
+      "server/src/main/java/org/elasticsearch/watcher/ResourceWatcherService.java",
+      "server/src/test/java/org/elasticsearch/watcher/ResourceWatcherServiceTests.java"
+    ],
+    "usages": [
+      {
+        "description": "field at the end of a lowercase name chain, as a call argument",
+        "kind": "access",
+        "file": "server/src/test/java/org/elasticsearch/watcher/ResourceWatcherServiceTests.java",
+        "line": 28,
+        "code": "service.highMonitor.interval",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/watcher/ResourceWatcherService.java",
+          "className": "org.elasticsearch.watcher.ResourceWatcherService.ResourceMonitor",
+          "member": "interval"
+        },
+        "aspects": [
+          "form:name chain a.b.c as an argument"
+        ],
+        "rmGap": {
+          "item": 1,
+          "id": "gap1-name-chain-argument",
+          "workaround": false
+        }
+      },
+      {
+        "description": "call in the arguments of an enum constant",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/watcher/ResourceWatcherService.java",
+        "line": 41,
+        "code": "TimeValue.timeValueSeconds(5)",
+        "target": {
+          "file": "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+          "className": "org.elasticsearch.core.TimeValue",
+          "member": "timeValueSeconds(long)"
+        },
+        "aspects": [
+          "context:enum constant arguments"
+        ],
+        "rmGap": {
+          "item": 3,
+          "id": "gap3-enum-constant-argument",
+          "workaround": false
+        }
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_67398",
+    "repository": "elastic/elasticsearch",
+    "commit": "29192e591cb62f1b6ace13073fda23b448f69be3",
+    "files": [
+      "server/src/main/java/org/elasticsearch/search/SearchService.java",
+      "server/src/test/java/org/elasticsearch/search/SearchServiceTests.java",
+      "x-pack/plugin/frozen-indices/src/internalClusterTest/java/org/elasticsearch/index/engine/FrozenIndexIT.java"
+    ],
+    "usages": [
+      {
+        "description": "field accessed on the result of a call",
+        "kind": "access",
+        "file": "server/src/main/java/org/elasticsearch/search/SearchService.java",
+        "line": 747,
+        "code": "context.scrollContext().scroll",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/search/internal/ScrollContext.java",
+          "className": "org.elasticsearch.search.internal.ScrollContext",
+          "member": "scroll"
+        },
+        "aspects": [
+          "form:field access on a call"
+        ],
+        "rmGap": {
+          "item": 2,
+          "id": "gap2-field-access-on-call",
+          "workaround": false
+        }
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_71758",
+    "repository": "elastic/elasticsearch",
+    "commit": "2cca9961a782f1c6b7873013f9379b4701badc07",
+    "files": [
+      "server/src/main/java/org/elasticsearch/search/aggregations/bucket/histogram/InternalHistogram.java",
+      "server/src/test/java/org/elasticsearch/search/aggregations/bucket/histogram/InternalHistogramTests.java"
+    ],
+    "usages": [
+      {
+        "description": "in a local class: call on a parameter of the enclosing method",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/search/aggregations/bucket/histogram/InternalHistogram.java",
+        "line": 358,
+        "code": "reduceContext.consumeBucketsAndMaybeBreak(size)",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/search/aggregations/InternalAggregation.java",
+          "className": "org.elasticsearch.search.aggregations.InternalAggregation.ReduceContext",
+          "member": "consumeBucketsAndMaybeBreak(int)"
+        },
+        "aspects": [
+          "context:local class",
+          "receiver:captured parameter of the enclosing method"
+        ],
+        "rmGap": {
+          "item": 5,
+          "id": "gap5-local-class-captured-parameter",
+          "workaround": false
+        }
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14031",
+    "repository": "netty/netty",
+    "commit": "d3a7403924f4a1bc4aa14603d6abb0f677ad8077",
+    "files": [
+      "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollDatagramChannel.java"
+    ],
+    "usages": [
+      {
+        "description": "unqualified call of a method of a superclass that is a member type inherited from the superclass of the enclosing class",
+        "kind": "invocation",
+        "file": "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollDatagramChannel.java",
+        "line": 568,
+        "code": "shouldStopReading(config)",
+        "target": {
+          "file": "transport-classes-epoll/src/main/java/io/netty/channel/epoll/AbstractEpollChannel.java",
+          "className": "io.netty.channel.epoll.AbstractEpollChannel.AbstractEpollUnsafe",
+          "member": "shouldStopReading(ChannelConfig)"
+        },
+        "aspects": [
+          "form:unqualified",
+          "target:superclass named by a member type inherited by the enclosing class (no import binds it)"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_10135",
+    "repository": "oracle/graal",
+    "commit": "c55983ced7d01676c68f4a4aaf33e0f9fc4dd23a",
+    "files": [
+      "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/hotspot/HotSpotTruffleRuntime.java"
+    ],
+    "usages": [
+      {
+        "description": "static call qualified by a member type inherited from a superinterface of the superclass",
+        "kind": "invocation",
+        "file": "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/hotspot/HotSpotTruffleRuntime.java",
+        "line": 722,
+        "code": "CompilationActivityMode.fromInteger(activityMode)",
+        "target": {
+          "file": "truffle/src/com.oracle.truffle.compiler/src/com/oracle/truffle/compiler/TruffleCompilerRuntime.java",
+          "className": "com.oracle.truffle.compiler.TruffleCompilerRuntime.CompilationActivityMode",
+          "member": "fromInteger(int)"
+        },
+        "aspects": [
+          "form:qualified by a type name",
+          "target:nested type inherited from a superinterface (no import binds it)"
+        ]
+      }
+    ]
+  }
+]

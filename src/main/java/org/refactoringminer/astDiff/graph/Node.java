@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 import org.refactoringminer.astDiff.graph.cluster.traverse.Util;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -26,6 +27,11 @@ public class Node implements ReviewNode {
   public static final Comparator<Node> COMPARATOR = Comparator.comparing(Node::getSrcDst)
       .thenComparing(Node::getPath)
       .thenComparingInt(node -> node.getTree().getPos());
+
+  // Dependencies read as the code declaring them, whichever revision each is taken from
+  public static final Comparator<Node> DEPENDENCY_COMPARATOR = Comparator.comparing(Node::getPath)
+      .thenComparingInt(node -> node.getTree().getPos())
+      .thenComparing(Node::getSrcDst);
 
   private static final String ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
   public static final int PROMPT_ID_LENGTH = 5;
@@ -36,9 +42,9 @@ public class Node implements ReviewNode {
   private final String id;
   private String promptId;
   private final String path;
-  private final Constants constants;
   private final SrcDst srcDst;
   private final ContentsContexts contentsContexts;
+  private final RMIndex rmIndex;
   private final Tree tree;
   @Nullable
   private final Set<Node> subs;
@@ -47,18 +53,37 @@ public class Node implements ReviewNode {
   private final Set<ASTDiff> diffs = new HashSet<>();
   @Nullable
   private UMLs umls = null;
+  @Nullable
+  private RMInfo rm;
 
-  public Node(ContentsContexts contentsContexts, String path, SrcDst srcDst, Tree tree,
+  public Node(ContentsContexts contentsContexts, RMIndex rmIndex, String path, SrcDst srcDst, Tree tree,
       @Nullable Set<Node> subs, NodeType nodeType) {
     this.id = formatId(path, srcDst, nodeType, tree);
     this.path = path;
-    this.constants = new Constants(path);
     this.contentsContexts = contentsContexts;
+    this.rmIndex = rmIndex;
     this.srcDst = srcDst;
     this.tree = tree;
     this.subs = subs;
     this.nodeType = nodeType;
     this.promptId = PROMPT_ID_PREFIX + shortId(this.id, PROMPT_ID_LENGTH);
+  }
+
+  // Code moved into a new block keeps its lines but takes the indentation of the block, as a diff ignoring whitespace
+  // shows
+  public static boolean sameIgnoringIndentation(String code, String other) {
+    String[] lines = code.split("\n", -1);
+    String[] otherLines = other.split("\n", -1);
+    if (lines.length != otherLines.length) {
+      return false;
+    }
+
+    for (int i = 0; i < lines.length; i++) {
+      if (!lines[i].strip().equals(otherLines[i].strip())) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public static String formatId(String path, SrcDst srcDst, NodeType nodeType, Tree tree) {
@@ -109,6 +134,14 @@ public class Node implements ReviewNode {
 
   public UMLs getUMLs() {
     return umls;
+  }
+
+  // Where the tree lies in what RM gives of its revision
+  public RMInfo getRM() {
+    if (rm == null) {
+      rm = rmIndex.locate(srcDst, path, tree);
+    }
+    return rm;
   }
 
   public void setUMLs(UMLs umls) {
@@ -166,6 +199,13 @@ public class Node implements ReviewNode {
     return id;
   }
 
+  // Nodes are told apart by identity, but hashed by what they are, so that the sets and maps of nodes, and all that is
+  // built by iterating them, come out in the same order on every run
+  @Override
+  public int hashCode() {
+    return id.hashCode();
+  }
+
   public String getPromptId() {
     return promptId;
   }
@@ -196,23 +236,28 @@ public class Node implements ReviewNode {
     return nodeType;
   }
 
+  // A location context reads as the name of the class or the operation it declares, or as the path of its file
   public String getContent() {
     if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
-      String type = tree.getType().name;
-
-      if (constants.isNamedBlock(type)) {
-        Tree name = TreeUtilFunctions.findChildByType(tree, constants.SIMPLE_NAME);
-        if (name != null) {
-          return name.getLabel();
-        }
+      RMInfo rm = getRM();
+      if (rm.declaredOperation() != null) {
+        return rm.declaredOperation().getName();
       }
-
-      if (constants.isRoot(type)) {
+      if (rm.declaredClass() != null) {
+        return rm.declaredClass().getNonQualifiedName();
+      }
+      if (new Constants(path).isRoot(tree.getType().name)) {
         return path;
       }
     }
 
     return getFileContent().substring(tree.getPos(), tree.getEndPos());
+  }
+
+  // A local not holding its type, as a variable of a declaration statement, is printed as the code declaring it
+  public Node getDeclaration() {
+    Tree declaration = getRM().declaration();
+    return declaration == null ? this : new Node(contentsContexts, rmIndex, path, srcDst, declaration, null, nodeType);
   }
 
   public String dedentContent() {
@@ -274,7 +319,7 @@ public class Node implements ReviewNode {
         continue;
       }
 
-      Node alternativeNode =  new Node(contentsContexts, contentsContexts.getPath(dstSrc, alternativeTree), dstSrc,
+      Node alternativeNode =  new Node(contentsContexts, rmIndex, contentsContexts.getPath(dstSrc, alternativeTree), dstSrc,
               alternativeTree, null, alternativeNodeType);
       alternativeNode.addDiff(diff);
       return alternativeNode;
@@ -288,12 +333,19 @@ public class Node implements ReviewNode {
   }
 
   public Tree getRight() {
-    Tree parent = tree.getParent();
-    if (parent == null) {
-      return null;
+    // The end of a doc comment stands between no two changes either: the last of its tags is followed by what follows
+    // the comment, such as the annotations of the declaration it documents
+    for (Tree current = tree; current.getParent() != null; current = current.getParent()) {
+      Tree right = rightSibling(current);
+      if (right != null || !withinDocComment(current.getParent())) {
+        return right;
+      }
     }
+    return null;
+  }
 
-    List<Tree> parentChildren = parent.getChildren();
+  private Tree rightSibling(Tree tree) {
+    List<Tree> parentChildren = tree.getParent().getChildren();
 
     int nodeIndex = -1;
     for (int i = 0; i < parentChildren.size(); i++) {
@@ -303,7 +355,19 @@ public class Node implements ReviewNode {
       }
     }
 
-    return nodeIndex < parentChildren.size() - 1 ? parentChildren.get(nodeIndex + 1) : null;
+    // Code not represented, such as the package and the imports between the header comment of a file and its type,
+    // stands between no two changes
+    for (int i = nodeIndex + 1; i < parentChildren.size(); i++) {
+      Tree sibling = parentChildren.get(i);
+      if (getRM().fileParts().stream().noneMatch(part -> part.getStartOffset() <= sibling.getPos() && sibling.getEndPos() <= part.getEndOffset())) {
+        return sibling;
+      }
+    }
+    return null;
+  }
+
+  private boolean withinDocComment(Tree tree) {
+    return rmIndex.isInDocComment(srcDst, path, tree);
   }
 
   // A hunk may be smaller than a line, so it is overlap in such cases
@@ -332,13 +396,6 @@ public class Node implements ReviewNode {
     nodeObj.addProperty("content", this.getContent());
     nodeObj.addProperty("nodeType", this.getNodeType().name());
     nodeObj.addProperty("treeType", this.getTree().getType().name);
-
-    List<String> descendantSimpleNames = this.getDescendantSimpleNames();
-    JsonArray descendantSimpleNamesArr = new JsonArray();
-    for (String descendantSimpleName : descendantSimpleNames) {
-      descendantSimpleNamesArr.add(descendantSimpleName);
-    }
-    nodeObj.add("descendantSimpleNames", descendantSimpleNamesArr);
 
     if (!this.getIdentifiers().isEmpty()) {
       JsonArray identifiersArr = new JsonArray();
@@ -505,8 +562,21 @@ public class Node implements ReviewNode {
   }
 
   public String getContextString() {
+    return contextString(false);
+  }
+
+  // The context string naming this node too when it is a named block (a type or a method) itself, as when its code
+  // is printed whole
+  public String getInclusiveContextString() {
+    return contextString(Context.isLocationContext(this.getPath(), this.getTree().getType().name));
+  }
+
+  private String contextString(boolean inclusive) {
     List<Pair<Tree, NodeType>> contexts = Context.get(this.getPath(), this.getTree());
     List<Pair<Tree, NodeType>> locationContexts = new ArrayList<>();
+    if (inclusive) {
+      locationContexts.add(new Pair<>(this.getTree(), NodeType.LOCATION_CONTEXT));
+    }
     for (Pair<Tree, NodeType> context : contexts) {
       if (context.second.equals(NodeType.LOCATION_CONTEXT)) {
         locationContexts.add(context);
@@ -516,7 +586,7 @@ public class Node implements ReviewNode {
 
     List<Node> locationContextNodes = locationContexts.stream()
             .map(locationContext ->
-                    new Node(contentsContexts, this.getPath(), this.getSrcDst(), locationContext.first, null, locationContext.second))
+                    new Node(contentsContexts, rmIndex, this.getPath(), this.getSrcDst(), locationContext.first, null, locationContext.second))
             .toList();
     StringBuilder sb = new StringBuilder();
     if (!locationContextNodes.isEmpty()) {
@@ -525,12 +595,52 @@ public class Node implements ReviewNode {
         sb.append("::").append(locationContextNodes.get(1).getContent());
         for (int i = 2; i < locationContextNodes.size(); i++) {
           Node n = locationContextNodes.get(i);
-          String prefix = this.constants.isNamedMethod(n.getTree().getType().name) ? "#" : ".";
-          sb.append(prefix).append(n.getContent());
+          boolean method = n.getRM().declaredOperation() != null;
+          sb.append(method ? "#" : ".").append(n.getContent());
+          if (method && isOverloaded(n.getTree(), n.getContent())) {
+            sb.append(parameterTypes(n));
+          }
         }
       }
     }
     return sb.toString();
+  }
+
+  // A method sharing its name with another method of its type, in either revision, is told apart by the types of its
+  // parameters: a method gaining an overload keeps one location in both revisions
+  private boolean isOverloaded(Tree method, String name) {
+    Tree owner = method.getParent();
+    if (owner == null) {
+      return false;
+    }
+    if (rmIndex.operationsNamed(srcDst, path, owner, name) > 1) {
+      return true;
+    }
+
+    for (ASTDiff diff : diffs) {
+      MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
+      Tree counterpart = isSrc() ? mappingStore.getDstForSrc(owner) : mappingStore.getSrcForDst(owner);
+      if (counterpart != null) {
+        SrcDst otherSide = isSrc() ? SrcDst.DST : SrcDst.SRC;
+        return rmIndex.operationsNamed(otherSide, contentsContexts.getPath(otherSide, counterpart), counterpart, name) > 1;
+      }
+    }
+    return false;
+  }
+
+  // The types of the parameters of the operation the node declares, as its code writes them
+  private String parameterTypes(Node operation) {
+    List<String> types = new ArrayList<>();
+    String content = operation.getFileContent();
+    for (VariableDeclaration parameter : operation.getRM().declaredOperation().getParameterDeclarationList()) {
+      if (parameter.getType() == null || parameter.getType().getLocationInfo() == null) {
+        continue;
+      }
+      int start = parameter.getType().getLocationInfo().getStartOffset();
+      int end = parameter.getLocationInfo().getEndOffset() - parameter.getVariableName().length();
+      types.add(content.substring(start, Math.max(start, end)).strip().replaceAll("\\s+", " "));
+    }
+    return "(" + String.join(", ", types) + ")";
   }
 
   public String mapping(Graph<Node, Edge> graph) {
@@ -607,14 +717,5 @@ public class Node implements ReviewNode {
 
   public List<Node> getMappingTargets(Graph<Node, Edge> graph) {
     return new Util(graph).getMappingTargets(this);
-  }
-
-  public List<String> getDescendantSimpleNames() {
-    List<Tree> trees = new ArrayList<>(this.tree.getDescendants());
-    trees.add(tree);
-    List<Tree> simpleNameTrees = trees.stream()
-        .filter(tree -> tree.getType().name.equals(constants.SIMPLE_NAME)).toList();
-    return simpleNameTrees.stream()
-        .map(tree -> getFileContent().substring(tree.getPos(), tree.getEndPos())).toList();
   }
 }

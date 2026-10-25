@@ -203,15 +203,32 @@ public class TraversalPattern extends GraphWrapper {
             List<Node> mains = flatten().stream()
                     .filter(fl -> fl instanceof Leaf).map(TraversalPattern::getMains).flatMap(List::stream).toList();
             cachedSortKey = mains.stream()
-                    .map(n -> new SortKey(n.getPath(), n.getTree().getPos()))
+                    .map(n -> new SortKey(isTest(n.getPath()), n.getPath(), n.getTree().getPos()))
                     .min(Comparator.naturalOrder())
-                    .orElse(new SortKey("", 0));
+                    .orElse(new SortKey(false, "", 0));
         }
         return cachedSortKey;
     }
 
-    public record SortKey(String path, int pos) implements Comparable<SortKey> {
-        private static final Comparator<SortKey> COMPARATOR = Comparator.comparing(SortKey::path)
+    // Code of the test source sets, by the layouts of their build tools (src/test, src/javaRestTest, testsuite) or the
+    // names of test classes, which a reviewer reads after the code they test
+    static boolean isTest(String path) {
+        String[] segments = path.split("/");
+        for (int i = 0; i < segments.length - 1; i++) {
+            String segment = segments[i];
+            if (segment.equals("test") || segment.equals("tests") || segment.equals("testsuite") || segment.endsWith("Test")
+                    || segment.equals("testFixtures")) {
+                return true;
+            }
+        }
+
+        String name = segments[segments.length - 1].replaceFirst("\\.[^.]*$", "");
+        return name.endsWith("Test") || name.endsWith("Tests") || name.endsWith("IT") || name.endsWith("TestCase");
+    }
+
+    // Unrelated code is read in the order of its files, the code under test first
+    public record SortKey(boolean test, String path, int pos) implements Comparable<SortKey> {
+        private static final Comparator<SortKey> COMPARATOR = Comparator.comparing(SortKey::test).thenComparing(SortKey::path)
                 .thenComparingInt(SortKey::pos);
 
         @Override

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Splitter {
-    public static final int THRESHOLD = 200;
+    public static final int THRESHOLD = Integer.MAX_VALUE;
 
     public static List<List<Integer>> createBalancedSplits(List<String> elements) {
         int totalLines = elements.stream().mapToInt(Splitter::lineCount).sum();

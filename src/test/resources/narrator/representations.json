@@ -1,0 +1,2286 @@
+[
+  {
+    "dataset": "apache_rocketmq_8916",
+    "repository": "apache/rocketmq",
+    "commit": "4292756632843522b792a8c97ff7890c351d361c",
+    "base_commit": "2bbc852361132db8697a5788197aa31f5e89d4a1",
+    "description": "HandleData#lock returns the lock time and expires; unlock takes it; every call site is updated",
+    "notes": [
+      "The added import of AtomicLong is not shown, as no import is; a swapped or wrong import would be invisible."
+    ],
+    "expectations": [
+      {
+        "description": "the whole changed lock() is located at its member",
+        "kind": "diff",
+        "location": "proxy/src/main/java/org/apache/rocketmq/proxy/common/ReceiptHandleGroup.java::ReceiptHandleGroup.HandleData#lock",
+        "body": "-        public boolean lock(long timeoutMs) {\n+        public Long lock(long timeoutMs) {\n             try {\n-                return this.semaphore.tryAcquire(timeoutMs, TimeUnit.MILLISECONDS);\n+                boolean result = this.semaphore.tryAcquire(timeoutMs, TimeUnit.MILLISECONDS);\n+                long currentTimeMs = System.currentTimeMillis();\n+                if (result) {\n+                    this.lastLockTimeMs.set(currentTimeMs);\n+                    return currentTimeMs;\n+                } else {\n+                    // if the lock is expired, can be acquired again\n+                    long expiredTimeMs = ConfigurationManager.getProxyConfig().getLockTimeoutMsInHandleGroup() * 3;\n+                    if (currentTimeMs - this.lastLockTimeMs.get() > expiredTimeMs) {\n+                        synchronized (this) {\n+                            if (currentTimeMs - this.lastLockTimeMs.get() > expiredTimeMs) {\n+                                this.lastLockTimeMs.set(currentTimeMs);\n+                                return currentTimeMs;\n+                            }\n+                        }\n+                    }\n+                }\n+                return null;\n             } catch (InterruptedException e) {\n-                return false;\n+                return null;\n             }\n         }"
+      },
+      {
+        "description": "the changed lock() is printed once, as its diff and not again as a dependency of its callers",
+        "kind": "contains",
+        "text": "public Long lock(long timeoutMs) {",
+        "count": 1
+      },
+      {
+        "description": "the changed lock() serves the call sites reading its result",
+        "kind": "serves",
+        "from": "public Long lock(long timeoutMs)",
+        "to": "try to put handle failed"
+      },
+      {
+        "description": "unlock(long) serves the call sites where only the argument changed",
+        "kind": "serves",
+        "from": "public void unlock(long lockTimeMs)",
+        "to": "try to compute failed"
+      },
+      {
+        "description": "the changed signatures come before the call sites relying on them",
+        "kind": "order",
+        "before": "public void unlock(long lockTimeMs)",
+        "after": "try to get handle failed"
+      },
+      {
+        "description": "the lock call only moved out of the if condition into `Long lockTimeMs = ...` brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "long timeout = ConfigurationManager.getProxyConfig().getLockTimeoutMsInHandleGroup();"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8231",
+    "repository": "apache/rocketmq",
+    "commit": "30127b88490cde0ff04cf7fabb3e17ab7c3ef067",
+    "base_commit": "7a5ea90cb79cc28ae86c368f22d1ab7d2f6f24cc",
+    "description": "the NotifyClientTerminationRequest branch wraps its statement in a blank-name check, in two files (an else-if branch in one, an if in the other)",
+    "notes": [],
+    "expectations": [
+      {
+        "description": "one hunk for PlainAccessResource#parse",
+        "kind": "diffs",
+        "location": "acl/src/main/java/org/apache/rocketmq/acl/plain/PlainAccessResource.java::PlainAccessResource#parse(GeneratedMessageV3, AuthenticationHeader)",
+        "count": 1
+      },
+      {
+        "description": "the wrapped statement reads as unchanged code inside the new if",
+        "kind": "diff",
+        "location": "acl/src/main/java/org/apache/rocketmq/acl/plain/PlainAccessResource.java::PlainAccessResource#parse(GeneratedMessageV3, AuthenticationHeader)",
+        "body": "             } else if (NotifyClientTerminationRequest.getDescriptor().getFullName().equals(rpcFullName)) {\n                 NotifyClientTerminationRequest request = (NotifyClientTerminationRequest) messageV3;\n+                if (StringUtils.isNotBlank(request.getGroup().getName())) {\n                     accessResource.addGroupResourceAndPerm(request.getGroup(), Permission.SUB);\n+                }\n             } else if (QueryRouteRequest.getDescriptor().getFullName().equals(rpcFullName)) {"
+      },
+      {
+        "description": "one hunk for DefaultAuthorizationContextBuilder#build",
+        "kind": "diffs",
+        "location": "auth/src/main/java/org/apache/rocketmq/auth/authorization/builder/DefaultAuthorizationContextBuilder.java::DefaultAuthorizationContextBuilder#build(Metadata, GeneratedMessageV3)",
+        "count": 1
+      },
+      {
+        "description": "the identical statements of the other branches are not shown as moved",
+        "kind": "unchanged",
+        "file": "acl/src/main/java/org/apache/rocketmq/acl/plain/PlainAccessResource.java",
+        "code": "accessResource.addGroupResourceAndPerm(request.getGroup(), Permission.SUB);"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_9087",
+    "repository": "apache/rocketmq",
+    "commit": "95e2886e7a6f90e28643f53188900eb9b10e3dff",
+    "base_commit": "7722ce78eef7864eb5bcae125b538be980f0569e",
+    "description": "resetting offsets guards a null counter, fixes the queue id passed to clearCache and commits the pull offset",
+    "notes": [
+      "Dependencies do not say which revision they come from: `int queueId` is used only by the removed argument (where it is informative: the replaced argument was the queue id of the request, -1 when every queue is reset).",
+      "Field and parameter dependencies (brokerController, topic, group) are of little use for this review."
+    ],
+    "expectations": [
+      {
+        "description": "the statement wrapped in the null check reads as unchanged code, and the argument fix as a changed line",
+        "kind": "diff",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/processor/AdminBrokerProcessor.java::AdminBrokerProcessor#resetOffsetInner",
+        "body": "         for (Map.Entry<Integer, Long> entry : queueOffsetMap.entrySet()) {\n+            if (brokerController.getPopInflightMessageCounter() != null) {\n                 brokerController.getPopInflightMessageCounter().clearInFlightMessageNum(topic, group, entry.getKey());\n+            }\n             if (brokerController.getBrokerConfig().isPopConsumerKVServiceEnable()) {\n-                brokerController.getPopConsumerService().clearCache(group, topic, queueId);\n+                brokerController.getPopConsumerService().clearCache(group, topic, entry.getKey());\n+                brokerController.getConsumerOffsetManager().commitPullOffset(\n+                    \"ResetOffsetInner\", group, topic, entry.getKey(), entry.getValue());\n             }\n             body.getOffsetTable().put(new MessageQueue(topic, brokerName, entry.getKey()), entry.getValue());\n         }"
+      },
+      {
+        "description": "clearCache, relied on by the removed and the added call alike, is printed once",
+        "kind": "dependency",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/pop/PopConsumerService.java::PopConsumerService",
+        "body": "public void clearCache(String groupId, String topicId, int queueId) {\n    while (consumerLockService.tryLock(groupId, topicId)) {\n    }\n    try {\n        if (popConsumerCache != null) {\n            popConsumerCache.removeRecords(groupId, topicId, queueId);\n        }\n    } finally {\n        consumerLockService.unlock(groupId, topicId);\n    }\n}",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_9214",
+    "repository": "apache/rocketmq",
+    "commit": "baaab33cf0ee82e359b1df6c86d6526913a695bc",
+    "base_commit": "5936695b384d457ed9b6b17ad135a148e11e562a",
+    "description": "the fetcher takes the earliest message time from the flat file metadata (the later of the commit log and consume queue minimums, -1 if none) instead of reading the first commit log message; the store takes the minimum of the valid local and remote times (a local 0 now counts)",
+    "notes": [
+      "Deleted code brings its dependencies, which add nothing to judging the removal: the removed latency metrics and debug log of TieredMessageStore (the log field, the metrics constants and helpers), and the removed commit log read of MessageStoreFetcherImpl (getCommitLogMinOffset, getCommitLogAsync, STORE_TIMESTAMP_POSITION, getStoreTimeStamp)."
+    ],
+    "expectations": [
+      {
+        "description": "the diff printing the whole method is located at it",
+        "kind": "diffs",
+        "location": "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/TieredMessageStore.java::TieredMessageStore#getEarliestMessageTimeAsync",
+        "count": 1
+      },
+      {
+        "description": "the changed getMinStoreTimestamp() serves its new caller",
+        "kind": "serves",
+        "from": "+        long minStoreTime = -1L;",
+        "to": "flatFile.getMinStoreTimestamp()"
+      },
+      {
+        "description": "the changed getMinStoreTimestamp(), shown whole by its diff, is not repeated as a dependency",
+        "kind": "absent",
+        "text": "public long getMinStoreTimestamp() {",
+        "of": "dependency"
+      },
+      {
+        "description": "constants read only by the removed metrics code are not printed",
+        "kind": "absent",
+        "text": "OPERATION_API_GET_EARLIEST_MESSAGE_TIME",
+        "of": "dependency",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show (a dependency of deleted code only)"
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_23150",
+    "repository": "bazelbuild/bazel",
+    "commit": "fcc654c8b707640106a9d164136b27a5974e960e",
+    "base_commit": "3a416240888159846f07c6d85b722f414b3b1198",
+    "description": "a native netty error on a call of a shared connection makes the factory forget its underlying connection (a new onFatalError callback), so that the next create() opens a new one; a test covers it",
+    "notes": [
+      "The test reads SharedConnection#getUnderlyingConnection through implicitly typed lambda parameters, which are not bound.",
+      "The unchanged readers of connectionAsyncSubject are not shown: createUnderlyingConnectionIfNot, which recreates the connection when the field is null, and close(), which closes only the current connection, so a forgotten one is never closed by the factory."
+    ],
+    "expectations": [
+      {
+        "description": "the constructor taking onFatalError serves the creation passing it",
+        "kind": "serves",
+        "from": "Action onClose, Runnable onFatalError)",
+        "to": "/* onFatalError= */"
+      },
+      {
+        "description": "the constructor comes before the creation using it",
+        "kind": "order",
+        "before": "Action onClose, Runnable onFatalError)",
+        "after": "/* onFatalError= */"
+      },
+      {
+        "description": "the changed create() serves the test exercising it",
+        "kind": "serves",
+        "from": "/* onFatalError= */",
+        "to": "create_belowMaxConcurrency_fatalErrorPreventsReuse"
+      },
+      {
+        "description": "isFatalError serves the listener calling it",
+        "kind": "serves",
+        "from": "private static boolean isFatalError",
+        "to": "if (isFatalError(status.getCause()))"
+      },
+      {
+        "description": "the BUILD dependency on netty unix common is shown",
+        "kind": "contains",
+        "text": "io_netty_netty_transport_native_unix_common",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs a Bazel BUILD file, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_25259",
+    "repository": "bazelbuild/bazel",
+    "commit": "3785a4943b69c2a36492535552f3f946c5e139ca",
+    "base_commit": "95bbed03758a7651916d0708a892f5342a0421c5",
+    "description": "custom flags to propagate are canonicalized by a converter and compared in canonical form",
+    "notes": [
+      "The unchanged define filter of the exec transition (`customFlagsToPropagate.contains(define.getKey())`), for which the converter returns --define keys as they are, is not shown (an unchanged user of the option whose converter changed).",
+      "CustomFlagConverter does not serve the @Option of customFlagsToPropagate installing it (a class literal in an annotation is no relation of the model), so the option diff reads after the comparison, unlinked."
+    ],
+    "expectations": [
+      {
+        "description": "the four edits of one lambda read as one hunk",
+        "kind": "diffs",
+        "location": "src/main/java/com/google/devtools/build/lib/analysis/starlark/FunctionTransitionUtil.java::FunctionTransitionUtil#propagateStarlarkFlagToExec",
+        "count": 1
+      },
+      {
+        "description": "that hunk shows the whole statement",
+        "kind": "diff",
+        "location": "src/main/java/com/google/devtools/build/lib/analysis/starlark/FunctionTransitionUtil.java::FunctionTransitionUtil#propagateStarlarkFlagToExec",
+        "body": "     return buildOptions.get(CoreOptions.class).customFlagsToPropagate.stream()\n         .anyMatch(\n             flagToPropagate ->\n-                (flagToPropagate.equals(starlarkFlag.toString())\n-                    || (flagToPropagate.endsWith(\"/...\")\n+                (flagToPropagate.equals(starlarkFlag.getUnambiguousCanonicalForm())\n+                    || (flagToPropagate.endsWith(CustomFlagConverter.SUBPACKAGES_SUFFIX)\n                         && starlarkFlag\n-                            .toString()\n+                            .getUnambiguousCanonicalForm()\n                             .startsWith(\n                                 flagToPropagate.substring(\n-                                    0, flagToPropagate.lastIndexOf(\"/...\"))))));\n+                                    0,\n+                                    flagToPropagate.lastIndexOf(\n+                                        CustomFlagConverter.SUBPACKAGES_SUFFIX))))));"
+      },
+      {
+        "description": "the new converter serves the comparison using its constant",
+        "kind": "serves",
+        "from": "public static class CustomFlagConverter",
+        "to": "CustomFlagConverter.SUBPACKAGES_SUFFIX)"
+      },
+      {
+        "description": "the removed @Ignore and its comment read inside the hunk of their test method",
+        "kind": "contains",
+        "text": "-  @Ignore(\"b/377959266\")\n   public void testExecStarlarkFlag_isPropagatedByTargetPattern() throws Exception {\n+    scratch.file(\"my_starlark_flag/BUILD\");",
+        "of": "diff"
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-boot_40493",
+    "repository": "spring-projects/spring-boot",
+    "commit": "df1845c4baa1d6707c6e0657cd7c9d46245f570f",
+    "base_commit": "6e37567a9d9932fdecd8ace18bb28a570e0827a9",
+    "description": "authentication parameter values (not keys) are JSON-escaped; the tests use a value needing escapes",
+    "notes": [],
+    "expectations": [
+      {
+        "description": "the deleted and added declarations of a test read together, with the statements using them",
+        "kind": "diff",
+        "location": "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/pulsar/PulsarPropertiesMapperTests.java::PulsarPropertiesMapperTests#customizeClientBuilderWhenHasAuthentication",
+        "body": " \tvoid customizeClientBuilderWhenHasAuthentication() throws UnsupportedAuthenticationException {\n \t\tPulsarProperties properties = new PulsarProperties();\n-\t\tMap<String, String> params = Map.of(\"param\", \"name\");\n-\t\tString authParamString = \"{\\\"param\\\":\\\"name\\\"}\";\n+\t\tMap<String, String> params = Map.of(\"simpleParam\", \"foo\", \"complexParam\",\n+\t\t\t\t\"{\\n\\t\\\"k1\\\" : \\\"v1\\\",\\n\\t\\\"k2\\\":\\\"v2\\\"\\n}\");\n+\t\tString authParamString = \"{\\\"complexParam\\\":\\\"{\\\\n\\\\t\\\\\\\"k1\\\\\\\" : \\\\\\\"v1\\\\\\\",\\\\n\\\\t\\\\\\\"k2\\\\\\\":\\\\\\\"v2\\\\\\\"\\\\n}\\\"\"\n+\t\t\t\t+ \",\\\"simpleParam\\\":\\\"foo\\\"}\";\n \t\tproperties.getClient().getAuthentication().setPluginClassName(\"myclass\");\n \t\tproperties.getClient().getAuthentication().setParam(params);\n \t\tClientBuilder builder = mock(ClientBuilder.class);\n \t\tnew PulsarPropertiesMapper(properties).customizeClientBuilder(builder,\n \t\t\t\tnew PropertiesPulsarConnectionDetails(properties));\n \t\tthen(builder).should().authentication(\"myclass\", authParamString);\n \t}"
+      },
+      {
+        "description": "the same for the admin test",
+        "kind": "diff",
+        "location": "spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/pulsar/PulsarPropertiesMapperTests.java::PulsarPropertiesMapperTests#customizeAdminBuilderWhenHasAuthentication",
+        "body": " \tvoid customizeAdminBuilderWhenHasAuthentication() throws UnsupportedAuthenticationException {\n \t\tPulsarProperties properties = new PulsarProperties();\n-\t\tMap<String, String> params = Map.of(\"param\", \"name\");\n-\t\tString authParamString = \"{\\\"param\\\":\\\"name\\\"}\";\n+\t\tMap<String, String> params = Map.of(\"simpleParam\", \"foo\", \"complexParam\",\n+\t\t\t\t\"{\\n\\t\\\"k1\\\" : \\\"v1\\\",\\n\\t\\\"k2\\\":\\\"v2\\\"\\n}\");\n+\t\tString authParamString = \"{\\\"complexParam\\\":\\\"{\\\\n\\\\t\\\\\\\"k1\\\\\\\" : \\\\\\\"v1\\\\\\\",\\\\n\\\\t\\\\\\\"k2\\\\\\\":\\\\\\\"v2\\\\\\\"\\\\n}\\\"\"\n+\t\t\t\t+ \",\\\"simpleParam\\\":\\\"foo\\\"}\";\n \t\tproperties.getAdmin().getAuthentication().setPluginClassName(\"myclass\");\n \t\tproperties.getAdmin().getAuthentication().setParam(params);\n \t\tPulsarAdminBuilder builder = mock(PulsarAdminBuilder.class);\n \t\tnew PulsarPropertiesMapper(properties).customizeAdminBuilder(builder,\n \t\t\t\tnew PropertiesPulsarConnectionDetails(properties));\n \t\tthen(builder).should().authentication(\"myclass\", authParamString);\n \t}"
+      },
+      {
+        "description": "escapeJson serves its caller",
+        "kind": "serves",
+        "from": "private String escapeJson(String raw)",
+        "to": "escapeJson(entry.getValue())"
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-framework_32034",
+    "repository": "spring-projects/spring-framework",
+    "commit": "70d3cc35e347473e3d01f8b75b01c701846c410b",
+    "base_commit": "faba044735ad173d96b4b1adab62752b48b2c758",
+    "description": "RestClient applies the defaultRequest consumer of its builder to every request",
+    "notes": [
+      "A one-line copyright bump prints the whole 15-line license comment as context.",
+      "The test brings every fluent RestClient method it calls as a dependency (get, uri, header, build, ...).",
+      "defaultRequest.accept(this) runs after `uri = initUri();`, so a URI set by the default consumer is ignored (the superseding commit moves the call before it); initUri, called on a context line, is not printed, and header resolves to the RequestHeadersSpec interface declaration, not the adding implementation of DefaultRequestBodyUriSpec the test relies on."
+    ],
+    "expectations": [
+      {
+        "description": "the license year bump marks only the year line of the comment",
+        "kind": "unchanged",
+        "file": "spring-web/src/main/java/org/springframework/web/client/DefaultRestClient.java",
+        "code": " * Licensed under the Apache License, Version 2.0 (the \"License\");"
+      },
+      {
+        "description": "the year line reads as removed and added, in each of the two bumped files",
+        "kind": "contains",
+        "of": "diff",
+        "count": 2,
+        "text": "- * Copyright 2002-2023 the original author or authors.\n+ * Copyright 2002-2024 the original author or authors."
+      },
+      {
+        "description": "the license comment is not printed as removed and added whole",
+        "kind": "absent",
+        "text": " * Licensed under the Apache License, Version 2.0 (the \"License\");\n-",
+        "of": "diff"
+      },
+      {
+        "description": "the new field serves the request execution reading it",
+        "kind": "serves",
+        "from": "private final Consumer<RequestHeadersSpec<?>> defaultRequest;",
+        "to": "defaultRequest.accept(this);"
+      },
+      {
+        "description": "trivial fluent API steps used by the test are not printed",
+        "kind": "absent",
+        "text": "RequestHeadersUriSpec<?> get();",
+        "of": "dependency",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_120097",
+    "repository": "elastic/elasticsearch",
+    "commit": "c2dac876d6410c38f75eb75792279aeeae837964",
+    "base_commit": "c638f746763733532e3c9db018ea72916955ac3a",
+    "description": "the Kibana thread pool test disables rebalancing and replicas, drops its investigation logging and is unmuted",
+    "notes": [
+      "The carried-over assertAcked, whose argument the added setSettings step changes, is printed as a dependency; the other dependencies of the index creation are new (setSettings, Settings.builder(), put and SETTING_NUMBER_OF_REPLICAS).",
+      "The put(String, Enum<?>) overload called by the added rebalance step is not printed, while the put(String, int) of the index settings is.",
+      "The muted-tests.yml entry unmuting this test is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "a step added to a builder chain is one added line; the chain it wraps is unchanged code",
+        "kind": "diff",
+        "location": "modules/kibana/src/internalClusterTest/java/org/elasticsearch/kibana/KibanaThreadPoolIT.java::KibanaThreadPoolIT#nodeSettings",
+        "body": "         return Settings.builder()\n             .put(super.nodeSettings(nodeOrdinal, otherSettings))\n             .put(IndexingPressure.MAX_PRIMARY_BYTES.getKey(), \"1KB\")\n             .put(IndexingPressure.MAX_COORDINATING_BYTES.getKey(), \"1KB\")\n             .put(\"thread_pool.search.size\", 1)\n             .put(\"thread_pool.search.queue_size\", 1)\n             .put(\"thread_pool.write.size\", 1)\n             .put(\"thread_pool.write.queue_size\", 1)\n             .put(\"thread_pool.get.size\", 1)\n             .put(\"thread_pool.get.queue_size\", 1)\n+            .put(EnableAllocationDecider.CLUSTER_ROUTING_REBALANCE_ENABLE_SETTING.getKey(), EnableAllocationDecider.Rebalance.NONE)\n             .build();"
+      },
+      {
+        "description": "the wrapped chain is not marked as removed and added",
+        "kind": "unchanged",
+        "file": "modules/kibana/src/internalClusterTest/java/org/elasticsearch/kibana/KibanaThreadPoolIT.java",
+        "code": ".put(\"thread_pool.get.queue_size\", 1)"
+      },
+      {
+        "description": "builder overloads of the chains are not printed",
+        "kind": "absent",
+        "text": "public Builder put(String setting, int value) {",
+        "of": "dependency",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show"
+      },
+      {
+        "description": "the chain re-wrapped by the added setSettings step brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public CreateIndexRequestBuilder prepareCreate(String index) {"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_110046",
+    "repository": "elastic/elasticsearch",
+    "commit": "4b88d7ddfa68ba7a9b45e9000709391092bc2be1",
+    "base_commit": "5c87eef89d6262624491810ef083001b36b0f6fe",
+    "description": "ES|QL replaces the shared mutable QueryParams.EMPTY by a new QueryParams per request and parse; QueryParams gets final fields, size() and addTokenParam() replace positionalParams()/positionalParamTokens(), parsingErrors() returns an Iterator, and equals/hashCode are added",
+    "notes": [
+      "A comment moved onto the line of its field is a diff of its own, which prints the new field line as added again, besides the diff of the field.",
+      "The old `public QueryParams() {}` is printed as a dependency of the removed EMPTY creation, though a diff printed after it removes it.",
+      "LogicalPlanBuilder#plan, which adapts to the Iterator returned by parsingErrors() (and never increments its counter), is linked to it only through the unchanged `var errors = ...` declaration, so nothing serves it and it reads last, after the tests."
+    ],
+    "expectations": [
+      {
+        "description": "a field losing its initializer reads as its old and new line",
+        "kind": "diff",
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/QueryParams.java::QueryParams",
+        "body": "-    private List<ParsingException> parsingErrors = new ArrayList<>();\n+    private List<ParsingException> parsingErrors;"
+      },
+      {
+        "description": "the rewritten constructor reads as one hunk",
+        "kind": "diff",
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/QueryParams.java::QueryParams#QueryParams(List<QueryParam>)",
+        "body": "     public QueryParams(List<QueryParam> params) {\n+        this.tokenToParam = new HashMap<>();\n+        this.parsingErrors = new ArrayList<>();\n+\n+        if (params == null || params.isEmpty()) {\n+            this.params = List.of();\n+            this.nameToParam = Map.of();\n+            this.paramsCount = 0;\n+        } else {\n+            this.paramsCount = params.size();\n+            this.params = new ArrayList<>(paramsCount);\n+            Map<String, QueryParam> tempNameToParam = new HashMap<>(paramsCount);\n             for (QueryParam p : params) {\n                 this.params.add(p);\n                 String name = p.name();\n                 if (name != null) {\n-                nameToParam.put(name, p);\n+                    tempNameToParam.put(name, p);\n                 }\n             }\n+            this.nameToParam = Collections.unmodifiableMap(tempNameToParam);\n+        }\n     }"
+      },
+      {
+        "description": "the new params field line is printed once",
+        "kind": "contains",
+        "of": "diff",
+        "count": 1,
+        "text": "private final List<QueryParam> params; // This matches",
+        "todo": "a comment moved onto the line of its field is a diff of its own repeating the added field line: the comment pair is located at the type while the changes of the field (the removed initializer, the added final) have the field declaration as their context, so neither the groups of an element nor its diffs sharing a line are merged"
+      },
+      {
+        "description": "the changed params field is not repeated as a dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "private List<QueryParam> params = new ArrayList<>();"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_115312",
+    "repository": "elastic/elasticsearch",
+    "commit": "e4bbc25e0c77a97d51650be840def70a91b9cd95",
+    "base_commit": "57532e7b7fb1348c8abf50b225932cddea5937a9",
+    "description": "filtered grouping unwraps a filtered intermediate input (a ClassCastException) and the ordinals segment aggregator releases its prepared inputs (a breaker leak); the test case extracts channels() for a new intermediate row test",
+    "notes": [
+      "The record accessor next() called by the fix is not resolved: the record header declaring the component `next` is printed for no diff.",
+      "Releasables.close(Releasable...) serves the test but not the leak fix calling it with a method reference; the test's addInput.add(0, group) brings no AddInput#add.",
+      "stats.csv-spec, holding the ES|QL tests of both fixes and the only user of the new capability PER_AGG_FILTERING_ORDS, is not shown.",
+      "The unrelated removed TODO comment of FilteredGroupingAggregatorFunctionTests reads before the production diffs of OrdinalsGroupingOperator and EsqlCapabilities, and the leak fix reads after the test diffs.",
+      "The unchanged merges of OrdinalsGroupingOperator passing a filtered function as the input, which make the cast safe, are not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the new channels() serves the test using it",
+        "kind": "serves",
+        "from": "protected List<Integer> channels(AggregatorMode mode)",
+        "to": "public void testAddIntermediateRowInput()"
+      },
+      {
+        "description": "channels() comes before the test, though it is grouped with the code it was extracted from",
+        "kind": "order",
+        "before": "protected List<Integer> channels(AggregatorMode mode)",
+        "after": "public void testAddIntermediateRowInput()"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_110118",
+    "repository": "elastic/elasticsearch",
+    "commit": "8561e5397961c2e3c9ae2161ff951c6441620bbc",
+    "base_commit": "f0afd9165064edf9d3e18a5b960e57bf96de71f2",
+    "description": "the test takes its ref only once a response is processed",
+    "notes": [
+      "The moved incRef balances only because the unchanged RestActionListener#onResponse runs ensureOpen() before processResponse and sends a closed channel to onFailure; that caller of the overridden processResponse is not shown.",
+      "The muted-tests.yml entry unmuting testClientCancellation is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the moved statement is the change; the statements it moves across are unchanged code",
+        "kind": "diff",
+        "location": "modules/transport-netty4/src/internalClusterTest/java/org/elasticsearch/http/netty4/Netty4ChunkedContinuationsIT.java::Netty4ChunkedContinuationsIT.InfiniteContinuationsPlugin#getRestHandlers#prepareRequest#accept",
+        "body": "                             public void accept(RestChannel channel) {\n-                                localRefs.mustIncRef();\n                                 client.execute(TYPE, new Request(), new RestActionListener<>(channel) {\n                                     @Override\n                                     protected void processResponse(Response response) {\n+                                        localRefs.mustIncRef();\n                                         channel.sendResponse(RestResponse.chunked(RestStatus.OK, response.getResponseBodyPart(), () -> {\n                                             // cancellation notification only happens while processing a continuation, not while computing\n                                             // the next one; prompt cancellation requires use of something like RestCancellableNodeClient\n                                             assertFalse(response.computingContinuation);\n                                             assertSame(localRefs, refs);\n                                             localRefs.decRef();\n                                         }));\n                                     }\n                                 });\n                             }"
+      },
+      {
+        "description": "the call it moves across is not marked",
+        "kind": "unchanged",
+        "file": "modules/transport-netty4/src/internalClusterTest/java/org/elasticsearch/http/netty4/Netty4ChunkedContinuationsIT.java",
+        "code": "client.execute(TYPE, new Request(), new RestActionListener<>(channel) {"
+      },
+      {
+        "description": "the local of the enclosing method captured by the anonymous classes is a dependency of the moved statement",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "final var localRefs = refs;"
+      },
+      {
+        "description": "the creation of the anonymous listener the moved mustIncRef call goes into brings no dependency to it",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "protected RestActionListener(RestChannel channel) {"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_103817",
+    "repository": "elastic/elasticsearch",
+    "commit": "50dd67c6e14b7c3bf1d4a1d481afbac75d78dfab",
+    "base_commit": "ad28dc9a6ca525e4f6cd2a9bf72c177cd4063ce2",
+    "description": "stateWithoutSnapshot copies the shard generations of a removed snapshot into other in-progress snapshots only for shards present in the ShardGenerations the finalization wrote (EMPTY on failure paths), so that an index deleted during finalization no longer gets a still referenced shard index blob deleted",
+    "notes": [
+      "The new IT test brings about 40 dependencies, mostly trivial getters and builder setters."
+    ],
+    "expectations": [
+      {
+        "description": "the unchanged anonymous class of startCloning is not marked",
+        "kind": "unchanged",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "code": "public void clusterStateProcessed(ClusterState oldState, ClusterState newState) {"
+      },
+      {
+        "description": "nor its field",
+        "kind": "unchanged",
+        "file": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java",
+        "code": "private SnapshotsInProgress.Entry updatedEntry;"
+      },
+      {
+        "description": "the unchanged anonymous listener of writeIndexGen is not marked",
+        "kind": "unchanged",
+        "file": "server/src/main/java/org/elasticsearch/repositories/blobstore/BlobStoreRepository.java",
+        "code": "public void onResponse(Void aVoid) {"
+      },
+      {
+        "description": "implicitly typed lambda parameters are not printed as dependencies",
+        "kind": "dependency",
+        "location": "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java::SnapshotsService#startCloning",
+        "body": "e",
+        "count": 0
+      },
+      {
+        "description": "the creation of the anonymous task its changed body is in brings no dependency to that body",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public ClusterStateUpdateTask() {"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_107947",
+    "repository": "elastic/elasticsearch",
+    "commit": "31542d85974de34e2462e9779d64bd7788991b43",
+    "base_commit": "98ed236f2bd58c0c3460a77493b231fd37a05cb9",
+    "description": "ES|QL configuration functions get equals and hashCode over their configuration, the redundant equals/hashCode overrides of other functions are removed in favour of those of Function, the unused RationalUnaryPredicate is deleted; tests build functions with a configuration",
+    "notes": [
+      "Constructors used by the tests are printed with their whole @FunctionInfo/@Param annotations.",
+      "The Pow field declaration split in two (`base, exponent`) reads as a move between two diffs of the same location, so its old line is printed as removed twice: the diff removing the dataType field below it holds the line too (the Log one reads as one diff).",
+      "Deleted code brings its dependencies: the deleted RationalUnaryPredicate brings ten (isType, childrenResolved, field(), ...) and the removed equals overrides bring the field declarations of their classes; the new AbstractConfigurationFunctionTestCase brings trivial random/EMPTY/default setting helpers.",
+      "The four test headers now extending AbstractConfigurationFunctionTestCase read before it, apart from their buildWithConfiguration overrides, and it does not serve them (a supertype reference is no relation of the model).",
+      "The Left/Right cleanups (production code unrelated to the tests) read last, after all test diffs."
+    ],
+    "expectations": [
+      {
+        "description": "a hunk shared by two groups of changes is printed once",
+        "kind": "contains",
+        "text": "public static void assertSerialization(PhysicalPlan plan) {",
+        "of": "diff",
+        "count": 1
+      },
+      {
+        "description": "a renamed method is located at both of its names",
+        "kind": "diffs",
+        "location": "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/expression/function/scalar/string/ToUpperTests.java::ToUpperTests#build -> x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/expression/function/scalar/string/ToUpperTests.java::ToUpperTests#buildWithConfiguration",
+        "count": 1
+      },
+      {
+        "description": "annotation descriptions of a dependency are not printed",
+        "kind": "absent",
+        "text": "java/time/temporal/ChronoField.html",
+        "of": "dependency",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show (annotation arguments of a used constructor)"
+      },
+      {
+        "description": "a split field declaration prints its old line once",
+        "kind": "contains",
+        "count": 1,
+        "text": "-    private final Expression base, value;"
+      },
+      {
+        "description": "production code unrelated to the tests reads before them",
+        "kind": "order",
+        "before": "return new LeftEvaluator.Factory(",
+        "after": "public abstract class AbstractConfigurationFunctionTestCase extends AbstractFunctionTestCase {",
+        "todo": "unrelated production code reads after the test diffs"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_121109",
+    "repository": "elastic/elasticsearch",
+    "commit": "cb251a46573e7ce3630574ddd6c06d23165ac72c",
+    "base_commit": "0d2db063ec4d8e95941e3b92dc150e294e5f0689",
+    "description": "copy_to contexts get a Wrapper constructor resetting dynamic from the root mapping",
+    "notes": [
+      "The fix takes effect through the unchanged `new Wrapper(root(), this)` in createCopyToContext, which now resolves to the new constructor as root() returns RootObjectMapper; neither that call, root(), nor the overload Wrapper(ObjectMapper, DocumentParserContext) it resolved to before (inheriting in.dynamic) is shown.",
+      "The YAML REST test of the fix is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "comments and the constructor they document read as one hunk",
+        "kind": "diff",
+        "location": "server/src/main/java/org/elasticsearch/index/mapper/DocumentParserContext.java::DocumentParserContext.Wrapper",
+        "body": "+        // Used to create a copy_to context.\n+        // It is important to reset `dynamic` here since it is possible that we copy into a completely different object.\n+        private Wrapper(RootObjectMapper root, DocumentParserContext in) {\n+            super(root, ObjectMapper.Dynamic.getRootDynamic(in.mappingLookup()), in);\n+            this.in = in;\n+        }"
+      },
+      {
+        "description": "the unchanged creation now choosing the new constructor is shown",
+        "kind": "contains",
+        "text": "new Wrapper(root(), this)",
+        "todo": "unchanged code using a changed declaration is not represented (see the TODO on forward extensions in HunkNetwork), though it is where the change takes effect"
+      },
+      {
+        "description": "the YAML REST test is shown",
+        "kind": "contains",
+        "text": "copy_to from object with dynamic strict to dynamic field",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs a YAML REST test, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_120617",
+    "repository": "elastic/elasticsearch",
+    "commit": "151e4eded28b12e7b4ae8142599efbb8d947df55",
+    "base_commit": "9ffe3c88354da86a806d1ee4cd64d4939362e389",
+    "description": "lookup joins stop running their lookups with the enrich origin (only the enrich service keeps it), so that document level security applies; the lookup index checks move from the analyzer to a post-analysis verification that also rejects aliases and patterns",
+    "notes": [
+      "The EsRelation accessors the new verification calls (indexMode, indexNameWithModes, indexPattern, concreteIndices) are not printed: they are called on the lambda parameter of forEachDown(Class<E>, Consumer<? super E>), whose type is not resolved.",
+      "The new override EnrichLookupService#sendChildRequest does not serve the call of sendChildRequest in lookupAsync.",
+      "The lookup mode check removed from Analyzer#resolveIndex and added to LookupJoin#postAnalysisVerification, and the ENRICH_ORIGIN try removed from lookupAsync and added to EnrichLookupService#sendChildRequest, are not linked as moves; the changed size mismatch message is seen only by comparing two diffs.",
+      "The unchanged LookupFromIndexService, which inherits the base sendChildRequest and so now runs its lookups without ENRICH_ORIGIN (the fix itself), is not shown.",
+      "roles.yml, defining the DLS query of dls_user that the expected values of the new test follow from, and the yml/gradle files skipping the alias lookup tests are not shown.",
+      "Deleted code brings its dependencies: the UnresolvedRelation constructor and getters and Node#source for the removed lookup check, the threadContext local for the removed stash."
+    ],
+    "expectations": [
+      {
+        "description": "an interface added to a class header reads as the old and the new header",
+        "kind": "diff",
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/join/LookupJoin.java::LookupJoin",
+        "body": "-public class LookupJoin extends Join implements SurrogateLogicalPlan {\n+public class LookupJoin extends Join implements SurrogateLogicalPlan, PostAnalysisVerificationAware {"
+      },
+      {
+        "description": "the new enrich override serves the call of the extracted hook",
+        "kind": "serves",
+        "from": "super.sendChildRequest(parentTask, delegate, targetNode, transportRequest)",
+        "to": "// TODO: handle retry and avoid forking for the local lookup",
+        "todo": "a new override whose parameter is the type variable of the overridden method is not linked to the call of that method: findOverridden compares the erased `T` of AbstractLookupService#sendChildRequest with the `TransportRequest` of the override, though the subclass binds T to it; matching the bound class links them, but then the override must read after the extracted hook (#EEDYT, which it relies on) and before the call site in lookupAsync that the hook moved from, which the traversal keeps next to the hook, so the order breaks (a decision on ordering a move pair around code relying on one side and serving the other)"
+      },
+      {
+        "description": "the call taking the lambda its changed body is in brings no dependency to that body",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "private void hasPrivilege(ActionListener<Void> outListener) {"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_104911",
+    "repository": "elastic/elasticsearch",
+    "commit": "ef0529b5923b98ec54ae8d0e41620c15671e6952",
+    "base_commit": "4c4463305630010e1d362b867bf83033b1e63d6e",
+    "description": "aggregations reject unsigned_long and their @FunctionInfo and @Param types drop it; count_distinct and the aggregate mapper accept version",
+    "notes": [
+      "The only test of the version support (countVersion in stats.csv-spec) and the regenerated signatures of show.csv-spec are not shown.",
+      "The diff of dataTypeToString starts at its changed else-if, so the parameter `DataType type` is printed as a dependency, with the whole DataType#equals."
+    ],
+    "expectations": [
+      {
+        "description": "an annotation reflowed from five lines to one reads as its five old lines and its new line, with the changed signature",
+        "kind": "diff",
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Min.java::Min#Min",
+        "body": "-    @FunctionInfo(\n-        returnType = { \"double\", \"integer\", \"long\", \"unsigned_long\" },\n-        description = \"The minimum value of a numeric field.\",\n-        isAggregation = true\n-    )\n-    public Min(Source source, @Param(name = \"field\", type = { \"double\", \"integer\", \"long\", \"unsigned_long\" }) Expression field) {\n+    @FunctionInfo(returnType = { \"double\", \"integer\", \"long\" }, description = \"The minimum value of a numeric field.\", isAggregation = true)\n+    public Min(Source source, @Param(name = \"field\", type = { \"double\", \"integer\", \"long\" }) Expression field) {"
+      },
+      {
+        "description": "the annotation and the signature of one constructor read as one diff",
+        "kind": "diffs",
+        "count": 1,
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Min.java::Min#Min"
+      },
+      {
+        "description": "a signature reflowed from four lines to one reads as its four old lines and its new line",
+        "kind": "contains",
+        "of": "diff",
+        "text": "-    public MedianAbsoluteDeviation(\n-        Source source,\n-        @Param(name = \"field\", type = { \"double\", \"integer\", \"long\", \"unsigned_long\" }) Expression field\n-    ) {\n+    public MedianAbsoluteDeviation(Source source, @Param(name = \"field\", type = { \"double\", \"integer\", \"long\" }) Expression field) {"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_123290",
+    "repository": "elastic/elasticsearch",
+    "commit": "3b5672cb173515aa2860c8a11db96a1d9dadf469",
+    "base_commit": "1d3106f288e7cfd4f2b52ea23f1103de8ce71545",
+    "description": "driver status reports iterations and cpu time since the last report instead of since the start",
+    "notes": [
+      "The test brings 25 dependencies: test helpers (randomLong, randomList, assertThat, logger), TimeValue factories, the trivial DriverStatus/DriverProfile getters and the whole Driver constructor.",
+      "NowSupplier#getAsLong, the fake clock the expected cpuNanos/tookNanos of the test come from, is not printed: run calls it through LongSupplier, and nothing links that call to the override the test passes."
+    ],
+    "expectations": [
+      {
+        "description": "updateStatus, which adds what it is given to the previous status, is printed",
+        "kind": "contains",
+        "text": "prev.cpuNanos() + extraCpuNanos",
+        "of": "dependency"
+      },
+      {
+        "description": "updateStatus serves the loop calling it",
+        "kind": "serves",
+        "from": "prev.cpuNanos() + extraCpuNanos",
+        "to": "long lastStatusUpdateTime = startTime;"
+      },
+      {
+        "description": "the changed run(), shown by its diff from the signature on, is not repeated with its javadoc as a dependency of the test",
+        "kind": "absent",
+        "text": "SubscribableListener<Void> run(TimeValue maxTime, int maxIterations, LongSupplier nowSupplier) {",
+        "of": "dependency"
+      },
+      {
+        "description": "the diff of run() serves the test instead",
+        "kind": "serves",
+        "from": "long lastStatusUpdateTime = startTime;",
+        "to": "public void testProfileAndStatusInterval()"
+      },
+      {
+        "description": "test framework helpers are not printed",
+        "kind": "absent",
+        "text": "public static long randomLong() {",
+        "of": "dependency",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show (a test helper)"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_118370",
+    "repository": "elastic/elasticsearch",
+    "commit": "bf75a92ce9bcdc60e55c9e6ce391b8fa5c51d107",
+    "base_commit": "d5589d7fca0e3481d6617a28da9483ed1db83494",
+    "description": "the source provider keeps one provider per thread; the test forces doc partitioning to exercise it",
+    "notes": [
+      "The test brings trivial declarations it calls as dependencies: the Settings.Builder overloads, Settings.builder(), the QueryPragmas constructor and getSettings(), and the ESTestCase#assertThat wrapper.",
+      "The removed record PerThreadSourceProvider does not serve the removed code of getSource creating it and reading its components (only the removed field does), so the old design reads as two unrelated deletions: RM parses the record as a method returning a type `record` (see the todo)."
+    ],
+    "expectations": [
+      {
+        "description": "canUseQueryPragmas, deciding whether the test exercises the fix at all, serves the test",
+        "kind": "serves",
+        "from": "protected static boolean canUseQueryPragmas() {",
+        "to": "int numDocs = 256;"
+      },
+      {
+        "description": "randomPragmas serves the test",
+        "kind": "serves",
+        "from": "protected static QueryPragmas randomPragmas() {",
+        "to": "int numDocs = 256;"
+      },
+      {
+        "description": "builder overloads are not printed",
+        "kind": "absent",
+        "text": "public Builder put(String setting, int value) {",
+        "of": "dependency",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show"
+      },
+      {
+        "description": "the removed record serves the removed code creating it",
+        "kind": "serves",
+        "from": "private record PerThreadSourceProvider(SourceProvider source, Thread creatingThread) {",
+        "to": "var sourceProvider = map.computeIfAbsent(",
+        "todo": "RM (to report): ReinitializingSourceProvider.java of the old revision is parsed at RM's default Java 14 level, where the nested `private record PerThreadSourceProvider(SourceProvider source, Thread creatingThread) {}` (L40-42) reads as a method named PerThreadSourceProvider returning a type `record`: its tree is a MethodDeclaration (with a SimpleType 'record') and its UML an operation, so no removed class exists for the creation `new PerThreadSourceProvider(...)` (L34) to rely on"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14188",
+    "repository": "netty/netty",
+    "commit": "4aca40b727475de98a42f6e44ce803e063ca9d63",
+    "base_commit": "b360abcca17bd86c7306ba4bdfdb22432bbcd5fd",
+    "description": "the scope id is dropped from an IPv6 address when it is 0 and the address is not link-local (a non-zero scope id is kept); a new test covers a global and a link-local address",
+    "notes": [],
+    "expectations": [
+      {
+        "description": "the statement wrapped in the new condition reads as unchanged code",
+        "kind": "diff",
+        "location": "transport-native-unix-common/src/main/java/io/netty/channel/unix/NativeInetAddress.java::NativeInetAddress#address(byte[], int, int)",
+        "body": "             switch (len) {\n                 // 8 bytes:\n                 // - 4  == ipaddress\n                 // - 4  == port\n                 case 8:\n                     byte[] ipv4 = new byte[4];\n                     System.arraycopy(addr, offset, ipv4, 0, 4);\n                     address = InetAddress.getByAddress(ipv4);\n                     break;\n \n                 // 24 bytes:\n                 // - 16  == ipaddress\n                 // - 4   == scopeId\n                 // - 4   == port\n                 case 24:\n                     byte[] ipv6 = new byte[16];\n                     System.arraycopy(addr, offset, ipv6, 0, 16);\n                     int scopeId = decodeInt(addr, offset + len  - 8);\n+                    // Only include the scopeId if its either non 0 or if this is a link-local address\n+                    // as scopeId is only supported with it:\n+                    // See also https://man7.org/linux/man-pages/man7/ipv6.7.html\n+                    if (scopeId != 0 || (ipv6[0] == (byte) 0xfe && ipv6[1] == (byte) 0x80)) {\n                         address = Inet6Address.getByAddress(null, ipv6, scopeId);\n+                    } else {\n+                        address = InetAddress.getByAddress(null, ipv6);\n+                    }\n                     break;\n                 default:\n                     throw new Error();\n             }"
+      },
+      {
+        "description": "the changed address() serves the new test calling it",
+        "kind": "serves",
+        "from": "if (scopeId != 0 ||",
+        "to": "testAddressNotIncludeScopeId"
+      },
+      {
+        "description": "the added test file reads as one diff, from its license header to its class",
+        "kind": "diffs",
+        "location": "transport-native-unix-common/src/test/java/io/netty/channel/unix/NativeInetAddressTest.java",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "dataset": "TeamNewPipe_NewPipe_11654",
+    "repository": "TeamNewPipe/NewPipe",
+    "commit": "e1c0f00bac63bae3ee9356bacbecaf7901136817",
+    "base_commit": "05a87da82746c09aa431eca184ede93d58071021",
+    "description": "the comments view gets a scroll-to-top button",
+    "notes": [],
+    "expectations": [
+      {
+        "description": "the new field serves the view setup using it",
+        "kind": "serves",
+        "from": "private Button scrollToTopButton;",
+        "to": "scrollToTopButton.setOnClickListener"
+      },
+      {
+        "description": "the layout declaring the button (with its onClick attribute) is shown",
+        "kind": "contains",
+        "text": "android:id=\"@+id/scrollToTopButton\"",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs an Android layout XML, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14332",
+    "repository": "netty/netty",
+    "commit": "abf3989074441f967c6c27288fc183306651e21a",
+    "base_commit": "5a9b28a4157f79bb69331b0979e73c2eb8b2bb3f",
+    "description": "adaptive byte bufs are pooled in a queue of their magazine instead of a recycler",
+    "notes": [
+      "The removed retainedSlice/retainedDuplicate overrides bring the super implementations taking over (useful) along with the code only their removed lines used (readerIndex/writerIndex/readableBytes, ensureAccessible, the handle field, PooledSlicedByteBuf/PooledDuplicatedByteBuf.newInstance).",
+      "The diff of allocate(int, int) starts below its signature, at the if it changes, so its parameters size and maxCapacity are printed as dependencies.",
+      "The unchanged AdaptiveByteBuf#deallocate, the only caller of the new Handle#recycle (whose Recycler.EnhancedHandle branch is now dead), is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the overloads of allocate are told apart by their parameters",
+        "kind": "diffs",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator#allocate(int, int)",
+        "count": 1
+      },
+      {
+        "description": "so is the one allocating into a given buffer",
+        "kind": "diffs",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator#allocate(int, int, AdaptiveByteBuf)",
+        "count": 1
+      },
+      {
+        "description": "the changed private allocate serves the removed call of its old signature",
+        "kind": "serves",
+        "from": "+    private AdaptiveByteBuf allocate(int size, int maxCapacity, Thread currentThread) {",
+        "to": "-        if (!allocate(size, maxCapacity, Thread.currentThread(), into)) {"
+      },
+      {
+        "description": "removed methods printed in one diff keep the blank lines between them",
+        "kind": "contains",
+        "text": "-        }\n-\n-        @Override\n-        public ByteBuf retainedSlice(int index, int length) {",
+        "of": "diff"
+      }
+    ]
+  },
+  {
+    "dataset": "oracle_graal_10135",
+    "repository": "oracle/graal",
+    "commit": "c55983ced7d01676c68f4a4aaf33e0f9fc4dd23a",
+    "base_commit": "cb464855ea73fa08e27715e9f32f5f2e87dc41ad",
+    "description": "Truffle submits compilations according to the compilation activity mode of HotSpot",
+    "notes": [
+      "submitForCompilation calls getCompilationActivityMode, which this change adds as an interface default (in the diff of the enum) and overrides in HotSpotTruffleRuntime; both diffs serve the call.",
+      "The unchanged caller OptimizedCallTarget#compile, which must handle the new null result of submitForCompilation (and its RejectedExecutionException after a shutdown), is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the new enum serves the HotSpot implementation naming it as a member type inherited from a superinterface",
+        "kind": "serves",
+        "from": "enum CompilationActivityMode {",
+        "to": "return CompilationActivityMode.fromInteger(activityMode);"
+      },
+      {
+        "description": "and the submission using it",
+        "kind": "serves",
+        "from": "enum CompilationActivityMode {",
+        "to": "CompilationActivityMode compilationActivityMode = getCompilationActivityMode();"
+      },
+      {
+        "description": "getQueuedTargets, whose targets are cancelled, is printed",
+        "kind": "dependency",
+        "location": "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/BackgroundCompileQueue.java::BackgroundCompileQueue",
+        "body": "/**\n * Return call targets waiting in queue. This does not include call targets currently being\n * compiled.\n */\npublic Collection<OptimizedCallTarget> getQueuedTargets(EngineData engine) {\n    BlockingQueue<Runnable> queue = this.compilationQueue;\n    if (queue == null) {\n        // queue not initialized\n        return Collections.emptyList();\n    }\n    List<OptimizedCallTarget> queuedTargets = new ArrayList<>();\n    CompilationTask.ExecutorServiceWrapper[] array = queue.toArray(new CompilationTask.ExecutorServiceWrapper[0]);\n    for (CompilationTask.ExecutorServiceWrapper wrapper : array) {\n        OptimizedCallTarget target = wrapper.compileTask.targetRef.get();\n        if (target != null && target.engine == engine) {\n            queuedTargets.add(target);\n        }\n    }\n    return Collections.unmodifiableCollection(queuedTargets);\n}"
+      },
+      {
+        "description": "the queue lookup only extracted into `BackgroundCompileQueue queue = ...` brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public abstract BackgroundCompileQueue getCompileQueue();"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8130",
+    "repository": "apache/rocketmq",
+    "commit": "230fe546425afcb4750ae30a123b120ec503098d",
+    "base_commit": "609196890765b89116e12745279d287b91eae2ee",
+    "description": "topics get a reserve time attribute that the tiered store uses as the file reserved hours of their flat files",
+    "notes": [
+      "The trivial getters the new method calls (getMessageStore, getTopicName, getAttributes, getMetadataStore) are printed as dependencies; so are the storeConfig field of FlatFileStore and the storeConfig parameter of init, used only by removed code.",
+      "The two metrics diffs are in two lambdas of init, which their locations do not tell apart.",
+      "The key format of newAttributes (prefixed with + or -, stripped by the unchanged AttributeUtil.alterCurrentAttributes) is not shown, so a reviewer cannot see that the lookup of the bare attribute name in updateTieredStoreTopicMetadata never matches and its throw is unreachable."
+    ],
+    "expectations": [
+      {
+        "description": "the variables of one name and type of two lambdas are printed as one dependency",
+        "kind": "dependency",
+        "location": "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metrics/TieredStoreMetricsManager.java::TieredStoreMetricsManager#init",
+        "body": "FlatMessageFile flatFile",
+        "count": 1
+      },
+      {
+        "description": "the new getter serves the expiry using it",
+        "kind": "serves",
+        "from": "public long getFileReservedHours() {",
+        "to": "TimeUnit.HOURS.toMillis(flatFile.getFileReservedHours());"
+      },
+      {
+        "description": "the unchanged continue of the first metrics lambda is not marked",
+        "kind": "unchanged",
+        "file": "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metrics/TieredStoreMetricsManager.java",
+        "code": "continue;"
+      },
+      {
+        "description": "the BUILD dependency on tieredstore is shown",
+        "kind": "contains",
+        "text": "\"//tieredstore\",",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs a Bazel BUILD file, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8290",
+    "repository": "apache/rocketmq",
+    "commit": "83b3bebfac92a372fab18ad2c0c243096ea02be7",
+    "base_commit": "1a73e015b8c764a39d2a03a5a58bf26a78638986",
+    "description": "the trace bean picks an IPv4 or IPv6 string for the local address; network utilities are merged and cleaned up",
+    "notes": [
+      "isInternalIP, changed by a diff showing only its 172 and 192 branches, is printed whole again as a dependency of its callers; that copy is the only element showing its `ip.length != 4` check, which the new static block of TraceBean hits with an IPv6 address from getIP. The ideal shows that check once, not by reprinting the method.",
+      "The parameter `byte[] ip` of isInternalIP is printed as a dependency of the diff of its branches."
+    ],
+    "expectations": [
+      {
+        "description": "two added methods printed in one diff keep the blank line between them",
+        "kind": "contains",
+        "text": "+    }\n+\n+    public static InetAddress getLocalInetAddress() {",
+        "of": "diff"
+      },
+      {
+        "description": "getIP's edits read as one diff of its try block, with the loops around them",
+        "kind": "diff",
+        "location": "common/src/main/java/org/apache/rocketmq/common/UtilAll.java::UtilAll#getIP",
+        "body": "         try {\n-            Enumeration allNetInterfaces = NetworkInterface.getNetworkInterfaces();\n-            InetAddress ip = null;\n+            Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();\n+            InetAddress ip;\n             byte[] internalIP = null;\n             while (allNetInterfaces.hasMoreElements()) {\n-                NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();\n-                Enumeration addresses = netInterface.getInetAddresses();\n+                NetworkInterface netInterface = allNetInterfaces.nextElement();\n+                Enumeration<InetAddress> addresses = netInterface.getInetAddresses();\n                 while (addresses.hasMoreElements()) {\n-                    ip = (InetAddress) addresses.nextElement();\n-                    if (ip != null && ip instanceof Inet4Address) {\n+                    ip =  addresses.nextElement();\n+                    if (ip instanceof Inet4Address) {\n                         byte[] ipByte = ip.getAddress();\n                         if (ipByte.length == 4) {\n                             if (ipCheck(ipByte)) {\n                                 if (!isInternalIP(ipByte)) {\n                                     return ipByte;\n                                 } else if (internalIP == null || internalIP[0] == (byte) 127) {\n                                     internalIP = ipByte;\n                                 }\n                             }\n                         }\n-                    } else if (ip != null && ip instanceof Inet6Address) {\n+                    } else if (ip instanceof Inet6Address) {\n                         byte[] ipByte = ip.getAddress();\n                         if (ipByte.length == 16) {\n                             if (ipV6Check(ipByte)) {\n                                 if (!isInternalV6IP(ip)) {\n                                     return ipByte;\n                                 }\n                             }\n                         }\n                     }\n                 }\n             }\n             if (internalIP != null) {\n                 return internalIP;\n             } else {\n                 throw new RuntimeException(\"Can not get local ip\");\n             }\n         } catch (Exception e) {"
+      },
+      {
+        "description": "an if unwrapped from the removed null checks reads as unchanged code",
+        "kind": "unchanged",
+        "file": "common/src/main/java/org/apache/rocketmq/common/utils/NetworkUtil.java",
+        "code": "if (selectorProvider != null) {"
+      },
+      {
+        "description": "a line of the if/else-if chain of isInternalIP is printed by one diff",
+        "kind": "contains",
+        "of": "diff",
+        "count": 1,
+        "text": "} else if (ip[0] == (byte) 192) {"
+      },
+      {
+        "description": "the old LOCAL_ADDRESS line, moved into the static block, is printed once",
+        "kind": "contains",
+        "of": "diff",
+        "count": 1,
+        "text": "-    private static final String LOCAL_ADDRESS = UtilAll.ipToIPv4Str(UtilAll.getIP());"
+      },
+      {
+        "description": "the condition only moved from a removed if into the returned value brings no dependency",
+        "kind": "dependency",
+        "location": "common/src/main/java/org/apache/rocketmq/common/UtilAll.java::UtilAll#isInternalIP",
+        "body": "byte[] ip",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14818",
+    "repository": "netty/netty",
+    "commit": "3cf53d6c996e29b667016a527dd96ea3e31e5c55",
+    "base_commit": "3517081b6c8c22263d7ae98c79080498f2d04d69",
+    "description": "io_uring reads with IORING_RECV_MULTISHOT when the kernel supports it",
+    "notes": [
+      "readComplete is printed whole (its new guard and `pending` sit directly in its body). The outer `} finally {` reads as removed and added, as the old finally block is mapped to the new inner finally that received its statements; the rest of the rewritten finally reads as removed and added code.",
+      "The only change of IoUringBufferRingTest, the third read moved before `if (!incremental)`, is not shown: no change node exists for it (whether RM reports the move is not checked yet).",
+      "scheduleRead0 is printed whole (43 lines) for the message added to its first assert, as an assert reads within its block, here the member body."
+    ],
+    "expectations": [
+      {
+        "description": "the multishot support check serves the read scheduling it",
+        "kind": "serves",
+        "from": "+    static boolean isIOUringRecvMultishotSupported() {\n+        return IORING_RECV_MULTISHOT_SUPPORTED;",
+        "to": "+                boolean multishot = IoUring.isIOUringRecvMultishotSupported();"
+      },
+      {
+        "description": "the unchanged reset of READ_SCHEDULED in readComplete is not marked",
+        "kind": "absent",
+        "text": "-                ioState &= ~READ_SCHEDULED;\n+                ioState &= ~READ_SCHEDULED;",
+        "of": "diff"
+      },
+      {
+        "description": "the reordered third read of the buffer ring test is shown",
+        "kind": "contains",
+        "of": "diff",
+        "text": "ByteBuf readBuffer = sendAndRecvMessage(clientChannel, writeBuffer, bufferSyncer);",
+        "todo": "a statement moved within its block (IoUringBufferRingTest, before `if (!incremental)`) has no change node; check whether RM reports the move before blaming either side"
+      },
+      {
+        "description": "the two assert edits of cancelOutstandingReads read as one in-place diff",
+        "kind": "diffs",
+        "count": 1,
+        "location": "transport-classes-io_uring/src/main/java/io/netty/channel/uring/AbstractIoUringStreamChannel.java::AbstractIoUringStreamChannel#cancelOutstandingReads"
+      },
+      {
+        "description": "the cancel call only re-wrapped as `long id = ...` brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "static IoUringIoOps newAsyncCancel(byte flags, long userData, short data) {"
+      },
+      {
+        "description": "the flags call only extracted into `byte flags = ...` brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "protected byte flags(byte flags) {"
+      },
+      {
+        "description": "the buffer select constant only extracted into `byte flags = ...` brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "static final int IOSQE_BUFFER_SELECT"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14480",
+    "repository": "netty/netty",
+    "commit": "69b7c08f8862f5a035db663bdaaab09261c456e7",
+    "base_commit": "e3b92c3a940038ebf19d7eb2c3436436e3d8c0a3",
+    "description": "the bounded input stream counts the bytes actually read and checks the bound after reading",
+    "notes": [
+      "checkMaxBytesRead carries moved_from both read methods (and they moved_to it), though no code moved: only its numRead names can pair with the numRead of statements removed from them (to be checked against the mapping of RM)."
+    ],
+    "expectations": [
+      {
+        "description": "read() reads with the statements leaving the removed try as unchanged code",
+        "kind": "diff",
+        "location": "common/src/main/java/io/netty/util/internal/BoundedInputStream.java::BoundedInputStream#read()",
+        "body": "     public int read() throws IOException {\n-        checkMaxBytesRead(1);\n-        try {\n+        checkMaxBytesRead();\n+\n         int b = super.read();\n-            if (b <= 0) {\n-                // We couldn't read anything.\n-                numRead--;\n+        if (b > 0) {\n+            numRead++;\n         }\n+\n+        checkMaxBytesRead();\n         return b;\n-        } catch (IOException e) {\n-            numRead--;\n-            throw e;\n-        }\n     }"
+      },
+      {
+        "description": "the changed read(byte[], int, int) serves the new test",
+        "kind": "serves",
+        "from": "public int read(byte[] buf, int off, int len) throws IOException {",
+        "to": "reader.read(buffer, 0, 10000);"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8403",
+    "repository": "apache/rocketmq",
+    "commit": "2c790b30f49c87ac31857bda3f661c2a05b50352",
+    "base_commit": "d9d53d58cf7f32143485f12d4851d5c119d0855a",
+    "description": "consume queues can append through the file channel, under a new store config flag",
+    "notes": [
+      "The new flag field is printed at the top of the chapter, apart from its accessors, which it alone serves."
+    ],
+    "expectations": [
+      {
+        "description": "the new interface method serves its implementation",
+        "kind": "serves",
+        "from": "boolean appendMessageUsingFileChannel(byte[] data);",
+        "to": "public boolean appendMessageUsingFileChannel(byte[] data) {"
+      },
+      {
+        "description": "the implementation comes after the interface method",
+        "kind": "order",
+        "before": "boolean appendMessageUsingFileChannel(byte[] data);",
+        "after": "public boolean appendMessageUsingFileChannel(byte[] data) {"
+      },
+      {
+        "description": "the append kept in the else branch reads as unchanged code",
+        "kind": "unchanged",
+        "file": "store/src/main/java/org/apache/rocketmq/store/ConsumeQueue.java",
+        "code": "mappedFile.appendMessage(byteBuffer.array());"
+      },
+      {
+        "description": "appendMessage(byte[]) is not repeated as a dependency of the diffs its changed doc serves",
+        "kind": "absent",
+        "of": "dependency",
+        "text": " * @param data the byte array to append\n * @return true if success; false otherwise.\n */\nboolean appendMessage(byte[] data);"
+      },
+      {
+        "description": "the doc edit of an interface method reads with the whole doc and the declaration",
+        "kind": "diff",
+        "location": "store/src/main/java/org/apache/rocketmq/store/logfile/MappedFile.java::MappedFile#appendMessage(byte[])",
+        "body": "     /**\n      * Appends a raw message data represents by a byte array to the current {@code MappedFile}.\n+     * Using mappedByteBuffer\n      *\n      * @param data the byte array to append\n      * @return true if success; false otherwise.\n      */\n     boolean appendMessage(byte[] data);"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14076",
+    "repository": "netty/netty",
+    "commit": "55b0e70f00aaf4d4841b56049f6fbe1e57f0e323",
+    "base_commit": "5085cef149134951c94a02a743ed70025c8cdad4",
+    "description": "buffers derived from read-only buffers share the reference count of their parent",
+    "notes": [
+      "ReadOnlyUnsafeDirectByteBuf now inherits the changed duplicate/slice of ReadOnlyByteBufferBuf, which it extends; the hierarchy is not shown.",
+      "RM reports the removed overrides of ReadOnlyUnsafeDirectByteBuf as moved to ReadOnlyByteBufferBuf.ReadOnlySlicedByteBuf (with an Extract Class); a questionable detection (sibling overrides of one ByteBuf contract, tied with ReadOnlyDuplicatedByteBuf), not reported to RM.",
+      "The tests call asReadOnly() and duplicate() through ByteBuf; the changed overrides serve them as calls they may run. slice() without arguments has no changed override, so ReadOnlyByteBufferBuf#slice(int, int) does not serve the tests.",
+      "The call unwrap().slice(index, length) carried over into the new constructor call of ReadOnlyByteBuf#slice brings no dependency, but the changed slice overrides (ReadOnlyByteBufferBuf#slice and the new nested classes) still serve it.",
+      "The parameter `int index` of ReadOnlyByteBufferBuf#slice is printed as a dependency of its own body (length is not)."
+    ],
+    "expectations": [
+      {
+        "description": "the removed call's callee (Unpooled.unmodifiableBuffer) is printed",
+        "kind": "dependency",
+        "location": "buffer/src/main/java/io/netty/buffer/Unpooled.java::Unpooled",
+        "body": "/**\n * Creates a read-only buffer which disallows any modification operations\n * on the specified {@code buffer}.  The new buffer has the same\n * {@code readerIndex} and {@code writerIndex} with the specified\n * {@code buffer}.\n *\n * @deprecated Use {@link ByteBuf#asReadOnly()}.\n */\n@Deprecated\npublic static ByteBuf unmodifiableBuffer(ByteBuf buffer) {\n    ByteOrder endianness = buffer.order();\n    if (endianness == BIG_ENDIAN) {\n        return new ReadOnlyByteBuf(buffer);\n    }\n\n    return new ReadOnlyByteBuf(buffer.order(BIG_ENDIAN)).order(LITTLE_ENDIAN);\n}"
+      },
+      {
+        "description": "the slice carried over as it is into the new constructor call brings no dependency",
+        "kind": "absent",
+        "text": "public abstract ByteBuf slice(int index, int length);",
+        "of": "dependency"
+      },
+      {
+        "description": "the new nested classes serve the overrides creating them",
+        "kind": "serves",
+        "from": "private static final class ReadOnlyDuplicatedByteBuf extends DuplicatedByteBuf {",
+        "to": "+        return new ReadOnlyDuplicatedByteBuf(this);"
+      }
+    ]
+  },
+  {
+    "dataset": "spring-projects_spring-boot_39813",
+    "repository": "spring-projects/spring-boot",
+    "commit": "0c1976d7b19100934e29e6a3520be91130afe0f3",
+    "base_commit": "1130ec54a955525bd2a375728fd140dc8b920702",
+    "description": "the JPA auto-configuration passes a ManagedClassNameFilter bean to the managed types scanner",
+    "notes": [
+      "Each copyright bump prints the whole 15-line license header.",
+      "The contextRunner dependency is the bare field declaration; its assignment in the constructor, registering TestConfiguration (@TestAutoConfigurationPackage(City.class)), which makes City scanned and doesNotContain(City.class) meaningful, is not shown.",
+      "The new test reaches persistenceManagedTypes only through injection of its ManagedClassNameFilter bean, so the bean method serves no diff."
+    ],
+    "expectations": [
+      {
+        "description": "the new test configuration serves the test naming it by a class literal",
+        "kind": "serves",
+        "from": "static class AutoConfigurePackageForCountry {",
+        "to": ".withUserConfiguration(AutoConfigurePackageForCountry.class)"
+      },
+      {
+        "description": "the configuration comes before the test",
+        "kind": "order",
+        "before": "static class AutoConfigurePackageForCountry {",
+        "after": ".withUserConfiguration(AutoConfigurePackageForCountry.class)"
+      },
+      {
+        "description": "the bean method reads with its new parameter and its use",
+        "kind": "diff",
+        "location": "spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaBaseConfiguration.java::JpaBaseConfiguration.PersistenceManagedTypesConfiguration#persistenceManagedTypes",
+        "body": " \t\t@Bean\n \t\t@Primary\n \t\t@ConditionalOnMissingBean\n-\t\tstatic PersistenceManagedTypes persistenceManagedTypes(BeanFactory beanFactory, ResourceLoader resourceLoader) {\n+\t\tstatic PersistenceManagedTypes persistenceManagedTypes(BeanFactory beanFactory, ResourceLoader resourceLoader,\n+\t\t\t\tObjectProvider<ManagedClassNameFilter> managedClassNameFilter) {\n \t\t\tString[] packagesToScan = getPackagesToScan(beanFactory);\n-\t\t\treturn new PersistenceManagedTypesScanner(resourceLoader).scan(packagesToScan);\n+\t\t\treturn new PersistenceManagedTypesScanner(resourceLoader, managedClassNameFilter.getIfAvailable())\n+\t\t\t\t.scan(packagesToScan);\n \t\t}"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14584",
+    "repository": "netty/netty",
+    "commit": "61a9d605b6b86ffd925ff294123e59e5d3fa1d63",
+    "base_commit": "6138a5a39cdbf6e9212d02bd9d02edb36c6618b5",
+    "description": "the central queue capacity of the adaptive allocator is capped with Math.min(2, ...) (meant as Math.max)",
+    "notes": [
+      "Nothing shows the unchanged users of CENTRAL_QUEUE_CAPACITY: the static check `CENTRAL_QUEUE_CAPACITY < 2` that throws (which Math.min(2, 1) still fails on a one-core host) and the queue it sizes; unchanged users of a changed declaration are not represented. Only the javadoc in the diff (a default of availableProcessors()) hints that min caps wrongly."
+    ],
+    "expectations": [
+      {
+        "description": "the changed field reads with its javadoc stating the default",
+        "kind": "diff",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator",
+        "body": "     /**\n      * The capacity if the central queue that allow chunks to be shared across magazines.\n      * The default size is {@link NettyRuntime#availableProcessors()},\n      * and the maximum number of magazines is twice this.\n      * <p>\n      * This means the maximum amount of memory that we can have allocated-but-not-in-use is\n      * 5 * {@link NettyRuntime#availableProcessors()} * {@link #MAX_CHUNK_SIZE} bytes.\n      */\n-    private static final int CENTRAL_QUEUE_CAPACITY = SystemPropertyUtil.getInt(\n-            \"io.netty.allocator.centralQueueCapacity\", NettyRuntime.availableProcessors());\n+    private static final int CENTRAL_QUEUE_CAPACITY = Math.min(2, SystemPropertyUtil.getInt(\n+            \"io.netty.allocator.centralQueueCapacity\", NettyRuntime.availableProcessors()));"
+      },
+      {
+        "description": "the property reading wrapped as it is by Math.min brings no dependency",
+        "kind": "absent",
+        "text": "public static int getInt(String key, int def)",
+        "of": "dependency"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_116583",
+    "repository": "elastic/elasticsearch",
+    "commit": "8a7615ee4660d42151c537baaf76d66781fb4e1d",
+    "base_commit": "3ebc1f48aaed8bfaecbb86881503373f9bda2491",
+    "description": "an enrich request from a node before 8.14 reads a null input data type, which the term query switch handles",
+    "notes": [
+      "The null flows from readFrom through the TransportRequest constructor into termQueryList; nothing links the three diffs, as unchanged code carries the value.",
+      "The calls kept as they are in the restructured initializer (onOrAfter, getTransportVersion, V_8_14_0 in the condition, readString in the then branch) bring dependencies that say nothing about the change."
+    ],
+    "expectations": [
+      {
+        "description": "fromTypeName, which explains that \"unknown\" already resolved to null, is printed",
+        "kind": "dependency",
+        "location": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/DataType.java::DataType",
+        "body": "/**\n * Resolve a type from a name. This name is sometimes user supplied,\n * like in the case of {@code ::<typename>} and is sometimes the name\n * used over the wire, like in {@link #readFrom(String)}.\n */\npublic static DataType fromTypeName(String name) {\n    return NAME_TO_TYPE.get(name.toLowerCase(Locale.ROOT));\n}"
+      },
+      {
+        "description": "the switch reads with its new null case",
+        "kind": "diff",
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/enrich/AbstractLookupService.java::AbstractLookupService#termQueryList",
+        "body": "         return switch (inputDataType) {\n             case IP -> QueryList.ipTermQueryList(field, searchExecutionContext, (BytesRefBlock) block);\n             case DATETIME -> QueryList.dateTermQueryList(field, searchExecutionContext, (LongBlock) block);\n-            default -> QueryList.rawTermQueryList(field, searchExecutionContext, block);\n+            case null, default -> QueryList.rawTermQueryList(field, searchExecutionContext, block);\n         };"
+      },
+      {
+        "description": "the unchanged version check kept in the restructured initializer brings no dependency on the version constant",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static final TransportVersion V_8_14_0",
+        "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+      },
+      {
+        "description": "the unchanged version check kept in the restructured initializer brings no dependency on onOrAfter",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "default boolean onOrAfter(T version) {",
+        "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+      },
+      {
+        "description": "the unchanged version check kept in the restructured initializer brings no dependency on getTransportVersion",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public TransportVersion getTransportVersion() {",
+        "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+      },
+      {
+        "description": "the readString call kept in the then branch of the restructured initializer brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public String readString() throws IOException {",
+        "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_106682",
+    "repository": "elastic/elasticsearch",
+    "commit": "a9ee568c4a09807d3b76c97e5bce9a2822edd1c8",
+    "base_commit": "fb17da0647b9dffe00449587dc80171eb14c9a35",
+    "description": "a missing routing hash is derived from the id; the test of a null id is removed",
+    "notes": [
+      "The removed test brings 15 dependencies; except the SourceToParse constructor (showing the null id that now hits the new assert), they (settings builders, test helpers, the whole IndexShard#prepareIndex) tell nothing about why it is removed.",
+      "The parameters `String routing` and `DocumentParserContext context` are printed as dependencies, as their diffs start below the signatures."
+    ],
+    "expectations": [
+      {
+        "description": "a diff of an if block starts at the if, not at the last line of its condition",
+        "kind": "contains",
+        "text": "         if (context.indexSettings().getMode() == IndexMode.TIME_SERIES\n             && context.indexSettings()",
+        "of": "diff"
+      },
+      {
+        "description": "the callee of the removed default (encode(0)) is printed, though the code carried over around it uses nothing new",
+        "kind": "dependency",
+        "location": "server/src/main/java/org/elasticsearch/index/mapper/TimeSeriesRoutingHashFieldMapper.java::TimeSeriesRoutingHashFieldMapper",
+        "body": "public static String encode(int routingId) {\n    byte[] bytes = new byte[4];\n    ByteUtils.writeIntLE(routingId, bytes, 0);\n    return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);\n}"
+      },
+      {
+        "description": "the isEmpty() rewrite reads within its if",
+        "kind": "diff",
+        "location": "server/src/main/java/org/elasticsearch/action/index/IndexRequest.java::IndexRequest#routing(String)",
+        "body": "-        if (routing != null && routing.length() == 0) {\n+        if (routing != null && routing.isEmpty()) {\n             this.routing = null;\n         } else {\n             this.routing = routing;\n         }"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_119134",
+    "repository": "elastic/elasticsearch",
+    "commit": "a8335f79231c049065b5445bdac41e60c751c503",
+    "base_commit": "97a3540496e1f281ebab79401c9c6e24d570e461",
+    "description": "downsampling copies ignore_malformed of the timestamp field and sets the index setting at creation; the test randomizes it",
+    "notes": [
+      "createDownsampleIndex is printed whole (about 60 lines) for an added if, as a statement reads within its block; its tail (the cluster state task applying copyIndexMetadata after the creation) is the second settings path the change moves the setting out of, so it is relevant context.",
+      "addTimestampField's diff starts at the if within its lambda, so the parameter `builder` is printed as a dependency."
+    ],
+    "expectations": [
+      {
+        "description": "the unchanged settings of the chain extended by a new put bring no dependency",
+        "kind": "absent",
+        "text": "index.time_series.end_time",
+        "of": "dependency"
+      },
+      {
+        "description": "the implicitly typed lambda parameter `mapping` is not printed as a dependency",
+        "kind": "dependency",
+        "location": "x-pack/plugin/downsample/src/main/java/org/elasticsearch/xpack/downsample/TransportDownsampleAction.java::TransportDownsampleAction#addTimestampField",
+        "body": "mapping",
+        "count": 0
+      },
+      {
+        "description": "the method printed whole for its added if starts at its signature",
+        "kind": "contains",
+        "text": "     private void createDownsampleIndex(\n         String downsampleIndexName,",
+        "of": "diff"
+      },
+      {
+        "description": "a step added to a mapping chain reads as its old and new line",
+        "kind": "diff",
+        "location": "x-pack/plugin/downsample/src/test/java/org/elasticsearch/xpack/downsample/DownsampleActionSingleNodeTests.java::DownsampleActionSingleNodeTests#setup",
+        "body": "-        mapping.startObject(FIELD_TIMESTAMP).field(\"type\", \"date\").endObject();\n+        mapping.startObject(FIELD_TIMESTAMP).field(\"type\", \"date\").field(\"ignore_malformed\", false).endObject();"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_113768",
+    "repository": "elastic/elasticsearch",
+    "commit": "dfcff13472c5694f73b86cc8a5c07e89a0db8c53",
+    "base_commit": "539d4fdff56492ca7f6b8e59384006650a1ed946",
+    "description": "a retried recovery target keeps a placeholder permit so that its assertion holds; restoreFileFromSnapshot also asserts it has references",
+    "notes": [
+      "The assignment of the placeholder in retryCopy is printed alone, without the copy of the permit taken just before it and the comment explaining it.",
+      "hasPermitToDownloadSnapshotFiles(), which the placeholder keeps true, is unchanged code next to the added assertion and is not shown.",
+      "The unrelated restoreFileFromSnapshot diff sits between the placeholder constant and the assignment in retryCopy that the constant alone serves."
+    ],
+    "expectations": [
+      {
+        "description": "a diff of a method body starts at the method's signature, not at the line of its brace",
+        "kind": "contains",
+        "text": "     public void restoreFileFromSnapshot(\n         String repository,\n         IndexId indexId,",
+        "of": "diff"
+      },
+      {
+        "description": "the placeholder constant serves the assignment using it",
+        "kind": "serves",
+        "from": "SNAPSHOT_FILE_DOWNLOADS_PERMIT_PLACEHOLDER_FOR_RETRY = Releasables.wrap();",
+        "to": "snapshotFileDownloadsPermit = SNAPSHOT_FILE_DOWNLOADS_PERMIT_PLACEHOLDER_FOR_RETRY;"
+      },
+      {
+        "description": "the newly asserted hasReferences() is printed",
+        "kind": "dependency",
+        "location": "libs/core/src/main/java/org/elasticsearch/core/AbstractRefCounted.java::AbstractRefCounted",
+        "body": "@Override\npublic final boolean hasReferences() {\n    return refCount > 0;\n}"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_112688",
+    "repository": "elastic/elasticsearch",
+    "commit": "99964189066bbd0b06e9fddb087c27420145ce14",
+    "base_commit": "f367d2799fa8f02e6d8ca904aad189770d4d7cc3",
+    "description": "the cache stats assertions of a test are retried with assertBusy; the test is unmuted",
+    "notes": [
+      "The whole test method (about 100 lines) is printed for a wrap of its last statements.",
+      "The wrapped assertions keep their dependencies (the trivial getters of NodeCachesStatsResponse), as they now run in a retried lambda.",
+      "The unmuting in muted-tests.yml is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "a multi-line statement moved into the lambda reads as unchanged code, though re-indented",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/searchable-snapshots/src/internalClusterTest/java/org/elasticsearch/xpack/searchablesnapshots/cache/shared/NodesCachesStatsIntegTests.java",
+        "code": "final NodesCachesStatsResponse response = client().execute("
+      },
+      {
+        "description": "so does the loop moved with it",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/searchable-snapshots/src/internalClusterTest/java/org/elasticsearch/xpack/searchablesnapshots/cache/shared/NodesCachesStatsIntegTests.java",
+        "code": "for (NodeCachesStatsResponse nodeCachesStats : response.getNodes()) {"
+      },
+      {
+        "description": "the wrapper is the added code",
+        "kind": "contains",
+        "text": "+        assertBusy(() -> {",
+        "of": "diff"
+      },
+      {
+        "description": "assertBusy, which retries for 10 seconds, is printed",
+        "kind": "dependency",
+        "location": "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java::ESTestCase",
+        "body": "/**\n * Runs the code block for 10 seconds waiting for no assertion to trip.\n */\npublic static void assertBusy(CheckedRunnable<Exception> codeBlock) throws Exception {\n    assertBusy(codeBlock, 10, TimeUnit.SECONDS);\n}"
+      },
+      {
+        "description": "the muted-tests.yml entry removed is shown",
+        "kind": "contains",
+        "text": "org.elasticsearch.xpack.searchablesnapshots.cache.shared.NodesCachesStatsIntegTests",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs muted-tests.yml, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_106413",
+    "repository": "elastic/elasticsearch",
+    "commit": "379fd4de421ea0ce4f583e909bd7f7d22de88152",
+    "base_commit": "720188e95f8e29d78117d61b402fb2ce50be06c0",
+    "description": "a transform whose auth state is red fails to start with a permission error; the listener is rewritten with delegateFailureAndWrap",
+    "notes": [
+      "onStart is printed whole (about 170 lines) for edits at its top and a declaration moved to its middle; the moved declaration's uses are far below.",
+      "The changelog YAML is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "an if moved out of the removed try into the new lambda reads as unchanged code",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/TransformIndexer.java",
+        "code": "if (context.getPageSize() == 0) {"
+      },
+      {
+        "description": "the statements carried over as they are into the new lambda bring no dependency",
+        "kind": "absent",
+        "text": "private RunState determineRunStateAtStart() {",
+        "of": "dependency"
+      },
+      {
+        "description": "delegateFailureAndWrap, which replaces ActionListener.wrap, is printed",
+        "kind": "dependency",
+        "location": "server/src/main/java/org/elasticsearch/action/ActionListener.java::ActionListener",
+        "body": "/**\n * Same as {@link #delegateFailure(BiConsumer)} except that any failure thrown by {@code bc} or the original listener's\n * {@link #onResponse} will be passed to the original listener's {@link #onFailure(Exception)}.\n */\ndefault <T> ActionListener<T> delegateFailureAndWrap(CheckedBiConsumer<ActionListener<Response>, T, ? extends Exception> bc) {\n    return new ActionListenerImplementations.ResponseWrappingActionListener<>(this, bc);\n}"
+      },
+      {
+        "description": "the new message serves the check using it",
+        "kind": "serves",
+        "from": "TRANSFORM_CANNOT_START_WITHOUT_PERMISSIONS = \"Cannot start transform [{0}]",
+        "to": "HealthStatus.RED.equals(context.getAuthState().getStatus())"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_111779",
+    "repository": "elastic/elasticsearch",
+    "commit": "5772e825bf229e1cd80234585741589c6cbf507a",
+    "base_commit": "fd916c221ae51b621dc5eb4d93b8f5a10bbc6d49",
+    "description": "a single value query read without a PlanStreamInput skips its source with the new Source.readEmpty",
+    "notes": [
+      "Test helpers (assertThat, randomInt) and stream primitives (readInt, writeInt) are printed as dependencies."
+    ],
+    "expectations": [
+      {
+        "description": "readFrom, which readEmpty must stay in sync with, is printed",
+        "kind": "dependency",
+        "location": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Source.java::Source",
+        "body": "public static <S extends StreamInput & PlanStreamInput> Source readFrom(S in) throws IOException {\n    /*\n     * The funny typing dance with `<S extends...>` is required we're in esql-core\n     * here and the real PlanStreamInput is in esql-proper. And we need PlanStreamInput\n     * to send the query one time.\n     */\n    if (in.readBoolean() == false) {\n        return EMPTY;\n    }\n    int line = in.readInt();\n    int column = in.readInt();\n    int charPositionInLine = column - 1;\n\n    int length = in.readInt();\n    String text = sourceText(in.sourceText(), line, column, length);\n    return new Source(new Location(line, charPositionInLine), text);\n}"
+      },
+      {
+        "description": "readEmpty serves the query reading with it",
+        "kind": "serves",
+        "from": "public static Source readEmpty(StreamInput in) throws IOException {",
+        "to": "this.source = Source.readEmpty(in);"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_110251",
+    "repository": "elastic/elasticsearch",
+    "commit": "c92cc3209782d2da16969cbc5bcfa0e683b8e52e",
+    "base_commit": "2f3f09fb1f6a19aa83945a9a4f40001d4c63436f",
+    "description": "index sorting is allowed with nested objects; writers set the parent field and sort fields under nested objects are rejected",
+    "notes": [
+      "Removing static from newTemporaryAppendingIndexWriter/newTemporaryEmptyIndexWriter follows from newTemporaryIndexWriterConfig reading hasIndexSort; nothing links them, the calls being unchanged code.",
+      "The documentation and YAML REST tests are not shown.",
+      "The unrelated MapperServiceTests diff (and the StoreTests diff) read before the writers setting the parent field and the Store helpers.",
+      "Engine.ROOT_DOC_FIELD_NAME is printed seven elements before the first writer setting it, with unrelated diffs in between.",
+      "The MapperServiceTests diff brings trivial builder and test framework declarations as dependencies (XContentBuilder, Settings.Builder, an assertThat used only by removed lines)."
+    ],
+    "expectations": [
+      {
+        "description": "the overloaded constructors of Store are told apart",
+        "kind": "diffs",
+        "location": "server/src/main/java/org/elasticsearch/index/store/Store.java::Store#Store(ShardId, IndexSettings, Directory, ShardLock)",
+        "count": 1
+      },
+      {
+        "description": "the root doc field name serves the writer config setting it",
+        "kind": "serves",
+        "from": "public static final String ROOT_DOC_FIELD_NAME = \"__root_doc_for_nested\";",
+        "to": "+            iwc.setParentField(Engine.ROOT_DOC_FIELD_NAME);\n+        }\n+        return iwc;"
+      },
+      {
+        "description": "the YAML test of sorting with nested objects is shown",
+        "kind": "contains",
+        "text": "sort doc with nested object",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs a YAML REST test, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      },
+      {
+        "description": "unrelated test code reads after production code",
+        "kind": "order",
+        "before": "iwc.setParentField(ROOT_DOC_FIELD_NAME);  // Needed to support index sorting in the presence of nested objects.",
+        "after": "public void testIndexSortWithNestedFields() throws IOException {",
+        "todo": "an unrelated test is placed among production diffs"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14803",
+    "repository": "netty/netty",
+    "commit": "eb4dd8f319355218f179eba239718311e8b2d379",
+    "base_commit": "f3311e5db4c9d9559fac96bb2f48295d63f58b67",
+    "description": "a frame stream takes the id of the stream it is set to",
+    "notes": [
+      "The callers of setStreamAndProperty, which tell whether the assert above the change can fail, are not shown: onStreamActive0 and the push promise read with a new frame stream whose id is -1, and onStreamAdded with a frame stream whose id initializeNewStream already set to the id of the stream."
+    ],
+    "expectations": [
+      {
+        "description": "the assignment reads within setStreamAndProperty, below the assert guarding the id",
+        "kind": "diff",
+        "location": "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java::Http2FrameCodec.DefaultHttp2FrameStream#setStreamAndProperty",
+        "body": "         DefaultHttp2FrameStream setStreamAndProperty(PropertyKey streamKey, Http2Stream stream) {\n             assert id == -1 || stream.id() == id;\n             this.stream = stream;\n+            this.id = stream.id();\n             stream.setProperty(streamKey, this);\n             return this;\n         }"
+      },
+      {
+        "description": "the id field serves the assignment",
+        "kind": "serves",
+        "from": "private volatile int id = -1;",
+        "to": "+            this.id = stream.id();"
+      },
+      {
+        "description": "the unchanged caller setting the stream of a new frame stream is shown",
+        "kind": "contains",
+        "text": "newStream().setStreamAndProperty(streamKey, stream)",
+        "todo": "unchanged code using a changed declaration is not represented (see the TODO on forward extensions in HunkNetwork), though the reviewer needed the caller to see the assert holds for new frame streams"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8964",
+    "repository": "apache/rocketmq",
+    "commit": "b97f60f8b604eabdf9fe07995891c02ac45f0efd",
+    "base_commit": "9202de34c30db004db26f4976f165595af1b8bd3",
+    "description": "push consumers fail sending a message back when the broker has no master address",
+    "notes": [
+      "The else branch is printed from its own line; neither the condition choosing it nor the enclosing catch (Throwable) handling the new throw (logging and falling back to sendMessageBackAsNormalMessage, as needRetry is true) is shown.",
+      "The pull consumer's sendMessageBack, which the review finds has the same issue, is unrelated code and not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the blank-address check reads within the else branch computing the address",
+        "kind": "diff",
+        "location": "client/src/main/java/org/apache/rocketmq/client/impl/consumer/DefaultMQPushConsumerImpl.java::DefaultMQPushConsumerImpl#sendMessageBack(MessageExt, int, String, MessageQueue)",
+        "body": "             } else {\n                 String brokerAddr = (null != brokerName) ? this.mQClientFactory.findBrokerAddressInPublish(brokerName)\n                     : RemotingHelper.parseSocketAddressAddr(msg.getStoreHost());\n+                if (UtilAll.isBlank(brokerAddr)) {\n+                    throw new MQClientException(\"Broker[\" + brokerName + \"] master node does not exist\", null);\n+                }\n                 this.mQClientFactory.getMQClientAPIImpl().consumerSendMessageBack(brokerAddr, brokerName, msg,\n                     this.defaultMQPushConsumer.getConsumerGroup(), delayLevel, 5000, getMaxReconsumeTimes());\n             }"
+      },
+      {
+        "description": "UtilAll#isBlank is a dependency",
+        "kind": "dependency",
+        "location": "common/src/main/java/org/apache/rocketmq/common/UtilAll.java::UtilAll",
+        "body": "public static boolean isBlank(String str) {\n    return StringUtils.isBlank(str);\n}"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14582",
+    "repository": "netty/netty",
+    "commit": "3f2f1436476efb04f90d9fc1d18165295dcebaa7",
+    "base_commit": "58ec269ae467689449dbfb23676536f06d1216c4",
+    "description": "the central queue capacity of the adaptive allocator is capped with Math.min(2, ...) (meant as Math.max)",
+    "notes": [
+      "Nothing shows the unchanged users of CENTRAL_QUEUE_CAPACITY: the static check `CENTRAL_QUEUE_CAPACITY < 2` that throws (which Math.min(2, 1) still fails on a one-core host) and the queue it sizes; unchanged users of a changed declaration are not represented. Only the javadoc in the diff (a default of availableProcessors()) hints that min caps wrongly."
+    ],
+    "expectations": [
+      {
+        "description": "the constant reads with its javadoc",
+        "kind": "diff",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator",
+        "body": "     /**\n      * The capacity if the central queue that allow chunks to be shared across magazines.\n      * The default size is {@link NettyRuntime#availableProcessors()},\n      * and the maximum number of magazines is twice this.\n      * <p>\n      * This means the maximum amount of memory that we can have allocated-but-not-in-use is\n      * 5 * {@link NettyRuntime#availableProcessors()} * {@link #MAX_CHUNK_SIZE} bytes.\n      */\n-    private static final int CENTRAL_QUEUE_CAPACITY = SystemPropertyUtil.getInt(\n-            \"io.netty.allocator.centralQueueCapacity\", NettyRuntime.availableProcessors());\n+    private static final int CENTRAL_QUEUE_CAPACITY = Math.min(2, SystemPropertyUtil.getInt(\n+            \"io.netty.allocator.centralQueueCapacity\", NettyRuntime.availableProcessors()));"
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_23301",
+    "repository": "bazelbuild/bazel",
+    "commit": "07b01b2c626cb3ee63ebac9481d359986058d963",
+    "base_commit": "ea7df052e09ff969a96a04ecaa3083bdaa06318e",
+    "description": "vendor mode takes the lookup keys of the targets with getLookupKey; a Python test covers alias targets",
+    "notes": [
+      "The removed import of ConfiguredTargetKey is not shown, as no import of a modified file is.",
+      "The removed builder chain brings ConfiguredTargetKey.builder and its setters as dependencies, which is how a reviewer compares it with getLookupKey."
+    ],
+    "expectations": [
+      {
+        "description": "the mapping lambda reads within its whole declaration statement, from the declared type to the collect",
+        "kind": "diff",
+        "location": "src/main/java/com/google/devtools/build/lib/bazel/commands/VendorCommand.java::VendorCommand#vendorTargets",
+        "body": "     ImmutableList<SkyKey> targetKeys =\n         buildResult.getActualTargets().stream()\n-            .map(\n-                target ->\n-                    ConfiguredTargetKey.builder()\n-                        .setConfigurationKey(target.getConfigurationKey())\n-                        .setLabel(target.getLabel())\n-                        .build())\n+            .map(target -> target.getLookupKey())\n             .collect(toImmutableList());"
+      },
+      {
+        "description": "ConfiguredTarget#getLabel shows the label comes from the lookup key",
+        "kind": "dependency",
+        "location": "src/main/java/com/google/devtools/build/lib/analysis/ConfiguredTarget.java::ConfiguredTarget",
+        "body": "@Override\ndefault Label getLabel() {\n  return getLookupKey().getLabel();\n}"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_9218",
+    "repository": "apache/rocketmq",
+    "commit": "a989d3c50f3f62bce8eb9f6e67b940b266bb6225",
+    "base_commit": "988c826921de5ed7eda3d88c22c705c6dc470e24",
+    "description": "pop lag, inflight and available counts skip the pop buffer when the pop consumer KV service is enabled; a duplicate fallback is removed",
+    "notes": [
+      "The fallback after the if/else of getAvailableMsgCount (`if (pullOffset < 0) pullOffset = brokerOffset;`), which makes the removed one a duplicate (the review comment), is not shown: the diff ends with the if statement.",
+      "The code pop groups now fall through to when the pop consumer KV service is enabled (after the early-return ifs of getConsumerLagStats and getInFlightMsgStats) is not shown.",
+      "The declarations of pullOffset and brokerOffset are printed as dependencies of the removed fallback only."
+    ],
+    "expectations": [
+      {
+        "description": "the removed fallback reads within the whole if of getAvailableMsgCount",
+        "kind": "diff",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/metrics/ConsumerLagCalculator.java::ConsumerLagCalculator#getAvailableMsgCount(String, String, int, boolean)",
+        "body": "-        if (isPop) {\n+        if (isPop && !brokerConfig.isPopConsumerKVServiceEnable()) {\n             pullOffset = popBufferMergeService.getLatestOffset(topic, group, queueId);\n             if (pullOffset < 0) {\n                 pullOffset = offsetManager.queryOffset(group, topic, queueId);\n             }\n-            if (pullOffset < 0) {\n-                pullOffset = brokerOffset;\n-            }\n         } else {\n             pullOffset = offsetManager.queryPullOffset(group, topic, queueId);\n         }"
+      },
+      {
+        "description": "a changed if condition prints the whole if it guards (the pop buffer branch, now skipped when the KV service is enabled)",
+        "kind": "diff",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/metrics/ConsumerLagCalculator.java::ConsumerLagCalculator#getConsumerLagStats(String, String, int, boolean)",
+        "body": "-        if (isPop) {\n+        if (isPop && !brokerConfig.isPopConsumerKVServiceEnable()) {\n             long pullOffset = popBufferMergeService.getLatestOffset(topic, group, queueId);\n             if (pullOffset < 0) {\n                 pullOffset = offsetManager.queryOffset(group, topic, queueId);\n             }\n             if (pullOffset < 0) {\n                 pullOffset = brokerOffset;\n             }\n             long inFlightNum = popInflightMessageCounter.getGroupPopInFlightMessageNum(topic, group, queueId);\n             long lag = calculateMessageCount(group, topic, queueId, pullOffset, brokerOffset) + inFlightNum;\n             long consumerOffset = pullOffset - inFlightNum;\n             long consumerStoreTimeStamp = getStoreTimeStamp(topic, queueId, consumerOffset);\n             return new Pair<>(lag, consumerStoreTimeStamp);\n         }"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_105994",
+    "repository": "elastic/elasticsearch",
+    "commit": "6da64669f1feb09bf7adcef51ff011d48b4fde81",
+    "base_commit": "6fbf9892aa6964151c7491ba8e6b5a00336bba84",
+    "description": "a nested kNN pre-filter that might match nested docs is restricted to parent docs",
+    "notes": [
+      "The YAML REST tests of the fix are not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the filter adjustment reads within the if on the filter query",
+        "kind": "diff",
+        "location": "server/src/main/java/org/elasticsearch/search/vectors/KnnVectorQueryBuilder.java::KnnVectorQueryBuilder#doToQuery",
+        "body": "             if (filterQuery != null) {\n+                NestedObjectMapper mapper = context.nestedLookup().getNestedMappers().get(parentPath);\n+                NestedHelper nestedHelper = new NestedHelper(context.nestedLookup(), context::isFieldMapped);\n+                // We treat the provided filter as a filter over PARENT documents, so if it might match nested documents\n+                // we need to adjust it.\n+                if (nestedHelper.mightMatchNestedDocs(filterQuery)) {\n+                    // Ensure that the query only returns parent documents matching `filterQuery`\n+                    filterQuery = Queries.filtered(filterQuery, Queries.not(mapper.nestedTypeFilter()));\n+                }\n+                // Now join the filterQuery & parentFilter to provide the matching blocks of children\n                 filterQuery = new ToChildBlockJoinQuery(filterQuery, parentFilter);\n             }"
+      },
+      {
+        "description": "NestedHelper#mightMatchNestedDocs is a dependency",
+        "kind": "contains",
+        "text": "public boolean mightMatchNestedDocs(Query query) {",
+        "of": "dependency"
+      },
+      {
+        "description": "the YAML REST test is shown",
+        "kind": "contains",
+        "text": "nested kNN search with filter that might match nested docs",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs a YAML REST test, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_24714",
+    "repository": "bazelbuild/bazel",
+    "commit": "b01e1451ff022d8e098acc4e1db684b5ad235d62",
+    "base_commit": "7d2bc79fdae52f1420b0e04904f26154ff1f48bf",
+    "description": "cgroup v2 cpu.max parsing skips the first token by \\S+ and reads 'max' as no limit",
+    "notes": [
+      "Path#getPathFile and the Cpu#getCpus declaration are printed as dependencies of the tests.",
+      "setCpuLimit_v2 prints only its changed statement; its unchanged call cpu.setCpus(5) and assertion, which make it the test of the setCpus fix, are not shown, so setCpus serves no test."
+    ],
+    "expectations": [
+      {
+        "description": "the changed skip reads within the try reading cpu.max",
+        "kind": "diff",
+        "location": "src/main/java/com/google/devtools/build/lib/sandbox/cgroups/controller/v2/UnifiedCpu.java::UnifiedCpu#setCpus",
+        "body": "     try (Scanner scanner = new Scanner(Files.newBufferedReader(path.resolve(\"cpu.max\")))) {\n-      period = scanner.skip(\".*\\\\s\").nextInt();\n+      period = scanner.skip(\"\\\\S+\\\\s\").nextInt();\n     }"
+      },
+      {
+        "description": "the changed override serves the test calling it through the Cpu interface",
+        "kind": "serves",
+        "from": "+      if (!scanner.hasNextLong()) {",
+        "to": "+    scratch.file(\"cgroup/cpu/cpu.max\", \"max 1000\\n\");"
+      },
+      {
+        "description": "FsApparatus#file shows how the scratch file content is joined",
+        "kind": "dependency",
+        "location": "src/test/java/com/google/devtools/build/lib/vfs/util/FsApparatus.java::FsApparatus",
+        "body": "/**\n * Creates a scratch file in the scratch filesystem with the given {@code pathName} with\n * {@code lines} being its content. The method returns a Path instance for the scratch file.\n */\npublic Path file(String pathName, String... lines) throws IOException {\n  Path file = path(pathName);\n  Path parentDir = file.getParentDirectory();\n  if (!parentDir.exists()) {\n    parentDir.createDirectoryAndParents();\n  }\n  if (file.exists()) {\n    throw new IOException(\"Could not create scratch file (file exists) \"\n        + file);\n  }\n  String fileContent = StringUtilities.joinLines(lines);\n  FileSystemUtils.writeContentAsLatin1(file, fileContent);\n  return file;\n}"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8626",
+    "repository": "apache/rocketmq",
+    "commit": "3c9b3b81eaec373ad879718c02705357f3f3c02b",
+    "base_commit": "720c87e85dd95be8e56166a7f00c652ce0f1d458",
+    "description": "the period of the name server address update becomes a broker config",
+    "notes": [],
+    "expectations": [
+      {
+        "description": "the period reads within the scheduled task",
+        "kind": "diff",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/BrokerController.java::BrokerController#initializeScheduledTasks",
+        "body": "             this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {\n                 @Override\n                 public void run() {\n                     try {\n                         BrokerController.this.updateNamesrvAddr();\n                     } catch (Throwable e) {\n                         LOG.error(\"Failed to update nameServer address list\", e);\n                     }\n                 }\n-            }, 1000 * 10, 1000 * 60 * 2, TimeUnit.MILLISECONDS);\n+            }, 1000 * 10, this.brokerConfig.getUpdateNameServerAddrPeriod(), TimeUnit.MILLISECONDS);"
+      },
+      {
+        "description": "the field serves its accessors",
+        "kind": "serves",
+        "from": "+    private int updateNameServerAddrPeriod = 1000 * 120;",
+        "to": "+    public int getUpdateNameServerAddrPeriod() {"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14141",
+    "repository": "netty/netty",
+    "commit": "2e906adddb20431a36d7915a9cf6e1f7bf424cad",
+    "base_commit": "217df76c40be0f9d4f82e8cf05d68ea07a23f42f",
+    "description": "an unresolved IPv6 host already in brackets is not bracketed again",
+    "notes": [],
+    "expectations": [
+      {
+        "description": "the bracket check reads within the IPv6 branch",
+        "kind": "diff",
+        "location": "codec-http/src/main/java/io/netty/handler/codec/http/HttpUtil.java::HttpUtil#formatHostnameForHttp",
+        "body": "         if (NetUtil.isValidIpV6Address(hostString)) {\n             if (!addr.isUnresolved()) {\n                 hostString = NetUtil.toAddressString(addr.getAddress());\n             }\n+\n+            // If IPv6 address already contains brackets, let's return as is.\n+            if (hostString.charAt(0) == '[' && hostString.charAt(hostString.length() - 1) == ']') {\n+                return hostString;\n+            } else {\n+                // Add brackets to the IPv6 address.\n                 return '[' + hostString + ']';\n+            }\n         }"
+      },
+      {
+        "description": "the return moved into the else branch reads as unchanged code",
+        "kind": "unchanged",
+        "file": "codec-http/src/main/java/io/netty/handler/codec/http/HttpUtil.java",
+        "code": "return '[' + hostString + ']';"
+      },
+      {
+        "description": "the fix serves its test",
+        "kind": "serves",
+        "from": "+            if (hostString.charAt(0) == '[' && hostString.charAt(hostString.length() - 1) == ']') {",
+        "to": "+    public void testIpv6UnresolvedExplicitAddress()  {"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_114899",
+    "repository": "elastic/elasticsearch",
+    "commit": "ef2760e05bdc3865b5819beba173c30c09644fa5",
+    "base_commit": "6f608803302230a24c2d81fc9c4b863eb3513cb8",
+    "description": "aggregate references leave out the attributes of aliased groupings",
+    "notes": [
+      "The capability added is read only by the csv-spec test, which is not shown.",
+      "The comma replacing the semicolon after PER_AGG_FILTERING is not shown, being no change of the AST.",
+      "The unchanged users of the changed static computeReferences are not shown: AggregateExec#computeReferences, and EsqlSession#fieldNames (through QueryPlan#references), where the alias name reached field_caps, the bug the change fixes."
+    ],
+    "expectations": [
+      {
+        "description": "computeReferences reads whole",
+        "kind": "diff",
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/Aggregate.java::Aggregate#computeReferences(List<? extends NamedExpression>, List<? extends Expression>)",
+        "body": "     public static AttributeSet computeReferences(List<? extends NamedExpression> aggregates, List<? extends Expression> groupings) {\n-        return Expressions.references(groupings).combine(Expressions.references(aggregates));\n+        AttributeSet result = Expressions.references(groupings).combine(Expressions.references(aggregates));\n+        for (Expression grouping : groupings) {\n+            if (grouping instanceof Alias) {\n+                result.remove(((Alias) grouping).toAttribute());\n+            }\n+        }\n+        return result;\n     }"
+      },
+      {
+        "description": "Alias#toAttribute is a dependency",
+        "kind": "dependency",
+        "location": "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/Alias.java::Alias",
+        "body": "@Override\npublic Attribute toAttribute() {\n    if (lazyAttribute == null) {\n        lazyAttribute = resolved()\n            ? new ReferenceAttribute(source(), name(), dataType(), nullable(), id(), synthetic())\n            : new UnresolvedAttribute(source(), name());\n    }\n    return lazyAttribute;\n}"
+      },
+      {
+        "description": "the csv-spec test is shown",
+        "kind": "contains",
+        "text": "statsByConstantExpression",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs an ES|QL csv-spec test, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14562",
+    "repository": "netty/netty",
+    "commit": "89539237773689e09307d2cf59c60c1325a04456",
+    "base_commit": "dc999c4b87d5023bfcf9ec73a8d7481e7bf5bdbf",
+    "description": "TooLongFrameException messages give the limit and the actual length",
+    "notes": [
+      "RM reports the first throw of decodeBinaryFrame as deleted and inserted while it maps the identical second one, with the argument inserted; the output reads the same.",
+      "The unchanged MqttCodecTest#validateDecoderExceptionTooLargeMessage asserts the old message (\"too large message:\") and now fails (the finding of the review); only the message text links it to the change, and it reaches decode through channelRead, so nothing RM represents leads to it.",
+      "The throws of SpdyHttpDecoder#decode and MqttDecoder#decode read as the statement alone, without the if condition whose operands the new message reports; the Spdy message reports the size of the frame while the condition compares the accumulated content."
+    ],
+    "expectations": [
+      {
+        "description": "the new message reads within the if checking the length field size",
+        "kind": "diff",
+        "location": "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocket00FrameDecoder.java::WebSocket00FrameDecoder#decodeBinaryFrame",
+        "body": "             if (lengthFieldSize > 8) {\n                 // Perhaps a malicious peer?\n-                throw new TooLongFrameException();\n+                throw new TooLongFrameException(\"frame length field size exceeds 8: \" + lengthFieldSize);\n             }"
+      },
+      {
+        "description": "the new message reads within the then block of the if of toFrameLength",
+        "kind": "diff",
+        "location": "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocket08FrameDecoder.java::WebSocket08FrameDecoder#toFrameLength",
+        "body": "         if (l > Integer.MAX_VALUE) {\n-            throw new TooLongFrameException(\"Length:\" + l);\n+            throw new TooLongFrameException(\"frame length exceeds \" + Integer.MAX_VALUE + \": \" + l);\n         } else {"
+      },
+      {
+        "description": "the two throws of decodeTextFrame read within their own ifs",
+        "kind": "diffs",
+        "location": "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocket00FrameDecoder.java::WebSocket00FrameDecoder#decodeTextFrame",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_25203",
+    "repository": "bazelbuild/bazel",
+    "commit": "0041f86fa2223efcf4ee5cf5772ee0feea3c4956",
+    "base_commit": "690ee50011826d8a626513b500f38a51d0acea4a",
+    "description": "BEP test results always carry the exit code of the spawn",
+    "notes": [
+      "Each test method changed by one assertion is printed whole (46 to 102 lines each), and so is extractExecutionInfo (71 lines, mostly the timing breakdown chain) for its one added statement.",
+      "The caller of extractExecutionInfo throwing unless the spawn set up, which the review relies on, is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the exit code is set before the cache hit check",
+        "kind": "contains",
+        "text": "+    executionInfo.setExitCode(spawnResult.exitCode());\n+\n     if (spawnResult.isCacheHit()) {",
+        "of": "diff"
+      },
+      {
+        "description": "SpawnResult#exitCode is a dependency",
+        "kind": "contains",
+        "text": "Returns the exit code of the subprocess if the subprocess was executed.",
+        "of": "dependency"
+      },
+      {
+        "description": "the caller of extractExecutionInfo is shown",
+        "kind": "contains",
+        "text": "extractExecutionInfo(spawnResult",
+        "todo": "unchanged code using a changed declaration is not represented (see the TODO on forward extensions in HunkNetwork), though the review judges the change by the setupSuccess check of the caller"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_123438",
+    "repository": "elastic/elasticsearch",
+    "commit": "b934036f85b2afc123ff0dd82b2f09b69775e839",
+    "base_commit": "39a2e88964eed986feedf76099c2dcd27709379c",
+    "description": "registering a compute group task handles its cancellation by failing the listener",
+    "notes": [],
+    "expectations": [
+      {
+        "description": "the call wrapped in the new try reads as unchanged code within the else branch",
+        "kind": "diff",
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ClusterComputeHandler.java::ClusterComputeHandler#startComputeOnRemoteCluster",
+        "body": "                 } else {\n+                    try {\n                         groupTask = computeService.createGroupTask(rootTask, () -> \"compute group: cluster [\" + clusterAlias + \"]\");\n+                    } catch (TaskCancelledException e) {\n+                        l.onFailure(e);\n+                        return;\n+                    }\n                     onGroupFailure = computeService.cancelQueryOnFailure(groupTask);\n                     l = ActionListener.runAfter(l, () -> transportService.getTaskManager().unregister(groupTask));\n                 }"
+      },
+      {
+        "description": "the declaration of TaskCancelledException is shown",
+        "kind": "contains",
+        "text": "class TaskCancelledException",
+        "todo": "types named by a change only as types (throws, catch, casts) are no dependencies, though the review asks whether this one is a runtime exception"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8593",
+    "repository": "apache/rocketmq",
+    "commit": "44b01cc4a0ad4e9372d850b781513c7b42d42c5d",
+    "base_commit": "00a05a5faa40a0c8f8deb59f0c8058e62b9bd747",
+    "description": "a blocked orderly pop returns the rest count without the queue backlog",
+    "notes": [
+      "The parameters topic and queueId, three local declarations (isOrder, offset, future), the brokerController field, getMessageStore and getMaxOffsetInQueue are printed as dependencies, mostly of the removed accumulation; the declaration of offset shows its first value, not the reassigned one the removed line uses.",
+      "The unchanged caller in processRequest, whose `restNum > 0` triggers notifyMessageArriving and whose restNum goes to the response header, is not shown, though the change exists for its effect there."
+    ],
+    "expectations": [
+      {
+        "description": "the moved block check reads within the try of popMsgFromQueue",
+        "kind": "diff",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/processor/PopMessageProcessor.java::PopMessageProcessor#popMsgFromQueue",
+        "body": "         try {\n             future.whenComplete((result, throwable) -> queueLockManager.unLock(lockKey));\n             offset = getPopOffset(topic, requestHeader.getConsumerGroup(), queueId, requestHeader.getInitMode(),\n                 true, lockKey, true);\n-            if (isOrder && brokerController.getConsumerOrderInfoManager().checkBlock(attemptId, topic,\n-                requestHeader.getConsumerGroup(), queueId, requestHeader.getInvisibleTime())) {\n-                future.complete(this.brokerController.getMessageStore().getMaxOffsetInQueue(topic, queueId) - offset + restNum);\n+\n+            // Current requests would calculate the total number of messages\n+            // waiting to be filtered for new message arrival notifications in\n+            // the long-polling service, need disregarding the backlog in order\n+            // consumption scenario. If rest message num including the blocked\n+            // queue accumulation would lead to frequent unnecessary wake-ups\n+            // of long-polling requests, resulting unnecessary CPU usage.\n+            // When client ack message, long-polling request would be notifications\n+            // by AckMessageProcessor.ackOrderly() and message will not be delayed.\n+            if (isOrder) {\n+                if (brokerController.getConsumerOrderInfoManager().checkBlock(\n+                    attemptId, topic, requestHeader.getConsumerGroup(), queueId, requestHeader.getInvisibleTime())) {\n+                    // should not add accumulation(max offset - consumer offset) here\n+                    future.complete(restNum);\n                     return future;\n                 }\n-\n-            if (isOrder) {\n                 this.brokerController.getPopInflightMessageCounter().clearInFlightMessageNum(\n-                    topic,\n-                    requestHeader.getConsumerGroup(),\n-                    queueId\n-                );\n+                    topic, requestHeader.getConsumerGroup(), queueId);\n             }\n \n             if (getMessageResult.getMessageMapedList().size() >= requestHeader.getMaxMsgNums()) {\n                 restNum = this.brokerController.getMessageStore().getMaxOffsetInQueue(topic, queueId) - offset + restNum;\n                 future.complete(restNum);\n                 return future;\n             }\n         } catch (Exception e) {"
+      },
+      {
+        "description": "the block check only moved from the && condition into a nested if, reflowed, brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public boolean checkBlock(String attemptId, String topic, String group, int queueId, long invisibleTime) {"
+      },
+      {
+        "description": "a local variable dependency is printed as its declaration, with its type",
+        "kind": "dependency",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/processor/PopMessageProcessor.java::PopMessageProcessor#popMsgFromQueue",
+        "body": "boolean isOrder = requestHeader.isOrder();",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_13903",
+    "repository": "netty/netty",
+    "commit": "b0bf6a0a0a6d56e7f67b0a886558af24cc357be8",
+    "base_commit": "a09cc1620c9f8ac0cb17851b85a051459ee02964",
+    "description": "HTTP/2 frames and frame streams get consistent hashCode and equals",
+    "notes": [
+      "The unchanged equals of AbstractHttp2StreamFrame and DefaultHttp2PingFrame, which the changed hashCode methods must agree with, are not shown (no relation links a hashCode to the equals of its class)."
+    ],
+    "expectations": [
+      {
+        "description": "the added hashCode and equals read together",
+        "kind": "diff",
+        "location": "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java::Http2FrameCodec.DefaultHttp2FrameStream",
+        "body": "+        @Override\n+        public int hashCode() {\n+            Http2Stream stream = this.stream;\n+            if (stream == null) {\n+                return id;\n+            }\n+            return stream.hashCode();\n+        }\n+\n+        @Override\n+        public boolean equals(Object o) {\n+            if (this == o) {\n+                return true;\n+            }\n+            if (o == null || getClass() != o.getClass()) {\n+                return false;\n+            }\n+            DefaultHttp2FrameStream that = (DefaultHttp2FrameStream) o;\n+            Http2Stream stream = this.stream;\n+            Http2Stream thatStream = that.stream;\n+            return id == that.id && stream != null && stream.equals(thatStream);\n+        }"
+      },
+      {
+        "description": "the stream field serves them",
+        "kind": "serves",
+        "from": "private volatile Http2Stream stream;",
+        "to": "+        public boolean equals(Object o) {"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14187",
+    "repository": "netty/netty",
+    "commit": "ffc63d1f3e09d517f50e80777442b1b8f991788c",
+    "base_commit": "b360abcca17bd86c7306ba4bdfdb22432bbcd5fd",
+    "description": "HTTP decoders check versions strictly through new valueOf and constructor overloads",
+    "notes": [
+      "Code arriving unchanged in the new valueOf and constructor brings its dependencies: the assigned fields (protocolName, majorVersion, ...), checkNonEmptyAfterTrim, HTTP_1_1_STRING, HTTP_1_1, version0 and checkNotNull; they also serve the removed bodies of the delegating originals."
+    ],
+    "expectations": [
+      {
+        "description": "the body extracted to valueOf(String, boolean) reads against the lines it left: only its edits are marked",
+        "kind": "diff",
+        "location": "codec-http/src/main/java/io/netty/handler/codec/http/HttpVersion.java::HttpVersion",
+        "body": "+    static HttpVersion valueOf(String text, boolean strict) {\n         ObjectUtil.checkNotNull(text, \"text\");\n \n         // super fast-path\n         if (text == HTTP_1_1_STRING) {\n             return HTTP_1_1;\n-        } else if (text == HTTP_1_0_STRING) {\n+        }\n+        if (text == HTTP_1_0_STRING) {\n             return HTTP_1_0;\n         }\n \n         text = text.trim();\n \n         if (text.isEmpty()) {\n             throw new IllegalArgumentException(\"text is empty (possibly HTTP/0.9)\");\n         }\n \n         // Try to match without convert to uppercase first as this is what 99% of all clients\n         // will send anyway. Also there is a change to the RFC to make it clear that it is\n         // expected to be case-sensitive\n         //\n         // See:\n         // * https://trac.tools.ietf.org/wg/httpbis/trac/ticket/1\n         // * https://trac.tools.ietf.org/wg/httpbis/trac/wiki\n         //\n         HttpVersion version = version0(text);\n         if (version == null) {\n-            version = new HttpVersion(text, true);\n+            version = new HttpVersion(text, strict,true);\n         }\n         return version;\n+    }"
+      },
+      {
+        "description": "the body extracted to the new constructor reads against the lines it left",
+        "kind": "diff",
+        "location": "codec-http/src/main/java/io/netty/handler/codec/http/HttpVersion.java::HttpVersion",
+        "body": "+    HttpVersion(String text, boolean strict, boolean keepAliveDefault) {\n         text = checkNonEmptyAfterTrim(text, \"text\").toUpperCase();\n \n-        Matcher m = VERSION_PATTERN.matcher(text);\n+        Matcher m = strict ? VERSION_PATTERN_STRICT.matcher(text) : VERSION_PATTERN.matcher(text);\n         if (!m.matches()) {\n             throw new IllegalArgumentException(\"invalid version format: \" + text);\n         }\n \n         protocolName = m.group(1);\n         majorVersion = Integer.parseInt(m.group(2));\n         minorVersion = Integer.parseInt(m.group(3));\n         this.text = protocolName + '/' + majorVersion + '.' + minorVersion;\n         this.keepAliveDefault = keepAliveDefault;\n         bytes = null;\n+    }"
+      },
+      {
+        "description": "the added import of an internal JDK class is shown",
+        "kind": "contains",
+        "text": "import sun.nio.cs.US_ASCII;",
+        "todo": "imports of modified files are not represented, though this one is unused and of an internal JDK class"
+      },
+      {
+        "description": "a member whose signature is unchanged keeps one location",
+        "kind": "diffs",
+        "count": 1,
+        "location": "codec-http/src/main/java/io/netty/handler/codec/http/HttpVersion.java::HttpVersion#valueOf(String)"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_116075",
+    "repository": "elastic/elasticsearch",
+    "commit": "e16e68cbd8562f36674a020c3bfe6827291a2827",
+    "base_commit": "6cf45366d5ba34f97c40d79439b769e6ad9ab581",
+    "description": "the synthetic source provider skips creating a mapper service when the source mode setting or the index mode decides",
+    "notes": [
+      "Each added counter assertion of the tests prints its whole test block; ESTestCase#assertThat is printed as a dependency."
+    ],
+    "expectations": [
+      {
+        "description": "the early return reads within the try, before the mapper service it avoids, with the edited comment of the catch the try ends on",
+        "kind": "diff",
+        "location": "x-pack/plugin/logsdb/src/main/java/org/elasticsearch/xpack/logsdb/SyntheticSourceIndexSettingsProvider.java::SyntheticSourceIndexSettingsProvider#newIndexHasSyntheticSourceUsage",
+        "body": "         try {\n             var tmpIndexMetadata = buildIndexMetadataForMapperService(indexName, templateIndexMode, indexTemplateAndCreateRequestSettings);\n+            var indexMode = tmpIndexMetadata.getIndexMode();\n+            if (SourceFieldMapper.INDEX_MAPPER_SOURCE_MODE_SETTING.exists(tmpIndexMetadata.getSettings())\n+                || indexMode == IndexMode.LOGSDB\n+                || indexMode == IndexMode.TIME_SERIES) {\n+                // in case when index mode is either tsdb or logsdb and only _source.mode attribute is specified, then the default could\n+                // be wrong. However, it doesn't really matter, because if it is set to stored, then adding index.mapping.source.mode has\n+                // no effect. And _source.mode can't be set to disabled, because that isn't allowed with logsdb/tsdb.\n+                var sourceMode = SourceFieldMapper.INDEX_MAPPER_SOURCE_MODE_SETTING.get(tmpIndexMetadata.getSettings());\n+                return sourceMode == SourceFieldMapper.Mode.SYNTHETIC;\n+            }\n+\n+            // TODO: remove this when _source.mode attribute has been removed:\n             try (var mapperService = mapperServiceFactory.apply(tmpIndexMetadata)) {\n                 // combinedTemplateMappings can be null when creating system indices\n                 // combinedTemplateMappings can be empty when creating a normal index that doesn't match any template and without mapping.\n                 if (combinedTemplateMappings == null || combinedTemplateMappings.isEmpty()) {\n                     combinedTemplateMappings = List.of(new CompressedXContent(\"{}\"));\n                 }\n                 mapperService.merge(MapperService.SINGLE_MAPPING_NAME, combinedTemplateMappings, MapperService.MergeReason.INDEX_TEMPLATE);\n                 return mapperService.documentMapper().sourceMapper().isSynthetic();\n             }\n         } catch (AssertionError | Exception e) {\n             // In case invalid mappings or setting are provided, then mapper service creation can fail.\n-            // In that case it is ok to return false here. The index creation will fail anyway later, so need to fallback to stored source.\n+            // In that case it is ok to return false here. The index creation will fail anyway later, so no need to fallback to stored\n+            // source.\n             LOGGER.info(() -> Strings.format(\"unable to create mapper service for index [%s]\", indexName), e);\n             return false;\n         }"
+      },
+      {
+        "description": "the setting, defaulting by the index mode, is a dependency",
+        "kind": "contains",
+        "text": "public static final Setting<Mode> INDEX_MAPPER_SOURCE_MODE_SETTING",
+        "of": "dependency"
+      },
+      {
+        "description": "the factory call only carried into the return of the new block lambda brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static MapperService newMapperService(\n    NamedXContentRegistry xContentRegistry,\n    Path tempDir,\n    Settings indexSettings,\n    String indexName\n) throws IOException {"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14516",
+    "repository": "netty/netty",
+    "commit": "74c96289e05163be8200d2955cacf8585c7cf0da",
+    "base_commit": "8930d29851ca9d1185eea621f9a72ce8b75d9610",
+    "description": "adaptive allocator chunks attach to and detach from magazines so that the used memory stays right",
+    "notes": [
+      "The attach in Magazine#allocate reads within its if, without the poll of the central queue before it that tells where the chunk comes from.",
+      "Chunk#magazine becomes null while a chunk is detached in the central queue, but the unchanged head of deallocate (`mag.parent`, `mag.preferredChunkSize()`) and the unchanged freeCentralQueue releasing queued chunks are not shown.",
+      "offerToQueue, whose false result (a freed allocator) now triggers the re-attach in transferChunk, is not printed: the call moved from the old condition to the guard of the new if.",
+      "The parameter `Thread currentThread` of allocateFallback is printed as a dependency of its own body."
+    ],
+    "expectations": [
+      {
+        "description": "the constructor reads with the statements it moved to attachToMagazine",
+        "kind": "diff",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator.Chunk#Chunk(AbstractByteBuf, Magazine, boolean)",
+        "body": "         Chunk(AbstractByteBuf delegate, Magazine magazine, boolean pooled) {\n             this.delegate = delegate;\n-            this.magazine = magazine;\n             this.pooled = pooled;\n             capacity = delegate.capacity();\n-            magazine.usedMemory.getAndAdd(capacity);\n             updater.setInitialValue(this);\n+            allocator = magazine.parent;\n+            attachToMagazine(magazine);\n         }"
+      },
+      {
+        "description": "attachToMagazine serves its call in allocate",
+        "kind": "serves",
+        "from": "+        void attachToMagazine(Magazine magazine) {",
+        "to": "curr.attachToMagazine(this);"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8024",
+    "repository": "apache/rocketmq",
+    "commit": "bb2a791ccc7696e619c74f75841de50625509ea2",
+    "base_commit": "63bb9e2a839d4e0caadccce8553f89a249c5bbff",
+    "description": "pull consumers get pullBlockIfNotFoundWithMessageSelector overloads",
+    "notes": [
+      "The new DefaultMQPullConsumer methods pass mq without queueWithNamespace, unlike the pullBlockIfNotFound next to them; that neighbour is unrelated code and not shown."
+    ],
+    "expectations": [
+      {
+        "description": "two javadoc lines merged into one (a multi-mapping of RM) read as edited, within the doc and the declaration of the method",
+        "kind": "diff",
+        "location": "client/src/main/java/org/apache/rocketmq/client/consumer/MQPullConsumer.java::MQPullConsumer#pull(MessageQueue, String, long, int)",
+        "body": "     /**\n      * Pulling the messages,not blocking\n      *\n      * @param mq from which message queue\n      * @param subExpression subscription expression.it only support or operation such as \"tag1 || tag2 || tag3\" <br> if\n-     * null or * expression,meaning subscribe\n-     * all\n+     * null or * expression,meaning subscribe all\n      * @param offset from where to pull\n      * @param maxNums max pulling numbers\n      * @return The resulting {@code PullRequest}\n      */\n     PullResult pull(final MessageQueue mq, final String subExpression, final long offset,\n         final int maxNums) throws MQClientException, RemotingException, MQBrokerException,\n         InterruptedException;"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14557",
+    "repository": "netty/netty",
+    "commit": "08760f73f74f680bd3b2e4e81f5830d318ad67ba",
+    "base_commit": "23746603dce38e18802ceed859772c76aabf6414",
+    "description": "the event loop passes a time quantum in nanoseconds to runAllTasks(long timeoutNanos), which was given the task count 4096 before",
+    "notes": [
+      "The two constructors taking the quantum in milliseconds assign it to the nanosecond field without converting it; both sides of that are shown."
+    ],
+    "expectations": [
+      {
+        "description": "the run loop reads with the call taking the quantum",
+        "kind": "diff",
+        "location": "transport/src/main/java/io/netty/channel/SingleThreadIoEventLoop.java::SingleThreadIoEventLoop#run",
+        "body": "         do {\n             runIo();\n             if (isShuttingDown()) {\n                 ioHandler.prepareToDestroy();\n             }\n-            runAllTasks(maxTasksPerRun);\n+            // Now run all tasks for the maximum configured amount of time before trying to run IO again.\n+            runAllTasks(maxTaskProcessingQuantumNs);\n \n             // We should continue with our loop until we either confirmed a shutdown or we can suspend it.\n         } while (!confirmShutdown() && !canSuspend());"
+      },
+      {
+        "description": "runAllTasks(long), taking a timeout, is a dependency",
+        "kind": "contains",
+        "text": "protected boolean runAllTasks(long timeoutNanos) {",
+        "of": "dependency"
+      },
+      {
+        "description": "the unchanged TODO comment above the replaced constant is not marked",
+        "kind": "unchanged",
+        "file": "transport/src/main/java/io/netty/channel/SingleThreadIoEventLoop.java",
+        "code": "// TODO: Is this a sensible default ?",
+        "todo": "RM (to report): SingleThreadIoEventLoop.java reports the identical `// TODO: Is this a sensible default ?` line comment above the replaced constant as deleted (L36) and inserted (L37) instead of mapping it"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_9197",
+    "repository": "apache/rocketmq",
+    "commit": "c94ea10e6782c9779f2041719a0704325e379d77",
+    "base_commit": "6cccff82f42d7c8326774c88334b4616b0a46e5e",
+    "description": "notifications return polling stats in a NotifyResult; the broker flags a full polling",
+    "notes": [
+      "NotifyResult is printed before the broker change, between the field and the accessors of NotificationResponseHeader, far from the client diffs it serves.",
+      "The polling dependency is the three-argument overload, which only delegates; the overload returning POLLING_FULL (polling size limits, failed add) is not shown.",
+      "Code that only moved keeps its dependencies: the polling call hoisted into a local and the body extracted to notificationWithPollingStats (createRequestCommand, invoke, getCode, ...) print about 85 lines of dependencies the change does not use anew."
+    ],
+    "expectations": [
+      {
+        "description": "the body extracted to notificationWithPollingStats reads against the lines it left: only its edits are marked",
+        "kind": "diff",
+        "location": "client/src/main/java/org/apache/rocketmq/client/impl/mqclient/MQClientAPIExt.java::MQClientAPIExt",
+        "body": "+    public CompletableFuture<NotifyResult> notificationWithPollingStats(String brokerAddr,\n+        NotificationRequestHeader requestHeader,\n+        long timeoutMillis) {\n         RemotingCommand request = RemotingCommand.createRequestCommand(RequestCode.NOTIFICATION, requestHeader);\n         return this.getRemotingClient().invoke(brokerAddr, request, timeoutMillis).thenCompose(response -> {\n-            CompletableFuture<Boolean> future0 = new CompletableFuture<>();\n+            CompletableFuture<NotifyResult> future0 = new CompletableFuture<>();\n             if (response.getCode() == ResponseCode.SUCCESS) {\n                 try {\n                     NotificationResponseHeader responseHeader = (NotificationResponseHeader) response.decodeCommandCustomHeader(NotificationResponseHeader.class);\n-                    future0.complete(responseHeader.isHasMsg());\n+                    NotifyResult notifyResult = new NotifyResult();\n+                    notifyResult.setHasMsg(responseHeader.isHasMsg());\n+                    notifyResult.setPollingFull(responseHeader.isPollingFull());\n+                    future0.complete(notifyResult);\n                 } catch (Throwable t) {\n                     future0.completeExceptionally(t);\n                 }\n             } else {\n                 future0.completeExceptionally(new MQBrokerException(response.getCode(), response.getRemark()));\n             }\n             return future0;\n         });\n+    }"
+      },
+      {
+        "description": "the added file reads as one diff, from its license header to its class",
+        "kind": "contains",
+        "text": "+ */\n+package org.apache.rocketmq.client.consumer;\n+\n+public class NotifyResult {",
+        "of": "diff"
+      },
+      {
+        "description": "NotifyResult, used only by the client, reads after the broker change, next to the client diffs",
+        "kind": "order",
+        "before": "responseHeader.setPollingFull(true);",
+        "after": "public class NotifyResult {",
+        "todo": "a diff is not placed as close as possible before the diffs building on it"
+      },
+      {
+        "description": "the polling call only moved out of the if condition into `PollingResult pollingResult = ...` brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public PollingHeader(NotificationRequestHeader requestHeader) {"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_111936",
+    "repository": "elastic/elasticsearch",
+    "commit": "6b2bc9a060d081182acf77f40ce90af03f2de487",
+    "base_commit": "0cf9c54f6583a82de05c4543b123c6c1f190092f",
+    "description": "XContentGenerator#copyCurrentEvent copies big integers and big decimals",
+    "notes": [
+      "The new test brings 26 dependencies, 16 of them the XContentBuilder methods building its input (only field(String, BigInteger) and field(String, BigDecimal) bear on the fix).",
+      "The fix and its test are linked only through the unchanged JsonXContentGenerator#copyCurrentStructure (the instanceof fast path, else the copyCurrentEvent loop), which is not shown; the fix serves nothing.",
+      "The abstract delegate() the anonymous FilterXContentParser of the test overrides is not printed."
+    ],
+    "expectations": [
+      {
+        "description": "the fix reads before the test exercising it (through the unchanged JsonXContentGenerator#copyCurrentStructure)",
+        "kind": "order",
+        "before": "+                    case BIG_INTEGER -> writeNumber((BigInteger) parser.numberValue());",
+        "after": "+public class XContentGeneratorTests extends ESTestCase {"
+      },
+      {
+        "description": "the added test file reads as one diff",
+        "kind": "diffs",
+        "location": "libs/x-content/impl/src/test/java/org/elasticsearch/xcontent/XContentGeneratorTests.java",
+        "count": 1
+      },
+      {
+        "description": "the new case labels bring the NumberType constants",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "BIG_DECIMAL"
+      },
+      {
+        "description": "an enum constant dependency is printed as the constant, not as its whole enum",
+        "kind": "dependency",
+        "location": "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentParser.java::XContentParser.NumberType",
+        "body": "BIG_DECIMAL"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8685",
+    "repository": "apache/rocketmq",
+    "commit": "581f08f5df5b670eb56d0ebe3598f80e4d6db82b",
+    "base_commit": "ba8148f746a9ba6244de365485d7245cb52b90c4",
+    "description": "a go-away reconnects only the channel that received it (no reconnect interval anymore) and its transparent retry carries the extFields of the request; logs carry the channel id",
+    "notes": [
+      "Log edits directly in a method body or in a lambda are one-line diffs."
+    ],
+    "expectations": [
+      {
+        "description": "the four log edits of closeChannel(String, Channel) read within its try block",
+        "kind": "diff",
+        "location": "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRemotingClient.java::NettyRemotingClient#closeChannel(String, Channel)",
+        "body": "                 try {\n                     boolean removeItemFromTable = true;\n                     final ChannelWrapper prevCW = this.channelTables.get(addrRemote);\n \n-                    LOGGER.info(\"closeChannel: begin close the channel[{}] Found: {}\", addrRemote, prevCW != null);\n+                    LOGGER.info(\"closeChannel: begin close the channel[{}], channelId={} Found: {}\", addrRemote, channel.id(), prevCW != null);\n \n                     if (null == prevCW) {\n-                        LOGGER.info(\"closeChannel: the channel[{}] has been removed from the channel table before\", addrRemote);\n+                        LOGGER.info(\"closeChannel: the channel[{}], channelId={} has been removed from the channel table before\", addrRemote, channel.id());\n                         removeItemFromTable = false;\n                     } else if (prevCW.isWrapperOf(channel)) {\n-                        LOGGER.info(\"closeChannel: the channel[{}] has been closed before, and has been created again, nothing to do.\",\n-                            addrRemote);\n+                        LOGGER.info(\"closeChannel: the channel[{}], channelId={} has been closed before, and has been created again, nothing to do.\",\n+                            addrRemote, channel.id());\n                         removeItemFromTable = false;\n                     }\n \n                     if (removeItemFromTable) {\n                         ChannelWrapper channelWrapper = this.channelWrapperTables.remove(channel);\n                         if (channelWrapper != null && channelWrapper.tryClose(channel)) {\n                             this.channelTables.remove(addrRemote);\n                         }\n-                        LOGGER.info(\"closeChannel: the channel[{}] was removed from channel table\", addrRemote);\n+                        LOGGER.info(\"closeChannel: the channel[{}], channelId={}, was removed from channel table\", addrRemote, channel.id());\n                     }\n \n                     RemotingHelper.closeChannel(channel);\n                 } catch (Exception e) {"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_110603",
+    "repository": "elastic/elasticsearch",
+    "commit": "f51dd2cd5350241e08accfe888e0c06d72861868",
+    "base_commit": "fbcde9c0fd40c3f461af0cefe1af6eabe9da5091",
+    "description": "date field mappers keep the data stream timestamp at a well-known key so that the timestamp and tsid mappers read it without iterating fields; test mapper services apply the default mapping of the index mode",
+    "notes": [],
+    "expectations": [
+      {
+        "description": "the parameter renamed in the signature is presented by the diff of the constructor, not again by one of its own",
+        "kind": "diffs",
+        "location": "server/src/main/java/org/elasticsearch/index/mapper/DateFieldMapper.java::DateFieldMapper#DateFieldMapper",
+        "count": 1
+      },
+      {
+        "description": "the arguments of the call moving from the return to a variable read as unchanged code",
+        "kind": "unchanged",
+        "file": "test/framework/src/main/java/org/elasticsearch/index/mapper/MapperServiceTestCase.java",
+        "code": "indexSettings.getMode().buildIdFieldMapper(idFieldDataEnabled),"
+      },
+      {
+        "description": "the call moving from the return to a variable reads as its changed first line, its unchanged arguments and closing line",
+        "kind": "diff",
+        "location": "test/framework/src/main/java/org/elasticsearch/index/mapper/MapperServiceTestCase.java::MapperServiceTestCase.TestMapperServiceBuilder#build",
+        "body": "         public MapperService build() {\n             IndexSettings indexSettings = createIndexSettings(indexVersion, settings);\n             SimilarityService similarityService = new SimilarityService(indexSettings, null, Map.of());\n             MapperRegistry mapperRegistry = new IndicesModule(\n                 getPlugins().stream().filter(p -> p instanceof MapperPlugin).map(p -> (MapperPlugin) p).collect(toList())\n             ).getMapperRegistry();\n \n             BitsetFilterCache bitsetFilterCache = new BitsetFilterCache(indexSettings, new BitsetFilterCache.Listener() {\n                 @Override\n                 public void onCache(ShardId shardId, Accountable accountable) {}\n \n                 @Override\n                 public void onRemoval(ShardId shardId, Accountable accountable) {}\n             });\n \n-            return new MapperService(\n+            var mapperService = new MapperService(\n                 () -> TransportVersion.current(),\n                 indexSettings,\n                 createIndexAnalyzers(indexSettings),\n                 parserConfig(),\n                 similarityService,\n                 mapperRegistry,\n                 () -> {\n                     throw new UnsupportedOperationException();\n                 },\n                 indexSettings.getMode().buildIdFieldMapper(idFieldDataEnabled),\n                 scriptCompiler,\n                 bitsetFilterCache::getBitSetProducer,\n                 mapperMetrics\n             );\n+\n+            if (indexSettings.getMode().getDefaultMapping() != null) {\n+                mapperService.merge(null, indexSettings.getMode().getDefaultMapping(), MapperService.MergeReason.MAPPING_UPDATE);\n+            }\n+\n+            return mapperService;\n         }"
+      },
+      {
+        "description": "the arguments carried into the variable declaration use nothing anew",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static TransportVersion current() {"
+      }
+    ]
+  },
+  {
+    "dataset": "bazelbuild_bazel_23374",
+    "repository": "bazelbuild/bazel",
+    "commit": "ab672a32fa3004d4c14790dd571f1b9379d9201b",
+    "base_commit": "4b9d30a2e954aea2466ecb6a3da1737ee5e30a0d",
+    "description": "the minimal BEP upload mode marks unimportant paths omitted when reading their metadata",
+    "notes": [
+      "Each existing test now passing RemoteBuildEventUploadMode.ALL to newArtifactUploader is a two-line diff.",
+      "The unchanged queryRemoteCache queries every omitted path, so the MINIMAL early return now sends paths that are not logs to findMissingDigests (the review asks what the early return saves); that user of the omitted flag is not shown.",
+      "Deleted code brings its dependencies (PathMetadata#getPath, PathMetadata#isBuildToolLog), and the new MINIMAL test brings about 20 scaffolding dependencies."
+    ],
+    "expectations": [
+      {
+        "description": "the two annotated variables are two diffs",
+        "kind": "diffs",
+        "location": "src/main/java/com/google/devtools/build/lib/runtime/NamedArtifactGroup.java::NamedArtifactGroup#asStreamProto",
+        "count": 2
+      },
+      {
+        "description": "the argument comments of the unchanged directory metadata are not marked",
+        "kind": "unchanged",
+        "file": "src/main/java/com/google/devtools/build/lib/remote/ByteStreamBuildEventArtifactUploader.java",
+        "code": "/* directory= */ true,",
+        "todo": "RM (to report): ByteStreamBuildEventArtifactUploader.java maps none of the comments /* directory= */ .. /* isBuildToolLog= */ of the unchanged `return new PathMetadata(...)` of readPathMetadata (L212-216 -> L233-237); each is multi-mapped to its copy there and to the one of the new MINIMAL block (L216-220), so they read as moved"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_109236",
+    "repository": "elastic/elasticsearch",
+    "commit": "6a7ead09642a6651493888acffd9785016912e7d",
+    "base_commit": "3f23c151803a5fe057ed0c2f484445b060b178ef",
+    "description": "responses of requests pruned on a closed connection fork to the executor of their handler",
+    "notes": [
+      "Adding a setting to ClusterSettings prints the whole Stream.of list of about 390 settings.",
+      "The TestNode constructor body, only moved into the new TestNode(String, Settings) with one argument changed, brings about 25 dependencies (thread pool builders, the TransportService constructor and methods, transport mocks).",
+      "The new enableStackOverflowAvoidance field, serving only the new constructor, reads before onConnectionClosed, which does not use it."
+    ],
+    "expectations": [
+      {
+        "description": "the new setting serves its registration",
+        "kind": "serves",
+        "from": "+    public static final Setting<Boolean> ENABLE_STACK_OVERFLOW_AVOIDANCE = Setting.boolSetting(",
+        "to": "+        TransportService.ENABLE_STACK_OVERFLOW_AVOIDANCE"
+      },
+      {
+        "description": "the registration reads with its neighbours only",
+        "kind": "absent",
+        "text": "AwarenessAllocationDecider.CLUSTER_ROUTING_ALLOCATION_AWARENESS_ATTRIBUTE_SETTING,",
+        "of": "diff",
+        "todo": "a change of one item of a long expression list prints the whole list as its context"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_8663",
+    "repository": "apache/rocketmq",
+    "commit": "530cb62a1f9a8ac509b028428e4d1516c8f99250",
+    "base_commit": "2956f6d46b03c5d8b06b06063313386d0a1f68d5",
+    "description": "an opt-in adaptive back-off lock (useABSLock, false by default) is added beside the existing put message locks and chosen in the CommitLog constructor",
+    "notes": [
+      "The existing PutMessageReentrantLock and PutMessageSpinLock, which BackOffReentrantLock copies and BackOffSpinLock re-implements with back-off, and the PutMessageLock interface whose methods the new interface redeclares, are not shown.",
+      "Each added file reads with its license header, package and imports, which tell the reviewer nothing."
+    ],
+    "expectations": [
+      {
+        "description": "the added interface file reads as one diff",
+        "kind": "diffs",
+        "location": "store/src/main/java/org/apache/rocketmq/store/lock/AdaptiveBackOffSpinLock.java",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14031",
+    "repository": "netty/netty",
+    "commit": "d3a7403924f4a1bc4aa14603d6abb0f677ad8077",
+    "base_commit": "7ed972d070f9c1f8d89cc226568e61e3b5f2a6f5",
+    "description": "epoll drops edge-triggered mode: every read loop ends with shouldStopReading/clearEpollIn instead of epollInFinally; EpollMode and its setters are deprecated no-ops; the ET/LT variants of six tests are merged into one test each",
+    "notes": [
+      "RM reports each ET/LT pair of tests as a Merge Class into one EpollSocket*Test, but its AST diff maps only the moved newFactories(): the class declarations, the license header, the package and the imports of both merged classes are unmapped, so each family prints as two whole deleted files and one whole added file (about 120 lines for a 9-line change), where the raw diff shows the ET test renamed with configure() removed.",
+      "The five read loop bodies (four epollInReady and EpollDomainSocketChannel#epollInReadFd) are printed whole, as their changes reach from their first statements to their finally blocks.",
+      "shouldStopReading reads as new code, though its comment and its condition come from the else branch of the removed epollInFinally, which RM maps to the new if statements of its callers (Move And Inline Method).",
+      "The unchanged callers of the changed maybeMoreDataToRead (the maybeMoreDataSupplier of EpollRecvByteAllocatorHandle) are not shown.",
+      "Imports are not shown: the removed ObjectUtil and EventLoop imports and the added logger imports are invisible.",
+      "The changed continueReading(UncheckedBooleanSupplier), where RDHUP now keeps the loop reading in place of the removed RDHUP re-read of epollInFinally, serves nothing and reads after the read loops, which call it only on unchanged lines.",
+      "Deleted code brings its dependencies: AbstractBootstrap#option and ServerBootstrap#childOption for the deleted configure() of the tests, EpollIoOps#with/#without for the removed add/remove, checkNotNull, eventLoop(), isActive(), config(). Some of them are the only sign of code the change leaves dead (checkChannelNotRegistered, epollInReadyRunnable, EPOLLET)."
+    ],
+    "expectations": [
+      {
+        "description": "the doc comment and the annotation added to the EpollMode enum read as one diff, with the declaration they deprecate",
+        "kind": "diff",
+        "location": "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollMode.java::EpollMode",
+        "body": " /**\n  * The <a href=\"https://linux.die.net//man/7/epoll\">epoll</a> mode to use.\n+ *\n+ * @deprecated Netty always uses level-triggered mode.\n  */\n+@Deprecated\n public enum EpollMode {"
+      },
+      {
+        "description": "the deprecated EPOLL_MODE option reads with its declaration",
+        "kind": "diff",
+        "location": "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollChannelOption.java::EpollChannelOption",
+        "body": "+    /**\n+     * @deprecated Netty always uses level-triggered mode and so this method is just a no-op.\n+     */\n+    @Deprecated\n     public static final ChannelOption<EpollMode> EPOLL_MODE =\n             ChannelOption.valueOf(EpollChannelOption.class, \"EPOLL_MODE\");"
+      },
+      {
+        "description": "the RDHUP check added to continueReading is printed as its return statement",
+        "kind": "diff",
+        "location": "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollRecvByteAllocatorHandle.java::EpollRecvByteAllocatorHandle#continueReading(UncheckedBooleanSupplier)",
+        "body": "-        return ((ExtendedHandle) delegate()).continueReading(maybeMoreDataSupplier);\n+        return isReceivedRdHup() || ((ExtendedHandle) delegate()).continueReading(maybeMoreDataSupplier);"
+      },
+      {
+        "description": "the forced read removed from doBeginRead reads within the method",
+        "kind": "diff",
+        "location": "transport-classes-epoll/src/main/java/io/netty/channel/epoll/AbstractEpollChannel.java::AbstractEpollChannel#doBeginRead",
+        "body": "     protected void doBeginRead() throws Exception {\n         // Channel.read() or ChannelHandlerContext.read() was called\n         final AbstractEpollUnsafe unsafe = (AbstractEpollUnsafe) unsafe();\n         unsafe.readPending = true;\n \n         // We must set the read flag here as it is possible the user didn't read in the last read loop, the\n         // executeEpollInReadyRunnable could read nothing, and if the user doesn't explicitly call read they will\n         // never get data after this.\n         setFlag(Native.EPOLLIN);\n-\n-        // If EPOLL ET mode is enabled and auto read was toggled off on the last read loop then we may not be notified\n-        // again if we didn't consume all the data. So we force a read operation here if there maybe more data.\n-        if (unsafe.maybeMoreDataToRead) {\n-            unsafe.executeEpollInReadyRunnable(config());\n-        }\n     }"
+      },
+      {
+        "description": "the new shouldStopReading serves the read loops calling it",
+        "kind": "serves",
+        "from": "boolean shouldStopReading(ChannelConfig config) {",
+        "to": "int datagramSize = config().getMaxDatagramPayloadSize();"
+      },
+      {
+        "description": "the removed edgeTriggered serves the read loops that stopped calling it",
+        "kind": "serves",
+        "from": "final void edgeTriggered(boolean edgeTriggered) {",
+        "to": "final DomainDatagramPacket packet;"
+      },
+      {
+        "description": "the inlined epollInFinally is printed before the read loops it went to",
+        "kind": "order",
+        "before": "final void epollInFinally(ChannelConfig config) {",
+        "after": "allocHandle.attemptedBytesRead(1);"
+      },
+      {
+        "description": "the production code reads before the merged tests",
+        "kind": "order",
+        "before": "LOGGER.debug(\"Changing the EpollMode is not supported anymore, this is just a no-op\");",
+        "after": "public class EpollSocketReadPendingTest extends SocketReadPendingTest {"
+      },
+      {
+        "description": "the unchanged newFactories() of a merged test is not marked as changed",
+        "kind": "unchanged",
+        "file": "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketAutoReadTest.java",
+        "code": "return EpollSocketTestPermutation.INSTANCE.socketWithFastOpen();",
+        "todo": "RM (to report): ProjectASTDiffer makes no AST diff for the class rename diffs of a UMLClassMergeDiff (UMLModelDiff.classMergeDiffList, not exposed), so for the Merge Class [EpollETSocketAutoReadTest, EpollLTSocketAutoReadTest] -> EpollSocketAutoReadTest only the move diffs of newFactories() exist: their roots, type declarations, license comments, package declarations and identical imports are unmapped (deleted from each source, inserted in the target)"
+      },
+      {
+        "description": "the license header of a merged test is not printed as added whole",
+        "kind": "absent",
+        "text": "+/*\n+ * Copyright 2016 The Netty Project",
+        "of": "diff",
+        "todo": "RM (to report): the license comment of EpollSocketAutoReadTest (and of the five other merged tests) is inserted in the move diffs of its Merge Class instead of mapped to the comments of the merged classes, as the merged classes have no AST diff (see the newFactories() expectation)"
+      },
+      {
+        "description": "a merged test reads as the class renamed and configure() removed against each merged class",
+        "kind": "contains",
+        "text": "-public class EpollLTSocketAutoReadTest extends SocketAutoReadTest {\n+public class EpollSocketAutoReadTest extends SocketAutoReadTest {",
+        "of": "diff",
+        "todo": "RM (to report): the type declarations of the classes of a Merge Class are not mapped to the merged class (see the newFactories() expectation)"
+      }
+    ]
+  }
+]

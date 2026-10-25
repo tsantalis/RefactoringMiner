@@ -11,7 +11,8 @@ import java.util.function.BiPredicate;
  * name the way the compiler does, through {@link ReceiverTypeResolver}. It replaces, for the hunk network,
  * {@code UMLModelDiff.findInvocationsInParentModel/ChildModel} and {@code UMLModelDiff.findFieldAccessesInParentModel/ChildModel}.
  *
- * Only the calls and names inside the changes are bound (those outside reach no change node). Binding one attaches the
+ * Only the calls and names reaching the changes are bound, overlapping them outside the bodies of the lambdas and
+ * anonymous classes within them (the others reach no change node). Binding one attaches the
  * file declaring its target to the model diff when it is not there yet, so the model gets exactly the unchanged files
  * declaring what the changes use.
  *
@@ -60,7 +61,7 @@ public class MemberUsageFinder {
   private final Map<UMLModel, Index> indexes = new IdentityHashMap<>();
 
   /**
-   * @param inChange whether code of a model is inside a change, which limits the calls and names bound
+   * @param inChange whether code of a model reaches a change, which limits the calls and names bound
    */
   public MemberUsageFinder(ReceiverTypeResolver resolver, BiPredicate<UMLModel, LocationInfo> inChange) {
     this.resolver = resolver;
@@ -76,6 +77,14 @@ public class MemberUsageFinder {
   }
 
   /**
+   * The names in anonymous classes referring to the local variable or parameter, which RM records as used in its scope
+   * only by the statements of its container and of the anonymous classes these statements create directly.
+   */
+  public List<LeafExpression> findAnonymousClassAccesses(VariableDeclaration local, UMLModel umlModel) {
+    return indexes.get(umlModel).anonymousClassAccesses().getOrDefault(local, List.of());
+  }
+
+  /**
    * Binds the calls and names of the changes in the model, attaching the files declaring their targets; called once
    * per model, before querying it or iterating over its classes, which this grows.
    */
@@ -84,7 +93,7 @@ public class MemberUsageFinder {
   }
 
   private Index buildIndex(UMLModel umlModel) {
-    Index index = new Index(new IdentityHashMap<>(), new IdentityHashMap<>());
+    Index index = new Index(new IdentityHashMap<>(), new IdentityHashMap<>(), new IdentityHashMap<>());
     Set<LocationInfo> seenCalls = new HashSet<>();
     Set<LocationInfo> seenVariables = new HashSet<>();
     Set<UMLAbstractClass> seenClasses = Collections.newSetFromMap(new IdentityHashMap<>());
@@ -115,6 +124,12 @@ public class MemberUsageFinder {
                     : resolver.resolveAccessTarget(variable, context, umlModel);
             if (target != null) {
               index.accesses().computeIfAbsent(target, key -> new ArrayList<>()).add(variable);
+            }
+            VariableDeclaration local = context instanceof UMLAnonymousClass
+                    && variable.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.SIMPLE_NAME)
+                    ? resolver.resolveLocal(variable, context, umlModel) : null;
+            if (local != null) {
+              index.anonymousClassAccesses().computeIfAbsent(local, key -> new ArrayList<>()).add(variable);
             }
           }
         }
@@ -200,6 +215,7 @@ public class MemberUsageFinder {
             && location.getStartOffset() < name.getStartOffset() && location.getEndOffset() == name.getEndOffset();
   }
 
-  private record Index(Map<UMLOperation, List<AbstractCall>> invocations, Map<UMLAttribute, List<LeafExpression>> accesses) {
+  private record Index(Map<UMLOperation, List<AbstractCall>> invocations, Map<UMLAttribute, List<LeafExpression>> accesses,
+                       Map<VariableDeclaration, List<LeafExpression>> anonymousClassAccesses) {
   }
 }

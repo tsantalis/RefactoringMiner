@@ -47,7 +47,7 @@ public class RepresentationTest {
     private static final String ORACLE_DATA_PATH = "src/test/resources/narrator/representations.json";
     private static final String ACTUAL_DIR = "build/narrator/representations";
     // The files read from GitHub, kept so that later runs need no GitHub access
-    private static final String CACHE_PATH = "src/test/resources/narrator/cache";
+    private static final String CACHE_PATH = "src/test/resources/oracle/commits";
     private static final Pattern ELEMENT = Pattern.compile("<(diff|dependency)((?: [a-z_]+=\"[^\"]*\")*)>\\n(.*?)\\n</\\1>", Pattern.DOTALL);
     private static final Pattern ATTRIBUTE = Pattern.compile("([a-z_]+)=\"([^\"]*)\"");
     private static final Map<String, Representation> REPRESENTATIONS = new HashMap<>();

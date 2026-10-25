@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 public class ReceiverTypeTest {
 
     // The files read from GitHub, kept so that later runs need no GitHub access
-    private static final String CACHE_PATH = "src/test/resources/narrator/cache";
+    private static final String CACHE_PATH = "src/test/resources/oracle/commits";
 
     static {
         // The cases share one JVM, and the HTTP/2 connection of the default connector gets its streams reset while

@@ -86,6 +86,19 @@ public class LocationInfo {
 		}
 	}
 
+	//the column of the offset counted from the previous line break (\n, \r or \r\n), like StringUtil.offsetToLineColumn,
+	//which counts the lines from the start of the text, so it is quadratic over the nodes of a file
+	public static int column(CharSequence text, int offset) {
+		int lineBreak = offset - 1;
+		while(lineBreak >= 0 && text.charAt(lineBreak) != '\n' && text.charAt(lineBreak) != '\r') {
+			lineBreak--;
+		}
+		if(lineBreak >= 0 && text.charAt(lineBreak) == '\r' && lineBreak + 1 < text.length() && text.charAt(lineBreak + 1) == '\n') {
+			return offset - (lineBreak + 2);
+		}
+		return offset - (lineBreak + 1);
+	}
+
 	public LocationInfo(KtFile ktFile, String sourceFolder, String filePath, KtElement node, CodeElementType codeElementType) {
 		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
@@ -101,8 +114,8 @@ public class LocationInfo {
 		if (document != null) {
 			this.startLine = document.getLineNumber(startOffset) + 1;
 			this.endLine = document.getLineNumber(endOffset) + 1;
-			this.startColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), startOffset).column + 1;
-			this.endColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), endOffset).column + 1;
+			this.startColumn = column(document.getCharsSequence(), startOffset) + 1;
+			this.endColumn = column(document.getCharsSequence(), endOffset) + 1;
 		} else {
 			this.startLine = 0;
 			this.endLine = 0;
@@ -126,8 +139,8 @@ public class LocationInfo {
 		if (document != null) {
 			this.startLine = document.getLineNumber(startOffset) + 1;
 			this.endLine = document.getLineNumber(endOffset) + 1;
-			this.startColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), startOffset).column + 1;
-			this.endColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), endOffset).column + 1;
+			this.startColumn = column(document.getCharsSequence(), startOffset) + 1;
+			this.endColumn = column(document.getCharsSequence(), endOffset) + 1;
 		} else {
 			this.startLine = 0;
 			this.endLine = 0;

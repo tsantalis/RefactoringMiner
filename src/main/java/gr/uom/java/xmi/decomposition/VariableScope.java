@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
-import org.jetbrains.kotlin.com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.kotlin.com.intellij.psi.FileViewProvider;
 import org.jetbrains.kotlin.psi.KtFile;
 
@@ -78,8 +77,8 @@ public class VariableScope {
 		if (document != null) {
 			this.startLine = document.getLineNumber(startOffset) + 1;
 			this.endLine = document.getLineNumber(endOffset) + 1;
-			this.startColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), startOffset).column + 1;
-			this.endColumn = StringUtil.offsetToLineColumn(document.getCharsSequence(), endOffset).column + 1;
+			this.startColumn = LocationInfo.column(document.getCharsSequence(), startOffset) + 1;
+			this.endColumn = LocationInfo.column(document.getCharsSequence(), endOffset) + 1;
 		} else {
 			this.startLine = 0;
 			this.endLine = 0;

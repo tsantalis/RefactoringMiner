@@ -1791,6 +1791,10 @@ public abstract class AbstractCall extends LeafExpression {
 		}
 		String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);
 		String reservedTokens2 = ReplacementUtil.keepReservedTokens(s2);
+		//the strings with the same reserved tokens are compared token by token
+		if(reservedTokens1.isEmpty() || !reservedTokens1.equals(reservedTokens2)) {
+			return false;
+		}
 		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(s1);
 		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(s2);
 		List<String> tokenList1 = new ArrayList<String>();
@@ -1828,11 +1832,7 @@ public abstract class AbstractCall extends LeafExpression {
 				}
 			}
 		}
-		if(commonTokens >= Math.min(tokenList1.size(), tokenList2.size()) &&
-				!reservedTokens1.isEmpty() && reservedTokens1.equals(reservedTokens2)) {
-			return true;
-		}
-		return false;
+		return commonTokens >= Math.min(tokenList1.size(), tokenList2.size());
 	}
 
 	private static boolean equalsIgnoringLambdaArrow(String s1, String s2) {

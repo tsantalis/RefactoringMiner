@@ -21,6 +21,8 @@ public class StringDistance {
 	//most edit distance computations are repeated for the same pair of strings
 	private static final int MAX_CACHE_SIZE = 100000;
 	private static final Map<StringPair, Integer> EDIT_DISTANCE_CACHE = new ConcurrentHashMap<>();
+	//the lower bounds of the edit distances that exceeded the threshold of a computation, i.e., threshold + 1
+	private static final Map<StringPair, Integer> EDIT_DISTANCE_LOWER_BOUNDS = new ConcurrentHashMap<>();
 	private record StringPair(String a, String b) {}
 	
 	public static int editDistance(String a, String b, int threshold) {
@@ -34,11 +36,21 @@ public class StringDistance {
 		if(cached != null && threshold >= 0) {
 			return cached <= threshold ? cached : -1;
 		}
+		Integer lowerBound = EDIT_DISTANCE_LOWER_BOUNDS.get(key);
+		if(lowerBound != null && threshold >= 0 && threshold < lowerBound) {
+			return -1;
+		}
 		int prefix = commonPrefixLength(a, b);
 		int suffix = commonSuffixLength(a, b, prefix);
 		int distance = new LevenshteinDistance(threshold).apply(a.substring(prefix, length1 - suffix), b.substring(prefix, length2 - suffix));
 		if(distance != -1) {
 			cache(key, distance);
+		}
+		else if(threshold >= 0) {
+			if(EDIT_DISTANCE_LOWER_BOUNDS.size() >= MAX_CACHE_SIZE) {
+				EDIT_DISTANCE_LOWER_BOUNDS.clear();
+			}
+			EDIT_DISTANCE_LOWER_BOUNDS.merge(key, threshold + 1, Math::max);
 		}
 		return distance;
 	}

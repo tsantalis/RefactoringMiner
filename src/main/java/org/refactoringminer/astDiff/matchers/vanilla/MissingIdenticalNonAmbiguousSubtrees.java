@@ -57,13 +57,21 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
             var currentPrioritySrcTrees = srcTrees.pop();
             var currentPriorityDstTrees = dstTrees.pop();
 
-            for (var currentSrc : currentPrioritySrcTrees)
-                for (var currentDst : currentPriorityDstTrees)
-                    if (currentSrc.getMetrics().hash == currentDst.getMetrics().hash)
-                        if (TreeUtilFunctions.isIsomorphicTo(currentSrc, currentDst)) {
-                            if (!mappingStore.isSrcMappedConsideringSubTrees(currentSrc) && !mappingStore.isDstMappedConsideringSubTrees(currentDst))
-                                multiMappings.addMapping(currentSrc, currentDst);
-                        }
+            //only the subtrees with the same hash can be isomorphic, which are visited in the order of the subtrees of the same priority
+            Map<Integer, List<Tree>> dstsByHash = new HashMap<>();
+            for (var currentDst : currentPriorityDstTrees)
+                dstsByHash.computeIfAbsent(currentDst.getMetrics().hash, k -> new ArrayList<>()).add(currentDst);
+            Map<Tree, Boolean> dstMapped = new HashMap<>();
+            for (var currentSrc : currentPrioritySrcTrees) {
+                Boolean srcMapped = null;
+                for (var currentDst : dstsByHash.getOrDefault(currentSrc.getMetrics().hash, List.of()))
+                    if (TreeUtilFunctions.isIsomorphicTo(currentSrc, currentDst)) {
+                        if (srcMapped == null)
+                            srcMapped = mappingStore.isSrcMappedConsideringSubTrees(currentSrc);
+                        if (!srcMapped && !dstMapped.computeIfAbsent(currentDst, mappingStore::isDstMappedConsideringSubTrees))
+                            multiMappings.addMapping(currentSrc, currentDst);
+                    }
+            }
 
             for (var t : currentPrioritySrcTrees)
                 if (!multiMappings.hasSrc(t))

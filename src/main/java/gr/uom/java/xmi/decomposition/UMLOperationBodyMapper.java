@@ -16,14 +16,12 @@ import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
-import static gr.uom.java.xmi.JavaFileProcessor.processJavaBlock;
 import static gr.uom.java.xmi.ModuleContainer.*;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.findReplacementsWithExactMatching;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.isForEach;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.processLambdas;
 import static gr.uom.java.xmi.decomposition.ReplacementUtil.isDefaultValue;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
-import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import static gr.uom.java.xmi.diff.UMLClassBaseDiff.matchParamsWithReplacements;
 import static gr.uom.java.xmi.diff.UMLClassBaseDiff.sanitizeStringLiteral;
 
@@ -94,7 +92,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
@@ -2163,14 +2160,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		// check if unmatched statements from left side have been commented
 		if(uniqueComments2.size() > 0 && nonMappedLeavesT1.size() > 0) {
 			for(UMLComment comment : uniqueComments2) {
-				String text = comment.getText();
-				if(text.startsWith("//")) {
-					text = text.substring(2);
-				}
-				text = text.trim();
-				ASTNode node = processJavaBlock(text);
-				if(node != null) {
-					String nodeAsString = stringify(node);
+				Optional<String> code = comment.getCodeStatement();
+				if(code.isPresent()) {
+					String nodeAsString = code.get();
 					Set<AbstractCodeFragment> matchingNodes1 = new LinkedHashSet<AbstractCodeFragment>();
 					for(AbstractCodeFragment leaf1 : nonMappedLeavesT1) {
 						if(leaf1.getString().equals(nodeAsString)) {
@@ -2187,14 +2179,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(uniqueComments1.size() > 0 && nonMappedLeavesT2.size() > 0) {
 			//List<ASTNode>
 			for(UMLComment comment : uniqueComments1) {
-				String text = comment.getText();
-				if(text.startsWith("//")) {
-					text = text.substring(2);
-				}
-				text = text.trim();
-				ASTNode node = processJavaBlock(text);
-				if(node != null) {
-					String nodeAsString = stringify(node);
+				Optional<String> code = comment.getCodeStatement();
+				if(code.isPresent()) {
+					String nodeAsString = code.get();
 					Set<AbstractCodeFragment> matchingNodes2 = new LinkedHashSet<AbstractCodeFragment>();
 					for(AbstractCodeFragment leaf2 : nonMappedLeavesT2) {
 						if(leaf2.getString().equals(nodeAsString)) {

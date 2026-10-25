@@ -2823,11 +2823,16 @@ public class ReplacementAlgorithm {
 						staticVSNonStatic = true;
 					}
 				}
-				for(UMLClass addedClass : modelDiff.getAddedClasses()) {
-					if((expression1 == null && expression2 != null && container1 != null && addedClass.getName().endsWith("." + expression2)) ||
-							(expression1 != null && expression2 == null && container2 != null && addedClass.getName().endsWith("." + expression1))) {
-						staticVSNonStatic = true;
-						break;
+				//the expression of the single call with an expression, which is a static call of an added class
+				String staticCallExpression = expression1 == null && expression2 != null && container1 != null ? expression2 :
+					expression1 != null && expression2 == null && container2 != null ? expression1 : null;
+				if(staticCallExpression != null) {
+					String suffix = "." + staticCallExpression;
+					for(UMLClass addedClass : modelDiff.getAddedClasses()) {
+						if(addedClass.getName().endsWith(suffix)) {
+							staticVSNonStatic = true;
+							break;
+						}
 					}
 				}
 			}
@@ -2841,6 +2846,7 @@ public class ReplacementAlgorithm {
 					AbstractExpression initializer = variableDeclaration.getInitializer();
 					if(initializer != null && statement1.getString().startsWith(initializer.getString()) && statement2.getString().startsWith(variableDeclaration.getVariableName())) {
 						overlappingExtractVariable = true;
+						break;
 					}
 				}
 			}
@@ -4823,22 +4829,12 @@ public class ReplacementAlgorithm {
 		boolean singleReturnStatement = container1.singleReturnStatement() != null && container2.singleReturnStatement() != null;
 		boolean lastStatement = (statement1.isLastStatement() && statement2.isLastStatement()) || 
 				lastStatementInParentBlockWithSameParentType(statement1, statement2);
+		//the possible extract and inline of the returned variable scan the statements, so they are checked after the other conditions
 		boolean possibleExtract = false;
-		for(AbstractCodeFragment fragment2 : replacementInfo.getStatements2()) {
-			if(statement2.getVariables().size() == 1 && fragment2.getVariableDeclaration(statement2.getVariables().get(0).getString()) != null) {
-				possibleExtract = true;
-				break;
-			}
-		}
-		boolean possibleInline = false;
-		for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
-			if(statement1.getVariables().size() == 1 && fragment1.getVariableDeclaration(statement1.getVariables().get(0).getString()) != null) {
-				possibleInline = true;
-				break;
-			}
-		}
-		if(parentMapper == null && (!variableReturnAsLastStatement1 || possibleInline) && (!variableReturnAsLastStatement2 || possibleExtract) && ((!numberLiteralReturn1 && !numberLiteralReturn2) || singleReturnStatement) && statement1.getString().startsWith(LANG1.RETURN_SPACE) && statement2.getString().startsWith(LANG2.RETURN_SPACE) && lastStatement &&
+		if(parentMapper == null && ((!numberLiteralReturn1 && !numberLiteralReturn2) || singleReturnStatement) && statement1.getString().startsWith(LANG1.RETURN_SPACE) && statement2.getString().startsWith(LANG2.RETURN_SPACE) && lastStatement &&
 				variableReturnQualified1 == variableReturnQualified2 && container1 instanceof UMLOperation && container2 instanceof UMLOperation &&
+				(!variableReturnAsLastStatement1 || declaresSingleVariable(replacementInfo.getStatements1(), statement1)) &&
+				((possibleExtract = declaresSingleVariable(replacementInfo.getStatements2(), statement2)) || !variableReturnAsLastStatement2) &&
 				compatibleSignatureForFinalReturnStatement(operationBodyMapper) &&
 				(statement1.getLambdas().size() == statement2.getLambdas().size() || possibleExtract)) {
 			boolean callToAddedOperation = false;
@@ -5351,6 +5347,20 @@ public class ReplacementAlgorithm {
 	private static boolean containsInArguments(AbstractCall call, String key) {
 		for(String arg : call.arguments()) {
 			if(arg.equals(key) || arg.contains("(" + key) || arg.contains(key + ")") || arg.contains("," + key) || arg.contains(key + ",") || arg.contains(key + ".")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//whether one of the statements declares the single variable of the statement, i.e., a possible extract or inline of the returned variable
+	private static boolean declaresSingleVariable(List<? extends AbstractCodeFragment> statements, AbstractCodeFragment statement) {
+		if(statement.getVariables().size() != 1) {
+			return false;
+		}
+		String variable = statement.getVariables().get(0).getString();
+		for(AbstractCodeFragment fragment : statements) {
+			if(fragment.getVariableDeclaration(variable) != null) {
 				return true;
 			}
 		}

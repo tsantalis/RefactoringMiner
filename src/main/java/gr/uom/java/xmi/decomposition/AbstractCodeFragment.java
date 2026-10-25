@@ -698,18 +698,15 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			if(prefix.contains("(") && prefix.contains(")")) {
 				int indexOfOpeningParenthesis = prefix.indexOf("(");
 				int indexOfClosingParenthesis = prefix.indexOf(")");
-				boolean openingParenthesisInsideSingleQuotes = ReplacementUtil.isInsideSingleQuotes(prefix, indexOfOpeningParenthesis);
-				boolean closingParenthesisInsideSingleQuotes = ReplacementUtil.isInsideSingleQuotes(prefix, indexOfClosingParenthesis);
-				boolean openingParenthesisInsideDoubleQuotes = ReplacementUtil.isInsideDoubleQuotes(prefix, indexOfOpeningParenthesis);
-				boolean closingParenthesisIndideDoubleQuotes = ReplacementUtil.isInsideDoubleQuotes(prefix, indexOfClosingParenthesis);
-				if(indexOfOpeningParenthesis < indexOfClosingParenthesis &&
-						!openingParenthesisInsideSingleQuotes && !closingParenthesisInsideSingleQuotes &&
-						!openingParenthesisInsideDoubleQuotes && !closingParenthesisIndideDoubleQuotes) {
+				if(indexOfOpeningParenthesis < indexOfClosingParenthesis) {
 					String casting = prefix.substring(indexOfOpeningParenthesis, indexOfClosingParenthesis+1);
-					if(statement.endsWith(LANG.STATEMENT_TERMINATION) && (LANG.RETURN_SPACE + casting + expression + LANG.STATEMENT_TERMINATION).equals(statement)) {
-						return true;
-					}
-					if(!statement.endsWith(LANG.STATEMENT_TERMINATION) && (casting + expression).equals(statement)) {
+					boolean castCoversStatement = statement.endsWith(LANG.STATEMENT_TERMINATION) ?
+							(LANG.RETURN_SPACE + casting + expression + LANG.STATEMENT_TERMINATION).equals(statement) :
+							(casting + expression).equals(statement);
+					//the parentheses in quotes are checked only for a cast covering the statement, as they scan the prefix
+					if(castCoversStatement &&
+							!ReplacementUtil.isInsideSingleQuotes(prefix, indexOfOpeningParenthesis) && !ReplacementUtil.isInsideSingleQuotes(prefix, indexOfClosingParenthesis) &&
+							!ReplacementUtil.isInsideDoubleQuotes(prefix, indexOfOpeningParenthesis) && !ReplacementUtil.isInsideDoubleQuotes(prefix, indexOfClosingParenthesis)) {
 						return true;
 					}
 				}

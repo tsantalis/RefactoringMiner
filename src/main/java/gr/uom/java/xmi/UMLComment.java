@@ -6,11 +6,13 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
+import gr.uom.java.xmi.decomposition.Visitor;
 
 public class UMLComment extends UMLAbstractDocumentation {
 
@@ -20,6 +22,8 @@ public class UMLComment extends UMLAbstractDocumentation {
 	private boolean markdown;
 	private List<LocationInfo> previousLineLocations = new ArrayList<>();
 	private static final Pattern EMPTY_LINES = Pattern.compile("(^\\s*$\\r?\\n)+", Pattern.MULTILINE);
+	//the comment parsed as a Java statement, which the mappers of the operations containing the comment compare with their unmatched statements
+	private Optional<String> codeStatement;
 
 	public UMLComment(String text, LocationInfo locationInfo) {
 		super(text, locationInfo);
@@ -50,6 +54,18 @@ public class UMLComment extends UMLAbstractDocumentation {
 
 	public void addPreviousLocation(LocationInfo info) {
 		previousLineLocations.add(info);
+	}
+
+	public Optional<String> getCodeStatement() {
+		if(codeStatement == null) {
+			String text = getText();
+			if(text.startsWith("//")) {
+				text = text.substring(2);
+			}
+			ASTNode node = JavaFileProcessor.processJavaBlock(text.trim());
+			codeStatement = node != null ? Optional.of(Visitor.stringify(node)) : Optional.empty();
+		}
+		return codeStatement;
 	}
 
 	public boolean isMarkdown() {

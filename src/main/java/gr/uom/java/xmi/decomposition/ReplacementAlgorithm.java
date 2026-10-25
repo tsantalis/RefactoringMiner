@@ -2906,6 +2906,14 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
+		//the boolean assertion is inverted and its subject changed with the other replacements, i.e., assertThat(w.isEmpty).isFalse() -> assertThat(w.hasRetainedReferences).isTrue()
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invertedBooleanAssertionWithReplacedSubject(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo, LANG1, LANG2)) {
+			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
+					invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
+			replacementInfo.addReplacement(replacement);
+			return replacementInfo.getReplacements();
+		}
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null && statement1.getClass().equals(statement2.getClass()) &&
 				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE,
@@ -5351,6 +5359,21 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return false;
+	}
+
+	private static boolean invertedBooleanAssertionWithReplacedSubject(AbstractCall invocation1, AbstractCall invocation2, ReplacementInfo replacementInfo, Constants LANG1, Constants LANG2) {
+		boolean inverted = (invocation1.getName().equals("isTrue") && invocation2.getName().equals("isFalse")) ||
+				(invocation1.getName().equals("isFalse") && invocation2.getName().equals("isTrue"));
+		String expression1 = invocation1.getExpression();
+		String expression2 = invocation2.getExpression();
+		if(!inverted || !invocation1.arguments().isEmpty() || !invocation2.arguments().isEmpty() || expression1 == null || expression2 == null ||
+				expression1.equals(expression2) || !expression1.startsWith("assertThat(") || !expression2.startsWith("assertThat(")) {
+			return false;
+		}
+		for(Replacement replacement : replacementInfo.getReplacements()) {
+			expression1 = ReplacementUtil.performReplacement(expression1, expression2, replacement.getBefore(), replacement.getAfter(), LANG1, LANG2);
+		}
+		return expression1.equals(expression2);
 	}
 
 	//whether one of the statements declares the single variable of the statement, i.e., a possible extract or inline of the returned variable

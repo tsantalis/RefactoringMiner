@@ -8851,6 +8851,13 @@
     "time": "4/4/19 05:25 PM",
     "refactorings": [{
         "type": "Rename Method",
+        "description": "Rename Method public reachable object not tracked() renamed to public reachable object retained() in class leaksentry.RefWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
         "description": "Rename Method public unreachable object not tracked() renamed to public unreachable object not retained() in class leaksentry.RefWatcherTest",
         "comment": null,
         "validation": "TP",

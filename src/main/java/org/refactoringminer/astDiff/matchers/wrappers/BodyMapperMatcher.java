@@ -214,6 +214,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         //the call site in another file than the inlined method, i.e., a method moved to another file and inlined, is not in the tree
         if (!bodyMapper.getOperationInvocation().getLocationInfo().getFilePath().equals(bodyMapper.getContainer1().getLocationInfo().getFilePath()))
             return;
+        //the call site is a method call with the anonymous class creation as argument, i.e., not the inlined constructor call new PingRunnable(true, a, b)
+        if (bodyMapper.getOperationInvocation() instanceof ObjectCreation)
+            return;
         Tree call1 = TreeUtilFunctions.findByLocationInfo(srcTree, bodyMapper.getOperationInvocation().getLocationInfo(), LANG1, LANG1.METHOD_INVOCATION);
         if (call1 == null)
             return;

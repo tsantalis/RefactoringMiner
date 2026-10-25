@@ -1440,6 +1440,7 @@ public class TypeScriptOperationBody extends OperationBody {
 	private void processTypeScriptClass(String sourceFolder, String filePath, String fileContent,
 			List<UMLClass> typeDeclarations, UMLClass umlClass, Swc4jAstClass clazz, List<UMLComment> comments) {
 		processComments(comments, umlClass);
+		umlClass.setAbstract(clazz.isAbstract());
 		Optional<ISwc4jAstExpr> superclass = clazz.getSuperClass();
 		if(superclass.isPresent()) {
 			ISwc4jAstExpr expr = superclass.get();

@@ -3,8 +3,7 @@ package org.refactoringminer.astDiff.tests;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import narrator.Driver;
-import narrator.service.NarrativeService;
+import org.jgrapht.Graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,11 +11,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.opentest4j.AssertionFailedError;
 import org.refactoringminer.astDiff.graph.DiffNode;
+import org.refactoringminer.astDiff.graph.Driver;
+import org.refactoringminer.astDiff.graph.Edge;
 import org.refactoringminer.astDiff.graph.Node;
 import org.refactoringminer.astDiff.graph.ReviewNode;
 import org.refactoringminer.astDiff.graph.cluster.Cluster;
-import org.refactoringminer.astDiff.graph.cluster.traverse.GrainLevel;
-import org.refactoringminer.astDiff.graph.cluster.traverse.Narrator;
+import org.refactoringminer.astDiff.graph.cluster.Clusterer;
+import org.refactoringminer.astDiff.graph.cluster.traverse.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -140,9 +141,9 @@ public class RepresentationTest {
         String url = "https://github.com/" + json.get("full_name").getAsString() + "/compare/"
                 + json.get("base_commit").getAsString() + "..." + testCase.commit;
 
-        NarrativeService service = new NarrativeService();
-        service.initializeNarrative(url);
-        List<Narrator.ChapterUnit> chapters = service.getFlatChapters(url, GrainLevel.SINGLE);
+        Graph<Node, Edge> graph = Driver.getCompareGraph(url);
+        List<Cluster> clusters = new Clusterer(graph).getClusters();
+        List<Narrator.ChapterUnit> chapters = chapters(clusters);
 
         List<Element> elements = new ArrayList<>();
         Set<Node> presented = new HashSet<>();
@@ -170,7 +171,7 @@ public class RepresentationTest {
         }
 
         List<String> unpresentedChanges = new ArrayList<>();
-        for (Cluster cluster : service.getOrComputeClusters(url)) {
+        for (Cluster cluster : clusters) {
             for (Node node : cluster.getGraph().vertexSet()) {
                 if (node.isBase() && !presented.contains(node)) {
                     unpresentedChanges.add(node.getId());
@@ -184,6 +185,26 @@ public class RepresentationTest {
         representation = new Representation(elements, unpresentedChanges);
         REPRESENTATIONS.put(testCase.dataset + "-" + testCase.commit, representation);
         return representation;
+    }
+
+    /** The chapters of {@link GrainLevel#SINGLE}, with the shortest prompt ids that tell its diffs apart. */
+    private static List<Narrator.ChapterUnit> chapters(List<Cluster> clusters) {
+        List<TraversalPattern> patterns = new ArrayList<>();
+        for (Cluster cluster : clusters) {
+            patterns.add(new TraversalEngine(cluster).get());
+        }
+        TraversalPattern root = patterns.size() == 1 ? patterns.get(0) : new TraversalComponent(patterns, ReasonType.CONTEXT);
+
+        List<Narrator.ChapterUnit> chapters = null;
+        for (int length = Node.PROMPT_ID_LENGTH; length <= Node.MAX_PROMPT_ID_LENGTH; length++) {
+            chapters = root.getNarrator().getFlatChapters(GrainLevel.SINGLE, length, true);
+            List<String> promptIds = chapters.stream().flatMap(chapter -> chapter.getAnchoredNodes().stream())
+                    .map(ReviewNode::getPromptId).toList();
+            if (promptIds.size() == new HashSet<>(promptIds).size()) {
+                break;
+            }
+        }
+        return chapters;
     }
 
     private record Element(int chapter, int index, String kind, Map<String, String> attributes, String body) {

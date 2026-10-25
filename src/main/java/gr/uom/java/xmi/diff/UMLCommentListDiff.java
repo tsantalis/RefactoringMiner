@@ -856,26 +856,7 @@ public class UMLCommentListDiff {
 		else {
 			//match comments that one contains a subsequence of the other
 			if(deletedTokenSequence.size() <= addedTokenSequence.size()) {
-				List<String> longestSubSequence = null;
-				for(int i=0; i<deletedTokenSequence.size(); i++) {
-					for(int j=i+1; j<deletedTokenSequence.size(); j++) {
-						List<String> subList = deletedTokenSequence.subList(i,j+1);
-						if(subList.size() > 2 || subListInQuotes(addedTokenSequence, subList)) {
-							int indexOfSubList = Collections.indexOfSubList(addedTokenSequence, subList);
-							if(indexOfSubList != -1) {
-								if(longestSubSequence == null) {
-									longestSubSequence = subList;
-								}
-								else if(subList.containsAll(longestSubSequence) && subList.size() > longestSubSequence.size()) {
-									longestSubSequence = subList;
-								}
-							}
-						}
-					}
-					if(longestSubSequence != null && longestSubSequence.equals(deletedTokenSequence)) {
-						break;
-					}
-				}
+				List<String> longestSubSequence = longestSubSequence(deletedTokenSequence, addedTokenSequence);
 				if(longestSubSequence != null && nonPunctuationWords(longestSubSequence) > 1) {
 					//make all pair combinations
 					boolean entireSubSequenceMatched = false;
@@ -909,26 +890,7 @@ public class UMLCommentListDiff {
 				}
 			}
 			else {
-				List<String> longestSubSequence = null;
-				for(int i=0; i<addedTokenSequence.size(); i++) {
-					for(int j=i+1; j<addedTokenSequence.size(); j++) {
-						List<String> subList = addedTokenSequence.subList(i,j+1);
-						if(subList.size() > 2 || subListInQuotes(deletedTokenSequence, subList)) {
-							int indexOfSubList = Collections.indexOfSubList(deletedTokenSequence, subList);
-							if(indexOfSubList != -1) {
-								if(longestSubSequence == null) {
-									longestSubSequence = subList;
-								}
-								else if(subList.containsAll(longestSubSequence) && subList.size() > longestSubSequence.size()) {
-									longestSubSequence = subList;
-								}
-							}
-						}
-					}
-					if(longestSubSequence != null && longestSubSequence.equals(addedTokenSequence)) {
-						break;
-					}
-				}
+				List<String> longestSubSequence = longestSubSequence(addedTokenSequence, deletedTokenSequence);
 				if(longestSubSequence != null && nonPunctuationWords(longestSubSequence) > 1) {
 					//make all pair combinations
 					boolean entireSubSequenceMatched = false;
@@ -1072,14 +1034,47 @@ public class UMLCommentListDiff {
 	}
 
 	private List<UMLComment> findConcatenatedMatch(List<UMLComment> comments, String text, int startIndex) {
+		String target = text.replaceAll("\\s", "");
 		StringBuilder concatText = new StringBuilder();
 		for(int i=startIndex; i<comments.size(); i++) {
-			concatText.append(comments.get(i).getText());
-			if(concatText.toString().replaceAll("\\s", "").equals(text.replaceAll("\\s", ""))) {
+			concatText.append(comments.get(i).getText().replaceAll("\\s", ""));
+			if(concatText.length() == target.length() && concatText.toString().equals(target)) {
 				return new ArrayList<>(comments.subList(startIndex, i+1));
+			}
+			//the concatenation only grows, so it cannot match once it is not a prefix of the text
+			if(!target.startsWith(concatText.toString())) {
+				break;
 			}
 		}
 		return Collections.emptyList();
+	}
+
+	//the longest subsequence of tokens of the source found in the target, with more than two tokens or two tokens in quotes,
+	//which replaces a found subsequence only when it contains it
+	private List<String> longestSubSequence(List<String> source, List<String> target) {
+		List<String> longestSubSequence = null;
+		for(int i=0; i<source.size(); i++) {
+			for(int j=i+1; j<source.size(); j++) {
+				List<String> subList = source.subList(i,j+1);
+				if(subList.size() > 2 || subListInQuotes(target, subList)) {
+					int indexOfSubList = Collections.indexOfSubList(target, subList);
+					if(indexOfSubList == -1) {
+						//the longer subsequences from the same start contain this one, so they are not found either
+						break;
+					}
+					if(longestSubSequence == null) {
+						longestSubSequence = subList;
+					}
+					else if(subList.containsAll(longestSubSequence) && subList.size() > longestSubSequence.size()) {
+						longestSubSequence = subList;
+					}
+				}
+			}
+			if(longestSubSequence != null && longestSubSequence.equals(source)) {
+				break;
+			}
+		}
+		return longestSubSequence;
 	}
 
 	private List<String> containsAnySubSequence(List<String> list, List<String> longestSubSequence) {

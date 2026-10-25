@@ -2761,6 +2761,32 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit) throws Exception {
+		return diffAtGitHubCompare(gitURL, startCommit, endCommit, null);
+	}
+
+	/**
+	 * With a root folder, the files fetched for the comparison are kept there, as
+	 * {@code <repoName>-<startCommit>...<endCommit>.json} and the contents under
+	 * {@code <repoName>-<startCommit>...<endCommit>/before} and {@code .../after}, and read from there afterwards,
+	 * with no GitHub access.
+	 */
+	public ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit, File rootFolder) throws Exception {
+		String repoName = gitURL.substring(gitURL.lastIndexOf('/') + 1, gitURL.lastIndexOf('.'));
+		String cacheName = repoName + "-" + startCommit + "..." + endCommit;
+		File jsonFile = rootFolder == null ? null : new File(rootFolder, cacheName + ".json");
+		if(jsonFile != null && jsonFile.exists()) {
+			ChangedFileInfo changedFileInfo = new ObjectMapper().readValue(jsonFile, ChangedFileInfo.class);
+			Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
+			Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
+			for(String fileName : changedFileInfo.getFilesBefore()) {
+				fileContentsBefore.put(fileName, FileUtils.readFileToString(new File(rootFolder, cacheName + "/before/" + fileName), StandardCharsets.UTF_8));
+			}
+			for(String fileName : changedFileInfo.getFilesCurrent()) {
+				fileContentsCurrent.put(fileName, FileUtils.readFileToString(new File(rootFolder, cacheName + "/after/" + fileName), StandardCharsets.UTF_8));
+			}
+			return diffAtGitHubCompare(gitURL, startCommit, endCommit, fileContentsBefore, fileContentsCurrent,
+					changedFileInfo.getRepositoryDirectoriesBefore(), changedFileInfo.getRepositoryDirectoriesCurrent());
+		}
 		GHRepository repository = getGitHubRepository(gitURL);
 		GHCompare compare = repository.getCompare(startCommit, endCommit);
 		//final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
@@ -2808,9 +2834,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		addDirectoryPaths(repositoryDirectoriesBefore, orderedFilesBefore);
 		addDirectoryPaths(repositoryDirectoriesCurrent, orderedFilesCurrent);
 		repositoryDirectoriesCurrent.addAll(deletedAndRenamedFileParentDirectories);
-		//ChangedFileInfo changedFileInfo = new ChangedFileInfo(startCommit, endCommit, new ArrayList<>(orderedFilesBefore), new ArrayList<>(orderedFilesCurrent), repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
-		//final ObjectMapper mapper = new ObjectMapper();
-		//mapper.writeValue(jsonFile, changedFileInfo);
+		if(jsonFile != null) {
+			for(String fileName : orderedFilesBefore) {
+				FileUtils.writeStringToFile(new File(rootFolder, cacheName + "/before/" + fileName), fileContentsBefore.get(fileName), StandardCharsets.UTF_8);
+			}
+			for(String fileName : orderedFilesCurrent) {
+				FileUtils.writeStringToFile(new File(rootFolder, cacheName + "/after/" + fileName), fileContentsCurrent.get(fileName), StandardCharsets.UTF_8);
+			}
+			ChangedFileInfo changedFileInfo = new ChangedFileInfo(startCommit, endCommit, new ArrayList<>(orderedFilesBefore), new ArrayList<>(orderedFilesCurrent), repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
+			new ObjectMapper().writeValue(jsonFile, changedFileInfo);
+		}
 		/*
 		PagedIterable<Commit> commits = compare.listCommits();
 		for(GHCommit currentGHCommit : commits) {
@@ -2855,6 +2888,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 		*/
+		return diffAtGitHubCompare(gitURL, startCommit, endCommit, fileContentsBefore, fileContentsCurrent,
+				repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+	}
+
+	private ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit,
+			Map<String, String> fileContentsBefore, Map<String, String> fileContentsCurrent,
+			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws Exception {
 		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);

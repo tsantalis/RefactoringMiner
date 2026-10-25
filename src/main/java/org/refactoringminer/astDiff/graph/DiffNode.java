@@ -130,6 +130,10 @@ public class DiffNode implements ReviewNode {
     return location;
   }
 
+  public List<DiffNode.DiffLine> getDiffLines() {
+    return diffLines;
+  }
+
   public String renderBody() {
     StringBuilder body = new StringBuilder();
     for (DiffNode.DiffLine diffLine : this.diffLines) {

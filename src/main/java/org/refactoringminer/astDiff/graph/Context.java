@@ -5,8 +5,10 @@ import com.github.gumtreediff.utils.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nullable;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 public class Context {
 
@@ -83,11 +85,16 @@ public class Context {
     if (treeType.equals(constants.SWITCH_CASE)) {
       return List.of(constants.SWITCH_STATEMENT);
     }
-    if (treeType.equals(constants.MARKER_ANNOTATION)) {
+    if (treeType.equals(constants.MARKER_ANNOTATION) || treeType.equals("SingleMemberAnnotation")
+        || treeType.equals("NormalAnnotation")) {
       return List.of(constants.FIELD_DECLARATION, constants.VARIABLE_DECLARATION_STATEMENT,
           constants.METHOD_DECLARATION);
     }
-    if (treeType.equals(constants.EXPRESSION_STATEMENT)) {
+    if (treeType.equals(constants.EXPRESSION_STATEMENT) || treeType.equals(constants.VARIABLE_DECLARATION_STATEMENT)
+        || treeType.equals(constants.IF_STATEMENT) || treeType.equals(constants.FOR_STATEMENT)
+        || treeType.equals(constants.ENHANCED_FOR_STATEMENT) || treeType.equals(constants.WHILE_STATEMENT)
+        || treeType.equals(constants.DO_STATEMENT) || treeType.equals(constants.TRY_STATEMENT)
+        || treeType.equals(constants.SWITCH_STATEMENT)) {
       return List.of(constants.BLOCK);
     }
     if (treeType.equals(constants.METHOD_INVOCATION_RECEIVER)) {
@@ -138,9 +145,6 @@ public class Context {
     if (treeType.equals("ArrayAccess")) {
       return List.of(constants.INFIX_EXPRESSION);
     }
-    if (treeType.equals(constants.IF_STATEMENT)) {
-      return List.of(constants.BLOCK);
-    }
     if (treeType.equals(constants.BLOCK)) {
       return List.of(constants.METHOD_INVOCATION);
     }
@@ -172,29 +176,92 @@ public class Context {
   }
 
   public static List<Pair<Tree, NodeType>> get(String path, Tree tree) {
+    return get(path, tree, false);
+  }
+
+  public static List<Pair<Tree, NodeType>> get(String path, Tree tree, boolean change) {
+    return get(path, tree, change, null);
+  }
+
+  // A change none of whose semantic contexts holds it reads within the statement, the block, the field declaration or
+  // the annotation holding it, as the other changes do within theirs. A context printed on the lines of the change alone
+  // shows nothing around it, so the change reads within the nearest one printing more, within the lambda or the
+  // anonymous class it is in and but the body of a member, which a change at the expression level does not need whole
+  public static List<Pair<Tree, NodeType>> get(String path, Tree tree, boolean change, @Nullable String content) {
     List<Pair<Tree, NodeType>> contexts = new ArrayList<>();
 
     String treeType = tree.getType().name;
 
     List<String> treeSemanticContexts = getSemanticContext(path, treeType);
+    boolean held = !change;
+    Constants constants = new Constants(path);
+    List<Pair<Tree, NodeType>> unchanged = change && content != null ? get(path, tree, true, null) : null;
+    TreeUtilFunctions.LineRange changeLines = unchanged == null ? null : TreeUtilFunctions.getLineRange(tree, content);
+    boolean widened = false;
     Tree parent = tree;
     while (true) {
       parent = parent.getParent();
 
       if (parent == null) {
-        return contexts;
+        return widened || unchanged == null ? contexts : unchanged;
       }
 
       String parentType = parent.getType().name;
 
-      if (treeSemanticContexts != null && treeSemanticContexts.contains(parentType)) {
+      boolean semantic = treeSemanticContexts != null && treeSemanticContexts.contains(parentType);
+      // The code around a lambda or an anonymous class holding the change is no context to widen to
+      if (changeLines != null && !held && isCallback(parentType, constants)) {
+        changeLines = null;
+      }
+      if (changeLines != null && !held && (semantic || isHolder(parent, constants)) && !isLocationContext(path, parentType)) {
+        // Until a context prints more than the change, only one doing so holds it
+        if (printsBeyond(parent, changeLines, content, constants) && !isMemberBody(parent, constants)) {
+          contexts.add(new Pair<>(parent, NodeType.SEMANTIC_CONTEXT));
+          held = true;
+          widened = true;
+        }
+      } else if (semantic) {
         contexts.add(new Pair<>(parent, NodeType.SEMANTIC_CONTEXT));
+        held = true;
+      } else if (!held && isHolder(parent, constants)) {
+        contexts.add(new Pair<>(parent, NodeType.SEMANTIC_CONTEXT));
+        held = true;
       }
 
       if (isLocationContext(path, parentType)) {
         contexts.add(new Pair<>(parent, NodeType.LOCATION_CONTEXT));
+        held = true;
       }
     }
+  }
+
+  // A block is printed from the construct it is the body of
+  private static boolean printsBeyond(Tree context, TreeUtilFunctions.LineRange changeLines, String content, Constants constants) {
+    TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(context, content);
+    int start = range.startLine();
+    if (context.getType().name.equals(constants.BLOCK) && context.getParent() != null
+        && !context.getParent().getType().name.equals(constants.BLOCK)) {
+      start = Math.min(start, TreeUtilFunctions.getLineRange(context.getParent(), content).startLine());
+    }
+
+    return start < changeLines.startLine() || changeLines.endLine() < range.endLine();
+  }
+
+  private static boolean isMemberBody(Tree tree, Constants constants) {
+    Tree owner = tree.getParent();
+    return tree.getType().name.equals(constants.BLOCK) && owner != null && (constants.isMethod(owner.getType().name)
+        || owner.getType().name.equals("Initializer") || isCallback(owner.getType().name, constants));
+  }
+
+  private static boolean isCallback(String treeType, Constants constants) {
+    return treeType.equals(constants.LAMBDA_EXPRESSION) || treeType.equals(constants.ANONYMOUS_CLASS_DECLARATION);
+  }
+
+  private static boolean isHolder(Tree tree, Constants constants) {
+    String type = tree.getType().name;
+    return type.equals(constants.FIELD_DECLARATION) || type.equals(constants.BLOCK)
+        || type.equals(constants.MARKER_ANNOTATION) || type.equals("SingleMemberAnnotation") || type.equals("NormalAnnotation")
+        || (tree.getParent() != null && tree.getParent().getType().name.equals(constants.BLOCK));
   }
 
   public static List<Node> get(Graph<Node, Edge> graph, Node node) {

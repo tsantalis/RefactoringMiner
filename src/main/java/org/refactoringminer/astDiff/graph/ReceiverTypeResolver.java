@@ -36,6 +36,8 @@ public class ReceiverTypeResolver {
   private final ContentsContexts contentsContexts;
   private final Map<Object, NodePool> nodePools = new IdentityHashMap<>();
   private final Map<UMLAnonymousClass, UMLType> anonymousSupertypes = new IdentityHashMap<>();
+  private final Map<UMLAbstractClass, Set<String>> nonMemberTypes = new IdentityHashMap<>();
+  private final Set<UMLAbstractClass> memberTypeLookups = Collections.newSetFromMap(new IdentityHashMap<>());
 
   public ReceiverTypeResolver(UMLModelDiff modelDiff, RepositoryStateFiles repositoryStateFiles) {
     this(modelDiff, repositoryStateFiles, null);
@@ -70,6 +72,51 @@ public class ReceiverTypeResolver {
   public UMLAttribute resolveAccessTarget(LeafExpression variable, UMLAbstractClass context, UMLModel umlModel) {
     UMLAttribute target = bindAccess(variable, context, umlModel);
     return target != null && attach(Set.of(target.getLocationInfo().getFilePath())) ? bindAccess(variable, context, umlModel) : target;
+  }
+
+  /**
+   * Java: the methods of the supertypes of its class that the operation overrides or implements, those of its name and
+   * parameter types (a type variable of the supertype method standing for any type) that are not private nor static.
+   */
+  public List<UMLOperation> findOverridden(UMLOperation operation, UMLAbstractClass declaring, UMLModel umlModel) {
+    if (!declaring.getLANG().equals(Constants.JAVA) || operation.isConstructor() || operation.isStatic()
+            || operation.getVisibility() == Visibility.PRIVATE) {
+      return List.of();
+    }
+
+    ClassRef declaringRef = new ClassRef(declaring, Set.of());
+    List<String> signature = candidate(operation, declaringRef).signature();
+    List<UMLOperation> overridden = new ArrayList<>();
+    walkHierarchy(declaringRef, umlModel, current -> {
+      if (current.umlClass() == declaring) {
+        return false;
+      }
+      for (UMLOperation superOperation : current.umlClass().getOperations()) {
+        if (!superOperation.getName().equals(operation.getName()) || superOperation.isConstructor() || superOperation.isStatic()
+                || superOperation.getVisibility() == Visibility.PRIVATE) {
+          continue;
+        }
+        Candidate superCandidate = candidate(superOperation, current);
+        if (superCandidate.signature().size() != signature.size()) {
+          continue;
+        }
+        boolean overrides = true;
+        for (int i = 0; i < signature.size() && overrides; i++) {
+          overrides = superCandidate.parameters().get(i) == null || superCandidate.signature().get(i).equals(signature.get(i));
+        }
+        if (overrides) {
+          overridden.add(superOperation);
+        }
+      }
+      return false;
+    }, external -> {});
+    return overridden;
+  }
+
+  /** The local variable or parameter a simple name refers to, looked up through the anonymous classes enclosing it. */
+  @Nullable
+  public VariableDeclaration resolveLocal(LeafExpression name, UMLAbstractClass context, UMLModel umlModel) {
+    return lookupName(name.getString().trim(), scopeOf(name.getContainer(), name.getLocationInfo(), context, umlModel)).local();
   }
 
   @Nullable
@@ -1250,7 +1297,13 @@ public class ReceiverTypeResolver {
 
   @Nullable
   private Found<DeclaredField> findField(ClassRef owner, String name, UMLModel umlModel) {
-    return findInHierarchy(owner, umlModel, umlClass -> findOwnField(umlClass, name));
+    // a private field is no member of the subclasses of its class, so a name there is looked up further (in the
+    // enclosing scope of an anonymous subclass, as a local the anonymous class captures)
+    return findInHierarchy(owner, umlModel, umlClass -> {
+      DeclaredField field = findOwnField(umlClass, name);
+      return field != null && umlClass.umlClass() != owner.umlClass() && field.member() != null
+              && field.member().getVisibility() == Visibility.PRIVATE ? null : field;
+    });
   }
 
   @Nullable
@@ -1966,10 +2019,13 @@ public class ReceiverTypeResolver {
       // the type of this in an anonymous class (its name is a number, which no named class has)
       return new ClassRef(anonymous, receiverType.files());
     }
-    // the class may be declared in the file of the scope, which the resolver does not report
-    Set<String> paths = new HashSet<>(resolvePaths(receiverType));
-    paths.add(receiverType.context().getSourceFile());
-    ClassRef found = findClass(paths, lastSegment(receiverType.type().getClassType()), receiverType.files(), umlModel);
+    ClassRef found = memberType(receiverType, umlModel);
+    if (found == null) {
+      // the class may be declared in the file of the scope, which the resolver does not report
+      Set<String> paths = new HashSet<>(resolvePaths(receiverType));
+      paths.add(receiverType.context().getSourceFile());
+      found = findClass(paths, lastSegment(receiverType.type().getClassType()), receiverType.files(), umlModel);
+    }
     if (found == null || !(found.umlClass() instanceof UMLClass umlClass)) {
       return found;
     }
@@ -1986,6 +2042,56 @@ public class ReceiverTypeResolver {
       }
     }
     return new ClassRef(found.umlClass(), found.files(), bindings);
+  }
+
+  // Java: a simple type name names first a member type, declared or inherited, of the class using it or of a class
+  // enclosing that class, which shadows the imports; an inherited one is bound by no import nor by the package of the
+  // file, but by the supertypes of the class. A class whose supertypes are being looked up is skipped, as its own
+  // members are not in the scope of its supertype names.
+  @Nullable
+  private ClassRef memberType(ReceiverType receiverType, UMLModel umlModel) {
+    String name = receiverType.type().getClassType();
+    UMLAbstractClass context = receiverType.context();
+    if (!context.getLANG().equals(Constants.JAVA) || name.contains(".")) {
+      return null;
+    }
+
+    // A name found is looked up again, as the class it names may be attached to the model since
+    Set<String> contextNonMemberTypes = nonMemberTypes.computeIfAbsent(context, key -> new HashSet<>());
+    if (contextNonMemberTypes.contains(name)) {
+      return null;
+    }
+
+    for (ClassRef scopeClass : classAndEnclosingClasses(context, umlModel)) {
+      if (!memberTypeLookups.add(scopeClass.umlClass())) {
+        continue;
+      }
+      try {
+        Found<ClassRef> found = findInHierarchy(scopeClass, umlModel, current -> nestedClass(current, name, umlModel));
+        if (found != null) {
+          return new ClassRef(found.value().umlClass(), union(receiverType.files(), found.value().files()));
+        }
+      } finally {
+        memberTypeLookups.remove(scopeClass.umlClass());
+      }
+    }
+    if (memberTypeLookups.isEmpty()) {
+      contextNonMemberTypes.add(name);
+    }
+    return null;
+  }
+
+  @Nullable
+  private ClassRef nestedClass(ClassRef owner, String name, UMLModel umlModel) {
+    String path = owner.umlClass().getSourceFile();
+    return classesOfFile(path, umlModel).stream().filter(umlClass -> umlClass.getName().equals(owner.umlClass().getName() + "." + name))
+            .findFirst().map(umlClass -> new ClassRef(umlClass, union(owner.files(), Set.of(path)))).orElse(null);
+  }
+
+  private static Set<String> union(Set<String> files, Set<String> moreFiles) {
+    Set<String> union = new LinkedHashSet<>(files);
+    union.addAll(moreFiles);
+    return union;
   }
 
   @Nullable

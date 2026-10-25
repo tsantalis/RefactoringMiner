@@ -26069,6 +26069,39 @@
   "firstEndPos" : 19282,
   "secondEndPos" : 20244
 }, {
+  "firstType" : "when_expression",
+  "secondType" : "when_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 19345,
+  "secondPos" : 15940,
+  "firstEndPos" : 19496,
+  "secondEndPos" : 16333
+}, {
+  "firstType" : "when_subject",
+  "secondType" : "when_subject",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_expression",
+  "secondParentType" : "when_expression",
+  "firstPos" : 19350,
+  "secondPos" : 15945,
+  "firstEndPos" : 19360,
+  "secondEndPos" : 15953
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "instance",
+  "secondLabel" : "record",
+  "firstParentType" : "when_subject",
+  "secondParentType" : "when_subject",
+  "firstPos" : 19351,
+  "secondPos" : 15946,
+  "firstEndPos" : 19359,
+  "secondEndPos" : 15952
+}, {
   "firstType" : "when_entry",
   "secondType" : "when_entry",
   "firstLabel" : "",
@@ -26076,9 +26109,64 @@
   "firstParentType" : "when_expression",
   "secondParentType" : "when_expression",
   "firstPos" : 19367,
-  "secondPos" : 16254,
+  "secondPos" : 15962,
   "firstEndPos" : 19400,
-  "secondEndPos" : 16327
+  "secondEndPos" : 16019
+}, {
+  "firstType" : "type_test",
+  "secondType" : "type_test",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_condition",
+  "secondParentType" : "when_condition",
+  "firstPos" : 19367,
+  "secondPos" : 15962,
+  "firstEndPos" : 19378,
+  "secondEndPos" : 15980
+}, {
+  "firstType" : "when_condition",
+  "secondType" : "when_condition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_entry",
+  "secondParentType" : "when_entry",
+  "firstPos" : 19367,
+  "secondPos" : 15962,
+  "firstEndPos" : 19378,
+  "secondEndPos" : 15980
+}, {
+  "firstType" : "type_check_operator",
+  "secondType" : "type_check_operator",
+  "firstLabel" : "is",
+  "secondLabel" : "is",
+  "firstParentType" : "type_test",
+  "secondParentType" : "type_test",
+  "firstPos" : 19367,
+  "secondPos" : 15962,
+  "firstEndPos" : 19369,
+  "secondEndPos" : 15964
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ClassObj",
+  "secondLabel" : "ClassDumpRecord",
+  "firstParentType" : "user_type",
+  "secondParentType" : "user_type",
+  "firstPos" : 19370,
+  "secondPos" : 15965,
+  "firstEndPos" : 19378,
+  "secondEndPos" : 15980
+}, {
+  "firstType" : "user_type",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_test",
+  "secondParentType" : "type_test",
+  "firstPos" : 19370,
+  "secondPos" : 15965,
+  "firstEndPos" : 19378,
+  "secondEndPos" : 15980
 }, {
   "firstType" : "arrow",
   "secondType" : "arrow",
@@ -26087,41 +26175,8 @@
   "firstParentType" : "when_entry",
   "secondParentType" : "when_entry",
   "firstPos" : 19379,
-  "secondPos" : 16259,
-  "firstEndPos" : 19381,
-  "secondEndPos" : 16261
-}, {
-  "firstType" : "control_structure_body",
-  "secondType" : "control_structure_body",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "when_entry",
-  "secondParentType" : "when_entry",
-  "firstPos" : 19382,
-  "secondPos" : 16262,
-  "firstEndPos" : 19400,
-  "secondEndPos" : 16327
-}, {
-  "firstType" : "when_entry",
-  "secondType" : "when_entry",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "when_expression",
-  "secondParentType" : "when_expression",
-  "firstPos" : 19457,
-  "secondPos" : 15962,
-  "firstEndPos" : 19492,
-  "secondEndPos" : 16019
-}, {
-  "firstType" : "arrow",
-  "secondType" : "arrow",
-  "firstLabel" : "->",
-  "secondLabel" : "->",
-  "firstParentType" : "when_entry",
-  "secondParentType" : "when_entry",
-  "firstPos" : 19462,
   "secondPos" : 15981,
-  "firstEndPos" : 19464,
+  "firstEndPos" : 19381,
   "secondEndPos" : 15983
 }, {
   "firstType" : "control_structure_body",
@@ -26130,9 +26185,9 @@
   "secondLabel" : "",
   "firstParentType" : "when_entry",
   "secondParentType" : "when_entry",
-  "firstPos" : 19465,
+  "firstPos" : 19382,
   "secondPos" : 15984,
-  "firstEndPos" : 19492,
+  "firstEndPos" : 19400,
   "secondEndPos" : 16019
 }, {
   "firstType" : "navigation_expression",
@@ -26141,10 +26196,21 @@
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "call_expression",
-  "firstPos" : 19465,
+  "firstPos" : 19382,
   "secondPos" : 15991,
-  "firstEndPos" : 19492,
+  "firstEndPos" : 19400,
   "secondEndPos" : 16007
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "instance",
+  "secondLabel" : "parser",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 19382,
+  "secondPos" : 15991,
+  "firstEndPos" : 19390,
+  "secondEndPos" : 15997
 }, {
   "firstType" : "navigation_suffix",
   "secondType" : "navigation_suffix",
@@ -26152,9 +26218,9 @@
   "secondLabel" : "",
   "firstParentType" : "navigation_expression",
   "secondParentType" : "navigation_expression",
-  "firstPos" : 19482,
+  "firstPos" : 19390,
   "secondPos" : 15997,
-  "firstEndPos" : 19492,
+  "firstEndPos" : 19400,
   "secondEndPos" : 16007
 }, {
   "firstType" : "simple_identifier",
@@ -26163,10 +26229,164 @@
   "secondLabel" : "className",
   "firstParentType" : "navigation_suffix",
   "secondParentType" : "navigation_suffix",
-  "firstPos" : 19483,
+  "firstPos" : 19391,
   "secondPos" : 15998,
-  "firstEndPos" : 19492,
+  "firstEndPos" : 19400,
   "secondEndPos" : 16007
+}, {
+  "firstType" : "when_entry",
+  "secondType" : "when_entry",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_expression",
+  "secondParentType" : "when_expression",
+  "firstPos" : 19405,
+  "secondPos" : 16174,
+  "firstEndPos" : 19452,
+  "secondEndPos" : 16247
+}, {
+  "firstType" : "type_test",
+  "secondType" : "type_test",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_condition",
+  "secondParentType" : "when_condition",
+  "firstPos" : 19405,
+  "secondPos" : 16174,
+  "firstEndPos" : 19421,
+  "secondEndPos" : 16198
+}, {
+  "firstType" : "when_condition",
+  "secondType" : "when_condition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_entry",
+  "secondParentType" : "when_entry",
+  "firstPos" : 19405,
+  "secondPos" : 16174,
+  "firstEndPos" : 19421,
+  "secondEndPos" : 16198
+}, {
+  "firstType" : "type_check_operator",
+  "secondType" : "type_check_operator",
+  "firstLabel" : "is",
+  "secondLabel" : "is",
+  "firstParentType" : "type_test",
+  "secondParentType" : "type_test",
+  "firstPos" : 19405,
+  "secondPos" : 16174,
+  "firstEndPos" : 19407,
+  "secondEndPos" : 16176
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ArrayInstance",
+  "secondLabel" : "ObjectArrayDumpRecord",
+  "firstParentType" : "user_type",
+  "secondParentType" : "user_type",
+  "firstPos" : 19408,
+  "secondPos" : 16177,
+  "firstEndPos" : 19421,
+  "secondEndPos" : 16198
+}, {
+  "firstType" : "user_type",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_test",
+  "secondParentType" : "type_test",
+  "firstPos" : 19408,
+  "secondPos" : 16177,
+  "firstEndPos" : 19421,
+  "secondEndPos" : 16198
+}, {
+  "firstType" : "arrow",
+  "secondType" : "arrow",
+  "firstLabel" : "->",
+  "secondLabel" : "->",
+  "firstParentType" : "when_entry",
+  "secondParentType" : "when_entry",
+  "firstPos" : 19422,
+  "secondPos" : 16199,
+  "firstEndPos" : 19424,
+  "secondEndPos" : 16201
+}, {
+  "firstType" : "control_structure_body",
+  "secondType" : "control_structure_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_entry",
+  "secondParentType" : "when_entry",
+  "firstPos" : 19425,
+  "secondPos" : 16202,
+  "firstEndPos" : 19452,
+  "secondEndPos" : 16247
+}, {
+  "firstType" : "navigation_expression",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "call_expression",
+  "firstPos" : 19425,
+  "secondPos" : 16209,
+  "firstEndPos" : 19452,
+  "secondEndPos" : 16225
+}, {
+  "firstType" : "navigation_suffix",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 19442,
+  "secondPos" : 16215,
+  "firstEndPos" : 19452,
+  "secondEndPos" : 16225
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "className",
+  "secondLabel" : "className",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 19443,
+  "secondPos" : 16216,
+  "firstEndPos" : 19452,
+  "secondEndPos" : 16225
+}, {
+  "firstType" : "when_entry",
+  "secondType" : "when_entry",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_expression",
+  "secondParentType" : "when_expression",
+  "firstPos" : 19457,
+  "secondPos" : 16254,
+  "firstEndPos" : 19492,
+  "secondEndPos" : 16327
+}, {
+  "firstType" : "arrow",
+  "secondType" : "arrow",
+  "firstLabel" : "->",
+  "secondLabel" : "->",
+  "firstParentType" : "when_entry",
+  "secondParentType" : "when_entry",
+  "firstPos" : 19462,
+  "secondPos" : 16259,
+  "firstEndPos" : 19464,
+  "secondEndPos" : 16261
+}, {
+  "firstType" : "control_structure_body",
+  "secondType" : "control_structure_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_entry",
+  "secondParentType" : "when_entry",
+  "firstPos" : 19465,
+  "secondPos" : 16262,
+  "firstEndPos" : 19492,
+  "secondEndPos" : 16327
 }, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",

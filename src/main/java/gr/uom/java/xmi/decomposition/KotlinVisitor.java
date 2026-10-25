@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.com.intellij.psi.stubs.IStubElementType;
 import org.jetbrains.kotlin.com.intellij.psi.tree.IElementType;
 import org.jetbrains.kotlin.lexer.KtSingleValueToken;
 import org.jetbrains.kotlin.psi.KtArrayAccessExpression;
+import org.jetbrains.kotlin.psi.KtWhenConditionIsPattern;
 import org.jetbrains.kotlin.psi.KtWhenConditionInRange;
 import org.jetbrains.kotlin.psi.KtWhenConditionWithExpression;
 import org.jetbrains.kotlin.psi.KtBinaryExpression;
@@ -241,6 +242,12 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		if(condition.getRangeExpression() != null)
 			this.visitExpression(condition.getRangeExpression(), data);
 		return super.visitWhenConditionInRange(condition, data);
+	}
+
+	public Object visitWhenConditionIsPattern(KtWhenConditionIsPattern condition, Object data) {
+		if(condition.getTypeReference() != null)
+			visitTypeReference(condition.getTypeReference(), data);
+		return super.visitWhenConditionIsPattern(condition, data);
 	}
 
 	public Object visitSuperTypeEntry(KtSuperTypeEntry entry, Object data) {

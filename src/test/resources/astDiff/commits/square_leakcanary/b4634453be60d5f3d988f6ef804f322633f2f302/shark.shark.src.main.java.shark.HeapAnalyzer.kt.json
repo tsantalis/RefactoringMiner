@@ -33853,17 +33853,6 @@
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
   "firstPos" : 20583,
-  "secondPos" : 5849,
-  "firstEndPos" : 21322,
-  "secondEndPos" : 6116
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 20583,
   "secondPos" : 13274,
   "firstEndPos" : 21322,
   "secondEndPos" : 14013
@@ -34181,17 +34170,6 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "property_declaration",
-  "secondParentType" : "statements",
-  "firstPos" : 20701,
-  "secondPos" : 5849,
-  "firstEndPos" : 20842,
-  "secondEndPos" : 6116
-}, {
-  "firstType" : "when_expression",
-  "secondType" : "when_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "property_declaration",
   "secondParentType" : "property_declaration",
   "firstPos" : 20701,
   "secondPos" : 13392,
@@ -34205,31 +34183,9 @@
   "firstParentType" : "when_expression",
   "secondParentType" : "when_expression",
   "firstPos" : 20706,
-  "secondPos" : 5854,
-  "firstEndPos" : 20718,
-  "secondEndPos" : 5861
-}, {
-  "firstType" : "when_subject",
-  "secondType" : "when_subject",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "when_expression",
-  "secondParentType" : "when_expression",
-  "firstPos" : 20706,
   "secondPos" : 13397,
   "firstEndPos" : 20718,
   "secondEndPos" : 13409
-}, {
-  "firstType" : "simple_identifier",
-  "secondType" : "simple_identifier",
-  "firstLabel" : "heapObject",
-  "secondLabel" : "event",
-  "firstParentType" : "when_subject",
-  "secondParentType" : "when_subject",
-  "firstPos" : 20707,
-  "secondPos" : 5855,
-  "firstEndPos" : 20717,
-  "secondEndPos" : 5860
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -34502,17 +34458,6 @@
   "firstParentType" : "when_expression",
   "secondParentType" : "when_expression",
   "firstPos" : 20818,
-  "secondPos" : 5878,
-  "firstEndPos" : 20834,
-  "secondEndPos" : 5953
-}, {
-  "firstType" : "when_entry",
-  "secondType" : "when_entry",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "when_expression",
-  "secondParentType" : "when_expression",
-  "firstPos" : 20818,
   "secondPos" : 13509,
   "firstEndPos" : 20834,
   "secondEndPos" : 13525
@@ -34524,31 +34469,9 @@
   "firstParentType" : "when_entry",
   "secondParentType" : "when_entry",
   "firstPos" : 20823,
-  "secondPos" : 5903,
-  "firstEndPos" : 20825,
-  "secondEndPos" : 5905
-}, {
-  "firstType" : "arrow",
-  "secondType" : "arrow",
-  "firstLabel" : "->",
-  "secondLabel" : "->",
-  "firstParentType" : "when_entry",
-  "secondParentType" : "when_entry",
-  "firstPos" : 20823,
   "secondPos" : 13514,
   "firstEndPos" : 20825,
   "secondEndPos" : 13516
-}, {
-  "firstType" : "control_structure_body",
-  "secondType" : "control_structure_body",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "when_entry",
-  "secondParentType" : "when_entry",
-  "firstPos" : 20826,
-  "secondPos" : 5906,
-  "firstEndPos" : 20834,
-  "secondEndPos" : 5953
 }, {
   "firstType" : "control_structure_body",
   "secondType" : "control_structure_body",

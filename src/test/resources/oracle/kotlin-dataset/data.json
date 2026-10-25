@@ -6768,6 +6768,13 @@
     "author": "pyricau",
     "time": "9/15/20 05:25 PM",
     "refactorings": [{
+        "type": "Rename Variable",
+        "description": "Rename Variable objectRecord : Inferred to heapObject : Inferred in method public onEntry(instanceId Long, dominatorId Long) from class shark.HeapAnalyzer.FindLeakInput.computeRetainedSizes.ForEachCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public parseHeaderOf(source BufferedSource) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.Hprof.Companion & moved to class shark.HprofHeader.Companion",
         "comment": null,
@@ -11888,6 +11895,34 @@
     "author": "pyricau",
     "time": "7/10/19 08:32 PM",
     "refactorings": [{
+        "type": "Rename Variable",
+        "description": "Rename Variable stringInstance : Inferred to graphObject : Inferred in method private updateDominatorWithSkips(graph HprofGraph, parentObjectId Long, objectId Long) from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable stringInstance : Inferred to graphObject : Inferred in method private undominateWithSkips(graph HprofGraph, objectId Long) from class leakcanary.internal.ShortestPathFinder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type record : ObjectRecord to graphObject : GraphObjectRecord in method public computeShallowSize(graphObject GraphObjectRecord) : Int from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter record : ObjectRecord to graphObject : GraphObjectRecord in method public computeShallowSize(graphObject GraphObjectRecord) : Int from class leakcanary.HprofGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Change Attribute Access Modifier",
         "description": "Change Attribute Access Modifier public to internal in attribute internal STRING_IN_UTF8 : Inferred from class leakcanary.HprofPushRecordsParser.Companion",
         "comment": null,

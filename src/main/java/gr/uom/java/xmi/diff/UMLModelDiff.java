@@ -57,6 +57,7 @@ import static gr.uom.java.xmi.diff.UMLClassBaseDiff.BUILDER_STATEMENT_RATIO_THRE
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -549,6 +550,17 @@ public class UMLModelDiff {
 				return classDiff;
 		}
 		return null;
+	}
+
+	//the removed attribute overrides a superclass member that was removed without being renamed to the added attribute,
+	//i.e., abstract val record became abstract fun readRecord(), so the override val record of the subclass was not renamed either
+	private boolean overriddenAttributeRemovedFromSuperclass(UMLClassBaseDiff diff, UMLAttribute a1, UMLAttribute a2) {
+		if(a1 == null || a2 == null || diff.getOriginalClass().getSuperclass() == null)
+			return false;
+		UMLClassBaseDiff superclassDiff = getUMLClassDiff(diff.getOriginalClass().getSuperclass());
+		return superclassDiff != null && superclassDiff.findAttributeInOriginalClass(a1.getName()) != null &&
+				superclassDiff.findAttributeInNextClass(a1.getName()) == null &&
+				superclassDiff.findAttributeInNextClass(a2.getName()) == null;
 	}
 
 	private List<UMLClassBaseDiff> getUMLClassDiffWithExistingAttributeAfter(Replacement pattern) {
@@ -4257,7 +4269,8 @@ public class UMLModelDiff {
 						UMLAttribute a2 = diff.findAttributeInNextClass(after);
 						if(!diff.getOriginalClass().containsAttributeWithName(after) &&
 								!diff.getNextClass().containsAttributeWithName(before) &&
-								!attributeMerged(a1, a2, refactorings)) {
+								!attributeMerged(a1, a2, refactorings) &&
+								!overriddenAttributeRemovedFromSuperclass(diff, a1, a2)) {
 							if(innerClassMoveDiffList.contains(diff)) {
 								if(a1 instanceof UMLEnumConstant && a2 instanceof UMLEnumConstant) {
 									UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff((UMLEnumConstant)a1, (UMLEnumConstant)a2, diff, this);
@@ -5952,6 +5965,54 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	//the non-mapped statements of the inlined operation that moved to an added operation called from the inlined code,
+	//i.e., the branch is A -> when (x) {...} is inlined as is A -> a.readSize(), where the added A.readSize() contains when (x) {...}
+	private int nonMappedElementsT1MovedToCalledOperations(UMLOperationBodyMapper operationBodyMapper) {
+		List<AbstractCall> calls = new ArrayList<AbstractCall>();
+		List<AbstractCodeFragment> fragments2 = new ArrayList<AbstractCodeFragment>(operationBodyMapper.getNonMappedLeavesT2());
+		fragments2.addAll(operationBodyMapper.getNonMappedInnerNodesT2());
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			fragments2.add(mapping.getFragment2());
+		}
+		for(AbstractCodeFragment fragment2 : fragments2) {
+			calls.addAll(fragment2.getMethodInvocations());
+		}
+		if(calls.isEmpty())
+			return 0;
+		Set<String> calledStatements = new HashSet<String>();
+		for(UMLOperation addedOperation : getAddedOperationsInCommonClasses()) {
+			if(addedOperation.getBody() != null && calls.stream().anyMatch(call -> call.matchesOperation(addedOperation, operationBodyMapper.getContainer2(), operationBodyMapper.getClassDiff(), this))) {
+				CompositeStatementObject body = addedOperation.getBody().getCompositeStatement();
+				for(AbstractCodeFragment leaf : body.getLeaves()) {
+					calledStatements.add(leaf.getString());
+				}
+				for(CompositeStatementObject innerNode : body.getInnerNodes()) {
+					calledStatements.add(innerNode.getString());
+				}
+			}
+		}
+		if(calledStatements.isEmpty())
+			return 0;
+		Set<AbstractCodeFragment> moved = new HashSet<AbstractCodeFragment>();
+		for(AbstractCodeFragment leaf1 : operationBodyMapper.getNonMappedLeavesT1()) {
+			if(calledStatements.contains(leaf1.getString())) {
+				moved.add(leaf1);
+			}
+		}
+		//nested composites first, so that a composite whose statements all moved is also moved
+		List<CompositeStatementObject> innerNodes1 = new ArrayList<CompositeStatementObject>(operationBodyMapper.getNonMappedInnerNodesT1());
+		innerNodes1.sort(Comparator.comparingInt(CompositeStatementObject::getDepth).reversed());
+		for(CompositeStatementObject innerNode1 : innerNodes1) {
+			//a block has no content of its own, so it moved only when its statements moved
+			boolean block = innerNode1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
+			if((!block && calledStatements.contains(innerNode1.getString())) ||
+					(!innerNode1.getStatements().isEmpty() && moved.containsAll(innerNode1.getStatements()))) {
+				moved.add(innerNode1);
+			}
+		}
+		return moved.size();
+	}
+
 	private boolean moveAndInlineMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
 		List<AbstractCodeMapping> mappingList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 		if((operationBodyMapper.getContainer1().isGetter() || operationBodyMapper.getContainer1().isDelegate() != null) && mappingList.size() == 1) {
@@ -6038,6 +6099,7 @@ public class UMLModelDiff {
 	 			}
 			}
 		}
+		nonMappedElementsT1 -= nonMappedElementsT1MovedToCalledOperations(operationBodyMapper);
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
 		List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = operationBodyMapper.getExactMatchesWithoutMatchesInNestedContainers();
 		int exactMatches = exactMatchList.size();

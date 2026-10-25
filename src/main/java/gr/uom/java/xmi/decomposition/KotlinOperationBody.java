@@ -101,8 +101,10 @@ public class KotlinOperationBody extends OperationBody {
 				}
 			}
 		}
-		this.compositeStatement = processWhenStatement(ktFile, sourceFolder, filePath, null, fileContent, whenExpression);
+		//the when needs a parent block to be mapped, as in a Java method body with a switch statement
+		this.compositeStatement = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenExpression, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
+		processWhenStatement(ktFile, sourceFolder, filePath, compositeStatement, fileContent, whenExpression);
 		for(AbstractCall invocation : getAllOperationInvocations()) {
 			if(invocation.isAssertion()) {
 				containsAssertion = true;
@@ -132,8 +134,10 @@ public class KotlinOperationBody extends OperationBody {
 				}
 			}
 		}
-		this.compositeStatement = processIfStatement(ktFile, sourceFolder, filePath, null, fileContent, ifExpression);
+		//the if needs a parent block to be mapped, as in a Java method body with an if statement
+		this.compositeStatement = new CompositeStatementObject(ktFile, sourceFolder, filePath, ifExpression, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
+		processIfStatement(ktFile, sourceFolder, filePath, compositeStatement, fileContent, ifExpression);
 		for(AbstractCall invocation : getAllOperationInvocations()) {
 			if(invocation.isAssertion()) {
 				containsAssertion = true;
@@ -531,12 +535,18 @@ public class KotlinOperationBody extends OperationBody {
 		CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenStatement, depth, CodeElementType.WHEN_STATEMENT, fileContent);
 		if (parent != null)
 			parent.addStatement(child);
-		addStatementInVariableScopes(child);
+		//the variable declared by the subject, i.e., when (val record = readRecord())
+		if(whenStatement.getSubjectVariable() != null) {
+			VariableDeclaration vd = new VariableDeclaration(ktFile, sourceFolder, filePath, whenStatement.getSubjectVariable(), container, activeVariableDeclarations, fileContent, child.getLocationInfo());
+			child.addVariableDeclaration(vd);
+		}
 		KtExpression subjectExpression = whenStatement.getSubjectExpression();
 		if(subjectExpression != null) {
 			AbstractExpression expr = new AbstractExpression(ktFile, sourceFolder, filePath, subjectExpression, CodeElementType.WHEN_SUBJECT_EXPRESSION, container, activeVariableDeclarations, fileContent);
 			child.addExpression(expr);
 		}
+		addStatementInVariableScopes(child);
+		addAllInActiveVariableDeclarations(child.getVariableDeclarations());
 		for(KtWhenEntry whenEntry : whenStatement.getEntries()) {
 			CompositeStatementObject grandChild = new CompositeStatementObject(ktFile, sourceFolder, filePath, whenEntry, child.getDepth()+1, CodeElementType.WHEN_ENTRY, fileContent);
 			KtWhenCondition[] whenConditions = whenEntry.getConditions();
@@ -550,6 +560,10 @@ public class KotlinOperationBody extends OperationBody {
 					processStatement(ktFile, sourceFolder, filePath, grandChild, bodyExpression, fileContent);
 				}
 				else {
+					//a when nested as the expression of the entry, as in return when (...) {...}
+					if(expression instanceof KtWhenExpression nestedWhen) {
+						processWhenStatement(ktFile, sourceFolder, filePath, grandChild, fileContent, nestedWhen);
+					}
 					AbstractExpression expr = new AbstractExpression(ktFile, sourceFolder, filePath, expression, CodeElementType.WHEN_ENTRY_EXPRESSION, container, activeVariableDeclarations, fileContent);
 					grandChild.addExpression(expr);
 				}

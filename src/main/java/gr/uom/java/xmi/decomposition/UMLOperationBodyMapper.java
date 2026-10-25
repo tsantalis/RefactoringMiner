@@ -2069,6 +2069,47 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	//the unmatched entries of two mapped when statements are matched through their conditions, i.e., is ClassObj -> {...} and is ClassDumpRecord -> {...}
+	private void matchWhenEntriesThroughConditions(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
+		for(AbstractCodeMapping whenMapping : new ArrayList<>(this.mappings)) {
+			if(!(whenMapping instanceof CompositeStatementObjectMapping) ||
+					!whenMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT) ||
+					!whenMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT))
+				continue;
+			Map<AbstractCodeFragment, CompositeStatementObject> entries1 = unmatchedWhenEntriesByCondition((CompositeStatementObject)whenMapping.getFragment1(), innerNodes1);
+			Map<AbstractCodeFragment, CompositeStatementObject> entries2 = unmatchedWhenEntriesByCondition((CompositeStatementObject)whenMapping.getFragment2(), innerNodes2);
+			if(entries1.isEmpty() || entries2.isEmpty())
+				continue;
+			List<AbstractCodeMapping> before = new ArrayList<>(this.mappings);
+			processLeaves(new ArrayList<>(entries1.keySet()), new ArrayList<>(entries2.keySet()), parameterToArgumentMap, false);
+			for(AbstractCodeMapping conditionMapping : new ArrayList<>(this.mappings)) {
+				if(before.contains(conditionMapping))
+					continue;
+				CompositeStatementObject entry1 = entries1.get(conditionMapping.getFragment1());
+				CompositeStatementObject entry2 = entries2.get(conditionMapping.getFragment2());
+				if(entry1 != null && entry2 != null && innerNodes1.contains(entry1) && innerNodes2.contains(entry2)) {
+					addMapping(createCompositeMapping(entry1, entry2, parameterToArgumentMap, 0));
+					innerNodes1.remove(entry1);
+					innerNodes2.remove(entry2);
+				}
+			}
+		}
+	}
+
+	private static Map<AbstractCodeFragment, CompositeStatementObject> unmatchedWhenEntriesByCondition(CompositeStatementObject when, List<CompositeStatementObject> innerNodes) {
+		Map<AbstractCodeFragment, CompositeStatementObject> entries = new LinkedHashMap<>();
+		for(AbstractStatement statement : when.getStatements()) {
+			if(statement instanceof CompositeStatementObject entry && entry.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) && innerNodes.contains(entry)) {
+				List<AbstractExpression> conditions = entry.getExpressions().stream()
+						.filter(e -> e.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY_CONDITION)).toList();
+				if(conditions.size() == 1) {
+					entries.put(conditions.get(0), entry);
+				}
+			}
+		}
+		return entries;
+	}
+
 	//the Java if-else-if chain comparing the same expression with constants is replaced with the Kotlin when with subject, i.e.,
 	//if(x == A) {...} else if(x == B) {...} -> when(x) { A -> {...} B -> {...} }, where the first if is mapped to the when,
 	//the else-if statements are mapped to the when entries, and the constants are mapped to the conditions of the when entries
@@ -6556,6 +6597,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			matchElseIfChainWithWhenEntries(innerNodes1, innerNodes2, leaves2, parameterToArgumentMap);
 			matchSwitchCasesWithWhenEntries(leaves1, leaves2);
 		}
+		else if(LANG1.equals(Constants.KOTLIN) && LANG2.equals(Constants.KOTLIN)) {
+			matchWhenEntriesThroughConditions(innerNodes1, innerNodes2, parameterToArgumentMap);
+		}
 		//check for possibly missed split conditional
 		Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<AbstractCodeMapping>();
 		for(AbstractCodeMapping mapping : new LinkedHashSet<>(this.mappings)) {
@@ -6904,6 +6948,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return s1.equals(s2) || s1.endsWith("." + s2) || s2.endsWith("." + s1);
 	}
 
+	private static String whenEntryExpressions(CompositeStatementObject entry, CodeElementType type) {
+		return entry.getExpressions().stream().filter(e -> e.getLocationInfo().getCodeElementType().equals(type)).map(AbstractExpression::getString).collect(Collectors.joining(", "));
+	}
+
 	private boolean identicalBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 			return false;
@@ -6923,10 +6971,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 			return false;
 		}
-		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) &&
-				statement1.getExpressions().size() > 1 && statement2.getExpressions().size() > 1) {
-			if(!equalOrQualified(statement1.getExpressions().get(0).getString(), statement2.getExpressions().get(0).getString()) &&
-					!equalOrQualified(statement1.getExpressions().get(1).getString(), statement2.getExpressions().get(1).getString())) {
+		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+			//the body of an entry without a block is its expression, i.e., else -> INSTANCE
+			String expression1 = whenEntryExpressions(statement1, CodeElementType.WHEN_ENTRY_EXPRESSION);
+			String expression2 = whenEntryExpressions(statement2, CodeElementType.WHEN_ENTRY_EXPRESSION);
+			if(!expression1.isEmpty() && !expression2.isEmpty() && !equalOrQualified(expression1, expression2) &&
+					!equalOrQualified(whenEntryExpressions(statement1, CodeElementType.WHEN_ENTRY_CONDITION), whenEntryExpressions(statement2, CodeElementType.WHEN_ENTRY_CONDITION))) {
 				return false;
 			}
 		}

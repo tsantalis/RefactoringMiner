@@ -3406,6 +3406,10 @@ public class JavaToKotlinMigration {
     //matches the words of a Javadoc text separated by any whitespace, including line breaks followed by a leading *,
     //allowing HTML markup to be converted to Markdown, i.e., <pre> to ```kotlin and &lt; to <, Markdown emphasis to be added, i.e., **text**,
     //words to be converted to links, i.e., IOException to [IOException], and the stray punctuation of the Java text to be removed, i.e., } in {@link A} }
+    //the start of the text of an HTML link, i.e., href="url">text of <a href="url">text</a>
+    private static final Pattern HTML_LINK_TEXT_START = Pattern.compile("(?i)href=\"[^\"]*\">(.*)");
+    private static final Pattern HTML_LINK_TEXT_END = Pattern.compile("(?i)(.*)</a>([.,;:)!?]*)");
+
     private static Pattern javadocTextPattern(String label) {
         String separator = "(?:\\s*\\n\\s*\\*(?!/))?\\s+";
         StringBuilder regex = new StringBuilder();
@@ -3434,6 +3438,30 @@ public class JavaToKotlinMigration {
             return "(?:```[\\w+-]*|" + Pattern.quote(word) + ")";
         if(word.equalsIgnoreCase("</pre>"))
             return "(?:```|" + Pattern.quote(word) + ")";
+        //the HTML links become Markdown links, i.e., <a href="url">text</a> and [text](url) or [text][ref], whose words might be on different lines
+        if(word.equalsIgnoreCase("<a"))
+            return null;
+        String linkStart = "";
+        String linkEnd = "";
+        Matcher href = HTML_LINK_TEXT_START.matcher(word);
+        if(href.matches()) {
+            word = href.group(1);
+            linkStart = "\\[?";
+        }
+        //the end of the text of an HTML link, followed by punctuation, i.e., text</a>.
+        Matcher end = HTML_LINK_TEXT_END.matcher(word);
+        if(end.matches()) {
+            word = end.group(1);
+            //an inline link [text](url) or a reference link [text][ref]
+            linkEnd = "(?:\\]\\([^)\\s]*\\)|\\]\\[[^\\]\\s]*\\])?" + Pattern.quote(end.group(2));
+        }
+        if(word.isEmpty())
+            return null;
+        String pattern = javadocWordPatternWithoutLinks(word);
+        return pattern == null ? null : linkStart + pattern + linkEnd;
+    }
+
+    private static String javadocWordPatternWithoutLinks(String word) {
         String markdown = word.replaceAll("</?p>", "").replaceAll("</?(strong|b)>", "**").replaceAll("</?(em|i)>", "*").replaceAll("</?code>", "`");
         if(markdown.isEmpty())
             return null;

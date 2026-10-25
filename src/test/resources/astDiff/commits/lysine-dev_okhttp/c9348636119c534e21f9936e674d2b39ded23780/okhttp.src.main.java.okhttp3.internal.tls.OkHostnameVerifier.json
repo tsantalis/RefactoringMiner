@@ -211,13 +211,35 @@
   "firstType" : "Javadoc",
   "secondType" : "multiline_comment",
   "firstLabel" : "",
-  "secondLabel" : "/**\n * A HostnameVerifier consistent with [RFC 2818][rfc_2818].\n *\n * [rfc_2818]: http://www.ietf.org/rfc/rfc2818.txt\n */",
+  "secondLabel" : "",
   "firstParentType" : "TypeDeclaration",
   "secondParentType" : "object_declaration",
   "firstPos" : 1280,
   "secondPos" : 1115,
   "firstEndPos" : 1385,
   "secondEndPos" : 1236
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "multiline_comment",
+  "firstPos" : 1287,
+  "secondPos" : 1122,
+  "firstEndPos" : 1381,
+  "secondEndPos" : 1178
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "A HostnameVerifier consistent with <a href=\"http://www.ietf.org/rfc/rfc2818.txt\">RFC 2818</a>.",
+  "secondLabel" : "A HostnameVerifier consistent with [RFC 2818][rfc_2818].",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1287,
+  "secondPos" : 1122,
+  "firstEndPos" : 1381,
+  "secondEndPos" : 1178
 }, {
   "firstType" : "TYPE_DECLARATION_KIND",
   "secondType" : "type_keyword",

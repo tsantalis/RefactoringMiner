@@ -20879,6 +20879,17 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
+  "firstLabel" : "(cleartext only)</a>",
+  "secondLabel" : "(cleartext only)][rfc_7540_34]",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35206,
+  "secondPos" : 29277,
+  "firstEndPos" : 35226,
+  "secondEndPos" : 29307
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
   "firstLabel" : "<p><strong>This is an evolving set.</strong> Future releases include support for transitional",
   "secondLabel" : "**This is an evolving set.** Future releases include support for transitional",
   "firstParentType" : "TagElement",
@@ -20898,6 +20909,28 @@
   "secondPos" : 29407,
   "firstEndPos" : 35411,
   "secondEndPos" : 29463
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<p>If multiple protocols are specified, <a",
+  "secondLabel" : "If multiple protocols are specified,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35426,
+  "secondPos" : 29478,
+  "firstEndPos" : 35468,
+  "secondEndPos" : 29514
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "href=\"http://tools.ietf.org/html/draft-ietf-tls-applayerprotoneg\">ALPN</a> will be used to",
+  "secondLabel" : "[ALPN][alpn] will be used to",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35476,
+  "secondPos" : 29515,
+  "firstEndPos" : 35566,
+  "secondEndPos" : 29543
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

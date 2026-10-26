@@ -177,12 +177,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "System.out",
-  "secondLabel" : "System.out",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 85,
   "secondPos" : 85,
+  "firstEndPos" : 95,
+  "secondEndPos" : 95
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "System",
+  "secondLabel" : "System",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 85,
+  "secondPos" : 85,
+  "firstEndPos" : 91,
+  "secondEndPos" : 91
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "out",
+  "secondLabel" : "out",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 92,
+  "secondPos" : 92,
   "firstEndPos" : 95,
   "secondEndPos" : 95
 }, {
@@ -353,12 +375,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "System.out",
-  "secondLabel" : "System.out",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 162,
   "secondPos" : 166,
+  "firstEndPos" : 172,
+  "secondEndPos" : 176
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "System",
+  "secondLabel" : "System",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 162,
+  "secondPos" : 166,
+  "firstEndPos" : 168,
+  "secondEndPos" : 172
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "out",
+  "secondLabel" : "out",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 169,
+  "secondPos" : 173,
   "firstEndPos" : 172,
   "secondEndPos" : 176
 }, {

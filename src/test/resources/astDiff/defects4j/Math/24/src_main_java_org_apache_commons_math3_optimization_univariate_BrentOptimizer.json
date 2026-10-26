@@ -32,17 +32,6 @@
   "firstEndPos" : 860,
   "secondEndPos" : 860
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math3.optimization.univariate",
-  "secondLabel" : "org.apache.commons.math3.optimization.univariate",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 811,
-  "secondPos" : 811,
-  "firstEndPos" : 859,
-  "secondEndPos" : 859
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -53,17 +42,6 @@
   "secondPos" : 862,
   "firstEndPos" : 909,
   "secondEndPos" : 909
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math3.util.Precision",
-  "secondLabel" : "org.apache.commons.math3.util.Precision",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 869,
-  "secondPos" : 869,
-  "firstEndPos" : 908,
-  "secondEndPos" : 908
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -76,17 +54,6 @@
   "firstEndPos" : 956,
   "secondEndPos" : 956
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math3.util.FastMath",
-  "secondLabel" : "org.apache.commons.math3.util.FastMath",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 917,
-  "secondPos" : 917,
-  "firstEndPos" : 955,
-  "secondEndPos" : 955
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -97,17 +64,6 @@
   "secondPos" : 957,
   "firstEndPos" : 1025,
   "secondEndPos" : 1025
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math3.exception.NumberIsTooSmallException",
-  "secondLabel" : "org.apache.commons.math3.exception.NumberIsTooSmallException",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 964,
-  "secondPos" : 964,
-  "firstEndPos" : 1024,
-  "secondEndPos" : 1024
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -120,17 +76,6 @@
   "firstEndPos" : 1097,
   "secondEndPos" : 1097
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math3.exception.NotStrictlyPositiveException",
-  "secondLabel" : "org.apache.commons.math3.exception.NotStrictlyPositiveException",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 1033,
-  "secondPos" : 1033,
-  "firstEndPos" : 1096,
-  "secondEndPos" : 1096
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -142,17 +87,6 @@
   "firstEndPos" : 1162,
   "secondEndPos" : 1162
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math3.optimization.ConvergenceChecker",
-  "secondLabel" : "org.apache.commons.math3.optimization.ConvergenceChecker",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 1105,
-  "secondPos" : 1105,
-  "firstEndPos" : 1161,
-  "secondEndPos" : 1161
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -163,17 +97,6 @@
   "secondPos" : 1163,
   "firstEndPos" : 1217,
   "secondEndPos" : 1217
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math3.optimization.GoalType",
-  "secondLabel" : "org.apache.commons.math3.optimization.GoalType",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 1170,
-  "secondPos" : 1170,
-  "firstEndPos" : 1216,
-  "secondEndPos" : 1216
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -3320,17 +3243,6 @@
   "secondPos" : 4355,
   "firstEndPos" : 4357,
   "secondEndPos" : 4357
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "GoalType.MINIMIZE",
-  "secondLabel" : "GoalType.MINIMIZE",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 4358,
-  "secondPos" : 4358,
-  "firstEndPos" : 4375,
-  "secondEndPos" : 4375
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10152,28 +10064,6 @@
   "firstEndPos" : 8223,
   "secondEndPos" : 8248
 }, {
-  "firstType" : "ReturnStatement",
-  "secondType" : "ReturnStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 8186,
-  "secondPos" : 8186,
-  "firstEndPos" : 8201,
-  "secondEndPos" : 8226
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "current",
-  "secondLabel" : "current",
-  "firstParentType" : "ReturnStatement",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 8193,
-  "secondPos" : 8198,
-  "firstEndPos" : 8200,
-  "secondEndPos" : 8205
-}, {
   "firstType" : "LineComment",
   "secondType" : "LineComment",
   "firstLabel" : "// Update a, b, v, w and x.",
@@ -11747,28 +11637,6 @@
   "firstEndPos" : 9343,
   "secondEndPos" : 9368
 }, {
-  "firstType" : "ReturnStatement",
-  "secondType" : "ReturnStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 9360,
-  "secondPos" : 9385,
-  "firstEndPos" : 9375,
-  "secondEndPos" : 9425
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "current",
-  "secondLabel" : "current",
-  "firstParentType" : "ReturnStatement",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 9367,
-  "secondPos" : 9397,
-  "firstEndPos" : 9374,
-  "secondEndPos" : 9404
-}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12967,4 +12835,576 @@
   "secondPos" : 10277,
   "firstEndPos" : 10228,
   "secondEndPos" : 10278
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 811,
+  "secondPos" : 811,
+  "firstEndPos" : 859,
+  "secondEndPos" : 859
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 811,
+  "secondPos" : 811,
+  "firstEndPos" : 814,
+  "secondEndPos" : 814
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 815,
+  "secondPos" : 815,
+  "firstEndPos" : 821,
+  "secondEndPos" : 821
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 822,
+  "secondPos" : 822,
+  "firstEndPos" : 829,
+  "secondEndPos" : 829
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math3",
+  "secondLabel" : "math3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 830,
+  "secondPos" : 830,
+  "firstEndPos" : 835,
+  "secondEndPos" : 835
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "optimization",
+  "secondLabel" : "optimization",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 836,
+  "secondPos" : 836,
+  "firstEndPos" : 848,
+  "secondEndPos" : 848
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "univariate",
+  "secondLabel" : "univariate",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 849,
+  "secondPos" : 849,
+  "firstEndPos" : 859,
+  "secondEndPos" : 859
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 869,
+  "secondPos" : 869,
+  "firstEndPos" : 908,
+  "secondEndPos" : 908
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 869,
+  "secondPos" : 869,
+  "firstEndPos" : 872,
+  "secondEndPos" : 872
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 873,
+  "secondPos" : 873,
+  "firstEndPos" : 879,
+  "secondEndPos" : 879
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 880,
+  "secondPos" : 880,
+  "firstEndPos" : 887,
+  "secondEndPos" : 887
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math3",
+  "secondLabel" : "math3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 888,
+  "secondPos" : 888,
+  "firstEndPos" : 893,
+  "secondEndPos" : 893
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 894,
+  "secondPos" : 894,
+  "firstEndPos" : 898,
+  "secondEndPos" : 898
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Precision",
+  "secondLabel" : "Precision",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 899,
+  "secondPos" : 899,
+  "firstEndPos" : 908,
+  "secondEndPos" : 908
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 917,
+  "secondPos" : 917,
+  "firstEndPos" : 955,
+  "secondEndPos" : 955
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 917,
+  "secondPos" : 917,
+  "firstEndPos" : 920,
+  "secondEndPos" : 920
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 921,
+  "secondPos" : 921,
+  "firstEndPos" : 927,
+  "secondEndPos" : 927
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 928,
+  "secondPos" : 928,
+  "firstEndPos" : 935,
+  "secondEndPos" : 935
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math3",
+  "secondLabel" : "math3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 936,
+  "secondPos" : 936,
+  "firstEndPos" : 941,
+  "secondEndPos" : 941
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 942,
+  "secondPos" : 942,
+  "firstEndPos" : 946,
+  "secondEndPos" : 946
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "FastMath",
+  "secondLabel" : "FastMath",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 947,
+  "secondPos" : 947,
+  "firstEndPos" : 955,
+  "secondEndPos" : 955
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 964,
+  "secondPos" : 964,
+  "firstEndPos" : 1024,
+  "secondEndPos" : 1024
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 964,
+  "secondPos" : 964,
+  "firstEndPos" : 967,
+  "secondEndPos" : 967
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 968,
+  "secondPos" : 968,
+  "firstEndPos" : 974,
+  "secondEndPos" : 974
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 975,
+  "secondPos" : 975,
+  "firstEndPos" : 982,
+  "secondEndPos" : 982
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math3",
+  "secondLabel" : "math3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 983,
+  "secondPos" : 983,
+  "firstEndPos" : 988,
+  "secondEndPos" : 988
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "exception",
+  "secondLabel" : "exception",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 989,
+  "secondPos" : 989,
+  "firstEndPos" : 998,
+  "secondEndPos" : 998
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NumberIsTooSmallException",
+  "secondLabel" : "NumberIsTooSmallException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 999,
+  "secondPos" : 999,
+  "firstEndPos" : 1024,
+  "secondEndPos" : 1024
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1033,
+  "secondPos" : 1033,
+  "firstEndPos" : 1096,
+  "secondEndPos" : 1096
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1033,
+  "secondPos" : 1033,
+  "firstEndPos" : 1036,
+  "secondEndPos" : 1036
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1037,
+  "secondPos" : 1037,
+  "firstEndPos" : 1043,
+  "secondEndPos" : 1043
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1044,
+  "secondPos" : 1044,
+  "firstEndPos" : 1051,
+  "secondEndPos" : 1051
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math3",
+  "secondLabel" : "math3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1052,
+  "secondPos" : 1052,
+  "firstEndPos" : 1057,
+  "secondEndPos" : 1057
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "exception",
+  "secondLabel" : "exception",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1058,
+  "secondPos" : 1058,
+  "firstEndPos" : 1067,
+  "secondEndPos" : 1067
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NotStrictlyPositiveException",
+  "secondLabel" : "NotStrictlyPositiveException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1068,
+  "secondPos" : 1068,
+  "firstEndPos" : 1096,
+  "secondEndPos" : 1096
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1105,
+  "secondPos" : 1105,
+  "firstEndPos" : 1161,
+  "secondEndPos" : 1161
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1105,
+  "secondPos" : 1105,
+  "firstEndPos" : 1108,
+  "secondEndPos" : 1108
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1109,
+  "secondPos" : 1109,
+  "firstEndPos" : 1115,
+  "secondEndPos" : 1115
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1116,
+  "secondPos" : 1116,
+  "firstEndPos" : 1123,
+  "secondEndPos" : 1123
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math3",
+  "secondLabel" : "math3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1124,
+  "secondPos" : 1124,
+  "firstEndPos" : 1129,
+  "secondEndPos" : 1129
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "optimization",
+  "secondLabel" : "optimization",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1130,
+  "secondPos" : 1130,
+  "firstEndPos" : 1142,
+  "secondEndPos" : 1142
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ConvergenceChecker",
+  "secondLabel" : "ConvergenceChecker",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1143,
+  "secondPos" : 1143,
+  "firstEndPos" : 1161,
+  "secondEndPos" : 1161
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 1170,
+  "secondPos" : 1170,
+  "firstEndPos" : 1216,
+  "secondEndPos" : 1216
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1170,
+  "secondPos" : 1170,
+  "firstEndPos" : 1173,
+  "secondEndPos" : 1173
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1174,
+  "secondPos" : 1174,
+  "firstEndPos" : 1180,
+  "secondEndPos" : 1180
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1181,
+  "secondPos" : 1181,
+  "firstEndPos" : 1188,
+  "secondEndPos" : 1188
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math3",
+  "secondLabel" : "math3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1189,
+  "secondPos" : 1189,
+  "firstEndPos" : 1194,
+  "secondEndPos" : 1194
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "optimization",
+  "secondLabel" : "optimization",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1195,
+  "secondPos" : 1195,
+  "firstEndPos" : 1207,
+  "secondEndPos" : 1207
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "GoalType",
+  "secondLabel" : "GoalType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1208,
+  "secondPos" : 1208,
+  "firstEndPos" : 1216,
+  "secondEndPos" : 1216
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 4358,
+  "secondPos" : 4358,
+  "firstEndPos" : 4375,
+  "secondEndPos" : 4375
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "GoalType",
+  "secondLabel" : "GoalType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4358,
+  "secondPos" : 4358,
+  "firstEndPos" : 4366,
+  "secondEndPos" : 4366
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MINIMIZE",
+  "secondLabel" : "MINIMIZE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4367,
+  "secondPos" : 4367,
+  "firstEndPos" : 4375,
+  "secondEndPos" : 4375
 } ]

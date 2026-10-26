@@ -34,12 +34,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "io.fabric8.maven",
-  "secondLabel" : "io.fabric8.maven",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 941,
   "secondPos" : 941,
+  "firstEndPos" : 957,
+  "secondEndPos" : 957
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 941,
+  "secondPos" : 941,
+  "firstEndPos" : 943,
+  "secondEndPos" : 943
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fabric8",
+  "secondLabel" : "fabric8",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 944,
+  "secondPos" : 944,
+  "firstEndPos" : 951,
+  "secondEndPos" : 951
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "maven",
+  "secondLabel" : "maven",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 952,
+  "secondPos" : 952,
   "firstEndPos" : 957,
   "secondEndPos" : 957
 }, {
@@ -56,12 +89,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "io.fabric8.kubernetes.api.Controller",
-  "secondLabel" : "io.fabric8.kubernetes.api.Controller",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 967,
   "secondPos" : 967,
+  "firstEndPos" : 1003,
+  "secondEndPos" : 1003
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 967,
+  "secondPos" : 967,
+  "firstEndPos" : 969,
+  "secondEndPos" : 969
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fabric8",
+  "secondLabel" : "fabric8",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 970,
+  "secondPos" : 970,
+  "firstEndPos" : 977,
+  "secondEndPos" : 977
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "kubernetes",
+  "secondLabel" : "kubernetes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 978,
+  "secondPos" : 978,
+  "firstEndPos" : 988,
+  "secondEndPos" : 988
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 989,
+  "secondPos" : 989,
+  "firstEndPos" : 992,
+  "secondEndPos" : 992
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Controller",
+  "secondLabel" : "Controller",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 993,
+  "secondPos" : 993,
   "firstEndPos" : 1003,
   "secondEndPos" : 1003
 }, {
@@ -78,12 +166,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "io.fabric8.kubernetes.api.KubernetesClient",
-  "secondLabel" : "io.fabric8.kubernetes.api.KubernetesClient",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1012,
   "secondPos" : 1012,
+  "firstEndPos" : 1054,
+  "secondEndPos" : 1054
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1012,
+  "secondPos" : 1012,
+  "firstEndPos" : 1014,
+  "secondEndPos" : 1014
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fabric8",
+  "secondLabel" : "fabric8",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1015,
+  "secondPos" : 1015,
+  "firstEndPos" : 1022,
+  "secondEndPos" : 1022
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "kubernetes",
+  "secondLabel" : "kubernetes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1023,
+  "secondPos" : 1023,
+  "firstEndPos" : 1033,
+  "secondEndPos" : 1033
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1034,
+  "secondPos" : 1034,
+  "firstEndPos" : 1037,
+  "secondEndPos" : 1037
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "KubernetesClient",
+  "secondLabel" : "KubernetesClient",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1038,
+  "secondPos" : 1038,
   "firstEndPos" : 1054,
   "secondEndPos" : 1054
 }, {
@@ -100,12 +243,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "io.fabric8.kubernetes.api.ServiceNames",
-  "secondLabel" : "io.fabric8.kubernetes.api.ServiceNames",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1063,
   "secondPos" : 1063,
+  "firstEndPos" : 1101,
+  "secondEndPos" : 1101
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1063,
+  "secondPos" : 1063,
+  "firstEndPos" : 1065,
+  "secondEndPos" : 1065
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fabric8",
+  "secondLabel" : "fabric8",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1066,
+  "secondPos" : 1066,
+  "firstEndPos" : 1073,
+  "secondEndPos" : 1073
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "kubernetes",
+  "secondLabel" : "kubernetes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1074,
+  "secondPos" : 1074,
+  "firstEndPos" : 1084,
+  "secondEndPos" : 1084
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1085,
+  "secondPos" : 1085,
+  "firstEndPos" : 1088,
+  "secondEndPos" : 1088
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ServiceNames",
+  "secondLabel" : "ServiceNames",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1089,
+  "secondPos" : 1089,
   "firstEndPos" : 1101,
   "secondEndPos" : 1101
 }, {
@@ -122,12 +320,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "io.fabric8.openshift.api.model.BuildConfig",
-  "secondLabel" : "io.fabric8.openshift.api.model.BuildConfig",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1110,
   "secondPos" : 1110,
+  "firstEndPos" : 1152,
+  "secondEndPos" : 1152
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1110,
+  "secondPos" : 1110,
+  "firstEndPos" : 1112,
+  "secondEndPos" : 1112
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fabric8",
+  "secondLabel" : "fabric8",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1113,
+  "secondPos" : 1113,
+  "firstEndPos" : 1120,
+  "secondEndPos" : 1120
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "openshift",
+  "secondLabel" : "openshift",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1121,
+  "secondPos" : 1121,
+  "firstEndPos" : 1130,
+  "secondEndPos" : 1130
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1131,
+  "secondPos" : 1131,
+  "firstEndPos" : 1134,
+  "secondEndPos" : 1134
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1135,
+  "secondPos" : 1135,
+  "firstEndPos" : 1140,
+  "secondEndPos" : 1140
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BuildConfig",
+  "secondLabel" : "BuildConfig",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1141,
+  "secondPos" : 1141,
   "firstEndPos" : 1152,
   "secondEndPos" : 1152
 }, {
@@ -144,12 +408,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "io.fabric8.openshift.api.model.BuildConfigBuilder",
-  "secondLabel" : "io.fabric8.openshift.api.model.BuildConfigBuilder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1161,
   "secondPos" : 1161,
+  "firstEndPos" : 1210,
+  "secondEndPos" : 1210
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1161,
+  "secondPos" : 1161,
+  "firstEndPos" : 1163,
+  "secondEndPos" : 1163
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fabric8",
+  "secondLabel" : "fabric8",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1164,
+  "secondPos" : 1164,
+  "firstEndPos" : 1171,
+  "secondEndPos" : 1171
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "openshift",
+  "secondLabel" : "openshift",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1172,
+  "secondPos" : 1172,
+  "firstEndPos" : 1181,
+  "secondEndPos" : 1181
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1182,
+  "secondPos" : 1182,
+  "firstEndPos" : 1185,
+  "secondEndPos" : 1185
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1186,
+  "secondPos" : 1186,
+  "firstEndPos" : 1191,
+  "secondEndPos" : 1191
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BuildConfigBuilder",
+  "secondLabel" : "BuildConfigBuilder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1192,
+  "secondPos" : 1192,
   "firstEndPos" : 1210,
   "secondEndPos" : 1210
 }, {
@@ -166,12 +496,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "io.fabric8.utils.Strings",
-  "secondLabel" : "io.fabric8.utils.Strings",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1219,
   "secondPos" : 1219,
+  "firstEndPos" : 1243,
+  "secondEndPos" : 1243
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1219,
+  "secondPos" : 1219,
+  "firstEndPos" : 1221,
+  "secondEndPos" : 1221
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fabric8",
+  "secondLabel" : "fabric8",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1222,
+  "secondPos" : 1222,
+  "firstEndPos" : 1229,
+  "secondEndPos" : 1229
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "utils",
+  "secondLabel" : "utils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1230,
+  "secondPos" : 1230,
+  "firstEndPos" : 1235,
+  "secondEndPos" : 1235
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Strings",
+  "secondLabel" : "Strings",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1236,
+  "secondPos" : 1236,
   "firstEndPos" : 1243,
   "secondEndPos" : 1243
 }, {
@@ -188,12 +562,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "io.fabric8.utils.URLUtils",
-  "secondLabel" : "io.fabric8.utils.URLUtils",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1252,
   "secondPos" : 1252,
+  "firstEndPos" : 1277,
+  "secondEndPos" : 1277
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1252,
+  "secondPos" : 1252,
+  "firstEndPos" : 1254,
+  "secondEndPos" : 1254
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fabric8",
+  "secondLabel" : "fabric8",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1255,
+  "secondPos" : 1255,
+  "firstEndPos" : 1262,
+  "secondEndPos" : 1262
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "utils",
+  "secondLabel" : "utils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1263,
+  "secondPos" : 1263,
+  "firstEndPos" : 1268,
+  "secondEndPos" : 1268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "URLUtils",
+  "secondLabel" : "URLUtils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1269,
+  "secondPos" : 1269,
   "firstEndPos" : 1277,
   "secondEndPos" : 1277
 }, {
@@ -210,12 +628,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.maven.plugin.MojoExecutionException",
-  "secondLabel" : "org.apache.maven.plugin.MojoExecutionException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1286,
   "secondPos" : 1286,
+  "firstEndPos" : 1332,
+  "secondEndPos" : 1332
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1286,
+  "secondPos" : 1286,
+  "firstEndPos" : 1289,
+  "secondEndPos" : 1289
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1290,
+  "secondPos" : 1290,
+  "firstEndPos" : 1296,
+  "secondEndPos" : 1296
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "maven",
+  "secondLabel" : "maven",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1297,
+  "secondPos" : 1297,
+  "firstEndPos" : 1302,
+  "secondEndPos" : 1302
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "plugin",
+  "secondLabel" : "plugin",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1303,
+  "secondPos" : 1303,
+  "firstEndPos" : 1309,
+  "secondEndPos" : 1309
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MojoExecutionException",
+  "secondLabel" : "MojoExecutionException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1310,
+  "secondPos" : 1310,
   "firstEndPos" : 1332,
   "secondEndPos" : 1332
 }, {
@@ -232,12 +705,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.maven.plugin.MojoFailureException",
-  "secondLabel" : "org.apache.maven.plugin.MojoFailureException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1341,
   "secondPos" : 1341,
+  "firstEndPos" : 1385,
+  "secondEndPos" : 1385
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1341,
+  "secondPos" : 1341,
+  "firstEndPos" : 1344,
+  "secondEndPos" : 1344
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1345,
+  "secondPos" : 1345,
+  "firstEndPos" : 1351,
+  "secondEndPos" : 1351
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "maven",
+  "secondLabel" : "maven",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1352,
+  "secondPos" : 1352,
+  "firstEndPos" : 1357,
+  "secondEndPos" : 1357
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "plugin",
+  "secondLabel" : "plugin",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1358,
+  "secondPos" : 1358,
+  "firstEndPos" : 1364,
+  "secondEndPos" : 1364
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MojoFailureException",
+  "secondLabel" : "MojoFailureException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1365,
+  "secondPos" : 1365,
   "firstEndPos" : 1385,
   "secondEndPos" : 1385
 }, {
@@ -254,12 +782,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.maven.plugins.annotations.Mojo",
-  "secondLabel" : "org.apache.maven.plugins.annotations.Mojo",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1394,
   "secondPos" : 1394,
+  "firstEndPos" : 1435,
+  "secondEndPos" : 1435
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1394,
+  "secondPos" : 1394,
+  "firstEndPos" : 1397,
+  "secondEndPos" : 1397
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1398,
+  "secondPos" : 1398,
+  "firstEndPos" : 1404,
+  "secondEndPos" : 1404
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "maven",
+  "secondLabel" : "maven",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1405,
+  "secondPos" : 1405,
+  "firstEndPos" : 1410,
+  "secondEndPos" : 1410
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "plugins",
+  "secondLabel" : "plugins",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1411,
+  "secondPos" : 1411,
+  "firstEndPos" : 1418,
+  "secondEndPos" : 1418
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "annotations",
+  "secondLabel" : "annotations",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1419,
+  "secondPos" : 1419,
+  "firstEndPos" : 1430,
+  "secondEndPos" : 1430
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Mojo",
+  "secondLabel" : "Mojo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1431,
+  "secondPos" : 1431,
   "firstEndPos" : 1435,
   "secondEndPos" : 1435
 }, {
@@ -276,12 +870,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.maven.plugins.annotations.Parameter",
-  "secondLabel" : "org.apache.maven.plugins.annotations.Parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1444,
   "secondPos" : 1444,
+  "firstEndPos" : 1490,
+  "secondEndPos" : 1490
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1444,
+  "secondPos" : 1444,
+  "firstEndPos" : 1447,
+  "secondEndPos" : 1447
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1448,
+  "secondPos" : 1448,
+  "firstEndPos" : 1454,
+  "secondEndPos" : 1454
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "maven",
+  "secondLabel" : "maven",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1455,
+  "secondPos" : 1455,
+  "firstEndPos" : 1460,
+  "secondEndPos" : 1460
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "plugins",
+  "secondLabel" : "plugins",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1461,
+  "secondPos" : 1461,
+  "firstEndPos" : 1468,
+  "secondEndPos" : 1468
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "annotations",
+  "secondLabel" : "annotations",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1469,
+  "secondPos" : 1469,
+  "firstEndPos" : 1480,
+  "secondEndPos" : 1480
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Parameter",
+  "secondLabel" : "Parameter",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1481,
+  "secondPos" : 1481,
   "firstEndPos" : 1490,
   "secondEndPos" : 1490
 }, {
@@ -298,12 +958,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.HashMap",
-  "secondLabel" : "java.util.HashMap",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1500,
   "secondPos" : 1500,
+  "firstEndPos" : 1517,
+  "secondEndPos" : 1517
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1500,
+  "secondPos" : 1500,
+  "firstEndPos" : 1504,
+  "secondEndPos" : 1504
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1505,
+  "secondPos" : 1505,
+  "firstEndPos" : 1509,
+  "secondEndPos" : 1509
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HashMap",
+  "secondLabel" : "HashMap",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1510,
+  "secondPos" : 1510,
   "firstEndPos" : 1517,
   "secondEndPos" : 1517
 }, {
@@ -320,12 +1013,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Map",
-  "secondLabel" : "java.util.Map",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1526,
   "secondPos" : 1526,
+  "firstEndPos" : 1539,
+  "secondEndPos" : 1539
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1526,
+  "secondPos" : 1526,
+  "firstEndPos" : 1530,
+  "secondEndPos" : 1530
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1531,
+  "secondPos" : 1531,
+  "firstEndPos" : 1535,
+  "secondEndPos" : 1535
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Map",
+  "secondLabel" : "Map",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1536,
+  "secondPos" : 1536,
   "firstEndPos" : 1539,
   "secondEndPos" : 1539
 }, {
@@ -3158,12 +3884,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ServiceNames.JENKINS",
-  "secondLabel" : "ServiceNames.JENKINS",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 3697,
   "secondPos" : 4337,
+  "firstEndPos" : 3717,
+  "secondEndPos" : 4357
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ServiceNames",
+  "secondLabel" : "ServiceNames",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3697,
+  "secondPos" : 4337,
+  "firstEndPos" : 3709,
+  "secondEndPos" : 4349
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JENKINS",
+  "secondLabel" : "JENKINS",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3710,
+  "secondPos" : 4350,
   "firstEndPos" : 3717,
   "secondEndPos" : 4357
 }, {

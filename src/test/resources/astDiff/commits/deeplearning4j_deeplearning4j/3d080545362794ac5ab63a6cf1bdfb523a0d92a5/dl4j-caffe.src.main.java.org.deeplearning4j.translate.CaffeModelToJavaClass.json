@@ -23,12 +23,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.deeplearning4j.translate",
-  "secondLabel" : "org.deeplearning4j.translate",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 8,
   "secondPos" : 8,
+  "firstEndPos" : 36,
+  "secondEndPos" : 36
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "deeplearning4j",
+  "secondLabel" : "deeplearning4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 26,
+  "secondEndPos" : 26
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "translate",
+  "secondLabel" : "translate",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 27,
+  "secondPos" : 27,
   "firstEndPos" : 36,
   "secondEndPos" : 36
 }, {
@@ -45,12 +78,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.deeplearning4j.caffe.Caffe",
-  "secondLabel" : "org.deeplearning4j.caffe.Caffe",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 46,
   "secondPos" : 46,
+  "firstEndPos" : 76,
+  "secondEndPos" : 76
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 46,
+  "secondPos" : 46,
+  "firstEndPos" : 49,
+  "secondEndPos" : 49
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "deeplearning4j",
+  "secondLabel" : "deeplearning4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 50,
+  "secondPos" : 50,
+  "firstEndPos" : 64,
+  "secondEndPos" : 64
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "caffe",
+  "secondLabel" : "caffe",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 65,
+  "secondPos" : 65,
+  "firstEndPos" : 70,
+  "secondEndPos" : 70
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Caffe",
+  "secondLabel" : "Caffe",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 71,
+  "secondPos" : 71,
   "firstEndPos" : 76,
   "secondEndPos" : 76
 }, {
@@ -67,12 +144,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.google.protobuf.CodedInputStream",
-  "secondLabel" : "com.google.protobuf.CodedInputStream",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 87,
   "secondPos" : 87,
+  "firstEndPos" : 123,
+  "secondEndPos" : 123
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 87,
+  "secondPos" : 87,
+  "firstEndPos" : 90,
+  "secondEndPos" : 90
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "google",
+  "secondLabel" : "google",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 91,
+  "secondPos" : 91,
+  "firstEndPos" : 97,
+  "secondEndPos" : 97
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "protobuf",
+  "secondLabel" : "protobuf",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 98,
+  "secondPos" : 98,
+  "firstEndPos" : 106,
+  "secondEndPos" : 106
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "CodedInputStream",
+  "secondLabel" : "CodedInputStream",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 107,
+  "secondPos" : 107,
   "firstEndPos" : 123,
   "secondEndPos" : 123
 }, {
@@ -89,12 +210,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.FileInputStream",
-  "secondLabel" : "java.io.FileInputStream",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 187,
   "secondPos" : 169,
+  "firstEndPos" : 210,
+  "secondEndPos" : 192
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 187,
+  "secondPos" : 169,
+  "firstEndPos" : 191,
+  "secondEndPos" : 173
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 192,
+  "secondPos" : 174,
+  "firstEndPos" : 194,
+  "secondEndPos" : 176
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "FileInputStream",
+  "secondLabel" : "FileInputStream",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 195,
+  "secondPos" : 177,
   "firstEndPos" : 210,
   "secondEndPos" : 192
 }, {
@@ -111,12 +265,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.IOException",
-  "secondLabel" : "java.io.IOException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 219,
   "secondPos" : 201,
+  "firstEndPos" : 238,
+  "secondEndPos" : 220
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 219,
+  "secondPos" : 201,
+  "firstEndPos" : 223,
+  "secondEndPos" : 205
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 224,
+  "secondPos" : 206,
+  "firstEndPos" : 226,
+  "secondEndPos" : 208
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "IOException",
+  "secondLabel" : "IOException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 227,
+  "secondPos" : 209,
   "firstEndPos" : 238,
   "secondEndPos" : 220
 }, {
@@ -133,12 +320,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.InputStream",
-  "secondLabel" : "java.io.InputStream",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 247,
   "secondPos" : 229,
+  "firstEndPos" : 266,
+  "secondEndPos" : 248
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 247,
+  "secondPos" : 229,
+  "firstEndPos" : 251,
+  "secondEndPos" : 233
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 252,
+  "secondPos" : 234,
+  "firstEndPos" : 254,
+  "secondEndPos" : 236
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InputStream",
+  "secondLabel" : "InputStream",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 255,
+  "secondPos" : 237,
   "firstEndPos" : 266,
   "secondEndPos" : 248
 }, {

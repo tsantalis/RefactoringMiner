@@ -33,7 +33,7 @@
   "secondEndPos" : 616
 }, {
   "firstType" : "SimpleName",
-  "secondType" : "identifier",
+  "secondType" : "simple_identifier",
   "firstLabel" : "okhttp3",
   "secondLabel" : "okhttp3",
   "firstParentType" : "PackageDeclaration",
@@ -56,12 +56,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "java.io.IOException",
-  "secondLabel" : "java.io.IOException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 626,
   "secondPos" : 1174,
+  "firstEndPos" : 645,
+  "secondEndPos" : 1193
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 626,
+  "secondPos" : 1174,
+  "firstEndPos" : 630,
+  "secondEndPos" : 1178
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 631,
+  "secondPos" : 1179,
+  "firstEndPos" : 633,
+  "secondEndPos" : 1181
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "IOException",
+  "secondLabel" : "IOException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 634,
+  "secondPos" : 1182,
   "firstEndPos" : 645,
   "secondEndPos" : 1193
 }, {
@@ -78,12 +111,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "java.io.InterruptedIOException",
-  "secondLabel" : "java.io.InterruptedIOException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 654,
   "secondPos" : 1201,
+  "firstEndPos" : 684,
+  "secondEndPos" : 1231
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 654,
+  "secondPos" : 1201,
+  "firstEndPos" : 658,
+  "secondEndPos" : 1205
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 659,
+  "secondPos" : 1206,
+  "firstEndPos" : 661,
+  "secondEndPos" : 1208
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "InterruptedIOException",
+  "secondLabel" : "InterruptedIOException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 662,
+  "secondPos" : 1209,
   "firstEndPos" : 684,
   "secondEndPos" : 1231
 }, {
@@ -100,12 +166,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "java.util.ArrayList",
-  "secondLabel" : "java.util.ArrayList",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 693,
   "secondPos" : 1239,
+  "firstEndPos" : 712,
+  "secondEndPos" : 1258
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 693,
+  "secondPos" : 1239,
+  "firstEndPos" : 697,
+  "secondEndPos" : 1243
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 698,
+  "secondPos" : 1244,
+  "firstEndPos" : 702,
+  "secondEndPos" : 1248
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "ArrayList",
+  "secondLabel" : "ArrayList",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 703,
+  "secondPos" : 1249,
   "firstEndPos" : 712,
   "secondEndPos" : 1258
 }, {
@@ -122,12 +221,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "java.util.concurrent.ExecutorService",
-  "secondLabel" : "java.util.concurrent.ExecutorService",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 744,
   "secondPos" : 1266,
+  "firstEndPos" : 780,
+  "secondEndPos" : 1302
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 744,
+  "secondPos" : 1266,
+  "firstEndPos" : 748,
+  "secondEndPos" : 1270
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 749,
+  "secondPos" : 1271,
+  "firstEndPos" : 753,
+  "secondEndPos" : 1275
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "concurrent",
+  "secondLabel" : "concurrent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 754,
+  "secondPos" : 1276,
+  "firstEndPos" : 764,
+  "secondEndPos" : 1286
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "ExecutorService",
+  "secondLabel" : "ExecutorService",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 765,
+  "secondPos" : 1287,
   "firstEndPos" : 780,
   "secondEndPos" : 1302
 }, {
@@ -144,12 +287,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "java.util.concurrent.RejectedExecutionException",
-  "secondLabel" : "java.util.concurrent.RejectedExecutionException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 789,
   "secondPos" : 1310,
+  "firstEndPos" : 836,
+  "secondEndPos" : 1357
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 789,
+  "secondPos" : 1310,
+  "firstEndPos" : 793,
+  "secondEndPos" : 1314
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 794,
+  "secondPos" : 1315,
+  "firstEndPos" : 798,
+  "secondEndPos" : 1319
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "concurrent",
+  "secondLabel" : "concurrent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 799,
+  "secondPos" : 1320,
+  "firstEndPos" : 809,
+  "secondEndPos" : 1330
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "RejectedExecutionException",
+  "secondLabel" : "RejectedExecutionException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 810,
+  "secondPos" : 1331,
   "firstEndPos" : 836,
   "secondEndPos" : 1357
 }, {
@@ -166,12 +353,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "java.util.concurrent.atomic.AtomicInteger",
-  "secondLabel" : "java.util.concurrent.atomic.AtomicInteger",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 845,
   "secondPos" : 1365,
+  "firstEndPos" : 886,
+  "secondEndPos" : 1406
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 845,
+  "secondPos" : 1365,
+  "firstEndPos" : 849,
+  "secondEndPos" : 1369
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 850,
+  "secondPos" : 1370,
+  "firstEndPos" : 854,
+  "secondEndPos" : 1374
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "concurrent",
+  "secondLabel" : "concurrent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 855,
+  "secondPos" : 1375,
+  "firstEndPos" : 865,
+  "secondEndPos" : 1385
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "atomic",
+  "secondLabel" : "atomic",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 866,
+  "secondPos" : 1386,
+  "firstEndPos" : 872,
+  "secondEndPos" : 1392
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "AtomicInteger",
+  "secondLabel" : "AtomicInteger",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 873,
+  "secondPos" : 1393,
   "firstEndPos" : 886,
   "secondEndPos" : 1406
 }, {
@@ -188,12 +430,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.cache.CacheInterceptor",
-  "secondLabel" : "okhttp3.internal.cache.CacheInterceptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 934,
   "secondPos" : 667,
+  "firstEndPos" : 973,
+  "secondEndPos" : 706
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 934,
+  "secondPos" : 667,
+  "firstEndPos" : 941,
+  "secondEndPos" : 674
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 942,
+  "secondPos" : 675,
+  "firstEndPos" : 950,
+  "secondEndPos" : 683
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "cache",
+  "secondLabel" : "cache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 951,
+  "secondPos" : 684,
+  "firstEndPos" : 956,
+  "secondEndPos" : 689
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "CacheInterceptor",
+  "secondLabel" : "CacheInterceptor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 957,
+  "secondPos" : 690,
   "firstEndPos" : 973,
   "secondEndPos" : 706
 }, {
@@ -210,12 +496,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.connection.ConnectInterceptor",
-  "secondLabel" : "okhttp3.internal.connection.ConnectInterceptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 982,
   "secondPos" : 714,
+  "firstEndPos" : 1028,
+  "secondEndPos" : 760
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 982,
+  "secondPos" : 714,
+  "firstEndPos" : 989,
+  "secondEndPos" : 721
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 990,
+  "secondPos" : 722,
+  "firstEndPos" : 998,
+  "secondEndPos" : 730
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "connection",
+  "secondLabel" : "connection",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 999,
+  "secondPos" : 731,
+  "firstEndPos" : 1009,
+  "secondEndPos" : 741
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "ConnectInterceptor",
+  "secondLabel" : "ConnectInterceptor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1010,
+  "secondPos" : 742,
   "firstEndPos" : 1028,
   "secondEndPos" : 760
 }, {
@@ -232,12 +562,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.connection.Transmitter",
-  "secondLabel" : "okhttp3.internal.connection.Transmitter",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 1037,
   "secondPos" : 768,
+  "firstEndPos" : 1076,
+  "secondEndPos" : 807
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1037,
+  "secondPos" : 768,
+  "firstEndPos" : 1044,
+  "secondEndPos" : 775
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1045,
+  "secondPos" : 776,
+  "firstEndPos" : 1053,
+  "secondEndPos" : 784
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "connection",
+  "secondLabel" : "connection",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1054,
+  "secondPos" : 785,
+  "firstEndPos" : 1064,
+  "secondEndPos" : 795
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Transmitter",
+  "secondLabel" : "Transmitter",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1065,
+  "secondPos" : 796,
   "firstEndPos" : 1076,
   "secondEndPos" : 807
 }, {
@@ -254,12 +628,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.http.BridgeInterceptor",
-  "secondLabel" : "okhttp3.internal.http.BridgeInterceptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 1085,
   "secondPos" : 815,
+  "firstEndPos" : 1124,
+  "secondEndPos" : 854
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1085,
+  "secondPos" : 815,
+  "firstEndPos" : 1092,
+  "secondEndPos" : 822
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1093,
+  "secondPos" : 823,
+  "firstEndPos" : 1101,
+  "secondEndPos" : 831
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "http",
+  "secondLabel" : "http",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1102,
+  "secondPos" : 832,
+  "firstEndPos" : 1106,
+  "secondEndPos" : 836
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "BridgeInterceptor",
+  "secondLabel" : "BridgeInterceptor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1107,
+  "secondPos" : 837,
   "firstEndPos" : 1124,
   "secondEndPos" : 854
 }, {
@@ -276,12 +694,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.http.CallServerInterceptor",
-  "secondLabel" : "okhttp3.internal.http.CallServerInterceptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 1133,
   "secondPos" : 862,
+  "firstEndPos" : 1176,
+  "secondEndPos" : 905
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1133,
+  "secondPos" : 862,
+  "firstEndPos" : 1140,
+  "secondEndPos" : 869
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1141,
+  "secondPos" : 870,
+  "firstEndPos" : 1149,
+  "secondEndPos" : 878
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "http",
+  "secondLabel" : "http",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1150,
+  "secondPos" : 879,
+  "firstEndPos" : 1154,
+  "secondEndPos" : 883
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "CallServerInterceptor",
+  "secondLabel" : "CallServerInterceptor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1155,
+  "secondPos" : 884,
   "firstEndPos" : 1176,
   "secondEndPos" : 905
 }, {
@@ -298,12 +760,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.http.RealInterceptorChain",
-  "secondLabel" : "okhttp3.internal.http.RealInterceptorChain",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 1185,
   "secondPos" : 913,
+  "firstEndPos" : 1227,
+  "secondEndPos" : 955
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1185,
+  "secondPos" : 913,
+  "firstEndPos" : 1192,
+  "secondEndPos" : 920
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1193,
+  "secondPos" : 921,
+  "firstEndPos" : 1201,
+  "secondEndPos" : 929
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "http",
+  "secondLabel" : "http",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1202,
+  "secondPos" : 930,
+  "firstEndPos" : 1206,
+  "secondEndPos" : 934
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "RealInterceptorChain",
+  "secondLabel" : "RealInterceptorChain",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1207,
+  "secondPos" : 935,
   "firstEndPos" : 1227,
   "secondEndPos" : 955
 }, {
@@ -320,12 +826,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.http.RetryAndFollowUpInterceptor",
-  "secondLabel" : "okhttp3.internal.http.RetryAndFollowUpInterceptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 1236,
   "secondPos" : 963,
+  "firstEndPos" : 1285,
+  "secondEndPos" : 1012
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1236,
+  "secondPos" : 963,
+  "firstEndPos" : 1243,
+  "secondEndPos" : 970
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1244,
+  "secondPos" : 971,
+  "firstEndPos" : 1252,
+  "secondEndPos" : 979
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "http",
+  "secondLabel" : "http",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1253,
+  "secondPos" : 980,
+  "firstEndPos" : 1257,
+  "secondEndPos" : 984
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "RetryAndFollowUpInterceptor",
+  "secondLabel" : "RetryAndFollowUpInterceptor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1258,
+  "secondPos" : 985,
   "firstEndPos" : 1285,
   "secondEndPos" : 1012
 }, {
@@ -342,12 +892,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.platform.Platform",
-  "secondLabel" : "okhttp3.internal.platform.Platform",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 1294,
   "secondPos" : 1020,
+  "firstEndPos" : 1328,
+  "secondEndPos" : 1054
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1294,
+  "secondPos" : 1020,
+  "firstEndPos" : 1301,
+  "secondEndPos" : 1027
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1302,
+  "secondPos" : 1028,
+  "firstEndPos" : 1310,
+  "secondEndPos" : 1036
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "platform",
+  "secondLabel" : "platform",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1311,
+  "secondPos" : 1037,
+  "firstEndPos" : 1319,
+  "secondEndPos" : 1045
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Platform",
+  "secondLabel" : "Platform",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1320,
+  "secondPos" : 1046,
   "firstEndPos" : 1328,
   "secondEndPos" : 1054
 }, {
@@ -364,12 +958,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okio.Timeout",
-  "secondLabel" : "okio.Timeout",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 1337,
   "secondPos" : 1154,
+  "firstEndPos" : 1349,
+  "secondEndPos" : 1166
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okio",
+  "secondLabel" : "okio",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1337,
+  "secondPos" : 1154,
+  "firstEndPos" : 1341,
+  "secondEndPos" : 1158
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Timeout",
+  "secondLabel" : "Timeout",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1342,
+  "secondPos" : 1159,
   "firstEndPos" : 1349,
   "secondEndPos" : 1166
 }, {
@@ -386,12 +1002,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "okhttp3.internal.Util.closeQuietly",
-  "secondLabel" : "okhttp3.internal.Util.closeQuietly",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 1366,
   "secondPos" : 625,
+  "firstEndPos" : 1400,
+  "secondEndPos" : 659
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "okhttp3",
+  "secondLabel" : "okhttp3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1366,
+  "secondPos" : 625,
+  "firstEndPos" : 1373,
+  "secondEndPos" : 632
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1374,
+  "secondPos" : 633,
+  "firstEndPos" : 1382,
+  "secondEndPos" : 641
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Util",
+  "secondLabel" : "Util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1383,
+  "secondPos" : 642,
+  "firstEndPos" : 1387,
+  "secondEndPos" : 646
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "closeQuietly",
+  "secondLabel" : "closeQuietly",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 1388,
+  "secondPos" : 647,
   "firstEndPos" : 1400,
   "secondEndPos" : 659
 }, {
@@ -1077,13 +1737,13 @@
   "firstEndPos" : 2433,
   "secondEndPos" : 6943
 }, {
-  "firstType" : "QualifiedName",
+  "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "call.transmitter",
+  "firstLabel" : "transmitter",
   "secondLabel" : "transmitter",
   "firstParentType" : "ExpressionStatement",
   "secondParentType" : "assignment",
-  "firstPos" : 2384,
+  "firstPos" : 2389,
   "secondPos" : 6904,
   "firstEndPos" : 2400,
   "secondEndPos" : 6915
@@ -3125,12 +3785,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
-  "firstLabel" : "other.callsPerHost",
-  "secondLabel" : "other.callsPerHost",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ExpressionStatement",
   "secondParentType" : "assignment",
   "firstPos" : 4209,
   "secondPos" : 3297,
+  "firstEndPos" : 4227,
+  "secondEndPos" : 3315
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "other",
+  "secondLabel" : "other",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 4209,
+  "secondPos" : 3297,
+  "firstEndPos" : 4214,
+  "secondEndPos" : 3302
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "callsPerHost",
+  "secondLabel" : "callsPerHost",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 4215,
+  "secondPos" : 3303,
   "firstEndPos" : 4227,
   "secondEndPos" : 3315
 }, {

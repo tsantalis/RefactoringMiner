@@ -32,17 +32,6 @@
   "firstEndPos" : 166,
   "secondEndPos" : 166
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.mockito.internal.stubbing.answers",
-  "secondLabel" : "org.mockito.internal.stubbing.answers",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 128,
-  "secondPos" : 128,
-  "firstEndPos" : 165,
-  "secondEndPos" : 165
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -53,17 +42,6 @@
   "secondPos" : 170,
   "firstEndPos" : 198,
   "secondEndPos" : 198
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.Serializable",
-  "secondLabel" : "java.io.Serializable",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 177,
-  "secondPos" : 177,
-  "firstEndPos" : 197,
-  "secondEndPos" : 197
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -76,17 +54,6 @@
   "firstEndPos" : 247,
   "secondEndPos" : 360
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.mockito.invocation.InvocationOnMock",
-  "secondLabel" : "org.mockito.invocation.InvocationOnMock",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 207,
-  "secondPos" : 320,
-  "firstEndPos" : 246,
-  "secondEndPos" : 359
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -97,17 +64,6 @@
   "secondPos" : 361,
   "firstEndPos" : 283,
   "secondEndPos" : 396
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.mockito.stubbing.Answer",
-  "secondLabel" : "org.mockito.stubbing.Answer",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 255,
-  "secondPos" : 368,
-  "firstEndPos" : 282,
-  "secondEndPos" : 395
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -779,4 +735,224 @@
   "secondPos" : 1951,
   "firstEndPos" : 1710,
   "secondEndPos" : 1965
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 128,
+  "secondPos" : 128,
+  "firstEndPos" : 165,
+  "secondEndPos" : 165
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 128,
+  "secondPos" : 128,
+  "firstEndPos" : 131,
+  "secondEndPos" : 131
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "mockito",
+  "secondLabel" : "mockito",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 132,
+  "secondPos" : 132,
+  "firstEndPos" : 139,
+  "secondEndPos" : 139
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 140,
+  "secondPos" : 140,
+  "firstEndPos" : 148,
+  "secondEndPos" : 148
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "stubbing",
+  "secondLabel" : "stubbing",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 149,
+  "secondPos" : 149,
+  "firstEndPos" : 157,
+  "secondEndPos" : 157
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "answers",
+  "secondLabel" : "answers",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 158,
+  "secondPos" : 158,
+  "firstEndPos" : 165,
+  "secondEndPos" : 165
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 177,
+  "secondPos" : 177,
+  "firstEndPos" : 197,
+  "secondEndPos" : 197
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 177,
+  "secondPos" : 177,
+  "firstEndPos" : 181,
+  "secondEndPos" : 181
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 182,
+  "secondPos" : 182,
+  "firstEndPos" : 184,
+  "secondEndPos" : 184
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Serializable",
+  "secondLabel" : "Serializable",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 185,
+  "secondPos" : 185,
+  "firstEndPos" : 197,
+  "secondEndPos" : 197
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 207,
+  "secondPos" : 320,
+  "firstEndPos" : 246,
+  "secondEndPos" : 359
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 207,
+  "secondPos" : 320,
+  "firstEndPos" : 210,
+  "secondEndPos" : 323
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "mockito",
+  "secondLabel" : "mockito",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 211,
+  "secondPos" : 324,
+  "firstEndPos" : 218,
+  "secondEndPos" : 331
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "invocation",
+  "secondLabel" : "invocation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 219,
+  "secondPos" : 332,
+  "firstEndPos" : 229,
+  "secondEndPos" : 342
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InvocationOnMock",
+  "secondLabel" : "InvocationOnMock",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 230,
+  "secondPos" : 343,
+  "firstEndPos" : 246,
+  "secondEndPos" : 359
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 255,
+  "secondPos" : 368,
+  "firstEndPos" : 282,
+  "secondEndPos" : 395
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 255,
+  "secondPos" : 368,
+  "firstEndPos" : 258,
+  "secondEndPos" : 371
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "mockito",
+  "secondLabel" : "mockito",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 259,
+  "secondPos" : 372,
+  "firstEndPos" : 266,
+  "secondEndPos" : 379
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "stubbing",
+  "secondLabel" : "stubbing",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 267,
+  "secondPos" : 380,
+  "firstEndPos" : 275,
+  "secondEndPos" : 388
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Answer",
+  "secondLabel" : "Answer",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 276,
+  "secondPos" : 389,
+  "firstEndPos" : 282,
+  "secondEndPos" : 395
 } ]

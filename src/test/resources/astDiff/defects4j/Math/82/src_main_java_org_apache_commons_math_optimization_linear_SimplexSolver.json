@@ -32,17 +32,6 @@
   "firstEndPos" : 856,
   "secondEndPos" : 856
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math.optimization.linear",
-  "secondLabel" : "org.apache.commons.math.optimization.linear",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 812,
-  "secondPos" : 812,
-  "firstEndPos" : 855,
-  "secondEndPos" : 855
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -53,17 +42,6 @@
   "secondPos" : 858,
   "firstEndPos" : 924,
   "secondEndPos" : 924
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math.optimization.OptimizationException",
-  "secondLabel" : "org.apache.commons.math.optimization.OptimizationException",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 865,
-  "secondPos" : 865,
-  "firstEndPos" : 923,
-  "secondEndPos" : 923
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -76,17 +54,6 @@
   "firstEndPos" : 988,
   "secondEndPos" : 988
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math.optimization.RealPointValuePair",
-  "secondLabel" : "org.apache.commons.math.optimization.RealPointValuePair",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 932,
-  "secondPos" : 932,
-  "firstEndPos" : 987,
-  "secondEndPos" : 987
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -97,17 +64,6 @@
   "secondPos" : 989,
   "firstEndPos" : 1035,
   "secondEndPos" : 1035
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.math.util.MathUtils",
-  "secondLabel" : "org.apache.commons.math.util.MathUtils",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 996,
-  "secondPos" : 996,
-  "firstEndPos" : 1034,
-  "secondEndPos" : 1034
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -2286,17 +2242,6 @@
   "secondPos" : 2892,
   "firstEndPos" : 2900,
   "secondEndPos" : 2900
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "Double.MAX_VALUE",
-  "secondLabel" : "Double.MAX_VALUE",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 2903,
-  "secondPos" : 2903,
-  "firstEndPos" : 2919,
-  "secondEndPos" : 2919
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7852,4 +7797,345 @@
   "secondPos" : 6989,
   "firstEndPos" : 7001,
   "secondEndPos" : 7000
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 812,
+  "secondPos" : 812,
+  "firstEndPos" : 855,
+  "secondEndPos" : 855
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 812,
+  "secondPos" : 812,
+  "firstEndPos" : 815,
+  "secondEndPos" : 815
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 816,
+  "secondPos" : 816,
+  "firstEndPos" : 822,
+  "secondEndPos" : 822
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 823,
+  "secondPos" : 823,
+  "firstEndPos" : 830,
+  "secondEndPos" : 830
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math",
+  "secondLabel" : "math",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 831,
+  "secondPos" : 831,
+  "firstEndPos" : 835,
+  "secondEndPos" : 835
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "optimization",
+  "secondLabel" : "optimization",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 836,
+  "secondPos" : 836,
+  "firstEndPos" : 848,
+  "secondEndPos" : 848
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "linear",
+  "secondLabel" : "linear",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 849,
+  "secondPos" : 849,
+  "firstEndPos" : 855,
+  "secondEndPos" : 855
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 865,
+  "secondPos" : 865,
+  "firstEndPos" : 923,
+  "secondEndPos" : 923
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 865,
+  "secondPos" : 865,
+  "firstEndPos" : 868,
+  "secondEndPos" : 868
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 869,
+  "secondPos" : 869,
+  "firstEndPos" : 875,
+  "secondEndPos" : 875
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 876,
+  "secondPos" : 876,
+  "firstEndPos" : 883,
+  "secondEndPos" : 883
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math",
+  "secondLabel" : "math",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 884,
+  "secondPos" : 884,
+  "firstEndPos" : 888,
+  "secondEndPos" : 888
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "optimization",
+  "secondLabel" : "optimization",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 889,
+  "secondPos" : 889,
+  "firstEndPos" : 901,
+  "secondEndPos" : 901
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OptimizationException",
+  "secondLabel" : "OptimizationException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 902,
+  "secondPos" : 902,
+  "firstEndPos" : 923,
+  "secondEndPos" : 923
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 932,
+  "secondPos" : 932,
+  "firstEndPos" : 987,
+  "secondEndPos" : 987
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 932,
+  "secondPos" : 932,
+  "firstEndPos" : 935,
+  "secondEndPos" : 935
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 936,
+  "secondPos" : 936,
+  "firstEndPos" : 942,
+  "secondEndPos" : 942
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 943,
+  "secondPos" : 943,
+  "firstEndPos" : 950,
+  "secondEndPos" : 950
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math",
+  "secondLabel" : "math",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 951,
+  "secondPos" : 951,
+  "firstEndPos" : 955,
+  "secondEndPos" : 955
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "optimization",
+  "secondLabel" : "optimization",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 956,
+  "secondPos" : 956,
+  "firstEndPos" : 968,
+  "secondEndPos" : 968
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "RealPointValuePair",
+  "secondLabel" : "RealPointValuePair",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 969,
+  "secondPos" : 969,
+  "firstEndPos" : 987,
+  "secondEndPos" : 987
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 996,
+  "secondPos" : 996,
+  "firstEndPos" : 1034,
+  "secondEndPos" : 1034
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 996,
+  "secondPos" : 996,
+  "firstEndPos" : 999,
+  "secondEndPos" : 999
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1000,
+  "secondPos" : 1000,
+  "firstEndPos" : 1006,
+  "secondEndPos" : 1006
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1007,
+  "secondPos" : 1007,
+  "firstEndPos" : 1014,
+  "secondEndPos" : 1014
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "math",
+  "secondLabel" : "math",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1015,
+  "secondPos" : 1015,
+  "firstEndPos" : 1019,
+  "secondEndPos" : 1019
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1020,
+  "secondPos" : 1020,
+  "firstEndPos" : 1024,
+  "secondEndPos" : 1024
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MathUtils",
+  "secondLabel" : "MathUtils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1025,
+  "secondPos" : 1025,
+  "firstEndPos" : 1034,
+  "secondEndPos" : 1034
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 2903,
+  "secondPos" : 2903,
+  "firstEndPos" : 2919,
+  "secondEndPos" : 2919
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Double",
+  "secondLabel" : "Double",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2903,
+  "secondPos" : 2903,
+  "firstEndPos" : 2909,
+  "secondEndPos" : 2909
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MAX_VALUE",
+  "secondLabel" : "MAX_VALUE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2910,
+  "secondPos" : 2910,
+  "firstEndPos" : 2919,
+  "secondEndPos" : 2919
 } ]

@@ -34,12 +34,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.datastax.driver.core.querybuilder",
-  "secondLabel" : "com.datastax.driver.core.querybuilder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 636,
   "secondPos" : 636,
+  "firstEndPos" : 673,
+  "secondEndPos" : 673
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 636,
+  "secondPos" : 636,
+  "firstEndPos" : 639,
+  "secondEndPos" : 639
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "datastax",
+  "secondLabel" : "datastax",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 640,
+  "secondPos" : 640,
+  "firstEndPos" : 648,
+  "secondEndPos" : 648
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "driver",
+  "secondLabel" : "driver",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 649,
+  "secondPos" : 649,
+  "firstEndPos" : 655,
+  "secondEndPos" : 655
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 656,
+  "secondPos" : 656,
+  "firstEndPos" : 660,
+  "secondEndPos" : 660
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "querybuilder",
+  "secondLabel" : "querybuilder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 661,
+  "secondPos" : 661,
   "firstEndPos" : 673,
   "secondEndPos" : 673
 }, {
@@ -56,12 +111,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.ArrayList",
-  "secondLabel" : "java.util.ArrayList",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 711,
   "secondPos" : 683,
+  "firstEndPos" : 730,
+  "secondEndPos" : 702
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 711,
+  "secondPos" : 683,
+  "firstEndPos" : 715,
+  "secondEndPos" : 687
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 716,
+  "secondPos" : 688,
+  "firstEndPos" : 720,
+  "secondEndPos" : 692
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ArrayList",
+  "secondLabel" : "ArrayList",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 721,
+  "secondPos" : 693,
   "firstEndPos" : 730,
   "secondEndPos" : 702
 }, {
@@ -78,12 +166,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Arrays",
-  "secondLabel" : "java.util.Arrays",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 739,
   "secondPos" : 711,
+  "firstEndPos" : 755,
+  "secondEndPos" : 727
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 739,
+  "secondPos" : 711,
+  "firstEndPos" : 743,
+  "secondEndPos" : 715
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 744,
+  "secondPos" : 716,
+  "firstEndPos" : 748,
+  "secondEndPos" : 720
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Arrays",
+  "secondLabel" : "Arrays",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 749,
+  "secondPos" : 721,
   "firstEndPos" : 755,
   "secondEndPos" : 727
 }, {
@@ -100,12 +221,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.List",
-  "secondLabel" : "java.util.List",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 764,
   "secondPos" : 736,
+  "firstEndPos" : 778,
+  "secondEndPos" : 750
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 764,
+  "secondPos" : 736,
+  "firstEndPos" : 768,
+  "secondEndPos" : 740
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 769,
+  "secondPos" : 741,
+  "firstEndPos" : 773,
+  "secondEndPos" : 745
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "List",
+  "secondLabel" : "List",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 774,
+  "secondPos" : 746,
   "firstEndPos" : 778,
   "secondEndPos" : 750
 }, {
@@ -122,12 +276,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.datastax.driver.core.TableMetadata",
-  "secondLabel" : "com.datastax.driver.core.TableMetadata",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 788,
   "secondPos" : 760,
+  "firstEndPos" : 826,
+  "secondEndPos" : 798
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 788,
+  "secondPos" : 760,
+  "firstEndPos" : 791,
+  "secondEndPos" : 763
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "datastax",
+  "secondLabel" : "datastax",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 792,
+  "secondPos" : 764,
+  "firstEndPos" : 800,
+  "secondEndPos" : 772
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "driver",
+  "secondLabel" : "driver",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 801,
+  "secondPos" : 773,
+  "firstEndPos" : 807,
+  "secondEndPos" : 779
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 808,
+  "secondPos" : 780,
+  "firstEndPos" : 812,
+  "secondEndPos" : 784
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TableMetadata",
+  "secondLabel" : "TableMetadata",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 813,
+  "secondPos" : 785,
   "firstEndPos" : 826,
   "secondEndPos" : 798
 }, {
@@ -2685,12 +2894,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "usings.usings",
-  "secondLabel" : "usings.usings",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 2045,
   "secondPos" : 2017,
+  "firstEndPos" : 2058,
+  "secondEndPos" : 2030
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "usings",
+  "secondLabel" : "usings",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2045,
+  "secondPos" : 2017,
+  "firstEndPos" : 2051,
+  "secondEndPos" : 2023
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "usings",
+  "secondLabel" : "usings",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2052,
+  "secondPos" : 2024,
   "firstEndPos" : 2058,
   "secondEndPos" : 2030
 }, {
@@ -2883,12 +3114,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "usings.usings",
-  "secondLabel" : "usings.usings",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 2161,
   "secondPos" : 2133,
+  "firstEndPos" : 2174,
+  "secondEndPos" : 2146
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "usings",
+  "secondLabel" : "usings",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2161,
+  "secondPos" : 2133,
+  "firstEndPos" : 2167,
+  "secondEndPos" : 2139
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "usings",
+  "secondLabel" : "usings",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2168,
+  "secondPos" : 2140,
   "firstEndPos" : 2174,
   "secondEndPos" : 2146
 }, {
@@ -4355,6 +4608,28 @@
   "firstEndPos" : 3370,
   "secondEndPos" : 3943
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "names",
+  "secondLabel" : "names",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 3372,
+  "secondPos" : 3945,
+  "firstEndPos" : 3377,
+  "secondEndPos" : 3950
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "values",
+  "secondLabel" : "values",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 3386,
+  "secondPos" : 3959,
+  "firstEndPos" : 3392,
+  "secondEndPos" : 3965
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4739,6 +5014,17 @@
   "secondPos" : 4072,
   "firstEndPos" : 3531,
   "secondEndPos" : 4073
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "names",
+  "secondLabel" : "names",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 3532,
+  "secondPos" : 4074,
+  "firstEndPos" : 3537,
+  "secondEndPos" : 4079
 }, {
   "firstType" : "PostfixExpression",
   "secondType" : "PostfixExpression",
@@ -5699,8 +5985,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "BuiltStatement.ForwardingStatement",
-  "secondLabel" : "BuiltStatement.ForwardingStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 4739,
@@ -5716,6 +6002,28 @@
   "secondParentType" : "ParameterizedType",
   "firstPos" : 4739,
   "secondPos" : 5293,
+  "firstEndPos" : 4773,
+  "secondEndPos" : 5327
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BuiltStatement",
+  "secondLabel" : "BuiltStatement",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4739,
+  "secondPos" : 5293,
+  "firstEndPos" : 4753,
+  "secondEndPos" : 5307
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ForwardingStatement",
+  "secondLabel" : "ForwardingStatement",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4754,
+  "secondPos" : 5308,
   "firstEndPos" : 4773,
   "secondEndPos" : 5327
 }, {

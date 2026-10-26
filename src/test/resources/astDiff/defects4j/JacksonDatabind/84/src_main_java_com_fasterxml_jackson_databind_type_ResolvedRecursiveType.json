@@ -21,17 +21,6 @@
   "firstEndPos" : 44,
   "secondEndPos" : 44
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.fasterxml.jackson.databind.type",
-  "secondLabel" : "com.fasterxml.jackson.databind.type",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 8,
-  "secondPos" : 8,
-  "firstEndPos" : 43,
-  "secondEndPos" : 43
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -42,17 +31,6 @@
   "secondPos" : 46,
   "firstEndPos" : 93,
   "secondEndPos" : 93
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.fasterxml.jackson.databind.JavaType",
-  "secondLabel" : "com.fasterxml.jackson.databind.JavaType",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 53,
-  "secondPos" : 53,
-  "firstEndPos" : 92,
-  "secondEndPos" : 92
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -4233,4 +4211,136 @@
   "secondPos" : 3121,
   "firstEndPos" : 2960,
   "secondEndPos" : 3142
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 43,
+  "secondEndPos" : 43
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fasterxml",
+  "secondLabel" : "fasterxml",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jackson",
+  "secondLabel" : "jackson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 29,
+  "secondEndPos" : 29
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "databind",
+  "secondLabel" : "databind",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30,
+  "secondPos" : 30,
+  "firstEndPos" : 38,
+  "secondEndPos" : 38
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39,
+  "secondPos" : 39,
+  "firstEndPos" : 43,
+  "secondEndPos" : 43
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 53,
+  "secondPos" : 53,
+  "firstEndPos" : 92,
+  "secondEndPos" : 92
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 53,
+  "secondPos" : 53,
+  "firstEndPos" : 56,
+  "secondEndPos" : 56
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fasterxml",
+  "secondLabel" : "fasterxml",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57,
+  "secondPos" : 57,
+  "firstEndPos" : 66,
+  "secondEndPos" : 66
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jackson",
+  "secondLabel" : "jackson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 67,
+  "secondPos" : 67,
+  "firstEndPos" : 74,
+  "secondEndPos" : 74
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "databind",
+  "secondLabel" : "databind",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 75,
+  "secondPos" : 75,
+  "firstEndPos" : 83,
+  "secondEndPos" : 83
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JavaType",
+  "secondLabel" : "JavaType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 84,
+  "secondPos" : 84,
+  "firstEndPos" : 92,
+  "secondEndPos" : 92
 } ]

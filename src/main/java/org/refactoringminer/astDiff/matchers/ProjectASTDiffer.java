@@ -15,6 +15,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.actions.editscript.SimplifiedExtendedChawatheScriptGenerator;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
+import org.refactoringminer.astDiff.utils.QualifiedNameAlignment;
 import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.moved.AllSubTreesMovedASTDiffGenerator;
@@ -87,6 +88,11 @@ public class ProjectASTDiffer
 		//flatten the source trees after all diffs are matched, so that a source tree matched with multiple target trees has the same structure for all of them
 		applyDeferredFlattenings(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap().keySet());
 		processAllOptimizations(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap());
+		//the Java qualified names are aligned by their names and flattened, after they are matched in their nested form
+		for (ASTDiff diff : projectASTDiff.getDiffSet())
+			QualifiedNameAlignment.align(diff, deferredFlattenings);
+		for (ASTDiff diff : unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap().keySet())
+			QualifiedNameAlignment.align(diff, deferredFlattenings);
 		//the flattenings registered while processing the optimizations
 		applyDeferredFlattenings(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap().keySet());
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {

@@ -32,17 +32,6 @@
   "firstEndPos" : 651,
   "secondEndPos" : 651
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.google.javascript.jscomp",
-  "secondLabel" : "com.google.javascript.jscomp",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 622,
-  "secondPos" : 622,
-  "firstEndPos" : 650,
-  "secondEndPos" : 650
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -53,17 +42,6 @@
   "secondPos" : 653,
   "firstEndPos" : 693,
   "secondEndPos" : 693
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.google.javascript.rhino.Node",
-  "secondLabel" : "com.google.javascript.rhino.Node",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 660,
-  "secondPos" : 660,
-  "firstEndPos" : 692,
-  "secondEndPos" : 692
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -8864,4 +8842,125 @@
   "secondPos" : 7072,
   "firstEndPos" : 7056,
   "secondEndPos" : 7074
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 622,
+  "secondPos" : 622,
+  "firstEndPos" : 650,
+  "secondEndPos" : 650
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 622,
+  "secondPos" : 622,
+  "firstEndPos" : 625,
+  "secondEndPos" : 625
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "google",
+  "secondLabel" : "google",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 626,
+  "secondPos" : 626,
+  "firstEndPos" : 632,
+  "secondEndPos" : 632
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "javascript",
+  "secondLabel" : "javascript",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 633,
+  "secondPos" : 633,
+  "firstEndPos" : 643,
+  "secondEndPos" : 643
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jscomp",
+  "secondLabel" : "jscomp",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 644,
+  "secondPos" : 644,
+  "firstEndPos" : 650,
+  "secondEndPos" : 650
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 660,
+  "secondPos" : 660,
+  "firstEndPos" : 692,
+  "secondEndPos" : 692
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 660,
+  "secondPos" : 660,
+  "firstEndPos" : 663,
+  "secondEndPos" : 663
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "google",
+  "secondLabel" : "google",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 664,
+  "secondPos" : 664,
+  "firstEndPos" : 670,
+  "secondEndPos" : 670
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "javascript",
+  "secondLabel" : "javascript",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 671,
+  "secondPos" : 671,
+  "firstEndPos" : 681,
+  "secondEndPos" : 681
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "rhino",
+  "secondLabel" : "rhino",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 682,
+  "secondPos" : 682,
+  "firstEndPos" : 687,
+  "secondEndPos" : 687
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Node",
+  "secondLabel" : "Node",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 688,
+  "secondPos" : 688,
+  "firstEndPos" : 692,
+  "secondEndPos" : 692
 } ]

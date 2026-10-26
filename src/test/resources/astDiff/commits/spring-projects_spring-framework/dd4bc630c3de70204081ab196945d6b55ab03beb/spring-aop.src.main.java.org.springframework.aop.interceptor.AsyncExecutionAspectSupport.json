@@ -34,12 +34,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.aop.interceptor",
-  "secondLabel" : "org.springframework.aop.interceptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 630,
   "secondPos" : 630,
+  "firstEndPos" : 665,
+  "secondEndPos" : 665
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 630,
+  "secondPos" : 630,
+  "firstEndPos" : 633,
+  "secondEndPos" : 633
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 634,
+  "secondPos" : 634,
+  "firstEndPos" : 649,
+  "secondEndPos" : 649
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "aop",
+  "secondLabel" : "aop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 650,
+  "secondPos" : 650,
+  "firstEndPos" : 653,
+  "secondEndPos" : 653
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "interceptor",
+  "secondLabel" : "interceptor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 654,
+  "secondPos" : 654,
   "firstEndPos" : 665,
   "secondEndPos" : 665
 }, {
@@ -56,12 +100,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.lang.reflect.Method",
-  "secondLabel" : "java.lang.reflect.Method",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 675,
   "secondPos" : 675,
+  "firstEndPos" : 699,
+  "secondEndPos" : 699
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 675,
+  "secondPos" : 675,
+  "firstEndPos" : 679,
+  "secondEndPos" : 679
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "lang",
+  "secondLabel" : "lang",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 680,
+  "secondPos" : 680,
+  "firstEndPos" : 684,
+  "secondEndPos" : 684
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "reflect",
+  "secondLabel" : "reflect",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 685,
+  "secondPos" : 685,
+  "firstEndPos" : 692,
+  "secondEndPos" : 692
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Method",
+  "secondLabel" : "Method",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 693,
+  "secondPos" : 693,
   "firstEndPos" : 699,
   "secondEndPos" : 699
 }, {
@@ -78,12 +166,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Map",
-  "secondLabel" : "java.util.Map",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 708,
   "secondPos" : 708,
+  "firstEndPos" : 721,
+  "secondEndPos" : 721
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 708,
+  "secondPos" : 708,
+  "firstEndPos" : 712,
+  "secondEndPos" : 712
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 713,
+  "secondPos" : 713,
+  "firstEndPos" : 717,
+  "secondEndPos" : 717
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Map",
+  "secondLabel" : "Map",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 718,
+  "secondPos" : 718,
   "firstEndPos" : 721,
   "secondEndPos" : 721
 }, {
@@ -100,12 +221,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.concurrent.ConcurrentHashMap",
-  "secondLabel" : "java.util.concurrent.ConcurrentHashMap",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 730,
   "secondPos" : 864,
+  "firstEndPos" : 768,
+  "secondEndPos" : 902
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 730,
+  "secondPos" : 864,
+  "firstEndPos" : 734,
+  "secondEndPos" : 868
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 735,
+  "secondPos" : 869,
+  "firstEndPos" : 739,
+  "secondEndPos" : 873
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "concurrent",
+  "secondLabel" : "concurrent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 740,
+  "secondPos" : 874,
+  "firstEndPos" : 750,
+  "secondEndPos" : 884
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ConcurrentHashMap",
+  "secondLabel" : "ConcurrentHashMap",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 751,
+  "secondPos" : 885,
   "firstEndPos" : 768,
   "secondEndPos" : 902
 }, {
@@ -122,12 +287,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.concurrent.Executor",
-  "secondLabel" : "java.util.concurrent.Executor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 777,
   "secondPos" : 911,
+  "firstEndPos" : 806,
+  "secondEndPos" : 940
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 777,
+  "secondPos" : 911,
+  "firstEndPos" : 781,
+  "secondEndPos" : 915
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 782,
+  "secondPos" : 916,
+  "firstEndPos" : 786,
+  "secondEndPos" : 920
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "concurrent",
+  "secondLabel" : "concurrent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 787,
+  "secondPos" : 921,
+  "firstEndPos" : 797,
+  "secondEndPos" : 931
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Executor",
+  "secondLabel" : "Executor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 798,
+  "secondPos" : 932,
   "firstEndPos" : 806,
   "secondEndPos" : 940
 }, {
@@ -144,12 +353,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.concurrent.Future",
-  "secondLabel" : "java.util.concurrent.Future",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 815,
   "secondPos" : 949,
+  "firstEndPos" : 842,
+  "secondEndPos" : 976
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 815,
+  "secondPos" : 949,
+  "firstEndPos" : 819,
+  "secondEndPos" : 953
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 820,
+  "secondPos" : 954,
+  "firstEndPos" : 824,
+  "secondEndPos" : 958
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "concurrent",
+  "secondLabel" : "concurrent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 825,
+  "secondPos" : 959,
+  "firstEndPos" : 835,
+  "secondEndPos" : 969
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Future",
+  "secondLabel" : "Future",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 836,
+  "secondPos" : 970,
   "firstEndPos" : 842,
   "secondEndPos" : 976
 }, {
@@ -166,12 +419,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.logging.Log",
-  "secondLabel" : "org.apache.commons.logging.Log",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 852,
   "secondPos" : 1022,
+  "firstEndPos" : 882,
+  "secondEndPos" : 1052
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 852,
+  "secondPos" : 1022,
+  "firstEndPos" : 855,
+  "secondEndPos" : 1025
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 856,
+  "secondPos" : 1026,
+  "firstEndPos" : 862,
+  "secondEndPos" : 1032
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 863,
+  "secondPos" : 1033,
+  "firstEndPos" : 870,
+  "secondEndPos" : 1040
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "logging",
+  "secondLabel" : "logging",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 871,
+  "secondPos" : 1041,
+  "firstEndPos" : 878,
+  "secondEndPos" : 1048
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Log",
+  "secondLabel" : "Log",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 879,
+  "secondPos" : 1049,
   "firstEndPos" : 882,
   "secondEndPos" : 1052
 }, {
@@ -188,12 +496,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.logging.LogFactory",
-  "secondLabel" : "org.apache.commons.logging.LogFactory",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 891,
   "secondPos" : 1061,
+  "firstEndPos" : 928,
+  "secondEndPos" : 1098
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 891,
+  "secondPos" : 1061,
+  "firstEndPos" : 894,
+  "secondEndPos" : 1064
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 895,
+  "secondPos" : 1065,
+  "firstEndPos" : 901,
+  "secondEndPos" : 1071
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 902,
+  "secondPos" : 1072,
+  "firstEndPos" : 909,
+  "secondEndPos" : 1079
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "logging",
+  "secondLabel" : "logging",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 910,
+  "secondPos" : 1080,
+  "firstEndPos" : 917,
+  "secondEndPos" : 1087
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LogFactory",
+  "secondLabel" : "LogFactory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 918,
+  "secondPos" : 1088,
   "firstEndPos" : 928,
   "secondEndPos" : 1098
 }, {
@@ -210,12 +573,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.beans.factory.BeanFactory",
-  "secondLabel" : "org.springframework.beans.factory.BeanFactory",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 938,
   "secondPos" : 1108,
+  "firstEndPos" : 983,
+  "secondEndPos" : 1153
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 938,
+  "secondPos" : 1108,
+  "firstEndPos" : 941,
+  "secondEndPos" : 1111
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 942,
+  "secondPos" : 1112,
+  "firstEndPos" : 957,
+  "secondEndPos" : 1127
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "beans",
+  "secondLabel" : "beans",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 958,
+  "secondPos" : 1128,
+  "firstEndPos" : 963,
+  "secondEndPos" : 1133
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "factory",
+  "secondLabel" : "factory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 964,
+  "secondPos" : 1134,
+  "firstEndPos" : 971,
+  "secondEndPos" : 1141
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BeanFactory",
+  "secondLabel" : "BeanFactory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 972,
+  "secondPos" : 1142,
   "firstEndPos" : 983,
   "secondEndPos" : 1153
 }, {
@@ -232,12 +650,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.beans.factory.BeanFactoryAware",
-  "secondLabel" : "org.springframework.beans.factory.BeanFactoryAware",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 992,
   "secondPos" : 1162,
+  "firstEndPos" : 1042,
+  "secondEndPos" : 1212
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 992,
+  "secondPos" : 1162,
+  "firstEndPos" : 995,
+  "secondEndPos" : 1165
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 996,
+  "secondPos" : 1166,
+  "firstEndPos" : 1011,
+  "secondEndPos" : 1181
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "beans",
+  "secondLabel" : "beans",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1012,
+  "secondPos" : 1182,
+  "firstEndPos" : 1017,
+  "secondEndPos" : 1187
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "factory",
+  "secondLabel" : "factory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1018,
+  "secondPos" : 1188,
+  "firstEndPos" : 1025,
+  "secondEndPos" : 1195
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BeanFactoryAware",
+  "secondLabel" : "BeanFactoryAware",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1026,
+  "secondPos" : 1196,
   "firstEndPos" : 1042,
   "secondEndPos" : 1212
 }, {
@@ -254,12 +727,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils",
-  "secondLabel" : "org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1051,
   "secondPos" : 1221,
+  "firstEndPos" : 1122,
+  "secondEndPos" : 1292
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1051,
+  "secondPos" : 1221,
+  "firstEndPos" : 1054,
+  "secondEndPos" : 1224
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1055,
+  "secondPos" : 1225,
+  "firstEndPos" : 1070,
+  "secondEndPos" : 1240
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "beans",
+  "secondLabel" : "beans",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1071,
+  "secondPos" : 1241,
+  "firstEndPos" : 1076,
+  "secondEndPos" : 1246
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "factory",
+  "secondLabel" : "factory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1077,
+  "secondPos" : 1247,
+  "firstEndPos" : 1084,
+  "secondEndPos" : 1254
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "annotation",
+  "secondLabel" : "annotation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1085,
+  "secondPos" : 1255,
+  "firstEndPos" : 1095,
+  "secondEndPos" : 1265
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BeanFactoryAnnotationUtils",
+  "secondLabel" : "BeanFactoryAnnotationUtils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1096,
+  "secondPos" : 1266,
   "firstEndPos" : 1122,
   "secondEndPos" : 1292
 }, {
@@ -276,12 +815,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.core.task.AsyncListenableTaskExecutor",
-  "secondLabel" : "org.springframework.core.task.AsyncListenableTaskExecutor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1131,
   "secondPos" : 1301,
+  "firstEndPos" : 1188,
+  "secondEndPos" : 1358
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1131,
+  "secondPos" : 1301,
+  "firstEndPos" : 1134,
+  "secondEndPos" : 1304
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1135,
+  "secondPos" : 1305,
+  "firstEndPos" : 1150,
+  "secondEndPos" : 1320
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1151,
+  "secondPos" : 1321,
+  "firstEndPos" : 1155,
+  "secondEndPos" : 1325
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "task",
+  "secondLabel" : "task",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1156,
+  "secondPos" : 1326,
+  "firstEndPos" : 1160,
+  "secondEndPos" : 1330
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AsyncListenableTaskExecutor",
+  "secondLabel" : "AsyncListenableTaskExecutor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1161,
+  "secondPos" : 1331,
   "firstEndPos" : 1188,
   "secondEndPos" : 1358
 }, {
@@ -298,12 +892,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.core.task.AsyncTaskExecutor",
-  "secondLabel" : "org.springframework.core.task.AsyncTaskExecutor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1197,
   "secondPos" : 1367,
+  "firstEndPos" : 1244,
+  "secondEndPos" : 1414
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1197,
+  "secondPos" : 1367,
+  "firstEndPos" : 1200,
+  "secondEndPos" : 1370
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1201,
+  "secondPos" : 1371,
+  "firstEndPos" : 1216,
+  "secondEndPos" : 1386
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1217,
+  "secondPos" : 1387,
+  "firstEndPos" : 1221,
+  "secondEndPos" : 1391
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "task",
+  "secondLabel" : "task",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1222,
+  "secondPos" : 1392,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 1396
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AsyncTaskExecutor",
+  "secondLabel" : "AsyncTaskExecutor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1227,
+  "secondPos" : 1397,
   "firstEndPos" : 1244,
   "secondEndPos" : 1414
 }, {
@@ -320,12 +969,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.core.task.support.TaskExecutorAdapter",
-  "secondLabel" : "org.springframework.core.task.support.TaskExecutorAdapter",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1253,
   "secondPos" : 1423,
+  "firstEndPos" : 1310,
+  "secondEndPos" : 1480
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1253,
+  "secondPos" : 1423,
+  "firstEndPos" : 1256,
+  "secondEndPos" : 1426
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1257,
+  "secondPos" : 1427,
+  "firstEndPos" : 1272,
+  "secondEndPos" : 1442
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1273,
+  "secondPos" : 1443,
+  "firstEndPos" : 1277,
+  "secondEndPos" : 1447
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "task",
+  "secondLabel" : "task",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1278,
+  "secondPos" : 1448,
+  "firstEndPos" : 1282,
+  "secondEndPos" : 1452
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "support",
+  "secondLabel" : "support",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1283,
+  "secondPos" : 1453,
+  "firstEndPos" : 1290,
+  "secondEndPos" : 1460
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TaskExecutorAdapter",
+  "secondLabel" : "TaskExecutorAdapter",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1291,
+  "secondPos" : 1461,
   "firstEndPos" : 1310,
   "secondEndPos" : 1480
 }, {
@@ -342,12 +1057,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.util.Assert",
-  "secondLabel" : "org.springframework.util.Assert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1319,
   "secondPos" : 1532,
+  "firstEndPos" : 1350,
+  "secondEndPos" : 1563
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1319,
+  "secondPos" : 1532,
+  "firstEndPos" : 1322,
+  "secondEndPos" : 1535
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1323,
+  "secondPos" : 1536,
+  "firstEndPos" : 1338,
+  "secondEndPos" : 1551
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1339,
+  "secondPos" : 1552,
+  "firstEndPos" : 1343,
+  "secondEndPos" : 1556
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Assert",
+  "secondLabel" : "Assert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1344,
+  "secondPos" : 1557,
   "firstEndPos" : 1350,
   "secondEndPos" : 1563
 }, {
@@ -364,12 +1123,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.util.ReflectionUtils",
-  "secondLabel" : "org.springframework.util.ReflectionUtils",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1359,
   "secondPos" : 1616,
+  "firstEndPos" : 1399,
+  "secondEndPos" : 1656
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1359,
+  "secondPos" : 1616,
+  "firstEndPos" : 1362,
+  "secondEndPos" : 1619
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1363,
+  "secondPos" : 1620,
+  "firstEndPos" : 1378,
+  "secondEndPos" : 1635
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1379,
+  "secondPos" : 1636,
+  "firstEndPos" : 1383,
+  "secondEndPos" : 1640
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ReflectionUtils",
+  "secondLabel" : "ReflectionUtils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1384,
+  "secondPos" : 1641,
   "firstEndPos" : 1399,
   "secondEndPos" : 1656
 }, {
@@ -386,12 +1189,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.springframework.util.StringUtils",
-  "secondLabel" : "org.springframework.util.StringUtils",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1408,
   "secondPos" : 1665,
+  "firstEndPos" : 1444,
+  "secondEndPos" : 1701
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1408,
+  "secondPos" : 1665,
+  "firstEndPos" : 1411,
+  "secondEndPos" : 1668
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "springframework",
+  "secondLabel" : "springframework",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1412,
+  "secondPos" : 1669,
+  "firstEndPos" : 1427,
+  "secondEndPos" : 1684
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1428,
+  "secondPos" : 1685,
+  "firstEndPos" : 1432,
+  "secondEndPos" : 1689
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "StringUtils",
+  "secondLabel" : "StringUtils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1433,
+  "secondPos" : 1690,
   "firstEndPos" : 1444,
   "secondEndPos" : 1701
 }, {
@@ -2443,14 +3290,25 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.concurrent.ExecutorService",
-  "secondLabel" : "java.util.concurrent.ExecutorService",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3495,
   "secondPos" : 4035,
   "firstEndPos" : 3531,
   "secondEndPos" : 4071
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3495,
+  "secondPos" : 4035,
+  "firstEndPos" : 3499,
+  "secondEndPos" : 4039
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -2462,6 +3320,28 @@
   "secondPos" : 2593,
   "firstEndPos" : 3505,
   "secondEndPos" : 2598
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3500,
+  "secondPos" : 4040,
+  "firstEndPos" : 3504,
+  "secondEndPos" : 4044
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "concurrent",
+  "secondLabel" : "concurrent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3505,
+  "secondPos" : 4045,
+  "firstEndPos" : 3515,
+  "secondEndPos" : 4055
 }, {
   "firstType" : "PrimitiveType",
   "secondType" : "PrimitiveType",
@@ -2495,6 +3375,17 @@
   "secondPos" : 2607,
   "firstEndPos" : 3538,
   "secondEndPos" : 2631
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ExecutorService",
+  "secondLabel" : "ExecutorService",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3516,
+  "secondPos" : 4056,
+  "firstEndPos" : 3531,
+  "secondEndPos" : 4071
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

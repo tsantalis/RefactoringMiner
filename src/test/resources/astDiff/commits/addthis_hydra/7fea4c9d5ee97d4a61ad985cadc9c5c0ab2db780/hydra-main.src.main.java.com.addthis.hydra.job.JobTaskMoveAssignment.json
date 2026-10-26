@@ -34,12 +34,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.addthis.hydra.job",
-  "secondLabel" : "com.addthis.hydra.job",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 566,
   "secondPos" : 566,
+  "firstEndPos" : 587,
+  "secondEndPos" : 587
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 566,
+  "secondPos" : 566,
+  "firstEndPos" : 569,
+  "secondEndPos" : 569
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "addthis",
+  "secondLabel" : "addthis",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 570,
+  "secondPos" : 570,
+  "firstEndPos" : 577,
+  "secondEndPos" : 577
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hydra",
+  "secondLabel" : "hydra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 578,
+  "secondPos" : 578,
+  "firstEndPos" : 583,
+  "secondEndPos" : 583
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "job",
+  "secondLabel" : "job",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 584,
+  "secondPos" : 584,
   "firstEndPos" : 587,
   "secondEndPos" : 587
 }, {
@@ -56,12 +100,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.addthis.hydra.job.mq.JobKey",
-  "secondLabel" : "com.addthis.hydra.job.mq.JobKey",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 597,
   "secondPos" : 632,
+  "firstEndPos" : 628,
+  "secondEndPos" : 663
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 597,
+  "secondPos" : 632,
+  "firstEndPos" : 600,
+  "secondEndPos" : 635
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "addthis",
+  "secondLabel" : "addthis",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 601,
+  "secondPos" : 636,
+  "firstEndPos" : 608,
+  "secondEndPos" : 643
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hydra",
+  "secondLabel" : "hydra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 609,
+  "secondPos" : 644,
+  "firstEndPos" : 614,
+  "secondEndPos" : 649
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "job",
+  "secondLabel" : "job",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 615,
+  "secondPos" : 650,
+  "firstEndPos" : 618,
+  "secondEndPos" : 653
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "mq",
+  "secondLabel" : "mq",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 619,
+  "secondPos" : 654,
+  "firstEndPos" : 621,
+  "secondEndPos" : 656
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JobKey",
+  "secondLabel" : "JobKey",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 622,
+  "secondPos" : 657,
   "firstEndPos" : 628,
   "secondEndPos" : 663
 }, {

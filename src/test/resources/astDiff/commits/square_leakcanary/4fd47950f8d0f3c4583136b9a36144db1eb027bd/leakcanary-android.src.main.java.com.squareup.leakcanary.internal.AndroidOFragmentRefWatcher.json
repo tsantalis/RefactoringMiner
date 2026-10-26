@@ -34,12 +34,23 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "com.squareup.leakcanary.internal",
-  "secondLabel" : "leaksentry.internal",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "package_header",
   "firstPos" : 609,
   "secondPos" : 640,
+  "firstEndPos" : 641,
+  "secondEndPos" : 659
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 633,
+  "secondPos" : 651,
   "firstEndPos" : 641,
   "secondEndPos" : 659
 }, {
@@ -56,12 +67,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "android.app.Activity",
-  "secondLabel" : "android.app.Activity",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 651,
   "secondPos" : 668,
+  "firstEndPos" : 671,
+  "secondEndPos" : 688
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 651,
+  "secondPos" : 668,
+  "firstEndPos" : 658,
+  "secondEndPos" : 675
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "app",
+  "secondLabel" : "app",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 659,
+  "secondPos" : 676,
+  "firstEndPos" : 662,
+  "secondEndPos" : 679
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Activity",
+  "secondLabel" : "Activity",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 663,
+  "secondPos" : 680,
   "firstEndPos" : 671,
   "secondEndPos" : 688
 }, {
@@ -78,12 +122,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "android.app.Fragment",
-  "secondLabel" : "android.app.Fragment",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 680,
   "secondPos" : 696,
+  "firstEndPos" : 700,
+  "secondEndPos" : 716
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 680,
+  "secondPos" : 696,
+  "firstEndPos" : 687,
+  "secondEndPos" : 703
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "app",
+  "secondLabel" : "app",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 688,
+  "secondPos" : 704,
+  "firstEndPos" : 691,
+  "secondEndPos" : 707
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Fragment",
+  "secondLabel" : "Fragment",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 692,
+  "secondPos" : 708,
   "firstEndPos" : 700,
   "secondEndPos" : 716
 }, {
@@ -100,12 +177,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "android.app.FragmentManager",
-  "secondLabel" : "android.app.FragmentManager",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 709,
   "secondPos" : 724,
+  "firstEndPos" : 736,
+  "secondEndPos" : 751
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 709,
+  "secondPos" : 724,
+  "firstEndPos" : 716,
+  "secondEndPos" : 731
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "app",
+  "secondLabel" : "app",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 717,
+  "secondPos" : 732,
+  "firstEndPos" : 720,
+  "secondEndPos" : 735
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "FragmentManager",
+  "secondLabel" : "FragmentManager",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 721,
+  "secondPos" : 736,
   "firstEndPos" : 736,
   "secondEndPos" : 751
 }, {
@@ -122,12 +232,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "android.os.Build",
-  "secondLabel" : "android.os.Build",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 745,
   "secondPos" : 759,
+  "firstEndPos" : 761,
+  "secondEndPos" : 775
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 745,
+  "secondPos" : 759,
+  "firstEndPos" : 752,
+  "secondEndPos" : 766
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "os",
+  "secondLabel" : "os",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 753,
+  "secondPos" : 767,
+  "firstEndPos" : 755,
+  "secondEndPos" : 769
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Build",
+  "secondLabel" : "Build",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 756,
+  "secondPos" : 770,
   "firstEndPos" : 761,
   "secondEndPos" : 775
 }, {
@@ -144,12 +287,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "androidx.annotation.RequiresApi",
-  "secondLabel" : "androidx.annotation.RequiresApi",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 796,
   "secondPos" : 783,
+  "firstEndPos" : 827,
+  "secondEndPos" : 814
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "androidx",
+  "secondLabel" : "androidx",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 796,
+  "secondPos" : 783,
+  "firstEndPos" : 804,
+  "secondEndPos" : 791
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "annotation",
+  "secondLabel" : "annotation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 805,
+  "secondPos" : 792,
+  "firstEndPos" : 815,
+  "secondEndPos" : 802
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "RequiresApi",
+  "secondLabel" : "RequiresApi",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 816,
+  "secondPos" : 803,
   "firstEndPos" : 827,
   "secondEndPos" : 814
 }, {
@@ -604,6 +780,17 @@
   "firstEndPos" : 1650,
   "secondEndPos" : 1333
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 1638,
+  "secondPos" : 1321,
+  "firstEndPos" : 1642,
+  "secondEndPos" : 1325
+}, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "comparison_operator",
   "firstLabel" : "!=",
@@ -636,6 +823,17 @@
   "secondPos" : 1334,
   "firstEndPos" : 1653,
   "secondEndPos" : 1336
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "configProvider",
+  "secondLabel" : "configProvider",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "call_expression",
+  "firstPos" : 1654,
+  "secondPos" : 1337,
+  "firstEndPos" : 1668,
+  "secondEndPos" : 1351
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
@@ -867,6 +1065,17 @@
   "secondPos" : 1526,
   "firstEndPos" : 1975,
   "secondEndPos" : 1607
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "configProvider",
+  "secondLabel" : "configProvider",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "call_expression",
+  "firstPos" : 1877,
+  "secondPos" : 1530,
+  "firstEndPos" : 1891,
+  "secondEndPos" : 1544
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",

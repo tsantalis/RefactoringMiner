@@ -177,12 +177,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.component.sjms.consumer",
-  "secondLabel" : "org.apache.camel.component.sjms.consumer",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 812,
   "secondPos" : 812,
+  "firstEndPos" : 852,
+  "secondEndPos" : 852
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 812,
+  "secondPos" : 812,
+  "firstEndPos" : 815,
+  "secondEndPos" : 815
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 816,
+  "secondPos" : 816,
+  "firstEndPos" : 822,
+  "secondEndPos" : 822
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 823,
+  "secondPos" : 823,
+  "firstEndPos" : 828,
+  "secondEndPos" : 828
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "component",
+  "secondLabel" : "component",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 829,
+  "secondPos" : 829,
+  "firstEndPos" : 838,
+  "secondEndPos" : 838
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sjms",
+  "secondLabel" : "sjms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 839,
+  "secondPos" : 839,
+  "firstEndPos" : 843,
+  "secondEndPos" : 843
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "consumer",
+  "secondLabel" : "consumer",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 844,
+  "secondPos" : 844,
   "firstEndPos" : 852,
   "secondEndPos" : 852
 }, {
@@ -199,12 +265,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.concurrent.ExecutorService",
-  "secondLabel" : "java.util.concurrent.ExecutorService",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 862,
   "secondPos" : 862,
+  "firstEndPos" : 898,
+  "secondEndPos" : 898
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 862,
+  "secondPos" : 862,
+  "firstEndPos" : 866,
+  "secondEndPos" : 866
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 867,
+  "secondPos" : 867,
+  "firstEndPos" : 871,
+  "secondEndPos" : 871
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "concurrent",
+  "secondLabel" : "concurrent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 872,
+  "secondPos" : 872,
+  "firstEndPos" : 882,
+  "secondEndPos" : 882
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ExecutorService",
+  "secondLabel" : "ExecutorService",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 883,
+  "secondPos" : 883,
   "firstEndPos" : 898,
   "secondEndPos" : 898
 }, {
@@ -221,12 +331,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "javax.jms.Message",
-  "secondLabel" : "javax.jms.Message",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 907,
   "secondPos" : 907,
+  "firstEndPos" : 924,
+  "secondEndPos" : 924
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "javax",
+  "secondLabel" : "javax",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 907,
+  "secondPos" : 907,
+  "firstEndPos" : 912,
+  "secondEndPos" : 912
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jms",
+  "secondLabel" : "jms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 913,
+  "secondPos" : 913,
+  "firstEndPos" : 916,
+  "secondEndPos" : 916
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Message",
+  "secondLabel" : "Message",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 917,
+  "secondPos" : 917,
   "firstEndPos" : 924,
   "secondEndPos" : 924
 }, {
@@ -243,12 +386,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "javax.jms.MessageListener",
-  "secondLabel" : "javax.jms.MessageListener",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 933,
   "secondPos" : 933,
+  "firstEndPos" : 958,
+  "secondEndPos" : 958
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "javax",
+  "secondLabel" : "javax",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 933,
+  "secondPos" : 933,
+  "firstEndPos" : 938,
+  "secondEndPos" : 938
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jms",
+  "secondLabel" : "jms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 939,
+  "secondPos" : 939,
+  "firstEndPos" : 942,
+  "secondEndPos" : 942
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MessageListener",
+  "secondLabel" : "MessageListener",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 943,
+  "secondPos" : 943,
   "firstEndPos" : 958,
   "secondEndPos" : 958
 }, {
@@ -265,12 +441,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "javax.jms.Session",
-  "secondLabel" : "javax.jms.Session",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 967,
   "secondPos" : 967,
+  "firstEndPos" : 984,
+  "secondEndPos" : 984
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "javax",
+  "secondLabel" : "javax",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 967,
+  "secondPos" : 967,
+  "firstEndPos" : 972,
+  "secondEndPos" : 972
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jms",
+  "secondLabel" : "jms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 973,
+  "secondPos" : 973,
+  "firstEndPos" : 976,
+  "secondEndPos" : 976
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Session",
+  "secondLabel" : "Session",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 977,
+  "secondPos" : 977,
   "firstEndPos" : 984,
   "secondEndPos" : 984
 }, {
@@ -287,12 +496,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.AsyncProcessor",
-  "secondLabel" : "org.apache.camel.AsyncProcessor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 994,
   "secondPos" : 994,
+  "firstEndPos" : 1025,
+  "secondEndPos" : 1025
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 994,
+  "secondPos" : 994,
+  "firstEndPos" : 997,
+  "secondEndPos" : 997
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 998,
+  "secondPos" : 998,
+  "firstEndPos" : 1004,
+  "secondEndPos" : 1004
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1005,
+  "secondPos" : 1005,
+  "firstEndPos" : 1010,
+  "secondEndPos" : 1010
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AsyncProcessor",
+  "secondLabel" : "AsyncProcessor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1011,
+  "secondPos" : 1011,
   "firstEndPos" : 1025,
   "secondEndPos" : 1025
 }, {
@@ -309,12 +562,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.Exchange",
-  "secondLabel" : "org.apache.camel.Exchange",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1034,
   "secondPos" : 1034,
+  "firstEndPos" : 1059,
+  "secondEndPos" : 1059
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1034,
+  "secondPos" : 1034,
+  "firstEndPos" : 1037,
+  "secondEndPos" : 1037
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1038,
+  "secondPos" : 1038,
+  "firstEndPos" : 1044,
+  "secondEndPos" : 1044
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1045,
+  "secondPos" : 1045,
+  "firstEndPos" : 1050,
+  "secondEndPos" : 1050
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Exchange",
+  "secondLabel" : "Exchange",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1051,
+  "secondPos" : 1051,
   "firstEndPos" : 1059,
   "secondEndPos" : 1059
 }, {
@@ -331,12 +628,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.RuntimeCamelException",
-  "secondLabel" : "org.apache.camel.RuntimeCamelException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1068,
   "secondPos" : 1068,
+  "firstEndPos" : 1106,
+  "secondEndPos" : 1106
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1068,
+  "secondPos" : 1068,
+  "firstEndPos" : 1071,
+  "secondEndPos" : 1071
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1072,
+  "secondPos" : 1072,
+  "firstEndPos" : 1078,
+  "secondEndPos" : 1078
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1079,
+  "secondPos" : 1079,
+  "firstEndPos" : 1084,
+  "secondEndPos" : 1084
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "RuntimeCamelException",
+  "secondLabel" : "RuntimeCamelException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1085,
+  "secondPos" : 1085,
   "firstEndPos" : 1106,
   "secondEndPos" : 1106
 }, {
@@ -353,12 +694,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.component.sjms.SjmsEndpoint",
-  "secondLabel" : "org.apache.camel.component.sjms.SjmsEndpoint",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1115,
   "secondPos" : 1115,
+  "firstEndPos" : 1159,
+  "secondEndPos" : 1159
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1115,
+  "secondPos" : 1115,
+  "firstEndPos" : 1118,
+  "secondEndPos" : 1118
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1119,
+  "secondPos" : 1119,
+  "firstEndPos" : 1125,
+  "secondEndPos" : 1125
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1126,
+  "secondPos" : 1126,
+  "firstEndPos" : 1131,
+  "secondEndPos" : 1131
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "component",
+  "secondLabel" : "component",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1132,
+  "secondPos" : 1132,
+  "firstEndPos" : 1141,
+  "secondEndPos" : 1141
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sjms",
+  "secondLabel" : "sjms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1142,
+  "secondPos" : 1142,
+  "firstEndPos" : 1146,
+  "secondEndPos" : 1146
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SjmsEndpoint",
+  "secondLabel" : "SjmsEndpoint",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1147,
+  "secondPos" : 1147,
   "firstEndPos" : 1159,
   "secondEndPos" : 1159
 }, {
@@ -375,12 +782,89 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.component.sjms.jms.JmsMessageHelper",
-  "secondLabel" : "org.apache.camel.component.sjms.jms.JmsMessageHelper",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1168,
   "secondPos" : 1168,
+  "firstEndPos" : 1220,
+  "secondEndPos" : 1220
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1168,
+  "secondPos" : 1168,
+  "firstEndPos" : 1171,
+  "secondEndPos" : 1171
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1172,
+  "secondPos" : 1172,
+  "firstEndPos" : 1178,
+  "secondEndPos" : 1178
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1179,
+  "secondPos" : 1179,
+  "firstEndPos" : 1184,
+  "secondEndPos" : 1184
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "component",
+  "secondLabel" : "component",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1185,
+  "secondPos" : 1185,
+  "firstEndPos" : 1194,
+  "secondEndPos" : 1194
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sjms",
+  "secondLabel" : "sjms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1195,
+  "secondPos" : 1195,
+  "firstEndPos" : 1199,
+  "secondEndPos" : 1199
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jms",
+  "secondLabel" : "jms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1200,
+  "secondPos" : 1200,
+  "firstEndPos" : 1203,
+  "secondEndPos" : 1203
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JmsMessageHelper",
+  "secondLabel" : "JmsMessageHelper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1204,
+  "secondPos" : 1204,
   "firstEndPos" : 1220,
   "secondEndPos" : 1220
 }, {
@@ -397,12 +881,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.impl.DefaultExchange",
-  "secondLabel" : "org.apache.camel.impl.DefaultExchange",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1229,
   "secondPos" : 1229,
+  "firstEndPos" : 1266,
+  "secondEndPos" : 1266
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1229,
+  "secondPos" : 1229,
+  "firstEndPos" : 1232,
+  "secondEndPos" : 1232
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1233,
+  "secondPos" : 1233,
+  "firstEndPos" : 1239,
+  "secondEndPos" : 1239
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1240,
+  "secondPos" : 1240,
+  "firstEndPos" : 1245,
+  "secondEndPos" : 1245
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1246,
+  "secondPos" : 1246,
+  "firstEndPos" : 1250,
+  "secondEndPos" : 1250
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DefaultExchange",
+  "secondLabel" : "DefaultExchange",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1251,
+  "secondPos" : 1251,
   "firstEndPos" : 1266,
   "secondEndPos" : 1266
 }, {
@@ -419,12 +958,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.spi.Synchronization",
-  "secondLabel" : "org.apache.camel.spi.Synchronization",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1275,
   "secondPos" : 1275,
+  "firstEndPos" : 1311,
+  "secondEndPos" : 1311
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1275,
+  "secondPos" : 1275,
+  "firstEndPos" : 1278,
+  "secondEndPos" : 1278
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1279,
+  "secondPos" : 1279,
+  "firstEndPos" : 1285,
+  "secondEndPos" : 1285
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1286,
+  "secondPos" : 1286,
+  "firstEndPos" : 1291,
+  "secondEndPos" : 1291
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "spi",
+  "secondLabel" : "spi",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1292,
+  "secondPos" : 1292,
+  "firstEndPos" : 1295,
+  "secondEndPos" : 1295
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Synchronization",
+  "secondLabel" : "Synchronization",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1296,
+  "secondPos" : 1296,
   "firstEndPos" : 1311,
   "secondEndPos" : 1311
 }, {
@@ -441,12 +1035,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.slf4j.Logger",
-  "secondLabel" : "org.slf4j.Logger",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1320,
   "secondPos" : 1320,
+  "firstEndPos" : 1336,
+  "secondEndPos" : 1336
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1320,
+  "secondPos" : 1320,
+  "firstEndPos" : 1323,
+  "secondEndPos" : 1323
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "slf4j",
+  "secondLabel" : "slf4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1324,
+  "secondPos" : 1324,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 1329
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Logger",
+  "secondLabel" : "Logger",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1330,
+  "secondPos" : 1330,
   "firstEndPos" : 1336,
   "secondEndPos" : 1336
 }, {
@@ -463,12 +1090,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.slf4j.LoggerFactory",
-  "secondLabel" : "org.slf4j.LoggerFactory",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1345,
   "secondPos" : 1345,
+  "firstEndPos" : 1368,
+  "secondEndPos" : 1368
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1345,
+  "secondPos" : 1345,
+  "firstEndPos" : 1348,
+  "secondEndPos" : 1348
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "slf4j",
+  "secondLabel" : "slf4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1349,
+  "secondPos" : 1349,
+  "firstEndPos" : 1354,
+  "secondEndPos" : 1354
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LoggerFactory",
+  "secondLabel" : "LoggerFactory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1355,
+  "secondPos" : 1355,
   "firstEndPos" : 1368,
   "secondEndPos" : 1368
 }, {
@@ -496,12 +1156,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.camel.util.ObjectHelper.wrapRuntimeCamelException",
-  "secondLabel" : "org.apache.camel.util.ObjectHelper.wrapRuntimeCamelException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1385,
   "secondPos" : 1385,
+  "firstEndPos" : 1445,
+  "secondEndPos" : 1445
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1385,
+  "secondPos" : 1385,
+  "firstEndPos" : 1388,
+  "secondEndPos" : 1388
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1389,
+  "secondPos" : 1389,
+  "firstEndPos" : 1395,
+  "secondEndPos" : 1395
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "camel",
+  "secondLabel" : "camel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1396,
+  "secondPos" : 1396,
+  "firstEndPos" : 1401,
+  "secondEndPos" : 1401
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1402,
+  "secondPos" : 1402,
+  "firstEndPos" : 1406,
+  "secondEndPos" : 1406
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ObjectHelper",
+  "secondLabel" : "ObjectHelper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1407,
+  "secondPos" : 1407,
+  "firstEndPos" : 1419,
+  "secondEndPos" : 1419
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "wrapRuntimeCamelException",
+  "secondLabel" : "wrapRuntimeCamelException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1420,
+  "secondPos" : 1420,
   "firstEndPos" : 1445,
   "secondEndPos" : 1445
 }, {

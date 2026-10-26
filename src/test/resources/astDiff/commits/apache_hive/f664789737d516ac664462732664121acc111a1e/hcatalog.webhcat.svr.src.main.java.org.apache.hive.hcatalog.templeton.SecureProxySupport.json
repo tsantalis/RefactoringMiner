@@ -199,12 +199,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hive.hcatalog.templeton",
-  "secondLabel" : "org.apache.hive.hcatalog.templeton",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 819,
   "secondPos" : 819,
+  "firstEndPos" : 853,
+  "secondEndPos" : 853
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 819,
+  "secondPos" : 819,
+  "firstEndPos" : 822,
+  "secondEndPos" : 822
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 823,
+  "secondPos" : 823,
+  "firstEndPos" : 829,
+  "secondEndPos" : 829
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hive",
+  "secondLabel" : "hive",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 830,
+  "secondPos" : 830,
+  "firstEndPos" : 834,
+  "secondEndPos" : 834
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hcatalog",
+  "secondLabel" : "hcatalog",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 835,
+  "secondPos" : 835,
+  "firstEndPos" : 843,
+  "secondEndPos" : 843
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "templeton",
+  "secondLabel" : "templeton",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 844,
+  "secondPos" : 844,
   "firstEndPos" : 853,
   "secondEndPos" : 853
 }, {
@@ -221,12 +276,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.File",
-  "secondLabel" : "java.io.File",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 863,
   "secondPos" : 863,
+  "firstEndPos" : 875,
+  "secondEndPos" : 875
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 863,
+  "secondPos" : 863,
+  "firstEndPos" : 867,
+  "secondEndPos" : 867
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 868,
+  "secondPos" : 868,
+  "firstEndPos" : 870,
+  "secondEndPos" : 870
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "File",
+  "secondLabel" : "File",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 871,
+  "secondPos" : 871,
   "firstEndPos" : 875,
   "secondEndPos" : 875
 }, {
@@ -243,12 +331,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.IOException",
-  "secondLabel" : "java.io.IOException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 884,
   "secondPos" : 884,
+  "firstEndPos" : 903,
+  "secondEndPos" : 903
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 884,
+  "secondPos" : 884,
+  "firstEndPos" : 888,
+  "secondEndPos" : 888
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 889,
+  "secondPos" : 889,
+  "firstEndPos" : 891,
+  "secondEndPos" : 891
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "IOException",
+  "secondLabel" : "IOException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 892,
+  "secondPos" : 892,
   "firstEndPos" : 903,
   "secondEndPos" : 903
 }, {
@@ -265,12 +386,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.security.PrivilegedExceptionAction",
-  "secondLabel" : "java.security.PrivilegedExceptionAction",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 912,
   "secondPos" : 912,
+  "firstEndPos" : 951,
+  "secondEndPos" : 951
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 912,
+  "secondPos" : 912,
+  "firstEndPos" : 916,
+  "secondEndPos" : 916
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "security",
+  "secondLabel" : "security",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 917,
+  "secondPos" : 917,
+  "firstEndPos" : 925,
+  "secondEndPos" : 925
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "PrivilegedExceptionAction",
+  "secondLabel" : "PrivilegedExceptionAction",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 926,
+  "secondPos" : 926,
   "firstEndPos" : 951,
   "secondEndPos" : 951
 }, {
@@ -287,12 +441,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.List",
-  "secondLabel" : "java.util.List",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 960,
   "secondPos" : 960,
+  "firstEndPos" : 974,
+  "secondEndPos" : 974
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 960,
+  "secondPos" : 960,
+  "firstEndPos" : 964,
+  "secondEndPos" : 964
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 965,
+  "secondPos" : 965,
+  "firstEndPos" : 969,
+  "secondEndPos" : 969
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "List",
+  "secondLabel" : "List",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 970,
+  "secondPos" : 970,
   "firstEndPos" : 974,
   "secondEndPos" : 974
 }, {
@@ -309,12 +496,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Map",
-  "secondLabel" : "java.util.Map",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 983,
   "secondPos" : 983,
+  "firstEndPos" : 996,
+  "secondEndPos" : 996
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 983,
+  "secondPos" : 983,
+  "firstEndPos" : 987,
+  "secondEndPos" : 987
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 988,
+  "secondPos" : 988,
+  "firstEndPos" : 992,
+  "secondEndPos" : 992
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Map",
+  "secondLabel" : "Map",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 993,
+  "secondPos" : 993,
   "firstEndPos" : 996,
   "secondEndPos" : 996
 }, {
@@ -331,12 +551,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.logging.Log",
-  "secondLabel" : "org.apache.commons.logging.Log",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1006,
   "secondPos" : 1006,
+  "firstEndPos" : 1036,
+  "secondEndPos" : 1036
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1006,
+  "secondPos" : 1006,
+  "firstEndPos" : 1009,
+  "secondEndPos" : 1009
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1010,
+  "secondPos" : 1010,
+  "firstEndPos" : 1016,
+  "secondEndPos" : 1016
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1017,
+  "secondPos" : 1017,
+  "firstEndPos" : 1024,
+  "secondEndPos" : 1024
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "logging",
+  "secondLabel" : "logging",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1025,
+  "secondPos" : 1025,
+  "firstEndPos" : 1032,
+  "secondEndPos" : 1032
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Log",
+  "secondLabel" : "Log",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1033,
+  "secondPos" : 1033,
   "firstEndPos" : 1036,
   "secondEndPos" : 1036
 }, {
@@ -353,12 +628,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.logging.LogFactory",
-  "secondLabel" : "org.apache.commons.logging.LogFactory",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1045,
   "secondPos" : 1045,
+  "firstEndPos" : 1082,
+  "secondEndPos" : 1082
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1045,
+  "secondPos" : 1045,
+  "firstEndPos" : 1048,
+  "secondEndPos" : 1048
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1049,
+  "secondPos" : 1049,
+  "firstEndPos" : 1055,
+  "secondEndPos" : 1055
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1056,
+  "secondPos" : 1056,
+  "firstEndPos" : 1063,
+  "secondEndPos" : 1063
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "logging",
+  "secondLabel" : "logging",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1064,
+  "secondPos" : 1064,
+  "firstEndPos" : 1071,
+  "secondEndPos" : 1071
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LogFactory",
+  "secondLabel" : "LogFactory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1072,
+  "secondPos" : 1072,
   "firstEndPos" : 1082,
   "secondEndPos" : 1082
 }, {
@@ -375,12 +705,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.conf.Configuration",
-  "secondLabel" : "org.apache.hadoop.conf.Configuration",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1091,
   "secondPos" : 1091,
+  "firstEndPos" : 1127,
+  "secondEndPos" : 1127
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1091,
+  "secondPos" : 1091,
+  "firstEndPos" : 1094,
+  "secondEndPos" : 1094
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1095,
+  "secondPos" : 1095,
+  "firstEndPos" : 1101,
+  "secondEndPos" : 1101
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1102,
+  "secondPos" : 1102,
+  "firstEndPos" : 1108,
+  "secondEndPos" : 1108
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "conf",
+  "secondLabel" : "conf",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1109,
+  "secondPos" : 1109,
+  "firstEndPos" : 1113,
+  "secondEndPos" : 1113
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Configuration",
+  "secondLabel" : "Configuration",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1114,
+  "secondPos" : 1114,
   "firstEndPos" : 1127,
   "secondEndPos" : 1127
 }, {
@@ -397,12 +782,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.fs.FileSystem",
-  "secondLabel" : "org.apache.hadoop.fs.FileSystem",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1136,
   "secondPos" : 1136,
+  "firstEndPos" : 1167,
+  "secondEndPos" : 1167
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1136,
+  "secondPos" : 1136,
+  "firstEndPos" : 1139,
+  "secondEndPos" : 1139
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1140,
+  "secondPos" : 1140,
+  "firstEndPos" : 1146,
+  "secondEndPos" : 1146
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1147,
+  "secondPos" : 1147,
+  "firstEndPos" : 1153,
+  "secondEndPos" : 1153
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fs",
+  "secondLabel" : "fs",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1154,
+  "secondPos" : 1154,
+  "firstEndPos" : 1156,
+  "secondEndPos" : 1156
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "FileSystem",
+  "secondLabel" : "FileSystem",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1157,
+  "secondPos" : 1157,
   "firstEndPos" : 1167,
   "secondEndPos" : 1167
 }, {
@@ -419,12 +859,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.fs.Path",
-  "secondLabel" : "org.apache.hadoop.fs.Path",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1176,
   "secondPos" : 1176,
+  "firstEndPos" : 1201,
+  "secondEndPos" : 1201
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1176,
+  "secondPos" : 1176,
+  "firstEndPos" : 1179,
+  "secondEndPos" : 1179
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1180,
+  "secondPos" : 1180,
+  "firstEndPos" : 1186,
+  "secondEndPos" : 1186
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1187,
+  "secondPos" : 1187,
+  "firstEndPos" : 1193,
+  "secondEndPos" : 1193
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fs",
+  "secondLabel" : "fs",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1194,
+  "secondPos" : 1194,
+  "firstEndPos" : 1196,
+  "secondEndPos" : 1196
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Path",
+  "secondLabel" : "Path",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1197,
+  "secondPos" : 1197,
   "firstEndPos" : 1201,
   "secondEndPos" : 1201
 }, {
@@ -441,12 +936,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.hive.conf.HiveConf",
-  "secondLabel" : "org.apache.hadoop.hive.conf.HiveConf",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1210,
   "secondPos" : 1210,
+  "firstEndPos" : 1246,
+  "secondEndPos" : 1246
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1210,
+  "secondPos" : 1210,
+  "firstEndPos" : 1213,
+  "secondEndPos" : 1213
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1214,
+  "secondPos" : 1214,
+  "firstEndPos" : 1220,
+  "secondEndPos" : 1220
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1221,
+  "secondPos" : 1221,
+  "firstEndPos" : 1227,
+  "secondEndPos" : 1227
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hive",
+  "secondLabel" : "hive",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1228,
+  "secondPos" : 1228,
+  "firstEndPos" : 1232,
+  "secondEndPos" : 1232
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "conf",
+  "secondLabel" : "conf",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1233,
+  "secondPos" : 1233,
+  "firstEndPos" : 1237,
+  "secondEndPos" : 1237
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HiveConf",
+  "secondLabel" : "HiveConf",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1238,
+  "secondPos" : 1238,
   "firstEndPos" : 1246,
   "secondEndPos" : 1246
 }, {
@@ -463,12 +1024,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.hive.metastore.IMetaStoreClient",
-  "secondLabel" : "org.apache.hadoop.hive.metastore.IMetaStoreClient",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1255,
   "secondPos" : 1255,
+  "firstEndPos" : 1304,
+  "secondEndPos" : 1304
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1255,
+  "secondPos" : 1255,
+  "firstEndPos" : 1258,
+  "secondEndPos" : 1258
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1259,
+  "secondPos" : 1259,
+  "firstEndPos" : 1265,
+  "secondEndPos" : 1265
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1266,
+  "secondPos" : 1266,
+  "firstEndPos" : 1272,
+  "secondEndPos" : 1272
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hive",
+  "secondLabel" : "hive",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1273,
+  "secondPos" : 1273,
+  "firstEndPos" : 1277,
+  "secondEndPos" : 1277
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "metastore",
+  "secondLabel" : "metastore",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1278,
+  "secondPos" : 1278,
+  "firstEndPos" : 1287,
+  "secondEndPos" : 1287
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "IMetaStoreClient",
+  "secondLabel" : "IMetaStoreClient",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1288,
+  "secondPos" : 1288,
   "firstEndPos" : 1304,
   "secondEndPos" : 1304
 }, {
@@ -485,12 +1112,89 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.hive.metastore.api.MetaException",
-  "secondLabel" : "org.apache.hadoop.hive.metastore.api.MetaException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1313,
   "secondPos" : 1313,
+  "firstEndPos" : 1363,
+  "secondEndPos" : 1363
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1313,
+  "secondPos" : 1313,
+  "firstEndPos" : 1316,
+  "secondEndPos" : 1316
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1317,
+  "secondPos" : 1317,
+  "firstEndPos" : 1323,
+  "secondEndPos" : 1323
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1324,
+  "secondPos" : 1324,
+  "firstEndPos" : 1330,
+  "secondEndPos" : 1330
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hive",
+  "secondLabel" : "hive",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1331,
+  "secondPos" : 1331,
+  "firstEndPos" : 1335,
+  "secondEndPos" : 1335
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "metastore",
+  "secondLabel" : "metastore",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1336,
+  "secondPos" : 1336,
+  "firstEndPos" : 1345,
+  "secondEndPos" : 1345
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1346,
+  "secondPos" : 1346,
+  "firstEndPos" : 1349,
+  "secondEndPos" : 1349
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MetaException",
+  "secondLabel" : "MetaException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1350,
+  "secondPos" : 1350,
   "firstEndPos" : 1363,
   "secondEndPos" : 1363
 }, {
@@ -507,12 +1211,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.io.Text",
-  "secondLabel" : "org.apache.hadoop.io.Text",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1372,
   "secondPos" : 1372,
+  "firstEndPos" : 1397,
+  "secondEndPos" : 1397
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1372,
+  "secondPos" : 1372,
+  "firstEndPos" : 1375,
+  "secondEndPos" : 1375
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1376,
+  "secondPos" : 1376,
+  "firstEndPos" : 1382,
+  "secondEndPos" : 1382
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1383,
+  "secondPos" : 1383,
+  "firstEndPos" : 1389,
+  "secondEndPos" : 1389
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1390,
+  "secondPos" : 1390,
+  "firstEndPos" : 1392,
+  "secondEndPos" : 1392
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Text",
+  "secondLabel" : "Text",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1393,
+  "secondPos" : 1393,
   "firstEndPos" : 1397,
   "secondEndPos" : 1397
 }, {
@@ -529,12 +1288,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.security.Credentials",
-  "secondLabel" : "org.apache.hadoop.security.Credentials",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1406,
   "secondPos" : 1406,
+  "firstEndPos" : 1444,
+  "secondEndPos" : 1444
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1406,
+  "secondPos" : 1406,
+  "firstEndPos" : 1409,
+  "secondEndPos" : 1409
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1410,
+  "secondPos" : 1410,
+  "firstEndPos" : 1416,
+  "secondEndPos" : 1416
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1417,
+  "secondPos" : 1417,
+  "firstEndPos" : 1423,
+  "secondEndPos" : 1423
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "security",
+  "secondLabel" : "security",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1424,
+  "secondPos" : 1424,
+  "firstEndPos" : 1432,
+  "secondEndPos" : 1432
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Credentials",
+  "secondLabel" : "Credentials",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1433,
+  "secondPos" : 1433,
   "firstEndPos" : 1444,
   "secondEndPos" : 1444
 }, {
@@ -551,12 +1365,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.security.UserGroupInformation",
-  "secondLabel" : "org.apache.hadoop.security.UserGroupInformation",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1453,
   "secondPos" : 1453,
+  "firstEndPos" : 1500,
+  "secondEndPos" : 1500
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1453,
+  "secondPos" : 1453,
+  "firstEndPos" : 1456,
+  "secondEndPos" : 1456
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1457,
+  "secondPos" : 1457,
+  "firstEndPos" : 1463,
+  "secondEndPos" : 1463
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1464,
+  "secondPos" : 1464,
+  "firstEndPos" : 1470,
+  "secondEndPos" : 1470
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "security",
+  "secondLabel" : "security",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1471,
+  "secondPos" : 1471,
+  "firstEndPos" : 1479,
+  "secondEndPos" : 1479
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "UserGroupInformation",
+  "secondLabel" : "UserGroupInformation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1480,
+  "secondPos" : 1480,
   "firstEndPos" : 1500,
   "secondEndPos" : 1500
 }, {
@@ -573,12 +1442,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hadoop.security.token.Token",
-  "secondLabel" : "org.apache.hadoop.security.token.Token",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1509,
   "secondPos" : 1509,
+  "firstEndPos" : 1547,
+  "secondEndPos" : 1547
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1509,
+  "secondPos" : 1509,
+  "firstEndPos" : 1512,
+  "secondEndPos" : 1512
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1513,
+  "secondPos" : 1513,
+  "firstEndPos" : 1519,
+  "secondEndPos" : 1519
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hadoop",
+  "secondLabel" : "hadoop",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1520,
+  "secondPos" : 1520,
+  "firstEndPos" : 1526,
+  "secondEndPos" : 1526
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "security",
+  "secondLabel" : "security",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1527,
+  "secondPos" : 1527,
+  "firstEndPos" : 1535,
+  "secondEndPos" : 1535
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "token",
+  "secondLabel" : "token",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1536,
+  "secondPos" : 1536,
+  "firstEndPos" : 1541,
+  "secondEndPos" : 1541
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Token",
+  "secondLabel" : "Token",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1542,
+  "secondPos" : 1542,
   "firstEndPos" : 1547,
   "secondEndPos" : 1547
 }, {
@@ -595,12 +1530,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.hive.hcatalog.common.HCatUtil",
-  "secondLabel" : "org.apache.hive.hcatalog.common.HCatUtil",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1556,
   "secondPos" : 1556,
+  "firstEndPos" : 1596,
+  "secondEndPos" : 1596
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1556,
+  "secondPos" : 1556,
+  "firstEndPos" : 1559,
+  "secondEndPos" : 1559
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1560,
+  "secondPos" : 1560,
+  "firstEndPos" : 1566,
+  "secondEndPos" : 1566
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hive",
+  "secondLabel" : "hive",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1567,
+  "secondPos" : 1567,
+  "firstEndPos" : 1571,
+  "secondEndPos" : 1571
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hcatalog",
+  "secondLabel" : "hcatalog",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1572,
+  "secondPos" : 1572,
+  "firstEndPos" : 1580,
+  "secondEndPos" : 1580
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "common",
+  "secondLabel" : "common",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1581,
+  "secondPos" : 1581,
+  "firstEndPos" : 1587,
+  "secondEndPos" : 1587
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HCatUtil",
+  "secondLabel" : "HCatUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1588,
+  "secondPos" : 1588,
   "firstEndPos" : 1596,
   "secondEndPos" : 1596
 }, {
@@ -617,12 +1618,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.thrift.TException",
-  "secondLabel" : "org.apache.thrift.TException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1605,
   "secondPos" : 1605,
+  "firstEndPos" : 1633,
+  "secondEndPos" : 1633
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1605,
+  "secondPos" : 1605,
+  "firstEndPos" : 1608,
+  "secondEndPos" : 1608
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1609,
+  "secondPos" : 1609,
+  "firstEndPos" : 1615,
+  "secondEndPos" : 1615
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "thrift",
+  "secondLabel" : "thrift",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1616,
+  "secondPos" : 1616,
+  "firstEndPos" : 1622,
+  "secondEndPos" : 1622
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TException",
+  "secondLabel" : "TException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1623,
+  "secondPos" : 1623,
   "firstEndPos" : 1633,
   "secondEndPos" : 1633
 }, {
@@ -3653,12 +4698,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "UserGroupInformation.HADOOP_TOKEN_FILE_LOCATION",
-  "secondLabel" : "UserGroupInformation.HADOOP_TOKEN_FILE_LOCATION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 3399,
   "secondPos" : 3492,
+  "firstEndPos" : 3446,
+  "secondEndPos" : 3539
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "UserGroupInformation",
+  "secondLabel" : "UserGroupInformation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3399,
+  "secondPos" : 3492,
+  "firstEndPos" : 3419,
+  "secondEndPos" : 3512
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HADOOP_TOKEN_FILE_LOCATION",
+  "secondLabel" : "HADOOP_TOKEN_FILE_LOCATION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3420,
+  "secondPos" : 3513,
   "firstEndPos" : 3446,
   "secondEndPos" : 3539
 }, {
@@ -5512,12 +6579,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "twrapper.token",
-  "secondLabel" : "twrapper.token",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "Assignment",
   "secondParentType" : "Assignment",
   "firstPos" : 4438,
   "secondPos" : 4531,
+  "firstEndPos" : 4452,
+  "secondEndPos" : 4545
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "twrapper",
+  "secondLabel" : "twrapper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4438,
+  "secondPos" : 4531,
+  "firstEndPos" : 4446,
+  "secondEndPos" : 4539
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "token",
+  "secondLabel" : "token",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4447,
+  "secondPos" : 4540,
   "firstEndPos" : 4452,
   "secondEndPos" : 4545
 }, {
@@ -5666,12 +6755,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "twrapper.token",
-  "secondLabel" : "twrapper.token",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ReturnStatement",
   "secondParentType" : "ReturnStatement",
   "firstPos" : 4550,
   "secondPos" : 4643,
+  "firstEndPos" : 4564,
+  "secondEndPos" : 4657
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "twrapper",
+  "secondLabel" : "twrapper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4550,
+  "secondPos" : 4643,
+  "firstEndPos" : 4558,
+  "secondEndPos" : 4651
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "token",
+  "secondLabel" : "token",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4559,
+  "secondPos" : 4652,
   "firstEndPos" : 4564,
   "secondEndPos" : 4657
 }, {

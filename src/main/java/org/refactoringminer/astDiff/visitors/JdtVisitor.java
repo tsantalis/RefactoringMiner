@@ -66,7 +66,10 @@ public class JdtVisitor  extends AbstractJdtVisitor {
     }
 
     protected String getLabel(ASTNode n) {
-        if (n instanceof Name)
+        //a qualified name is split into its qualifier and name, which carry the text, as a field access
+        if (n instanceof QualifiedName)
+            return "";
+        else if (n instanceof Name)
             return ((Name) n).getFullyQualifiedName();
         else if (n instanceof PrimitiveType)
             return n.toString();
@@ -98,11 +101,6 @@ public class JdtVisitor  extends AbstractJdtVisitor {
             popNode();
         }
         return true;
-    }
-
-    @Override
-    public boolean visit(QualifiedName name) {
-        return false;
     }
 
     @Override

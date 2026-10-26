@@ -21,17 +21,6 @@
   "firstEndPos" : 44,
   "secondEndPos" : 44
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.fasterxml.jackson.databind.node",
-  "secondLabel" : "com.fasterxml.jackson.databind.node",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 8,
-  "secondPos" : 8,
-  "firstEndPos" : 43,
-  "secondEndPos" : 43
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -42,17 +31,6 @@
   "secondPos" : 46,
   "firstEndPos" : 73,
   "secondEndPos" : 73
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.IOException",
-  "secondLabel" : "java.io.IOException",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 53,
-  "secondPos" : 53,
-  "firstEndPos" : 72,
-  "secondEndPos" : 72
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -65,17 +43,6 @@
   "firstEndPos" : 111,
   "secondEndPos" : 111
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.fasterxml.jackson.core",
-  "secondLabel" : "com.fasterxml.jackson.core",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 82,
-  "secondPos" : 82,
-  "firstEndPos" : 108,
-  "secondEndPos" : 108
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -86,17 +53,6 @@
   "secondPos" : 112,
   "firstEndPos" : 167,
   "secondEndPos" : 167
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.fasterxml.jackson.databind.JsonSerializable",
-  "secondLabel" : "com.fasterxml.jackson.databind.JsonSerializable",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 119,
-  "secondPos" : 119,
-  "firstEndPos" : 166,
-  "secondEndPos" : 166
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -109,17 +65,6 @@
   "firstEndPos" : 225,
   "secondEndPos" : 225
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.fasterxml.jackson.databind.SerializerProvider",
-  "secondLabel" : "com.fasterxml.jackson.databind.SerializerProvider",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 175,
-  "secondPos" : 175,
-  "firstEndPos" : 224,
-  "secondEndPos" : 224
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -130,17 +75,6 @@
   "secondPos" : 226,
   "firstEndPos" : 278,
   "secondEndPos" : 278
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.fasterxml.jackson.databind.util.RawValue",
-  "secondLabel" : "com.fasterxml.jackson.databind.util.RawValue",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 233,
-  "secondPos" : 233,
-  "firstEndPos" : 277,
-  "secondEndPos" : 277
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -229,17 +163,6 @@
   "secondPos" : 419,
   "firstEndPos" : 424,
   "secondEndPos" : 424
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "com.fasterxml.jackson.databind.ObjectMapper",
-  "secondLabel" : "com.fasterxml.jackson.databind.ObjectMapper",
-  "firstParentType" : "TagElement",
-  "secondParentType" : "TagElement",
-  "firstPos" : 426,
-  "secondPos" : 426,
-  "firstEndPos" : 469,
-  "secondEndPos" : 469
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -648,17 +571,6 @@
   "firstEndPos" : 865,
   "secondEndPos" : 865
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "JsonNodeType.POJO",
-  "secondLabel" : "JsonNodeType.POJO",
-  "firstParentType" : "ReturnStatement",
-  "secondParentType" : "ReturnStatement",
-  "firstPos" : 847,
-  "secondPos" : 847,
-  "firstEndPos" : 864,
-  "secondEndPos" : 864
-}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -757,17 +669,6 @@
   "secondPos" : 916,
   "firstEndPos" : 955,
   "secondEndPos" : 955
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "JsonToken.VALUE_EMBEDDED_OBJECT",
-  "secondLabel" : "JsonToken.VALUE_EMBEDDED_OBJECT",
-  "firstParentType" : "ReturnStatement",
-  "secondParentType" : "ReturnStatement",
-  "firstPos" : 923,
-  "secondPos" : 923,
-  "firstEndPos" : 954,
-  "secondEndPos" : 954
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -3519,83 +3420,6 @@
   "firstEndPos" : 3274,
   "secondEndPos" : 3274
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 3287,
-  "secondPos" : 3287,
-  "firstEndPos" : 3311,
-  "secondEndPos" : 3327
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 3287,
-  "secondPos" : 3287,
-  "firstEndPos" : 3310,
-  "secondEndPos" : 3326
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 3287,
-  "secondPos" : 3287,
-  "firstEndPos" : 3290,
-  "secondEndPos" : 3291
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "gen",
-  "secondLabel" : "gen",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 3287,
-  "secondPos" : 3322,
-  "firstEndPos" : 3290,
-  "secondEndPos" : 3325
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "writeObject",
-  "secondLabel" : "defaultSerializeValue",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 3291,
-  "secondPos" : 3292,
-  "firstEndPos" : 3302,
-  "secondEndPos" : 3313
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 3303,
-  "secondPos" : 3314,
-  "firstEndPos" : 3309,
-  "secondEndPos" : 3325
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "_value",
-  "secondLabel" : "_value",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 3303,
-  "secondPos" : 3314,
-  "firstEndPos" : 3309,
-  "secondEndPos" : 3320
-}, {
   "firstType" : "BlockComment",
   "secondType" : "BlockComment",
   "firstLabel" : "/*\n    /**********************************************************\n    /* Extended API\n    /**********************************************************\n     */",
@@ -4421,17 +4245,6 @@
   "firstEndPos" : 4213,
   "secondEndPos" : 4229
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "other._value",
-  "secondLabel" : "other._value",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 4193,
-  "secondPos" : 4209,
-  "firstEndPos" : 4205,
-  "secondEndPos" : 4221
-}, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",
   "firstLabel" : "==",
@@ -4515,17 +4328,6 @@
   "secondLabel" : "",
   "firstParentType" : "MethodInvocation",
   "secondParentType" : "MethodInvocation",
-  "firstPos" : 4254,
-  "secondPos" : 4270,
-  "firstEndPos" : 4266,
-  "secondEndPos" : 4282
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "other._value",
-  "secondLabel" : "other._value",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 4254,
   "secondPos" : 4270,
   "firstEndPos" : 4266,
@@ -5311,4 +5113,576 @@
   "secondPos" : 4809,
   "firstEndPos" : 4799,
   "secondEndPos" : 4815
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 43,
+  "secondEndPos" : 43
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fasterxml",
+  "secondLabel" : "fasterxml",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jackson",
+  "secondLabel" : "jackson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 29,
+  "secondEndPos" : 29
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "databind",
+  "secondLabel" : "databind",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30,
+  "secondPos" : 30,
+  "firstEndPos" : 38,
+  "secondEndPos" : 38
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "node",
+  "secondLabel" : "node",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39,
+  "secondPos" : 39,
+  "firstEndPos" : 43,
+  "secondEndPos" : 43
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 53,
+  "secondPos" : 53,
+  "firstEndPos" : 72,
+  "secondEndPos" : 72
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 53,
+  "secondPos" : 53,
+  "firstEndPos" : 57,
+  "secondEndPos" : 57
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 58,
+  "secondPos" : 58,
+  "firstEndPos" : 60,
+  "secondEndPos" : 60
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "IOException",
+  "secondLabel" : "IOException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 61,
+  "secondPos" : 61,
+  "firstEndPos" : 72,
+  "secondEndPos" : 72
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 82,
+  "secondPos" : 82,
+  "firstEndPos" : 108,
+  "secondEndPos" : 108
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 82,
+  "secondPos" : 82,
+  "firstEndPos" : 85,
+  "secondEndPos" : 85
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fasterxml",
+  "secondLabel" : "fasterxml",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 86,
+  "secondPos" : 86,
+  "firstEndPos" : 95,
+  "secondEndPos" : 95
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jackson",
+  "secondLabel" : "jackson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 96,
+  "secondPos" : 96,
+  "firstEndPos" : 103,
+  "secondEndPos" : 103
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 104,
+  "secondPos" : 104,
+  "firstEndPos" : 108,
+  "secondEndPos" : 108
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 119,
+  "secondPos" : 119,
+  "firstEndPos" : 166,
+  "secondEndPos" : 166
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 119,
+  "secondPos" : 119,
+  "firstEndPos" : 122,
+  "secondEndPos" : 122
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fasterxml",
+  "secondLabel" : "fasterxml",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 123,
+  "secondPos" : 123,
+  "firstEndPos" : 132,
+  "secondEndPos" : 132
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jackson",
+  "secondLabel" : "jackson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 133,
+  "secondPos" : 133,
+  "firstEndPos" : 140,
+  "secondEndPos" : 140
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "databind",
+  "secondLabel" : "databind",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 141,
+  "secondPos" : 141,
+  "firstEndPos" : 149,
+  "secondEndPos" : 149
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JsonSerializable",
+  "secondLabel" : "JsonSerializable",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 150,
+  "secondPos" : 150,
+  "firstEndPos" : 166,
+  "secondEndPos" : 166
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 175,
+  "secondPos" : 175,
+  "firstEndPos" : 224,
+  "secondEndPos" : 224
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 175,
+  "secondPos" : 175,
+  "firstEndPos" : 178,
+  "secondEndPos" : 178
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fasterxml",
+  "secondLabel" : "fasterxml",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 179,
+  "secondPos" : 179,
+  "firstEndPos" : 188,
+  "secondEndPos" : 188
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jackson",
+  "secondLabel" : "jackson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 189,
+  "secondPos" : 189,
+  "firstEndPos" : 196,
+  "secondEndPos" : 196
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "databind",
+  "secondLabel" : "databind",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 197,
+  "secondPos" : 197,
+  "firstEndPos" : 205,
+  "secondEndPos" : 205
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SerializerProvider",
+  "secondLabel" : "SerializerProvider",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 206,
+  "secondPos" : 206,
+  "firstEndPos" : 224,
+  "secondEndPos" : 224
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 233,
+  "secondPos" : 233,
+  "firstEndPos" : 277,
+  "secondEndPos" : 277
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 233,
+  "secondPos" : 233,
+  "firstEndPos" : 236,
+  "secondEndPos" : 236
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fasterxml",
+  "secondLabel" : "fasterxml",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 237,
+  "secondPos" : 237,
+  "firstEndPos" : 246,
+  "secondEndPos" : 246
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jackson",
+  "secondLabel" : "jackson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 247,
+  "secondPos" : 247,
+  "firstEndPos" : 254,
+  "secondEndPos" : 254
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "databind",
+  "secondLabel" : "databind",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 255,
+  "secondPos" : 255,
+  "firstEndPos" : 263,
+  "secondEndPos" : 263
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 264,
+  "secondPos" : 264,
+  "firstEndPos" : 268,
+  "secondEndPos" : 268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "RawValue",
+  "secondLabel" : "RawValue",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 269,
+  "secondPos" : 269,
+  "firstEndPos" : 277,
+  "secondEndPos" : 277
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 426,
+  "secondPos" : 426,
+  "firstEndPos" : 469,
+  "secondEndPos" : 469
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 426,
+  "secondPos" : 426,
+  "firstEndPos" : 429,
+  "secondEndPos" : 429
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fasterxml",
+  "secondLabel" : "fasterxml",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 430,
+  "secondPos" : 430,
+  "firstEndPos" : 439,
+  "secondEndPos" : 439
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jackson",
+  "secondLabel" : "jackson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 440,
+  "secondPos" : 440,
+  "firstEndPos" : 447,
+  "secondEndPos" : 447
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "databind",
+  "secondLabel" : "databind",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 448,
+  "secondPos" : 448,
+  "firstEndPos" : 456,
+  "secondEndPos" : 456
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ObjectMapper",
+  "secondLabel" : "ObjectMapper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 457,
+  "secondPos" : 457,
+  "firstEndPos" : 469,
+  "secondEndPos" : 469
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "ReturnStatement",
+  "firstPos" : 847,
+  "secondPos" : 847,
+  "firstEndPos" : 864,
+  "secondEndPos" : 864
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JsonNodeType",
+  "secondLabel" : "JsonNodeType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 847,
+  "secondPos" : 847,
+  "firstEndPos" : 859,
+  "secondEndPos" : 859
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "POJO",
+  "secondLabel" : "POJO",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 860,
+  "secondPos" : 860,
+  "firstEndPos" : 864,
+  "secondEndPos" : 864
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "ReturnStatement",
+  "firstPos" : 923,
+  "secondPos" : 923,
+  "firstEndPos" : 954,
+  "secondEndPos" : 954
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JsonToken",
+  "secondLabel" : "JsonToken",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 923,
+  "secondPos" : 923,
+  "firstEndPos" : 932,
+  "secondEndPos" : 932
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VALUE_EMBEDDED_OBJECT",
+  "secondLabel" : "VALUE_EMBEDDED_OBJECT",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 933,
+  "secondPos" : 933,
+  "firstEndPos" : 954,
+  "secondEndPos" : 954
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 4193,
+  "secondPos" : 4209,
+  "firstEndPos" : 4205,
+  "secondEndPos" : 4221
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "other",
+  "secondLabel" : "other",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4193,
+  "secondPos" : 4209,
+  "firstEndPos" : 4198,
+  "secondEndPos" : 4214
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "_value",
+  "secondLabel" : "_value",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4199,
+  "secondPos" : 4215,
+  "firstEndPos" : 4205,
+  "secondEndPos" : 4221
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 4254,
+  "secondPos" : 4270,
+  "firstEndPos" : 4266,
+  "secondEndPos" : 4282
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "other",
+  "secondLabel" : "other",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4254,
+  "secondPos" : 4270,
+  "firstEndPos" : 4259,
+  "secondEndPos" : 4275
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "_value",
+  "secondLabel" : "_value",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4260,
+  "secondPos" : 4276,
+  "firstEndPos" : 4266,
+  "secondEndPos" : 4282
 } ]

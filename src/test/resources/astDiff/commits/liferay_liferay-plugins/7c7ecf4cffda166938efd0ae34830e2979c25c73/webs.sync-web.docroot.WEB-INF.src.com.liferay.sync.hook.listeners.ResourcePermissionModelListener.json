@@ -144,12 +144,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.sync.hook.listeners",
-  "secondLabel" : "com.liferay.sync.hook.listeners",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 601,
   "secondPos" : 601,
+  "firstEndPos" : 632,
+  "secondEndPos" : 632
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 601,
+  "secondPos" : 601,
+  "firstEndPos" : 604,
+  "secondEndPos" : 604
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 605,
+  "secondPos" : 605,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sync",
+  "secondLabel" : "sync",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 613,
+  "secondPos" : 613,
+  "firstEndPos" : 617,
+  "secondEndPos" : 617
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hook",
+  "secondLabel" : "hook",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 618,
+  "secondPos" : 618,
+  "firstEndPos" : 622,
+  "secondEndPos" : 622
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "listeners",
+  "secondLabel" : "listeners",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 623,
+  "secondPos" : 623,
   "firstEndPos" : 632,
   "secondEndPos" : 632
 }, {
@@ -166,12 +221,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.portal.ModelListenerException",
-  "secondLabel" : "com.liferay.portal.ModelListenerException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 642,
   "secondPos" : 642,
+  "firstEndPos" : 683,
+  "secondEndPos" : 683
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 642,
+  "secondPos" : 642,
+  "firstEndPos" : 645,
+  "secondEndPos" : 645
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 646,
+  "secondPos" : 646,
+  "firstEndPos" : 653,
+  "secondEndPos" : 653
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "portal",
+  "secondLabel" : "portal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 654,
+  "secondPos" : 654,
+  "firstEndPos" : 660,
+  "secondEndPos" : 660
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ModelListenerException",
+  "secondLabel" : "ModelListenerException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 661,
+  "secondPos" : 661,
   "firstEndPos" : 683,
   "secondEndPos" : 683
 }, {
@@ -188,12 +287,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.portal.kernel.util.GetterUtil",
-  "secondLabel" : "com.liferay.portal.kernel.util.GetterUtil",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 692,
   "secondPos" : 752,
+  "firstEndPos" : 733,
+  "secondEndPos" : 793
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 692,
+  "secondPos" : 752,
+  "firstEndPos" : 695,
+  "secondEndPos" : 755
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 696,
+  "secondPos" : 756,
+  "firstEndPos" : 703,
+  "secondEndPos" : 763
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "portal",
+  "secondLabel" : "portal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 704,
+  "secondPos" : 764,
+  "firstEndPos" : 710,
+  "secondEndPos" : 770
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "kernel",
+  "secondLabel" : "kernel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 711,
+  "secondPos" : 771,
+  "firstEndPos" : 717,
+  "secondEndPos" : 777
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 718,
+  "secondPos" : 778,
+  "firstEndPos" : 722,
+  "secondEndPos" : 782
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "GetterUtil",
+  "secondLabel" : "GetterUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 723,
+  "secondPos" : 783,
   "firstEndPos" : 733,
   "secondEndPos" : 793
 }, {
@@ -210,12 +375,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.portal.model.BaseModelListener",
-  "secondLabel" : "com.liferay.portal.model.BaseModelListener",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 742,
   "secondPos" : 802,
+  "firstEndPos" : 784,
+  "secondEndPos" : 844
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 742,
+  "secondPos" : 802,
+  "firstEndPos" : 745,
+  "secondEndPos" : 805
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 746,
+  "secondPos" : 806,
+  "firstEndPos" : 753,
+  "secondEndPos" : 813
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "portal",
+  "secondLabel" : "portal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 754,
+  "secondPos" : 814,
+  "firstEndPos" : 760,
+  "secondEndPos" : 820
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 761,
+  "secondPos" : 821,
+  "firstEndPos" : 766,
+  "secondEndPos" : 826
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BaseModelListener",
+  "secondLabel" : "BaseModelListener",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 767,
+  "secondPos" : 827,
   "firstEndPos" : 784,
   "secondEndPos" : 844
 }, {
@@ -232,12 +452,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.portal.model.ResourcePermission",
-  "secondLabel" : "com.liferay.portal.model.ResourcePermission",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 793,
   "secondPos" : 853,
+  "firstEndPos" : 836,
+  "secondEndPos" : 896
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 793,
+  "secondPos" : 853,
+  "firstEndPos" : 796,
+  "secondEndPos" : 856
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 797,
+  "secondPos" : 857,
+  "firstEndPos" : 804,
+  "secondEndPos" : 864
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "portal",
+  "secondLabel" : "portal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 805,
+  "secondPos" : 865,
+  "firstEndPos" : 811,
+  "secondEndPos" : 871
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 812,
+  "secondPos" : 872,
+  "firstEndPos" : 817,
+  "secondEndPos" : 877
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ResourcePermission",
+  "secondLabel" : "ResourcePermission",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 818,
+  "secondPos" : 878,
   "firstEndPos" : 836,
   "secondEndPos" : 896
 }, {
@@ -254,12 +529,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.portlet.documentlibrary.model.DLFileEntry",
-  "secondLabel" : "com.liferay.portlet.documentlibrary.model.DLFileEntry",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 845,
   "secondPos" : 905,
+  "firstEndPos" : 898,
+  "secondEndPos" : 958
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 845,
+  "secondPos" : 905,
+  "firstEndPos" : 848,
+  "secondEndPos" : 908
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 849,
+  "secondPos" : 909,
+  "firstEndPos" : 856,
+  "secondEndPos" : 916
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "portlet",
+  "secondLabel" : "portlet",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 857,
+  "secondPos" : 917,
+  "firstEndPos" : 864,
+  "secondEndPos" : 924
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "documentlibrary",
+  "secondLabel" : "documentlibrary",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 865,
+  "secondPos" : 925,
+  "firstEndPos" : 880,
+  "secondEndPos" : 940
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 881,
+  "secondPos" : 941,
+  "firstEndPos" : 886,
+  "secondEndPos" : 946
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DLFileEntry",
+  "secondLabel" : "DLFileEntry",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 887,
+  "secondPos" : 947,
   "firstEndPos" : 898,
   "secondEndPos" : 958
 }, {
@@ -276,12 +617,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.portlet.documentlibrary.model.DLFolder",
-  "secondLabel" : "com.liferay.portlet.documentlibrary.model.DLFolder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 907,
   "secondPos" : 967,
+  "firstEndPos" : 957,
+  "secondEndPos" : 1017
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 907,
+  "secondPos" : 967,
+  "firstEndPos" : 910,
+  "secondEndPos" : 970
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 911,
+  "secondPos" : 971,
+  "firstEndPos" : 918,
+  "secondEndPos" : 978
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "portlet",
+  "secondLabel" : "portlet",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 919,
+  "secondPos" : 979,
+  "firstEndPos" : 926,
+  "secondEndPos" : 986
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "documentlibrary",
+  "secondLabel" : "documentlibrary",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 927,
+  "secondPos" : 987,
+  "firstEndPos" : 942,
+  "secondEndPos" : 1002
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 943,
+  "secondPos" : 1003,
+  "firstEndPos" : 948,
+  "secondEndPos" : 1008
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DLFolder",
+  "secondLabel" : "DLFolder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 949,
+  "secondPos" : 1009,
   "firstEndPos" : 957,
   "secondEndPos" : 1017
 }, {
@@ -298,12 +705,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.sync.model.SyncConstants",
-  "secondLabel" : "com.liferay.sync.model.SyncConstants",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 966,
   "secondPos" : 1026,
+  "firstEndPos" : 1002,
+  "secondEndPos" : 1062
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 966,
+  "secondPos" : 1026,
+  "firstEndPos" : 969,
+  "secondEndPos" : 1029
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 970,
+  "secondPos" : 1030,
+  "firstEndPos" : 977,
+  "secondEndPos" : 1037
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sync",
+  "secondLabel" : "sync",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 978,
+  "secondPos" : 1038,
+  "firstEndPos" : 982,
+  "secondEndPos" : 1042
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 983,
+  "secondPos" : 1043,
+  "firstEndPos" : 988,
+  "secondEndPos" : 1048
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SyncConstants",
+  "secondLabel" : "SyncConstants",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 989,
+  "secondPos" : 1049,
   "firstEndPos" : 1002,
   "secondEndPos" : 1062
 }, {
@@ -320,12 +782,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.sync.model.SyncDLObject",
-  "secondLabel" : "com.liferay.sync.model.SyncDLObject",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1011,
   "secondPos" : 1071,
+  "firstEndPos" : 1046,
+  "secondEndPos" : 1106
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1011,
+  "secondPos" : 1071,
+  "firstEndPos" : 1014,
+  "secondEndPos" : 1074
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1015,
+  "secondPos" : 1075,
+  "firstEndPos" : 1022,
+  "secondEndPos" : 1082
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sync",
+  "secondLabel" : "sync",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1023,
+  "secondPos" : 1083,
+  "firstEndPos" : 1027,
+  "secondEndPos" : 1087
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1028,
+  "secondPos" : 1088,
+  "firstEndPos" : 1033,
+  "secondEndPos" : 1093
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SyncDLObject",
+  "secondLabel" : "SyncDLObject",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1034,
+  "secondPos" : 1094,
   "firstEndPos" : 1046,
   "secondEndPos" : 1106
 }, {
@@ -342,12 +859,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.liferay.sync.service.SyncDLObjectLocalServiceUtil",
-  "secondLabel" : "com.liferay.sync.service.SyncDLObjectLocalServiceUtil",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1055,
   "secondPos" : 1115,
+  "firstEndPos" : 1108,
+  "secondEndPos" : 1168
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1055,
+  "secondPos" : 1115,
+  "firstEndPos" : 1058,
+  "secondEndPos" : 1118
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "liferay",
+  "secondLabel" : "liferay",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1059,
+  "secondPos" : 1119,
+  "firstEndPos" : 1066,
+  "secondEndPos" : 1126
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sync",
+  "secondLabel" : "sync",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1067,
+  "secondPos" : 1127,
+  "firstEndPos" : 1071,
+  "secondEndPos" : 1131
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "service",
+  "secondLabel" : "service",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1072,
+  "secondPos" : 1132,
+  "firstEndPos" : 1079,
+  "secondEndPos" : 1139
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SyncDLObjectLocalServiceUtil",
+  "secondLabel" : "SyncDLObjectLocalServiceUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1080,
+  "secondPos" : 1140,
   "firstEndPos" : 1108,
   "secondEndPos" : 1168
 }, {
@@ -1035,12 +1607,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "SyncConstants.TYPE_FILE",
-  "secondLabel" : "SyncConstants.TYPE_FILE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "Assignment",
   "firstPos" : 1554,
   "secondPos" : 1582,
+  "firstEndPos" : 1577,
+  "secondEndPos" : 1605
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SyncConstants",
+  "secondLabel" : "SyncConstants",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1554,
+  "secondPos" : 1582,
+  "firstEndPos" : 1567,
+  "secondEndPos" : 1595
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TYPE_FILE",
+  "secondLabel" : "TYPE_FILE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1568,
+  "secondPos" : 1596,
   "firstEndPos" : 1577,
   "secondEndPos" : 1605
 }, {
@@ -1651,12 +2245,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "SyncConstants.TYPE_FOLDER",
-  "secondLabel" : "SyncConstants.TYPE_FOLDER",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "Assignment",
   "firstPos" : 1976,
   "secondPos" : 1681,
+  "firstEndPos" : 2001,
+  "secondEndPos" : 1706
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SyncConstants",
+  "secondLabel" : "SyncConstants",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1976,
+  "secondPos" : 1681,
+  "firstEndPos" : 1989,
+  "secondEndPos" : 1694
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TYPE_FOLDER",
+  "secondLabel" : "TYPE_FOLDER",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1990,
+  "secondPos" : 1695,
   "firstEndPos" : 2001,
   "secondEndPos" : 1706
 }, {

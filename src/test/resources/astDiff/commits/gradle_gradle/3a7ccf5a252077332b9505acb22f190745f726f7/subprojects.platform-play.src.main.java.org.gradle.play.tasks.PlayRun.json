@@ -34,12 +34,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.play.tasks",
-  "secondLabel" : "org.gradle.play.tasks",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 625,
   "secondPos" : 625,
+  "firstEndPos" : 646,
+  "secondEndPos" : 646
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 625,
+  "secondPos" : 625,
+  "firstEndPos" : 628,
+  "secondEndPos" : 628
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 629,
+  "secondPos" : 629,
+  "firstEndPos" : 635,
+  "secondEndPos" : 635
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "play",
+  "secondLabel" : "play",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 636,
+  "secondPos" : 636,
+  "firstEndPos" : 640,
+  "secondEndPos" : 640
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "tasks",
+  "secondLabel" : "tasks",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 641,
+  "secondPos" : 641,
   "firstEndPos" : 646,
   "secondEndPos" : 646
 }, {
@@ -56,12 +100,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.api.Incubating",
-  "secondLabel" : "org.gradle.api.Incubating",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 656,
   "secondPos" : 656,
+  "firstEndPos" : 681,
+  "secondEndPos" : 681
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 656,
+  "secondPos" : 656,
+  "firstEndPos" : 659,
+  "secondEndPos" : 659
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 660,
+  "secondPos" : 660,
+  "firstEndPos" : 666,
+  "secondEndPos" : 666
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 667,
+  "secondPos" : 667,
+  "firstEndPos" : 670,
+  "secondEndPos" : 670
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Incubating",
+  "secondLabel" : "Incubating",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 671,
+  "secondPos" : 671,
   "firstEndPos" : 681,
   "secondEndPos" : 681
 }, {
@@ -78,12 +166,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.api.UncheckedIOException",
-  "secondLabel" : "org.gradle.api.UncheckedIOException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 690,
   "secondPos" : 690,
+  "firstEndPos" : 725,
+  "secondEndPos" : 725
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 690,
+  "secondPos" : 690,
+  "firstEndPos" : 693,
+  "secondEndPos" : 693
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 694,
+  "secondPos" : 694,
+  "firstEndPos" : 700,
+  "secondEndPos" : 700
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 701,
+  "secondPos" : 701,
+  "firstEndPos" : 704,
+  "secondEndPos" : 704
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "UncheckedIOException",
+  "secondLabel" : "UncheckedIOException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 705,
+  "secondPos" : 705,
   "firstEndPos" : 725,
   "secondEndPos" : 725
 }, {
@@ -100,12 +232,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.api.file.FileCollection",
-  "secondLabel" : "org.gradle.api.file.FileCollection",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 734,
   "secondPos" : 734,
+  "firstEndPos" : 768,
+  "secondEndPos" : 768
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 734,
+  "secondPos" : 734,
+  "firstEndPos" : 737,
+  "secondEndPos" : 737
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 738,
+  "secondPos" : 738,
+  "firstEndPos" : 744,
+  "secondEndPos" : 744
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 745,
+  "secondPos" : 745,
+  "firstEndPos" : 748,
+  "secondEndPos" : 748
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "file",
+  "secondLabel" : "file",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 749,
+  "secondPos" : 749,
+  "firstEndPos" : 753,
+  "secondEndPos" : 753
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "FileCollection",
+  "secondLabel" : "FileCollection",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 754,
+  "secondPos" : 754,
   "firstEndPos" : 768,
   "secondEndPos" : 768
 }, {
@@ -122,12 +309,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.api.internal.ConventionTask",
-  "secondLabel" : "org.gradle.api.internal.ConventionTask",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 777,
   "secondPos" : 777,
+  "firstEndPos" : 815,
+  "secondEndPos" : 815
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 777,
+  "secondPos" : 777,
+  "firstEndPos" : 780,
+  "secondEndPos" : 780
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 781,
+  "secondPos" : 781,
+  "firstEndPos" : 787,
+  "secondEndPos" : 787
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 788,
+  "secondPos" : 788,
+  "firstEndPos" : 791,
+  "secondEndPos" : 791
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 792,
+  "secondPos" : 792,
+  "firstEndPos" : 800,
+  "secondEndPos" : 800
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ConventionTask",
+  "secondLabel" : "ConventionTask",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 801,
+  "secondPos" : 801,
   "firstEndPos" : 815,
   "secondEndPos" : 815
 }, {
@@ -144,12 +386,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.api.tasks.InputFile",
-  "secondLabel" : "org.gradle.api.tasks.InputFile",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 824,
   "secondPos" : 824,
+  "firstEndPos" : 854,
+  "secondEndPos" : 854
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 824,
+  "secondPos" : 824,
+  "firstEndPos" : 827,
+  "secondEndPos" : 827
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 828,
+  "secondPos" : 828,
+  "firstEndPos" : 834,
+  "secondEndPos" : 834
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 835,
+  "secondPos" : 835,
+  "firstEndPos" : 838,
+  "secondEndPos" : 838
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "tasks",
+  "secondLabel" : "tasks",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 839,
+  "secondPos" : 839,
+  "firstEndPos" : 844,
+  "secondEndPos" : 844
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InputFile",
+  "secondLabel" : "InputFile",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 845,
+  "secondPos" : 845,
   "firstEndPos" : 854,
   "secondEndPos" : 854
 }, {
@@ -166,12 +463,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.api.tasks.InputFiles",
-  "secondLabel" : "org.gradle.api.tasks.InputFiles",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 863,
   "secondPos" : 863,
+  "firstEndPos" : 894,
+  "secondEndPos" : 894
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 863,
+  "secondPos" : 863,
+  "firstEndPos" : 866,
+  "secondEndPos" : 866
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 867,
+  "secondPos" : 867,
+  "firstEndPos" : 873,
+  "secondEndPos" : 873
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 874,
+  "secondPos" : 874,
+  "firstEndPos" : 877,
+  "secondEndPos" : 877
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "tasks",
+  "secondLabel" : "tasks",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 878,
+  "secondPos" : 878,
+  "firstEndPos" : 883,
+  "secondEndPos" : 883
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InputFiles",
+  "secondLabel" : "InputFiles",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 884,
+  "secondPos" : 884,
   "firstEndPos" : 894,
   "secondEndPos" : 894
 }, {
@@ -188,12 +540,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.api.tasks.TaskAction",
-  "secondLabel" : "org.gradle.api.tasks.TaskAction",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 903,
   "secondPos" : 903,
+  "firstEndPos" : 934,
+  "secondEndPos" : 934
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 903,
+  "secondPos" : 903,
+  "firstEndPos" : 906,
+  "secondEndPos" : 906
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 907,
+  "secondPos" : 907,
+  "firstEndPos" : 913,
+  "secondEndPos" : 913
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 914,
+  "secondPos" : 914,
+  "firstEndPos" : 917,
+  "secondEndPos" : 917
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "tasks",
+  "secondLabel" : "tasks",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 918,
+  "secondPos" : 918,
+  "firstEndPos" : 923,
+  "secondEndPos" : 923
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TaskAction",
+  "secondLabel" : "TaskAction",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 924,
+  "secondPos" : 924,
   "firstEndPos" : 934,
   "secondEndPos" : 934
 }, {
@@ -210,12 +617,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.api.tasks.compile.BaseForkOptions",
-  "secondLabel" : "org.gradle.api.tasks.compile.BaseForkOptions",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 943,
   "secondPos" : 943,
+  "firstEndPos" : 987,
+  "secondEndPos" : 987
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 943,
+  "secondPos" : 943,
+  "firstEndPos" : 946,
+  "secondEndPos" : 946
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 947,
+  "secondPos" : 947,
+  "firstEndPos" : 953,
+  "secondEndPos" : 953
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 954,
+  "secondPos" : 954,
+  "firstEndPos" : 957,
+  "secondEndPos" : 957
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "tasks",
+  "secondLabel" : "tasks",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 958,
+  "secondPos" : 958,
+  "firstEndPos" : 963,
+  "secondEndPos" : 963
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "compile",
+  "secondLabel" : "compile",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 964,
+  "secondPos" : 964,
+  "firstEndPos" : 971,
+  "secondEndPos" : 971
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BaseForkOptions",
+  "secondLabel" : "BaseForkOptions",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 972,
+  "secondPos" : 972,
   "firstEndPos" : 987,
   "secondEndPos" : 987
 }, {
@@ -232,12 +705,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.logging.ProgressLogger",
-  "secondLabel" : "org.gradle.logging.ProgressLogger",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 996,
   "secondPos" : 1054,
+  "firstEndPos" : 1029,
+  "secondEndPos" : 1087
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 996,
+  "secondPos" : 1054,
+  "firstEndPos" : 999,
+  "secondEndPos" : 1057
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1000,
+  "secondPos" : 1058,
+  "firstEndPos" : 1006,
+  "secondEndPos" : 1064
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "logging",
+  "secondLabel" : "logging",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1007,
+  "secondPos" : 1065,
+  "firstEndPos" : 1014,
+  "secondEndPos" : 1072
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProgressLogger",
+  "secondLabel" : "ProgressLogger",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1015,
+  "secondPos" : 1073,
   "firstEndPos" : 1029,
   "secondEndPos" : 1087
 }, {
@@ -254,12 +771,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.logging.ProgressLoggerFactory",
-  "secondLabel" : "org.gradle.logging.ProgressLoggerFactory",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1038,
   "secondPos" : 1096,
+  "firstEndPos" : 1078,
+  "secondEndPos" : 1136
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1038,
+  "secondPos" : 1096,
+  "firstEndPos" : 1041,
+  "secondEndPos" : 1099
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1042,
+  "secondPos" : 1100,
+  "firstEndPos" : 1048,
+  "secondEndPos" : 1106
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "logging",
+  "secondLabel" : "logging",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1049,
+  "secondPos" : 1107,
+  "firstEndPos" : 1056,
+  "secondEndPos" : 1114
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProgressLoggerFactory",
+  "secondLabel" : "ProgressLoggerFactory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1057,
+  "secondPos" : 1115,
   "firstEndPos" : 1078,
   "secondEndPos" : 1136
 }, {
@@ -276,12 +837,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.play.internal.run",
-  "secondLabel" : "org.gradle.play.internal.run",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1087,
   "secondPos" : 1145,
+  "firstEndPos" : 1115,
+  "secondEndPos" : 1173
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1087,
+  "secondPos" : 1145,
+  "firstEndPos" : 1090,
+  "secondEndPos" : 1148
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1091,
+  "secondPos" : 1149,
+  "firstEndPos" : 1097,
+  "secondEndPos" : 1155
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "play",
+  "secondLabel" : "play",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1098,
+  "secondPos" : 1156,
+  "firstEndPos" : 1102,
+  "secondEndPos" : 1160
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1103,
+  "secondPos" : 1161,
+  "firstEndPos" : 1111,
+  "secondEndPos" : 1169
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "run",
+  "secondLabel" : "run",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1112,
+  "secondPos" : 1170,
   "firstEndPos" : 1115,
   "secondEndPos" : 1173
 }, {
@@ -298,12 +914,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.gradle.play.internal.toolchain.PlayToolProvider",
-  "secondLabel" : "org.gradle.play.internal.toolchain.PlayToolProvider",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1126,
   "secondPos" : 1184,
+  "firstEndPos" : 1177,
+  "secondEndPos" : 1235
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1126,
+  "secondPos" : 1184,
+  "firstEndPos" : 1129,
+  "secondEndPos" : 1187
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gradle",
+  "secondLabel" : "gradle",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1130,
+  "secondPos" : 1188,
+  "firstEndPos" : 1136,
+  "secondEndPos" : 1194
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "play",
+  "secondLabel" : "play",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1137,
+  "secondPos" : 1195,
+  "firstEndPos" : 1141,
+  "secondEndPos" : 1199
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1142,
+  "secondPos" : 1200,
+  "firstEndPos" : 1150,
+  "secondEndPos" : 1208
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "toolchain",
+  "secondLabel" : "toolchain",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1151,
+  "secondPos" : 1209,
+  "firstEndPos" : 1160,
+  "secondEndPos" : 1218
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "PlayToolProvider",
+  "secondLabel" : "PlayToolProvider",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1161,
+  "secondPos" : 1219,
   "firstEndPos" : 1177,
   "secondEndPos" : 1235
 }, {
@@ -320,12 +1002,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.slf4j.Logger",
-  "secondLabel" : "org.slf4j.Logger",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1186,
   "secondPos" : 1244,
+  "firstEndPos" : 1202,
+  "secondEndPos" : 1260
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1186,
+  "secondPos" : 1244,
+  "firstEndPos" : 1189,
+  "secondEndPos" : 1247
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "slf4j",
+  "secondLabel" : "slf4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1190,
+  "secondPos" : 1248,
+  "firstEndPos" : 1195,
+  "secondEndPos" : 1253
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Logger",
+  "secondLabel" : "Logger",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1196,
+  "secondPos" : 1254,
   "firstEndPos" : 1202,
   "secondEndPos" : 1260
 }, {
@@ -342,12 +1057,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.slf4j.LoggerFactory",
-  "secondLabel" : "org.slf4j.LoggerFactory",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1211,
   "secondPos" : 1269,
+  "firstEndPos" : 1234,
+  "secondEndPos" : 1292
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1211,
+  "secondPos" : 1269,
+  "firstEndPos" : 1214,
+  "secondEndPos" : 1272
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "slf4j",
+  "secondLabel" : "slf4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1215,
+  "secondPos" : 1273,
+  "firstEndPos" : 1220,
+  "secondEndPos" : 1278
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LoggerFactory",
+  "secondLabel" : "LoggerFactory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1221,
+  "secondPos" : 1279,
   "firstEndPos" : 1234,
   "secondEndPos" : 1292
 }, {
@@ -364,12 +1112,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.File",
-  "secondLabel" : "java.io.File",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1244,
   "secondPos" : 1330,
+  "firstEndPos" : 1256,
+  "secondEndPos" : 1342
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1244,
+  "secondPos" : 1330,
+  "firstEndPos" : 1248,
+  "secondEndPos" : 1334
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1249,
+  "secondPos" : 1335,
+  "firstEndPos" : 1251,
+  "secondEndPos" : 1337
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "File",
+  "secondLabel" : "File",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1252,
+  "secondPos" : 1338,
   "firstEndPos" : 1256,
   "secondEndPos" : 1342
 }, {
@@ -386,12 +1167,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.IOException",
-  "secondLabel" : "java.io.IOException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1265,
   "secondPos" : 1351,
+  "firstEndPos" : 1284,
+  "secondEndPos" : 1370
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1265,
+  "secondPos" : 1351,
+  "firstEndPos" : 1269,
+  "secondEndPos" : 1355
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1270,
+  "secondPos" : 1356,
+  "firstEndPos" : 1272,
+  "secondEndPos" : 1358
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "IOException",
+  "secondLabel" : "IOException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1273,
+  "secondPos" : 1359,
   "firstEndPos" : 1284,
   "secondEndPos" : 1370
 }, {
@@ -408,12 +1222,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Set",
-  "secondLabel" : "java.util.Set",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1293,
   "secondPos" : 1379,
+  "firstEndPos" : 1306,
+  "secondEndPos" : 1392
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1293,
+  "secondPos" : 1379,
+  "firstEndPos" : 1297,
+  "secondEndPos" : 1383
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1298,
+  "secondPos" : 1384,
+  "firstEndPos" : 1302,
+  "secondEndPos" : 1388
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Set",
+  "secondLabel" : "Set",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1303,
+  "secondPos" : 1389,
   "firstEndPos" : 1306,
   "secondEndPos" : 1392
 }, {
@@ -3675,12 +4522,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "System.in",
-  "secondLabel" : "System.in",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 3625,
   "secondPos" : 3750,
+  "firstEndPos" : 3634,
+  "secondEndPos" : 3759
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "System",
+  "secondLabel" : "System",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3625,
+  "secondPos" : 3750,
+  "firstEndPos" : 3631,
+  "secondEndPos" : 3756
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "in",
+  "secondLabel" : "in",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3632,
+  "secondPos" : 3757,
   "firstEndPos" : 3634,
   "secondEndPos" : 3759
 }, {
@@ -5927,6 +6796,39 @@
   "secondPos" : 5773,
   "firstEndPos" : 24039,
   "secondEndPos" : 5803
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DeploymentRegistry",
+  "secondLabel" : "DeploymentRegistry",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 24040,
+  "secondPos" : 5835,
+  "firstEndPos" : 24058,
+  "secondEndPos" : 5853
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "VariableDeclarationStatement",
+  "firstPos" : 24040,
+  "secondPos" : 5835,
+  "firstEndPos" : 24058,
+  "secondEndPos" : 5853
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "deploymentRegistry",
+  "secondLabel" : "deploymentRegistry",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 24059,
+  "secondPos" : 5854,
+  "firstEndPos" : 24077,
+  "secondEndPos" : 5872
 }, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "SingleVariableDeclaration",

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 
@@ -19,9 +20,11 @@ public class ImportMatcher implements TreeMatcher {
     private final UMLImportListDiff importDiffList;
     private final Constants LANG1;
     private final Constants LANG2;
+    private final DeferredFlattenings deferredFlattenings;
 
-    public ImportMatcher(UMLImportListDiff importDiffList, Constants LANG1, Constants LANG2) {
+    public ImportMatcher(UMLImportListDiff importDiffList, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         this.importDiffList = importDiffList;
+        this.deferredFlattenings = deferredFlattenings;
         this.LANG1 = LANG1;
         this.LANG2 = LANG2;
     }
@@ -45,7 +48,7 @@ public class ImportMatcher implements TreeMatcher {
                 if (srcImportStatement != null && dstImportStatement != null) {
                     mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
                     if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                        JavaToKotlinMigration.handleImportMapping(mappingStore, srcImportStatement, dstImportStatement, LANG1, LANG2);
+                        JavaToKotlinMigration.handleImportMapping(mappingStore, srcImportStatement, dstImportStatement, LANG1, LANG2, deferredFlattenings);
                     }
                     handleParent(mappingStore, srcImportStatement, dstImportStatement);
                 }

@@ -35,9 +35,9 @@ public class PackageInfoDiffMatcher extends OptimizationAwareMatcher {
     private void packageInfoDiffMatcher(UMLPackageInfoDiff packageInfoDiff, boolean mergeFlag, ExtendedMultiMappingStore mappingStore, Tree srcTree, Tree dstTree, OptimizationData optimizationData) {
         if (!mergeFlag) {
             mappingStore.addMapping(srcTree, dstTree);
-            new PackageDeclarationMatcher(LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+            new PackageDeclarationMatcher(LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcTree, dstTree, mappingStore);
         }
-        new ImportMatcher(packageInfoDiff.getImportDiffList(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+        new ImportMatcher(packageInfoDiff.getImportDiffList(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcTree, dstTree, mappingStore);
         new CommentMatcher(optimizationData, packageInfoDiff.getCommentListDiff(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         if (packageInfoDiff.getPackageDeclarationJavadocDiff().isPresent()) {
             new JavaDocMatcher(optimizationData, packageInfoDiff.getOriginalPackageInfo().getPackageDoc(), packageInfoDiff.getNextPackageInfo().getPackageDoc(), packageInfoDiff.getPackageDeclarationJavadocDiff(), LANG1, LANG2)

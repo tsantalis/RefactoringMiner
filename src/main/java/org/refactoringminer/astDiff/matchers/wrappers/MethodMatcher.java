@@ -700,7 +700,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(srcAffectationKeyword, dstAffectationKeyword);
             }
             if(umlOperationBodyMapper.getImportListDiff() != null) {
-                new ImportMatcher(umlOperationBodyMapper.getImportListDiff(), LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
+                new ImportMatcher(umlOperationBodyMapper.getImportListDiff(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcOperationNode, dstOperationNode, mappingStore);
             }
             new BodyMapperMatcher(optimizationData, umlOperationBodyMapper, isPartOfExtractedMethod, LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
             processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);

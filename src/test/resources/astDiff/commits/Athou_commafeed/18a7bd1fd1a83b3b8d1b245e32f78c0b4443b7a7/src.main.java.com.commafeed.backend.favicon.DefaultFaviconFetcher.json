@@ -23,12 +23,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.commafeed.backend.favicon",
-  "secondLabel" : "com.commafeed.backend.favicon",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 8,
   "secondPos" : 8,
+  "firstEndPos" : 37,
+  "secondEndPos" : 37
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commafeed",
+  "secondLabel" : "commafeed",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 21,
+  "secondEndPos" : 21
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "backend",
+  "secondLabel" : "backend",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 22,
+  "secondPos" : 22,
+  "firstEndPos" : 29,
+  "secondEndPos" : 29
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "favicon",
+  "secondLabel" : "favicon",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30,
+  "secondPos" : 30,
   "firstEndPos" : 37,
   "secondEndPos" : 37
 }, {
@@ -45,12 +89,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "javax.inject.Inject",
-  "secondLabel" : "javax.inject.Inject",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 47,
   "secondPos" : 47,
+  "firstEndPos" : 66,
+  "secondEndPos" : 66
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "javax",
+  "secondLabel" : "javax",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 47,
+  "secondPos" : 47,
+  "firstEndPos" : 52,
+  "secondEndPos" : 52
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "inject",
+  "secondLabel" : "inject",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 53,
+  "secondPos" : 53,
+  "firstEndPos" : 59,
+  "secondEndPos" : 59
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Inject",
+  "secondLabel" : "Inject",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 60,
+  "secondPos" : 60,
   "firstEndPos" : 66,
   "secondEndPos" : 66
 }, {
@@ -67,12 +144,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "javax.inject.Singleton",
-  "secondLabel" : "javax.inject.Singleton",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 75,
   "secondPos" : 75,
+  "firstEndPos" : 97,
+  "secondEndPos" : 97
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "javax",
+  "secondLabel" : "javax",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 75,
+  "secondPos" : 75,
+  "firstEndPos" : 80,
+  "secondEndPos" : 80
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "inject",
+  "secondLabel" : "inject",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 81,
+  "secondPos" : 81,
+  "firstEndPos" : 87,
+  "secondEndPos" : 87
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Singleton",
+  "secondLabel" : "Singleton",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 88,
+  "secondPos" : 88,
   "firstEndPos" : 97,
   "secondEndPos" : 97
 }, {
@@ -89,12 +199,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "lombok.RequiredArgsConstructor",
-  "secondLabel" : "lombok.RequiredArgsConstructor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 107,
   "secondPos" : 107,
+  "firstEndPos" : 137,
+  "secondEndPos" : 137
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "lombok",
+  "secondLabel" : "lombok",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 107,
+  "secondPos" : 107,
+  "firstEndPos" : 113,
+  "secondEndPos" : 113
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "RequiredArgsConstructor",
+  "secondLabel" : "RequiredArgsConstructor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 114,
+  "secondPos" : 114,
   "firstEndPos" : 137,
   "secondEndPos" : 137
 }, {
@@ -111,12 +243,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "lombok.extern.slf4j.Slf4j",
-  "secondLabel" : "lombok.extern.slf4j.Slf4j",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 146,
   "secondPos" : 146,
+  "firstEndPos" : 171,
+  "secondEndPos" : 171
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "lombok",
+  "secondLabel" : "lombok",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 146,
+  "secondPos" : 146,
+  "firstEndPos" : 152,
+  "secondEndPos" : 152
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "extern",
+  "secondLabel" : "extern",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 153,
+  "secondPos" : 153,
+  "firstEndPos" : 159,
+  "secondEndPos" : 159
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "slf4j",
+  "secondLabel" : "slf4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 160,
+  "secondPos" : 160,
+  "firstEndPos" : 165,
+  "secondEndPos" : 165
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Slf4j",
+  "secondLabel" : "Slf4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 166,
+  "secondPos" : 166,
   "firstEndPos" : 171,
   "secondEndPos" : 171
 }, {
@@ -133,12 +309,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.commons.lang3.StringUtils",
-  "secondLabel" : "org.apache.commons.lang3.StringUtils",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 181,
   "secondPos" : 181,
+  "firstEndPos" : 217,
+  "secondEndPos" : 217
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 181,
+  "secondPos" : 181,
+  "firstEndPos" : 184,
+  "secondEndPos" : 184
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 185,
+  "secondPos" : 185,
+  "firstEndPos" : 191,
+  "secondEndPos" : 191
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commons",
+  "secondLabel" : "commons",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 192,
+  "secondPos" : 192,
+  "firstEndPos" : 199,
+  "secondEndPos" : 199
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "lang3",
+  "secondLabel" : "lang3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 200,
+  "secondPos" : 200,
+  "firstEndPos" : 205,
+  "secondEndPos" : 205
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "StringUtils",
+  "secondLabel" : "StringUtils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 206,
+  "secondPos" : 206,
   "firstEndPos" : 217,
   "secondEndPos" : 217
 }, {
@@ -155,12 +386,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.Jsoup",
-  "secondLabel" : "org.jsoup.Jsoup",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 226,
   "secondPos" : 226,
+  "firstEndPos" : 241,
+  "secondEndPos" : 241
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 226,
+  "secondPos" : 226,
+  "firstEndPos" : 229,
+  "secondEndPos" : 229
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 230,
+  "secondPos" : 230,
+  "firstEndPos" : 235,
+  "secondEndPos" : 235
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Jsoup",
+  "secondLabel" : "Jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 236,
+  "secondPos" : 236,
   "firstEndPos" : 241,
   "secondEndPos" : 241
 }, {
@@ -177,12 +441,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.nodes.Document",
-  "secondLabel" : "org.jsoup.nodes.Document",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 250,
   "secondPos" : 250,
+  "firstEndPos" : 274,
+  "secondEndPos" : 274
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 250,
+  "secondPos" : 250,
+  "firstEndPos" : 253,
+  "secondEndPos" : 253
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 254,
+  "secondPos" : 254,
+  "firstEndPos" : 259,
+  "secondEndPos" : 259
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "nodes",
+  "secondLabel" : "nodes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 260,
+  "secondPos" : 260,
+  "firstEndPos" : 265,
+  "secondEndPos" : 265
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Document",
+  "secondLabel" : "Document",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 266,
+  "secondPos" : 266,
   "firstEndPos" : 274,
   "secondEndPos" : 274
 }, {
@@ -199,12 +507,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.select.Elements",
-  "secondLabel" : "org.jsoup.select.Elements",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 283,
   "secondPos" : 283,
+  "firstEndPos" : 308,
+  "secondEndPos" : 308
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 283,
+  "secondPos" : 283,
+  "firstEndPos" : 286,
+  "secondEndPos" : 286
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 287,
+  "secondPos" : 287,
+  "firstEndPos" : 292,
+  "secondEndPos" : 292
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "select",
+  "secondLabel" : "select",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 293,
+  "secondPos" : 293,
+  "firstEndPos" : 299,
+  "secondEndPos" : 299
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Elements",
+  "secondLabel" : "Elements",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 300,
+  "secondPos" : 300,
   "firstEndPos" : 308,
   "secondEndPos" : 308
 }, {
@@ -221,12 +573,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.commafeed.backend.HttpGetter",
-  "secondLabel" : "com.commafeed.backend.HttpGetter",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 318,
   "secondPos" : 318,
+  "firstEndPos" : 350,
+  "secondEndPos" : 350
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 318,
+  "secondPos" : 318,
+  "firstEndPos" : 321,
+  "secondEndPos" : 321
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commafeed",
+  "secondLabel" : "commafeed",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 322,
+  "secondPos" : 322,
+  "firstEndPos" : 331,
+  "secondEndPos" : 331
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "backend",
+  "secondLabel" : "backend",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 332,
+  "secondPos" : 332,
+  "firstEndPos" : 339,
+  "secondEndPos" : 339
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HttpGetter",
+  "secondLabel" : "HttpGetter",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 340,
+  "secondPos" : 340,
   "firstEndPos" : 350,
   "secondEndPos" : 350
 }, {
@@ -243,12 +639,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.commafeed.backend.HttpGetter.HttpResult",
-  "secondLabel" : "com.commafeed.backend.HttpGetter.HttpResult",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 359,
   "secondPos" : 359,
+  "firstEndPos" : 402,
+  "secondEndPos" : 402
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 359,
+  "secondPos" : 359,
+  "firstEndPos" : 362,
+  "secondEndPos" : 362
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commafeed",
+  "secondLabel" : "commafeed",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 363,
+  "secondPos" : 363,
+  "firstEndPos" : 372,
+  "secondEndPos" : 372
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "backend",
+  "secondLabel" : "backend",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 373,
+  "secondPos" : 373,
+  "firstEndPos" : 380,
+  "secondEndPos" : 380
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HttpGetter",
+  "secondLabel" : "HttpGetter",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 381,
+  "secondPos" : 381,
+  "firstEndPos" : 391,
+  "secondEndPos" : 391
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HttpResult",
+  "secondLabel" : "HttpResult",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 392,
+  "secondPos" : 392,
   "firstEndPos" : 402,
   "secondEndPos" : 402
 }, {
@@ -265,12 +716,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.commafeed.backend.feed.FeedUtils",
-  "secondLabel" : "com.commafeed.backend.feed.FeedUtils",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 411,
   "secondPos" : 411,
+  "firstEndPos" : 447,
+  "secondEndPos" : 447
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 411,
+  "secondPos" : 411,
+  "firstEndPos" : 414,
+  "secondEndPos" : 414
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commafeed",
+  "secondLabel" : "commafeed",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 415,
+  "secondPos" : 415,
+  "firstEndPos" : 424,
+  "secondEndPos" : 424
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "backend",
+  "secondLabel" : "backend",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 425,
+  "secondPos" : 425,
+  "firstEndPos" : 432,
+  "secondEndPos" : 432
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "feed",
+  "secondLabel" : "feed",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 433,
+  "secondPos" : 433,
+  "firstEndPos" : 437,
+  "secondEndPos" : 437
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "FeedUtils",
+  "secondLabel" : "FeedUtils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 438,
+  "secondPos" : 438,
   "firstEndPos" : 447,
   "secondEndPos" : 447
 }, {
@@ -287,12 +793,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.commafeed.backend.model.Feed",
-  "secondLabel" : "com.commafeed.backend.model.Feed",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 456,
   "secondPos" : 456,
+  "firstEndPos" : 488,
+  "secondEndPos" : 488
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 456,
+  "secondPos" : 456,
+  "firstEndPos" : 459,
+  "secondEndPos" : 459
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "commafeed",
+  "secondLabel" : "commafeed",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 460,
+  "secondPos" : 460,
+  "firstEndPos" : 469,
+  "secondEndPos" : 469
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "backend",
+  "secondLabel" : "backend",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 470,
+  "secondPos" : 470,
+  "firstEndPos" : 477,
+  "secondEndPos" : 477
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "model",
+  "secondLabel" : "model",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 478,
+  "secondPos" : 478,
+  "firstEndPos" : 483,
+  "secondEndPos" : 483
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Feed",
+  "secondLabel" : "Feed",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 484,
+  "secondPos" : 484,
   "firstEndPos" : 488,
   "secondEndPos" : 488
 }, {
@@ -801,39 +1362,6 @@
   "secondPos" : 805,
   "firstEndPos" : 808,
   "secondEndPos" : 809
-}, {
-  "firstType" : "InfixExpression",
-  "secondType" : "InfixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ConditionalExpression",
-  "secondParentType" : "IfStatement",
-  "firstPos" : 811,
-  "secondPos" : 841,
-  "firstEndPos" : 833,
-  "secondEndPos" : 853
-}, {
-  "firstType" : "INFIX_EXPRESSION_OPERATOR",
-  "secondType" : "INFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "!=",
-  "secondLabel" : "==",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 826,
-  "secondPos" : 846,
-  "firstEndPos" : 828,
-  "secondEndPos" : 848
-}, {
-  "firstType" : "NullLiteral",
-  "secondType" : "NullLiteral",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 829,
-  "secondPos" : 849,
-  "firstEndPos" : 833,
-  "secondEndPos" : 853
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -2022,6 +2550,17 @@
   "secondPos" : 902,
   "firstEndPos" : 1289,
   "secondEndPos" : 906
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "icon",
+  "secondLabel" : "icon",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "ReturnStatement",
+  "firstPos" : 1285,
+  "secondPos" : 1364,
+  "firstEndPos" : 1289,
+  "secondEndPos" : 1368
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

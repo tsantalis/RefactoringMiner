@@ -23,12 +23,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.netflix.discovery",
-  "secondLabel" : "com.netflix.discovery",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 8,
   "secondPos" : 8,
+  "firstEndPos" : 29,
+  "secondEndPos" : 29
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "netflix",
+  "secondLabel" : "netflix",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 19,
+  "secondEndPos" : 19
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "discovery",
+  "secondLabel" : "discovery",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 20,
+  "secondPos" : 20,
   "firstEndPos" : 29,
   "secondEndPos" : 29
 }, {
@@ -45,12 +78,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.netflix.appinfo.InstanceInfo",
-  "secondLabel" : "com.netflix.appinfo.InstanceInfo",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 39,
   "secondPos" : 39,
+  "firstEndPos" : 71,
+  "secondEndPos" : 71
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39,
+  "secondPos" : 39,
+  "firstEndPos" : 42,
+  "secondEndPos" : 42
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "netflix",
+  "secondLabel" : "netflix",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 43,
+  "secondPos" : 43,
+  "firstEndPos" : 50,
+  "secondEndPos" : 50
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "appinfo",
+  "secondLabel" : "appinfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 51,
+  "secondPos" : 51,
+  "firstEndPos" : 58,
+  "secondEndPos" : 58
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceInfo",
+  "secondLabel" : "InstanceInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 59,
+  "secondPos" : 59,
   "firstEndPos" : 71,
   "secondEndPos" : 71
 }, {
@@ -133,12 +210,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.netflix.eventbus.spi.EventBus",
-  "secondLabel" : "com.netflix.eventbus.spi.EventBus",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 175,
   "secondPos" : 175,
+  "firstEndPos" : 208,
+  "secondEndPos" : 208
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 175,
+  "secondPos" : 175,
+  "firstEndPos" : 178,
+  "secondEndPos" : 178
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "netflix",
+  "secondLabel" : "netflix",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 179,
+  "secondPos" : 179,
+  "firstEndPos" : 186,
+  "secondEndPos" : 186
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "eventbus",
+  "secondLabel" : "eventbus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 187,
+  "secondPos" : 187,
+  "firstEndPos" : 195,
+  "secondEndPos" : 195
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "spi",
+  "secondLabel" : "spi",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 196,
+  "secondPos" : 196,
+  "firstEndPos" : 199,
+  "secondEndPos" : 199
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "EventBus",
+  "secondLabel" : "EventBus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 200,
+  "secondPos" : 200,
   "firstEndPos" : 208,
   "secondEndPos" : 208
 }, {
@@ -298,8 +430,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "InstanceInfo.InstanceStatus",
-  "secondLabel" : "InstanceInfo.InstanceStatus",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 396,
@@ -315,6 +447,28 @@
   "secondParentType" : "FieldDeclaration",
   "firstPos" : 396,
   "secondPos" : 419,
+  "firstEndPos" : 423,
+  "secondEndPos" : 446
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceInfo",
+  "secondLabel" : "InstanceInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 396,
+  "secondPos" : 419,
+  "firstEndPos" : 408,
+  "secondEndPos" : 431
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceStatus",
+  "secondLabel" : "InstanceStatus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 409,
+  "secondPos" : 432,
   "firstEndPos" : 423,
   "secondEndPos" : 446
 }, {
@@ -375,8 +529,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "InstanceInfo.InstanceStatus",
-  "secondLabel" : "InstanceInfo.InstanceStatus",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 451,
@@ -392,6 +546,28 @@
   "secondParentType" : "FieldDeclaration",
   "firstPos" : 451,
   "secondPos" : 474,
+  "firstEndPos" : 478,
+  "secondEndPos" : 501
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceInfo",
+  "secondLabel" : "InstanceInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 451,
+  "secondPos" : 474,
+  "firstEndPos" : 463,
+  "secondEndPos" : 486
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceStatus",
+  "secondLabel" : "InstanceStatus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 464,
+  "secondPos" : 487,
   "firstEndPos" : 478,
   "secondEndPos" : 501
 }, {
@@ -463,8 +639,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "InstanceInfo.InstanceStatus",
-  "secondLabel" : "InstanceInfo.InstanceStatus",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 519,
@@ -480,6 +656,28 @@
   "secondParentType" : "SingleVariableDeclaration",
   "firstPos" : 519,
   "secondPos" : 542,
+  "firstEndPos" : 546,
+  "secondEndPos" : 569
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceInfo",
+  "secondLabel" : "InstanceInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 519,
+  "secondPos" : 542,
+  "firstEndPos" : 531,
+  "secondEndPos" : 554
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceStatus",
+  "secondLabel" : "InstanceStatus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 532,
+  "secondPos" : 555,
   "firstEndPos" : 546,
   "secondEndPos" : 569
 }, {
@@ -507,8 +705,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "InstanceInfo.InstanceStatus",
-  "secondLabel" : "InstanceInfo.InstanceStatus",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 557,
@@ -524,6 +722,28 @@
   "secondParentType" : "SingleVariableDeclaration",
   "firstPos" : 557,
   "secondPos" : 580,
+  "firstEndPos" : 584,
+  "secondEndPos" : 607
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceInfo",
+  "secondLabel" : "InstanceInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 557,
+  "secondPos" : 580,
+  "firstEndPos" : 569,
+  "secondEndPos" : 592
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceStatus",
+  "secondLabel" : "InstanceStatus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 570,
+  "secondPos" : 593,
   "firstEndPos" : 584,
   "secondEndPos" : 607
 }, {
@@ -914,12 +1134,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "InstanceInfo.InstanceStatus.UP",
-  "secondLabel" : "InstanceInfo.InstanceStatus.UP",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 882,
   "secondPos" : 905,
+  "firstEndPos" : 912,
+  "secondEndPos" : 935
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceInfo",
+  "secondLabel" : "InstanceInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 882,
+  "secondPos" : 905,
+  "firstEndPos" : 894,
+  "secondEndPos" : 917
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceStatus",
+  "secondLabel" : "InstanceStatus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 895,
+  "secondPos" : 918,
+  "firstEndPos" : 909,
+  "secondEndPos" : 932
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "UP",
+  "secondLabel" : "UP",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 910,
+  "secondPos" : 933,
   "firstEndPos" : 912,
   "secondEndPos" : 935
 }, {
@@ -991,8 +1244,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "InstanceInfo.InstanceStatus",
-  "secondLabel" : "InstanceInfo.InstanceStatus",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 1012,
@@ -1008,6 +1261,28 @@
   "secondParentType" : "MethodDeclaration",
   "firstPos" : 1012,
   "secondPos" : 1035,
+  "firstEndPos" : 1039,
+  "secondEndPos" : 1062
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceInfo",
+  "secondLabel" : "InstanceInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1012,
+  "secondPos" : 1035,
+  "firstEndPos" : 1024,
+  "secondEndPos" : 1047
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceStatus",
+  "secondLabel" : "InstanceStatus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1025,
+  "secondPos" : 1048,
   "firstEndPos" : 1039,
   "secondEndPos" : 1062
 }, {
@@ -1123,8 +1398,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "InstanceInfo.InstanceStatus",
-  "secondLabel" : "InstanceInfo.InstanceStatus",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 1182,
@@ -1140,6 +1415,28 @@
   "secondParentType" : "MethodDeclaration",
   "firstPos" : 1182,
   "secondPos" : 1205,
+  "firstEndPos" : 1209,
+  "secondEndPos" : 1232
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceInfo",
+  "secondLabel" : "InstanceInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1182,
+  "secondPos" : 1205,
+  "firstEndPos" : 1194,
+  "secondEndPos" : 1217
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InstanceStatus",
+  "secondLabel" : "InstanceStatus",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1195,
+  "secondPos" : 1218,
   "firstEndPos" : 1209,
   "secondEndPos" : 1232
 }, {

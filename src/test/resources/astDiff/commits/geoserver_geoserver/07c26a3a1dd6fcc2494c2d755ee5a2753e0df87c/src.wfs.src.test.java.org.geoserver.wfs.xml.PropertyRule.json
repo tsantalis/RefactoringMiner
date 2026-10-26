@@ -34,14 +34,36 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.geoserver.wfs.xml",
-  "secondLabel" : "org.geoserver.util",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 217,
   "secondPos" : 217,
   "firstEndPos" : 238,
   "secondEndPos" : 235
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 217,
+  "secondPos" : 217,
+  "firstEndPos" : 220,
+  "secondEndPos" : 220
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "geoserver",
+  "secondLabel" : "geoserver",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 221,
+  "secondPos" : 221,
+  "firstEndPos" : 230,
+  "secondEndPos" : 230
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -56,12 +78,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Properties",
-  "secondLabel" : "java.util.Properties",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 248,
   "secondPos" : 245,
+  "firstEndPos" : 268,
+  "secondEndPos" : 265
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 248,
+  "secondPos" : 245,
+  "firstEndPos" : 252,
+  "secondEndPos" : 249
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 253,
+  "secondPos" : 250,
+  "firstEndPos" : 257,
+  "secondEndPos" : 254
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Properties",
+  "secondLabel" : "Properties",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 258,
+  "secondPos" : 255,
   "firstEndPos" : 268,
   "secondEndPos" : 265
 }, {
@@ -177,8 +232,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.junit.rules.ExternalResource",
-  "secondLabel" : "org.junit.rules.ExternalResource",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 432,
@@ -194,6 +249,50 @@
   "secondParentType" : "TypeDeclaration",
   "firstPos" : 432,
   "secondPos" : 436,
+  "firstEndPos" : 464,
+  "secondEndPos" : 468
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 432,
+  "secondPos" : 436,
+  "firstEndPos" : 435,
+  "secondEndPos" : 439
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "junit",
+  "secondLabel" : "junit",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 436,
+  "secondPos" : 440,
+  "firstEndPos" : 441,
+  "secondEndPos" : 445
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "rules",
+  "secondLabel" : "rules",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 442,
+  "secondPos" : 446,
+  "firstEndPos" : 447,
+  "secondEndPos" : 451
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ExternalResource",
+  "secondLabel" : "ExternalResource",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 448,
+  "secondPos" : 452,
   "firstEndPos" : 464,
   "secondEndPos" : 468
 }, {

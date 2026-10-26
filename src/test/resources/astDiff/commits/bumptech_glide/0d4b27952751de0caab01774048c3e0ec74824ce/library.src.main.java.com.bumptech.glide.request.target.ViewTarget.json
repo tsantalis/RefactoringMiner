@@ -23,12 +23,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.bumptech.glide.request.target",
-  "secondLabel" : "com.bumptech.glide.request.target",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 8,
   "secondPos" : 8,
+  "firstEndPos" : 41,
+  "secondEndPos" : 41
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "bumptech",
+  "secondLabel" : "bumptech",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 20,
+  "secondEndPos" : 20
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "glide",
+  "secondLabel" : "glide",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 21,
+  "secondPos" : 21,
+  "firstEndPos" : 26,
+  "secondEndPos" : 26
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "request",
+  "secondLabel" : "request",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 27,
+  "secondPos" : 27,
+  "firstEndPos" : 34,
+  "secondEndPos" : 34
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "target",
+  "secondLabel" : "target",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 35,
+  "secondPos" : 35,
   "firstEndPos" : 41,
   "secondEndPos" : 41
 }, {
@@ -45,12 +100,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.annotation.TargetApi",
-  "secondLabel" : "android.annotation.TargetApi",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 51,
   "secondPos" : 51,
+  "firstEndPos" : 79,
+  "secondEndPos" : 79
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 51,
+  "secondPos" : 51,
+  "firstEndPos" : 58,
+  "secondEndPos" : 58
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "annotation",
+  "secondLabel" : "annotation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 59,
+  "secondPos" : 59,
+  "firstEndPos" : 69,
+  "secondEndPos" : 69
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TargetApi",
+  "secondLabel" : "TargetApi",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 70,
+  "secondPos" : 70,
   "firstEndPos" : 79,
   "secondEndPos" : 79
 }, {
@@ -67,12 +155,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.content.Context",
-  "secondLabel" : "android.content.Context",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 88,
   "secondPos" : 88,
+  "firstEndPos" : 111,
+  "secondEndPos" : 111
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 88,
+  "secondPos" : 88,
+  "firstEndPos" : 95,
+  "secondEndPos" : 95
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "content",
+  "secondLabel" : "content",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 96,
+  "secondPos" : 96,
+  "firstEndPos" : 103,
+  "secondEndPos" : 103
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Context",
+  "secondLabel" : "Context",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 104,
+  "secondPos" : 104,
   "firstEndPos" : 111,
   "secondEndPos" : 111
 }, {
@@ -89,12 +210,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.graphics.Point",
-  "secondLabel" : "android.graphics.Point",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 120,
   "secondPos" : 120,
+  "firstEndPos" : 142,
+  "secondEndPos" : 142
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 120,
+  "secondPos" : 120,
+  "firstEndPos" : 127,
+  "secondEndPos" : 127
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "graphics",
+  "secondLabel" : "graphics",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 128,
+  "secondPos" : 128,
+  "firstEndPos" : 136,
+  "secondEndPos" : 136
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Point",
+  "secondLabel" : "Point",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 137,
+  "secondPos" : 137,
   "firstEndPos" : 142,
   "secondEndPos" : 142
 }, {
@@ -111,12 +265,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.os.Build",
-  "secondLabel" : "android.os.Build",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 151,
   "secondPos" : 194,
+  "firstEndPos" : 167,
+  "secondEndPos" : 210
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 151,
+  "secondPos" : 194,
+  "firstEndPos" : 158,
+  "secondEndPos" : 201
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "os",
+  "secondLabel" : "os",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 159,
+  "secondPos" : 202,
+  "firstEndPos" : 161,
+  "secondEndPos" : 204
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Build",
+  "secondLabel" : "Build",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 162,
+  "secondPos" : 205,
   "firstEndPos" : 167,
   "secondEndPos" : 210
 }, {
@@ -133,12 +320,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.support.annotation.Nullable",
-  "secondLabel" : "android.support.annotation.Nullable",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 176,
   "secondPos" : 219,
+  "firstEndPos" : 211,
+  "secondEndPos" : 254
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 176,
+  "secondPos" : 219,
+  "firstEndPos" : 183,
+  "secondEndPos" : 226
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "support",
+  "secondLabel" : "support",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 184,
+  "secondPos" : 227,
+  "firstEndPos" : 191,
+  "secondEndPos" : 234
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "annotation",
+  "secondLabel" : "annotation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 192,
+  "secondPos" : 235,
+  "firstEndPos" : 202,
+  "secondEndPos" : 245
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Nullable",
+  "secondLabel" : "Nullable",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 203,
+  "secondPos" : 246,
   "firstEndPos" : 211,
   "secondEndPos" : 254
 }, {
@@ -155,12 +386,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.util.Log",
-  "secondLabel" : "android.util.Log",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 220,
   "secondPos" : 263,
+  "firstEndPos" : 236,
+  "secondEndPos" : 279
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 220,
+  "secondPos" : 263,
+  "firstEndPos" : 227,
+  "secondEndPos" : 270
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 228,
+  "secondPos" : 271,
+  "firstEndPos" : 232,
+  "secondEndPos" : 275
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Log",
+  "secondLabel" : "Log",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 233,
+  "secondPos" : 276,
   "firstEndPos" : 236,
   "secondEndPos" : 279
 }, {
@@ -177,12 +441,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.Display",
-  "secondLabel" : "android.view.Display",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 245,
   "secondPos" : 288,
+  "firstEndPos" : 265,
+  "secondEndPos" : 308
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 245,
+  "secondPos" : 288,
+  "firstEndPos" : 252,
+  "secondEndPos" : 295
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 253,
+  "secondPos" : 296,
+  "firstEndPos" : 257,
+  "secondEndPos" : 300
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Display",
+  "secondLabel" : "Display",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 258,
+  "secondPos" : 301,
   "firstEndPos" : 265,
   "secondEndPos" : 308
 }, {
@@ -199,12 +496,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.View",
-  "secondLabel" : "android.view.View",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 274,
   "secondPos" : 317,
+  "firstEndPos" : 291,
+  "secondEndPos" : 334
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 274,
+  "secondPos" : 317,
+  "firstEndPos" : 281,
+  "secondEndPos" : 324
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 282,
+  "secondPos" : 325,
+  "firstEndPos" : 286,
+  "secondEndPos" : 329
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "View",
+  "secondLabel" : "View",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 287,
+  "secondPos" : 330,
   "firstEndPos" : 291,
   "secondEndPos" : 334
 }, {
@@ -221,12 +551,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.ViewGroup.LayoutParams",
-  "secondLabel" : "android.view.ViewGroup.LayoutParams",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 300,
   "secondPos" : 343,
+  "firstEndPos" : 335,
+  "secondEndPos" : 378
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 300,
+  "secondPos" : 343,
+  "firstEndPos" : 307,
+  "secondEndPos" : 350
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 308,
+  "secondPos" : 351,
+  "firstEndPos" : 312,
+  "secondEndPos" : 355
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ViewGroup",
+  "secondLabel" : "ViewGroup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 313,
+  "secondPos" : 356,
+  "firstEndPos" : 322,
+  "secondEndPos" : 365
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LayoutParams",
+  "secondLabel" : "LayoutParams",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 323,
+  "secondPos" : 366,
   "firstEndPos" : 335,
   "secondEndPos" : 378
 }, {
@@ -243,12 +617,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.ViewTreeObserver",
-  "secondLabel" : "android.view.ViewTreeObserver",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 344,
   "secondPos" : 387,
+  "firstEndPos" : 373,
+  "secondEndPos" : 416
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 344,
+  "secondPos" : 387,
+  "firstEndPos" : 351,
+  "secondEndPos" : 394
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 352,
+  "secondPos" : 395,
+  "firstEndPos" : 356,
+  "secondEndPos" : 399
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ViewTreeObserver",
+  "secondLabel" : "ViewTreeObserver",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 357,
+  "secondPos" : 400,
   "firstEndPos" : 373,
   "secondEndPos" : 416
 }, {
@@ -265,12 +672,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.WindowManager",
-  "secondLabel" : "android.view.WindowManager",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 382,
   "secondPos" : 425,
+  "firstEndPos" : 408,
+  "secondEndPos" : 451
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 382,
+  "secondPos" : 425,
+  "firstEndPos" : 389,
+  "secondEndPos" : 432
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 390,
+  "secondPos" : 433,
+  "firstEndPos" : 394,
+  "secondEndPos" : 437
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "WindowManager",
+  "secondLabel" : "WindowManager",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 395,
+  "secondPos" : 438,
   "firstEndPos" : 408,
   "secondEndPos" : 451
 }, {
@@ -287,12 +727,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.bumptech.glide.request.Request",
-  "secondLabel" : "com.bumptech.glide.request.Request",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 418,
   "secondPos" : 461,
+  "firstEndPos" : 452,
+  "secondEndPos" : 495
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 418,
+  "secondPos" : 461,
+  "firstEndPos" : 421,
+  "secondEndPos" : 464
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "bumptech",
+  "secondLabel" : "bumptech",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 422,
+  "secondPos" : 465,
+  "firstEndPos" : 430,
+  "secondEndPos" : 473
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "glide",
+  "secondLabel" : "glide",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 431,
+  "secondPos" : 474,
+  "firstEndPos" : 436,
+  "secondEndPos" : 479
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "request",
+  "secondLabel" : "request",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 437,
+  "secondPos" : 480,
+  "firstEndPos" : 444,
+  "secondEndPos" : 487
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Request",
+  "secondLabel" : "Request",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 445,
+  "secondPos" : 488,
   "firstEndPos" : 452,
   "secondEndPos" : 495
 }, {
@@ -309,12 +804,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.bumptech.glide.util.Preconditions",
-  "secondLabel" : "com.bumptech.glide.util.Preconditions",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 461,
   "secondPos" : 504,
+  "firstEndPos" : 498,
+  "secondEndPos" : 541
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 461,
+  "secondPos" : 504,
+  "firstEndPos" : 464,
+  "secondEndPos" : 507
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "bumptech",
+  "secondLabel" : "bumptech",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 465,
+  "secondPos" : 508,
+  "firstEndPos" : 473,
+  "secondEndPos" : 516
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "glide",
+  "secondLabel" : "glide",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 474,
+  "secondPos" : 517,
+  "firstEndPos" : 479,
+  "secondEndPos" : 522
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 480,
+  "secondPos" : 523,
+  "firstEndPos" : 484,
+  "secondEndPos" : 527
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Preconditions",
+  "secondLabel" : "Preconditions",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 485,
+  "secondPos" : 528,
   "firstEndPos" : 498,
   "secondEndPos" : 541
 }, {
@@ -331,12 +881,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.lang.ref.WeakReference",
-  "secondLabel" : "java.lang.ref.WeakReference",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 508,
   "secondPos" : 551,
+  "firstEndPos" : 535,
+  "secondEndPos" : 578
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 508,
+  "secondPos" : 551,
+  "firstEndPos" : 512,
+  "secondEndPos" : 555
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "lang",
+  "secondLabel" : "lang",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 513,
+  "secondPos" : 556,
+  "firstEndPos" : 517,
+  "secondEndPos" : 560
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ref",
+  "secondLabel" : "ref",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 518,
+  "secondPos" : 561,
+  "firstEndPos" : 521,
+  "secondEndPos" : 564
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "WeakReference",
+  "secondLabel" : "WeakReference",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 522,
+  "secondPos" : 565,
   "firstEndPos" : 535,
   "secondEndPos" : 578
 }, {
@@ -353,12 +947,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.ArrayList",
-  "secondLabel" : "java.util.ArrayList",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 544,
   "secondPos" : 587,
+  "firstEndPos" : 563,
+  "secondEndPos" : 606
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 544,
+  "secondPos" : 587,
+  "firstEndPos" : 548,
+  "secondEndPos" : 591
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 549,
+  "secondPos" : 592,
+  "firstEndPos" : 553,
+  "secondEndPos" : 596
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ArrayList",
+  "secondLabel" : "ArrayList",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 554,
+  "secondPos" : 597,
   "firstEndPos" : 563,
   "secondEndPos" : 606
 }, {
@@ -375,12 +1002,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.List",
-  "secondLabel" : "java.util.List",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 572,
   "secondPos" : 615,
+  "firstEndPos" : 586,
+  "secondEndPos" : 629
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 572,
+  "secondPos" : 615,
+  "firstEndPos" : 576,
+  "secondEndPos" : 619
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 577,
+  "secondPos" : 620,
+  "firstEndPos" : 581,
+  "secondEndPos" : 624
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "List",
+  "secondLabel" : "List",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 582,
+  "secondPos" : 625,
   "firstEndPos" : 586,
   "secondEndPos" : 629
 }, {
@@ -496,12 +1156,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.graphics.Bitmap",
-  "secondLabel" : "android.graphics.Bitmap",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 637,
   "secondPos" : 680,
+  "firstEndPos" : 660,
+  "secondEndPos" : 703
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 637,
+  "secondPos" : 680,
+  "firstEndPos" : 644,
+  "secondEndPos" : 687
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "graphics",
+  "secondLabel" : "graphics",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 645,
+  "secondPos" : 688,
+  "firstEndPos" : 653,
+  "secondEndPos" : 696
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Bitmap",
+  "secondLabel" : "Bitmap",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 654,
+  "secondPos" : 697,
   "firstEndPos" : 660,
   "secondEndPos" : 703
 }, {
@@ -606,12 +1299,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.ViewTreeObserver.OnDrawListener",
-  "secondLabel" : "android.view.ViewTreeObserver.OnDrawListener",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 799,
   "secondPos" : 842,
+  "firstEndPos" : 843,
+  "secondEndPos" : 886
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 799,
+  "secondPos" : 842,
+  "firstEndPos" : 806,
+  "secondEndPos" : 849
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 807,
+  "secondPos" : 850,
+  "firstEndPos" : 811,
+  "secondEndPos" : 854
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ViewTreeObserver",
+  "secondLabel" : "ViewTreeObserver",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 812,
+  "secondPos" : 855,
+  "firstEndPos" : 828,
+  "secondEndPos" : 871
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OnDrawListener",
+  "secondLabel" : "OnDrawListener",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 829,
+  "secondPos" : 872,
   "firstEndPos" : 843,
   "secondEndPos" : 886
 }, {
@@ -705,12 +1442,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.widget.ListView",
-  "secondLabel" : "android.widget.ListView",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 895,
   "secondPos" : 938,
+  "firstEndPos" : 918,
+  "secondEndPos" : 961
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 895,
+  "secondPos" : 938,
+  "firstEndPos" : 902,
+  "secondEndPos" : 945
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "widget",
+  "secondLabel" : "widget",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 903,
+  "secondPos" : 946,
+  "firstEndPos" : 909,
+  "secondEndPos" : 952
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ListView",
+  "secondLabel" : "ListView",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 910,
+  "secondPos" : 953,
   "firstEndPos" : 918,
   "secondEndPos" : 961
 }, {
@@ -749,12 +1519,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.ViewGroup",
-  "secondLabel" : "android.view.ViewGroup",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 937,
   "secondPos" : 980,
+  "firstEndPos" : 959,
+  "secondEndPos" : 1002
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 937,
+  "secondPos" : 980,
+  "firstEndPos" : 944,
+  "secondEndPos" : 987
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 945,
+  "secondPos" : 988,
+  "firstEndPos" : 949,
+  "secondEndPos" : 992
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ViewGroup",
+  "secondLabel" : "ViewGroup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 950,
+  "secondPos" : 993,
   "firstEndPos" : 959,
   "secondEndPos" : 1002
 }, {
@@ -2366,12 +3169,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.View",
-  "secondLabel" : "android.view.View",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 2088,
   "secondPos" : 2209,
+  "firstEndPos" : 2105,
+  "secondEndPos" : 2226
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2088,
+  "secondPos" : 2209,
+  "firstEndPos" : 2095,
+  "secondEndPos" : 2216
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2096,
+  "secondPos" : 2217,
+  "firstEndPos" : 2100,
+  "secondEndPos" : 2221
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "View",
+  "secondLabel" : "View",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2101,
+  "secondPos" : 2222,
   "firstEndPos" : 2105,
   "secondEndPos" : 2226
 }, {
@@ -2542,12 +3378,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.View",
-  "secondLabel" : "android.view.View",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 2227,
   "secondPos" : 2348,
+  "firstEndPos" : 2244,
+  "secondEndPos" : 2365
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2227,
+  "secondPos" : 2348,
+  "firstEndPos" : 2234,
+  "secondEndPos" : 2355
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2235,
+  "secondPos" : 2356,
+  "firstEndPos" : 2239,
+  "secondEndPos" : 2360
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "View",
+  "secondLabel" : "View",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2240,
+  "secondPos" : 2361,
   "firstEndPos" : 2244,
   "secondEndPos" : 2365
 }, {
@@ -2608,12 +3477,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.View",
-  "secondLabel" : "android.view.View",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 2273,
   "secondPos" : 2394,
+  "firstEndPos" : 2290,
+  "secondEndPos" : 2411
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2273,
+  "secondPos" : 2394,
+  "firstEndPos" : 2280,
+  "secondEndPos" : 2401
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2281,
+  "secondPos" : 2402,
+  "firstEndPos" : 2285,
+  "secondEndPos" : 2406
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "View",
+  "secondLabel" : "View",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2286,
+  "secondPos" : 2407,
   "firstEndPos" : 2290,
   "secondEndPos" : 2411
 }, {
@@ -2718,12 +3620,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.ViewTreeObserver.OnPreDrawListener",
-  "secondLabel" : "android.view.ViewTreeObserver.OnPreDrawListener",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 2489,
   "secondPos" : 2610,
+  "firstEndPos" : 2536,
+  "secondEndPos" : 2657
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2489,
+  "secondPos" : 2610,
+  "firstEndPos" : 2496,
+  "secondEndPos" : 2617
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2497,
+  "secondPos" : 2618,
+  "firstEndPos" : 2501,
+  "secondEndPos" : 2622
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ViewTreeObserver",
+  "secondLabel" : "ViewTreeObserver",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2502,
+  "secondPos" : 2623,
+  "firstEndPos" : 2518,
+  "secondEndPos" : 2639
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OnPreDrawListener",
+  "secondLabel" : "OnPreDrawListener",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2519,
+  "secondPos" : 2640,
   "firstEndPos" : 2536,
   "secondEndPos" : 2657
 }, {
@@ -3477,12 +4423,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.View",
-  "secondLabel" : "android.view.View",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 3044,
   "secondPos" : 3320,
+  "firstEndPos" : 3061,
+  "secondEndPos" : 3337
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3044,
+  "secondPos" : 3320,
+  "firstEndPos" : 3051,
+  "secondEndPos" : 3327
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3052,
+  "secondPos" : 3328,
+  "firstEndPos" : 3056,
+  "secondEndPos" : 3332
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "View",
+  "secondLabel" : "View",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3057,
+  "secondPos" : 3333,
   "firstEndPos" : 3061,
   "secondEndPos" : 3337
 }, {
@@ -3675,12 +4654,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.lang.IllegalArgumentException",
-  "secondLabel" : "java.lang.IllegalArgumentException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3514,
   "secondPos" : 3790,
+  "firstEndPos" : 3548,
+  "secondEndPos" : 3824
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3514,
+  "secondPos" : 3790,
+  "firstEndPos" : 3518,
+  "secondEndPos" : 3794
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "lang",
+  "secondLabel" : "lang",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3519,
+  "secondPos" : 3795,
+  "firstEndPos" : 3523,
+  "secondEndPos" : 3799
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "IllegalArgumentException",
+  "secondLabel" : "IllegalArgumentException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3524,
+  "secondPos" : 3800,
   "firstEndPos" : 3548,
   "secondEndPos" : 3824
 }, {
@@ -3730,12 +4742,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "android.view.View",
-  "secondLabel" : "android.view.View",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 3565,
   "secondPos" : 3841,
+  "firstEndPos" : 3582,
+  "secondEndPos" : 3858
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3565,
+  "secondPos" : 3841,
+  "firstEndPos" : 3572,
+  "secondEndPos" : 3848
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3573,
+  "secondPos" : 3849,
+  "firstEndPos" : 3577,
+  "secondEndPos" : 3853
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "View",
+  "secondLabel" : "View",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3578,
+  "secondPos" : 3854,
   "firstEndPos" : 3582,
   "secondEndPos" : 3858
 }, {
@@ -3785,12 +4830,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.bumptech.glide.request.Request",
-  "secondLabel" : "com.bumptech.glide.request.Request",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3647,
   "secondPos" : 3923,
+  "firstEndPos" : 3681,
+  "secondEndPos" : 3957
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3647,
+  "secondPos" : 3923,
+  "firstEndPos" : 3650,
+  "secondEndPos" : 3926
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "bumptech",
+  "secondLabel" : "bumptech",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3651,
+  "secondPos" : 3927,
+  "firstEndPos" : 3659,
+  "secondEndPos" : 3935
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "glide",
+  "secondLabel" : "glide",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3660,
+  "secondPos" : 3936,
+  "firstEndPos" : 3665,
+  "secondEndPos" : 3941
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "request",
+  "secondLabel" : "request",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3666,
+  "secondPos" : 3942,
+  "firstEndPos" : 3673,
+  "secondEndPos" : 3949
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Request",
+  "secondLabel" : "Request",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3674,
+  "secondPos" : 3950,
   "firstEndPos" : 3681,
   "secondEndPos" : 3957
 }, {
@@ -5600,12 +6700,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.bumptech.glide.RequestManager",
-  "secondLabel" : "com.bumptech.glide.RequestManager",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 5053,
   "secondPos" : 5329,
+  "firstEndPos" : 5086,
+  "secondEndPos" : 5362
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5053,
+  "secondPos" : 5329,
+  "firstEndPos" : 5056,
+  "secondEndPos" : 5332
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "bumptech",
+  "secondLabel" : "bumptech",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5057,
+  "secondPos" : 5333,
+  "firstEndPos" : 5065,
+  "secondEndPos" : 5341
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "glide",
+  "secondLabel" : "glide",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5066,
+  "secondPos" : 5342,
+  "firstEndPos" : 5071,
+  "secondEndPos" : 5347
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "RequestManager",
+  "secondLabel" : "RequestManager",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5072,
+  "secondPos" : 5348,
   "firstEndPos" : 5086,
   "secondEndPos" : 5362
 }, {
@@ -5853,12 +6997,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ViewTarget.tagId",
-  "secondLabel" : "ViewTarget.tagId",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 5306,
   "secondPos" : 5582,
+  "firstEndPos" : 5322,
+  "secondEndPos" : 5598
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ViewTarget",
+  "secondLabel" : "ViewTarget",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5306,
+  "secondPos" : 5582,
+  "firstEndPos" : 5316,
+  "secondEndPos" : 5592
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "tagId",
+  "secondLabel" : "tagId",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5317,
+  "secondPos" : 5593,
   "firstEndPos" : 5322,
   "secondEndPos" : 5598
 }, {
@@ -6029,12 +7195,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ViewTarget.tagId",
-  "secondLabel" : "ViewTarget.tagId",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "Assignment",
   "secondParentType" : "Assignment",
   "firstPos" : 5540,
   "secondPos" : 5816,
+  "firstEndPos" : 5556,
+  "secondEndPos" : 5832
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ViewTarget",
+  "secondLabel" : "ViewTarget",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5540,
+  "secondPos" : 5816,
+  "firstEndPos" : 5550,
+  "secondEndPos" : 5826
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "tagId",
+  "secondLabel" : "tagId",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5551,
+  "secondPos" : 5827,
   "firstEndPos" : 5556,
   "secondEndPos" : 5832
 }, {
@@ -9450,12 +10638,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "layoutParams.height",
-  "secondLabel" : "layoutParams.height",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 8165,
   "secondPos" : 8515,
+  "firstEndPos" : 8184,
+  "secondEndPos" : 8534
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "layoutParams",
+  "secondLabel" : "layoutParams",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8165,
+  "secondPos" : 8515,
+  "firstEndPos" : 8177,
+  "secondEndPos" : 8527
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "height",
+  "secondLabel" : "height",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8178,
+  "secondPos" : 8528,
   "firstEndPos" : 8184,
   "secondEndPos" : 8534
 }, {
@@ -9945,12 +11155,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "layoutParams.width",
-  "secondLabel" : "layoutParams.width",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 8515,
   "secondPos" : 8865,
+  "firstEndPos" : 8533,
+  "secondEndPos" : 8883
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "layoutParams",
+  "secondLabel" : "layoutParams",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8515,
+  "secondPos" : 8865,
+  "firstEndPos" : 8527,
+  "secondEndPos" : 8877
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "width",
+  "secondLabel" : "width",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8528,
+  "secondPos" : 8878,
   "firstEndPos" : 8533,
   "secondEndPos" : 8883
 }, {
@@ -10176,12 +11408,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "LayoutParams.WRAP_CONTENT",
-  "secondLabel" : "LayoutParams.WRAP_CONTENT",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 8697,
   "secondPos" : 9047,
+  "firstEndPos" : 8722,
+  "secondEndPos" : 9072
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LayoutParams",
+  "secondLabel" : "LayoutParams",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8697,
+  "secondPos" : 9047,
+  "firstEndPos" : 8709,
+  "secondEndPos" : 9059
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "WRAP_CONTENT",
+  "secondLabel" : "WRAP_CONTENT",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8710,
+  "secondPos" : 9060,
   "firstEndPos" : 8722,
   "secondEndPos" : 9072
 }, {
@@ -10308,8 +11562,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "displayDimens.y",
-  "secondLabel" : "displayDimens.y",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ConditionalExpression",
   "secondParentType" : "ConditionalExpression",
   "firstPos" : 8802,
@@ -10317,14 +11571,58 @@
   "firstEndPos" : 8817,
   "secondEndPos" : 9167
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "displayDimens",
+  "secondLabel" : "displayDimens",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8802,
+  "secondPos" : 9152,
+  "firstEndPos" : 8815,
+  "secondEndPos" : 9165
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "y",
+  "secondLabel" : "y",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8816,
+  "secondPos" : 9166,
+  "firstEndPos" : 8817,
+  "secondEndPos" : 9167
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "displayDimens.x",
-  "secondLabel" : "displayDimens.x",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ConditionalExpression",
   "secondParentType" : "ConditionalExpression",
   "firstPos" : 8820,
   "secondPos" : 9170,
+  "firstEndPos" : 8835,
+  "secondEndPos" : 9185
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "displayDimens",
+  "secondLabel" : "displayDimens",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8820,
+  "secondPos" : 9170,
+  "firstEndPos" : 8833,
+  "secondEndPos" : 9183
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "x",
+  "secondLabel" : "x",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8834,
+  "secondPos" : 9184,
   "firstEndPos" : 8835,
   "secondEndPos" : 9185
 }, {
@@ -10396,12 +11694,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Build.VERSION_CODES.HONEYCOMB_MR2",
-  "secondLabel" : "Build.VERSION_CODES.HONEYCOMB_MR2",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SingleMemberAnnotation",
   "secondParentType" : "SingleMemberAnnotation",
   "firstPos" : 8904,
   "secondPos" : 9254,
+  "firstEndPos" : 8937,
+  "secondEndPos" : 9287
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Build",
+  "secondLabel" : "Build",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8904,
+  "secondPos" : 9254,
+  "firstEndPos" : 8909,
+  "secondEndPos" : 9259
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION_CODES",
+  "secondLabel" : "VERSION_CODES",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8910,
+  "secondPos" : 9260,
+  "firstEndPos" : 8923,
+  "secondEndPos" : 9273
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HONEYCOMB_MR2",
+  "secondLabel" : "HONEYCOMB_MR2",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8924,
+  "secondPos" : 9274,
   "firstEndPos" : 8937,
   "secondEndPos" : 9287
 }, {
@@ -10759,12 +12090,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Context.WINDOW_SERVICE",
-  "secondLabel" : "Context.WINDOW_SERVICE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 9185,
   "secondPos" : 9535,
+  "firstEndPos" : 9207,
+  "secondEndPos" : 9557
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Context",
+  "secondLabel" : "Context",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9185,
+  "secondPos" : 9535,
+  "firstEndPos" : 9192,
+  "secondEndPos" : 9542
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "WINDOW_SERVICE",
+  "secondLabel" : "WINDOW_SERVICE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9193,
+  "secondPos" : 9543,
   "firstEndPos" : 9207,
   "secondEndPos" : 9557
 }, {
@@ -10891,12 +12244,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Build.VERSION.SDK_INT",
-  "secondLabel" : "Build.VERSION.SDK_INT",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 9279,
   "secondPos" : 9629,
+  "firstEndPos" : 9300,
+  "secondEndPos" : 9650
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Build",
+  "secondLabel" : "Build",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9279,
+  "secondPos" : 9629,
+  "firstEndPos" : 9284,
+  "secondEndPos" : 9634
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9285,
+  "secondPos" : 9635,
+  "firstEndPos" : 9292,
+  "secondEndPos" : 9642
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SDK_INT",
+  "secondLabel" : "SDK_INT",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9293,
+  "secondPos" : 9643,
   "firstEndPos" : 9300,
   "secondEndPos" : 9650
 }, {
@@ -10913,12 +12299,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Build.VERSION_CODES.HONEYCOMB_MR2",
-  "secondLabel" : "Build.VERSION_CODES.HONEYCOMB_MR2",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 9304,
   "secondPos" : 9654,
+  "firstEndPos" : 9337,
+  "secondEndPos" : 9687
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Build",
+  "secondLabel" : "Build",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9304,
+  "secondPos" : 9654,
+  "firstEndPos" : 9309,
+  "secondEndPos" : 9659
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION_CODES",
+  "secondLabel" : "VERSION_CODES",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9310,
+  "secondPos" : 9660,
+  "firstEndPos" : 9323,
+  "secondEndPos" : 9673
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HONEYCOMB_MR2",
+  "secondLabel" : "HONEYCOMB_MR2",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9324,
+  "secondPos" : 9674,
   "firstEndPos" : 9337,
   "secondEndPos" : 9687
 }, {
@@ -11485,12 +12904,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "LayoutParams.WRAP_CONTENT",
-  "secondLabel" : "LayoutParams.WRAP_CONTENT",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 9629,
   "secondPos" : 9979,
+  "firstEndPos" : 9654,
+  "secondEndPos" : 10004
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LayoutParams",
+  "secondLabel" : "LayoutParams",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9629,
+  "secondPos" : 9979,
+  "firstEndPos" : 9641,
+  "secondEndPos" : 9991
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "WRAP_CONTENT",
+  "secondLabel" : "WRAP_CONTENT",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9642,
+  "secondPos" : 9992,
   "firstEndPos" : 9654,
   "secondEndPos" : 10004
 }, {
@@ -11562,8 +13003,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ViewTreeObserver.OnPreDrawListener",
-  "secondLabel" : "ViewTreeObserver.OnPreDrawListener",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 9728,
@@ -11579,6 +13020,28 @@
   "secondParentType" : "TypeDeclaration",
   "firstPos" : 9728,
   "secondPos" : 10078,
+  "firstEndPos" : 9771,
+  "secondEndPos" : 10121
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ViewTreeObserver",
+  "secondLabel" : "ViewTreeObserver",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9728,
+  "secondPos" : 10078,
+  "firstEndPos" : 9744,
+  "secondEndPos" : 10094
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OnPreDrawListener",
+  "secondLabel" : "OnPreDrawListener",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9754,
+  "secondPos" : 10104,
   "firstEndPos" : 9771,
   "secondEndPos" : 10121
 }, {
@@ -12035,12 +13498,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Log.VERBOSE",
-  "secondLabel" : "Log.VERBOSE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 10076,
   "secondPos" : 10426,
+  "firstEndPos" : 10087,
+  "secondEndPos" : 10437
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Log",
+  "secondLabel" : "Log",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10076,
+  "secondPos" : 10426,
+  "firstEndPos" : 10079,
+  "secondEndPos" : 10429
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERBOSE",
+  "secondLabel" : "VERBOSE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10080,
+  "secondPos" : 10430,
   "firstEndPos" : 10087,
   "secondEndPos" : 10437
 }, {

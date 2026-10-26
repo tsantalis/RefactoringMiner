@@ -34,12 +34,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.db",
-  "secondLabel" : "org.apache.cassandra.db",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 814,
   "secondPos" : 814,
+  "firstEndPos" : 837,
+  "secondEndPos" : 837
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 814,
+  "secondPos" : 814,
+  "firstEndPos" : 817,
+  "secondEndPos" : 817
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 818,
+  "secondPos" : 818,
+  "firstEndPos" : 824,
+  "secondEndPos" : 824
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 825,
+  "secondPos" : 825,
+  "firstEndPos" : 834,
+  "secondEndPos" : 834
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 835,
+  "secondPos" : 835,
   "firstEndPos" : 837,
   "secondEndPos" : 837
 }, {
@@ -56,12 +100,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.nio.ByteBuffer",
-  "secondLabel" : "java.nio.ByteBuffer",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 847,
   "secondPos" : 847,
+  "firstEndPos" : 866,
+  "secondEndPos" : 866
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 847,
+  "secondPos" : 847,
+  "firstEndPos" : 851,
+  "secondEndPos" : 851
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "nio",
+  "secondLabel" : "nio",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 852,
+  "secondPos" : 852,
+  "firstEndPos" : 855,
+  "secondEndPos" : 855
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ByteBuffer",
+  "secondLabel" : "ByteBuffer",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 856,
+  "secondPos" : 856,
   "firstEndPos" : 866,
   "secondEndPos" : 866
 }, {
@@ -78,12 +155,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Map",
-  "secondLabel" : "java.util.Map",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 875,
   "secondPos" : 875,
+  "firstEndPos" : 888,
+  "secondEndPos" : 888
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 875,
+  "secondPos" : 875,
+  "firstEndPos" : 879,
+  "secondEndPos" : 879
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 880,
+  "secondPos" : 880,
+  "firstEndPos" : 884,
+  "secondEndPos" : 884
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Map",
+  "secondLabel" : "Map",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 885,
+  "secondPos" : 885,
   "firstEndPos" : 888,
   "secondEndPos" : 888
 }, {
@@ -100,12 +210,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Set",
-  "secondLabel" : "java.util.Set",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 897,
   "secondPos" : 897,
+  "firstEndPos" : 910,
+  "secondEndPos" : 910
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 897,
+  "secondPos" : 897,
+  "firstEndPos" : 901,
+  "secondEndPos" : 901
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 902,
+  "secondPos" : 902,
+  "firstEndPos" : 906,
+  "secondEndPos" : 906
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Set",
+  "secondLabel" : "Set",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 907,
+  "secondPos" : 907,
   "firstEndPos" : 910,
   "secondEndPos" : 910
 }, {
@@ -122,12 +265,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.cql3.ColumnIdentifier",
-  "secondLabel" : "org.apache.cassandra.cql3.ColumnIdentifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 920,
   "secondPos" : 920,
+  "firstEndPos" : 962,
+  "secondEndPos" : 962
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 920,
+  "secondPos" : 920,
+  "firstEndPos" : 923,
+  "secondEndPos" : 923
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 924,
+  "secondPos" : 924,
+  "firstEndPos" : 930,
+  "secondEndPos" : 930
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 931,
+  "secondPos" : 931,
+  "firstEndPos" : 940,
+  "secondEndPos" : 940
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cql3",
+  "secondLabel" : "cql3",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 941,
+  "secondPos" : 941,
+  "firstEndPos" : 945,
+  "secondEndPos" : 945
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ColumnIdentifier",
+  "secondLabel" : "ColumnIdentifier",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 946,
+  "secondPos" : 946,
   "firstEndPos" : 962,
   "secondEndPos" : 962
 }, {
@@ -144,12 +342,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.config.CFMetaData",
-  "secondLabel" : "org.apache.cassandra.config.CFMetaData",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 971,
   "secondPos" : 971,
+  "firstEndPos" : 1009,
+  "secondEndPos" : 1009
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 971,
+  "secondPos" : 971,
+  "firstEndPos" : 974,
+  "secondEndPos" : 974
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 975,
+  "secondPos" : 975,
+  "firstEndPos" : 981,
+  "secondEndPos" : 981
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 982,
+  "secondPos" : 982,
+  "firstEndPos" : 991,
+  "secondEndPos" : 991
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "config",
+  "secondLabel" : "config",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 992,
+  "secondPos" : 992,
+  "firstEndPos" : 998,
+  "secondEndPos" : 998
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "CFMetaData",
+  "secondLabel" : "CFMetaData",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 999,
+  "secondPos" : 999,
   "firstEndPos" : 1009,
   "secondEndPos" : 1009
 }, {
@@ -166,12 +419,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.config.ColumnDefinition",
-  "secondLabel" : "org.apache.cassandra.config.ColumnDefinition",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1018,
   "secondPos" : 1018,
+  "firstEndPos" : 1062,
+  "secondEndPos" : 1062
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1018,
+  "secondPos" : 1018,
+  "firstEndPos" : 1021,
+  "secondEndPos" : 1021
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1022,
+  "secondPos" : 1022,
+  "firstEndPos" : 1028,
+  "secondEndPos" : 1028
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1029,
+  "secondPos" : 1029,
+  "firstEndPos" : 1038,
+  "secondEndPos" : 1038
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "config",
+  "secondLabel" : "config",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1039,
+  "secondPos" : 1039,
+  "firstEndPos" : 1045,
+  "secondEndPos" : 1045
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ColumnDefinition",
+  "secondLabel" : "ColumnDefinition",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1046,
+  "secondPos" : 1046,
   "firstEndPos" : 1062,
   "secondEndPos" : 1062
 }, {
@@ -188,12 +496,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.db.marshal.SetType",
-  "secondLabel" : "org.apache.cassandra.db.marshal.SetType",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1071,
   "secondPos" : 1071,
+  "firstEndPos" : 1110,
+  "secondEndPos" : 1110
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1071,
+  "secondPos" : 1071,
+  "firstEndPos" : 1074,
+  "secondEndPos" : 1074
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1075,
+  "secondPos" : 1075,
+  "firstEndPos" : 1081,
+  "secondEndPos" : 1081
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1082,
+  "secondPos" : 1082,
+  "firstEndPos" : 1091,
+  "secondEndPos" : 1091
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1092,
+  "secondPos" : 1092,
+  "firstEndPos" : 1094,
+  "secondEndPos" : 1094
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "marshal",
+  "secondLabel" : "marshal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1095,
+  "secondPos" : 1095,
+  "firstEndPos" : 1102,
+  "secondEndPos" : 1102
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SetType",
+  "secondLabel" : "SetType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1103,
+  "secondPos" : 1103,
   "firstEndPos" : 1110,
   "secondEndPos" : 1110
 }, {
@@ -210,12 +584,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.db.rows",
-  "secondLabel" : "org.apache.cassandra.db.rows",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1119,
   "secondPos" : 1119,
+  "firstEndPos" : 1147,
+  "secondEndPos" : 1147
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1119,
+  "secondPos" : 1119,
+  "firstEndPos" : 1122,
+  "secondEndPos" : 1122
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1123,
+  "secondPos" : 1123,
+  "firstEndPos" : 1129,
+  "secondEndPos" : 1129
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1130,
+  "secondPos" : 1130,
+  "firstEndPos" : 1139,
+  "secondEndPos" : 1139
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1140,
+  "secondPos" : 1140,
+  "firstEndPos" : 1142,
+  "secondEndPos" : 1142
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "rows",
+  "secondLabel" : "rows",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1143,
+  "secondPos" : 1143,
   "firstEndPos" : 1147,
   "secondEndPos" : 1147
 }, {
@@ -232,12 +661,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.db.context.CounterContext",
-  "secondLabel" : "org.apache.cassandra.db.context.CounterContext",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1158,
   "secondPos" : 1158,
+  "firstEndPos" : 1204,
+  "secondEndPos" : 1204
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1158,
+  "secondPos" : 1158,
+  "firstEndPos" : 1161,
+  "secondEndPos" : 1161
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1162,
+  "secondPos" : 1162,
+  "firstEndPos" : 1168,
+  "secondEndPos" : 1168
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1169,
+  "secondPos" : 1169,
+  "firstEndPos" : 1178,
+  "secondEndPos" : 1178
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1179,
+  "secondPos" : 1179,
+  "firstEndPos" : 1181,
+  "secondEndPos" : 1181
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "context",
+  "secondLabel" : "context",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1182,
+  "secondPos" : 1182,
+  "firstEndPos" : 1189,
+  "secondEndPos" : 1189
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "CounterContext",
+  "secondLabel" : "CounterContext",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1190,
+  "secondPos" : 1190,
   "firstEndPos" : 1204,
   "secondEndPos" : 1204
 }, {
@@ -254,12 +749,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.db.partitions",
-  "secondLabel" : "org.apache.cassandra.db.partitions",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1213,
   "secondPos" : 1213,
+  "firstEndPos" : 1247,
+  "secondEndPos" : 1247
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1213,
+  "secondPos" : 1213,
+  "firstEndPos" : 1216,
+  "secondEndPos" : 1216
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1217,
+  "secondPos" : 1217,
+  "firstEndPos" : 1223,
+  "secondEndPos" : 1223
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1224,
+  "secondPos" : 1224,
+  "firstEndPos" : 1233,
+  "secondEndPos" : 1233
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1234,
+  "secondPos" : 1234,
+  "firstEndPos" : 1236,
+  "secondEndPos" : 1236
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "partitions",
+  "secondLabel" : "partitions",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1237,
+  "secondPos" : 1237,
   "firstEndPos" : 1247,
   "secondEndPos" : 1247
 }, {
@@ -276,12 +826,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.db.marshal.AbstractType",
-  "secondLabel" : "org.apache.cassandra.db.marshal.AbstractType",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1258,
   "secondPos" : 1258,
+  "firstEndPos" : 1302,
+  "secondEndPos" : 1302
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1258,
+  "secondPos" : 1258,
+  "firstEndPos" : 1261,
+  "secondEndPos" : 1261
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1262,
+  "secondPos" : 1262,
+  "firstEndPos" : 1268,
+  "secondEndPos" : 1268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1269,
+  "secondPos" : 1269,
+  "firstEndPos" : 1278,
+  "secondEndPos" : 1278
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1279,
+  "secondPos" : 1279,
+  "firstEndPos" : 1281,
+  "secondEndPos" : 1281
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "marshal",
+  "secondLabel" : "marshal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1282,
+  "secondPos" : 1282,
+  "firstEndPos" : 1289,
+  "secondEndPos" : 1289
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractType",
+  "secondLabel" : "AbstractType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1290,
+  "secondPos" : 1290,
   "firstEndPos" : 1302,
   "secondEndPos" : 1302
 }, {
@@ -298,12 +914,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.db.marshal.ListType",
-  "secondLabel" : "org.apache.cassandra.db.marshal.ListType",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1311,
   "secondPos" : 1311,
+  "firstEndPos" : 1351,
+  "secondEndPos" : 1351
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1311,
+  "secondPos" : 1311,
+  "firstEndPos" : 1314,
+  "secondEndPos" : 1314
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1315,
+  "secondPos" : 1315,
+  "firstEndPos" : 1321,
+  "secondEndPos" : 1321
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1322,
+  "secondPos" : 1322,
+  "firstEndPos" : 1331,
+  "secondEndPos" : 1331
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1332,
+  "secondPos" : 1332,
+  "firstEndPos" : 1334,
+  "secondEndPos" : 1334
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "marshal",
+  "secondLabel" : "marshal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1335,
+  "secondPos" : 1335,
+  "firstEndPos" : 1342,
+  "secondEndPos" : 1342
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ListType",
+  "secondLabel" : "ListType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1343,
+  "secondPos" : 1343,
   "firstEndPos" : 1351,
   "secondEndPos" : 1351
 }, {
@@ -320,12 +1002,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.db.marshal.MapType",
-  "secondLabel" : "org.apache.cassandra.db.marshal.MapType",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1360,
   "secondPos" : 1360,
+  "firstEndPos" : 1399,
+  "secondEndPos" : 1399
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1360,
+  "secondPos" : 1360,
+  "firstEndPos" : 1363,
+  "secondEndPos" : 1363
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1364,
+  "secondPos" : 1364,
+  "firstEndPos" : 1370,
+  "secondEndPos" : 1370
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1371,
+  "secondPos" : 1371,
+  "firstEndPos" : 1380,
+  "secondEndPos" : 1380
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1381,
+  "secondPos" : 1381,
+  "firstEndPos" : 1383,
+  "secondEndPos" : 1383
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "marshal",
+  "secondLabel" : "marshal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1384,
+  "secondPos" : 1384,
+  "firstEndPos" : 1391,
+  "secondEndPos" : 1391
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MapType",
+  "secondLabel" : "MapType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1392,
+  "secondPos" : 1392,
   "firstEndPos" : 1399,
   "secondEndPos" : 1399
 }, {
@@ -342,12 +1090,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.service.StorageService",
-  "secondLabel" : "org.apache.cassandra.service.StorageService",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1408,
   "secondPos" : 1408,
+  "firstEndPos" : 1451,
+  "secondEndPos" : 1451
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1408,
+  "secondPos" : 1408,
+  "firstEndPos" : 1411,
+  "secondEndPos" : 1411
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1412,
+  "secondPos" : 1412,
+  "firstEndPos" : 1418,
+  "secondEndPos" : 1418
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1419,
+  "secondPos" : 1419,
+  "firstEndPos" : 1428,
+  "secondEndPos" : 1428
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "service",
+  "secondLabel" : "service",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1429,
+  "secondPos" : 1429,
+  "firstEndPos" : 1436,
+  "secondEndPos" : 1436
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "StorageService",
+  "secondLabel" : "StorageService",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1437,
+  "secondPos" : 1437,
   "firstEndPos" : 1451,
   "secondEndPos" : 1451
 }, {
@@ -364,12 +1167,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.cassandra.utils",
-  "secondLabel" : "org.apache.cassandra.utils",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1460,
   "secondPos" : 1460,
+  "firstEndPos" : 1486,
+  "secondEndPos" : 1486
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1460,
+  "secondPos" : 1460,
+  "firstEndPos" : 1463,
+  "secondEndPos" : 1463
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1464,
+  "secondPos" : 1464,
+  "firstEndPos" : 1470,
+  "secondEndPos" : 1470
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cassandra",
+  "secondLabel" : "cassandra",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1471,
+  "secondPos" : 1471,
+  "firstEndPos" : 1480,
+  "secondEndPos" : 1480
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "utils",
+  "secondLabel" : "utils",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1481,
+  "secondPos" : 1481,
   "firstEndPos" : 1486,
   "secondEndPos" : 1486
 }, {
@@ -914,8 +1761,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Row.Builder",
-  "secondLabel" : "Row.Builder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 1920,
@@ -931,6 +1778,28 @@
   "secondParentType" : "FieldDeclaration",
   "firstPos" : 1920,
   "secondPos" : 1920,
+  "firstEndPos" : 1931,
+  "secondEndPos" : 1931
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Row",
+  "secondLabel" : "Row",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1920,
+  "secondPos" : 1920,
+  "firstEndPos" : 1923,
+  "secondEndPos" : 1923
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Builder",
+  "secondLabel" : "Builder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1924,
+  "secondPos" : 1924,
   "firstEndPos" : 1931,
   "secondEndPos" : 1931
 }, {
@@ -980,8 +1849,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Row.Builder",
-  "secondLabel" : "Row.Builder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 1960,
@@ -997,6 +1866,28 @@
   "secondParentType" : "FieldDeclaration",
   "firstPos" : 1960,
   "secondPos" : 1960,
+  "firstEndPos" : 1971,
+  "secondEndPos" : 1971
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Row",
+  "secondLabel" : "Row",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1960,
+  "secondPos" : 1960,
+  "firstEndPos" : 1963,
+  "secondEndPos" : 1963
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Builder",
+  "secondLabel" : "Builder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1964,
+  "secondPos" : 1964,
   "firstEndPos" : 1971,
   "secondEndPos" : 1971
 }, {
@@ -3268,8 +4159,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Row.Builder",
-  "secondLabel" : "Row.Builder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 3584,
@@ -3285,6 +4176,28 @@
   "secondParentType" : "MethodDeclaration",
   "firstPos" : 3584,
   "secondPos" : 3584,
+  "firstEndPos" : 3595,
+  "secondEndPos" : 3595
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Row",
+  "secondLabel" : "Row",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3584,
+  "secondPos" : 3584,
+  "firstEndPos" : 3587,
+  "secondEndPos" : 3587
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Builder",
+  "secondLabel" : "Builder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3588,
+  "secondPos" : 3588,
   "firstEndPos" : 3595,
   "secondEndPos" : 3595
 }, {
@@ -3653,12 +4566,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Clustering.EMPTY",
-  "secondLabel" : "Clustering.EMPTY",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 4013,
   "secondPos" : 4013,
+  "firstEndPos" : 4029,
+  "secondEndPos" : 4029
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Clustering",
+  "secondLabel" : "Clustering",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4013,
+  "secondPos" : 4013,
+  "firstEndPos" : 4023,
+  "secondEndPos" : 4023
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "EMPTY",
+  "secondLabel" : "EMPTY",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4024,
+  "secondPos" : 4024,
   "firstEndPos" : 4029,
   "secondEndPos" : 4029
 }, {
@@ -3708,8 +4643,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Row.Builder",
-  "secondLabel" : "Row.Builder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 4092,
@@ -3725,6 +4660,28 @@
   "secondParentType" : "MethodDeclaration",
   "firstPos" : 4092,
   "secondPos" : 4092,
+  "firstEndPos" : 4103,
+  "secondEndPos" : 4103
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Row",
+  "secondLabel" : "Row",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4092,
+  "secondPos" : 4092,
+  "firstEndPos" : 4095,
+  "secondEndPos" : 4095
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Builder",
+  "secondLabel" : "Builder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4096,
+  "secondPos" : 4096,
   "firstEndPos" : 4103,
   "secondEndPos" : 4103
 }, {
@@ -4159,12 +5116,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Clustering.STATIC_CLUSTERING",
-  "secondLabel" : "Clustering.STATIC_CLUSTERING",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 4448,
   "secondPos" : 4448,
+  "firstEndPos" : 4476,
+  "secondEndPos" : 4476
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Clustering",
+  "secondLabel" : "Clustering",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4448,
+  "secondPos" : 4448,
+  "firstEndPos" : 4458,
+  "secondEndPos" : 4458
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "STATIC_CLUSTERING",
+  "secondLabel" : "STATIC_CLUSTERING",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4459,
+  "secondPos" : 4459,
   "firstEndPos" : 4476,
   "secondEndPos" : 4476
 }, {
@@ -4214,8 +5193,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Row.Builder",
-  "secondLabel" : "Row.Builder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 4538,
@@ -4231,6 +5210,28 @@
   "secondParentType" : "MethodDeclaration",
   "firstPos" : 4538,
   "secondPos" : 4538,
+  "firstEndPos" : 4549,
+  "secondEndPos" : 4549
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Row",
+  "secondLabel" : "Row",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4538,
+  "secondPos" : 4538,
+  "firstEndPos" : 4541,
+  "secondEndPos" : 4541
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Builder",
+  "secondLabel" : "Builder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4542,
+  "secondPos" : 4542,
   "firstEndPos" : 4549,
   "secondEndPos" : 4549
 }, {
@@ -5897,12 +6898,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "LivenessInfo.NO_TTL",
-  "secondLabel" : "LivenessInfo.NO_TTL",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ConstructorInvocation",
   "secondParentType" : "ConstructorInvocation",
   "firstPos" : 5645,
   "secondPos" : 5645,
+  "firstEndPos" : 5664,
+  "secondEndPos" : 5664
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LivenessInfo",
+  "secondLabel" : "LivenessInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5645,
+  "secondPos" : 5645,
+  "firstEndPos" : 5657,
+  "secondEndPos" : 5657
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NO_TTL",
+  "secondLabel" : "NO_TTL",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5658,
+  "secondPos" : 5658,
   "firstEndPos" : 5664,
   "secondEndPos" : 5664
 }, {
@@ -6755,12 +7778,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "clusteringValues.length",
-  "secondLabel" : "clusteringValues.length",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 6261,
   "secondPos" : 6261,
+  "firstEndPos" : 6284,
+  "secondEndPos" : 6284
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "clusteringValues",
+  "secondLabel" : "clusteringValues",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6261,
+  "secondPos" : 6261,
+  "firstEndPos" : 6277,
+  "secondEndPos" : 6277
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6278,
+  "secondPos" : 6278,
   "firstEndPos" : 6284,
   "secondEndPos" : 6284
 }, {
@@ -7019,12 +8064,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "clusteringValues.length",
-  "secondLabel" : "clusteringValues.length",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 6437,
   "secondPos" : 6437,
+  "firstEndPos" : 6460,
+  "secondEndPos" : 6460
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "clusteringValues",
+  "secondLabel" : "clusteringValues",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6437,
+  "secondPos" : 6437,
+  "firstEndPos" : 6453,
+  "secondEndPos" : 6453
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6454,
+  "secondPos" : 6454,
   "firstEndPos" : 6460,
   "secondEndPos" : 6460
 }, {
@@ -7096,12 +8163,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "clusteringValues.length",
-  "secondLabel" : "clusteringValues.length",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 6480,
   "secondPos" : 6480,
+  "firstEndPos" : 6503,
+  "secondEndPos" : 6503
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "clusteringValues",
+  "secondLabel" : "clusteringValues",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6480,
+  "secondPos" : 6480,
+  "firstEndPos" : 6496,
+  "secondEndPos" : 6496
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6497,
+  "secondPos" : 6497,
   "firstEndPos" : 6503,
   "secondEndPos" : 6503
 }, {
@@ -7129,12 +8218,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Clustering.EMPTY",
-  "secondLabel" : "Clustering.EMPTY",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ConditionalExpression",
   "secondParentType" : "ConditionalExpression",
   "firstPos" : 6511,
   "secondPos" : 6511,
+  "firstEndPos" : 6527,
+  "secondEndPos" : 6527
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Clustering",
+  "secondLabel" : "Clustering",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6511,
+  "secondPos" : 6511,
+  "firstEndPos" : 6521,
+  "secondEndPos" : 6521
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "EMPTY",
+  "secondLabel" : "EMPTY",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6522,
+  "secondPos" : 6522,
   "firstEndPos" : 6527,
   "secondEndPos" : 6527
 }, {
@@ -7360,8 +8471,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Row.Builder",
-  "secondLabel" : "Row.Builder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 6654,
@@ -7377,6 +8488,28 @@
   "secondParentType" : "VariableDeclarationStatement",
   "firstPos" : 6654,
   "secondPos" : 6654,
+  "firstEndPos" : 6665,
+  "secondEndPos" : 6665
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Row",
+  "secondLabel" : "Row",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6654,
+  "secondPos" : 6654,
+  "firstEndPos" : 6657,
+  "secondEndPos" : 6657
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Builder",
+  "secondLabel" : "Builder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 6658,
+  "secondPos" : 6658,
   "firstEndPos" : 6665,
   "secondEndPos" : 6665
 }, {
@@ -8031,12 +9164,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "clusteringValues.length",
-  "secondLabel" : "clusteringValues.length",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 7051,
   "secondPos" : 7075,
+  "firstEndPos" : 7074,
+  "secondEndPos" : 7098
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "clusteringValues",
+  "secondLabel" : "clusteringValues",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7051,
+  "secondPos" : 7075,
+  "firstEndPos" : 7067,
+  "secondEndPos" : 7091
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7068,
+  "secondPos" : 7092,
   "firstEndPos" : 7074,
   "secondEndPos" : 7098
 }, {
@@ -8196,12 +9351,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "clusteringValues.length",
-  "secondLabel" : "clusteringValues.length",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 7118,
   "secondPos" : 7142,
+  "firstEndPos" : 7141,
+  "secondEndPos" : 7165
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "clusteringValues",
+  "secondLabel" : "clusteringValues",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7118,
+  "secondPos" : 7142,
+  "firstEndPos" : 7134,
+  "secondEndPos" : 7158
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7135,
+  "secondPos" : 7159,
   "firstEndPos" : 7141,
   "secondEndPos" : 7165
 }, {
@@ -8416,12 +9593,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "clusteringValues.length",
-  "secondLabel" : "clusteringValues.length",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 7216,
   "secondPos" : 7240,
+  "firstEndPos" : 7239,
+  "secondEndPos" : 7263
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "clusteringValues",
+  "secondLabel" : "clusteringValues",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7216,
+  "secondPos" : 7240,
+  "firstEndPos" : 7232,
+  "secondEndPos" : 7256
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7233,
+  "secondPos" : 7257,
   "firstEndPos" : 7239,
   "secondEndPos" : 7263
 }, {
@@ -8548,8 +9747,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Row.Builder",
-  "secondLabel" : "Row.Builder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 7288,
@@ -8565,6 +9764,28 @@
   "secondParentType" : "VariableDeclarationStatement",
   "firstPos" : 7288,
   "secondPos" : 7312,
+  "firstEndPos" : 7299,
+  "secondEndPos" : 7323
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Row",
+  "secondLabel" : "Row",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7288,
+  "secondPos" : 7312,
+  "firstEndPos" : 7291,
+  "secondEndPos" : 7315
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Builder",
+  "secondLabel" : "Builder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7292,
+  "secondPos" : 7316,
   "firstEndPos" : 7299,
   "secondEndPos" : 7323
 }, {
@@ -8889,12 +10110,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Clustering.STATIC_CLUSTERING",
-  "secondLabel" : "Clustering.STATIC_CLUSTERING",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 7455,
   "secondPos" : 7479,
+  "firstEndPos" : 7483,
+  "secondEndPos" : 7507
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Clustering",
+  "secondLabel" : "Clustering",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7455,
+  "secondPos" : 7479,
+  "firstEndPos" : 7465,
+  "secondEndPos" : 7489
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "STATIC_CLUSTERING",
+  "secondLabel" : "STATIC_CLUSTERING",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7466,
+  "secondPos" : 7490,
   "firstEndPos" : 7483,
   "secondEndPos" : 7507
 }, {
@@ -8988,12 +10231,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "clusteringValues.length",
-  "secondLabel" : "clusteringValues.length",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 7526,
   "secondPos" : 7550,
+  "firstEndPos" : 7549,
+  "secondEndPos" : 7573
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "clusteringValues",
+  "secondLabel" : "clusteringValues",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7526,
+  "secondPos" : 7550,
+  "firstEndPos" : 7542,
+  "secondEndPos" : 7566
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7543,
+  "secondPos" : 7567,
   "firstEndPos" : 7549,
   "secondEndPos" : 7573
 }, {
@@ -9021,12 +10286,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Clustering.EMPTY",
-  "secondLabel" : "Clustering.EMPTY",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ConditionalExpression",
   "secondParentType" : "ConditionalExpression",
   "firstPos" : 7557,
   "secondPos" : 7581,
+  "firstEndPos" : 7573,
+  "secondEndPos" : 7597
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Clustering",
+  "secondLabel" : "Clustering",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7557,
+  "secondPos" : 7581,
+  "firstEndPos" : 7567,
+  "secondEndPos" : 7591
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "EMPTY",
+  "secondLabel" : "EMPTY",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 7568,
+  "secondPos" : 7592,
   "firstEndPos" : 7573,
   "secondEndPos" : 7597
 }, {
@@ -10825,12 +12112,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "partitionKey.length",
-  "secondLabel" : "partitionKey.length",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 8695,
   "secondPos" : 9009,
+  "firstEndPos" : 8714,
+  "secondEndPos" : 9028
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "partitionKey",
+  "secondLabel" : "partitionKey",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8695,
+  "secondPos" : 9009,
+  "firstEndPos" : 8707,
+  "secondEndPos" : 9021
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8708,
+  "secondPos" : 9022,
   "firstEndPos" : 8714,
   "secondEndPos" : 9028
 }, {
@@ -12651,12 +13960,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 9742,
   "secondPos" : 10056,
+  "firstEndPos" : 9748,
+  "secondEndPos" : 10062
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9742,
+  "secondPos" : 10056,
+  "firstEndPos" : 9743,
+  "secondEndPos" : 10057
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9744,
+  "secondPos" : 10058,
   "firstEndPos" : 9748,
   "secondEndPos" : 10062
 }, {
@@ -12706,12 +14037,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 9767,
   "secondPos" : 10081,
+  "firstEndPos" : 9773,
+  "secondEndPos" : 10087
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9767,
+  "secondPos" : 10081,
+  "firstEndPos" : 9768,
+  "secondEndPos" : 10082
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 9769,
+  "secondPos" : 10083,
   "firstEndPos" : 9773,
   "secondEndPos" : 10087
 }, {
@@ -14763,12 +16116,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "LivenessInfo.NO_TTL",
-  "secondLabel" : "LivenessInfo.NO_TTL",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 10871,
   "secondPos" : 11185,
+  "firstEndPos" : 10890,
+  "secondEndPos" : 11204
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LivenessInfo",
+  "secondLabel" : "LivenessInfo",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10871,
+  "secondPos" : 11185,
+  "firstEndPos" : 10883,
+  "secondEndPos" : 11197
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NO_TTL",
+  "secondLabel" : "NO_TTL",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10884,
+  "secondPos" : 11198,
   "firstEndPos" : 10890,
   "secondEndPos" : 11204
 }, {
@@ -15709,12 +17084,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "columnDefinition.type",
-  "secondLabel" : "columnDefinition.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 11416,
   "secondPos" : 11730,
+  "firstEndPos" : 11437,
+  "secondEndPos" : 11751
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "columnDefinition",
+  "secondLabel" : "columnDefinition",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 11416,
+  "secondPos" : 11730,
+  "firstEndPos" : 11432,
+  "secondEndPos" : 11746
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 11433,
+  "secondPos" : 11747,
   "firstEndPos" : 11437,
   "secondEndPos" : 11751
 }, {
@@ -17403,8 +18800,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Map.Entry",
-  "secondLabel" : "Map.Entry",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 12504,
@@ -17420,6 +18817,28 @@
   "secondParentType" : "ParameterizedType",
   "firstPos" : 12504,
   "secondPos" : 12818,
+  "firstEndPos" : 12513,
+  "secondEndPos" : 12827
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Map",
+  "secondLabel" : "Map",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12504,
+  "secondPos" : 12818,
+  "firstEndPos" : 12507,
+  "secondEndPos" : 12821
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Entry",
+  "secondLabel" : "Entry",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12508,
+  "secondPos" : 12822,
   "firstEndPos" : 12513,
   "secondEndPos" : 12827
 }, {
@@ -18712,12 +20131,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InstanceofExpression",
   "secondParentType" : "InstanceofExpression",
   "firstPos" : 13200,
   "secondPos" : 13514,
+  "firstEndPos" : 13206,
+  "secondEndPos" : 13520
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13200,
+  "secondPos" : 13514,
+  "firstEndPos" : 13201,
+  "secondEndPos" : 13515
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13202,
+  "secondPos" : 13516,
   "firstEndPos" : 13206,
   "secondEndPos" : 13520
 }, {
@@ -18778,12 +20219,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 13229,
   "secondPos" : 13543,
+  "firstEndPos" : 13235,
+  "secondEndPos" : 13549
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13229,
+  "secondPos" : 13543,
+  "firstEndPos" : 13230,
+  "secondEndPos" : 13544
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13231,
+  "secondPos" : 13545,
   "firstEndPos" : 13235,
   "secondEndPos" : 13549
 }, {
@@ -18888,12 +20351,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "CastExpression",
   "secondParentType" : "CastExpression",
   "firstPos" : 13281,
   "secondPos" : 13595,
+  "firstEndPos" : 13287,
+  "secondEndPos" : 13601
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13281,
+  "secondPos" : 13595,
+  "firstEndPos" : 13282,
+  "secondEndPos" : 13596
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13283,
+  "secondPos" : 13597,
   "firstEndPos" : 13287,
   "secondEndPos" : 13601
 }, {
@@ -19757,12 +21242,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InstanceofExpression",
   "secondParentType" : "InstanceofExpression",
   "firstPos" : 13720,
   "secondPos" : 14034,
+  "firstEndPos" : 13726,
+  "secondEndPos" : 14040
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13720,
+  "secondPos" : 14034,
+  "firstEndPos" : 13721,
+  "secondEndPos" : 14035
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13722,
+  "secondPos" : 14036,
   "firstEndPos" : 13726,
   "secondEndPos" : 14040
 }, {
@@ -19823,12 +21330,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 13750,
   "secondPos" : 14064,
+  "firstEndPos" : 13756,
+  "secondEndPos" : 14070
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13750,
+  "secondPos" : 14064,
+  "firstEndPos" : 13751,
+  "secondEndPos" : 14065
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13752,
+  "secondPos" : 14066,
   "firstEndPos" : 13756,
   "secondEndPos" : 14070
 }, {
@@ -19933,12 +21462,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "CastExpression",
   "secondParentType" : "CastExpression",
   "firstPos" : 13804,
   "secondPos" : 14118,
+  "firstEndPos" : 13810,
+  "secondEndPos" : 14124
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13804,
+  "secondPos" : 14118,
+  "firstEndPos" : 13805,
+  "secondEndPos" : 14119
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 13806,
+  "secondPos" : 14120,
   "firstEndPos" : 13810,
   "secondEndPos" : 14124
 }, {
@@ -20813,12 +22364,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InstanceofExpression",
   "secondParentType" : "InstanceofExpression",
   "firstPos" : 14262,
   "secondPos" : 14576,
+  "firstEndPos" : 14268,
+  "secondEndPos" : 14582
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 14262,
+  "secondPos" : 14576,
+  "firstEndPos" : 14263,
+  "secondEndPos" : 14577
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 14264,
+  "secondPos" : 14578,
   "firstEndPos" : 14268,
   "secondEndPos" : 14582
 }, {
@@ -20879,12 +22452,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 14291,
   "secondPos" : 14605,
+  "firstEndPos" : 14297,
+  "secondEndPos" : 14611
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 14291,
+  "secondPos" : 14605,
+  "firstEndPos" : 14292,
+  "secondEndPos" : 14606
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 14293,
+  "secondPos" : 14607,
   "firstEndPos" : 14297,
   "secondEndPos" : 14611
 }, {
@@ -20989,12 +22584,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "c.type",
-  "secondLabel" : "c.type",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "CastExpression",
   "secondParentType" : "CastExpression",
   "firstPos" : 14343,
   "secondPos" : 14657,
+  "firstEndPos" : 14349,
+  "secondEndPos" : 14663
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 14343,
+  "secondPos" : 14657,
+  "firstEndPos" : 14344,
+  "secondEndPos" : 14658
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 14345,
+  "secondPos" : 14659,
   "firstEndPos" : 14349,
   "secondEndPos" : 14663
 }, {
@@ -21143,12 +22760,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ByteBufferUtil.EMPTY_BYTE_BUFFER",
-  "secondLabel" : "ByteBufferUtil.EMPTY_BYTE_BUFFER",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 14390,
   "secondPos" : 14704,
+  "firstEndPos" : 14422,
+  "secondEndPos" : 14736
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ByteBufferUtil",
+  "secondLabel" : "ByteBufferUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 14390,
+  "secondPos" : 14704,
+  "firstEndPos" : 14404,
+  "secondEndPos" : 14718
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "EMPTY_BYTE_BUFFER",
+  "secondLabel" : "EMPTY_BYTE_BUFFER",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 14405,
+  "secondPos" : 14719,
   "firstEndPos" : 14422,
   "secondEndPos" : 14736
 }, {

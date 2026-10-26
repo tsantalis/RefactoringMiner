@@ -44,12 +44,12 @@ public class ClassDiffMatcher extends OptimizationAwareMatcher{
             if(classDiff.getOriginalClass().getLANG().equals(gr.uom.java.xmi.Constants.CPP) && classDiff.getNextClass().getLANG().equals(gr.uom.java.xmi.Constants.CPP))
                 ClassDeclarationMatcher.processNamespaceDefinitions(srcTree, dstTree, mappingStore, LANG1, LANG2);
             else
-                new PackageDeclarationMatcher(LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+                new PackageDeclarationMatcher(LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcTree, dstTree, mappingStore);
         }
         boolean isBaseDiff = classDiff instanceof UMLClassBaseDiff;
         if (isBaseDiff) {
             UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
-            new ImportMatcher(baseClassDiff.getImportDiffList(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+            new ImportMatcher(baseClassDiff.getImportDiffList(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcTree, dstTree, mappingStore);
             new ClassDeclarationMatcher(optimizationData, baseClassDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         }
         if(classDiff instanceof UMLAnonymousToClassDiff) {

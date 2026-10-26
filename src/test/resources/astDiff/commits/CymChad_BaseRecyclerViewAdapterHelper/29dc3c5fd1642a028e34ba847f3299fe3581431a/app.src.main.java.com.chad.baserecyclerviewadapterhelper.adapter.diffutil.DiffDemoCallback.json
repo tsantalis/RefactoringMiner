@@ -23,13 +23,57 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.chad.baserecyclerviewadapterhelper.adapter.diffutil",
-  "secondLabel" : "com.chad.baserecyclerviewadapterhelper.activity.differ.adapter",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 8,
   "secondPos" : 8,
   "firstEndPos" : 63,
+  "secondEndPos" : 70
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "chad",
+  "secondLabel" : "chad",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 16,
+  "secondEndPos" : 16
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "baserecyclerviewadapterhelper",
+  "secondLabel" : "baserecyclerviewadapterhelper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 17,
+  "secondPos" : 17,
+  "firstEndPos" : 46,
+  "secondEndPos" : 46
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "adapter",
+  "secondLabel" : "adapter",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 47,
+  "secondPos" : 63,
+  "firstEndPos" : 54,
   "secondEndPos" : 70
 }, {
   "firstType" : "ImportDeclaration",
@@ -45,12 +89,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "androidx.annotation.NonNull",
-  "secondLabel" : "androidx.annotation.NonNull",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 73,
   "secondPos" : 80,
+  "firstEndPos" : 100,
+  "secondEndPos" : 107
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "androidx",
+  "secondLabel" : "androidx",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 73,
+  "secondPos" : 80,
+  "firstEndPos" : 81,
+  "secondEndPos" : 88
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "annotation",
+  "secondLabel" : "annotation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 82,
+  "secondPos" : 89,
+  "firstEndPos" : 92,
+  "secondEndPos" : 99
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NonNull",
+  "secondLabel" : "NonNull",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 93,
+  "secondPos" : 100,
   "firstEndPos" : 100,
   "secondEndPos" : 107
 }, {
@@ -67,12 +144,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "androidx.recyclerview.widget.DiffUtil",
-  "secondLabel" : "androidx.recyclerview.widget.DiffUtil",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 109,
   "secondPos" : 116,
+  "firstEndPos" : 146,
+  "secondEndPos" : 153
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "androidx",
+  "secondLabel" : "androidx",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 109,
+  "secondPos" : 116,
+  "firstEndPos" : 117,
+  "secondEndPos" : 124
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "recyclerview",
+  "secondLabel" : "recyclerview",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 118,
+  "secondPos" : 125,
+  "firstEndPos" : 130,
+  "secondEndPos" : 137
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "widget",
+  "secondLabel" : "widget",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 131,
+  "secondPos" : 138,
+  "firstEndPos" : 137,
+  "secondEndPos" : 144
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DiffUtil",
+  "secondLabel" : "DiffUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 138,
+  "secondPos" : 145,
   "firstEndPos" : 146,
   "secondEndPos" : 153
 }, {
@@ -89,12 +210,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.chad.baserecyclerviewadapterhelper.entity.DiffUtilDemoEntity",
-  "secondLabel" : "com.chad.baserecyclerviewadapterhelper.entity.DiffEntity",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 156,
   "secondPos" : 163,
+  "firstEndPos" : 220,
+  "secondEndPos" : 219
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 156,
+  "secondPos" : 163,
+  "firstEndPos" : 159,
+  "secondEndPos" : 166
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "chad",
+  "secondLabel" : "chad",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 160,
+  "secondPos" : 167,
+  "firstEndPos" : 164,
+  "secondEndPos" : 171
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "baserecyclerviewadapterhelper",
+  "secondLabel" : "baserecyclerviewadapterhelper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 165,
+  "secondPos" : 172,
+  "firstEndPos" : 194,
+  "secondEndPos" : 201
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "entity",
+  "secondLabel" : "entity",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 195,
+  "secondPos" : 202,
+  "firstEndPos" : 201,
+  "secondEndPos" : 208
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DiffUtilDemoEntity",
+  "secondLabel" : "DiffEntity",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 202,
+  "secondPos" : 209,
   "firstEndPos" : 220,
   "secondEndPos" : 219
 }, {
@@ -199,8 +375,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "DiffUtil.ItemCallback",
-  "secondLabel" : "DiffUtil.ItemCallback",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 292,
@@ -216,6 +392,28 @@
   "secondParentType" : "ParameterizedType",
   "firstPos" : 292,
   "secondPos" : 293,
+  "firstEndPos" : 313,
+  "secondEndPos" : 314
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DiffUtil",
+  "secondLabel" : "DiffUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 292,
+  "secondPos" : 293,
+  "firstEndPos" : 300,
+  "secondEndPos" : 301
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ItemCallback",
+  "secondLabel" : "ItemCallback",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 301,
+  "secondPos" : 302,
   "firstEndPos" : 313,
   "secondEndPos" : 314
 }, {

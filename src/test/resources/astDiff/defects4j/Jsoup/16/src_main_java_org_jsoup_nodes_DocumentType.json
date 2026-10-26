@@ -21,17 +21,6 @@
   "firstEndPos" : 24,
   "secondEndPos" : 24
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.nodes",
-  "secondLabel" : "org.jsoup.nodes",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 8,
-  "secondPos" : 8,
-  "firstEndPos" : 23,
-  "secondEndPos" : 23
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -42,17 +31,6 @@
   "secondPos" : 26,
   "firstEndPos" : 61,
   "secondEndPos" : 61
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.helper.StringUtil",
-  "secondLabel" : "org.jsoup.helper.StringUtil",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 33,
-  "secondPos" : 33,
-  "firstEndPos" : 60,
-  "secondEndPos" : 60
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -1121,17 +1099,6 @@
   "firstEndPos" : 820,
   "secondEndPos" : 887
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "Document.OutputSettings",
-  "secondLabel" : "Document.OutputSettings",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 793,
-  "secondPos" : 860,
-  "firstEndPos" : 816,
-  "secondEndPos" : 883
-}, {
   "firstType" : "SimpleType",
   "secondType" : "SimpleType",
   "firstLabel" : "",
@@ -2155,17 +2122,6 @@
   "firstEndPos" : 1243,
   "secondEndPos" : 1329
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "Document.OutputSettings",
-  "secondLabel" : "Document.OutputSettings",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 1216,
-  "secondPos" : 1302,
-  "firstEndPos" : 1239,
-  "secondEndPos" : 1325
-}, {
   "firstType" : "SimpleType",
   "secondType" : "SimpleType",
   "firstLabel" : "",
@@ -2198,4 +2154,169 @@
   "secondPos" : 1331,
   "firstEndPos" : 1252,
   "secondEndPos" : 1338
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 23,
+  "secondEndPos" : 23
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 17,
+  "secondEndPos" : 17
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "nodes",
+  "secondLabel" : "nodes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 18,
+  "secondPos" : 18,
+  "firstEndPos" : 23,
+  "secondEndPos" : 23
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 33,
+  "secondPos" : 33,
+  "firstEndPos" : 60,
+  "secondEndPos" : 60
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 33,
+  "secondPos" : 33,
+  "firstEndPos" : 36,
+  "secondEndPos" : 36
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 37,
+  "secondPos" : 37,
+  "firstEndPos" : 42,
+  "secondEndPos" : 42
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "helper",
+  "secondLabel" : "helper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 43,
+  "secondPos" : 43,
+  "firstEndPos" : 49,
+  "secondEndPos" : 49
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "StringUtil",
+  "secondLabel" : "StringUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 50,
+  "secondPos" : 50,
+  "firstEndPos" : 60,
+  "secondEndPos" : 60
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 793,
+  "secondPos" : 860,
+  "firstEndPos" : 816,
+  "secondEndPos" : 883
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Document",
+  "secondLabel" : "Document",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 793,
+  "secondPos" : 860,
+  "firstEndPos" : 801,
+  "secondEndPos" : 868
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OutputSettings",
+  "secondLabel" : "OutputSettings",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 802,
+  "secondPos" : 869,
+  "firstEndPos" : 816,
+  "secondEndPos" : 883
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 1216,
+  "secondPos" : 1302,
+  "firstEndPos" : 1239,
+  "secondEndPos" : 1325
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Document",
+  "secondLabel" : "Document",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1216,
+  "secondPos" : 1302,
+  "firstEndPos" : 1224,
+  "secondEndPos" : 1310
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OutputSettings",
+  "secondLabel" : "OutputSettings",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1225,
+  "secondPos" : 1311,
+  "firstEndPos" : 1239,
+  "secondEndPos" : 1325
 } ]

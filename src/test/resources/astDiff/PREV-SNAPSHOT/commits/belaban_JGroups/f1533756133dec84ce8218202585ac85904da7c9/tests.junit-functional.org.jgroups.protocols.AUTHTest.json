@@ -23,12 +23,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.jgroups.protocols",
-  "secondLabel" : "org.jgroups.protocols",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 8,
   "secondPos" : 8,
+  "firstEndPos" : 29,
+  "secondEndPos" : 29
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jgroups",
+  "secondLabel" : "jgroups",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 19,
+  "secondEndPos" : 19
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "protocols",
+  "secondLabel" : "protocols",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 20,
+  "secondPos" : 20,
   "firstEndPos" : 29,
   "secondEndPos" : 29
 }, {
@@ -45,12 +78,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.jgroups.Global",
-  "secondLabel" : "org.jgroups.Global",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 40,
   "secondPos" : 40,
+  "firstEndPos" : 58,
+  "secondEndPos" : 58
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 40,
+  "secondPos" : 40,
+  "firstEndPos" : 43,
+  "secondEndPos" : 43
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jgroups",
+  "secondLabel" : "jgroups",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 44,
+  "secondPos" : 44,
+  "firstEndPos" : 51,
+  "secondEndPos" : 51
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Global",
+  "secondLabel" : "Global",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 52,
+  "secondPos" : 52,
   "firstEndPos" : 58,
   "secondEndPos" : 58
 }, {
@@ -67,12 +133,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.jgroups.auth.MD5Token",
-  "secondLabel" : "org.jgroups.auth.MD5Token",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 67,
   "secondPos" : 113,
+  "firstEndPos" : 92,
+  "secondEndPos" : 138
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 67,
+  "secondPos" : 113,
+  "firstEndPos" : 70,
+  "secondEndPos" : 116
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jgroups",
+  "secondLabel" : "jgroups",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 71,
+  "secondPos" : 117,
+  "firstEndPos" : 78,
+  "secondEndPos" : 124
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "auth",
+  "secondLabel" : "auth",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 79,
+  "secondPos" : 125,
+  "firstEndPos" : 83,
+  "secondEndPos" : 129
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MD5Token",
+  "secondLabel" : "MD5Token",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 84,
+  "secondPos" : 130,
   "firstEndPos" : 92,
   "secondEndPos" : 138
 }, {
@@ -89,12 +199,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.jgroups.auth.SimpleToken",
-  "secondLabel" : "org.jgroups.auth.SimpleToken",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 101,
   "secondPos" : 147,
+  "firstEndPos" : 129,
+  "secondEndPos" : 175
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 101,
+  "secondPos" : 147,
+  "firstEndPos" : 104,
+  "secondEndPos" : 150
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jgroups",
+  "secondLabel" : "jgroups",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 105,
+  "secondPos" : 151,
+  "firstEndPos" : 112,
+  "secondEndPos" : 158
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "auth",
+  "secondLabel" : "auth",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 113,
+  "secondPos" : 159,
+  "firstEndPos" : 117,
+  "secondEndPos" : 163
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SimpleToken",
+  "secondLabel" : "SimpleToken",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 118,
+  "secondPos" : 164,
   "firstEndPos" : 129,
   "secondEndPos" : 175
 }, {
@@ -111,12 +265,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.testng.annotations.Test",
-  "secondLabel" : "org.testng.annotations.Test",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 138,
   "secondPos" : 220,
+  "firstEndPos" : 165,
+  "secondEndPos" : 247
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 138,
+  "secondPos" : 220,
+  "firstEndPos" : 141,
+  "secondEndPos" : 223
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "testng",
+  "secondLabel" : "testng",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 142,
+  "secondPos" : 224,
+  "firstEndPos" : 148,
+  "secondEndPos" : 230
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "annotations",
+  "secondLabel" : "annotations",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 149,
+  "secondPos" : 231,
+  "firstEndPos" : 160,
+  "secondEndPos" : 242
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Test",
+  "secondLabel" : "Test",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 161,
+  "secondPos" : 243,
   "firstEndPos" : 165,
   "secondEndPos" : 247
 }, {
@@ -243,12 +441,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Global.FUNCTIONAL",
-  "secondLabel" : "Global.FUNCTIONAL",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MemberValuePair",
   "secondParentType" : "MemberValuePair",
   "firstPos" : 258,
   "secondPos" : 340,
+  "firstEndPos" : 275,
+  "secondEndPos" : 357
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Global",
+  "secondLabel" : "Global",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 258,
+  "secondPos" : 340,
+  "firstEndPos" : 264,
+  "secondEndPos" : 346
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "FUNCTIONAL",
+  "secondLabel" : "FUNCTIONAL",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 265,
+  "secondPos" : 347,
   "firstEndPos" : 275,
   "secondEndPos" : 357
 }, {

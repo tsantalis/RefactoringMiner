@@ -2,7 +2,6 @@ package org.refactoringminer.astDiff.matchers.vanilla;
 
 import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.matchers.Matcher;
-import com.github.gumtreediff.matchers.SimilarityMetrics;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeUtils;
 import com.github.gumtreediff.tree.Type;
@@ -40,11 +39,15 @@ public class CustomBottomUpMatcher implements Matcher {
 				List<Tree> candidates = getDstCandidates(mappings, t);
 				Tree best = null;
 				var max = -1D;
-				var tSize = t.getDescendants().size();
+				List<Tree> tDescendants = descendants(t, LANG1);
 
 				for (var candidate : candidates) {
-					var threshold = 1D / (1D + Math.log(candidate.getDescendants().size() + tSize));
-					var sim = SimilarityMetrics.chawatheSimilarity(t, candidate, mappings);
+					//t is from src, candidate is from dst
+					if (operatorMappedElsewhere(mappings, t, candidate))
+						continue;
+					List<Tree> candidateDescendants = descendants(candidate, LANG2);
+					var threshold = 1D / (1D + Math.log(candidateDescendants.size() + tDescendants.size()));
+					var sim = chawatheSimilarity(tDescendants, candidateDescendants, mappings);
 					if (sim > max && sim >= threshold) {
 						max = sim;
 						best = candidate;
@@ -55,8 +58,11 @@ public class CustomBottomUpMatcher implements Matcher {
 					lastChanceMatch(mappings, t, best);
 					//t is from src, best is from dst
 					boolean checkOperatorOfInfixExpression = checkInfixExpression(mappings, t, best, LANG1, LANG2);
-					if (checkOperatorOfInfixExpression)
+					if (checkOperatorOfInfixExpression) {
 						mappings.addMapping(t, best);
+						if (t.getType().name.equals(LANG1.INFIX_EXPRESSION))
+							keepOperandsInInfixExpression(mappings, t, best);
+					}
 				}
 			}
 			else if (mappings.isSrcMapped(t) && mappings.hasUnmappedSrcChildren(t)
@@ -64,6 +70,59 @@ public class CustomBottomUpMatcher implements Matcher {
 				lastChanceMatch(mappings, t, mappings.getDstForSrc(t));
 		}
 		return mappings;
+	}
+
+	//a qualified name counts as one node, as its names are the parts of a single name, i.e., v1.y in v1.y * v2.z - v1.z * v2.y -> y3 * z2 - z3 * y2
+	private static List<Tree> descendants(Tree tree, Constants LANG) {
+		List<Tree> descendants = new ArrayList<>();
+		for (Tree child : tree.getChildren()) {
+			descendants.add(child);
+			if (!child.getType().name.equals(LANG.QUALIFIED_NAME))
+				descendants.addAll(descendants(child, LANG));
+		}
+		return descendants;
+	}
+
+	private static double chawatheSimilarity(List<Tree> srcDescendants, List<Tree> dstDescendants, MappingStore mappings) {
+		Set<Tree> dsts = new HashSet<>(dstDescendants);
+		int common = 0;
+		for (Tree src : srcDescendants) {
+			if (mappings.isSrcMapped(src) && dsts.contains(mappings.getDstForSrc(src)))
+				common++;
+		}
+		return (double) common / Math.max(srcDescendants.size(), dstDescendants.size());
+	}
+
+	//the operands of mapped infix expressions are mapped with each other by position, when an operand is mapped outside the other infix expression,
+	//i.e., format.getShape() == JsonFormat.Shape.STRING -> (shape == JsonFormat.Shape.STRING) || format.hasPattern(), format.getShape() is mapped with shape instead of format.hasPattern()
+	private void keepOperandsInInfixExpression(MappingStore mappings, Tree t, Tree best) {
+		if (t.getChildren().size() != best.getChildren().size())
+			return;
+		for (int i = 0; i < t.getChildren().size(); i++) {
+			Tree operand1 = t.getChild(i);
+			Tree operand2 = best.getChild(i);
+			Tree mapped = mappings.getDstForSrc(operand1);
+			if (mapped == null || best.getDescendants().contains(mapped) || !mappings.areDstsUnmapped(TreeUtils.preOrder(operand2)))
+				continue;
+			List<Tree> mappedSubtree = mapped.getDescendants();
+			for (Tree src : operand1.getDescendants()) {
+				if (mappings.isSrcMapped(src) && mappedSubtree.contains(mappings.getDstForSrc(src)))
+					mappings.removeMapping(src, mappings.getDstForSrc(src));
+			}
+			mappings.removeMapping(operand1, mapped);
+			mappings.addMapping(operand1, operand2);
+			lastChanceMatch(mappings, operand1, operand2);
+		}
+	}
+
+	//an infix expression is not a counterpart of another one, whose operator is not the counterpart of its operator,
+	//i.e., format.getShape() == JsonFormat.Shape.STRING -> (shape == JsonFormat.Shape.STRING) || format.hasPattern(), when == is mapped inside the parentheses
+	private boolean operatorMappedElsewhere(MappingStore mappings, Tree t, Tree candidate) {
+		if (!t.getType().name.equals(LANG1.INFIX_EXPRESSION))
+			return false;
+		Tree a = TreeUtilFunctions.findChildByType(t, LANG1.INFIX_EXPRESSION_OPERATOR);
+		Tree b = TreeUtilFunctions.findChildByType(candidate, LANG2.INFIX_EXPRESSION_OPERATOR);
+		return a != null && mappings.isSrcMapped(a) && mappings.getDstForSrc(a) != b;
 	}
 
 	private static boolean checkInfixExpression(MappingStore mappings, Tree t, Tree best, Constants LANG1, Constants LANG2) {

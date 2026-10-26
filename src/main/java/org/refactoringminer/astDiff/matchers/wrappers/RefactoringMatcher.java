@@ -146,7 +146,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 if(bodyMapper.getImportListDiff() != null) {
                     Tree srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, bodyMapper.getOperation1().getLocationInfo(), LANG1);
                     Tree dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, bodyMapper.getOperation2().getLocationInfo(), LANG2);
-                    new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
+                    new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcOperationNode, dstOperationNode, mappingStore);
                 }
                 if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
                     processArgumentMappings(srcTree, dstTree, extractOperationRefactoring.getArgumentMappings());
@@ -159,7 +159,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 if(bodyMapper.getImportListDiff() != null) {
                     Tree srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, bodyMapper.getOperation1().getLocationInfo(), LANG1);
                     Tree dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, bodyMapper.getOperation2().getLocationInfo(), LANG2);
-                    new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
+                    new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcOperationNode, dstOperationNode, mappingStore);
                 }
                 if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
                     processArgumentMappings(srcTree, dstTree, inlineOperationRefactoring.getArgumentMappings());

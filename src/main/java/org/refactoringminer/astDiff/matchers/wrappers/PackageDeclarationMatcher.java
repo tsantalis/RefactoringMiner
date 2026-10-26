@@ -2,6 +2,7 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 
@@ -11,9 +12,11 @@ import java.util.List;
 public class PackageDeclarationMatcher implements TreeMatcher {
     private final Constants LANG1;
     private final Constants LANG2;
-    public PackageDeclarationMatcher(Constants LANG1, Constants LANG2) {
+    private final DeferredFlattenings deferredFlattenings;
+    public PackageDeclarationMatcher(Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         this.LANG1 = LANG1;
         this.LANG2 = LANG2;
+        this.deferredFlattenings = deferredFlattenings;
     }
     @Override
     public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
@@ -22,7 +25,7 @@ public class PackageDeclarationMatcher implements TreeMatcher {
         if (srcPackageDeclaration != null && dstPackageDeclaration != null) {
             mappingStore.addMappingRecursively(srcPackageDeclaration,dstPackageDeclaration);
             if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                JavaToKotlinMigration.handlePackageDeclarationMapping(mappingStore, srcPackageDeclaration, dstPackageDeclaration, LANG1, LANG2);
+                JavaToKotlinMigration.handlePackageDeclarationMapping(mappingStore, srcPackageDeclaration, dstPackageDeclaration, LANG1, LANG2, deferredFlattenings);
             }
         }
     }

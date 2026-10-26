@@ -34,12 +34,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "com.zaxxer.hikari.util",
-  "secondLabel" : "com.zaxxer.hikari.util",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 609,
   "secondPos" : 609,
+  "firstEndPos" : 631,
+  "secondEndPos" : 631
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 609,
+  "secondPos" : 609,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "zaxxer",
+  "secondLabel" : "zaxxer",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 613,
+  "secondPos" : 613,
+  "firstEndPos" : 619,
+  "secondEndPos" : 619
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "hikari",
+  "secondLabel" : "hikari",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 620,
+  "secondPos" : 620,
+  "firstEndPos" : 626,
+  "secondEndPos" : 626
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 627,
+  "secondPos" : 627,
   "firstEndPos" : 631,
   "secondEndPos" : 631
 }, {
@@ -1398,12 +1442,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "TimeUnit.NANOSECONDS",
-  "secondLabel" : "TimeUnit.NANOSECONDS",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 1071,
   "secondPos" : 3818,
+  "firstEndPos" : 1091,
+  "secondEndPos" : 3838
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TimeUnit",
+  "secondLabel" : "TimeUnit",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1071,
+  "secondPos" : 3818,
+  "firstEndPos" : 1079,
+  "secondEndPos" : 3826
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NANOSECONDS",
+  "secondLabel" : "NANOSECONDS",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1080,
+  "secondPos" : 3827,
   "firstEndPos" : 1091,
   "secondEndPos" : 3838
 }, {
@@ -1981,14 +2047,25 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "TimeUnit.NANOSECONDS",
-  "secondLabel" : "TimeUnit.NANOSECONDS",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 1220,
   "secondPos" : 3985,
   "firstEndPos" : 1240,
   "secondEndPos" : 4005
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TimeUnit",
+  "secondLabel" : "TimeUnit",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1220,
+  "secondPos" : 3985,
+  "firstEndPos" : 1228,
+  "secondEndPos" : 3993
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -2033,6 +2110,17 @@
   "secondPos" : 3210,
   "firstEndPos" : 1235,
   "secondEndPos" : 3217
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NANOSECONDS",
+  "secondLabel" : "NANOSECONDS",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1229,
+  "secondPos" : 3994,
+  "firstEndPos" : 1240,
+  "secondEndPos" : 4005
 }, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "SingleVariableDeclaration",
@@ -2828,14 +2916,25 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "TimeUnit.NANOSECONDS",
-  "secondLabel" : "TimeUnit.NANOSECONDS",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 1414,
   "secondPos" : 4197,
   "firstEndPos" : 1434,
   "secondEndPos" : 4217
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TimeUnit",
+  "secondLabel" : "TimeUnit",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1414,
+  "secondPos" : 4197,
+  "firstEndPos" : 1422,
+  "secondEndPos" : 4205
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2869,6 +2968,17 @@
   "secondPos" : 3432,
   "firstEndPos" : 1424,
   "secondEndPos" : 3436
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NANOSECONDS",
+  "secondLabel" : "NANOSECONDS",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1423,
+  "secondPos" : 4206,
+  "firstEndPos" : 1434,
+  "secondEndPos" : 4217
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3433,12 +3543,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "TimeUnit.MILLISECONDS",
-  "secondLabel" : "TimeUnit.MILLISECONDS",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 1596,
   "secondPos" : 4397,
+  "firstEndPos" : 1617,
+  "secondEndPos" : 4418
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TimeUnit",
+  "secondLabel" : "TimeUnit",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1596,
+  "secondPos" : 4397,
+  "firstEndPos" : 1604,
+  "secondEndPos" : 4405
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MILLISECONDS",
+  "secondLabel" : "MILLISECONDS",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1605,
+  "secondPos" : 4406,
   "firstEndPos" : 1617,
   "secondEndPos" : 4418
 }, {

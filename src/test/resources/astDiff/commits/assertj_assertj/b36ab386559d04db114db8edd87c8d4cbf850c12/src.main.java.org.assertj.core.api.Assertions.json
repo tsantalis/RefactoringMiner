@@ -122,12 +122,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api",
-  "secondLabel" : "org.assertj.core.api",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 616,
   "secondPos" : 616,
+  "firstEndPos" : 636,
+  "secondEndPos" : 636
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 616,
+  "secondPos" : 616,
+  "firstEndPos" : 619,
+  "secondEndPos" : 619
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 620,
+  "secondPos" : 620,
+  "firstEndPos" : 627,
+  "secondEndPos" : 627
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 628,
+  "secondPos" : 628,
+  "firstEndPos" : 632,
+  "secondEndPos" : 632
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 633,
+  "secondPos" : 633,
   "firstEndPos" : 636,
   "secondEndPos" : 636
 }, {
@@ -144,12 +188,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.nio.file.Path",
-  "secondLabel" : "java.nio.file.Path",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 863,
   "secondPos" : 646,
+  "firstEndPos" : 881,
+  "secondEndPos" : 664
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 863,
+  "secondPos" : 646,
+  "firstEndPos" : 867,
+  "secondEndPos" : 650
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "nio",
+  "secondLabel" : "nio",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 868,
+  "secondPos" : 651,
+  "firstEndPos" : 871,
+  "secondEndPos" : 654
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "file",
+  "secondLabel" : "file",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 872,
+  "secondPos" : 655,
+  "firstEndPos" : 876,
+  "secondEndPos" : 659
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Path",
+  "secondLabel" : "Path",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 877,
+  "secondPos" : 660,
   "firstEndPos" : 881,
   "secondEndPos" : 664
 }, {
@@ -166,12 +254,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Iterator",
-  "secondLabel" : "java.util.Iterator",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1151,
   "secondPos" : 673,
+  "firstEndPos" : 1169,
+  "secondEndPos" : 691
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1151,
+  "secondPos" : 673,
+  "firstEndPos" : 1155,
+  "secondEndPos" : 677
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1156,
+  "secondPos" : 678,
+  "firstEndPos" : 1160,
+  "secondEndPos" : 682
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Iterator",
+  "secondLabel" : "Iterator",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1161,
+  "secondPos" : 683,
   "firstEndPos" : 1169,
   "secondEndPos" : 691
 }, {
@@ -188,12 +309,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.List",
-  "secondLabel" : "java.util.List",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1178,
   "secondPos" : 700,
+  "firstEndPos" : 1192,
+  "secondEndPos" : 714
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1178,
+  "secondPos" : 700,
+  "firstEndPos" : 1182,
+  "secondEndPos" : 704
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1183,
+  "secondPos" : 705,
+  "firstEndPos" : 1187,
+  "secondEndPos" : 709
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "List",
+  "secondLabel" : "List",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1188,
+  "secondPos" : 710,
   "firstEndPos" : 1192,
   "secondEndPos" : 714
 }, {
@@ -210,12 +364,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Map",
-  "secondLabel" : "java.util.Map",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1201,
   "secondPos" : 723,
+  "firstEndPos" : 1214,
+  "secondEndPos" : 736
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1201,
+  "secondPos" : 723,
+  "firstEndPos" : 1205,
+  "secondEndPos" : 727
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1206,
+  "secondPos" : 728,
+  "firstEndPos" : 1210,
+  "secondEndPos" : 732
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Map",
+  "secondLabel" : "Map",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1211,
+  "secondPos" : 733,
   "firstEndPos" : 1214,
   "secondEndPos" : 736
 }, {
@@ -1222,12 +1409,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Optional",
-  "secondLabel" : "java.util.Optional",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3269,
   "secondPos" : 3365,
+  "firstEndPos" : 3287,
+  "secondEndPos" : 3383
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3269,
+  "secondPos" : 3365,
+  "firstEndPos" : 3273,
+  "secondEndPos" : 3369
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3274,
+  "secondPos" : 3370,
+  "firstEndPos" : 3278,
+  "secondEndPos" : 3374
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Optional",
+  "secondLabel" : "Optional",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3279,
+  "secondPos" : 3375,
   "firstEndPos" : 3287,
   "secondEndPos" : 3383
 }, {
@@ -1376,12 +1596,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Optional",
-  "secondLabel" : "java.util.Optional",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3396,
   "secondPos" : 3492,
+  "firstEndPos" : 3414,
+  "secondEndPos" : 3510
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3396,
+  "secondPos" : 3492,
+  "firstEndPos" : 3400,
+  "secondEndPos" : 3496
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3401,
+  "secondPos" : 3497,
+  "firstEndPos" : 3405,
+  "secondEndPos" : 3501
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Optional",
+  "secondLabel" : "Optional",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3406,
+  "secondPos" : 3502,
   "firstEndPos" : 3414,
   "secondEndPos" : 3510
 }, {
@@ -1761,12 +2014,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.OptionalDouble",
-  "secondLabel" : "java.util.OptionalDouble",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3631,
   "secondPos" : 3727,
+  "firstEndPos" : 3655,
+  "secondEndPos" : 3751
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3631,
+  "secondPos" : 3727,
+  "firstEndPos" : 3635,
+  "secondEndPos" : 3731
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3636,
+  "secondPos" : 3732,
+  "firstEndPos" : 3640,
+  "secondEndPos" : 3736
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OptionalDouble",
+  "secondLabel" : "OptionalDouble",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3641,
+  "secondPos" : 3737,
   "firstEndPos" : 3655,
   "secondEndPos" : 3751
 }, {
@@ -2091,12 +2377,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.OptionalInt",
-  "secondLabel" : "java.util.OptionalInt",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 3940,
   "secondPos" : 4036,
+  "firstEndPos" : 3961,
+  "secondEndPos" : 4057
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3940,
+  "secondPos" : 4036,
+  "firstEndPos" : 3944,
+  "secondEndPos" : 4040
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3945,
+  "secondPos" : 4041,
+  "firstEndPos" : 3949,
+  "secondEndPos" : 4045
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OptionalInt",
+  "secondLabel" : "OptionalInt",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3950,
+  "secondPos" : 4046,
   "firstEndPos" : 3961,
   "secondEndPos" : 4057
 }, {
@@ -2421,12 +2740,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.OptionalInt",
-  "secondLabel" : "java.util.OptionalInt",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 4228,
   "secondPos" : 4324,
+  "firstEndPos" : 4249,
+  "secondEndPos" : 4345
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4228,
+  "secondPos" : 4324,
+  "firstEndPos" : 4232,
+  "secondEndPos" : 4328
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4233,
+  "secondPos" : 4329,
+  "firstEndPos" : 4237,
+  "secondEndPos" : 4333
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OptionalInt",
+  "secondLabel" : "OptionalInt",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4238,
+  "secondPos" : 4334,
   "firstEndPos" : 4249,
   "secondEndPos" : 4345
 }, {
@@ -20450,12 +20802,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.time.OffsetDateTime",
-  "secondLabel" : "java.time.OffsetDateTime",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 19772,
   "secondPos" : 14658,
+  "firstEndPos" : 19796,
+  "secondEndPos" : 14682
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 19772,
+  "secondPos" : 14658,
+  "firstEndPos" : 19776,
+  "secondEndPos" : 14662
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "time",
+  "secondLabel" : "time",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 19777,
+  "secondPos" : 14663,
+  "firstEndPos" : 19781,
+  "secondEndPos" : 14667
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OffsetDateTime",
+  "secondLabel" : "OffsetDateTime",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 19782,
+  "secondPos" : 14668,
   "firstEndPos" : 19796,
   "secondEndPos" : 14682
 }, {
@@ -20802,12 +21187,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.time.OffsetTime",
-  "secondLabel" : "java.time.OffsetTime",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 20070,
   "secondPos" : 14956,
+  "firstEndPos" : 20090,
+  "secondEndPos" : 14976
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 20070,
+  "secondPos" : 14956,
+  "firstEndPos" : 20074,
+  "secondEndPos" : 14960
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "time",
+  "secondLabel" : "time",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 20075,
+  "secondPos" : 14961,
+  "firstEndPos" : 20079,
+  "secondEndPos" : 14965
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "OffsetTime",
+  "secondLabel" : "OffsetTime",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 20080,
+  "secondPos" : 14966,
   "firstEndPos" : 20090,
   "secondEndPos" : 14976
 }, {
@@ -27952,12 +28370,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractIterableAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractIterableAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 30123,
   "secondPos" : 25009,
+  "firstEndPos" : 30166,
+  "secondEndPos" : 25052
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30123,
+  "secondPos" : 25009,
+  "firstEndPos" : 30126,
+  "secondEndPos" : 25012
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30127,
+  "secondPos" : 25013,
+  "firstEndPos" : 30134,
+  "secondEndPos" : 25020
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30135,
+  "secondPos" : 25021,
+  "firstEndPos" : 30139,
+  "secondEndPos" : 25025
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30140,
+  "secondPos" : 25026,
+  "firstEndPos" : 30143,
+  "secondEndPos" : 25029
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractIterableAssert",
+  "secondLabel" : "AbstractIterableAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30144,
+  "secondPos" : 25030,
   "firstEndPos" : 30166,
   "secondEndPos" : 25052
 }, {
@@ -28084,12 +28557,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractObjectArrayAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractObjectArrayAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 30255,
   "secondPos" : 25141,
+  "firstEndPos" : 30301,
+  "secondEndPos" : 25187
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30255,
+  "secondPos" : 25141,
+  "firstEndPos" : 30258,
+  "secondEndPos" : 25144
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30259,
+  "secondPos" : 25145,
+  "firstEndPos" : 30266,
+  "secondEndPos" : 25152
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30267,
+  "secondPos" : 25153,
+  "firstEndPos" : 30271,
+  "secondEndPos" : 25157
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30272,
+  "secondPos" : 25158,
+  "firstEndPos" : 30275,
+  "secondEndPos" : 25161
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractObjectArrayAssert",
+  "secondLabel" : "AbstractObjectArrayAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30276,
+  "secondPos" : 25162,
   "firstEndPos" : 30301,
   "secondEndPos" : 25187
 }, {
@@ -28579,12 +29107,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractIterableAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractIterableAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 30966,
   "secondPos" : 25852,
+  "firstEndPos" : 31009,
+  "secondEndPos" : 25895
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30966,
+  "secondPos" : 25852,
+  "firstEndPos" : 30969,
+  "secondEndPos" : 25855
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30970,
+  "secondPos" : 25856,
+  "firstEndPos" : 30977,
+  "secondEndPos" : 25863
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30978,
+  "secondPos" : 25864,
+  "firstEndPos" : 30982,
+  "secondEndPos" : 25868
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30983,
+  "secondPos" : 25869,
+  "firstEndPos" : 30986,
+  "secondEndPos" : 25872
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractIterableAssert",
+  "secondLabel" : "AbstractIterableAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30987,
+  "secondPos" : 25873,
   "firstEndPos" : 31009,
   "secondEndPos" : 25895
 }, {
@@ -28612,8 +29195,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.lang.String",
-  "secondLabel" : "java.lang.String",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 31041,
@@ -28629,6 +29212,39 @@
   "secondParentType" : "MethodRefParameter",
   "firstPos" : 31041,
   "secondPos" : 25927,
+  "firstEndPos" : 31057,
+  "secondEndPos" : 25943
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 31041,
+  "secondPos" : 25927,
+  "firstEndPos" : 31045,
+  "secondEndPos" : 25931
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "lang",
+  "secondLabel" : "lang",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 31046,
+  "secondPos" : 25932,
+  "firstEndPos" : 31050,
+  "secondEndPos" : 25936
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 31051,
+  "secondPos" : 25937,
   "firstEndPos" : 31057,
   "secondEndPos" : 25943
 }, {
@@ -28700,12 +29316,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractObjectAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractObjectAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 31103,
   "secondPos" : 25989,
+  "firstEndPos" : 31144,
+  "secondEndPos" : 26030
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 31103,
+  "secondPos" : 25989,
+  "firstEndPos" : 31106,
+  "secondEndPos" : 25992
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 31107,
+  "secondPos" : 25993,
+  "firstEndPos" : 31114,
+  "secondEndPos" : 26000
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 31115,
+  "secondPos" : 26001,
+  "firstEndPos" : 31119,
+  "secondEndPos" : 26005
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 31120,
+  "secondPos" : 26006,
+  "firstEndPos" : 31123,
+  "secondEndPos" : 26009
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractObjectAssert",
+  "secondLabel" : "AbstractObjectAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 31124,
+  "secondPos" : 26010,
   "firstEndPos" : 31144,
   "secondEndPos" : 26030
 }, {
@@ -33639,12 +34310,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.data.Percentage",
-  "secondLabel" : "org.assertj.core.data.Percentage",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 36090,
   "secondPos" : 30976,
+  "firstEndPos" : 36122,
+  "secondEndPos" : 31008
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36090,
+  "secondPos" : 30976,
+  "firstEndPos" : 36093,
+  "secondEndPos" : 30979
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36094,
+  "secondPos" : 30980,
+  "firstEndPos" : 36101,
+  "secondEndPos" : 30987
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36102,
+  "secondPos" : 30988,
+  "firstEndPos" : 36106,
+  "secondEndPos" : 30992
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "data",
+  "secondLabel" : "data",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36107,
+  "secondPos" : 30993,
+  "firstEndPos" : 36111,
+  "secondEndPos" : 30997
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Percentage",
+  "secondLabel" : "Percentage",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36112,
+  "secondPos" : 30998,
   "firstEndPos" : 36122,
   "secondEndPos" : 31008
 }, {
@@ -33958,12 +34684,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.data.Percentage",
-  "secondLabel" : "org.assertj.core.data.Percentage",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 36485,
   "secondPos" : 31371,
+  "firstEndPos" : 36517,
+  "secondEndPos" : 31403
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36485,
+  "secondPos" : 31371,
+  "firstEndPos" : 36488,
+  "secondEndPos" : 31374
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36489,
+  "secondPos" : 31375,
+  "firstEndPos" : 36496,
+  "secondEndPos" : 31382
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36497,
+  "secondPos" : 31383,
+  "firstEndPos" : 36501,
+  "secondEndPos" : 31387
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "data",
+  "secondLabel" : "data",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36502,
+  "secondPos" : 31388,
+  "firstEndPos" : 36506,
+  "secondEndPos" : 31392
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Percentage",
+  "secondLabel" : "Percentage",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36507,
+  "secondPos" : 31393,
   "firstEndPos" : 36517,
   "secondEndPos" : 31403
 }, {
@@ -34277,12 +35058,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.data.Percentage",
-  "secondLabel" : "org.assertj.core.data.Percentage",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 36872,
   "secondPos" : 31758,
+  "firstEndPos" : 36904,
+  "secondEndPos" : 31790
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36872,
+  "secondPos" : 31758,
+  "firstEndPos" : 36875,
+  "secondEndPos" : 31761
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36876,
+  "secondPos" : 31762,
+  "firstEndPos" : 36883,
+  "secondEndPos" : 31769
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36884,
+  "secondPos" : 31770,
+  "firstEndPos" : 36888,
+  "secondEndPos" : 31774
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "data",
+  "secondLabel" : "data",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36889,
+  "secondPos" : 31775,
+  "firstEndPos" : 36893,
+  "secondEndPos" : 31779
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Percentage",
+  "secondLabel" : "Percentage",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 36894,
+  "secondPos" : 31780,
   "firstEndPos" : 36904,
   "secondEndPos" : 31790
 }, {
@@ -49930,12 +50766,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractDateAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractDateAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 54754,
   "secondPos" : 49640,
+  "firstEndPos" : 54793,
+  "secondEndPos" : 49679
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 54754,
+  "secondPos" : 49640,
+  "firstEndPos" : 54757,
+  "secondEndPos" : 49643
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 54758,
+  "secondPos" : 49644,
+  "firstEndPos" : 54765,
+  "secondEndPos" : 49651
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 54766,
+  "secondPos" : 49652,
+  "firstEndPos" : 54770,
+  "secondEndPos" : 49656
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 54771,
+  "secondPos" : 49657,
+  "firstEndPos" : 54774,
+  "secondEndPos" : 49660
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractDateAssert",
+  "secondLabel" : "AbstractDateAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 54775,
+  "secondPos" : 49661,
   "firstEndPos" : 54793,
   "secondEndPos" : 49679
 }, {
@@ -50106,12 +50997,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractDateAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractDateAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 55070,
   "secondPos" : 49956,
+  "firstEndPos" : 55109,
+  "secondEndPos" : 49995
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55070,
+  "secondPos" : 49956,
+  "firstEndPos" : 55073,
+  "secondEndPos" : 49959
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55074,
+  "secondPos" : 49960,
+  "firstEndPos" : 55081,
+  "secondEndPos" : 49967
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55082,
+  "secondPos" : 49968,
+  "firstEndPos" : 55086,
+  "secondEndPos" : 49972
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55087,
+  "secondPos" : 49973,
+  "firstEndPos" : 55090,
+  "secondEndPos" : 49976
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractDateAssert",
+  "secondLabel" : "AbstractDateAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55091,
+  "secondPos" : 49977,
   "firstEndPos" : 55109,
   "secondEndPos" : 49995
 }, {
@@ -50216,12 +51162,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractDateAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractDateAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 55155,
   "secondPos" : 50041,
+  "firstEndPos" : 55194,
+  "secondEndPos" : 50080
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55155,
+  "secondPos" : 50041,
+  "firstEndPos" : 55158,
+  "secondEndPos" : 50044
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55159,
+  "secondPos" : 50045,
+  "firstEndPos" : 55166,
+  "secondEndPos" : 50052
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55167,
+  "secondPos" : 50053,
+  "firstEndPos" : 55171,
+  "secondEndPos" : 50057
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55172,
+  "secondPos" : 50058,
+  "firstEndPos" : 55175,
+  "secondEndPos" : 50061
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractDateAssert",
+  "secondLabel" : "AbstractDateAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55176,
+  "secondPos" : 50062,
   "firstEndPos" : 55194,
   "secondEndPos" : 50080
 }, {
@@ -50249,8 +51250,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.text.DateFormat",
-  "secondLabel" : "java.text.DateFormat",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 55210,
@@ -50266,6 +51267,39 @@
   "secondParentType" : "MethodRefParameter",
   "firstPos" : 55210,
   "secondPos" : 50096,
+  "firstEndPos" : 55230,
+  "secondEndPos" : 50116
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55210,
+  "secondPos" : 50096,
+  "firstEndPos" : 55214,
+  "secondEndPos" : 50100
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "text",
+  "secondLabel" : "text",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55215,
+  "secondPos" : 50101,
+  "firstEndPos" : 55219,
+  "secondEndPos" : 50105
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DateFormat",
+  "secondLabel" : "DateFormat",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55220,
+  "secondPos" : 50106,
   "firstEndPos" : 55230,
   "secondEndPos" : 50116
 }, {
@@ -50348,8 +51382,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.text.DateFormat",
-  "secondLabel" : "java.text.DateFormat",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 55280,
@@ -50365,6 +51399,39 @@
   "secondParentType" : "MethodRefParameter",
   "firstPos" : 55280,
   "secondPos" : 50166,
+  "firstEndPos" : 55300,
+  "secondEndPos" : 50186
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55280,
+  "secondPos" : 50166,
+  "firstEndPos" : 55284,
+  "secondEndPos" : 50170
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "text",
+  "secondLabel" : "text",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55285,
+  "secondPos" : 50171,
+  "firstEndPos" : 55289,
+  "secondEndPos" : 50175
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DateFormat",
+  "secondLabel" : "DateFormat",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55290,
+  "secondPos" : 50176,
   "firstEndPos" : 55300,
   "secondEndPos" : 50186
 }, {
@@ -50623,12 +51690,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractDateAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractDateAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 55613,
   "secondPos" : 50499,
+  "firstEndPos" : 55652,
+  "secondEndPos" : 50538
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55613,
+  "secondPos" : 50499,
+  "firstEndPos" : 55616,
+  "secondEndPos" : 50502
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55617,
+  "secondPos" : 50503,
+  "firstEndPos" : 55624,
+  "secondEndPos" : 50510
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55625,
+  "secondPos" : 50511,
+  "firstEndPos" : 55629,
+  "secondEndPos" : 50515
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55630,
+  "secondPos" : 50516,
+  "firstEndPos" : 55633,
+  "secondEndPos" : 50519
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractDateAssert",
+  "secondLabel" : "AbstractDateAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 55634,
+  "secondPos" : 50520,
   "firstEndPos" : 55652,
   "secondEndPos" : 50538
 }, {
@@ -51151,12 +52273,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractDateAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractDateAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 56996,
   "secondPos" : 51882,
+  "firstEndPos" : 57035,
+  "secondEndPos" : 51921
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56996,
+  "secondPos" : 51882,
+  "firstEndPos" : 56999,
+  "secondEndPos" : 51885
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57000,
+  "secondPos" : 51886,
+  "firstEndPos" : 57007,
+  "secondEndPos" : 51893
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57008,
+  "secondPos" : 51894,
+  "firstEndPos" : 57012,
+  "secondEndPos" : 51898
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57013,
+  "secondPos" : 51899,
+  "firstEndPos" : 57016,
+  "secondEndPos" : 51902
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractDateAssert",
+  "secondLabel" : "AbstractDateAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57017,
+  "secondPos" : 51903,
   "firstEndPos" : 57035,
   "secondEndPos" : 51921
 }, {
@@ -51327,12 +52504,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractDateAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractDateAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 57312,
   "secondPos" : 52198,
+  "firstEndPos" : 57351,
+  "secondEndPos" : 52237
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57312,
+  "secondPos" : 52198,
+  "firstEndPos" : 57315,
+  "secondEndPos" : 52201
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57316,
+  "secondPos" : 52202,
+  "firstEndPos" : 57323,
+  "secondEndPos" : 52209
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57324,
+  "secondPos" : 52210,
+  "firstEndPos" : 57328,
+  "secondEndPos" : 52214
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57329,
+  "secondPos" : 52215,
+  "firstEndPos" : 57332,
+  "secondEndPos" : 52218
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractDateAssert",
+  "secondLabel" : "AbstractDateAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57333,
+  "secondPos" : 52219,
   "firstEndPos" : 57351,
   "secondEndPos" : 52237
 }, {
@@ -51437,12 +52669,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractDateAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractDateAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 57397,
   "secondPos" : 52283,
+  "firstEndPos" : 57436,
+  "secondEndPos" : 52322
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57397,
+  "secondPos" : 52283,
+  "firstEndPos" : 57400,
+  "secondEndPos" : 52286
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57401,
+  "secondPos" : 52287,
+  "firstEndPos" : 57408,
+  "secondEndPos" : 52294
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57409,
+  "secondPos" : 52295,
+  "firstEndPos" : 57413,
+  "secondEndPos" : 52299
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57414,
+  "secondPos" : 52300,
+  "firstEndPos" : 57417,
+  "secondEndPos" : 52303
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractDateAssert",
+  "secondLabel" : "AbstractDateAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57418,
+  "secondPos" : 52304,
   "firstEndPos" : 57436,
   "secondEndPos" : 52322
 }, {
@@ -51470,8 +52757,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.text.DateFormat",
-  "secondLabel" : "java.text.DateFormat",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 57452,
@@ -51487,6 +52774,39 @@
   "secondParentType" : "MethodRefParameter",
   "firstPos" : 57452,
   "secondPos" : 52338,
+  "firstEndPos" : 57472,
+  "secondEndPos" : 52358
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57452,
+  "secondPos" : 52338,
+  "firstEndPos" : 57456,
+  "secondEndPos" : 52342
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "text",
+  "secondLabel" : "text",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57457,
+  "secondPos" : 52343,
+  "firstEndPos" : 57461,
+  "secondEndPos" : 52347
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DateFormat",
+  "secondLabel" : "DateFormat",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57462,
+  "secondPos" : 52348,
   "firstEndPos" : 57472,
   "secondEndPos" : 52358
 }, {
@@ -51569,8 +52889,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.text.DateFormat",
-  "secondLabel" : "java.text.DateFormat",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 57522,
@@ -51586,6 +52906,39 @@
   "secondParentType" : "MethodRefParameter",
   "firstPos" : 57522,
   "secondPos" : 52408,
+  "firstEndPos" : 57542,
+  "secondEndPos" : 52428
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57522,
+  "secondPos" : 52408,
+  "firstEndPos" : 57526,
+  "secondEndPos" : 52412
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "text",
+  "secondLabel" : "text",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57527,
+  "secondPos" : 52413,
+  "firstEndPos" : 57531,
+  "secondEndPos" : 52417
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DateFormat",
+  "secondLabel" : "DateFormat",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57532,
+  "secondPos" : 52418,
   "firstEndPos" : 57542,
   "secondEndPos" : 52428
 }, {
@@ -51844,12 +53197,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.assertj.core.api.AbstractDateAssert",
-  "secondLabel" : "org.assertj.core.api.AbstractDateAssert",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "MethodRef",
   "secondParentType" : "MethodRef",
   "firstPos" : 57855,
   "secondPos" : 52741,
+  "firstEndPos" : 57894,
+  "secondEndPos" : 52780
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57855,
+  "secondPos" : 52741,
+  "firstEndPos" : 57858,
+  "secondEndPos" : 52744
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "assertj",
+  "secondLabel" : "assertj",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57859,
+  "secondPos" : 52745,
+  "firstEndPos" : 57866,
+  "secondEndPos" : 52752
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "core",
+  "secondLabel" : "core",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57867,
+  "secondPos" : 52753,
+  "firstEndPos" : 57871,
+  "secondEndPos" : 52757
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57872,
+  "secondPos" : 52758,
+  "firstEndPos" : 57875,
+  "secondEndPos" : 52761
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AbstractDateAssert",
+  "secondLabel" : "AbstractDateAssert",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57876,
+  "secondPos" : 52762,
   "firstEndPos" : 57894,
   "secondEndPos" : 52780
 }, {

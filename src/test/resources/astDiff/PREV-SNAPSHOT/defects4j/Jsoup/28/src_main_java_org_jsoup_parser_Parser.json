@@ -21,17 +21,6 @@
   "firstEndPos" : 25,
   "secondEndPos" : 25
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.parser",
-  "secondLabel" : "org.jsoup.parser",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 8,
-  "secondPos" : 8,
-  "firstEndPos" : 24,
-  "secondEndPos" : 24
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -42,17 +31,6 @@
   "secondPos" : 27,
   "firstEndPos" : 59,
   "secondEndPos" : 59
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.nodes.Document",
-  "secondLabel" : "org.jsoup.nodes.Document",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 34,
-  "secondPos" : 34,
-  "firstEndPos" : 58,
-  "secondEndPos" : 58
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -65,17 +43,6 @@
   "firstEndPos" : 91,
   "secondEndPos" : 91
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.nodes.Element",
-  "secondLabel" : "org.jsoup.nodes.Element",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 67,
-  "secondPos" : 67,
-  "firstEndPos" : 90,
-  "secondEndPos" : 90
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -87,17 +54,6 @@
   "firstEndPos" : 120,
   "secondEndPos" : 120
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.nodes.Node",
-  "secondLabel" : "org.jsoup.nodes.Node",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 99,
-  "secondPos" : 99,
-  "firstEndPos" : 119,
-  "secondEndPos" : 119
-}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -108,17 +64,6 @@
   "secondPos" : 122,
   "firstEndPos" : 144,
   "secondEndPos" : 144
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.List",
-  "secondLabel" : "java.util.List",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 129,
-  "secondPos" : 129,
-  "firstEndPos" : 143,
-  "secondEndPos" : 143
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -186,17 +131,6 @@
   "firstEndPos" : 177,
   "secondEndPos" : 177
 }, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.nodes.Document",
-  "secondLabel" : "org.jsoup.nodes.Document",
-  "firstParentType" : "TagElement",
-  "secondParentType" : "TagElement",
-  "firstPos" : 179,
-  "secondPos" : 179,
-  "firstEndPos" : 203,
-  "secondEndPos" : 203
-}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : ". Generally best to use one of the  more convenient parse methods",
@@ -240,17 +174,6 @@
   "secondPos" : 276,
   "firstEndPos" : 281,
   "secondEndPos" : 281
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "org.jsoup.Jsoup",
-  "secondLabel" : "org.jsoup.Jsoup",
-  "firstParentType" : "TagElement",
-  "secondParentType" : "TagElement",
-  "firstPos" : 283,
-  "secondPos" : 283,
-  "firstEndPos" : 298,
-  "secondEndPos" : 298
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6015,4 +5938,356 @@
   "secondPos" : 5949,
   "firstEndPos" : 5718,
   "secondEndPos" : 5963
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 24,
+  "secondEndPos" : 24
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 17,
+  "secondEndPos" : 17
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "parser",
+  "secondLabel" : "parser",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 18,
+  "secondPos" : 18,
+  "firstEndPos" : 24,
+  "secondEndPos" : 24
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 34,
+  "secondPos" : 34,
+  "firstEndPos" : 58,
+  "secondEndPos" : 58
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 34,
+  "secondPos" : 34,
+  "firstEndPos" : 37,
+  "secondEndPos" : 37
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 38,
+  "secondPos" : 38,
+  "firstEndPos" : 43,
+  "secondEndPos" : 43
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "nodes",
+  "secondLabel" : "nodes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 44,
+  "secondPos" : 44,
+  "firstEndPos" : 49,
+  "secondEndPos" : 49
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Document",
+  "secondLabel" : "Document",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 50,
+  "secondPos" : 50,
+  "firstEndPos" : 58,
+  "secondEndPos" : 58
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 67,
+  "secondPos" : 67,
+  "firstEndPos" : 90,
+  "secondEndPos" : 90
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 67,
+  "secondPos" : 67,
+  "firstEndPos" : 70,
+  "secondEndPos" : 70
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 71,
+  "secondPos" : 71,
+  "firstEndPos" : 76,
+  "secondEndPos" : 76
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "nodes",
+  "secondLabel" : "nodes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 77,
+  "secondPos" : 77,
+  "firstEndPos" : 82,
+  "secondEndPos" : 82
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Element",
+  "secondLabel" : "Element",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 83,
+  "secondPos" : 83,
+  "firstEndPos" : 90,
+  "secondEndPos" : 90
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 99,
+  "secondPos" : 99,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 99,
+  "secondPos" : 99,
+  "firstEndPos" : 102,
+  "secondEndPos" : 102
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 103,
+  "secondPos" : 103,
+  "firstEndPos" : 108,
+  "secondEndPos" : 108
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "nodes",
+  "secondLabel" : "nodes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 109,
+  "secondPos" : 109,
+  "firstEndPos" : 114,
+  "secondEndPos" : 114
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Node",
+  "secondLabel" : "Node",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 115,
+  "secondPos" : 115,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 129,
+  "secondPos" : 129,
+  "firstEndPos" : 143,
+  "secondEndPos" : 143
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 129,
+  "secondPos" : 129,
+  "firstEndPos" : 133,
+  "secondEndPos" : 133
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 134,
+  "secondPos" : 134,
+  "firstEndPos" : 138,
+  "secondEndPos" : 138
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "List",
+  "secondLabel" : "List",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 139,
+  "secondPos" : 139,
+  "firstEndPos" : 143,
+  "secondEndPos" : 143
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 179,
+  "secondPos" : 179,
+  "firstEndPos" : 203,
+  "secondEndPos" : 203
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 179,
+  "secondPos" : 179,
+  "firstEndPos" : 182,
+  "secondEndPos" : 182
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 183,
+  "secondPos" : 183,
+  "firstEndPos" : 188,
+  "secondEndPos" : 188
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "nodes",
+  "secondLabel" : "nodes",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 189,
+  "secondPos" : 189,
+  "firstEndPos" : 194,
+  "secondEndPos" : 194
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Document",
+  "secondLabel" : "Document",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 195,
+  "secondPos" : 195,
+  "firstEndPos" : 203,
+  "secondEndPos" : 203
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 283,
+  "secondPos" : 283,
+  "firstEndPos" : 298,
+  "secondEndPos" : 298
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 283,
+  "secondPos" : 283,
+  "firstEndPos" : 286,
+  "secondEndPos" : 286
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "jsoup",
+  "secondLabel" : "jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 287,
+  "secondPos" : 287,
+  "firstEndPos" : 292,
+  "secondEndPos" : 292
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Jsoup",
+  "secondLabel" : "Jsoup",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 293,
+  "secondPos" : 293,
+  "firstEndPos" : 298,
+  "secondEndPos" : 298
 } ]

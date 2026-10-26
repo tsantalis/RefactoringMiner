@@ -33,7 +33,9 @@ public class TreeFromParserTest {
                                     ExpressionStatement [51,73]
                                         MethodInvocation [51,72]
                                             METHOD_INVOCATION_RECEIVER [51,61]
-                                                QualifiedName: System.out [51,61]
+                                                QualifiedName [51,61]
+                                                    SimpleName: System [51,57]
+                                                    SimpleName: out [58,61]
                                             SimpleName: println [62,69]
                                             METHOD_INVOCATION_ARGUMENTS [70,71]
                                                 SimpleName: a [70,71]""";

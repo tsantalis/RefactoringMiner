@@ -23,12 +23,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "fr.cph.chicago.util",
-  "secondLabel" : "fr.cph.chicago.util",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "package_header",
   "firstPos" : 8,
   "secondPos" : 8,
+  "firstEndPos" : 27,
+  "secondEndPos" : 27
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "fr",
+  "secondLabel" : "fr",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 10,
+  "secondEndPos" : 10
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "cph",
+  "secondLabel" : "cph",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 11,
+  "secondPos" : 11,
+  "firstEndPos" : 14,
+  "secondEndPos" : 14
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "chicago",
+  "secondLabel" : "chicago",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 22,
+  "secondEndPos" : 22
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 23,
+  "secondPos" : 23,
   "firstEndPos" : 27,
   "secondEndPos" : 27
 }, {
@@ -45,12 +89,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "android.location.Location",
-  "secondLabel" : "android.location.Location",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 37,
   "secondPos" : 36,
+  "firstEndPos" : 62,
+  "secondEndPos" : 61
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 37,
+  "secondPos" : 36,
+  "firstEndPos" : 44,
+  "secondEndPos" : 43
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "location",
+  "secondLabel" : "location",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 45,
+  "secondPos" : 44,
+  "firstEndPos" : 53,
+  "secondEndPos" : 52
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Location",
+  "secondLabel" : "Location",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 54,
+  "secondPos" : 53,
   "firstEndPos" : 62,
   "secondEndPos" : 61
 }, {
@@ -67,12 +144,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "android.os.Looper",
-  "secondLabel" : "android.os.Looper",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 71,
   "secondPos" : 69,
+  "firstEndPos" : 88,
+  "secondEndPos" : 86
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 71,
+  "secondPos" : 69,
+  "firstEndPos" : 78,
+  "secondEndPos" : 76
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "os",
+  "secondLabel" : "os",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 79,
+  "secondPos" : 77,
+  "firstEndPos" : 81,
+  "secondEndPos" : 79
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Looper",
+  "secondLabel" : "Looper",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 82,
+  "secondPos" : 80,
   "firstEndPos" : 88,
   "secondEndPos" : 86
 }, {
@@ -89,12 +199,89 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "com.google.android.gms.common.api.GoogleApiClient",
-  "secondLabel" : "com.google.android.gms.common.api.GoogleApiClient",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 177,
   "secondPos" : 94,
+  "firstEndPos" : 226,
+  "secondEndPos" : 143
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 177,
+  "secondPos" : 94,
+  "firstEndPos" : 180,
+  "secondEndPos" : 97
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "google",
+  "secondLabel" : "google",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 181,
+  "secondPos" : 98,
+  "firstEndPos" : 187,
+  "secondEndPos" : 104
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 188,
+  "secondPos" : 105,
+  "firstEndPos" : 195,
+  "secondEndPos" : 112
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "gms",
+  "secondLabel" : "gms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 196,
+  "secondPos" : 113,
+  "firstEndPos" : 199,
+  "secondEndPos" : 116
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "common",
+  "secondLabel" : "common",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 200,
+  "secondPos" : 117,
+  "firstEndPos" : 206,
+  "secondEndPos" : 123
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "api",
+  "secondLabel" : "api",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 207,
+  "secondPos" : 124,
+  "firstEndPos" : 210,
+  "secondEndPos" : 127
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "GoogleApiClient",
+  "secondLabel" : "GoogleApiClient",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 211,
+  "secondPos" : 128,
   "firstEndPos" : 226,
   "secondEndPos" : 143
 }, {
@@ -111,12 +298,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "com.google.android.gms.location.LocationRequest",
-  "secondLabel" : "com.google.android.gms.location.LocationRequest",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 235,
   "secondPos" : 151,
+  "firstEndPos" : 282,
+  "secondEndPos" : 198
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 235,
+  "secondPos" : 151,
+  "firstEndPos" : 238,
+  "secondEndPos" : 154
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "google",
+  "secondLabel" : "google",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 239,
+  "secondPos" : 155,
+  "firstEndPos" : 245,
+  "secondEndPos" : 161
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 246,
+  "secondPos" : 162,
+  "firstEndPos" : 253,
+  "secondEndPos" : 169
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "gms",
+  "secondLabel" : "gms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 254,
+  "secondPos" : 170,
+  "firstEndPos" : 257,
+  "secondEndPos" : 173
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "location",
+  "secondLabel" : "location",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 258,
+  "secondPos" : 174,
+  "firstEndPos" : 266,
+  "secondEndPos" : 182
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LocationRequest",
+  "secondLabel" : "LocationRequest",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 267,
+  "secondPos" : 183,
   "firstEndPos" : 282,
   "secondEndPos" : 198
 }, {
@@ -133,12 +386,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "com.google.android.gms.location.LocationServices",
-  "secondLabel" : "com.google.android.gms.location.LocationServices",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 291,
   "secondPos" : 206,
+  "firstEndPos" : 339,
+  "secondEndPos" : 254
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 291,
+  "secondPos" : 206,
+  "firstEndPos" : 294,
+  "secondEndPos" : 209
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "google",
+  "secondLabel" : "google",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 295,
+  "secondPos" : 210,
+  "firstEndPos" : 301,
+  "secondEndPos" : 216
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "android",
+  "secondLabel" : "android",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 302,
+  "secondPos" : 217,
+  "firstEndPos" : 309,
+  "secondEndPos" : 224
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "gms",
+  "secondLabel" : "gms",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 310,
+  "secondPos" : 225,
+  "firstEndPos" : 313,
+  "secondEndPos" : 228
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "location",
+  "secondLabel" : "location",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 314,
+  "secondPos" : 229,
+  "firstEndPos" : 322,
+  "secondEndPos" : 237
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LocationServices",
+  "secondLabel" : "LocationServices",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 323,
+  "secondPos" : 238,
   "firstEndPos" : 339,
   "secondEndPos" : 254
 }, {
@@ -155,12 +474,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "identifier",
-  "firstLabel" : "fr.cph.chicago.entity.Position",
-  "secondLabel" : "fr.cph.chicago.entity.Position",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "import_header",
   "firstPos" : 349,
   "secondPos" : 262,
+  "firstEndPos" : 379,
+  "secondEndPos" : 292
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "fr",
+  "secondLabel" : "fr",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 349,
+  "secondPos" : 262,
+  "firstEndPos" : 351,
+  "secondEndPos" : 264
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "cph",
+  "secondLabel" : "cph",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 352,
+  "secondPos" : 265,
+  "firstEndPos" : 355,
+  "secondEndPos" : 268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "chicago",
+  "secondLabel" : "chicago",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 356,
+  "secondPos" : 269,
+  "firstEndPos" : 363,
+  "secondEndPos" : 276
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "entity",
+  "secondLabel" : "entity",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 364,
+  "secondPos" : 277,
+  "firstEndPos" : 370,
+  "secondEndPos" : 283
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Position",
+  "secondLabel" : "Position",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "identifier",
+  "firstPos" : 371,
+  "secondPos" : 284,
   "firstEndPos" : 379,
   "secondEndPos" : 292
 }, {
@@ -639,12 +1013,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
-  "firstLabel" : "LocationRequest.PRIORITY_HIGH_ACCURACY",
-  "secondLabel" : "LocationRequest.PRIORITY_HIGH_ACCURACY",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "assignment",
   "firstPos" : 1051,
   "secondPos" : 586,
+  "firstEndPos" : 1089,
+  "secondEndPos" : 624
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LocationRequest",
+  "secondLabel" : "LocationRequest",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1051,
+  "secondPos" : 586,
+  "firstEndPos" : 1066,
+  "secondEndPos" : 601
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "PRIORITY_HIGH_ACCURACY",
+  "secondLabel" : "PRIORITY_HIGH_ACCURACY",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1067,
+  "secondPos" : 602,
   "firstEndPos" : 1089,
   "secondEndPos" : 624
 }, {
@@ -672,12 +1068,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
-  "firstLabel" : "LocationServices.FusedLocationApi",
-  "secondLabel" : "LocationServices.FusedLocationApi",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "navigation_expression",
   "firstPos" : 1221,
   "secondPos" : 756,
+  "firstEndPos" : 1254,
+  "secondEndPos" : 789
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LocationServices",
+  "secondLabel" : "LocationServices",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1221,
+  "secondPos" : 756,
+  "firstEndPos" : 1237,
+  "secondEndPos" : 772
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "FusedLocationApi",
+  "secondLabel" : "FusedLocationApi",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1238,
+  "secondPos" : 773,
   "firstEndPos" : 1254,
   "secondEndPos" : 789
 }, {
@@ -848,12 +1266,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
-  "firstLabel" : "LocationServices.FusedLocationApi",
-  "secondLabel" : "LocationServices.FusedLocationApi",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "navigation_expression",
   "firstPos" : 1396,
   "secondPos" : 913,
+  "firstEndPos" : 1429,
+  "secondEndPos" : 946
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LocationServices",
+  "secondLabel" : "LocationServices",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1396,
+  "secondPos" : 913,
+  "firstEndPos" : 1412,
+  "secondEndPos" : 929
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "FusedLocationApi",
+  "secondLabel" : "FusedLocationApi",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1413,
+  "secondPos" : 930,
   "firstEndPos" : 1429,
   "secondEndPos" : 946
 }, {

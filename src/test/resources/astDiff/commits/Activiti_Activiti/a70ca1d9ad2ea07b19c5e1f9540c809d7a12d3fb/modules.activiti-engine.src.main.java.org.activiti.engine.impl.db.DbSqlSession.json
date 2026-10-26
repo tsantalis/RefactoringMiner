@@ -34,12 +34,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.db",
-  "secondLabel" : "org.activiti.engine.impl.db",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "PackageDeclaration",
   "secondParentType" : "PackageDeclaration",
   "firstPos" : 571,
   "secondPos" : 571,
+  "firstEndPos" : 598,
+  "secondEndPos" : 598
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 571,
+  "secondPos" : 571,
+  "firstEndPos" : 574,
+  "secondEndPos" : 574
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 575,
+  "secondPos" : 575,
+  "firstEndPos" : 583,
+  "secondEndPos" : 583
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 584,
+  "secondPos" : 584,
+  "firstEndPos" : 590,
+  "secondEndPos" : 590
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 591,
+  "secondPos" : 591,
+  "firstEndPos" : 595,
+  "secondEndPos" : 595
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 596,
+  "secondPos" : 596,
   "firstEndPos" : 598,
   "secondEndPos" : 598
 }, {
@@ -56,12 +111,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.BufferedReader",
-  "secondLabel" : "java.io.BufferedReader",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 608,
   "secondPos" : 608,
+  "firstEndPos" : 630,
+  "secondEndPos" : 630
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 608,
+  "secondPos" : 608,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 613,
+  "secondPos" : 613,
+  "firstEndPos" : 615,
+  "secondEndPos" : 615
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BufferedReader",
+  "secondLabel" : "BufferedReader",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 616,
+  "secondPos" : 616,
   "firstEndPos" : 630,
   "secondEndPos" : 630
 }, {
@@ -78,12 +166,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.IOException",
-  "secondLabel" : "java.io.IOException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 639,
   "secondPos" : 639,
+  "firstEndPos" : 658,
+  "secondEndPos" : 658
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 639,
+  "secondPos" : 639,
+  "firstEndPos" : 643,
+  "secondEndPos" : 643
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 644,
+  "secondPos" : 644,
+  "firstEndPos" : 646,
+  "secondEndPos" : 646
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "IOException",
+  "secondLabel" : "IOException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 647,
+  "secondPos" : 647,
   "firstEndPos" : 658,
   "secondEndPos" : 658
 }, {
@@ -100,12 +221,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.InputStream",
-  "secondLabel" : "java.io.InputStream",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 667,
   "secondPos" : 667,
+  "firstEndPos" : 686,
+  "secondEndPos" : 686
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 667,
+  "secondPos" : 667,
+  "firstEndPos" : 671,
+  "secondEndPos" : 671
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 672,
+  "secondPos" : 672,
+  "firstEndPos" : 674,
+  "secondEndPos" : 674
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "InputStream",
+  "secondLabel" : "InputStream",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 675,
+  "secondPos" : 675,
   "firstEndPos" : 686,
   "secondEndPos" : 686
 }, {
@@ -122,12 +276,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.io.StringReader",
-  "secondLabel" : "java.io.StringReader",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 695,
   "secondPos" : 695,
+  "firstEndPos" : 715,
+  "secondEndPos" : 715
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 695,
+  "secondPos" : 695,
+  "firstEndPos" : 699,
+  "secondEndPos" : 699
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "io",
+  "secondLabel" : "io",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 700,
+  "secondPos" : 700,
+  "firstEndPos" : 702,
+  "secondEndPos" : 702
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "StringReader",
+  "secondLabel" : "StringReader",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 703,
+  "secondPos" : 703,
   "firstEndPos" : 715,
   "secondEndPos" : 715
 }, {
@@ -144,12 +331,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.sql.Connection",
-  "secondLabel" : "java.sql.Connection",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 724,
   "secondPos" : 724,
+  "firstEndPos" : 743,
+  "secondEndPos" : 743
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 724,
+  "secondPos" : 724,
+  "firstEndPos" : 728,
+  "secondEndPos" : 728
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sql",
+  "secondLabel" : "sql",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 729,
+  "secondPos" : 729,
+  "firstEndPos" : 732,
+  "secondEndPos" : 732
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Connection",
+  "secondLabel" : "Connection",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 733,
+  "secondPos" : 733,
   "firstEndPos" : 743,
   "secondEndPos" : 743
 }, {
@@ -166,12 +386,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.sql.DatabaseMetaData",
-  "secondLabel" : "java.sql.DatabaseMetaData",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 752,
   "secondPos" : 752,
+  "firstEndPos" : 777,
+  "secondEndPos" : 777
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 752,
+  "secondPos" : 752,
+  "firstEndPos" : 756,
+  "secondEndPos" : 756
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sql",
+  "secondLabel" : "sql",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 757,
+  "secondPos" : 757,
+  "firstEndPos" : 760,
+  "secondEndPos" : 760
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DatabaseMetaData",
+  "secondLabel" : "DatabaseMetaData",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 761,
+  "secondPos" : 761,
   "firstEndPos" : 777,
   "secondEndPos" : 777
 }, {
@@ -188,12 +441,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.sql.ResultSet",
-  "secondLabel" : "java.sql.ResultSet",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 786,
   "secondPos" : 786,
+  "firstEndPos" : 804,
+  "secondEndPos" : 804
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 786,
+  "secondPos" : 786,
+  "firstEndPos" : 790,
+  "secondEndPos" : 790
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sql",
+  "secondLabel" : "sql",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 791,
+  "secondPos" : 791,
+  "firstEndPos" : 794,
+  "secondEndPos" : 794
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ResultSet",
+  "secondLabel" : "ResultSet",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 795,
+  "secondPos" : 795,
   "firstEndPos" : 804,
   "secondEndPos" : 804
 }, {
@@ -210,12 +496,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.sql.Statement",
-  "secondLabel" : "java.sql.Statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 813,
   "secondPos" : 813,
+  "firstEndPos" : 831,
+  "secondEndPos" : 831
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 813,
+  "secondPos" : 813,
+  "firstEndPos" : 817,
+  "secondEndPos" : 817
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "sql",
+  "secondLabel" : "sql",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 818,
+  "secondPos" : 818,
+  "firstEndPos" : 821,
+  "secondEndPos" : 821
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Statement",
+  "secondLabel" : "Statement",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 822,
+  "secondPos" : 822,
   "firstEndPos" : 831,
   "secondEndPos" : 831
 }, {
@@ -232,12 +551,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.ArrayList",
-  "secondLabel" : "java.util.ArrayList",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 840,
   "secondPos" : 840,
+  "firstEndPos" : 859,
+  "secondEndPos" : 859
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 840,
+  "secondPos" : 840,
+  "firstEndPos" : 844,
+  "secondEndPos" : 844
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 845,
+  "secondPos" : 845,
+  "firstEndPos" : 849,
+  "secondEndPos" : 849
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ArrayList",
+  "secondLabel" : "ArrayList",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 850,
+  "secondPos" : 850,
   "firstEndPos" : 859,
   "secondEndPos" : 859
 }, {
@@ -254,12 +606,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Arrays",
-  "secondLabel" : "java.util.Arrays",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 868,
   "secondPos" : 868,
+  "firstEndPos" : 884,
+  "secondEndPos" : 884
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 868,
+  "secondPos" : 868,
+  "firstEndPos" : 872,
+  "secondEndPos" : 872
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 873,
+  "secondPos" : 873,
+  "firstEndPos" : 877,
+  "secondEndPos" : 877
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Arrays",
+  "secondLabel" : "Arrays",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 878,
+  "secondPos" : 878,
   "firstEndPos" : 884,
   "secondEndPos" : 884
 }, {
@@ -276,12 +661,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Collection",
-  "secondLabel" : "java.util.Collection",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 893,
   "secondPos" : 893,
+  "firstEndPos" : 913,
+  "secondEndPos" : 913
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 893,
+  "secondPos" : 893,
+  "firstEndPos" : 897,
+  "secondEndPos" : 897
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 898,
+  "secondPos" : 898,
+  "firstEndPos" : 902,
+  "secondEndPos" : 902
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Collection",
+  "secondLabel" : "Collection",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 903,
+  "secondPos" : 903,
   "firstEndPos" : 913,
   "secondEndPos" : 913
 }, {
@@ -298,12 +716,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Collections",
-  "secondLabel" : "java.util.Collections",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 922,
   "secondPos" : 922,
+  "firstEndPos" : 943,
+  "secondEndPos" : 943
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 922,
+  "secondPos" : 922,
+  "firstEndPos" : 926,
+  "secondEndPos" : 926
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 927,
+  "secondPos" : 927,
+  "firstEndPos" : 931,
+  "secondEndPos" : 931
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Collections",
+  "secondLabel" : "Collections",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 932,
+  "secondPos" : 932,
   "firstEndPos" : 943,
   "secondEndPos" : 943
 }, {
@@ -320,12 +771,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.HashMap",
-  "secondLabel" : "java.util.HashMap",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 952,
   "secondPos" : 952,
+  "firstEndPos" : 969,
+  "secondEndPos" : 969
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 952,
+  "secondPos" : 952,
+  "firstEndPos" : 956,
+  "secondEndPos" : 956
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 957,
+  "secondPos" : 957,
+  "firstEndPos" : 961,
+  "secondEndPos" : 961
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HashMap",
+  "secondLabel" : "HashMap",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 962,
+  "secondPos" : 962,
   "firstEndPos" : 969,
   "secondEndPos" : 969
 }, {
@@ -342,12 +826,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Iterator",
-  "secondLabel" : "java.util.Iterator",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 978,
   "secondPos" : 978,
+  "firstEndPos" : 996,
+  "secondEndPos" : 996
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 978,
+  "secondPos" : 978,
+  "firstEndPos" : 982,
+  "secondEndPos" : 982
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 983,
+  "secondPos" : 983,
+  "firstEndPos" : 987,
+  "secondEndPos" : 987
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Iterator",
+  "secondLabel" : "Iterator",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 988,
+  "secondPos" : 988,
   "firstEndPos" : 996,
   "secondEndPos" : 996
 }, {
@@ -364,12 +881,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.List",
-  "secondLabel" : "java.util.List",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1005,
   "secondPos" : 1005,
+  "firstEndPos" : 1019,
+  "secondEndPos" : 1019
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1005,
+  "secondPos" : 1005,
+  "firstEndPos" : 1009,
+  "secondEndPos" : 1009
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1010,
+  "secondPos" : 1010,
+  "firstEndPos" : 1014,
+  "secondEndPos" : 1014
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "List",
+  "secondLabel" : "List",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1015,
+  "secondPos" : 1015,
   "firstEndPos" : 1019,
   "secondEndPos" : 1019
 }, {
@@ -386,12 +936,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.Map",
-  "secondLabel" : "java.util.Map",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1028,
   "secondPos" : 1028,
+  "firstEndPos" : 1041,
+  "secondEndPos" : 1041
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1028,
+  "secondPos" : 1028,
+  "firstEndPos" : 1032,
+  "secondEndPos" : 1032
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1033,
+  "secondPos" : 1033,
+  "firstEndPos" : 1037,
+  "secondEndPos" : 1037
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Map",
+  "secondLabel" : "Map",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1038,
+  "secondPos" : 1038,
   "firstEndPos" : 1041,
   "secondEndPos" : 1041
 }, {
@@ -408,12 +991,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.regex.Matcher",
-  "secondLabel" : "java.util.regex.Matcher",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1050,
   "secondPos" : 1050,
+  "firstEndPos" : 1073,
+  "secondEndPos" : 1073
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1050,
+  "secondPos" : 1050,
+  "firstEndPos" : 1054,
+  "secondEndPos" : 1054
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1055,
+  "secondPos" : 1055,
+  "firstEndPos" : 1059,
+  "secondEndPos" : 1059
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "regex",
+  "secondLabel" : "regex",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1060,
+  "secondPos" : 1060,
+  "firstEndPos" : 1065,
+  "secondEndPos" : 1065
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Matcher",
+  "secondLabel" : "Matcher",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1066,
+  "secondPos" : 1066,
   "firstEndPos" : 1073,
   "secondEndPos" : 1073
 }, {
@@ -430,12 +1057,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "java.util.regex.Pattern",
-  "secondLabel" : "java.util.regex.Pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1082,
   "secondPos" : 1082,
+  "firstEndPos" : 1105,
+  "secondEndPos" : 1105
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1082,
+  "secondPos" : 1082,
+  "firstEndPos" : 1086,
+  "secondEndPos" : 1086
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1087,
+  "secondPos" : 1087,
+  "firstEndPos" : 1091,
+  "secondEndPos" : 1091
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "regex",
+  "secondLabel" : "regex",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1092,
+  "secondPos" : 1092,
+  "firstEndPos" : 1097,
+  "secondEndPos" : 1097
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Pattern",
+  "secondLabel" : "Pattern",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1098,
+  "secondPos" : 1098,
   "firstEndPos" : 1105,
   "secondEndPos" : 1105
 }, {
@@ -452,12 +1123,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.ActivitiException",
-  "secondLabel" : "org.activiti.engine.ActivitiException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1115,
   "secondPos" : 1115,
+  "firstEndPos" : 1152,
+  "secondEndPos" : 1152
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1115,
+  "secondPos" : 1115,
+  "firstEndPos" : 1118,
+  "secondEndPos" : 1118
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1119,
+  "secondPos" : 1119,
+  "firstEndPos" : 1127,
+  "secondEndPos" : 1127
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1128,
+  "secondPos" : 1128,
+  "firstEndPos" : 1134,
+  "secondEndPos" : 1134
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ActivitiException",
+  "secondLabel" : "ActivitiException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1135,
+  "secondPos" : 1135,
   "firstEndPos" : 1152,
   "secondEndPos" : 1152
 }, {
@@ -474,12 +1189,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.ActivitiOptimisticLockingException",
-  "secondLabel" : "org.activiti.engine.ActivitiOptimisticLockingException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1161,
   "secondPos" : 1161,
+  "firstEndPos" : 1215,
+  "secondEndPos" : 1215
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1161,
+  "secondPos" : 1161,
+  "firstEndPos" : 1164,
+  "secondEndPos" : 1164
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1165,
+  "secondPos" : 1165,
+  "firstEndPos" : 1173,
+  "secondEndPos" : 1173
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1174,
+  "secondPos" : 1174,
+  "firstEndPos" : 1180,
+  "secondEndPos" : 1180
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ActivitiOptimisticLockingException",
+  "secondLabel" : "ActivitiOptimisticLockingException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1181,
+  "secondPos" : 1181,
   "firstEndPos" : 1215,
   "secondEndPos" : 1215
 }, {
@@ -496,12 +1255,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.ActivitiWrongDbException",
-  "secondLabel" : "org.activiti.engine.ActivitiWrongDbException",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1224,
   "secondPos" : 1224,
+  "firstEndPos" : 1268,
+  "secondEndPos" : 1268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1224,
+  "secondPos" : 1224,
+  "firstEndPos" : 1227,
+  "secondEndPos" : 1227
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1228,
+  "secondPos" : 1228,
+  "firstEndPos" : 1236,
+  "secondEndPos" : 1236
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1237,
+  "secondPos" : 1237,
+  "firstEndPos" : 1243,
+  "secondEndPos" : 1243
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ActivitiWrongDbException",
+  "secondLabel" : "ActivitiWrongDbException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1244,
+  "secondPos" : 1244,
   "firstEndPos" : 1268,
   "secondEndPos" : 1268
 }, {
@@ -518,12 +1321,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.ProcessEngine",
-  "secondLabel" : "org.activiti.engine.ProcessEngine",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1277,
   "secondPos" : 1277,
+  "firstEndPos" : 1310,
+  "secondEndPos" : 1310
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1277,
+  "secondPos" : 1277,
+  "firstEndPos" : 1280,
+  "secondEndPos" : 1280
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1281,
+  "secondPos" : 1281,
+  "firstEndPos" : 1289,
+  "secondEndPos" : 1289
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1290,
+  "secondPos" : 1290,
+  "firstEndPos" : 1296,
+  "secondEndPos" : 1296
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1297,
+  "secondPos" : 1297,
   "firstEndPos" : 1310,
   "secondEndPos" : 1310
 }, {
@@ -540,12 +1387,56 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.ProcessEngineConfiguration",
-  "secondLabel" : "org.activiti.engine.ProcessEngineConfiguration",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1319,
   "secondPos" : 1319,
+  "firstEndPos" : 1365,
+  "secondEndPos" : 1365
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1319,
+  "secondPos" : 1319,
+  "firstEndPos" : 1322,
+  "secondEndPos" : 1322
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1323,
+  "secondPos" : 1323,
+  "firstEndPos" : 1331,
+  "secondEndPos" : 1331
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1332,
+  "secondPos" : 1332,
+  "firstEndPos" : 1338,
+  "secondEndPos" : 1338
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfiguration",
+  "secondLabel" : "ProcessEngineConfiguration",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1339,
+  "secondPos" : 1339,
   "firstEndPos" : 1365,
   "secondEndPos" : 1365
 }, {
@@ -562,12 +1453,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.delegate.event.ActivitiEventType",
-  "secondLabel" : "org.activiti.engine.delegate.event.ActivitiEventType",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1374,
   "secondPos" : 1374,
+  "firstEndPos" : 1426,
+  "secondEndPos" : 1426
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1374,
+  "secondPos" : 1374,
+  "firstEndPos" : 1377,
+  "secondEndPos" : 1377
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1378,
+  "secondPos" : 1378,
+  "firstEndPos" : 1386,
+  "secondEndPos" : 1386
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1387,
+  "secondPos" : 1387,
+  "firstEndPos" : 1393,
+  "secondEndPos" : 1393
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "delegate",
+  "secondLabel" : "delegate",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1394,
+  "secondPos" : 1394,
+  "firstEndPos" : 1402,
+  "secondEndPos" : 1402
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "event",
+  "secondLabel" : "event",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1403,
+  "secondPos" : 1403,
+  "firstEndPos" : 1408,
+  "secondEndPos" : 1408
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ActivitiEventType",
+  "secondLabel" : "ActivitiEventType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1409,
+  "secondPos" : 1409,
   "firstEndPos" : 1426,
   "secondEndPos" : 1426
 }, {
@@ -584,12 +1541,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.delegate.event.ActivitiVariableEvent",
-  "secondLabel" : "org.activiti.engine.delegate.event.ActivitiVariableEvent",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1435,
   "secondPos" : 1435,
+  "firstEndPos" : 1491,
+  "secondEndPos" : 1491
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1435,
+  "secondPos" : 1435,
+  "firstEndPos" : 1438,
+  "secondEndPos" : 1438
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1439,
+  "secondPos" : 1439,
+  "firstEndPos" : 1447,
+  "secondEndPos" : 1447
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1448,
+  "secondPos" : 1448,
+  "firstEndPos" : 1454,
+  "secondEndPos" : 1454
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "delegate",
+  "secondLabel" : "delegate",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1455,
+  "secondPos" : 1455,
+  "firstEndPos" : 1463,
+  "secondEndPos" : 1463
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "event",
+  "secondLabel" : "event",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1464,
+  "secondPos" : 1464,
+  "firstEndPos" : 1469,
+  "secondEndPos" : 1469
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ActivitiVariableEvent",
+  "secondLabel" : "ActivitiVariableEvent",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1470,
+  "secondPos" : 1470,
   "firstEndPos" : 1491,
   "secondEndPos" : 1491
 }, {
@@ -606,12 +1629,89 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.delegate.event.impl.ActivitiEventBuilder",
-  "secondLabel" : "org.activiti.engine.delegate.event.impl.ActivitiEventBuilder",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1500,
   "secondPos" : 1500,
+  "firstEndPos" : 1560,
+  "secondEndPos" : 1560
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1500,
+  "secondPos" : 1500,
+  "firstEndPos" : 1503,
+  "secondEndPos" : 1503
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1504,
+  "secondPos" : 1504,
+  "firstEndPos" : 1512,
+  "secondEndPos" : 1512
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1513,
+  "secondPos" : 1513,
+  "firstEndPos" : 1519,
+  "secondEndPos" : 1519
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "delegate",
+  "secondLabel" : "delegate",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1520,
+  "secondPos" : 1520,
+  "firstEndPos" : 1528,
+  "secondEndPos" : 1528
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "event",
+  "secondLabel" : "event",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1529,
+  "secondPos" : 1529,
+  "firstEndPos" : 1534,
+  "secondEndPos" : 1534
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1535,
+  "secondPos" : 1535,
+  "firstEndPos" : 1539,
+  "secondEndPos" : 1539
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ActivitiEventBuilder",
+  "secondLabel" : "ActivitiEventBuilder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1540,
+  "secondPos" : 1540,
   "firstEndPos" : 1560,
   "secondEndPos" : 1560
 }, {
@@ -628,12 +1728,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.DeploymentQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.DeploymentQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1569,
   "secondPos" : 1569,
+  "firstEndPos" : 1613,
+  "secondEndPos" : 1613
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1569,
+  "secondPos" : 1569,
+  "firstEndPos" : 1572,
+  "secondEndPos" : 1572
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1573,
+  "secondPos" : 1573,
+  "firstEndPos" : 1581,
+  "secondEndPos" : 1581
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1582,
+  "secondPos" : 1582,
+  "firstEndPos" : 1588,
+  "secondEndPos" : 1588
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1589,
+  "secondPos" : 1589,
+  "firstEndPos" : 1593,
+  "secondEndPos" : 1593
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DeploymentQueryImpl",
+  "secondLabel" : "DeploymentQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1594,
+  "secondPos" : 1594,
   "firstEndPos" : 1613,
   "secondEndPos" : 1613
 }, {
@@ -650,12 +1805,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.ExecutionQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.ExecutionQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1622,
   "secondPos" : 1622,
+  "firstEndPos" : 1665,
+  "secondEndPos" : 1665
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1622,
+  "secondPos" : 1622,
+  "firstEndPos" : 1625,
+  "secondEndPos" : 1625
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1626,
+  "secondPos" : 1626,
+  "firstEndPos" : 1634,
+  "secondEndPos" : 1634
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1635,
+  "secondPos" : 1635,
+  "firstEndPos" : 1641,
+  "secondEndPos" : 1641
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1642,
+  "secondPos" : 1642,
+  "firstEndPos" : 1646,
+  "secondEndPos" : 1646
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ExecutionQueryImpl",
+  "secondLabel" : "ExecutionQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1647,
+  "secondPos" : 1647,
   "firstEndPos" : 1665,
   "secondEndPos" : 1665
 }, {
@@ -672,12 +1882,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.GroupQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.GroupQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1674,
   "secondPos" : 1674,
+  "firstEndPos" : 1713,
+  "secondEndPos" : 1713
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1674,
+  "secondPos" : 1674,
+  "firstEndPos" : 1677,
+  "secondEndPos" : 1677
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1678,
+  "secondPos" : 1678,
+  "firstEndPos" : 1686,
+  "secondEndPos" : 1686
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1687,
+  "secondPos" : 1687,
+  "firstEndPos" : 1693,
+  "secondEndPos" : 1693
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1694,
+  "secondPos" : 1694,
+  "firstEndPos" : 1698,
+  "secondEndPos" : 1698
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "GroupQueryImpl",
+  "secondLabel" : "GroupQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1699,
+  "secondPos" : 1699,
   "firstEndPos" : 1713,
   "secondEndPos" : 1713
 }, {
@@ -694,12 +1959,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.HistoricActivityInstanceQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.HistoricActivityInstanceQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1722,
   "secondPos" : 1722,
+  "firstEndPos" : 1780,
+  "secondEndPos" : 1780
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1722,
+  "secondPos" : 1722,
+  "firstEndPos" : 1725,
+  "secondEndPos" : 1725
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1726,
+  "secondPos" : 1726,
+  "firstEndPos" : 1734,
+  "secondEndPos" : 1734
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1735,
+  "secondPos" : 1735,
+  "firstEndPos" : 1741,
+  "secondEndPos" : 1741
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1742,
+  "secondPos" : 1742,
+  "firstEndPos" : 1746,
+  "secondEndPos" : 1746
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HistoricActivityInstanceQueryImpl",
+  "secondLabel" : "HistoricActivityInstanceQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1747,
+  "secondPos" : 1747,
   "firstEndPos" : 1780,
   "secondEndPos" : 1780
 }, {
@@ -716,12 +2036,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.HistoricDetailQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.HistoricDetailQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1789,
   "secondPos" : 1789,
+  "firstEndPos" : 1837,
+  "secondEndPos" : 1837
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1789,
+  "secondPos" : 1789,
+  "firstEndPos" : 1792,
+  "secondEndPos" : 1792
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1793,
+  "secondPos" : 1793,
+  "firstEndPos" : 1801,
+  "secondEndPos" : 1801
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1802,
+  "secondPos" : 1802,
+  "firstEndPos" : 1808,
+  "secondEndPos" : 1808
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1809,
+  "secondPos" : 1809,
+  "firstEndPos" : 1813,
+  "secondEndPos" : 1813
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HistoricDetailQueryImpl",
+  "secondLabel" : "HistoricDetailQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1814,
+  "secondPos" : 1814,
   "firstEndPos" : 1837,
   "secondEndPos" : 1837
 }, {
@@ -738,12 +2113,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.HistoricProcessInstanceQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.HistoricProcessInstanceQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1846,
   "secondPos" : 1846,
+  "firstEndPos" : 1903,
+  "secondEndPos" : 1903
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1846,
+  "secondPos" : 1846,
+  "firstEndPos" : 1849,
+  "secondEndPos" : 1849
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1850,
+  "secondPos" : 1850,
+  "firstEndPos" : 1858,
+  "secondEndPos" : 1858
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1859,
+  "secondPos" : 1859,
+  "firstEndPos" : 1865,
+  "secondEndPos" : 1865
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1866,
+  "secondPos" : 1866,
+  "firstEndPos" : 1870,
+  "secondEndPos" : 1870
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HistoricProcessInstanceQueryImpl",
+  "secondLabel" : "HistoricProcessInstanceQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1871,
+  "secondPos" : 1871,
   "firstEndPos" : 1903,
   "secondEndPos" : 1903
 }, {
@@ -760,12 +2190,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.HistoricTaskInstanceQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.HistoricTaskInstanceQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1912,
   "secondPos" : 1912,
+  "firstEndPos" : 1966,
+  "secondEndPos" : 1966
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1912,
+  "secondPos" : 1912,
+  "firstEndPos" : 1915,
+  "secondEndPos" : 1915
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1916,
+  "secondPos" : 1916,
+  "firstEndPos" : 1924,
+  "secondEndPos" : 1924
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1925,
+  "secondPos" : 1925,
+  "firstEndPos" : 1931,
+  "secondEndPos" : 1931
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1932,
+  "secondPos" : 1932,
+  "firstEndPos" : 1936,
+  "secondEndPos" : 1936
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HistoricTaskInstanceQueryImpl",
+  "secondLabel" : "HistoricTaskInstanceQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1937,
+  "secondPos" : 1937,
   "firstEndPos" : 1966,
   "secondEndPos" : 1966
 }, {
@@ -782,12 +2267,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.HistoricVariableInstanceQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.HistoricVariableInstanceQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 1975,
   "secondPos" : 1975,
+  "firstEndPos" : 2033,
+  "secondEndPos" : 2033
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1975,
+  "secondPos" : 1975,
+  "firstEndPos" : 1978,
+  "secondEndPos" : 1978
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1979,
+  "secondPos" : 1979,
+  "firstEndPos" : 1987,
+  "secondEndPos" : 1987
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1988,
+  "secondPos" : 1988,
+  "firstEndPos" : 1994,
+  "secondEndPos" : 1994
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 1995,
+  "secondPos" : 1995,
+  "firstEndPos" : 1999,
+  "secondEndPos" : 1999
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HistoricVariableInstanceQueryImpl",
+  "secondLabel" : "HistoricVariableInstanceQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2000,
+  "secondPos" : 2000,
   "firstEndPos" : 2033,
   "secondEndPos" : 2033
 }, {
@@ -804,12 +2344,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.JobQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.JobQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2042,
   "secondPos" : 2042,
+  "firstEndPos" : 2079,
+  "secondEndPos" : 2079
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2042,
+  "secondPos" : 2042,
+  "firstEndPos" : 2045,
+  "secondEndPos" : 2045
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2046,
+  "secondPos" : 2046,
+  "firstEndPos" : 2054,
+  "secondEndPos" : 2054
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2055,
+  "secondPos" : 2055,
+  "firstEndPos" : 2061,
+  "secondEndPos" : 2061
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2062,
+  "secondPos" : 2062,
+  "firstEndPos" : 2066,
+  "secondEndPos" : 2066
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JobQueryImpl",
+  "secondLabel" : "JobQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2067,
+  "secondPos" : 2067,
   "firstEndPos" : 2079,
   "secondEndPos" : 2079
 }, {
@@ -826,12 +2421,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.ModelQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.ModelQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2088,
   "secondPos" : 2088,
+  "firstEndPos" : 2127,
+  "secondEndPos" : 2127
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2088,
+  "secondPos" : 2088,
+  "firstEndPos" : 2091,
+  "secondEndPos" : 2091
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2092,
+  "secondPos" : 2092,
+  "firstEndPos" : 2100,
+  "secondEndPos" : 2100
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2101,
+  "secondPos" : 2101,
+  "firstEndPos" : 2107,
+  "secondEndPos" : 2107
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2108,
+  "secondPos" : 2108,
+  "firstEndPos" : 2112,
+  "secondEndPos" : 2112
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ModelQueryImpl",
+  "secondLabel" : "ModelQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2113,
+  "secondPos" : 2113,
   "firstEndPos" : 2127,
   "secondEndPos" : 2127
 }, {
@@ -848,12 +2498,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.Page",
-  "secondLabel" : "org.activiti.engine.impl.Page",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2136,
   "secondPos" : 2136,
+  "firstEndPos" : 2165,
+  "secondEndPos" : 2165
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2136,
+  "secondPos" : 2136,
+  "firstEndPos" : 2139,
+  "secondEndPos" : 2139
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2140,
+  "secondPos" : 2140,
+  "firstEndPos" : 2148,
+  "secondEndPos" : 2148
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2149,
+  "secondPos" : 2149,
+  "firstEndPos" : 2155,
+  "secondEndPos" : 2155
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2156,
+  "secondPos" : 2156,
+  "firstEndPos" : 2160,
+  "secondEndPos" : 2160
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Page",
+  "secondLabel" : "Page",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2161,
+  "secondPos" : 2161,
   "firstEndPos" : 2165,
   "secondEndPos" : 2165
 }, {
@@ -870,12 +2575,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.ProcessDefinitionQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.ProcessDefinitionQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2174,
   "secondPos" : 2174,
+  "firstEndPos" : 2225,
+  "secondEndPos" : 2225
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2174,
+  "secondPos" : 2174,
+  "firstEndPos" : 2177,
+  "secondEndPos" : 2177
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2178,
+  "secondPos" : 2178,
+  "firstEndPos" : 2186,
+  "secondEndPos" : 2186
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2187,
+  "secondPos" : 2187,
+  "firstEndPos" : 2193,
+  "secondEndPos" : 2193
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2194,
+  "secondPos" : 2194,
+  "firstEndPos" : 2198,
+  "secondEndPos" : 2198
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessDefinitionQueryImpl",
+  "secondLabel" : "ProcessDefinitionQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2199,
+  "secondPos" : 2199,
   "firstEndPos" : 2225,
   "secondEndPos" : 2225
 }, {
@@ -892,12 +2652,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.ProcessInstanceQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.ProcessInstanceQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2234,
   "secondPos" : 2234,
+  "firstEndPos" : 2283,
+  "secondEndPos" : 2283
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2234,
+  "secondPos" : 2234,
+  "firstEndPos" : 2237,
+  "secondEndPos" : 2237
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2238,
+  "secondPos" : 2238,
+  "firstEndPos" : 2246,
+  "secondEndPos" : 2246
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2247,
+  "secondPos" : 2247,
+  "firstEndPos" : 2253,
+  "secondEndPos" : 2253
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2254,
+  "secondPos" : 2254,
+  "firstEndPos" : 2258,
+  "secondEndPos" : 2258
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessInstanceQueryImpl",
+  "secondLabel" : "ProcessInstanceQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2259,
+  "secondPos" : 2259,
   "firstEndPos" : 2283,
   "secondEndPos" : 2283
 }, {
@@ -914,12 +2729,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.TaskQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.TaskQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2292,
   "secondPos" : 2292,
+  "firstEndPos" : 2330,
+  "secondEndPos" : 2330
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2292,
+  "secondPos" : 2292,
+  "firstEndPos" : 2295,
+  "secondEndPos" : 2295
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2296,
+  "secondPos" : 2296,
+  "firstEndPos" : 2304,
+  "secondEndPos" : 2304
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2305,
+  "secondPos" : 2305,
+  "firstEndPos" : 2311,
+  "secondEndPos" : 2311
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2312,
+  "secondPos" : 2312,
+  "firstEndPos" : 2316,
+  "secondEndPos" : 2316
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "TaskQueryImpl",
+  "secondLabel" : "TaskQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2317,
+  "secondPos" : 2317,
   "firstEndPos" : 2330,
   "secondEndPos" : 2330
 }, {
@@ -936,12 +2806,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.UserQueryImpl",
-  "secondLabel" : "org.activiti.engine.impl.UserQueryImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2339,
   "secondPos" : 2339,
+  "firstEndPos" : 2377,
+  "secondEndPos" : 2377
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2339,
+  "secondPos" : 2339,
+  "firstEndPos" : 2342,
+  "secondEndPos" : 2342
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2343,
+  "secondPos" : 2343,
+  "firstEndPos" : 2351,
+  "secondEndPos" : 2351
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2352,
+  "secondPos" : 2352,
+  "firstEndPos" : 2358,
+  "secondEndPos" : 2358
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2359,
+  "secondPos" : 2359,
+  "firstEndPos" : 2363,
+  "secondEndPos" : 2363
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "UserQueryImpl",
+  "secondLabel" : "UserQueryImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2364,
+  "secondPos" : 2364,
   "firstEndPos" : 2377,
   "secondEndPos" : 2377
 }, {
@@ -958,12 +2883,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl",
-  "secondLabel" : "org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2386,
   "secondPos" : 2386,
+  "firstEndPos" : 2445,
+  "secondEndPos" : 2445
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2386,
+  "secondPos" : 2386,
+  "firstEndPos" : 2389,
+  "secondEndPos" : 2389
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2390,
+  "secondPos" : 2390,
+  "firstEndPos" : 2398,
+  "secondEndPos" : 2398
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2399,
+  "secondPos" : 2399,
+  "firstEndPos" : 2405,
+  "secondEndPos" : 2405
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2406,
+  "secondPos" : 2406,
+  "firstEndPos" : 2410,
+  "secondEndPos" : 2410
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "cfg",
+  "secondLabel" : "cfg",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2411,
+  "secondPos" : 2411,
+  "firstEndPos" : 2414,
+  "secondEndPos" : 2414
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfigurationImpl",
+  "secondLabel" : "ProcessEngineConfigurationImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2415,
+  "secondPos" : 2415,
   "firstEndPos" : 2445,
   "secondEndPos" : 2445
 }, {
@@ -980,12 +2971,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.context.Context",
-  "secondLabel" : "org.activiti.engine.impl.context.Context",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2454,
   "secondPos" : 2454,
+  "firstEndPos" : 2494,
+  "secondEndPos" : 2494
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2454,
+  "secondPos" : 2454,
+  "firstEndPos" : 2457,
+  "secondEndPos" : 2457
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2458,
+  "secondPos" : 2458,
+  "firstEndPos" : 2466,
+  "secondEndPos" : 2466
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2467,
+  "secondPos" : 2467,
+  "firstEndPos" : 2473,
+  "secondEndPos" : 2473
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2474,
+  "secondPos" : 2474,
+  "firstEndPos" : 2478,
+  "secondEndPos" : 2478
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "context",
+  "secondLabel" : "context",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2479,
+  "secondPos" : 2479,
+  "firstEndPos" : 2486,
+  "secondEndPos" : 2486
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Context",
+  "secondLabel" : "Context",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2487,
+  "secondPos" : 2487,
   "firstEndPos" : 2494,
   "secondEndPos" : 2494
 }, {
@@ -1002,12 +3059,89 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.db.upgrade.DbUpgradeStep",
-  "secondLabel" : "org.activiti.engine.impl.db.upgrade.DbUpgradeStep",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2503,
   "secondPos" : 2503,
+  "firstEndPos" : 2552,
+  "secondEndPos" : 2552
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2503,
+  "secondPos" : 2503,
+  "firstEndPos" : 2506,
+  "secondEndPos" : 2506
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2507,
+  "secondPos" : 2507,
+  "firstEndPos" : 2515,
+  "secondEndPos" : 2515
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2516,
+  "secondPos" : 2516,
+  "firstEndPos" : 2522,
+  "secondEndPos" : 2522
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2523,
+  "secondPos" : 2523,
+  "firstEndPos" : 2527,
+  "secondEndPos" : 2527
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "db",
+  "secondLabel" : "db",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2528,
+  "secondPos" : 2528,
+  "firstEndPos" : 2530,
+  "secondEndPos" : 2530
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "upgrade",
+  "secondLabel" : "upgrade",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2531,
+  "secondPos" : 2531,
+  "firstEndPos" : 2538,
+  "secondEndPos" : 2538
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DbUpgradeStep",
+  "secondLabel" : "DbUpgradeStep",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2539,
+  "secondPos" : 2539,
   "firstEndPos" : 2552,
   "secondEndPos" : 2552
 }, {
@@ -1024,12 +3158,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.history.HistoryLevel",
-  "secondLabel" : "org.activiti.engine.impl.history.HistoryLevel",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2561,
   "secondPos" : 2561,
+  "firstEndPos" : 2606,
+  "secondEndPos" : 2606
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2561,
+  "secondPos" : 2561,
+  "firstEndPos" : 2564,
+  "secondEndPos" : 2564
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2565,
+  "secondPos" : 2565,
+  "firstEndPos" : 2573,
+  "secondEndPos" : 2573
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2574,
+  "secondPos" : 2574,
+  "firstEndPos" : 2580,
+  "secondEndPos" : 2580
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2581,
+  "secondPos" : 2581,
+  "firstEndPos" : 2585,
+  "secondEndPos" : 2585
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "history",
+  "secondLabel" : "history",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2586,
+  "secondPos" : 2586,
+  "firstEndPos" : 2593,
+  "secondEndPos" : 2593
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HistoryLevel",
+  "secondLabel" : "HistoryLevel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2594,
+  "secondPos" : 2594,
   "firstEndPos" : 2606,
   "secondEndPos" : 2606
 }, {
@@ -1046,12 +3246,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.interceptor.Session",
-  "secondLabel" : "org.activiti.engine.impl.interceptor.Session",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2615,
   "secondPos" : 2615,
+  "firstEndPos" : 2659,
+  "secondEndPos" : 2659
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2615,
+  "secondPos" : 2615,
+  "firstEndPos" : 2618,
+  "secondEndPos" : 2618
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2619,
+  "secondPos" : 2619,
+  "firstEndPos" : 2627,
+  "secondEndPos" : 2627
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2628,
+  "secondPos" : 2628,
+  "firstEndPos" : 2634,
+  "secondEndPos" : 2634
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2635,
+  "secondPos" : 2635,
+  "firstEndPos" : 2639,
+  "secondEndPos" : 2639
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "interceptor",
+  "secondLabel" : "interceptor",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2640,
+  "secondPos" : 2640,
+  "firstEndPos" : 2651,
+  "secondEndPos" : 2651
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Session",
+  "secondLabel" : "Session",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2652,
+  "secondPos" : 2652,
   "firstEndPos" : 2659,
   "secondEndPos" : 2659
 }, {
@@ -1068,12 +3334,89 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.persistence.entity.PropertyEntity",
-  "secondLabel" : "org.activiti.engine.impl.persistence.entity.PropertyEntity",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2668,
   "secondPos" : 2668,
+  "firstEndPos" : 2726,
+  "secondEndPos" : 2726
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2668,
+  "secondPos" : 2668,
+  "firstEndPos" : 2671,
+  "secondEndPos" : 2671
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2672,
+  "secondPos" : 2672,
+  "firstEndPos" : 2680,
+  "secondEndPos" : 2680
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2681,
+  "secondPos" : 2681,
+  "firstEndPos" : 2687,
+  "secondEndPos" : 2687
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2688,
+  "secondPos" : 2688,
+  "firstEndPos" : 2692,
+  "secondEndPos" : 2692
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "persistence",
+  "secondLabel" : "persistence",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2693,
+  "secondPos" : 2693,
+  "firstEndPos" : 2704,
+  "secondEndPos" : 2704
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "entity",
+  "secondLabel" : "entity",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2705,
+  "secondPos" : 2705,
+  "firstEndPos" : 2711,
+  "secondEndPos" : 2711
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "PropertyEntity",
+  "secondLabel" : "PropertyEntity",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2712,
+  "secondPos" : 2712,
   "firstEndPos" : 2726,
   "secondEndPos" : 2726
 }, {
@@ -1090,12 +3433,89 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.persistence.entity.VariableInstanceEntity",
-  "secondLabel" : "org.activiti.engine.impl.persistence.entity.VariableInstanceEntity",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2735,
   "secondPos" : 2735,
+  "firstEndPos" : 2801,
+  "secondEndPos" : 2801
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2735,
+  "secondPos" : 2735,
+  "firstEndPos" : 2738,
+  "secondEndPos" : 2738
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2739,
+  "secondPos" : 2739,
+  "firstEndPos" : 2747,
+  "secondEndPos" : 2747
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2748,
+  "secondPos" : 2748,
+  "firstEndPos" : 2754,
+  "secondEndPos" : 2754
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2755,
+  "secondPos" : 2755,
+  "firstEndPos" : 2759,
+  "secondEndPos" : 2759
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "persistence",
+  "secondLabel" : "persistence",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2760,
+  "secondPos" : 2760,
+  "firstEndPos" : 2771,
+  "secondEndPos" : 2771
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "entity",
+  "secondLabel" : "entity",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2772,
+  "secondPos" : 2772,
+  "firstEndPos" : 2778,
+  "secondEndPos" : 2778
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VariableInstanceEntity",
+  "secondLabel" : "VariableInstanceEntity",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2779,
+  "secondPos" : 2779,
   "firstEndPos" : 2801,
   "secondEndPos" : 2801
 }, {
@@ -1112,12 +3532,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.util.IoUtil",
-  "secondLabel" : "org.activiti.engine.impl.util.IoUtil",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2810,
   "secondPos" : 2810,
+  "firstEndPos" : 2846,
+  "secondEndPos" : 2846
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2810,
+  "secondPos" : 2810,
+  "firstEndPos" : 2813,
+  "secondEndPos" : 2813
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2814,
+  "secondPos" : 2814,
+  "firstEndPos" : 2822,
+  "secondEndPos" : 2822
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2823,
+  "secondPos" : 2823,
+  "firstEndPos" : 2829,
+  "secondEndPos" : 2829
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2830,
+  "secondPos" : 2830,
+  "firstEndPos" : 2834,
+  "secondEndPos" : 2834
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2835,
+  "secondPos" : 2835,
+  "firstEndPos" : 2839,
+  "secondEndPos" : 2839
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "IoUtil",
+  "secondLabel" : "IoUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2840,
+  "secondPos" : 2840,
   "firstEndPos" : 2846,
   "secondEndPos" : 2846
 }, {
@@ -1134,12 +3620,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.util.ReflectUtil",
-  "secondLabel" : "org.activiti.engine.impl.util.ReflectUtil",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2855,
   "secondPos" : 2855,
+  "firstEndPos" : 2896,
+  "secondEndPos" : 2896
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2855,
+  "secondPos" : 2855,
+  "firstEndPos" : 2858,
+  "secondEndPos" : 2858
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2859,
+  "secondPos" : 2859,
+  "firstEndPos" : 2867,
+  "secondEndPos" : 2867
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2868,
+  "secondPos" : 2868,
+  "firstEndPos" : 2874,
+  "secondEndPos" : 2874
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2875,
+  "secondPos" : 2875,
+  "firstEndPos" : 2879,
+  "secondEndPos" : 2879
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2880,
+  "secondPos" : 2880,
+  "firstEndPos" : 2884,
+  "secondEndPos" : 2884
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ReflectUtil",
+  "secondLabel" : "ReflectUtil",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2885,
+  "secondPos" : 2885,
   "firstEndPos" : 2896,
   "secondEndPos" : 2896
 }, {
@@ -1156,12 +3708,78 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.impl.variable.DeserializedObject",
-  "secondLabel" : "org.activiti.engine.impl.variable.DeserializedObject",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2905,
   "secondPos" : 2905,
+  "firstEndPos" : 2957,
+  "secondEndPos" : 2957
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2905,
+  "secondPos" : 2905,
+  "firstEndPos" : 2908,
+  "secondEndPos" : 2908
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2909,
+  "secondPos" : 2909,
+  "firstEndPos" : 2917,
+  "secondEndPos" : 2917
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2918,
+  "secondPos" : 2918,
+  "firstEndPos" : 2924,
+  "secondEndPos" : 2924
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2925,
+  "secondPos" : 2925,
+  "firstEndPos" : 2929,
+  "secondEndPos" : 2929
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "variable",
+  "secondLabel" : "variable",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2930,
+  "secondPos" : 2930,
+  "firstEndPos" : 2938,
+  "secondEndPos" : 2938
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DeserializedObject",
+  "secondLabel" : "DeserializedObject",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2939,
+  "secondPos" : 2939,
   "firstEndPos" : 2957,
   "secondEndPos" : 2957
 }, {
@@ -1178,12 +3796,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.apache.ibatis.session.SqlSession",
-  "secondLabel" : "org.apache.ibatis.session.SqlSession",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 2966,
   "secondPos" : 2966,
+  "firstEndPos" : 3002,
+  "secondEndPos" : 3002
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2966,
+  "secondPos" : 2966,
+  "firstEndPos" : 2969,
+  "secondEndPos" : 2969
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "apache",
+  "secondLabel" : "apache",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2970,
+  "secondPos" : 2970,
+  "firstEndPos" : 2976,
+  "secondEndPos" : 2976
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ibatis",
+  "secondLabel" : "ibatis",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2977,
+  "secondPos" : 2977,
+  "firstEndPos" : 2983,
+  "secondEndPos" : 2983
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "session",
+  "secondLabel" : "session",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2984,
+  "secondPos" : 2984,
+  "firstEndPos" : 2991,
+  "secondEndPos" : 2991
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SqlSession",
+  "secondLabel" : "SqlSession",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2992,
+  "secondPos" : 2992,
   "firstEndPos" : 3002,
   "secondEndPos" : 3002
 }, {
@@ -1200,12 +3873,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.slf4j.Logger",
-  "secondLabel" : "org.slf4j.Logger",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 3011,
   "secondPos" : 3011,
+  "firstEndPos" : 3027,
+  "secondEndPos" : 3027
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3011,
+  "secondPos" : 3011,
+  "firstEndPos" : 3014,
+  "secondEndPos" : 3014
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "slf4j",
+  "secondLabel" : "slf4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3015,
+  "secondPos" : 3015,
+  "firstEndPos" : 3020,
+  "secondEndPos" : 3020
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Logger",
+  "secondLabel" : "Logger",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3021,
+  "secondPos" : 3021,
   "firstEndPos" : 3027,
   "secondEndPos" : 3027
 }, {
@@ -1222,12 +3928,45 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.slf4j.LoggerFactory",
-  "secondLabel" : "org.slf4j.LoggerFactory",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ImportDeclaration",
   "secondParentType" : "ImportDeclaration",
   "firstPos" : 3036,
   "secondPos" : 3036,
+  "firstEndPos" : 3059,
+  "secondEndPos" : 3059
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3036,
+  "secondPos" : 3036,
+  "firstEndPos" : 3039,
+  "secondEndPos" : 3039
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "slf4j",
+  "secondLabel" : "slf4j",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3040,
+  "secondPos" : 3040,
+  "firstEndPos" : 3045,
+  "secondEndPos" : 3045
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "LoggerFactory",
+  "secondLabel" : "LoggerFactory",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3046,
+  "secondPos" : 3046,
   "firstEndPos" : 3059,
   "secondEndPos" : 3059
 }, {
@@ -4302,12 +7041,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "ClassInstanceCreation",
   "firstPos" : 4995,
   "secondPos" : 4995,
+  "firstEndPos" : 5016,
+  "secondEndPos" : 5016
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 4995,
+  "secondPos" : 4995,
+  "firstEndPos" : 5008,
+  "secondEndPos" : 5008
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 5009,
+  "secondPos" : 5009,
   "firstEndPos" : 5016,
   "secondEndPos" : 5016
 }, {
@@ -17425,12 +20186,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Integer.MAX_VALUE",
-  "secondLabel" : "Integer.MAX_VALUE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 15373,
   "secondPos" : 15373,
+  "firstEndPos" : 15390,
+  "secondEndPos" : 15390
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Integer",
+  "secondLabel" : "Integer",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 15373,
+  "secondPos" : 15373,
+  "firstEndPos" : 15380,
+  "secondEndPos" : 15380
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MAX_VALUE",
+  "secondLabel" : "MAX_VALUE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 15381,
+  "secondPos" : 15381,
   "firstEndPos" : 15390,
   "secondEndPos" : 15390
 }, {
@@ -17700,12 +20483,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Integer.MAX_VALUE",
-  "secondLabel" : "Integer.MAX_VALUE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 15544,
   "secondPos" : 15544,
+  "firstEndPos" : 15561,
+  "secondEndPos" : 15561
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Integer",
+  "secondLabel" : "Integer",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 15544,
+  "secondPos" : 15544,
+  "firstEndPos" : 15551,
+  "secondEndPos" : 15551
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MAX_VALUE",
+  "secondLabel" : "MAX_VALUE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 15552,
+  "secondPos" : 15552,
   "firstEndPos" : 15561,
   "secondEndPos" : 15561
 }, {
@@ -18250,12 +21055,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Integer.MAX_VALUE",
-  "secondLabel" : "Integer.MAX_VALUE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 15856,
   "secondPos" : 15856,
+  "firstEndPos" : 15873,
+  "secondEndPos" : 15873
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Integer",
+  "secondLabel" : "Integer",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 15856,
+  "secondPos" : 15856,
+  "firstEndPos" : 15863,
+  "secondEndPos" : 15863
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MAX_VALUE",
+  "secondLabel" : "MAX_VALUE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 15864,
+  "secondPos" : 15864,
   "firstEndPos" : 15873,
   "secondEndPos" : 15873
 }, {
@@ -19845,12 +22672,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Collections.EMPTY_LIST",
-  "secondLabel" : "Collections.EMPTY_LIST",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ReturnStatement",
   "secondParentType" : "ReturnStatement",
   "firstPos" : 16829,
   "secondPos" : 16829,
+  "firstEndPos" : 16851,
+  "secondEndPos" : 16851
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Collections",
+  "secondLabel" : "Collections",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 16829,
+  "secondPos" : 16829,
+  "firstEndPos" : 16840,
+  "secondEndPos" : 16840
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "EMPTY_LIST",
+  "secondLabel" : "EMPTY_LIST",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 16841,
+  "secondPos" : 16841,
   "firstEndPos" : 16851,
   "secondEndPos" : 16851
 }, {
@@ -20604,12 +23453,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Collections.EMPTY_LIST",
-  "secondLabel" : "Collections.EMPTY_LIST",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ReturnStatement",
   "secondParentType" : "ReturnStatement",
   "firstPos" : 17276,
   "secondPos" : 17276,
+  "firstEndPos" : 17298,
+  "secondEndPos" : 17298
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Collections",
+  "secondLabel" : "Collections",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 17276,
+  "secondPos" : 17276,
+  "firstEndPos" : 17287,
+  "secondEndPos" : 17287
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "EMPTY_LIST",
+  "secondLabel" : "EMPTY_LIST",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 17288,
+  "secondPos" : 17288,
   "firstEndPos" : 17298,
   "secondEndPos" : 17298
 }, {
@@ -33001,8 +35872,8 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "DbSqlSession.DeleteOperation",
-  "secondLabel" : "DbSqlSession.DeleteOperation",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "SimpleType",
   "secondParentType" : "SimpleType",
   "firstPos" : 25884,
@@ -33018,6 +35889,28 @@
   "secondParentType" : "ParameterizedType",
   "firstPos" : 25884,
   "secondPos" : 25884,
+  "firstEndPos" : 25912,
+  "secondEndPos" : 25912
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DbSqlSession",
+  "secondLabel" : "DbSqlSession",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 25884,
+  "secondPos" : 25884,
+  "firstEndPos" : 25896,
+  "secondEndPos" : 25896
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DeleteOperation",
+  "secondLabel" : "DeleteOperation",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 25897,
+  "secondPos" : 25897,
   "firstEndPos" : 25912,
   "secondEndPos" : 25912
 }, {
@@ -38743,12 +41636,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "EntityDependencyOrder.INSERT_ORDER",
-  "secondLabel" : "EntityDependencyOrder.INSERT_ORDER",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "EnhancedForStatement",
   "secondParentType" : "EnhancedForStatement",
   "firstPos" : 30041,
   "secondPos" : 30081,
+  "firstEndPos" : 30075,
+  "secondEndPos" : 30115
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "EntityDependencyOrder",
+  "secondLabel" : "EntityDependencyOrder",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30041,
+  "secondPos" : 30081,
+  "firstEndPos" : 30062,
+  "secondEndPos" : 30102
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "INSERT_ORDER",
+  "secondLabel" : "INSERT_ORDER",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30063,
+  "secondPos" : 30103,
   "firstEndPos" : 30075,
   "secondEndPos" : 30115
 }, {
@@ -39095,12 +42010,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "Boolean.FALSE",
-  "secondLabel" : "Boolean.FALSE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 30297,
   "secondPos" : 30961,
+  "firstEndPos" : 30310,
+  "secondEndPos" : 30974
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Boolean",
+  "secondLabel" : "Boolean",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30297,
+  "secondPos" : 30961,
+  "firstEndPos" : 30304,
+  "secondEndPos" : 30968
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "FALSE",
+  "secondLabel" : "FALSE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 30305,
+  "secondPos" : 30969,
   "firstEndPos" : 30310,
   "secondEndPos" : 30974
 }, {
@@ -45420,12 +48357,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ActivitiEventType.VARIABLE_DELETED",
-  "secondLabel" : "ActivitiEventType.VARIABLE_DELETED",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 35065,
   "secondPos" : 35205,
+  "firstEndPos" : 35099,
+  "secondEndPos" : 35239
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ActivitiEventType",
+  "secondLabel" : "ActivitiEventType",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 35065,
+  "secondPos" : 35205,
+  "firstEndPos" : 35082,
+  "secondEndPos" : 35222
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VARIABLE_DELETED",
+  "secondLabel" : "VARIABLE_DELETED",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 35083,
+  "secondPos" : 35223,
   "firstEndPos" : 35099,
   "secondEndPos" : 35239
 }, {
@@ -48049,12 +51008,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 37530,
   "secondPos" : 37670,
+  "firstEndPos" : 37551,
+  "secondEndPos" : 37691
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 37530,
+  "secondPos" : 37670,
+  "firstEndPos" : 37543,
+  "secondEndPos" : 37683
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 37544,
+  "secondPos" : 37684,
   "firstEndPos" : 37551,
   "secondEndPos" : 37691
 }, {
@@ -48148,12 +51129,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "ClassInstanceCreation",
   "firstPos" : 37616,
   "secondPos" : 37756,
+  "firstEndPos" : 37637,
+  "secondEndPos" : 37777
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 37616,
+  "secondPos" : 37756,
+  "firstEndPos" : 37629,
+  "secondEndPos" : 37769
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 37630,
+  "secondPos" : 37770,
   "firstEndPos" : 37637,
   "secondEndPos" : 37777
 }, {
@@ -50469,12 +53472,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 39556,
   "secondPos" : 39696,
+  "firstEndPos" : 39577,
+  "secondEndPos" : 39717
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39556,
+  "secondPos" : 39696,
+  "firstEndPos" : 39569,
+  "secondEndPos" : 39709
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39570,
+  "secondPos" : 39710,
   "firstEndPos" : 39577,
   "secondEndPos" : 39717
 }, {
@@ -50568,12 +53593,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "ClassInstanceCreation",
   "firstPos" : 39642,
   "secondPos" : 39782,
+  "firstEndPos" : 39663,
+  "secondEndPos" : 39803
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39642,
+  "secondPos" : 39782,
+  "firstEndPos" : 39655,
+  "secondEndPos" : 39795
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39656,
+  "secondPos" : 39796,
   "firstEndPos" : 39663,
   "secondEndPos" : 39803
 }, {
@@ -50711,12 +53758,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "HistoryLevel.NONE",
-  "secondLabel" : "HistoryLevel.NONE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 39791,
   "secondPos" : 39931,
+  "firstEndPos" : 39808,
+  "secondEndPos" : 39948
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HistoryLevel",
+  "secondLabel" : "HistoryLevel",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39791,
+  "secondPos" : 39931,
+  "firstEndPos" : 39803,
+  "secondEndPos" : 39943
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "NONE",
+  "secondLabel" : "NONE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 39804,
+  "secondPos" : 39944,
   "firstEndPos" : 39808,
   "secondEndPos" : 39948
 }, {
@@ -53923,12 +56992,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 42156,
   "secondPos" : 42296,
+  "firstEndPos" : 42177,
+  "secondEndPos" : 42317
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 42156,
+  "secondPos" : 42296,
+  "firstEndPos" : 42169,
+  "secondEndPos" : 42309
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 42170,
+  "secondPos" : 42310,
   "firstEndPos" : 42177,
   "secondEndPos" : 42317
 }, {
@@ -54528,12 +57619,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 42580,
   "secondPos" : 42720,
+  "firstEndPos" : 42601,
+  "secondEndPos" : 42741
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 42580,
+  "secondPos" : 42720,
+  "firstEndPos" : 42593,
+  "secondEndPos" : 42733
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 42594,
+  "secondPos" : 42734,
   "firstEndPos" : 42601,
   "secondEndPos" : 42741
 }, {
@@ -54803,12 +57916,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 42796,
   "secondPos" : 42936,
+  "firstEndPos" : 42817,
+  "secondEndPos" : 42957
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 42796,
+  "secondPos" : 42936,
+  "firstEndPos" : 42809,
+  "secondEndPos" : 42949
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 42810,
+  "secondPos" : 42950,
   "firstEndPos" : 42817,
   "secondEndPos" : 42957
 }, {
@@ -58213,12 +61348,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 45329,
   "secondPos" : 45469,
+  "firstEndPos" : 45350,
+  "secondEndPos" : 45490
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 45329,
+  "secondPos" : 45469,
+  "firstEndPos" : 45342,
+  "secondEndPos" : 45482
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 45343,
+  "secondPos" : 45483,
   "firstEndPos" : 45350,
   "secondEndPos" : 45490
 }, {
@@ -58884,12 +62041,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 45733,
   "secondPos" : 45873,
+  "firstEndPos" : 45754,
+  "secondEndPos" : 45894
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 45733,
+  "secondPos" : 45873,
+  "firstEndPos" : 45746,
+  "secondEndPos" : 45886
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 45747,
+  "secondPos" : 45887,
   "firstEndPos" : 45754,
   "secondEndPos" : 45894
 }, {
@@ -59643,12 +62822,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 46268,
   "secondPos" : 46408,
+  "firstEndPos" : 46289,
+  "secondEndPos" : 46429
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 46268,
+  "secondPos" : 46408,
+  "firstEndPos" : 46281,
+  "secondEndPos" : 46421
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 46282,
+  "secondPos" : 46422,
   "firstEndPos" : 46289,
   "secondEndPos" : 46429
 }, {
@@ -59885,12 +63086,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 46568,
   "secondPos" : 46708,
+  "firstEndPos" : 46589,
+  "secondEndPos" : 46729
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 46568,
+  "secondPos" : 46708,
+  "firstEndPos" : 46581,
+  "secondEndPos" : 46721
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 46582,
+  "secondPos" : 46722,
   "firstEndPos" : 46589,
   "secondEndPos" : 46729
 }, {
@@ -61403,12 +64626,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngine.VERSION",
-  "secondLabel" : "ProcessEngine.VERSION",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstPos" : 47665,
   "secondPos" : 47805,
+  "firstEndPos" : 47686,
+  "secondEndPos" : 47826
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngine",
+  "secondLabel" : "ProcessEngine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 47665,
+  "secondPos" : 47805,
+  "firstEndPos" : 47678,
+  "secondEndPos" : 47818
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "VERSION",
+  "secondLabel" : "VERSION",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 47679,
+  "secondPos" : 47819,
   "firstEndPos" : 47686,
   "secondEndPos" : 47826
 }, {
@@ -73459,12 +76704,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_DROP_CREATE",
-  "secondLabel" : "ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_DROP_CREATE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 56409,
   "secondPos" : 56549,
+  "firstEndPos" : 56468,
+  "secondEndPos" : 56608
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfigurationImpl",
+  "secondLabel" : "ProcessEngineConfigurationImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56409,
+  "secondPos" : 56549,
+  "firstEndPos" : 56439,
+  "secondEndPos" : 56579
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DB_SCHEMA_UPDATE_DROP_CREATE",
+  "secondLabel" : "DB_SCHEMA_UPDATE_DROP_CREATE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56440,
+  "secondPos" : 56580,
   "firstEndPos" : 56468,
   "secondEndPos" : 56608
 }, {
@@ -73690,12 +76957,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP",
-  "secondLabel" : "org.activiti.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 56615,
   "secondPos" : 56755,
+  "firstEndPos" : 56690,
+  "secondEndPos" : 56830
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56615,
+  "secondPos" : 56755,
+  "firstEndPos" : 56618,
+  "secondEndPos" : 56758
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56619,
+  "secondPos" : 56759,
+  "firstEndPos" : 56627,
+  "secondEndPos" : 56767
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56628,
+  "secondPos" : 56768,
+  "firstEndPos" : 56634,
+  "secondEndPos" : 56774
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfiguration",
+  "secondLabel" : "ProcessEngineConfiguration",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56635,
+  "secondPos" : 56775,
+  "firstEndPos" : 56661,
+  "secondEndPos" : 56801
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DB_SCHEMA_UPDATE_CREATE_DROP",
+  "secondLabel" : "DB_SCHEMA_UPDATE_CREATE_DROP",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56662,
+  "secondPos" : 56802,
   "firstEndPos" : 56690,
   "secondEndPos" : 56830
 }, {
@@ -73767,12 +77089,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_DROP_CREATE",
-  "secondLabel" : "ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_DROP_CREATE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 56733,
   "secondPos" : 56873,
+  "firstEndPos" : 56792,
+  "secondEndPos" : 56932
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfigurationImpl",
+  "secondLabel" : "ProcessEngineConfigurationImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56733,
+  "secondPos" : 56873,
+  "firstEndPos" : 56763,
+  "secondEndPos" : 56903
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DB_SCHEMA_UPDATE_DROP_CREATE",
+  "secondLabel" : "DB_SCHEMA_UPDATE_DROP_CREATE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56764,
+  "secondPos" : 56904,
   "firstEndPos" : 56792,
   "secondEndPos" : 56932
 }, {
@@ -73833,12 +77177,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_CREATE",
-  "secondLabel" : "ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_CREATE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 56834,
   "secondPos" : 56974,
+  "firstEndPos" : 56888,
+  "secondEndPos" : 57028
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfigurationImpl",
+  "secondLabel" : "ProcessEngineConfigurationImpl",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56834,
+  "secondPos" : 56974,
+  "firstEndPos" : 56864,
+  "secondEndPos" : 57004
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DB_SCHEMA_UPDATE_CREATE",
+  "secondLabel" : "DB_SCHEMA_UPDATE_CREATE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56865,
+  "secondPos" : 57005,
   "firstEndPos" : 56888,
   "secondEndPos" : 57028
 }, {
@@ -73954,12 +77320,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE",
-  "secondLabel" : "org.activiti.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 56975,
   "secondPos" : 57115,
+  "firstEndPos" : 57044,
+  "secondEndPos" : 57184
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56975,
+  "secondPos" : 57115,
+  "firstEndPos" : 56978,
+  "secondEndPos" : 57118
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56979,
+  "secondPos" : 57119,
+  "firstEndPos" : 56987,
+  "secondEndPos" : 57127
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56988,
+  "secondPos" : 57128,
+  "firstEndPos" : 56994,
+  "secondEndPos" : 57134
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfiguration",
+  "secondLabel" : "ProcessEngineConfiguration",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 56995,
+  "secondPos" : 57135,
+  "firstEndPos" : 57021,
+  "secondEndPos" : 57161
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DB_SCHEMA_UPDATE_FALSE",
+  "secondLabel" : "DB_SCHEMA_UPDATE_FALSE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57022,
+  "secondPos" : 57162,
   "firstEndPos" : 57044,
   "secondEndPos" : 57184
 }, {
@@ -74075,12 +77496,34 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE",
-  "secondLabel" : "ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 57129,
   "secondPos" : 57269,
+  "firstEndPos" : 57177,
+  "secondEndPos" : 57317
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfiguration",
+  "secondLabel" : "ProcessEngineConfiguration",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57129,
+  "secondPos" : 57269,
+  "firstEndPos" : 57155,
+  "secondEndPos" : 57295
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DB_SCHEMA_UPDATE_TRUE",
+  "secondLabel" : "DB_SCHEMA_UPDATE_TRUE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57156,
+  "secondPos" : 57296,
   "firstEndPos" : 57177,
   "secondEndPos" : 57317
 }, {
@@ -74383,12 +77826,67 @@
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
-  "firstLabel" : "org.activiti.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP",
-  "secondLabel" : "org.activiti.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
   "secondParentType" : "METHOD_INVOCATION_RECEIVER",
   "firstPos" : 57414,
   "secondPos" : 57554,
+  "firstEndPos" : 57489,
+  "secondEndPos" : 57629
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "org",
+  "secondLabel" : "org",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57414,
+  "secondPos" : 57554,
+  "firstEndPos" : 57417,
+  "secondEndPos" : 57557
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activiti",
+  "secondLabel" : "activiti",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57418,
+  "secondPos" : 57558,
+  "firstEndPos" : 57426,
+  "secondEndPos" : 57566
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "engine",
+  "secondLabel" : "engine",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57427,
+  "secondPos" : 57567,
+  "firstEndPos" : 57433,
+  "secondEndPos" : 57573
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ProcessEngineConfiguration",
+  "secondLabel" : "ProcessEngineConfiguration",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57434,
+  "secondPos" : 57574,
+  "firstEndPos" : 57460,
+  "secondEndPos" : 57600
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DB_SCHEMA_UPDATE_CREATE_DROP",
+  "secondLabel" : "DB_SCHEMA_UPDATE_CREATE_DROP",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57461,
+  "secondPos" : 57601,
   "firstEndPos" : 57489,
   "secondEndPos" : 57629
 }, {

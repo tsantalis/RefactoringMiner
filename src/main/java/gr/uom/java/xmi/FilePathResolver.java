@@ -84,7 +84,6 @@ public class FilePathResolver {
 	private static final Pattern CPP_INCLUDE = Pattern.compile("#\\s*include\\s*([<\"][^>\"]+[>\"])");
 
 	private final RepositoryStateFiles files;
-	private Map<String, List<String>> pathsByFileName;
 	private final Map<String, Optional<JsonObject>> jsonCache = new HashMap<>();
 	private final Map<String, List<UMLClass>> classesByFile = new HashMap<>();
 	private final Map<String, List<UMLAbstractClass>> supertypesByClass = new HashMap<>();
@@ -559,7 +558,7 @@ public class FilePathResolver {
 		String subpath = String.join("/", Arrays.copyOfRange(parts, nameParts, parts.length));
 		// a package of the repository lives in a folder named after the package (without its scope)
 		String folderName = parts[nameParts - 1];
-		for (String packageJson : pathsByFileName().getOrDefault("package.json", List.of())) {
+		for (String packageJson : files.pathsNamed("package.json")) {
 			String packageDir = parent(packageJson);
 			if (!packageJson.contains("node_modules/") && fileName(packageDir).equals(folderName)) {
 				JsonObject manifest = json(packageJson);
@@ -941,7 +940,7 @@ public class FilePathResolver {
 	}
 
 	private boolean exists(String path) throws Exception {
-		return files.allPaths().contains(path);
+		return files.exists(path);
 	}
 
 	private String sourceText(LocationInfo locationInfo) throws Exception {
@@ -971,18 +970,9 @@ public class FilePathResolver {
 		return cached.orElse(null);
 	}
 
-	private Map<String, List<String>> pathsByFileName() throws Exception {
-		if (pathsByFileName == null) {
-			pathsByFileName = new HashMap<>();
-			for (String path : files.allPaths())
-				pathsByFileName.computeIfAbsent(fileName(path), k -> new ArrayList<>()).add(path);
-		}
-		return pathsByFileName;
-	}
-
 	private List<String> pathsEndingWith(String relativePath) throws Exception {
 		List<String> matches = new ArrayList<>();
-		for (String path : pathsByFileName().getOrDefault(fileName(relativePath), List.of())) {
+		for (String path : files.pathsNamed(fileName(relativePath))) {
 			if (path.equals(relativePath) || path.endsWith("/" + relativePath))
 				matches.add(path);
 		}

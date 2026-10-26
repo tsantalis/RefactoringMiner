@@ -1,0 +1,243 @@
+{
+  "AbstractIndexComponent.java": [
+    "server/src/main/java/org/elasticsearch/index/AbstractIndexComponent.java"
+  ],
+  "AbstractIndexShardComponent.java": [
+    "server/src/main/java/org/elasticsearch/index/shard/AbstractIndexShardComponent.java"
+  ],
+  "AbstractLifecycleComponent.java": [
+    "server/src/main/java/org/elasticsearch/common/component/AbstractLifecycleComponent.java"
+  ],
+  "AllocatedIndex.java": [],
+  "BigDecimal.java": [],
+  "BigInteger.java": [],
+  "Boolean.java": [],
+  "BooleanSupplier.java": [],
+  "Byte.java": [],
+  "ByteSizeValue.java": [
+    "server/src/main/java/org/elasticsearch/common/unit/ByteSizeValue.java"
+  ],
+  "CheckedConsumer.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/CheckedConsumer.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedConsumer.java"
+  ],
+  "Class.java": [],
+  "Closeable.java": [],
+  "ClusterStateApplier.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterStateApplier.java"
+  ],
+  "Collection.java": [],
+  "Comparable.java": [],
+  "Consumer.java": [],
+  "CoreMatchers.java": [],
+  "DenseVectorFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/vectors/DenseVectorFieldMapper.java"
+  ],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "Directory.java": [],
+  "DocumentMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/DocumentMapper.java"
+  ],
+  "Double.java": [],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "Engine.java": [
+    "server/src/main/java/org/elasticsearch/index/engine/Engine.java"
+  ],
+  "Enum.java": [],
+  "FeatureSpecification.java": [
+    "server/src/main/java/org/elasticsearch/features/FeatureSpecification.java"
+  ],
+  "FieldTypeTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/index/mapper/FieldTypeTestCase.java"
+  ],
+  "FilterRepository.java": [
+    "server/src/main/java/org/elasticsearch/repositories/FilterRepository.java"
+  ],
+  "Float.java": [],
+  "Flushable.java": [],
+  "IgnoredSourceFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/IgnoredSourceFieldMapper.java"
+  ],
+  "IllegalArgumentException.java": [],
+  "IndexService.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexService.java"
+  ],
+  "IndexSettings.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexSettings.java"
+  ],
+  "IndexShardComponent.java": [
+    "server/src/main/java/org/elasticsearch/index/shard/IndexShardComponent.java"
+  ],
+  "IndexSortConfig.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexSortConfig.java"
+  ],
+  "IndexVersion.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexVersion.java"
+  ],
+  "IndexWriterConfig.java": [],
+  "IndicesClusterStateService.java": [
+    "server/src/main/java/org/elasticsearch/indices/cluster/IndicesClusterStateService.java"
+  ],
+  "Integer.java": [],
+  "InternalEngine.java": [
+    "server/src/main/java/org/elasticsearch/index/engine/InternalEngine.java"
+  ],
+  "Iterable.java": [],
+  "Level.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Level.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
+    "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
+  ],
+  "LifecycleComponent.java": [
+    "server/src/main/java/org/elasticsearch/common/component/LifecycleComponent.java"
+  ],
+  "LinkedFilesDirectory.java": [],
+  "List.java": [],
+  "Long.java": [],
+  "Lucene.java": [
+    "server/src/main/java/org/elasticsearch/common/lucene/Lucene.java"
+  ],
+  "LuceneDocument.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/LuceneDocument.java"
+  ],
+  "LuceneTestCase.java": [],
+  "Map.java": [],
+  "Mapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/planner/Mapper.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/Mapper.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/planner/Mapper.java"
+  ],
+  "MapperFeatures.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MapperFeatures.java"
+  ],
+  "MapperService.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MapperService.java"
+  ],
+  "MapperServiceTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/index/mapper/MapperServiceTestCase.java"
+  ],
+  "MapperServiceTests.java": [
+    "server/src/test/java/org/elasticsearch/index/mapper/MapperServiceTests.java"
+  ],
+  "MappingLookup.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MappingLookup.java"
+  ],
+  "NestedLookup.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/NestedLookup.java"
+  ],
+  "NestedObjectMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/NestedObjectMapper.java"
+  ],
+  "NodeFeature.java": [
+    "server/src/main/java/org/elasticsearch/features/NodeFeature.java"
+  ],
+  "Number.java": [],
+  "Object.java": [],
+  "ObjectMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/ObjectMapper.java"
+  ],
+  "OnClose.java": [],
+  "ParsedDocument.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/ParsedDocument.java"
+  ],
+  "PassThroughObjectMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/PassThroughObjectMapper.java"
+  ],
+  "Path.java": [],
+  "RangeFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/RangeFieldMapper.java"
+  ],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "Repository.java": [
+    "server/src/main/java/org/elasticsearch/repositories/Repository.java"
+  ],
+  "Set.java": [],
+  "Setting.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
+  ],
+  "Settings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+  ],
+  "ShardId.java": [
+    "server/src/main/java/org/elasticsearch/index/shard/ShardId.java"
+  ],
+  "ShardLock.java": [
+    "server/src/main/java/org/elasticsearch/env/ShardLock.java"
+  ],
+  "Short.java": [],
+  "SourceFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/SourceFieldMapper.java"
+  ],
+  "SourceOnlySnapshot.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/snapshots/sourceonly/SourceOnlySnapshot.java"
+  ],
+  "SourceOnlySnapshotRepository.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/snapshots/sourceonly/SourceOnlySnapshotRepository.java"
+  ],
+  "StackTraceElement.java": [],
+  "Store.java": [
+    "server/src/main/java/org/elasticsearch/index/store/Store.java"
+  ],
+  "StoreRecovery.java": [
+    "server/src/main/java/org/elasticsearch/index/shard/StoreRecovery.java"
+  ],
+  "StoreTests.java": [
+    "server/src/test/java/org/elasticsearch/index/store/StoreTests.java"
+  ],
+  "String.java": [],
+  "TimeValue.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "Version.java": [
+    "build-tools/src/main/java/org/elasticsearch/gradle/Version.java",
+    "server/src/main/java/org/elasticsearch/Version.java",
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/util/Version.java",
+    "x-pack/plugin/mapper-version/src/main/java/org/elasticsearch/xpack/versionfield/Version.java"
+  ],
+  "VersionId.java": [
+    "server/src/main/java/org/elasticsearch/common/VersionId.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "XContentBuilder.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
+  ],
+  "apache.java": [],
+  "file.java": [],
+  "function.java": [],
+  "hamcrest.java": [],
+  "index.java": [],
+  "io.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "log4j.java": [],
+  "logging.java": [],
+  "lucene.java": [],
+  "math.java": [],
+  "nio.java": [],
+  "org.java": [],
+  "store.java": [],
+  "tests.java": [],
+  "util.java": []
+}

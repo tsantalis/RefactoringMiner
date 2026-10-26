@@ -1,0 +1,32 @@
+{
+  "AdminBrokerProcessor.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/processor/AdminBrokerProcessor.java"
+  ],
+  "BrokerController.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/BrokerController.java"
+  ],
+  "ConfigManager.java": [
+    "common/src/main/java/org/apache/rocketmq/common/ConfigManager.java"
+  ],
+  "ConsumerOffsetManager.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/offset/ConsumerOffsetManager.java"
+  ],
+  "Entry.java": [],
+  "Map.java": [],
+  "NettyRequestProcessor.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRequestProcessor.java"
+  ],
+  "PopConsumerService.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/pop/PopConsumerService.java"
+  ],
+  "PopInflightMessageCounter.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/processor/PopInflightMessageCounter.java"
+  ],
+  "Runnable.java": [],
+  "ServiceThread.java": [
+    "common/src/main/java/org/apache/rocketmq/common/ServiceThread.java",
+    "remoting/src/main/java/org/apache/rocketmq/remoting/common/ServiceThread.java"
+  ],
+  "String.java": [],
+  "util.java": []
+}

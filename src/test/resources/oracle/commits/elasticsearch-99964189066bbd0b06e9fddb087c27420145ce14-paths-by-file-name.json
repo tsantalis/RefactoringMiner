@@ -1,0 +1,109 @@
+{
+  "AbstractSnapshotIntegTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/snapshots/AbstractSnapshotIntegTestCase.java"
+  ],
+  "ActionFuture.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionFuture.java"
+  ],
+  "ActionRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionRequest.java"
+  ],
+  "ActionResponse.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionResponse.java"
+  ],
+  "ActionType.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionType.java"
+  ],
+  "BaseFrozenSearchableSnapshotsIntegTestCase.java": [
+    "x-pack/plugin/searchable-snapshots/src/internalClusterTest/java/org/elasticsearch/xpack/searchablesnapshots/BaseFrozenSearchableSnapshotsIntegTestCase.java"
+  ],
+  "BaseNodeResponse.java": [
+    "server/src/main/java/org/elasticsearch/action/support/nodes/BaseNodeResponse.java"
+  ],
+  "BaseNodesRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/support/nodes/BaseNodesRequest.java"
+  ],
+  "BaseNodesResponse.java": [
+    "server/src/main/java/org/elasticsearch/action/support/nodes/BaseNodesResponse.java"
+  ],
+  "BaseSearchableSnapshotsIntegTestCase.java": [
+    "x-pack/plugin/searchable-snapshots/src/internalClusterTest/java/org/elasticsearch/xpack/searchablesnapshots/BaseSearchableSnapshotsIntegTestCase.java"
+  ],
+  "Client.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/Client.java"
+  ],
+  "Collector.java": [
+    "x-pack/plugin/monitoring/src/main/java/org/elasticsearch/xpack/monitoring/collector/Collector.java"
+  ],
+  "Collectors.java": [],
+  "DiscoveryNode.java": [
+    "server/src/main/java/org/elasticsearch/cluster/node/DiscoveryNode.java"
+  ],
+  "ESIntegTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESIntegTestCase.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "ElasticsearchClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/ElasticsearchClient.java"
+  ],
+  "Future.java": [],
+  "List.java": [],
+  "LuceneTestCase.java": [],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/injection/guice/matcher/Matchers.java"
+  ],
+  "NodeCachesStatsResponse.java": [],
+  "NodesCachesStatsIntegTests.java": [
+    "x-pack/plugin/searchable-snapshots/src/internalClusterTest/java/org/elasticsearch/xpack/searchablesnapshots/cache/shared/NodesCachesStatsIntegTests.java"
+  ],
+  "NodesCachesStatsResponse.java": [],
+  "NodesRequest.java": [],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Stream.java": [],
+  "String.java": [],
+  "TaskAwareRequest.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskAwareRequest.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "TransportAction.java": [
+    "server/src/main/java/org/elasticsearch/action/support/TransportAction.java"
+  ],
+  "TransportMessage.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportMessage.java"
+  ],
+  "TransportNodesAction.java": [
+    "server/src/main/java/org/elasticsearch/action/support/nodes/TransportNodesAction.java"
+  ],
+  "TransportRequest.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequest.java"
+  ],
+  "TransportResponse.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportResponse.java"
+  ],
+  "TransportSearchableSnapshotsNodeCachesStatsAction.java": [
+    "x-pack/plugin/searchable-snapshots/src/main/java/org/elasticsearch/xpack/searchablesnapshots/action/cache/TransportSearchableSnapshotsNodeCachesStatsAction.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "concurrent.java": [],
+  "hamcrest.java": [],
+  "java.java": [],
+  "lucene.java": [],
+  "stream.java": [],
+  "tests.java": [],
+  "util.java": []
+}

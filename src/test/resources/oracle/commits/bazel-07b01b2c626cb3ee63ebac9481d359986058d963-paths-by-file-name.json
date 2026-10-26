@@ -1,0 +1,95 @@
+{
+  "ActionLookupKey.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/ActionLookupKey.java"
+  ],
+  "ArtifactOwner.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/ArtifactOwner.java"
+  ],
+  "BlazeCommand.java": [
+    "src/main/java/com/google/devtools/build/lib/runtime/BlazeCommand.java"
+  ],
+  "BuildConfigurationKey.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/config/BuildConfigurationKey.java"
+  ],
+  "BuildResult.java": [
+    "src/main/java/com/google/devtools/build/lib/buildtool/BuildResult.java"
+  ],
+  "CPUHeavySkyKey.java": [
+    "src/main/java/com/google/devtools/build/skyframe/CPUHeavySkyKey.java"
+  ],
+  "Callable.java": [],
+  "Collection.java": [],
+  "ConfiguredTarget.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/ConfiguredTarget.java"
+  ],
+  "ConfiguredTargetKey.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/ConfiguredTargetKey.java"
+  ],
+  "CqueryNode.java": [
+    "src/main/java/com/google/devtools/build/lib/query2/common/CqueryNode.java"
+  ],
+  "DeferredObjectCodec.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/serialization/DeferredObjectCodec.java"
+  ],
+  "DeferredValue.java": [],
+  "ImmutableList.java": [],
+  "ObjectCodec.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/serialization/ObjectCodec.java"
+  ],
+  "ProviderCollection.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/ProviderCollection.java"
+  ],
+  "RunBazel.py": [],
+  "RunBazel.pyi": [],
+  "ScratchFile.py": [],
+  "ScratchFile.pyi": [],
+  "Serializable.java": [],
+  "SkyKey.java": [
+    "src/main/java/com/google/devtools/build/skyframe/SkyKey.java"
+  ],
+  "StarlarkIndexable.java": [
+    "src/main/java/net/starlark/java/eval/StarlarkIndexable.java"
+  ],
+  "StarlarkValue.java": [
+    "src/main/java/net/starlark/java/eval/StarlarkValue.java"
+  ],
+  "Stream.java": [],
+  "Structure.java": [
+    "src/main/java/net/starlark/java/eval/Structure.java"
+  ],
+  "TransitiveInfoCollection.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/TransitiveInfoCollection.java"
+  ],
+  "TransitiveInfoCollectionApi.java": [
+    "src/main/java/com/google/devtools/build/lib/starlarkbuildapi/core/TransitiveInfoCollectionApi.java"
+  ],
+  "VendorCommand.java": [
+    "src/main/java/com/google/devtools/build/lib/bazel/commands/VendorCommand.java"
+  ],
+  "__init__.py": [
+    "third_party/py/abseil/absl/__init__.py",
+    "third_party/py/abseil/absl/flags/__init__.py",
+    "third_party/py/abseil/absl/logging/__init__.py",
+    "third_party/py/abseil/absl/testing/__init__.py",
+    "third_party/py/concurrent/__init__.py",
+    "third_party/py/concurrent/futures/__init__.py",
+    "third_party/py/dataclasses/dataclasses/__init__.py",
+    "third_party/py/frozendict/frozendict/__init__.py",
+    "third_party/py/mock/__init__.py",
+    "third_party/py/mock/tests/__init__.py"
+  ],
+  "__init__.pyi": [],
+  "bazel_vendor_test.py": [
+    "src/test/py/bazel/bzlmod/bazel_vendor_test.py"
+  ],
+  "collect.java": [],
+  "common.java": [],
+  "concurrent.java": [],
+  "google.java": [],
+  "io.java": [],
+  "java.java": [],
+  "self.py": [],
+  "self.pyi": [],
+  "stream.java": [],
+  "util.java": []
+}

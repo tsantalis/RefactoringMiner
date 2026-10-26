@@ -1,0 +1,295 @@
+{
+  "AbstractLifecycleComponent.java": [
+    "server/src/main/java/org/elasticsearch/common/component/AbstractLifecycleComponent.java"
+  ],
+  "AbstractLookupService.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/enrich/AbstractLookupService.java"
+  ],
+  "ActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
+  "ActionListenerResponseHandler.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListenerResponseHandler.java"
+  ],
+  "Analyzer.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/analysis/Analyzer.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/analysis/Analyzer.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/analysis/analyzer/Analyzer.java"
+  ],
+  "AnalyzerRules.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/analysis/AnalyzerRules.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/analyzer/AnalyzerRules.java"
+  ],
+  "Arrays.java": [],
+  "BinaryPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/BinaryPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/BinaryPlan.java"
+  ],
+  "BlockFactory.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java"
+  ],
+  "CancellableTask.java": [
+    "server/src/main/java/org/elasticsearch/tasks/CancellableTask.java"
+  ],
+  "Cap.java": [],
+  "CheckedBiConsumer.java": [
+    "server/src/main/java/org/elasticsearch/common/CheckedBiConsumer.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedBiConsumer.java"
+  ],
+  "Class.java": [],
+  "ClientHelper.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ClientHelper.java"
+  ],
+  "Closeable.java": [],
+  "ClusterHandle.java": [
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/ClusterHandle.java"
+  ],
+  "Connection.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/protocol/xpack/graph/Connection.java"
+  ],
+  "Consumer.java": [],
+  "DiscoveryNode.java": [
+    "server/src/main/java/org/elasticsearch/cluster/node/DiscoveryNode.java"
+  ],
+  "DistributionType.java": [
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/local/distribution/DistributionType.java"
+  ],
+  "E.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/scalar/math/E.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/scalar/math/E.java"
+  ],
+  "ESRestTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/rest/ESRestTestCase.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "ElasticsearchCluster.java": [
+    "build-tools/src/main/java/org/elasticsearch/gradle/testclusters/ElasticsearchCluster.java",
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/ElasticsearchCluster.java"
+  ],
+  "EnrichLookupService.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/enrich/EnrichLookupService.java"
+  ],
+  "EsIndex.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/index/EsIndex.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/index/EsIndex.java"
+  ],
+  "EsqlCapabilities.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlCapabilities.java"
+  ],
+  "EsqlSecurityIT.java": [
+    "x-pack/plugin/esql/qa/security/src/javaRestTest/java/org/elasticsearch/xpack/esql/EsqlSecurityIT.java"
+  ],
+  "EsqlSpecTestCase.java": [
+    "x-pack/plugin/esql/qa/server/src/main/java/org/elasticsearch/xpack/esql/qa/rest/EsqlSpecTestCase.java"
+  ],
+  "Executor.java": [],
+  "Failure.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/common/Failure.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/common/Failure.java"
+  ],
+  "Failures.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/common/Failures.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/common/Failures.java"
+  ],
+  "HttpEntity.java": [],
+  "HttpStatus.java": [],
+  "IndexMode.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexMode.java"
+  ],
+  "IndicesRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
+  ],
+  "InputStream.java": [],
+  "Join.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/Join.java",
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/logical/Join.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/join/Join.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/logical/Join.java"
+  ],
+  "LeafPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/LeafPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/LeafPlan.java"
+  ],
+  "LifecycleComponent.java": [
+    "server/src/main/java/org/elasticsearch/common/component/LifecycleComponent.java"
+  ],
+  "List.java": [],
+  "LocalClusterHandle.java": [
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/local/LocalClusterHandle.java"
+  ],
+  "LocalClusterSpecBuilder.java": [
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/local/LocalClusterSpecBuilder.java"
+  ],
+  "LocalSpecBuilder.java": [
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/local/LocalSpecBuilder.java"
+  ],
+  "LogicalPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/LogicalPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/LogicalPlan.java"
+  ],
+  "LookupJoin.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/join/LookupJoin.java"
+  ],
+  "LuceneTestCase.java": [],
+  "Map.java": [],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/injection/guice/matcher/Matchers.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
+  "ParameterizedAnalyzerRule.java": [],
+  "ParameterizedRule.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/rule/ParameterizedRule.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/ParameterizedRule.java"
+  ],
+  "ParameterizedRuleExecutor.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/rule/ParameterizedRuleExecutor.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/ParameterizedRuleExecutor.java"
+  ],
+  "PostAnalysisVerificationAware.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/capabilities/PostAnalysisVerificationAware.java"
+  ],
+  "QueryPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/QueryPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/QueryPlan.java"
+  ],
+  "Reader.java": [],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "ReportingService.java": [
+    "server/src/main/java/org/elasticsearch/node/ReportingService.java"
+  ],
+  "Resolvable.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/capabilities/Resolvable.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/capabilities/Resolvable.java"
+  ],
+  "Resource.java": [
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/util/resource/Resource.java"
+  ],
+  "Response.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Response.java"
+  ],
+  "RestClient.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/RestClient.java"
+  ],
+  "Rule.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/rule/Rule.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/Rule.java"
+  ],
+  "RuleExecutor.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/rule/RuleExecutor.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/RuleExecutor.java"
+  ],
+  "Scheduler.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/Scheduler.java"
+  ],
+  "Source.java": [
+    "build-tools-internal/src/main/java/org/elasticsearch/gradle/internal/doc/Source.java",
+    "server/src/main/java/org/elasticsearch/search/lookup/Source.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Source.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Source.java"
+  ],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "String.java": [],
+  "Supplier.java": [],
+  "SurrogateLogicalPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/SurrogateLogicalPlan.java"
+  ],
+  "TableIdentifier.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/TableIdentifier.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/TableIdentifier.java"
+  ],
+  "Task.java": [
+    "server/src/main/java/org/elasticsearch/tasks/Task.java"
+  ],
+  "TestRule.java": [],
+  "ThreadContext.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/ThreadContext.java"
+  ],
+  "ThreadPool.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/ThreadPool.java"
+  ],
+  "TimeProvider.java": [
+    "server/src/main/java/org/elasticsearch/common/time/TimeProvider.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "TraceContext.java": [
+    "server/src/main/java/org/elasticsearch/telemetry/tracing/TraceContext.java",
+    "x-pack/plugin/inference/src/main/java/org/elasticsearch/xpack/inference/telemetry/TraceContext.java"
+  ],
+  "Traceable.java": [
+    "server/src/main/java/org/elasticsearch/telemetry/tracing/Traceable.java"
+  ],
+  "Transport.java": [
+    "server/src/main/java/org/elasticsearch/transport/Transport.java"
+  ],
+  "TransportConnectionListener.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportConnectionListener.java"
+  ],
+  "TransportMessage.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportMessage.java"
+  ],
+  "TransportMessageListener.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportMessageListener.java"
+  ],
+  "TransportRequest.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequest.java"
+  ],
+  "TransportRequestOptions.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequestOptions.java"
+  ],
+  "TransportResponse.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportResponse.java"
+  ],
+  "TransportResponseHandler.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportResponseHandler.java"
+  ],
+  "TransportService.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportService.java"
+  ],
+  "Unresolvable.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/capabilities/Unresolvable.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/capabilities/Unresolvable.java"
+  ],
+  "UnresolvedRelation.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/UnresolvedRelation.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/UnresolvedRelation.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "concurrent.java": [],
+  "elasticsearch.java": [],
+  "function.java": [],
+  "hamcrest.java": [],
+  "http.java": [],
+  "io.java": [],
+  "junit.java": [],
+  "lucene.java": [],
+  "org.java": [],
+  "rules.java": [],
+  "tests.java": [],
+  "transport.java": [],
+  "util.java": []
+}

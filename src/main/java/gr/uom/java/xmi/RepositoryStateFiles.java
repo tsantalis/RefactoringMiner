@@ -1,43 +1,46 @@
 package gr.uom.java.xmi;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTreeEntry;
-import org.refactoringminer.util.PathFileUtils;
 
 import javax.annotation.Nullable;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 /**
  * The files of a repository at a commit, read through GitHub. With a cache folder, what is read is kept there (the
- * paths of the commit in {@code <cacheName>-<stateSha>-paths.txt.gz}, the content of a file at
- * {@code <cacheName>-<stateSha>/<path>}) and read from there afterwards, so that a state read before needs no GitHub
- * access at all: the repository is only connected to when something is not cached.
+ * paths of the commit having each file name looked up in {@code <cacheName>-<stateSha>-paths-by-file-name.json}, the
+ * content of a file at {@code <cacheName>-<stateSha>/<path>}) and read from there afterwards, so that a state read
+ * before needs no GitHub access at all: the repository is only connected to when something is not cached.
  */
 public class RepositoryStateFiles {
+  private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+  private static final TypeToken<TreeMap<String, List<String>>> PATHS_BY_FILE_NAME = new TypeToken<>() {};
+
   private final Callable<GHRepository> repositorySupplier;
   private GHRepository repository = null;
   private final String stateSha;
   @Nullable
   private final File stateFolder;
   @Nullable
-  private final File pathsFile;
-  private Set<String> allPathsCache = null;
-  private Set<String> pathsCache = null;
+  private final File pathsByFileNameFile;
+  // The file names looked up so far, with the paths having them
+  private Map<String, List<String>> pathsByFileName = null;
+  // The paths of the whole tree of the commit by file name, read from GitHub only when a file name is not cached
+  private Map<String, List<String>> treePathsByFileName = null;
   private final Map<String, String> contentCache = new HashMap<>();
 
   public RepositoryStateFiles(GHRepository repository, String stateSha) {
@@ -53,7 +56,8 @@ public class RepositoryStateFiles {
     this.repositorySupplier = repositorySupplier;
     this.stateSha = stateSha;
     this.stateFolder = cacheFolder == null ? null : new File(cacheFolder, cacheName + "-" + stateSha);
-    this.pathsFile = cacheFolder == null ? null : new File(cacheFolder, cacheName + "-" + stateSha + "-paths.txt.gz");
+    this.pathsByFileNameFile = cacheFolder == null ? null
+            : new File(cacheFolder, cacheName + "-" + stateSha + "-paths-by-file-name.json");
   }
 
   private GHRepository repository() throws Exception {
@@ -63,33 +67,49 @@ public class RepositoryStateFiles {
     return repository;
   }
 
-  public Set<String> allPaths() throws Exception {
-    if (allPathsCache == null) {
-      if (pathsFile != null && pathsFile.exists()) {
-        try (InputStream input = new GZIPInputStream(Files.newInputStream(pathsFile.toPath()))) {
-          allPathsCache = new String(input.readAllBytes(), StandardCharsets.UTF_8).lines().collect(Collectors.toCollection(HashSet::new));
-        }
-      } else {
-        allPathsCache = repository().getTreeRecursive(stateSha, 1).getTree().stream()
-                .filter(entry -> entry.getType().equals("blob"))
-                .map(GHTreeEntry::getPath).collect(Collectors.toSet());
-        if (pathsFile != null) {
-          ByteArrayOutputStream paths = new ByteArrayOutputStream();
-          try (OutputStream output = new GZIPOutputStream(paths)) {
-            output.write(String.join("\n", allPathsCache.stream().sorted().toList()).getBytes(StandardCharsets.UTF_8));
-          }
-          write(pathsFile.toPath(), paths.toByteArray());
-        }
+  /**
+   * The paths of the commit whose last segment is {@code fileName}, sorted. Synchronized, as tests share an instance
+   * across threads.
+   */
+  public synchronized List<String> pathsNamed(String fileName) throws Exception {
+    if (pathsByFileName == null) {
+      pathsByFileName = cachedPathsByFileName();
+    }
+    List<String> paths = pathsByFileName.get(fileName);
+    if (paths == null) {
+      paths = treePathsByFileName().getOrDefault(fileName, List.of());
+      pathsByFileName.put(fileName, paths);
+      if (pathsByFileNameFile != null) {
+        // Other instances on the same commit may have cached other file names meanwhile
+        Map<String, List<String>> cached = cachedPathsByFileName();
+        cached.putAll(pathsByFileName);
+        write(pathsByFileNameFile.toPath(), GSON.toJson(cached).getBytes(StandardCharsets.UTF_8));
       }
     }
-    return allPathsCache;
+    return paths;
   }
 
-  public Set<String> paths() throws Exception {
-    if (pathsCache == null) {
-      pathsCache = allPaths().stream().filter(PathFileUtils::isSupportedFile).collect(Collectors.toSet());
+  public boolean exists(String path) throws Exception {
+    return pathsNamed(path.substring(path.lastIndexOf('/') + 1)).contains(path);
+  }
+
+  private Map<String, List<String>> cachedPathsByFileName() throws Exception {
+    if (pathsByFileNameFile == null || !pathsByFileNameFile.exists()) {
+      return new TreeMap<>();
     }
-    return pathsCache;
+    return GSON.fromJson(Files.readString(pathsByFileNameFile.toPath(), StandardCharsets.UTF_8), PATHS_BY_FILE_NAME);
+  }
+
+  private Map<String, List<String>> treePathsByFileName() throws Exception {
+    if (treePathsByFileName == null) {
+      treePathsByFileName = new HashMap<>();
+      repository().getTreeRecursive(stateSha, 1).getTree().stream()
+              .filter(entry -> entry.getType().equals("blob"))
+              .map(GHTreeEntry::getPath).sorted()
+              .forEach(path -> treePathsByFileName.computeIfAbsent(path.substring(path.lastIndexOf('/') + 1),
+                      k -> new ArrayList<>()).add(path));
+    }
+    return treePathsByFileName;
   }
 
   public String content(String path) throws Exception {

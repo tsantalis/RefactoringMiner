@@ -1,0 +1,84 @@
+{
+  "AggregateFunction.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/aggregate/AggregateFunction.java"
+  ],
+  "AggregateMapper.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/AggregateMapper.java"
+  ],
+  "AnalyzerTests.java": [
+    "x-pack/plugin/eql/src/test/java/org/elasticsearch/xpack/eql/analysis/AnalyzerTests.java",
+    "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/AnalyzerTests.java",
+    "x-pack/plugin/sql/src/test/java/org/elasticsearch/xpack/sql/analysis/analyzer/AnalyzerTests.java"
+  ],
+  "Avg.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/metrics/Avg.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Avg.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/Avg.java"
+  ],
+  "CountDistinct.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/CountDistinct.java"
+  ],
+  "DataType.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/DataType.java"
+  ],
+  "DataTypes.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/DataTypes.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "Expression.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Expression.java"
+  ],
+  "Function.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
+  ],
+  "LuceneTestCase.java": [],
+  "Median.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Median.java"
+  ],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
+  "NumericAggregate.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/NumericAggregate.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/NumericAggregate.java"
+  ],
+  "OptionalArgument.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/OptionalArgument.java"
+  ],
+  "ParamOrdinal.java": [],
+  "Percentile.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/metrics/Percentile.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Percentile.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/Percentile.java"
+  ],
+  "Predicate.java": [],
+  "Resolvable.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/capabilities/Resolvable.java"
+  ],
+  "StackTraceElement.java": [],
+  "String.java": [],
+  "SurrogateExpression.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/SurrogateExpression.java"
+  ],
+  "ToAggregator.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/ToAggregator.java"
+  ],
+  "TypeResolutions.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/TypeResolutions.java"
+  ],
+  "VerifierTests.java": [
+    "x-pack/plugin/eql/src/test/java/org/elasticsearch/xpack/eql/analysis/VerifierTests.java",
+    "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+    "x-pack/plugin/sql/src/test/java/org/elasticsearch/xpack/sql/planner/VerifierTests.java"
+  ],
+  "apache.java": [],
+  "function.java": [],
+  "lucene.java": [],
+  "tests.java": [],
+  "util.java": []
+}

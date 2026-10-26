@@ -1,0 +1,32 @@
+{
+  "Class.java": [],
+  "ConcurrentHashMap.java": [],
+  "Feature.java": [
+    "sdk/src/org.graalvm.nativeimage/src/org/graalvm/nativeimage/hosted/Feature.java"
+  ],
+  "JfrEventSubstitution.java": [
+    "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrEventSubstitution.java"
+  ],
+  "JfrFeature.java": [
+    "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrFeature.java"
+  ],
+  "JfrManager.java": [
+    "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrManager.java"
+  ],
+  "ResolvedJavaType.java": [],
+  "RuntimeSupport.java": [
+    "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jdk/RuntimeSupport.java"
+  ],
+  "SubstitutionProcessor.java": [
+    "espresso/src/com.oracle.truffle.espresso.processor/src/com/oracle/truffle/espresso/processor/SubstitutionProcessor.java",
+    "substratevm/src/com.oracle.graal.pointsto/src/com/oracle/graal/pointsto/infrastructure/SubstitutionProcessor.java"
+  ],
+  "VMRuntimeSupport.java": [
+    "sdk/src/org.graalvm.nativeimage/src/org/graalvm/nativeimage/impl/VMRuntimeSupport.java"
+  ],
+  "ci.java": [],
+  "concurrent.java": [],
+  "meta.java": [],
+  "util.java": [],
+  "vm.java": []
+}

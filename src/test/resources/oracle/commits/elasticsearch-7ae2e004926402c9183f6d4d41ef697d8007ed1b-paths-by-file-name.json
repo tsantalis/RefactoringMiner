@@ -1,0 +1,94 @@
+{
+  "ActionFuture.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionFuture.java"
+  ],
+  "ActionRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionRequest.java"
+  ],
+  "ActionRequestBuilder.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionRequestBuilder.java"
+  ],
+  "ActionResponse.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionResponse.java"
+  ],
+  "ActionType.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionType.java"
+  ],
+  "BaseBroadcastResponse.java": [
+    "server/src/main/java/org/elasticsearch/action/support/broadcast/BaseBroadcastResponse.java"
+  ],
+  "BulkResponse.java": [
+    "server/src/main/java/org/elasticsearch/action/bulk/BulkResponse.java"
+  ],
+  "ChunkedToXContent.java": [
+    "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContent.java"
+  ],
+  "ChunkedToXContentObject.java": [
+    "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContentObject.java"
+  ],
+  "Client.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/Client.java"
+  ],
+  "ESIntegTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESIntegTestCase.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "ElasticsearchAssertions.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/hamcrest/ElasticsearchAssertions.java"
+  ],
+  "ElasticsearchClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/ElasticsearchClient.java"
+  ],
+  "IndicesRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
+  ],
+  "LuceneTestCase.java": [],
+  "OpenPointInTimeAction.java": [
+    "server/src/main/java/org/elasticsearch/action/search/OpenPointInTimeAction.java"
+  ],
+  "OpenPointInTimeRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/search/OpenPointInTimeRequest.java"
+  ],
+  "PointInTimeIT.java": [
+    "qa/smoke-test-http/src/javaRestTest/java/org/elasticsearch/http/PointInTimeIT.java",
+    "server/src/internalClusterTest/java/org/elasticsearch/action/search/PointInTimeIT.java"
+  ],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Replaceable.java": [],
+  "SearchPhaseProvider.java": [],
+  "SearchResponse.java": [
+    "server/src/main/java/org/elasticsearch/action/search/SearchResponse.java"
+  ],
+  "SearchService.java": [
+    "server/src/main/java/org/elasticsearch/search/SearchService.java"
+  ],
+  "TaskAwareRequest.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskAwareRequest.java"
+  ],
+  "TransportMessage.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportMessage.java"
+  ],
+  "TransportOpenPointInTimeAction.java": [
+    "server/src/main/java/org/elasticsearch/action/search/TransportOpenPointInTimeAction.java"
+  ],
+  "TransportRequest.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequest.java"
+  ],
+  "TransportResponse.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportResponse.java"
+  ],
+  "TransportSearchAction.java": [
+    "server/src/main/java/org/elasticsearch/action/search/TransportSearchAction.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "lucene.java": [],
+  "tests.java": [],
+  "util.java": []
+}

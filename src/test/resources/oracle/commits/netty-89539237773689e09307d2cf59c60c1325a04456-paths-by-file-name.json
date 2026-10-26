@@ -1,0 +1,74 @@
+{
+  "ByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
+  ],
+  "ByteBufConvertible.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufConvertible.java"
+  ],
+  "ByteBufHolder.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufHolder.java"
+  ],
+  "ByteToMessageDecoder.java": [
+    "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java"
+  ],
+  "ChannelHandler.java": [
+    "transport/src/main/java/io/netty/channel/ChannelHandler.java"
+  ],
+  "ChannelHandlerAdapter.java": [
+    "transport/src/main/java/io/netty/channel/ChannelHandlerAdapter.java"
+  ],
+  "ChannelInboundHandler.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInboundHandler.java"
+  ],
+  "ChannelInboundHandlerAdapter.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInboundHandlerAdapter.java"
+  ],
+  "CodecException.java": [
+    "codec/src/main/java/io/netty/handler/codec/CodecException.java"
+  ],
+  "Comparable.java": [],
+  "DecoderException.java": [
+    "codec/src/main/java/io/netty/handler/codec/DecoderException.java"
+  ],
+  "HttpNames.java": [],
+  "Integer.java": [],
+  "MessageToMessageDecoder.java": [
+    "codec/src/main/java/io/netty/handler/codec/MessageToMessageDecoder.java"
+  ],
+  "MqttDecoder.java": [
+    "codec-mqtt/src/main/java/io/netty/handler/codec/mqtt/MqttDecoder.java"
+  ],
+  "ReferenceCounted.java": [
+    "common/src/main/java/io/netty/util/ReferenceCounted.java"
+  ],
+  "ReplayingDecoder.java": [
+    "codec/src/main/java/io/netty/handler/codec/ReplayingDecoder.java"
+  ],
+  "RuntimeException.java": [],
+  "SpdyDataFrame.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/spdy/SpdyDataFrame.java"
+  ],
+  "SpdyFrame.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/spdy/SpdyFrame.java"
+  ],
+  "SpdyHttpDecoder.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/spdy/SpdyHttpDecoder.java"
+  ],
+  "SpdyStreamFrame.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/spdy/SpdyStreamFrame.java"
+  ],
+  "String.java": [],
+  "Throwable.java": [],
+  "TooLongFrameException.java": [
+    "codec/src/main/java/io/netty/handler/codec/TooLongFrameException.java"
+  ],
+  "WebSocket00FrameDecoder.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocket00FrameDecoder.java"
+  ],
+  "WebSocket08FrameDecoder.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocket08FrameDecoder.java"
+  ],
+  "WebSocketFrameDecoder.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketFrameDecoder.java"
+  ]
+}

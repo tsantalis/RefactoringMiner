@@ -1,0 +1,146 @@
+{
+  "AbstractReferenceCounted.java": [],
+  "ArgumentMatchers.java": [],
+  "BaseEncoding.java": [],
+  "BuildEvent.java": [
+    "src/main/java/com/google/devtools/build/lib/buildeventstream/BuildEvent.java"
+  ],
+  "BuildEventArtifactUploader.java": [
+    "src/main/java/com/google/devtools/build/lib/buildeventstream/BuildEventArtifactUploader.java"
+  ],
+  "ByteStreamBuildEventArtifactUploader.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/ByteStreamBuildEventArtifactUploader.java"
+  ],
+  "ByteStreamBuildEventArtifactUploaderTest.java": [
+    "src/test/java/com/google/devtools/build/lib/remote/ByteStreamBuildEventArtifactUploaderTest.java"
+  ],
+  "ByteStreamGrpc.java": [],
+  "ByteStreamImplBase.java": [],
+  "ByteStreamUploaderTest.java": [
+    "src/test/java/com/google/devtools/build/lib/remote/ByteStreamUploaderTest.java"
+  ],
+  "ChainableEvent.java": [
+    "src/main/java/com/google/devtools/build/lib/buildeventstream/ChainableEvent.java"
+  ],
+  "ChannelConnectionFactory.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/grpc/ChannelConnectionFactory.java"
+  ],
+  "ChannelConnectionWithServerCapabilitiesFactory.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/ChannelConnectionWithServerCapabilitiesFactory.java"
+  ],
+  "CharSequence.java": [],
+  "Comparable.java": [],
+  "ConnectionFactory.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/grpc/ConnectionFactory.java"
+  ],
+  "Digest.java": [],
+  "DigestFunction.java": [],
+  "DigestUtil.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/util/DigestUtil.java"
+  ],
+  "EventHandler.java": [
+    "src/main/java/com/google/devtools/build/lib/events/EventHandler.java"
+  ],
+  "ExtendedEventHandler.java": [
+    "src/main/java/com/google/devtools/build/lib/events/ExtendedEventHandler.java"
+  ],
+  "FileSystem.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/FileSystem.java",
+    "src/test/java/com/google/devtools/build/android/ziputils/FileSystem.java"
+  ],
+  "FileType.java": [
+    "src/main/java/com/google/devtools/build/lib/util/FileType.java"
+  ],
+  "FixedBackoff.java": [],
+  "HasFileType.java": [],
+  "HashCode.java": [],
+  "HashMap.java": [],
+  "ListenableFuture.java": [],
+  "ListeningScheduledExecutorService.java": [],
+  "LocalFile.java": [],
+  "LocalFileType.java": [],
+  "Map.java": [],
+  "Matcher.java": [],
+  "MaybeFailOnceUploadService.java": [],
+  "Message.java": [],
+  "Mockito.java": [],
+  "MoreExecutors.java": [],
+  "MutableHandlerRegistry.java": [],
+  "NamedArtifactGroup.java": [
+    "src/main/java/com/google/devtools/build/lib/runtime/NamedArtifactGroup.java"
+  ],
+  "OutputStream.java": [],
+  "Path.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/Path.java"
+  ],
+  "PathConverter.java": [
+    "src/main/java/com/google/devtools/build/lib/buildeventstream/PathConverter.java"
+  ],
+  "PathFragment.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/PathFragment.java"
+  ],
+  "Pattern.java": [],
+  "Postable.java": [],
+  "Random.java": [],
+  "ReferenceCounted.java": [],
+  "ReferenceCountedChannel.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/ReferenceCountedChannel.java"
+  ],
+  "RemoteBuildEventUploadMode.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/options/RemoteBuildEventUploadMode.java"
+  ],
+  "RemoteCache.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/RemoteCache.java"
+  ],
+  "RemoteRetrier.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/RemoteRetrier.java"
+  ],
+  "Reportable.java": [
+    "src/main/java/com/google/devtools/build/lib/events/Reportable.java"
+  ],
+  "Reporter.java": [
+    "src/main/java/com/google/devtools/build/lib/events/Reporter.java"
+  ],
+  "Retrier.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/Retrier.java"
+  ],
+  "String.java": [],
+  "SyscallCache.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/SyscallCache.java"
+  ],
+  "TestUtils.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/serialization/testutils/TestUtils.java",
+    "src/test/java/com/google/devtools/build/lib/remote/util/TestUtils.java",
+    "src/test/java/com/google/devtools/build/lib/testutil/TestUtils.java"
+  ],
+  "Truth.java": [],
+  "Value.java": [
+    "third_party/java/proguard/proguard6.2.2/src/proguard/evaluation/value/Value.java"
+  ],
+  "VirtualActionInput.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/cache/VirtualActionInput.java"
+  ],
+  "XattrProvider.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/XattrProvider.java"
+  ],
+  "bazel.java": [],
+  "bytestream.java": [],
+  "common.java": [],
+  "concurrent.java": [],
+  "execution.java": [],
+  "google.java": [],
+  "grpc.java": [],
+  "hash.java": [],
+  "int.java": [],
+  "io.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "mockito.java": [],
+  "netty.java": [],
+  "protobuf.java": [],
+  "regex.java": [],
+  "remote.java": [],
+  "truth.java": [],
+  "util.java": [],
+  "v2.java": []
+}

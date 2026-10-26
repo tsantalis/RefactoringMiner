@@ -1,0 +1,70 @@
+{
+  "AbstractQueryBuilder.java": [
+    "server/src/main/java/org/elasticsearch/index/query/AbstractQueryBuilder.java"
+  ],
+  "Iterable.java": [],
+  "KnnVectorQueryBuilder.java": [
+    "server/src/main/java/org/elasticsearch/search/vectors/KnnVectorQueryBuilder.java"
+  ],
+  "Map.java": [],
+  "Mapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/planner/Mapper.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/Mapper.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/planner/Mapper.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "NestedHelper.java": [
+    "server/src/main/java/org/elasticsearch/index/search/NestedHelper.java"
+  ],
+  "NestedLookup.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/NestedLookup.java"
+  ],
+  "NestedObjectMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/NestedObjectMapper.java"
+  ],
+  "ObjectMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/ObjectMapper.java"
+  ],
+  "Queries.java": [
+    "server/src/main/java/org/elasticsearch/common/lucene/search/Queries.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/util/Queries.java"
+  ],
+  "Query.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/querydsl/query/Query.java"
+  ],
+  "QueryBuilder.java": [
+    "server/src/main/java/org/elasticsearch/index/query/QueryBuilder.java"
+  ],
+  "QueryRewriteContext.java": [
+    "server/src/main/java/org/elasticsearch/index/query/QueryRewriteContext.java"
+  ],
+  "Rewriteable.java": [
+    "server/src/main/java/org/elasticsearch/index/query/Rewriteable.java"
+  ],
+  "SearchExecutionContext.java": [
+    "server/src/main/java/org/elasticsearch/index/query/SearchExecutionContext.java"
+  ],
+  "String.java": [],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "VersionedNamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/VersionedNamedWriteable.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "lucene.java": [],
+  "search.java": [],
+  "util.java": []
+}

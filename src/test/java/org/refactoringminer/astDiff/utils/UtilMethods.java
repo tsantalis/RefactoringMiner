@@ -75,10 +75,12 @@ public class UtilMethods {
                         s1 = changedFileInfo.getFilesBefore().stream().filter(path -> path.startsWith(prefix)).findFirst().orElse(null);
                         s2 = changedFileInfo.getFilesCurrent().stream().filter(path -> path.startsWith(prefix)).findFirst().orElse(null);
                     }
-                    String folder1 = REPOS + "/" + repoName + "-" +
-                        changedFileInfo.getParentCommitId() + "/" + s1;
-                    String folder2 = REPOS + "/" + repoName + "-" +
-                        changedFileInfo.getCurrentCommitId() + "/" + s2;
+                    String folder1 = info.getCommit().contains("...") ?
+                        REPOS + "/" + repoName + "-" + info.getCommit() + "/before/" + s1 :
+                        REPOS + "/" + repoName + "-" + changedFileInfo.getParentCommitId() + "/" + s1;
+                    String folder2 = info.getCommit().contains("...") ?
+                        REPOS + "/" + repoName + "-" + info.getCommit() + "/after/" + s2 :
+                        REPOS + "/" + repoName + "-" + changedFileInfo.getCurrentCommitId() + "/" + s2;
                     Set<ASTDiff> diffSet = new GitHistoryRefactoringMinerImpl().diffAtDirectories(Path.of(folder1), Path.of(folder2)).getDiffSet();
                     for(ASTDiff diff : diffSet) {
                         diff.setSrcPath(s);

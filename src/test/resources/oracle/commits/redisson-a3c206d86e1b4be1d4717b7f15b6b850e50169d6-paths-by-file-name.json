@@ -1,0 +1,31 @@
+{
+  "BaseConfig.java": [
+    "redisson/src/main/java/org/redisson/config/BaseConfig.java"
+  ],
+  "BaseMasterSlaveServersConfig.java": [
+    "redisson/src/main/java/org/redisson/config/BaseMasterSlaveServersConfig.java"
+  ],
+  "ClientConnectionsEntry.java": [
+    "redisson/src/main/java/org/redisson/connection/ClientConnectionsEntry.java"
+  ],
+  "Config.java": [
+    "redisson/src/main/java/org/redisson/config/Config.java",
+    "redisson/src/test/java/org/redisson/spring/session/Config.java"
+  ],
+  "ConnectionManager.java": [
+    "redisson/src/main/java/org/redisson/connection/ConnectionManager.java"
+  ],
+  "ElastiCacheReplicatedServersConnectionManager.java": [
+    "redisson/src/main/java/org/redisson/extension/aws/ElastiCacheReplicatedServersConnectionManager.java"
+  ],
+  "ElasticCacheReplicationGroupServersConfig.java": [
+    "redisson/src/main/java/org/redisson/extension/aws/ElasticCacheReplicationGroupServersConfig.java"
+  ],
+  "FreezeReason.java": [],
+  "MasterSlaveConnectionManager.java": [
+    "redisson/src/main/java/org/redisson/connection/MasterSlaveConnectionManager.java"
+  ],
+  "MasterSlaveServersConfig.java": [
+    "redisson/src/main/java/org/redisson/config/MasterSlaveServersConfig.java"
+  ]
+}

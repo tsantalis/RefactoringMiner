@@ -1,0 +1,64 @@
+{
+  "AbstractPluginMessageStore.java": [
+    "store/src/main/java/org/apache/rocketmq/store/plugin/AbstractPluginMessageStore.java"
+  ],
+  "Assert.java": [],
+  "AttributesBuilder.java": [],
+  "CompletableFuture.java": [],
+  "FlatAppendFile.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatAppendFile.java"
+  ],
+  "FlatCommitLogFile.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatCommitLogFile.java"
+  ],
+  "FlatConsumeQueueFile.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatConsumeQueueFile.java"
+  ],
+  "FlatFileInterface.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatFileInterface.java"
+  ],
+  "FlatMessageFile.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatMessageFile.java"
+  ],
+  "Logger.java": [],
+  "Long.java": [],
+  "LongHistogram.java": [],
+  "Math.java": [],
+  "MessageFormatUtil.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/util/MessageFormatUtil.java"
+  ],
+  "MessageStore.java": [
+    "store/src/main/java/org/apache/rocketmq/store/MessageStore.java"
+  ],
+  "MessageStoreFetcher.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/core/MessageStoreFetcher.java"
+  ],
+  "MessageStoreFetcherImpl.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/core/MessageStoreFetcherImpl.java"
+  ],
+  "Stopwatch.java": [],
+  "String.java": [],
+  "TieredMessageStore.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/TieredMessageStore.java"
+  ],
+  "TieredMessageStoreTest.java": [
+    "tieredstore/src/test/java/org/apache/rocketmq/tieredstore/TieredMessageStoreTest.java"
+  ],
+  "TieredStoreMetricsConstant.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metrics/TieredStoreMetricsConstant.java"
+  ],
+  "TieredStoreMetricsManager.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metrics/TieredStoreMetricsManager.java"
+  ],
+  "TimeUnit.java": [],
+  "api.java": [],
+  "base.java": [],
+  "common.java": [],
+  "concurrent.java": [],
+  "google.java": [],
+  "junit.java": [],
+  "metrics.java": [],
+  "opentelemetry.java": [],
+  "slf4j.java": [],
+  "util.java": []
+}

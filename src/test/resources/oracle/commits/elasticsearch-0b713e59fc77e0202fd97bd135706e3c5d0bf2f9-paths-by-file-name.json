@@ -1,0 +1,112 @@
+{
+  "AbstractLifecycleComponent.java": [
+    "server/src/main/java/org/elasticsearch/common/component/AbstractLifecycleComponent.java"
+  ],
+  "AbstractNamedDiffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/AbstractNamedDiffable.java"
+  ],
+  "ActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
+  "ActionRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionRequest.java"
+  ],
+  "Closeable.java": [],
+  "ClusterState.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterState.java"
+  ],
+  "ClusterStateApplier.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterStateApplier.java"
+  ],
+  "ClusterStateTaskConfig.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterStateTaskConfig.java"
+  ],
+  "ClusterStateTaskExecutor.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterStateTaskExecutor.java"
+  ],
+  "ClusterStateTaskListener.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterStateTaskListener.java"
+  ],
+  "ClusterStateUpdateTask.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterStateUpdateTask.java"
+  ],
+  "CreateSnapshotRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/cluster/snapshots/create/CreateSnapshotRequest.java"
+  ],
+  "Custom.java": [],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "Entry.java": [],
+  "IndicesRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
+  ],
+  "LifecycleComponent.java": [
+    "server/src/main/java/org/elasticsearch/common/component/LifecycleComponent.java"
+  ],
+  "List.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/List.java",
+    "libs/core/src/main/java11/org/elasticsearch/core/List.java"
+  ],
+  "MasterNodeRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/support/master/MasterNodeRequest.java"
+  ],
+  "NamedDiffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/NamedDiffable.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "Replaceable.java": [],
+  "Repository.java": [
+    "server/src/main/java/org/elasticsearch/repositories/Repository.java"
+  ],
+  "RepositoryOperation.java": [
+    "server/src/main/java/org/elasticsearch/repositories/RepositoryOperation.java"
+  ],
+  "Set.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Set.java",
+    "libs/core/src/main/java11/org/elasticsearch/core/Set.java"
+  ],
+  "Snapshot.java": [
+    "server/src/main/java/org/elasticsearch/snapshots/Snapshot.java"
+  ],
+  "SnapshotsInProgress.java": [
+    "server/src/main/java/org/elasticsearch/cluster/SnapshotsInProgress.java"
+  ],
+  "SnapshotsService.java": [
+    "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java"
+  ],
+  "TaskAwareRequest.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskAwareRequest.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "TransportMessage.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportMessage.java"
+  ],
+  "TransportRequest.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequest.java"
+  ],
+  "VersionedNamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/VersionedNamedWriteable.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "io.java": [],
+  "util.java": []
+}

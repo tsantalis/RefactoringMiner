@@ -1,0 +1,233 @@
+{
+  "AbstractBootstrap.java": [
+    "transport/src/main/java/io/netty/bootstrap/AbstractBootstrap.java"
+  ],
+  "AbstractChannel.java": [
+    "transport/src/main/java/io/netty/channel/AbstractChannel.java"
+  ],
+  "AbstractComboTestsuiteTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/AbstractComboTestsuiteTest.java"
+  ],
+  "AbstractEpollChannel.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/AbstractEpollChannel.java"
+  ],
+  "AbstractEpollServerChannel.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/AbstractEpollServerChannel.java"
+  ],
+  "AbstractEpollStreamChannel.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/AbstractEpollStreamChannel.java"
+  ],
+  "AbstractSocketTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/AbstractSocketTest.java"
+  ],
+  "AttributeMap.java": [
+    "common/src/main/java/io/netty/util/AttributeMap.java"
+  ],
+  "AutoCloseable.java": [],
+  "BooleanSupplier.java": [
+    "common/src/main/java/io/netty/util/BooleanSupplier.java"
+  ],
+  "Bootstrap.java": [
+    "transport/src/main/java/io/netty/bootstrap/Bootstrap.java"
+  ],
+  "ByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufAllocator.java"
+  ],
+  "Channel.java": [
+    "transport/src/main/java/io/netty/channel/Channel.java"
+  ],
+  "ChannelConfig.java": [
+    "transport/src/main/java/io/netty/channel/ChannelConfig.java"
+  ],
+  "ChannelOption.java": [
+    "transport/src/main/java/io/netty/channel/ChannelOption.java"
+  ],
+  "ChannelOutboundInvoker.java": [
+    "transport/src/main/java/io/netty/channel/ChannelOutboundInvoker.java"
+  ],
+  "Class.java": [],
+  "Cloneable.java": [],
+  "Comparable.java": [],
+  "DatagramChannel.java": [
+    "transport/src/main/java/io/netty/channel/socket/DatagramChannel.java"
+  ],
+  "DatagramChannelConfig.java": [
+    "transport/src/main/java/io/netty/channel/socket/DatagramChannelConfig.java"
+  ],
+  "DefaultAttributeMap.java": [
+    "common/src/main/java/io/netty/util/DefaultAttributeMap.java"
+  ],
+  "DefaultChannelConfig.java": [
+    "transport/src/main/java/io/netty/channel/DefaultChannelConfig.java"
+  ],
+  "DelegatingHandle.java": [],
+  "DomainDatagramChannel.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/DomainDatagramChannel.java"
+  ],
+  "DomainDatagramChannelConfig.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/DomainDatagramChannelConfig.java"
+  ],
+  "DomainSocketChannel.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/DomainSocketChannel.java"
+  ],
+  "DuplexChannel.java": [
+    "transport/src/main/java/io/netty/channel/socket/DuplexChannel.java"
+  ],
+  "EPOLL_MODE.java": [],
+  "EpollChannelConfig.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollChannelConfig.java"
+  ],
+  "EpollChannelOption.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollChannelOption.java"
+  ],
+  "EpollChannelOption.kt": [],
+  "EpollDatagramChannel.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollDatagramChannel.java"
+  ],
+  "EpollDatagramChannelConfig.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollDatagramChannelConfig.java"
+  ],
+  "EpollDomainDatagramChannel.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollDomainDatagramChannel.java"
+  ],
+  "EpollDomainSocketChannel.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollDomainSocketChannel.java"
+  ],
+  "EpollETSocketAutoReadTest.java": [],
+  "EpollETSocketConditionalWritabilityTest.java": [],
+  "EpollETSocketDataReadInitialStateTest.java": [],
+  "EpollETSocketExceptionHandlingTest.java": [],
+  "EpollETSocketHalfClosedTest.java": [],
+  "EpollETSocketReadPendingTest.java": [],
+  "EpollETSocketStringEchoBusyWaitTest.java": [],
+  "EpollIoHandle.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollIoHandle.java"
+  ],
+  "EpollIoOps.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollIoOps.java"
+  ],
+  "EpollLTSocketAutoReadTest.java": [],
+  "EpollLTSocketConditionalWritabilityTest.java": [],
+  "EpollLTSocketDataReadInitialStateTest.java": [],
+  "EpollLTSocketExceptionHandlingTest.java": [],
+  "EpollLTSocketHalfClosedTest.java": [],
+  "EpollLTSocketReadPendingTest.java": [],
+  "EpollLTSocketStringEchoBusyWaitTest.java": [],
+  "EpollMode.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollMode.java"
+  ],
+  "EpollMode.kt": [],
+  "EpollRecvByteAllocatorHandle.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollRecvByteAllocatorHandle.java"
+  ],
+  "EpollSocketAutoReadTest.java": [
+    "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketAutoReadTest.java"
+  ],
+  "EpollSocketConditionalWritabilityTest.java": [
+    "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketConditionalWritabilityTest.java"
+  ],
+  "EpollSocketDataReadInitialStateTest.java": [
+    "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketDataReadInitialStateTest.java"
+  ],
+  "EpollSocketExceptionHandlingTest.java": [
+    "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketExceptionHandlingTest.java"
+  ],
+  "EpollSocketHalfClosedTest.java": [
+    "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketHalfClosedTest.java"
+  ],
+  "EpollSocketReadPendingTest.java": [
+    "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketReadPendingTest.java"
+  ],
+  "EpollSocketStringEchoBusyWaitTest.java": [
+    "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketStringEchoBusyWaitTest.java"
+  ],
+  "EpollSocketStringEchoBusyWaitTest.kt": [],
+  "EpollSocketTestPermutation.java": [
+    "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketTestPermutation.java"
+  ],
+  "EpollSocketTestPermutation.kt": [],
+  "Error.java": [],
+  "EventExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/EventExecutor.java"
+  ],
+  "EventExecutorGroup.java": [
+    "common/src/main/java/io/netty/util/concurrent/EventExecutorGroup.java"
+  ],
+  "EventLoop.java": [
+    "transport/src/main/java/io/netty/channel/EventLoop.java"
+  ],
+  "EventLoopGroup.java": [
+    "transport/src/main/java/io/netty/channel/EventLoopGroup.java"
+  ],
+  "ExtendedHandle.java": [],
+  "InternalLogger.java": [
+    "common/src/main/java/io/netty/util/internal/logging/InternalLogger.java"
+  ],
+  "InternalLoggerFactory.java": [
+    "common/src/main/java/io/netty/util/internal/logging/InternalLoggerFactory.java"
+  ],
+  "IoHandle.java": [
+    "transport/src/main/java/io/netty/channel/IoHandle.java"
+  ],
+  "IoOps.java": [
+    "transport/src/main/java/io/netty/channel/IoOps.java"
+  ],
+  "Iterable.java": [],
+  "Native.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/Native.java",
+    "transport-classes-kqueue/src/main/java/io/netty/channel/kqueue/Native.java"
+  ],
+  "ObjectUtil.java": [
+    "common/src/main/java/io/netty/util/internal/ObjectUtil.java"
+  ],
+  "OrderedEventExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/OrderedEventExecutor.java"
+  ],
+  "RecvByteBufAllocator.java": [
+    "transport/src/main/java/io/netty/channel/RecvByteBufAllocator.java"
+  ],
+  "Runnable.java": [],
+  "ScheduledExecutorService.java": [],
+  "ServerBootstrap.java": [
+    "transport/src/main/java/io/netty/bootstrap/ServerBootstrap.java"
+  ],
+  "ServerChannel.java": [
+    "transport/src/main/java/io/netty/channel/ServerChannel.java"
+  ],
+  "SocketAutoReadTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketAutoReadTest.java"
+  ],
+  "SocketConditionalWritabilityTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketConditionalWritabilityTest.java"
+  ],
+  "SocketDataReadInitialStateTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketDataReadInitialStateTest.java"
+  ],
+  "SocketExceptionHandlingTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketExceptionHandlingTest.java"
+  ],
+  "SocketHalfClosedTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketHalfClosedTest.java"
+  ],
+  "SocketReadPendingTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketReadPendingTest.java"
+  ],
+  "SocketStringEchoTest.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketStringEchoTest.java"
+  ],
+  "SocketTestPermutation.java": [
+    "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketTestPermutation.java"
+  ],
+  "String.java": [],
+  "Throwable.java": [],
+  "UncheckedBooleanSupplier.java": [
+    "common/src/main/java/io/netty/util/UncheckedBooleanSupplier.java"
+  ],
+  "UnixChannel.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/UnixChannel.java"
+  ],
+  "concurrent.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "util.java": []
+}

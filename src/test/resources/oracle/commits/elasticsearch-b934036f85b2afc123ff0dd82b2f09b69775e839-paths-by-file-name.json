@@ -1,0 +1,56 @@
+{
+  "ActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
+  "BiConsumer.java": [],
+  "CancellableTask.java": [
+    "server/src/main/java/org/elasticsearch/tasks/CancellableTask.java"
+  ],
+  "CheckedBiConsumer.java": [
+    "server/src/main/java/org/elasticsearch/common/CheckedBiConsumer.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedBiConsumer.java"
+  ],
+  "ClusterComputeHandler.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ClusterComputeHandler.java"
+  ],
+  "ComputeService.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ComputeService.java"
+  ],
+  "DataNodeComputeHandler.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/DataNodeComputeHandler.java"
+  ],
+  "DataNodeRequestSender.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/DataNodeRequestSender.java"
+  ],
+  "DiscoveryNode.java": [
+    "server/src/main/java/org/elasticsearch/cluster/node/DiscoveryNode.java"
+  ],
+  "ElasticsearchException.java": [
+    "server/src/main/java/org/elasticsearch/ElasticsearchException.java"
+  ],
+  "Exception.java": [],
+  "RuntimeException.java": [],
+  "Task.java": [
+    "server/src/main/java/org/elasticsearch/tasks/Task.java"
+  ],
+  "TaskCancelledException.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskCancelledException.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "Traceable.java": [
+    "server/src/main/java/org/elasticsearch/telemetry/tracing/Traceable.java"
+  ],
+  "TransportRequestHandler.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequestHandler.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "function.java": [],
+  "util.java": []
+}

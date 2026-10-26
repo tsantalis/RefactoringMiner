@@ -1,0 +1,98 @@
+{
+  "Boolean.java": [],
+  "ChannelHandlerContext.java": [],
+  "Class.java": [],
+  "CommandCustomHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/CommandCustomHeader.java"
+  ],
+  "CompletableFuture.java": [],
+  "Exception.java": [],
+  "MQBrokerException.java": [
+    "client/src/main/java/org/apache/rocketmq/client/exception/MQBrokerException.java"
+  ],
+  "MQClientAPIExt.java": [
+    "client/src/main/java/org/apache/rocketmq/client/impl/mqclient/MQClientAPIExt.java"
+  ],
+  "MQClientAPIImpl.java": [
+    "client/src/main/java/org/apache/rocketmq/client/impl/MQClientAPIImpl.java"
+  ],
+  "NameServerUpdateCallback.java": [
+    "common/src/main/java/org/apache/rocketmq/common/namesrv/NameServerUpdateCallback.java"
+  ],
+  "NettyRequestProcessor.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRequestProcessor.java"
+  ],
+  "NotificationProcessor.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/processor/NotificationProcessor.java"
+  ],
+  "NotificationRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/NotificationRequestHeader.java"
+  ],
+  "NotificationResponseHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/NotificationResponseHeader.java"
+  ],
+  "NotifyResult.java": [
+    "client/src/main/java/org/apache/rocketmq/client/consumer/NotifyResult.java"
+  ],
+  "PollingHeader.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/longpolling/PollingHeader.java"
+  ],
+  "PollingResult.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/longpolling/PollingResult.java"
+  ],
+  "PopLongPollingService.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/longpolling/PopLongPollingService.java"
+  ],
+  "PopMessageRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/PopMessageRequestHeader.java"
+  ],
+  "RemotingClient.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/RemotingClient.java"
+  ],
+  "RemotingCommand.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/RemotingCommand.java"
+  ],
+  "RemotingService.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/RemotingService.java"
+  ],
+  "RemotingSysResponseCode.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/RemotingSysResponseCode.java"
+  ],
+  "RequestCode.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/RequestCode.java"
+  ],
+  "ResponseCode.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/ResponseCode.java"
+  ],
+  "RpcRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/RpcRequestHeader.java"
+  ],
+  "Runnable.java": [],
+  "ServiceThread.java": [
+    "common/src/main/java/org/apache/rocketmq/common/ServiceThread.java",
+    "remoting/src/main/java/org/apache/rocketmq/remoting/common/ServiceThread.java"
+  ],
+  "Shutdown.java": [
+    "common/src/main/java/org/apache/rocketmq/common/utils/Shutdown.java"
+  ],
+  "Start.java": [
+    "common/src/main/java/org/apache/rocketmq/common/utils/Start.java"
+  ],
+  "StartAndShutdown.java": [
+    "common/src/main/java/org/apache/rocketmq/common/utils/StartAndShutdown.java"
+  ],
+  "String.java": [],
+  "Throwable.java": [],
+  "TopicQueueRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/TopicQueueRequestHeader.java"
+  ],
+  "TopicRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/TopicRequestHeader.java"
+  ],
+  "channel.java": [],
+  "concurrent.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "netty.java": [],
+  "util.java": []
+}

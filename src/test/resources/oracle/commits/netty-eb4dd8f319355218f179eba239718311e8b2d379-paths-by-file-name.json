@@ -1,0 +1,35 @@
+{
+  "ByteToMessageDecoder.java": [
+    "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java"
+  ],
+  "ChannelHandler.java": [
+    "transport/src/main/java/io/netty/channel/ChannelHandler.java"
+  ],
+  "ChannelHandlerAdapter.java": [
+    "transport/src/main/java/io/netty/channel/ChannelHandlerAdapter.java"
+  ],
+  "ChannelInboundHandler.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInboundHandler.java"
+  ],
+  "ChannelInboundHandlerAdapter.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInboundHandlerAdapter.java"
+  ],
+  "ChannelOutboundHandler.java": [
+    "transport/src/main/java/io/netty/channel/ChannelOutboundHandler.java"
+  ],
+  "Http2ConnectionHandler.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionHandler.java"
+  ],
+  "Http2FrameCodec.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java"
+  ],
+  "Http2FrameStream.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameStream.java"
+  ],
+  "Http2LifecycleManager.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2LifecycleManager.java"
+  ],
+  "Http2Stream.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Stream.java"
+  ]
+}

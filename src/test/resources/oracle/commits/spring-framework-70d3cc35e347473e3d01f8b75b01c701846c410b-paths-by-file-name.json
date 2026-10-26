@@ -1,0 +1,62 @@
+{
+  "Assertions.java": [],
+  "Builder.java": [],
+  "ClientHttpRequestFactory.java": [
+    "spring-web/src/main/java/org/springframework/http/client/ClientHttpRequestFactory.java"
+  ],
+  "ClientRequestObservationConvention.java": [
+    "spring-web/src/main/java/org/springframework/http/client/observation/ClientRequestObservationConvention.java",
+    "spring-webflux/src/main/java/org/springframework/web/reactive/function/client/ClientRequestObservationConvention.java"
+  ],
+  "Consumer.java": [],
+  "DefaultRestClient.java": [
+    "spring-web/src/main/java/org/springframework/web/client/DefaultRestClient.java"
+  ],
+  "DefaultRestClientBuilder.java": [
+    "spring-web/src/main/java/org/springframework/web/client/DefaultRestClientBuilder.java"
+  ],
+  "Function.java": [
+    "spring-core/src/main/java/org/springframework/cglib/core/internal/Function.java"
+  ],
+  "HttpHeaders.java": [
+    "spring-web/src/main/java/org/springframework/http/HttpHeaders.java"
+  ],
+  "List.java": [],
+  "Map.java": [],
+  "MediaType.java": [
+    "spring-web/src/main/java/org/springframework/http/MediaType.java"
+  ],
+  "MockResponse.java": [],
+  "MultiValueMap.java": [
+    "spring-core/src/main/java/org/springframework/util/MultiValueMap.java"
+  ],
+  "ObservationConvention.java": [],
+  "ObservationRegistry.java": [],
+  "RecordedRequest.java": [],
+  "RestClient.java": [
+    "spring-web/src/main/java/org/springframework/web/client/RestClient.java"
+  ],
+  "RestClientIntegrationTests.java": [
+    "spring-web/src/test/java/org/springframework/web/client/RestClientIntegrationTests.java"
+  ],
+  "S.java": [],
+  "Serializable.java": [],
+  "String.java": [],
+  "URI.java": [],
+  "UriBuilderFactory.java": [
+    "spring-web/src/main/java/org/springframework/web/util/UriBuilderFactory.java"
+  ],
+  "UriTemplateHandler.java": [
+    "spring-web/src/main/java/org/springframework/web/util/UriTemplateHandler.java"
+  ],
+  "api.java": [],
+  "assertj.java": [],
+  "core.java": [],
+  "function.java": [],
+  "io.java": [],
+  "micrometer.java": [],
+  "mockwebserver.java": [],
+  "net.java": [],
+  "observation.java": [],
+  "util.java": []
+}

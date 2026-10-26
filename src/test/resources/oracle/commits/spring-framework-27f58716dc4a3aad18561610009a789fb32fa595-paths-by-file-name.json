@@ -1,0 +1,51 @@
+{
+  "AbstractHandlerExceptionResolver.java": [
+    "spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerExceptionResolver.java"
+  ],
+  "AbstractHandlerMethodExceptionResolver.java": [
+    "spring-webmvc/src/main/java/org/springframework/web/servlet/handler/AbstractHandlerMethodExceptionResolver.java"
+  ],
+  "ApplicationContextAware.java": [
+    "spring-context/src/main/java/org/springframework/context/ApplicationContextAware.java"
+  ],
+  "Aware.java": [
+    "spring-beans/src/main/java/org/springframework/beans/factory/Aware.java"
+  ],
+  "Class.java": [],
+  "ClassUtils.java": [
+    "spring-core/src/main/java/org/springframework/util/ClassUtils.java"
+  ],
+  "ExceptionHandlerExceptionResolver.java": [
+    "spring-webmvc/src/main/java/org/springframework/web/servlet/mvc/method/annotation/ExceptionHandlerExceptionResolver.java"
+  ],
+  "HandlerExceptionResolver.java": [
+    "spring-webmvc/src/main/java/org/springframework/web/servlet/HandlerExceptionResolver.java"
+  ],
+  "HandlerMethod.java": [
+    "spring-messaging/src/main/java/org/springframework/messaging/handler/HandlerMethod.java",
+    "spring-web/src/main/java/org/springframework/web/method/HandlerMethod.java"
+  ],
+  "InitializingBean.java": [
+    "spring-beans/src/main/java/org/springframework/beans/factory/InitializingBean.java"
+  ],
+  "InvocableHandlerMethod.java": [
+    "spring-messaging/src/main/java/org/springframework/messaging/handler/invocation/InvocableHandlerMethod.java",
+    "spring-messaging/src/main/java/org/springframework/messaging/handler/invocation/reactive/InvocableHandlerMethod.java",
+    "spring-web/src/main/java/org/springframework/web/method/support/InvocableHandlerMethod.java",
+    "spring-webflux/src/main/java/org/springframework/web/reactive/result/method/InvocableHandlerMethod.java"
+  ],
+  "InvocableHandlerMethodTests.java": [
+    "spring-messaging/src/test/java/org/springframework/messaging/handler/invocation/InvocableHandlerMethodTests.java",
+    "spring-messaging/src/test/java/org/springframework/messaging/handler/invocation/reactive/InvocableHandlerMethodTests.java",
+    "spring-web/src/test/java/org/springframework/web/method/support/InvocableHandlerMethodTests.java",
+    "spring-webflux/src/test/java/org/springframework/web/reactive/result/method/InvocableHandlerMethodTests.java"
+  ],
+  "Log.java": [
+    "spring-context/src/test/java/org/springframework/scripting/groovy/Log.java",
+    "spring-jcl/src/main/java/org/apache/commons/logging/Log.java"
+  ],
+  "Object.java": [],
+  "Ordered.java": [
+    "spring-core/src/main/java/org/springframework/core/Ordered.java"
+  ]
+}

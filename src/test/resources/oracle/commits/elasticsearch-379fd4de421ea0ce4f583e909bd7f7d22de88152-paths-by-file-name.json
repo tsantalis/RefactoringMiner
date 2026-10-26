@@ -1,0 +1,95 @@
+{
+  "ActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
+  "AsyncTwoPhaseIndexer.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/indexing/AsyncTwoPhaseIndexer.java"
+  ],
+  "AuthorizationState.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/AuthorizationState.java"
+  ],
+  "Boolean.java": [],
+  "CheckedBiConsumer.java": [
+    "server/src/main/java/org/elasticsearch/common/CheckedBiConsumer.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedBiConsumer.java"
+  ],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "ESRestTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/rest/ESRestTestCase.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "ElasticsearchException.java": [
+    "server/src/main/java/org/elasticsearch/ElasticsearchException.java"
+  ],
+  "ElasticsearchSecurityException.java": [
+    "server/src/main/java/org/elasticsearch/ElasticsearchSecurityException.java"
+  ],
+  "ElasticsearchStatusException.java": [
+    "server/src/main/java/org/elasticsearch/ElasticsearchStatusException.java"
+  ],
+  "Exception.java": [],
+  "HealthStatus.java": [
+    "server/src/main/java/org/elasticsearch/health/HealthStatus.java"
+  ],
+  "Integer.java": [],
+  "LuceneTestCase.java": [],
+  "RuntimeException.java": [],
+  "SetOnce.java": [],
+  "SettingsConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/SettingsConfig.java"
+  ],
+  "SimpleDiffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/SimpleDiffable.java"
+  ],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "String.java": [],
+  "Strings.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Strings.java",
+    "server/src/main/java/org/elasticsearch/common/Strings.java",
+    "server/src/main/java/org/elasticsearch/common/inject/internal/Strings.java",
+    "x-pack/plugin/watcher/src/main/java/org/elasticsearch/xpack/watcher/support/Strings.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "TransformConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/TransformConfig.java"
+  ],
+  "TransformContext.java": [
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/TransformContext.java"
+  ],
+  "TransformIndexer.java": [
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/TransformIndexer.java"
+  ],
+  "TransformInsufficientPermissionsIT.java": [
+    "x-pack/plugin/transform/qa/multi-node-tests/src/javaRestTest/java/org/elasticsearch/xpack/transform/integration/TransformInsufficientPermissionsIT.java"
+  ],
+  "TransformMessages.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/TransformMessages.java"
+  ],
+  "TransformRestTestCase.java": [
+    "x-pack/plugin/transform/qa/multi-node-tests/src/javaRestTest/java/org/elasticsearch/xpack/transform/integration/TransformRestTestCase.java",
+    "x-pack/plugin/transform/qa/single-node-tests/src/javaRestTest/java/org/elasticsearch/xpack/transform/integration/TransformRestTestCase.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "lucene.java": [],
+  "tests.java": [],
+  "util.java": []
+}

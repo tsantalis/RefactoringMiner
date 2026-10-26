@@ -1,0 +1,87 @@
+{
+  "ArtifactFactory.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/ArtifactFactory.java"
+  ],
+  "ArtifactFunction.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/ArtifactFunction.java"
+  ],
+  "ArtifactResolver.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/ArtifactResolver.java"
+  ],
+  "ArtifactResolverSupplier.java": [],
+  "AtomicReference.java": [],
+  "BuildConfiguration.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/config/BuildConfiguration.java"
+  ],
+  "BuildConfigurationApi.java": [
+    "src/main/java/com/google/devtools/build/lib/skylarkbuildapi/BuildConfigurationApi.java"
+  ],
+  "CyclesReporter.java": [
+    "src/main/java/com/google/devtools/build/skyframe/CyclesReporter.java"
+  ],
+  "DelegatingEventHandler.java": [
+    "src/main/java/com/google/devtools/build/lib/events/DelegatingEventHandler.java"
+  ],
+  "ErrorSensingEventHandler.java": [
+    "src/main/java/com/google/devtools/build/lib/events/ErrorSensingEventHandler.java"
+  ],
+  "EvaluationResult.java": [
+    "src/main/java/com/google/devtools/build/skyframe/EvaluationResult.java"
+  ],
+  "EventHandler.java": [
+    "src/main/java/com/google/devtools/build/lib/events/EventHandler.java"
+  ],
+  "ExtendedEventHandler.java": [
+    "src/main/java/com/google/devtools/build/lib/events/ExtendedEventHandler.java"
+  ],
+  "Function.java": [],
+  "List.java": [],
+  "MutableSupplier.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/MutableSupplier.java"
+  ],
+  "NotComparableSkyValue.java": [
+    "src/main/java/com/google/devtools/build/skyframe/NotComparableSkyValue.java"
+  ],
+  "Optional.java": [],
+  "PackageValue.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/PackageValue.java"
+  ],
+  "RegisteredToolchainsCycleReporter.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/RegisteredToolchainsCycleReporter.java"
+  ],
+  "Serializable.java": [],
+  "SingleCycleReporter.java": [],
+  "SkyKey.java": [
+    "src/main/java/com/google/devtools/build/skyframe/SkyKey.java"
+  ],
+  "SkyValue.java": [
+    "src/main/java/com/google/devtools/build/skyframe/SkyValue.java"
+  ],
+  "SkyframeActionExecutor.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeActionExecutor.java"
+  ],
+  "SkyframeBuildView.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeBuildView.java"
+  ],
+  "SkyframeExecutor.java": [
+    "src/main/java/com/google/devtools/build/lib/skyframe/SkyframeExecutor.java"
+  ],
+  "Supplier.java": [
+    "src/java_tools/junitrunner/java/com/google/testing/junit/runner/util/Supplier.java"
+  ],
+  "TimestampGranularityMonitor.java": [
+    "src/main/java/com/google/devtools/build/lib/util/io/TimestampGranularityMonitor.java"
+  ],
+  "UUID.java": [],
+  "WalkableGraph.java": [
+    "src/main/java/com/google/devtools/build/skyframe/WalkableGraph.java"
+  ],
+  "WalkableGraphFactory.java": [],
+  "atomic.java": [],
+  "base.java": [],
+  "common.java": [],
+  "concurrent.java": [],
+  "google.java": [],
+  "io.java": [],
+  "util.java": []
+}

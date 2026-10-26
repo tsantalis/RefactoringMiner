@@ -1,0 +1,93 @@
+{
+  "AtomicInteger.java": [],
+  "Builder.java": [],
+  "CheckedFunction.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/CheckedFunction.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedFunction.java"
+  ],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "FieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/FieldMapper.java"
+  ],
+  "Index.java": [
+    "server/src/main/java/org/elasticsearch/index/Index.java"
+  ],
+  "IndexMetadata.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/IndexMetadata.java"
+  ],
+  "IndexMode.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexMode.java"
+  ],
+  "IndexSettingProvider.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexSettingProvider.java"
+  ],
+  "Iterable.java": [],
+  "LogsdbIndexModeSettingsProvider.java": [
+    "x-pack/plugin/logsdb/src/main/java/org/elasticsearch/xpack/logsdb/LogsdbIndexModeSettingsProvider.java"
+  ],
+  "LuceneTestCase.java": [],
+  "Mapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/planner/Mapper.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/mapper/Mapper.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/planner/Mapper.java"
+  ],
+  "MapperTestUtils.java": [
+    "test/framework/src/main/java/org/elasticsearch/index/MapperTestUtils.java"
+  ],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/injection/guice/matcher/Matchers.java"
+  ],
+  "MetadataFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MetadataFieldMapper.java"
+  ],
+  "Mode.java": [
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/Mode.java"
+  ],
+  "NamedXContentRegistry.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/NamedXContentRegistry.java"
+  ],
+  "Setting.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
+  ],
+  "Settings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+  ],
+  "SourceFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/SourceFieldMapper.java"
+  ],
+  "String.java": [],
+  "SyntheticSourceIndexSettingsProvider.java": [
+    "x-pack/plugin/logsdb/src/main/java/org/elasticsearch/xpack/logsdb/SyntheticSourceIndexSettingsProvider.java"
+  ],
+  "SyntheticSourceIndexSettingsProviderTests.java": [
+    "x-pack/plugin/logsdb/src/test/java/org/elasticsearch/xpack/logsdb/SyntheticSourceIndexSettingsProviderTests.java"
+  ],
+  "SyntheticSourceLicenseService.java": [
+    "x-pack/plugin/logsdb/src/main/java/org/elasticsearch/xpack/logsdb/SyntheticSourceLicenseService.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "atomic.java": [],
+  "concurrent.java": [],
+  "hamcrest.java": [],
+  "lucene.java": [],
+  "tests.java": [],
+  "util.java": []
+}

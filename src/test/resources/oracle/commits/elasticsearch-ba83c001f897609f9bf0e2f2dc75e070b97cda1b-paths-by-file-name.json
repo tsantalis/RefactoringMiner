@@ -1,0 +1,73 @@
+{
+  "Attribute.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/Attribute.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Attribute.java"
+  ],
+  "Class.java": [],
+  "DataType.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/DataType.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/DataType.java"
+  ],
+  "EsField.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/EsField.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/EsField.java"
+  ],
+  "Expression.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/Expression.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Expression.java"
+  ],
+  "FieldAttribute.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/FieldAttribute.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/FieldAttribute.java"
+  ],
+  "InputStream.java": [],
+  "NameId.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/NameId.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/NameId.java"
+  ],
+  "NamedExpression.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/NamedExpression.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/NamedExpression.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
+  "Nullability.java": [
+    "server/src/main/java/org/elasticsearch/injection/guice/internal/Nullability.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/Nullability.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Nullability.java"
+  ],
+  "PlanStreamInput.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/util/PlanStreamInput.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/io/stream/PlanStreamInput.java"
+  ],
+  "Resolvable.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/capabilities/Resolvable.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/capabilities/Resolvable.java"
+  ],
+  "Source.java": [
+    "build-tools-internal/src/main/java/org/elasticsearch/gradle/internal/doc/Source.java",
+    "server/src/main/java/org/elasticsearch/search/lookup/Source.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Source.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Source.java"
+  ],
+  "StreamInput \u0026 PlanStreamInput.java": [],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "String.java": [],
+  "TypedAttribute.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/TypedAttribute.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/TypedAttribute.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "io.java": []
+}

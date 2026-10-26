@@ -1,0 +1,140 @@
+{
+  "AcknowledgedTransportMasterNodeAction.java": [
+    "server/src/main/java/org/elasticsearch/action/support/master/AcknowledgedTransportMasterNodeAction.java"
+  ],
+  "ActionWithReservedState.java": [
+    "server/src/main/java/org/elasticsearch/reservedstate/ActionWithReservedState.java"
+  ],
+  "BiConsumer.java": [],
+  "BigDecimal.java": [],
+  "BigInteger.java": [],
+  "Boolean.java": [],
+  "Builder.java": [],
+  "Byte.java": [],
+  "ByteSizeValue.java": [
+    "server/src/main/java/org/elasticsearch/common/unit/ByteSizeValue.java"
+  ],
+  "Closeable.java": [],
+  "Collection.java": [],
+  "DateFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/DateFieldMapper.java"
+  ],
+  "DateFormatter.java": [
+    "server/src/main/java/org/elasticsearch/common/time/DateFormatter.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/scalar/datetime/DateFormatter.java"
+  ],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "Double.java": [],
+  "DownsampleActionSingleNodeTests.java": [
+    "x-pack/plugin/downsample/src/test/java/org/elasticsearch/xpack/downsample/DownsampleActionSingleNodeTests.java"
+  ],
+  "ESSingleNodeTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESSingleNodeTestCase.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "Enum.java": [],
+  "FieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/FieldMapper.java"
+  ],
+  "Float.java": [],
+  "Flushable.java": [],
+  "HandledTransportAction.java": [
+    "server/src/main/java/org/elasticsearch/action/support/HandledTransportAction.java"
+  ],
+  "IndexMetadata.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/IndexMetadata.java"
+  ],
+  "IndexMode.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexMode.java"
+  ],
+  "IndexSettings.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexSettings.java"
+  ],
+  "Instant.java": [],
+  "Integer.java": [],
+  "Iterable.java": [],
+  "Level.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Level.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
+    "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
+  ],
+  "List.java": [],
+  "Long.java": [],
+  "LuceneTestCase.java": [],
+  "Map.java": [],
+  "Mapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/planner/Mapper.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/mapper/Mapper.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/planner/Mapper.java"
+  ],
+  "MappingVisitor.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/cluster/stats/MappingVisitor.java"
+  ],
+  "Number.java": [],
+  "Object.java": [],
+  "Path.java": [],
+  "Setting.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
+  ],
+  "Settings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+  ],
+  "Short.java": [],
+  "String.java": [],
+  "TimeValue.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "TransportAction.java": [
+    "server/src/main/java/org/elasticsearch/action/support/TransportAction.java"
+  ],
+  "TransportDownsampleAction.java": [
+    "x-pack/plugin/downsample/src/main/java/org/elasticsearch/xpack/downsample/TransportDownsampleAction.java"
+  ],
+  "TransportMasterNodeAction.java": [
+    "server/src/main/java/org/elasticsearch/action/support/master/TransportMasterNodeAction.java"
+  ],
+  "Version.java": [
+    "build-tools/src/main/java/org/elasticsearch/gradle/Version.java",
+    "server/src/main/java/org/elasticsearch/Version.java",
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/util/Version.java",
+    "x-pack/plugin/mapper-version/src/main/java/org/elasticsearch/xpack/versionfield/Version.java"
+  ],
+  "VersionId.java": [
+    "server/src/main/java/org/elasticsearch/common/VersionId.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "XContentBuilder.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
+  ],
+  "apache.java": [],
+  "file.java": [],
+  "function.java": [],
+  "io.java": [],
+  "java.java": [],
+  "log4j.java": [],
+  "logging.java": [],
+  "lucene.java": [],
+  "math.java": [],
+  "nio.java": [],
+  "org.java": [],
+  "tests.java": [],
+  "time.java": [],
+  "util.java": []
+}

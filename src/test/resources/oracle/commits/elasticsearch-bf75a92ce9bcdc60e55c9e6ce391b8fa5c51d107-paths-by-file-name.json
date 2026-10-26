@@ -1,0 +1,102 @@
+{
+  "AbstractEsqlIntegTestCase.java": [
+    "x-pack/plugin/esql/src/internalClusterTest/java/org/elasticsearch/xpack/esql/action/AbstractEsqlIntegTestCase.java"
+  ],
+  "ArrayList.java": [],
+  "Builder.java": [],
+  "ByteSizeValue.java": [
+    "server/src/main/java/org/elasticsearch/common/unit/ByteSizeValue.java"
+  ],
+  "Collections.java": [],
+  "ConcurrentCollections.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/ConcurrentCollections.java"
+  ],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "ESIntegTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESIntegTestCase.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "Enum.java": [],
+  "EsqlActionIT.java": [
+    "x-pack/plugin/esql/src/internalClusterTest/java/org/elasticsearch/xpack/esql/action/EsqlActionIT.java"
+  ],
+  "EsqlQueryRequest.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/esql/action/EsqlQueryRequest.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlQueryRequest.java"
+  ],
+  "LeafReaderContext.java": [],
+  "Level.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Level.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
+    "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
+  ],
+  "LongStream.java": [],
+  "LuceneTestCase.java": [],
+  "Map.java": [],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/injection/guice/matcher/Matchers.java"
+  ],
+  "Path.java": [],
+  "PerThreadSourceProvider.java": [],
+  "QueryPragmas.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/QueryPragmas.java"
+  ],
+  "ReinitializingSourceProvider.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ReinitializingSourceProvider.java"
+  ],
+  "Settings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+  ],
+  "SourceProvider.java": [
+    "server/src/main/java/org/elasticsearch/injection/guice/internal/SourceProvider.java",
+    "server/src/main/java/org/elasticsearch/search/lookup/SourceProvider.java"
+  ],
+  "Stream.java": [],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "String.java": [],
+  "Supplier.java": [],
+  "Thread.java": [],
+  "TimeValue.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "Version.java": [
+    "build-tools/src/main/java/org/elasticsearch/gradle/Version.java",
+    "server/src/main/java/org/elasticsearch/Version.java",
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/util/Version.java",
+    "x-pack/plugin/mapper-version/src/main/java/org/elasticsearch/xpack/versionfield/Version.java"
+  ],
+  "VersionId.java": [
+    "server/src/main/java/org/elasticsearch/common/VersionId.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "file.java": [],
+  "function.java": [],
+  "hamcrest.java": [],
+  "index.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "log4j.java": [],
+  "logging.java": [],
+  "lucene.java": [],
+  "nio.java": [],
+  "org.java": [],
+  "stream.java": [],
+  "tests.java": [],
+  "util.java": []
+}

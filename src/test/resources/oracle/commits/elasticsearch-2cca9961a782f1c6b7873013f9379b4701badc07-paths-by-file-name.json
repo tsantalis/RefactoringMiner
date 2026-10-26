@@ -1,0 +1,40 @@
+{
+  "Aggregation.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/Aggregation.java"
+  ],
+  "DoubleConsumer.java": [],
+  "Histogram.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/bucket/histogram/Histogram.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/grouping/Histogram.java"
+  ],
+  "HistogramFactory.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/bucket/histogram/HistogramFactory.java"
+  ],
+  "InternalAggregation.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/InternalAggregation.java"
+  ],
+  "InternalHistogram.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/bucket/histogram/InternalHistogram.java"
+  ],
+  "InternalMultiBucketAggregation.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/InternalMultiBucketAggregation.java"
+  ],
+  "MultiBucketsAggregation.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/bucket/MultiBucketsAggregation.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/common/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/common/xcontent/ToXContentFragment.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "function.java": [],
+  "reduceContext.java": [],
+  "util.java": []
+}

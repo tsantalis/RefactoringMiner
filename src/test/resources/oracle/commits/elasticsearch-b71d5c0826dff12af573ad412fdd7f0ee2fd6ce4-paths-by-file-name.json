@@ -1,0 +1,72 @@
+{
+  "Analyzer.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/analysis/Analyzer.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/analysis/Analyzer.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/analysis/analyzer/Analyzer.java"
+  ],
+  "Class.java": [],
+  "Collection.java": [],
+  "DataType.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/DataType.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/DataType.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "EsField.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/EsField.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/EsField.java"
+  ],
+  "EsqlCapabilities.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlCapabilities.java"
+  ],
+  "FeatureFlag.java": [
+    "server/src/main/java/org/elasticsearch/common/util/FeatureFlag.java",
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/FeatureFlag.java"
+  ],
+  "InputStream.java": [],
+  "InvalidMappedField.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/InvalidMappedField.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/InvalidMappedField.java"
+  ],
+  "List.java": [],
+  "LuceneTestCase.java": [],
+  "Map.java": [],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "Object.java": [],
+  "ParameterizedRuleExecutor.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/rule/ParameterizedRuleExecutor.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/ParameterizedRuleExecutor.java"
+  ],
+  "QueryParam.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/QueryParam.java"
+  ],
+  "Reader.java": [],
+  "RuleExecutor.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/rule/RuleExecutor.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/RuleExecutor.java"
+  ],
+  "Stream.java": [],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "String.java": [],
+  "TreeMap.java": [],
+  "VerifierTests.java": [
+    "x-pack/plugin/eql/src/test/java/org/elasticsearch/xpack/eql/analysis/VerifierTests.java",
+    "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/VerifierTests.java",
+    "x-pack/plugin/sql/src/test/java/org/elasticsearch/xpack/sql/planner/VerifierTests.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "io.java": [],
+  "java.java": [],
+  "lucene.java": [],
+  "stream.java": [],
+  "tests.java": [],
+  "util.java": []
+}

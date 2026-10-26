@@ -1,0 +1,78 @@
+{
+  "BigDecimal.java": [],
+  "BigInteger.java": [],
+  "Boolean.java": [],
+  "Byte.java": [],
+  "ByteArrayOutputStream.java": [],
+  "BytesReference.java": [
+    "server/src/main/java/org/elasticsearch/common/bytes/BytesReference.java"
+  ],
+  "CheckedFunction.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/CheckedFunction.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedFunction.java"
+  ],
+  "Closeable.java": [],
+  "Collection.java": [],
+  "Comparable.java": [],
+  "Double.java": [],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "Enum.java": [],
+  "FilterXContentParser.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/FilterXContentParser.java"
+  ],
+  "Float.java": [],
+  "Flushable.java": [],
+  "InputStream.java": [],
+  "Integer.java": [],
+  "Iterable.java": [],
+  "Long.java": [],
+  "LuceneTestCase.java": [],
+  "Map.java": [],
+  "MediaType.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/MediaType.java"
+  ],
+  "Number.java": [],
+  "Object.java": [],
+  "OutputStream.java": [],
+  "Short.java": [],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "String.java": [],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "XContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContent.java"
+  ],
+  "XContentBuilder.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
+  ],
+  "XContentGenerator.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentGenerator.java"
+  ],
+  "XContentGeneratorTests.java": [
+    "libs/x-content/impl/src/test/java/org/elasticsearch/xcontent/XContentGeneratorTests.java"
+  ],
+  "XContentParser.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentParser.java"
+  ],
+  "XContentParserConfiguration.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentParserConfiguration.java"
+  ],
+  "XContentType.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentType.java"
+  ],
+  "apache.java": [],
+  "io.java": [],
+  "java.java": [],
+  "lucene.java": [],
+  "math.java": [],
+  "tests.java": [],
+  "util.java": []
+}

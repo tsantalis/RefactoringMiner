@@ -1,0 +1,51 @@
+{
+  "Class.java": [],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "EsqlTestUtils.java": [
+    "x-pack/plugin/esql/qa/testFixtures/src/main/java/org/elasticsearch/xpack/esql/EsqlTestUtils.java"
+  ],
+  "FieldAttribute.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/FieldAttribute.java"
+  ],
+  "FieldData.java": [
+    "server/src/main/java/org/elasticsearch/index/fielddata/FieldData.java"
+  ],
+  "LimitExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/LimitExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/LimitExec.java"
+  ],
+  "LocalPhysicalPlanOptimizer.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/LocalPhysicalPlanOptimizer.java"
+  ],
+  "LuceneTestCase.java": [],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
+  "PhysicalPlan.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/PhysicalPlan.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/PhysicalPlan.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/PhysicalPlan.java"
+  ],
+  "PhysicalPlanOptimizerTests.java": [
+    "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/PhysicalPlanOptimizerTests.java"
+  ],
+  "QueryPlan.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/QueryPlan.java"
+  ],
+  "String.java": [],
+  "ValueSources.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/lucene/ValueSources.java"
+  ],
+  "apache.java": [],
+  "elasticsearch.java": [],
+  "fielddata.java": [],
+  "index.java": [],
+  "lucene.java": [],
+  "org.java": [],
+  "tests.java": [],
+  "util.java": []
+}

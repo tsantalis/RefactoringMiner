@@ -1,0 +1,120 @@
+{
+  "AcknowledgedRequestBuilder.java": [
+    "server/src/main/java/org/elasticsearch/action/support/master/AcknowledgedRequestBuilder.java"
+  ],
+  "ActionRequestBuilder.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionRequestBuilder.java"
+  ],
+  "AdminClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/AdminClient.java"
+  ],
+  "AllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/AllocationDecider.java"
+  ],
+  "Builder.java": [],
+  "ByteSizeValue.java": [
+    "server/src/main/java/org/elasticsearch/common/unit/ByteSizeValue.java"
+  ],
+  "Client.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/Client.java"
+  ],
+  "CreateIndexRequestBuilder.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/indices/create/CreateIndexRequestBuilder.java"
+  ],
+  "CreateIndexResponse.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/indices/create/CreateIndexResponse.java"
+  ],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "ESIntegTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESIntegTestCase.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "ElasticsearchAssertions.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/hamcrest/ElasticsearchAssertions.java"
+  ],
+  "ElasticsearchClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/ElasticsearchClient.java"
+  ],
+  "EnableAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/EnableAllocationDecider.java"
+  ],
+  "Enum.java": [],
+  "IndexMetadata.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/IndexMetadata.java"
+  ],
+  "IndexingPressure.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexingPressure.java"
+  ],
+  "IndicesAdminClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/IndicesAdminClient.java"
+  ],
+  "IsAcknowledgedSupplier.java": [
+    "server/src/main/java/org/elasticsearch/action/support/master/IsAcknowledgedSupplier.java"
+  ],
+  "KibanaThreadPoolIT.java": [
+    "modules/kibana/src/internalClusterTest/java/org/elasticsearch/kibana/KibanaThreadPoolIT.java"
+  ],
+  "Level.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Level.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
+    "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
+  ],
+  "LuceneTestCase.java": [],
+  "Map.java": [],
+  "MasterNodeOperationRequestBuilder.java": [
+    "server/src/main/java/org/elasticsearch/action/support/master/MasterNodeOperationRequestBuilder.java"
+  ],
+  "Path.java": [],
+  "Rebalance.java": [],
+  "RequestBuilder.java": [
+    "server/src/main/java/org/elasticsearch/action/RequestBuilder.java"
+  ],
+  "Setting.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
+  ],
+  "Settings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+  ],
+  "String.java": [],
+  "TimeValue.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "Version.java": [
+    "build-tools/src/main/java/org/elasticsearch/gradle/Version.java",
+    "server/src/main/java/org/elasticsearch/Version.java",
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/util/Version.java",
+    "x-pack/plugin/mapper-version/src/main/java/org/elasticsearch/xpack/versionfield/Version.java"
+  ],
+  "VersionId.java": [
+    "server/src/main/java/org/elasticsearch/common/VersionId.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "XContentBuilder.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
+  ],
+  "apache.java": [],
+  "file.java": [],
+  "log4j.java": [],
+  "logging.java": [],
+  "lucene.java": [],
+  "nio.java": [],
+  "org.java": [],
+  "tests.java": [],
+  "util.java": []
+}

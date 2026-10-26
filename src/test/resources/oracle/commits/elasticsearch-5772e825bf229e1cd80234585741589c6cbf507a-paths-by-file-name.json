@@ -1,0 +1,92 @@
+{
+  "AbstractQueryBuilder.java": [
+    "server/src/main/java/org/elasticsearch/index/query/AbstractQueryBuilder.java"
+  ],
+  "BytesReference.java": [
+    "server/src/main/java/org/elasticsearch/common/bytes/BytesReference.java"
+  ],
+  "BytesStream.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/BytesStream.java"
+  ],
+  "BytesStreamOutput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/BytesStreamOutput.java"
+  ],
+  "Comparable.java": [],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "FilterStreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/FilterStreamInput.java"
+  ],
+  "InputStream.java": [],
+  "LuceneTestCase.java": [],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/common/inject/matcher/Matchers.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "NamedWriteableAwareStreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteableAwareStreamInput.java"
+  ],
+  "OutputStream.java": [],
+  "PlanStreamInput.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/util/PlanStreamInput.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/io/stream/PlanStreamInput.java"
+  ],
+  "Query.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/querydsl/query/Query.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/querydsl/query/Query.java"
+  ],
+  "QueryBuilder.java": [
+    "server/src/main/java/org/elasticsearch/index/query/QueryBuilder.java"
+  ],
+  "Rewriteable.java": [
+    "server/src/main/java/org/elasticsearch/index/query/Rewriteable.java"
+  ],
+  "SingleValueQuery.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/querydsl/query/SingleValueQuery.java"
+  ],
+  "Source.java": [
+    "build-tools-internal/src/main/java/org/elasticsearch/gradle/internal/doc/Source.java",
+    "server/src/main/java/org/elasticsearch/search/lookup/Source.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Source.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Source.java"
+  ],
+  "SourceTests.java": [
+    "x-pack/plugin/esql-core/src/test/java/org/elasticsearch/xpack/esql/core/tree/SourceTests.java",
+    "x-pack/plugin/ql/src/test/java/org/elasticsearch/xpack/ql/tree/SourceTests.java"
+  ],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "StreamOutput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamOutput.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "VersionedNamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/VersionedNamedWriteable.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "core.java": [],
+  "elasticsearch.java": [],
+  "esql.java": [],
+  "hamcrest.java": [],
+  "io.java": [],
+  "lucene.java": [],
+  "org.java": [],
+  "tests.java": [],
+  "util.java": [],
+  "xpack.java": []
+}

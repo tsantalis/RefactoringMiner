@@ -1,0 +1,96 @@
+{
+  "ArrayList.java": [],
+  "CannedSourceOperator.java": [
+    "x-pack/plugin/esql/compute/test/src/main/java/org/elasticsearch/compute/test/CannedSourceOperator.java"
+  ],
+  "ChunkedToXContent.java": [
+    "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContent.java"
+  ],
+  "ChunkedToXContentObject.java": [
+    "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContentObject.java"
+  ],
+  "Closeable.java": [],
+  "Comparable.java": [],
+  "Describable.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/Describable.java"
+  ],
+  "Driver.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/Driver.java"
+  ],
+  "DriverContext.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/DriverContext.java"
+  ],
+  "DriverProfile.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/DriverProfile.java"
+  ],
+  "DriverStatus.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/DriverStatus.java"
+  ],
+  "DriverTests.java": [
+    "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/operator/DriverTests.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "IsBlockedResult.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/IsBlockedResult.java"
+  ],
+  "Iterator.java": [],
+  "List.java": [],
+  "Logger.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Logger.java"
+  ],
+  "LongSupplier.java": [],
+  "LuceneTestCase.java": [],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/injection/guice/matcher/Matchers.java"
+  ],
+  "Operator.java": [
+    "server/src/main/java/org/elasticsearch/index/query/Operator.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ml/job/config/Operator.java",
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/Operator.java"
+  ],
+  "PageConsumerOperator.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/PageConsumerOperator.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "SinkOperator.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/SinkOperator.java"
+  ],
+  "SourceOperator.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/SourceOperator.java"
+  ],
+  "Status.java": [],
+  "String.java": [],
+  "Task.java": [
+    "server/src/main/java/org/elasticsearch/tasks/Task.java"
+  ],
+  "TestResultPageSinkOperator.java": [
+    "x-pack/plugin/esql/compute/test/src/main/java/org/elasticsearch/compute/test/TestResultPageSinkOperator.java"
+  ],
+  "TimeValue.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "function.java": [],
+  "hamcrest.java": [],
+  "io.java": [],
+  "java.java": [],
+  "log4j.java": [],
+  "logging.java": [],
+  "lucene.java": [],
+  "tests.java": [],
+  "util.java": []
+}

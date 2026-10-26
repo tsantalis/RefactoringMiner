@@ -1,0 +1,28 @@
+{
+  "DocumentParserContext.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/DocumentParserContext.java"
+  ],
+  "Dynamic.java": [],
+  "Iterable.java": [],
+  "Mapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/planner/Mapper.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/mapper/Mapper.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/planner/Mapper.java"
+  ],
+  "MappingLookup.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MappingLookup.java"
+  ],
+  "ObjectMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/ObjectMapper.java"
+  ],
+  "RootObjectMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/RootObjectMapper.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ]
+}

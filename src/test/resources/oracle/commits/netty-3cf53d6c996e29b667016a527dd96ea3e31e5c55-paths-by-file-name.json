@@ -1,0 +1,88 @@
+{
+  "AbstractChannel.java": [
+    "transport/src/main/java/io/netty/channel/AbstractChannel.java"
+  ],
+  "AbstractIoUringChannel.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/AbstractIoUringChannel.java"
+  ],
+  "AbstractIoUringStreamChannel.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/AbstractIoUringStreamChannel.java"
+  ],
+  "AttributeMap.java": [
+    "common/src/main/java/io/netty/util/AttributeMap.java"
+  ],
+  "AutoCloseable.java": [],
+  "ByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
+  ],
+  "ByteBufConvertible.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufConvertible.java"
+  ],
+  "Channel.java": [
+    "transport/src/main/java/io/netty/channel/Channel.java"
+  ],
+  "ChannelConfig.java": [
+    "transport/src/main/java/io/netty/channel/ChannelConfig.java"
+  ],
+  "ChannelInboundInvoker.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInboundInvoker.java"
+  ],
+  "ChannelOutboundInvoker.java": [
+    "transport/src/main/java/io/netty/channel/ChannelOutboundInvoker.java"
+  ],
+  "ChannelPipeline.java": [
+    "transport/src/main/java/io/netty/channel/ChannelPipeline.java"
+  ],
+  "Comparable.java": [],
+  "DefaultAttributeMap.java": [
+    "common/src/main/java/io/netty/util/DefaultAttributeMap.java"
+  ],
+  "DelegatingHandle.java": [],
+  "DuplexChannel.java": [
+    "transport/src/main/java/io/netty/channel/socket/DuplexChannel.java"
+  ],
+  "ExtendedHandle.java": [],
+  "InternalLogger.java": [
+    "common/src/main/java/io/netty/util/internal/logging/InternalLogger.java"
+  ],
+  "IoHandle.java": [
+    "transport/src/main/java/io/netty/channel/IoHandle.java"
+  ],
+  "IoOps.java": [
+    "transport/src/main/java/io/netty/channel/IoOps.java"
+  ],
+  "IoRegistration.java": [
+    "transport/src/main/java/io/netty/channel/IoRegistration.java"
+  ],
+  "IoUring.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUring.java"
+  ],
+  "IoUringBufferRing.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringBufferRing.java"
+  ],
+  "IoUringIoHandle.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringIoHandle.java"
+  ],
+  "IoUringIoOps.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringIoOps.java"
+  ],
+  "IoUringRecvByteAllocatorHandle.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringRecvByteAllocatorHandle.java"
+  ],
+  "Iterable.java": [],
+  "Native.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/Native.java",
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/Native.java",
+    "transport-classes-kqueue/src/main/java/io/netty/channel/kqueue/Native.java"
+  ],
+  "RecvByteBufAllocator.java": [
+    "transport/src/main/java/io/netty/channel/RecvByteBufAllocator.java"
+  ],
+  "ReferenceCounted.java": [
+    "common/src/main/java/io/netty/util/ReferenceCounted.java"
+  ],
+  "String.java": [],
+  "UnixChannel.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/UnixChannel.java"
+  ]
+}

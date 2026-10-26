@@ -1,0 +1,21 @@
+{
+  "EndChunkNativePeriodicEvents.java": [
+    "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/events/EndChunkNativePeriodicEvents.java"
+  ],
+  "Event.java": [
+    "compiler/src/org.graalvm.compiler.truffle.jfr/src/org/graalvm/compiler/truffle/jfr/Event.java",
+    "tools/src/com.oracle.truffle.tools.chromeinspector/src/com/oracle/truffle/tools/chromeinspector/events/Event.java",
+    "tools/src/com.oracle.truffle.tools.dap/src/com/oracle/truffle/tools/dap/types/Event.java",
+    "wasm/src/org.graalvm.wasm/src/org/graalvm/wasm/predefined/wasi/types/Event.java"
+  ],
+  "JfrEvent.java": [
+    "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/JfrEvent.java"
+  ],
+  "JfrNativeEventSetting.java": [
+    "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/JfrNativeEventSetting.java"
+  ],
+  "SubstrateJVM.java": [
+    "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jfr/SubstrateJVM.java"
+  ],
+  "jfr.java": []
+}

@@ -1,0 +1,598 @@
+{
+  "AbstractLifecycleComponent.java": [
+    "server/src/main/java/org/elasticsearch/common/component/AbstractLifecycleComponent.java"
+  ],
+  "AbstractRefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/AbstractRefCounted.java"
+  ],
+  "AbstractRunnable.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/AbstractRunnable.java"
+  ],
+  "AbstractScopedSettings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/AbstractScopedSettings.java"
+  ],
+  "ActionFuture.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionFuture.java"
+  ],
+  "ActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
+  "ActionListenerResponseHandler.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListenerResponseHandler.java"
+  ],
+  "ActionTestUtils.java": [
+    "test/framework/src/main/java/org/elasticsearch/action/support/ActionTestUtils.java"
+  ],
+  "ActionTransportException.java": [
+    "server/src/main/java/org/elasticsearch/transport/ActionTransportException.java"
+  ],
+  "AutoCreateIndex.java": [
+    "server/src/main/java/org/elasticsearch/action/support/AutoCreateIndex.java"
+  ],
+  "AwarenessAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/AwarenessAllocationDecider.java"
+  ],
+  "BalancedShardsAllocator.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/allocator/BalancedShardsAllocator.java"
+  ],
+  "BaseRestHandler.java": [
+    "server/src/main/java/org/elasticsearch/rest/BaseRestHandler.java"
+  ],
+  "BiConsumer.java": [],
+  "Boolean.java": [],
+  "BootstrapSettings.java": [
+    "server/src/main/java/org/elasticsearch/bootstrap/BootstrapSettings.java"
+  ],
+  "BoundTransportAddress.java": [
+    "server/src/main/java/org/elasticsearch/common/transport/BoundTransportAddress.java"
+  ],
+  "BreakerSettings.java": [
+    "server/src/main/java/org/elasticsearch/indices/breaker/BreakerSettings.java"
+  ],
+  "Client.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/Client.java"
+  ],
+  "Closeable.java": [],
+  "CloseableConnection.java": [
+    "server/src/main/java/org/elasticsearch/transport/CloseableConnection.java"
+  ],
+  "ClusterApplierService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/service/ClusterApplierService.java"
+  ],
+  "ClusterBootstrapService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/ClusterBootstrapService.java"
+  ],
+  "ClusterFormationFailureHelper.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/ClusterFormationFailureHelper.java"
+  ],
+  "ClusterModule.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterModule.java"
+  ],
+  "ClusterName.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterName.java"
+  ],
+  "ClusterRebalanceAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/ClusterRebalanceAllocationDecider.java"
+  ],
+  "ClusterService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/service/ClusterService.java"
+  ],
+  "ClusterSettings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/ClusterSettings.java"
+  ],
+  "Collections.java": [],
+  "Collector.java": [
+    "x-pack/plugin/monitoring/src/main/java/org/elasticsearch/xpack/monitoring/collector/Collector.java"
+  ],
+  "Collectors.java": [],
+  "Comparable.java": [],
+  "ConcurrentRebalanceAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/ConcurrentRebalanceAllocationDecider.java"
+  ],
+  "ConnectTransportException.java": [
+    "server/src/main/java/org/elasticsearch/transport/ConnectTransportException.java"
+  ],
+  "Connection.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/protocol/xpack/graph/Connection.java"
+  ],
+  "CoordinationDiagnosticsService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/CoordinationDiagnosticsService.java"
+  ],
+  "Coordinator.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/Coordinator.java"
+  ],
+  "DataStreamAutoShardingService.java": [
+    "server/src/main/java/org/elasticsearch/action/datastreams/autosharding/DataStreamAutoShardingService.java"
+  ],
+  "DataStreamLifecycle.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/DataStreamLifecycle.java"
+  ],
+  "DataTier.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/DataTier.java"
+  ],
+  "DesiredBalanceComputer.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/allocator/DesiredBalanceComputer.java"
+  ],
+  "DesiredBalanceReconciler.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/allocator/DesiredBalanceReconciler.java"
+  ],
+  "DestructiveOperations.java": [
+    "server/src/main/java/org/elasticsearch/action/support/DestructiveOperations.java"
+  ],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "DiscoveryModule.java": [
+    "server/src/main/java/org/elasticsearch/discovery/DiscoveryModule.java"
+  ],
+  "DiscoveryNode.java": [
+    "server/src/main/java/org/elasticsearch/cluster/node/DiscoveryNode.java"
+  ],
+  "DiscoveryNodeUtils.java": [
+    "test/framework/src/main/java/org/elasticsearch/cluster/node/DiscoveryNodeUtils.java"
+  ],
+  "DiskThresholdDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/DiskThresholdDecider.java"
+  ],
+  "DiskThresholdSettings.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/DiskThresholdSettings.java"
+  ],
+  "ESSingleNodeTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESSingleNodeTestCase.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "ElasticsearchException.java": [
+    "server/src/main/java/org/elasticsearch/ElasticsearchException.java"
+  ],
+  "ElectionSchedulerFactory.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/ElectionSchedulerFactory.java"
+  ],
+  "Empty.java": [],
+  "EnableAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/EnableAllocationDecider.java"
+  ],
+  "EnableAssignmentDecider.java": [
+    "server/src/main/java/org/elasticsearch/persistent/decider/EnableAssignmentDecider.java"
+  ],
+  "Environment.java": [
+    "server/src/main/java/org/elasticsearch/env/Environment.java"
+  ],
+  "EsExecutors.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/EsExecutors.java"
+  ],
+  "Exception.java": [],
+  "Executor.java": [],
+  "ExecutorBuilder.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/ExecutorBuilder.java"
+  ],
+  "ExecutorService.java": [],
+  "FastVectorHighlighter.java": [
+    "server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/FastVectorHighlighter.java"
+  ],
+  "FilterAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/FilterAllocationDecider.java"
+  ],
+  "FixedExecutorBuilder.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/FixedExecutorBuilder.java"
+  ],
+  "FollowersChecker.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/FollowersChecker.java"
+  ],
+  "ForkingResponseHandlerRunnable.java": [
+    "server/src/main/java/org/elasticsearch/transport/ForkingResponseHandlerRunnable.java"
+  ],
+  "FsHealthService.java": [
+    "server/src/main/java/org/elasticsearch/monitor/fs/FsHealthService.java"
+  ],
+  "FsRepository.java": [
+    "server/src/main/java/org/elasticsearch/repositories/fs/FsRepository.java"
+  ],
+  "FsService.java": [
+    "server/src/main/java/org/elasticsearch/monitor/fs/FsService.java"
+  ],
+  "Function.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/function/Function.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
+  ],
+  "Future.java": [],
+  "GatewayService.java": [
+    "server/src/main/java/org/elasticsearch/gateway/GatewayService.java"
+  ],
+  "HandshakingTransportAddressConnector.java": [
+    "server/src/main/java/org/elasticsearch/discovery/HandshakingTransportAddressConnector.java"
+  ],
+  "HealthNodeTaskExecutor.java": [
+    "server/src/main/java/org/elasticsearch/health/node/selection/HealthNodeTaskExecutor.java"
+  ],
+  "HealthPeriodicLogger.java": [
+    "server/src/main/java/org/elasticsearch/health/HealthPeriodicLogger.java"
+  ],
+  "HierarchyCircuitBreakerService.java": [
+    "server/src/main/java/org/elasticsearch/indices/breaker/HierarchyCircuitBreakerService.java"
+  ],
+  "HttpTransportSettings.java": [
+    "server/src/main/java/org/elasticsearch/http/HttpTransportSettings.java"
+  ],
+  "HunspellService.java": [
+    "server/src/main/java/org/elasticsearch/indices/analysis/HunspellService.java"
+  ],
+  "IndexGraveyard.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/IndexGraveyard.java"
+  ],
+  "IndexModule.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexModule.java"
+  ],
+  "IndexSettings.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexSettings.java"
+  ],
+  "IndexingMemoryController.java": [
+    "server/src/main/java/org/elasticsearch/indices/IndexingMemoryController.java"
+  ],
+  "IndexingPressure.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexingPressure.java"
+  ],
+  "IndicesClusterStateService.java": [
+    "server/src/main/java/org/elasticsearch/indices/cluster/IndicesClusterStateService.java"
+  ],
+  "IndicesFieldDataCache.java": [
+    "server/src/main/java/org/elasticsearch/indices/fielddata/cache/IndicesFieldDataCache.java"
+  ],
+  "IndicesQueryCache.java": [
+    "server/src/main/java/org/elasticsearch/indices/IndicesQueryCache.java"
+  ],
+  "IndicesRequestCache.java": [
+    "server/src/main/java/org/elasticsearch/indices/IndicesRequestCache.java"
+  ],
+  "IndicesService.java": [
+    "server/src/main/java/org/elasticsearch/indices/IndicesService.java"
+  ],
+  "IndicesStore.java": [
+    "server/src/main/java/org/elasticsearch/indices/store/IndicesStore.java"
+  ],
+  "IngestSettings.java": [
+    "server/src/main/java/org/elasticsearch/ingest/IngestSettings.java"
+  ],
+  "InternalClusterInfoService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/InternalClusterInfoService.java"
+  ],
+  "InternalSnapshotsInfoService.java": [
+    "server/src/main/java/org/elasticsearch/snapshots/InternalSnapshotsInfoService.java"
+  ],
+  "JoinValidationService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/JoinValidationService.java"
+  ],
+  "JvmGcMonitorService.java": [
+    "server/src/main/java/org/elasticsearch/monitor/jvm/JvmGcMonitorService.java"
+  ],
+  "JvmService.java": [
+    "server/src/main/java/org/elasticsearch/monitor/jvm/JvmService.java"
+  ],
+  "KeyStoreWrapper.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/KeyStoreWrapper.java"
+  ],
+  "LagDetector.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/LagDetector.java"
+  ],
+  "LeaderChecker.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/LeaderChecker.java"
+  ],
+  "LifecycleComponent.java": [
+    "server/src/main/java/org/elasticsearch/common/component/LifecycleComponent.java"
+  ],
+  "LocalHealthMonitor.java": [
+    "server/src/main/java/org/elasticsearch/health/node/LocalHealthMonitor.java"
+  ],
+  "Logger.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Logger.java"
+  ],
+  "Loggers.java": [
+    "server/src/main/java/org/elasticsearch/common/logging/Loggers.java"
+  ],
+  "LuceneTestCase.java": [],
+  "MappingUpdatedAction.java": [
+    "server/src/main/java/org/elasticsearch/cluster/action/index/MappingUpdatedAction.java"
+  ],
+  "MasterHistory.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/MasterHistory.java"
+  ],
+  "MasterService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/service/MasterService.java"
+  ],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/common/inject/matcher/Matchers.java"
+  ],
+  "MergePolicyConfig.java": [
+    "server/src/main/java/org/elasticsearch/index/MergePolicyConfig.java"
+  ],
+  "Metadata.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/Metadata.java",
+    "server/src/main/java/org/elasticsearch/script/Metadata.java"
+  ],
+  "MockTransportService.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/transport/MockTransportService.java"
+  ],
+  "MultiBucketConsumerService.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/MultiBucketConsumerService.java"
+  ],
+  "Names.java": [],
+  "NetworkModule.java": [
+    "server/src/main/java/org/elasticsearch/common/network/NetworkModule.java"
+  ],
+  "NetworkService.java": [
+    "server/src/main/java/org/elasticsearch/common/network/NetworkService.java"
+  ],
+  "NoMasterBlockService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/NoMasterBlockService.java"
+  ],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
+  "NodeConnectionsService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/NodeConnectionsService.java"
+  ],
+  "NodeDisconnectedException.java": [
+    "server/src/main/java/org/elasticsearch/transport/NodeDisconnectedException.java"
+  ],
+  "NodeEnvironment.java": [
+    "server/src/main/java/org/elasticsearch/env/NodeEnvironment.java"
+  ],
+  "NodeRoleSettings.java": [
+    "server/src/main/java/org/elasticsearch/node/NodeRoleSettings.java"
+  ],
+  "OperationRouting.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/OperationRouting.java"
+  ],
+  "OsService.java": [
+    "server/src/main/java/org/elasticsearch/monitor/os/OsService.java"
+  ],
+  "PageCacheRecycler.java": [
+    "server/src/main/java/org/elasticsearch/common/util/PageCacheRecycler.java"
+  ],
+  "PeerFinder.java": [
+    "server/src/main/java/org/elasticsearch/discovery/PeerFinder.java"
+  ],
+  "PersistedClusterStateService.java": [
+    "server/src/main/java/org/elasticsearch/gateway/PersistedClusterStateService.java"
+  ],
+  "PersistentTasksClusterService.java": [
+    "server/src/main/java/org/elasticsearch/persistent/PersistentTasksClusterService.java"
+  ],
+  "PlainActionFuture.java": [
+    "server/src/main/java/org/elasticsearch/action/support/PlainActionFuture.java"
+  ],
+  "PluginsService.java": [
+    "server/src/main/java/org/elasticsearch/plugins/PluginsService.java"
+  ],
+  "ProcessService.java": [
+    "server/src/main/java/org/elasticsearch/monitor/process/ProcessService.java"
+  ],
+  "Property.java": [],
+  "ProxyConnectionStrategy.java": [
+    "server/src/main/java/org/elasticsearch/transport/ProxyConnectionStrategy.java"
+  ],
+  "Random.java": [
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/scalar/math/Random.java"
+  ],
+  "Reader.java": [],
+  "ReadinessService.java": [
+    "server/src/main/java/org/elasticsearch/readiness/ReadinessService.java"
+  ],
+  "Reconfigurator.java": [
+    "server/src/main/java/org/elasticsearch/cluster/coordination/Reconfigurator.java"
+  ],
+  "RecoverySettings.java": [
+    "server/src/main/java/org/elasticsearch/indices/recovery/RecoverySettings.java"
+  ],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "RemoteClusterPortSettings.java": [
+    "server/src/main/java/org/elasticsearch/transport/RemoteClusterPortSettings.java"
+  ],
+  "RemoteClusterService.java": [
+    "server/src/main/java/org/elasticsearch/transport/RemoteClusterService.java"
+  ],
+  "RemoteConnectionStrategy.java": [
+    "server/src/main/java/org/elasticsearch/transport/RemoteConnectionStrategy.java"
+  ],
+  "ReportingService.java": [
+    "server/src/main/java/org/elasticsearch/node/ReportingService.java"
+  ],
+  "ResourceWatcherService.java": [
+    "server/src/main/java/org/elasticsearch/watcher/ResourceWatcherService.java"
+  ],
+  "ResponseContext.java": [],
+  "RestoreService.java": [
+    "server/src/main/java/org/elasticsearch/snapshots/RestoreService.java"
+  ],
+  "Runnable.java": [],
+  "RuntimeException.java": [],
+  "SameShardAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/SameShardAllocationDecider.java"
+  ],
+  "ScalingExecutorBuilder.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/ScalingExecutorBuilder.java"
+  ],
+  "Scheduler.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/Scheduler.java"
+  ],
+  "ScriptService.java": [
+    "server/src/main/java/org/elasticsearch/script/ScriptService.java"
+  ],
+  "SearchModule.java": [
+    "server/src/main/java/org/elasticsearch/search/SearchModule.java"
+  ],
+  "SearchService.java": [
+    "server/src/main/java/org/elasticsearch/search/SearchService.java"
+  ],
+  "SeedHostsResolver.java": [
+    "server/src/main/java/org/elasticsearch/discovery/SeedHostsResolver.java"
+  ],
+  "Setting.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
+  ],
+  "Settings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+  ],
+  "SettingsBasedSeedHostsProvider.java": [
+    "server/src/main/java/org/elasticsearch/discovery/SettingsBasedSeedHostsProvider.java"
+  ],
+  "ShardLimitValidator.java": [
+    "server/src/main/java/org/elasticsearch/indices/ShardLimitValidator.java"
+  ],
+  "ShardsLimitAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/ShardsLimitAllocationDecider.java"
+  ],
+  "SimulatePipelineTransportAction.java": [
+    "server/src/main/java/org/elasticsearch/action/ingest/SimulatePipelineTransportAction.java"
+  ],
+  "SnapshotsService.java": [
+    "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java"
+  ],
+  "SniffConnectionStrategy.java": [
+    "server/src/main/java/org/elasticsearch/transport/SniffConnectionStrategy.java"
+  ],
+  "Stream.java": [],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "String.java": [],
+  "T.java": [],
+  "TDigestExecutionHint.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/metrics/TDigestExecutionHint.java"
+  ],
+  "TaskAwareRequest.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskAwareRequest.java"
+  ],
+  "TaskTrackingConfig.java": [],
+  "TcpTransport.java": [
+    "server/src/main/java/org/elasticsearch/transport/TcpTransport.java"
+  ],
+  "TestThreadPool.java": [
+    "test/framework/src/main/java/org/elasticsearch/threadpool/TestThreadPool.java"
+  ],
+  "Thread.java": [],
+  "ThreadContext.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/ThreadContext.java"
+  ],
+  "ThreadPool.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/ThreadPool.java"
+  ],
+  "ThrottlingAllocationDecider.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/ThrottlingAllocationDecider.java"
+  ],
+  "Throwable.java": [],
+  "TimeValue.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "Transport.java": [
+    "server/src/main/java/org/elasticsearch/transport/Transport.java"
+  ],
+  "TransportAddVotingConfigExclusionsAction.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/cluster/configuration/TransportAddVotingConfigExclusionsAction.java"
+  ],
+  "TransportAddress.java": [
+    "server/src/main/java/org/elasticsearch/common/transport/TransportAddress.java"
+  ],
+  "TransportChannel.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportChannel.java"
+  ],
+  "TransportCloseIndexAction.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/indices/close/TransportCloseIndexAction.java"
+  ],
+  "TransportConnectionListener.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportConnectionListener.java"
+  ],
+  "TransportException.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportException.java"
+  ],
+  "TransportHealthNodeAction.java": [
+    "server/src/main/java/org/elasticsearch/health/node/action/TransportHealthNodeAction.java"
+  ],
+  "TransportInterceptor.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportInterceptor.java"
+  ],
+  "TransportMessage.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportMessage.java"
+  ],
+  "TransportMessageListener.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportMessageListener.java"
+  ],
+  "TransportReplicationAction.java": [
+    "server/src/main/java/org/elasticsearch/action/support/replication/TransportReplicationAction.java"
+  ],
+  "TransportRequest.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequest.java"
+  ],
+  "TransportRequestHandler.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequestHandler.java"
+  ],
+  "TransportRequestOptions.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequestOptions.java"
+  ],
+  "TransportResponse.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportResponse.java"
+  ],
+  "TransportResponseHandler.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportResponseHandler.java"
+  ],
+  "TransportSearchAction.java": [
+    "server/src/main/java/org/elasticsearch/action/search/TransportSearchAction.java"
+  ],
+  "TransportService.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportService.java"
+  ],
+  "TransportServiceIT.java": [
+    "server/src/internalClusterTest/java/org/elasticsearch/transport/TransportServiceIT.java"
+  ],
+  "TransportServiceLifecycleTests.java": [
+    "server/src/test/java/org/elasticsearch/transport/TransportServiceLifecycleTests.java"
+  ],
+  "TransportSettings.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportSettings.java"
+  ],
+  "TransportVersion.java": [
+    "server/src/main/java/org/elasticsearch/TransportVersion.java"
+  ],
+  "VersionId.java": [
+    "server/src/main/java/org/elasticsearch/common/VersionId.java"
+  ],
+  "WriteAckDelay.java": [
+    "server/src/main/java/org/elasticsearch/action/bulk/WriteAckDelay.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "concurrent.java": [],
+  "function.java": [],
+  "hamcrest.java": [],
+  "io.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "log4j.java": [],
+  "logging.java": [],
+  "lucene.java": [],
+  "stream.java": [],
+  "tests.java": [],
+  "util.java": []
+}

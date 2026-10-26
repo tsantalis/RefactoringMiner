@@ -1,0 +1,193 @@
+{
+  "AbstractIndexComponent.java": [
+    "server/src/main/java/org/elasticsearch/index/AbstractIndexComponent.java"
+  ],
+  "BigDecimal.java": [],
+  "BigInteger.java": [],
+  "BinaryFieldMapperTests.java": [
+    "server/src/test/java/org/elasticsearch/index/mapper/BinaryFieldMapperTests.java"
+  ],
+  "BitsetFilterCache.java": [
+    "server/src/main/java/org/elasticsearch/index/cache/bitset/BitsetFilterCache.java"
+  ],
+  "Boolean.java": [],
+  "BooleanSupplier.java": [],
+  "Builder.java": [],
+  "Byte.java": [],
+  "CheckedConsumer.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/CheckedConsumer.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedConsumer.java"
+  ],
+  "Closeable.java": [],
+  "ClosedListener.java": [],
+  "Collection.java": [],
+  "Comparable.java": [],
+  "CompressedXContent.java": [
+    "server/src/main/java/org/elasticsearch/common/compress/CompressedXContent.java"
+  ],
+  "DataStreamTimestampFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/DataStreamTimestampFieldMapper.java"
+  ],
+  "DateFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/DateFieldMapper.java"
+  ],
+  "Diffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "DocValuesType.java": [],
+  "DocumentParserContext.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/DocumentParserContext.java"
+  ],
+  "Double.java": [],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "Enum.java": [],
+  "Field.java": [
+    "server/src/main/java/org/elasticsearch/script/field/Field.java",
+    "x-pack/plugin/watcher/src/main/java/org/elasticsearch/xpack/watcher/notification/slack/message/Field.java"
+  ],
+  "FieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/FieldMapper.java"
+  ],
+  "FieldTypeTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/index/mapper/FieldTypeTestCase.java"
+  ],
+  "Float.java": [],
+  "Flushable.java": [],
+  "IdFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/IdFieldMapper.java"
+  ],
+  "IllegalArgumentException.java": [],
+  "IndexAnalyzers.java": [
+    "server/src/main/java/org/elasticsearch/index/analysis/IndexAnalyzers.java"
+  ],
+  "IndexMode.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexMode.java"
+  ],
+  "IndexReader.java": [],
+  "IndexSettings.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexSettings.java"
+  ],
+  "IndexableField.java": [],
+  "Integer.java": [],
+  "Iterable.java": [],
+  "List.java": [],
+  "Long.java": [],
+  "LongField.java": [],
+  "LuceneDocument.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/LuceneDocument.java"
+  ],
+  "LuceneTestCase.java": [],
+  "Map.java": [],
+  "MappedFieldType.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MappedFieldType.java"
+  ],
+  "Mapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/planner/Mapper.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/Mapper.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/planner/Mapper.java"
+  ],
+  "MapperMetrics.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MapperMetrics.java"
+  ],
+  "MapperRegistry.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MapperRegistry.java"
+  ],
+  "MapperService.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MapperService.java"
+  ],
+  "MapperServiceTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/index/mapper/MapperServiceTestCase.java"
+  ],
+  "MapperTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/index/mapper/MapperTestCase.java"
+  ],
+  "MappingLookup.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MappingLookup.java"
+  ],
+  "MergeReason.java": [],
+  "MetadataFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MetadataFieldMapper.java"
+  ],
+  "MetadataMapperTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/index/mapper/MetadataMapperTestCase.java"
+  ],
+  "Number.java": [],
+  "Object.java": [],
+  "OnScriptError.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/OnScriptError.java"
+  ],
+  "RemovalListener.java": [
+    "server/src/main/java/org/elasticsearch/common/cache/RemovalListener.java"
+  ],
+  "ScriptCompiler.java": [
+    "server/src/main/java/org/elasticsearch/script/ScriptCompiler.java"
+  ],
+  "Setting.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
+  ],
+  "Settings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+  ],
+  "Short.java": [],
+  "SimilarityService.java": [
+    "server/src/main/java/org/elasticsearch/index/similarity/SimilarityService.java"
+  ],
+  "Store.java": [
+    "server/src/main/java/org/elasticsearch/index/store/Store.java"
+  ],
+  "StoredField.java": [],
+  "String.java": [],
+  "Supplier.java": [],
+  "TimeSeriesIdFieldMapperTests.java": [
+    "server/src/test/java/org/elasticsearch/index/mapper/TimeSeriesIdFieldMapperTests.java"
+  ],
+  "TimeSeriesRoutingHashFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/TimeSeriesRoutingHashFieldMapper.java"
+  ],
+  "TimeSeriesRoutingHashFieldMapperTests.java": [
+    "server/src/test/java/org/elasticsearch/index/mapper/TimeSeriesRoutingHashFieldMapperTests.java"
+  ],
+  "TimestampBounds.java": [
+    "server/src/main/java/org/elasticsearch/index/TimestampBounds.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "ToXContentFragment.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
+  ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "TransportVersion.java": [
+    "server/src/main/java/org/elasticsearch/TransportVersion.java"
+  ],
+  "TsidExtractingIdFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/TsidExtractingIdFieldMapper.java"
+  ],
+  "UnsupportedOperationException.java": [],
+  "VersionId.java": [
+    "server/src/main/java/org/elasticsearch/common/VersionId.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "XContentBuilder.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
+  ],
+  "XContentParserConfiguration.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentParserConfiguration.java"
+  ],
+  "apache.java": [],
+  "document.java": [],
+  "function.java": [],
+  "index.java": [],
+  "io.java": [],
+  "lucene.java": [],
+  "math.java": [],
+  "tests.java": [],
+  "util.java": []
+}

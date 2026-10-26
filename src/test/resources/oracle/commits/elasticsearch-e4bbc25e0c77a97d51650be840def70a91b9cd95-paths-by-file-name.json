@@ -1,0 +1,113 @@
+{
+  "Accountable.java": [],
+  "AddInput.java": [],
+  "AggregatorFunctionSupplier.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/aggregation/AggregatorFunctionSupplier.java"
+  ],
+  "AggregatorMode.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/aggregation/AggregatorMode.java"
+  ],
+  "AnyOperatorTestCase.java": [
+    "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/operator/AnyOperatorTestCase.java"
+  ],
+  "Block.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/Block.java"
+  ],
+  "BlockFactory.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java"
+  ],
+  "BlockLoader.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/BlockLoader.java"
+  ],
+  "Closeable.java": [],
+  "ComputeTestCase.java": [
+    "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/operator/ComputeTestCase.java"
+  ],
+  "Describable.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/Describable.java"
+  ],
+  "DriverContext.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/DriverContext.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "FilteredGroupingAggregatorFunction.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/aggregation/FilteredGroupingAggregatorFunction.java"
+  ],
+  "FilteredGroupingAggregatorFunctionTests.java": [
+    "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/aggregation/FilteredGroupingAggregatorFunctionTests.java"
+  ],
+  "ForkingOperatorTestCase.java": [
+    "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/operator/ForkingOperatorTestCase.java"
+  ],
+  "Function.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/function/Function.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
+  ],
+  "GroupingAggregatorFunction.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/aggregation/GroupingAggregatorFunction.java"
+  ],
+  "GroupingAggregatorFunctionTestCase.java": [
+    "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/aggregation/GroupingAggregatorFunctionTestCase.java"
+  ],
+  "IntBlock.java": [
+    "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlock.java"
+  ],
+  "IntStream.java": [],
+  "IntVector.java": [
+    "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntVector.java"
+  ],
+  "List.java": [],
+  "LuceneTestCase.java": [],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/injection/guice/matcher/Matchers.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "Operator.java": [
+    "server/src/main/java/org/elasticsearch/index/query/Operator.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ml/job/config/Operator.java",
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/Operator.java"
+  ],
+  "OperatorTestCase.java": [
+    "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/operator/OperatorTestCase.java"
+  ],
+  "OrdinalsGroupingOperator.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/OrdinalsGroupingOperator.java"
+  ],
+  "Page.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/Page.java"
+  ],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "Releasables.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasables.java"
+  ],
+  "SeenGroupIds.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/aggregation/SeenGroupIds.java"
+  ],
+  "SourceOperator.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/SourceOperator.java"
+  ],
+  "Vector.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/Vector.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "function.java": [],
+  "hamcrest.java": [],
+  "io.java": [],
+  "lucene.java": [],
+  "stream.java": [],
+  "tests.java": [],
+  "util.java": []
+}

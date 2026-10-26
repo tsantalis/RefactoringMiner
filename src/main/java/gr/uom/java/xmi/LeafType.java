@@ -94,7 +94,7 @@ public class LeafType extends UMLType implements Cloneable {
 			if(this.classType.equals(leafType.classType) && equalTypeArgumentsAndArrayDimension(type)) {
 				return true;
 			}
-			if(!this.LANG.equals(leafType.LANG) && this.classType.toLowerCase().equals(leafType.classType.toLowerCase()) && equalTypeArgumentsAndArrayDimension(type)) {
+			if(!this.LANG.equals(leafType.LANG) && (this.classType.toLowerCase().equals(leafType.classType.toLowerCase()) || rootTypeInOtherLanguage(leafType)) && equalTypeArgumentsAndArrayDimension(type)) {
 				return true;
 			}
 			if(equalsTypeScript(type)) {
@@ -166,7 +166,7 @@ public class LeafType extends UMLType implements Cloneable {
 	public boolean equalClassType(UMLType type) {
 		if(this.getClass() == type.getClass()) {
 			LeafType leafType = (LeafType)type;
-			if(!this.LANG.equals(leafType.LANG) && this.nonQualifiedClassType.toLowerCase().equals(leafType.nonQualifiedClassType.toLowerCase()))
+			if(!this.LANG.equals(leafType.LANG) && (this.nonQualifiedClassType.toLowerCase().equals(leafType.nonQualifiedClassType.toLowerCase()) || rootTypeInOtherLanguage(leafType)))
 				return true;
 			return this.nonQualifiedClassType.equals(leafType.nonQualifiedClassType);
 		}
@@ -176,6 +176,13 @@ public class LeafType extends UMLType implements Cloneable {
 		return false;
 	}
 
+	//Kotlin Any is the root of the class hierarchy, like Java Object
+	private boolean rootTypeInOtherLanguage(LeafType leafType) {
+		return !this.LANG.equals(leafType.LANG) &&
+				((this.nonQualifiedClassType.equals("Object") && leafType.nonQualifiedClassType.equals("Any")) ||
+				(this.nonQualifiedClassType.equals("Any") && leafType.nonQualifiedClassType.equals("Object")));
+	}
+
 	@Override
 	public boolean compatibleTypes(UMLType type) {
 		if(this.getClass() == type.getClass()) {
@@ -183,6 +190,8 @@ public class LeafType extends UMLType implements Cloneable {
 			return this.getClassType().equals(leafType.getClassType()) ||
 					this.getClassType().equals("Object") ||
 					leafType.getClassType().equals("Object") ||
+					this.getClassType().equals("Any") ||
+					leafType.getClassType().equals("Any") ||
 					this.getClassType().startsWith(leafType.getClassType()) ||
 					leafType.getClassType().startsWith(this.getClassType()) ||
 					this.getClassType().endsWith(leafType.getClassType()) ||

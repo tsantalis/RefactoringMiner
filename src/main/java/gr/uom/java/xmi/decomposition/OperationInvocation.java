@@ -825,7 +825,8 @@ public class OperationInvocation extends AbstractCall {
 	    		return true;
 	    	}
     	}
-    	if(!varargsParameter && type1.endsWith("Object") && !type2.endsWith("Object"))
+    	//Kotlin Any is the root of the class hierarchy, like Java Object
+    	if(!varargsParameter && (type1.endsWith("Object") || parameterType.getClassType().equals("Any")) && !type2.endsWith("Object"))
     		return true;
     	if(varargsParameter && type1.endsWith("Object[]") && (type2.equals("Throwable") || type2.endsWith("Exception") || isPrimitiveType(type2) || type2.equals("String")))
     		return true;

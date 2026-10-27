@@ -25,7 +25,6 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 import net.joshka.junit.json.params.JsonFileSource;
 
@@ -43,7 +42,7 @@ public class CppDiffTest {
 				Path.of(REPOS + "/v2")).getDiffSet();
 		for (ASTDiff astDiff : astDiffs) {
 			String finalFilePath = MAPPING_PATH + "/" + astDiff.getSrcPath().replace(".cpp","").replace("/",".") + ".json";
-			String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+			String calculated = MappingExportModel.exportString(astDiff.getAllMappings()).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
 			String msg = String.format("Failed for srcFileName: %s",astDiff.getSrcPath());
 			String expected = null;
 			try {
@@ -51,7 +50,8 @@ public class CppDiffTest {
 			} catch (IOException e) {
 				fail("File not found: " + finalFilePath + " , srcFileName: " + astDiff.getSrcPath());
 			}
-			JSONAssert.assertEquals(msg,expected, calculated, false);
+			assertEquals(expected.length(), calculated.length(), msg);
+			assertEquals(calculated, expected, msg);
 			expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));
 		}
 	}

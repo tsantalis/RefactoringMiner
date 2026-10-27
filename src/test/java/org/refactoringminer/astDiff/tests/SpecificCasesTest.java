@@ -13,7 +13,6 @@ import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.utils.UtilMethods;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,7 +83,7 @@ public class SpecificCasesTest {
         ASTDiff astDiff = astDiffs.iterator().next();
         String calculated = MappingExportModel.exportString(astDiff.getAllMappings()).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
         String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
-        JSONAssert.assertEquals(expected, calculated, false);
+        assertEquals(calculated, expected);
     }
 
     @ParameterizedTest(name = "{0}")

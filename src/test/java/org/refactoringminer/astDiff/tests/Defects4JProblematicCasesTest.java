@@ -8,7 +8,6 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.refactoringminer.astDiff.utils.ExportUtils.*;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
@@ -43,7 +43,7 @@ public class Defects4JProblematicCasesTest extends ConsideringCommentsVisitorTes
             String finalFilePath = getFinalFilePath(astDiff, dir, info.getRepo(), info.getCommit());
             finalFilePath = getSnapShotPath(finalFilePath);
             //Because we store the previous snapshot of problematic cases in /astDiff/SNAPSHOT/
-            String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+            String calculated = MappingExportModel.exportString(astDiff.getAllMappings()).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
             String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",info.getRepo().replace(".git",""),info.getCommit(),astDiff.getSrcPath());
             String expected = null;
             try {
@@ -51,7 +51,8 @@ public class Defects4JProblematicCasesTest extends ConsideringCommentsVisitorTes
             } catch (IOException e) {
                 fail("File not found: " + finalFilePath + " for " + info.getRepo() + "/commit/" + info.getCommit() + " , srcFileName: " + astDiff.getSrcPath());
             }
-            JSONAssert.assertEquals(msg,expected, calculated, false);
+            assertEquals(expected.length(), calculated.length(), msg);
+            assertEquals(calculated, expected, msg);
             expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));
         }
         for (String expectedButNotGeneratedFile : expectedFilesList) {

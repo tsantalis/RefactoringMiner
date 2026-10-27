@@ -21,6 +21,83 @@
   "firstEndPos" : 43,
   "secondEndPos" : 43
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PackageDeclaration",
+  "secondParentType" : "PackageDeclaration",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 42,
+  "secondEndPos" : 42
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "com",
+  "secondLabel" : "com",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 11,
+  "secondEndPos" : 11
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "google",
+  "secondLabel" : "google",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 12,
+  "secondPos" : 12,
+  "firstEndPos" : 18,
+  "secondEndPos" : 18
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "gson",
+  "secondLabel" : "gson",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 19,
+  "secondPos" : 19,
+  "firstEndPos" : 23,
+  "secondEndPos" : 23
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 24,
+  "secondPos" : 24,
+  "firstEndPos" : 32,
+  "secondEndPos" : 32
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "bind",
+  "secondLabel" : "bind",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 33,
+  "secondPos" : 33,
+  "firstEndPos" : 37,
+  "secondEndPos" : 37
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 38,
+  "secondPos" : 38,
+  "firstEndPos" : 42,
+  "secondEndPos" : 42
+}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -31,6 +108,50 @@
   "secondPos" : 45,
   "firstEndPos" : 77,
   "secondEndPos" : 77
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 52,
+  "secondPos" : 52,
+  "firstEndPos" : 76,
+  "secondEndPos" : 76
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 52,
+  "secondPos" : 52,
+  "firstEndPos" : 56,
+  "secondEndPos" : 56
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "text",
+  "secondLabel" : "text",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 57,
+  "secondPos" : 57,
+  "firstEndPos" : 61,
+  "secondEndPos" : 61
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ParseException",
+  "secondLabel" : "ParseException",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 62,
+  "secondPos" : 62,
+  "firstEndPos" : 76,
+  "secondEndPos" : 76
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -43,6 +164,50 @@
   "firstEndPos" : 109,
   "secondEndPos" : 109
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 85,
+  "secondPos" : 85,
+  "firstEndPos" : 108,
+  "secondEndPos" : 108
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 85,
+  "secondPos" : 85,
+  "firstEndPos" : 89,
+  "secondEndPos" : 89
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "text",
+  "secondLabel" : "text",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 90,
+  "secondPos" : 90,
+  "firstEndPos" : 94,
+  "secondEndPos" : 94
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ParsePosition",
+  "secondLabel" : "ParsePosition",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 95,
+  "secondPos" : 95,
+  "firstEndPos" : 108,
+  "secondEndPos" : 108
+}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -53,6 +218,39 @@
   "secondPos" : 110,
   "firstEndPos" : 129,
   "secondEndPos" : 129
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 117,
+  "secondPos" : 117,
+  "firstEndPos" : 126,
+  "secondEndPos" : 126
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "java",
+  "secondLabel" : "java",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 117,
+  "secondPos" : 117,
+  "firstEndPos" : 121,
+  "secondEndPos" : 121
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "util",
+  "secondLabel" : "util",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 122,
+  "secondPos" : 122,
+  "firstEndPos" : 126,
+  "secondEndPos" : 126
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -1792,6 +1990,39 @@
   "firstEndPos" : 2426,
   "secondEndPos" : 2426
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 2428,
+  "secondPos" : 2428,
+  "firstEndPos" : 2437,
+  "secondEndPos" : 2437
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Locale",
+  "secondLabel" : "Locale",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2428,
+  "secondPos" : 2428,
+  "firstEndPos" : 2434,
+  "secondEndPos" : 2434
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "US",
+  "secondLabel" : "US",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2435,
+  "secondPos" : 2435,
+  "firstEndPos" : 2437,
+  "secondEndPos" : 2437
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2518,6 +2749,39 @@
   "firstEndPos" : 2857,
   "secondEndPos" : 2857
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 2844,
+  "secondPos" : 2844,
+  "firstEndPos" : 2857,
+  "secondEndPos" : 2857
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2844,
+  "secondPos" : 2844,
+  "firstEndPos" : 2852,
+  "secondEndPos" : 2852
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "YEAR",
+  "secondLabel" : "YEAR",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2853,
+  "secondPos" : 2853,
+  "firstEndPos" : 2857,
+  "secondEndPos" : 2857
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -2757,6 +3021,39 @@
   "secondParentType" : "MethodInvocation",
   "firstPos" : 2948,
   "secondPos" : 2948,
+  "firstEndPos" : 2962,
+  "secondEndPos" : 2962
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 2948,
+  "secondPos" : 2948,
+  "firstEndPos" : 2962,
+  "secondEndPos" : 2962
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2948,
+  "secondPos" : 2948,
+  "firstEndPos" : 2956,
+  "secondEndPos" : 2956
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MONTH",
+  "secondLabel" : "MONTH",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 2957,
+  "secondPos" : 2957,
   "firstEndPos" : 2962,
   "secondEndPos" : 2962
 }, {
@@ -3013,6 +3310,39 @@
   "firstEndPos" : 3076,
   "secondEndPos" : 3076
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 3055,
+  "secondPos" : 3055,
+  "firstEndPos" : 3076,
+  "secondEndPos" : 3076
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3055,
+  "secondPos" : 3055,
+  "firstEndPos" : 3063,
+  "secondEndPos" : 3063
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DAY_OF_MONTH",
+  "secondLabel" : "DAY_OF_MONTH",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3064,
+  "secondPos" : 3064,
+  "firstEndPos" : 3076,
+  "secondEndPos" : 3076
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -3241,6 +3571,39 @@
   "secondParentType" : "MethodInvocation",
   "firstPos" : 3165,
   "secondPos" : 3165,
+  "firstEndPos" : 3185,
+  "secondEndPos" : 3185
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 3165,
+  "secondPos" : 3165,
+  "firstEndPos" : 3185,
+  "secondEndPos" : 3185
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3165,
+  "secondPos" : 3165,
+  "firstEndPos" : 3173,
+  "secondEndPos" : 3173
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HOUR_OF_DAY",
+  "secondLabel" : "HOUR_OF_DAY",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3174,
+  "secondPos" : 3174,
   "firstEndPos" : 3185,
   "secondEndPos" : 3185
 }, {
@@ -3475,6 +3838,39 @@
   "firstEndPos" : 3289,
   "secondEndPos" : 3289
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 3274,
+  "secondPos" : 3274,
+  "firstEndPos" : 3289,
+  "secondEndPos" : 3289
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3274,
+  "secondPos" : 3274,
+  "firstEndPos" : 3282,
+  "secondEndPos" : 3282
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MINUTE",
+  "secondLabel" : "MINUTE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3283,
+  "secondPos" : 3283,
+  "firstEndPos" : 3289,
+  "secondEndPos" : 3289
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -3703,6 +4099,39 @@
   "secondParentType" : "MethodInvocation",
   "firstPos" : 3378,
   "secondPos" : 3378,
+  "firstEndPos" : 3393,
+  "secondEndPos" : 3393
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 3378,
+  "secondPos" : 3378,
+  "firstEndPos" : 3393,
+  "secondEndPos" : 3393
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3378,
+  "secondPos" : 3378,
+  "firstEndPos" : 3386,
+  "secondEndPos" : 3386
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SECOND",
+  "secondLabel" : "SECOND",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3387,
+  "secondPos" : 3387,
   "firstEndPos" : 3393,
   "secondEndPos" : 3393
 }, {
@@ -3967,6 +4396,39 @@
   "secondParentType" : "MethodInvocation",
   "firstPos" : 3512,
   "secondPos" : 3512,
+  "firstEndPos" : 3532,
+  "secondEndPos" : 3532
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 3512,
+  "secondPos" : 3512,
+  "firstEndPos" : 3532,
+  "secondEndPos" : 3532
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3512,
+  "secondPos" : 3512,
+  "firstEndPos" : 3520,
+  "secondEndPos" : 3520
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MILLISECOND",
+  "secondLabel" : "MILLISECOND",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 3521,
+  "secondPos" : 3521,
   "firstEndPos" : 3532,
   "secondEndPos" : 3532
 }, {
@@ -12176,6 +12638,39 @@
   "firstEndPos" : 10511,
   "secondEndPos" : 10615
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 10492,
+  "secondPos" : 10596,
+  "firstEndPos" : 10505,
+  "secondEndPos" : 10609
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10492,
+  "secondPos" : 10596,
+  "firstEndPos" : 10500,
+  "secondEndPos" : 10604
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "YEAR",
+  "secondLabel" : "YEAR",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10501,
+  "secondPos" : 10605,
+  "firstEndPos" : 10505,
+  "secondEndPos" : 10609
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "year",
@@ -12252,6 +12747,39 @@
   "secondPos" : 10643,
   "firstEndPos" : 10564,
   "secondEndPos" : 10668
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 10539,
+  "secondPos" : 10643,
+  "firstEndPos" : 10553,
+  "secondEndPos" : 10657
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10539,
+  "secondPos" : 10643,
+  "firstEndPos" : 10547,
+  "secondEndPos" : 10651
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MONTH",
+  "secondLabel" : "MONTH",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10548,
+  "secondPos" : 10652,
+  "firstEndPos" : 10553,
+  "secondEndPos" : 10657
 }, {
   "firstType" : "InfixExpression",
   "secondType" : "InfixExpression",
@@ -12363,6 +12891,39 @@
   "firstEndPos" : 10618,
   "secondEndPos" : 10722
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 10592,
+  "secondPos" : 10696,
+  "firstEndPos" : 10613,
+  "secondEndPos" : 10717
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10592,
+  "secondPos" : 10696,
+  "firstEndPos" : 10600,
+  "secondEndPos" : 10704
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DAY_OF_MONTH",
+  "secondLabel" : "DAY_OF_MONTH",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10601,
+  "secondPos" : 10705,
+  "firstEndPos" : 10613,
+  "secondEndPos" : 10717
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "day",
@@ -12439,6 +13000,39 @@
   "secondPos" : 10750,
   "firstEndPos" : 10672,
   "secondEndPos" : 10776
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 10646,
+  "secondPos" : 10750,
+  "firstEndPos" : 10666,
+  "secondEndPos" : 10770
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10646,
+  "secondPos" : 10750,
+  "firstEndPos" : 10654,
+  "secondEndPos" : 10758
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "HOUR_OF_DAY",
+  "secondLabel" : "HOUR_OF_DAY",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10655,
+  "secondPos" : 10759,
+  "firstEndPos" : 10666,
+  "secondEndPos" : 10770
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -12517,6 +13111,39 @@
   "firstEndPos" : 10724,
   "secondEndPos" : 10828
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 10700,
+  "secondPos" : 10804,
+  "firstEndPos" : 10715,
+  "secondEndPos" : 10819
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10700,
+  "secondPos" : 10804,
+  "firstEndPos" : 10708,
+  "secondEndPos" : 10812
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MINUTE",
+  "secondLabel" : "MINUTE",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10709,
+  "secondPos" : 10813,
+  "firstEndPos" : 10715,
+  "secondEndPos" : 10819
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "minutes",
@@ -12594,6 +13221,39 @@
   "firstEndPos" : 10776,
   "secondEndPos" : 10880
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 10752,
+  "secondPos" : 10856,
+  "firstEndPos" : 10767,
+  "secondEndPos" : 10871
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10752,
+  "secondPos" : 10856,
+  "firstEndPos" : 10760,
+  "secondEndPos" : 10864
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SECOND",
+  "secondLabel" : "SECOND",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10761,
+  "secondPos" : 10865,
+  "firstEndPos" : 10767,
+  "secondEndPos" : 10871
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "seconds",
@@ -12670,6 +13330,39 @@
   "secondPos" : 10908,
   "firstEndPos" : 10838,
   "secondEndPos" : 10942
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 10804,
+  "secondPos" : 10908,
+  "firstEndPos" : 10824,
+  "secondEndPos" : 10928
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Calendar",
+  "secondLabel" : "Calendar",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10804,
+  "secondPos" : 10908,
+  "firstEndPos" : 10812,
+  "secondEndPos" : 10916
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MILLISECOND",
+  "secondLabel" : "MILLISECOND",
+  "firstParentType" : "QualifiedName",
+  "secondParentType" : "QualifiedName",
+  "firstPos" : 10813,
+  "secondPos" : 10917,
+  "firstEndPos" : 10824,
+  "secondEndPos" : 10928
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -18302,697 +18995,4 @@
   "secondPos" : 14559,
   "firstEndPos" : 14461,
   "secondEndPos" : 14565
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "PackageDeclaration",
-  "secondParentType" : "PackageDeclaration",
-  "firstPos" : 8,
-  "secondPos" : 8,
-  "firstEndPos" : 42,
-  "secondEndPos" : 42
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "com",
-  "secondLabel" : "com",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 8,
-  "secondPos" : 8,
-  "firstEndPos" : 11,
-  "secondEndPos" : 11
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "google",
-  "secondLabel" : "google",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 12,
-  "secondPos" : 12,
-  "firstEndPos" : 18,
-  "secondEndPos" : 18
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "gson",
-  "secondLabel" : "gson",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 19,
-  "secondPos" : 19,
-  "firstEndPos" : 23,
-  "secondEndPos" : 23
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "internal",
-  "secondLabel" : "internal",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 24,
-  "secondPos" : 24,
-  "firstEndPos" : 32,
-  "secondEndPos" : 32
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "bind",
-  "secondLabel" : "bind",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 33,
-  "secondPos" : 33,
-  "firstEndPos" : 37,
-  "secondEndPos" : 37
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "util",
-  "secondLabel" : "util",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 38,
-  "secondPos" : 38,
-  "firstEndPos" : 42,
-  "secondEndPos" : 42
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 52,
-  "secondPos" : 52,
-  "firstEndPos" : 76,
-  "secondEndPos" : 76
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "java",
-  "secondLabel" : "java",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 52,
-  "secondPos" : 52,
-  "firstEndPos" : 56,
-  "secondEndPos" : 56
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "text",
-  "secondLabel" : "text",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 57,
-  "secondPos" : 57,
-  "firstEndPos" : 61,
-  "secondEndPos" : 61
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "ParseException",
-  "secondLabel" : "ParseException",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 62,
-  "secondPos" : 62,
-  "firstEndPos" : 76,
-  "secondEndPos" : 76
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 85,
-  "secondPos" : 85,
-  "firstEndPos" : 108,
-  "secondEndPos" : 108
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "java",
-  "secondLabel" : "java",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 85,
-  "secondPos" : 85,
-  "firstEndPos" : 89,
-  "secondEndPos" : 89
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "text",
-  "secondLabel" : "text",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 90,
-  "secondPos" : 90,
-  "firstEndPos" : 94,
-  "secondEndPos" : 94
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "ParsePosition",
-  "secondLabel" : "ParsePosition",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 95,
-  "secondPos" : 95,
-  "firstEndPos" : 108,
-  "secondEndPos" : 108
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ImportDeclaration",
-  "secondParentType" : "ImportDeclaration",
-  "firstPos" : 117,
-  "secondPos" : 117,
-  "firstEndPos" : 126,
-  "secondEndPos" : 126
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "java",
-  "secondLabel" : "java",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 117,
-  "secondPos" : 117,
-  "firstEndPos" : 121,
-  "secondEndPos" : 121
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "util",
-  "secondLabel" : "util",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 122,
-  "secondPos" : 122,
-  "firstEndPos" : 126,
-  "secondEndPos" : 126
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ClassInstanceCreation",
-  "secondParentType" : "ClassInstanceCreation",
-  "firstPos" : 2428,
-  "secondPos" : 2428,
-  "firstEndPos" : 2437,
-  "secondEndPos" : 2437
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Locale",
-  "secondLabel" : "Locale",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 2428,
-  "secondPos" : 2428,
-  "firstEndPos" : 2434,
-  "secondEndPos" : 2434
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "US",
-  "secondLabel" : "US",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 2435,
-  "secondPos" : 2435,
-  "firstEndPos" : 2437,
-  "secondEndPos" : 2437
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 2844,
-  "secondPos" : 2844,
-  "firstEndPos" : 2857,
-  "secondEndPos" : 2857
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 2844,
-  "secondPos" : 2844,
-  "firstEndPos" : 2852,
-  "secondEndPos" : 2852
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "YEAR",
-  "secondLabel" : "YEAR",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 2853,
-  "secondPos" : 2853,
-  "firstEndPos" : 2857,
-  "secondEndPos" : 2857
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 2948,
-  "secondPos" : 2948,
-  "firstEndPos" : 2962,
-  "secondEndPos" : 2962
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 2948,
-  "secondPos" : 2948,
-  "firstEndPos" : 2956,
-  "secondEndPos" : 2956
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "MONTH",
-  "secondLabel" : "MONTH",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 2957,
-  "secondPos" : 2957,
-  "firstEndPos" : 2962,
-  "secondEndPos" : 2962
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 3055,
-  "secondPos" : 3055,
-  "firstEndPos" : 3076,
-  "secondEndPos" : 3076
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3055,
-  "secondPos" : 3055,
-  "firstEndPos" : 3063,
-  "secondEndPos" : 3063
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "DAY_OF_MONTH",
-  "secondLabel" : "DAY_OF_MONTH",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3064,
-  "secondPos" : 3064,
-  "firstEndPos" : 3076,
-  "secondEndPos" : 3076
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 3165,
-  "secondPos" : 3165,
-  "firstEndPos" : 3185,
-  "secondEndPos" : 3185
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3165,
-  "secondPos" : 3165,
-  "firstEndPos" : 3173,
-  "secondEndPos" : 3173
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "HOUR_OF_DAY",
-  "secondLabel" : "HOUR_OF_DAY",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3174,
-  "secondPos" : 3174,
-  "firstEndPos" : 3185,
-  "secondEndPos" : 3185
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 3274,
-  "secondPos" : 3274,
-  "firstEndPos" : 3289,
-  "secondEndPos" : 3289
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3274,
-  "secondPos" : 3274,
-  "firstEndPos" : 3282,
-  "secondEndPos" : 3282
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "MINUTE",
-  "secondLabel" : "MINUTE",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3283,
-  "secondPos" : 3283,
-  "firstEndPos" : 3289,
-  "secondEndPos" : 3289
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 3378,
-  "secondPos" : 3378,
-  "firstEndPos" : 3393,
-  "secondEndPos" : 3393
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3378,
-  "secondPos" : 3378,
-  "firstEndPos" : 3386,
-  "secondEndPos" : 3386
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "SECOND",
-  "secondLabel" : "SECOND",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3387,
-  "secondPos" : 3387,
-  "firstEndPos" : 3393,
-  "secondEndPos" : 3393
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 3512,
-  "secondPos" : 3512,
-  "firstEndPos" : 3532,
-  "secondEndPos" : 3532
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3512,
-  "secondPos" : 3512,
-  "firstEndPos" : 3520,
-  "secondEndPos" : 3520
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "MILLISECOND",
-  "secondLabel" : "MILLISECOND",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 3521,
-  "secondPos" : 3521,
-  "firstEndPos" : 3532,
-  "secondEndPos" : 3532
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 10492,
-  "secondPos" : 10596,
-  "firstEndPos" : 10505,
-  "secondEndPos" : 10609
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10492,
-  "secondPos" : 10596,
-  "firstEndPos" : 10500,
-  "secondEndPos" : 10604
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "YEAR",
-  "secondLabel" : "YEAR",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10501,
-  "secondPos" : 10605,
-  "firstEndPos" : 10505,
-  "secondEndPos" : 10609
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 10539,
-  "secondPos" : 10643,
-  "firstEndPos" : 10553,
-  "secondEndPos" : 10657
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10539,
-  "secondPos" : 10643,
-  "firstEndPos" : 10547,
-  "secondEndPos" : 10651
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "MONTH",
-  "secondLabel" : "MONTH",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10548,
-  "secondPos" : 10652,
-  "firstEndPos" : 10553,
-  "secondEndPos" : 10657
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 10592,
-  "secondPos" : 10696,
-  "firstEndPos" : 10613,
-  "secondEndPos" : 10717
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10592,
-  "secondPos" : 10696,
-  "firstEndPos" : 10600,
-  "secondEndPos" : 10704
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "DAY_OF_MONTH",
-  "secondLabel" : "DAY_OF_MONTH",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10601,
-  "secondPos" : 10705,
-  "firstEndPos" : 10613,
-  "secondEndPos" : 10717
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 10646,
-  "secondPos" : 10750,
-  "firstEndPos" : 10666,
-  "secondEndPos" : 10770
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10646,
-  "secondPos" : 10750,
-  "firstEndPos" : 10654,
-  "secondEndPos" : 10758
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "HOUR_OF_DAY",
-  "secondLabel" : "HOUR_OF_DAY",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10655,
-  "secondPos" : 10759,
-  "firstEndPos" : 10666,
-  "secondEndPos" : 10770
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 10700,
-  "secondPos" : 10804,
-  "firstEndPos" : 10715,
-  "secondEndPos" : 10819
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10700,
-  "secondPos" : 10804,
-  "firstEndPos" : 10708,
-  "secondEndPos" : 10812
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "MINUTE",
-  "secondLabel" : "MINUTE",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10709,
-  "secondPos" : 10813,
-  "firstEndPos" : 10715,
-  "secondEndPos" : 10819
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 10752,
-  "secondPos" : 10856,
-  "firstEndPos" : 10767,
-  "secondEndPos" : 10871
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10752,
-  "secondPos" : 10856,
-  "firstEndPos" : 10760,
-  "secondEndPos" : 10864
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "SECOND",
-  "secondLabel" : "SECOND",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10761,
-  "secondPos" : 10865,
-  "firstEndPos" : 10767,
-  "secondEndPos" : 10871
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 10804,
-  "secondPos" : 10908,
-  "firstEndPos" : 10824,
-  "secondEndPos" : 10928
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Calendar",
-  "secondLabel" : "Calendar",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10804,
-  "secondPos" : 10908,
-  "firstEndPos" : 10812,
-  "secondEndPos" : 10916
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "MILLISECOND",
-  "secondLabel" : "MILLISECOND",
-  "firstParentType" : "QualifiedName",
-  "secondParentType" : "QualifiedName",
-  "firstPos" : 10813,
-  "secondPos" : 10917,
-  "firstEndPos" : 10824,
-  "secondEndPos" : 10928
 } ]

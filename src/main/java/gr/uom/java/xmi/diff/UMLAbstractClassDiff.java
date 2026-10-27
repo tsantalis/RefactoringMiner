@@ -3574,7 +3574,8 @@ public abstract class UMLAbstractClassDiff {
 			boolean commonTokenCheck = false;
 			for(String token1 : tokens1) {
 				for(String token2 : tokens2) {
-					if(token1.equals(token2) || token1.startsWith(token2)) {
+					//case-insensitive startsWith, since testOneArgument splits into One, while oneArgument splits into one
+					if(token1.regionMatches(true, 0, token2, 0, token2.length())) {
 						commonTokens.add(token2);
 					}
 				}

@@ -57,4 +57,10 @@
 }, {
   "repo" : "https://github.com/pmd/pmd.git",
   "commit" : "b172c19de7f487e36e7185aaa41ea34c0734e130"
+}, {
+  "repo" : "https://github.com/elastic/elasticsearch.git",
+  "commit" : "099a3dbb2565e0d114492fce0bdc48e61519e05a...5755968002086a78a66840628de4680f868407da",
+  "src_files" : [
+    "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/LogicalPlanOptimizerTests.java"
+  ]
 } ]

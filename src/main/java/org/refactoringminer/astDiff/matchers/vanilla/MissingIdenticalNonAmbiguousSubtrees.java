@@ -11,6 +11,7 @@ import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.*;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -24,11 +25,15 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     public final int tooAmbiguousThreshold = 5;
     private final Constants LANG1;
     private final Constants LANG2;
+    //whether the model replaced the source subtree in a statement mapping, and the target subtree is outside the operations related to it,
+    //i.e., calling or called by it, in which case it is not mapped to one of several identical subtrees
+    private final BiPredicate<Tree, Tree> replacedElsewhere;
 
-    public MissingIdenticalNonAmbiguousSubtrees(Constants LANG1, Constants LANG2) {
+    public MissingIdenticalNonAmbiguousSubtrees(Constants LANG1, Constants LANG2, BiPredicate<Tree, Tree> replacedElsewhere) {
         this.acceptance = (m) -> isAcceptable(m.first, m.second);
         this.LANG1 = LANG1;
         this.LANG2 = LANG2;
+        this.replacedElsewhere = replacedElsewhere;
     }
 
     private static final String DEFAULT_PRIORITY_CALCULATOR = "height";
@@ -144,6 +149,9 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     private void addAcceptableDescendants(Tree src, Tree dst) {
         if (TreeUtilFunctions.isStatement(src.getType().name, LANG1) || src.getChildren().size() != dst.getChildren().size())
             return;
+        //an invocation is only rejected in a different context (an argument vs. a receiver), which its parts share
+        if (src.getType().name.equals(LANG1.METHOD_INVOCATION))
+            return;
         if (!notBelongingToMethodWithTestAnnotation(src, LANG1) || !notBelongingToMethodWithTestAnnotation(dst, LANG2))
             return;
         for (int i = 0; i < src.getChildren().size(); i++) {
@@ -250,6 +258,8 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
         List<Mapping> verifiedList = new ArrayList<>();
         for (Mapping mapping : mappingList) {
+            if (replacedElsewhere.test(mapping.first, mapping.second))
+                continue;
             if (isAcceptable(mapping.first, mapping.second))
                 verifiedList.add(mapping);
         }

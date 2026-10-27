@@ -21,6 +21,7 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.moved.AllSubTreesMovedASTDiffGenerator;
 import org.refactoringminer.astDiff.moved.MovedASTDiffGenerator;
 import org.refactoringminer.astDiff.utils.Constants;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.matchers.wrappers.*;
@@ -48,6 +49,8 @@ public class ProjectASTDiffer
 	private final Map<ASTDiff, OptimizationData> optimizationDataMap = new HashMap<>();
 	//the flattenings of the source trees, applied after all diffs are matched
 	private final DeferredFlattenings deferredFlattenings = new DeferredFlattenings();
+	//the class diffs by the path of their original file, which tell the source expressions the model replaced, i.e., limit.child() replaced with plan
+	private final Map<String, List<UMLAbstractClassDiff>> classDiffsBySrcPath = new HashMap<>();
 
 	public ProjectASTDiffer(UMLModelDiff modelDiff, Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws RefactoringMinerTimedOutException {
 		this.modelDiff = modelDiff;
@@ -96,7 +99,7 @@ public class ProjectASTDiffer
 		//the flattenings registered while processing the optimizations
 		applyDeferredFlattenings(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap().keySet());
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
-			new MissingIdenticalNonAmbiguousSubtrees(diff.LANG1, diff.LANG2).match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
+			new MissingIdenticalNonAmbiguousSubtrees(diff.LANG1, diff.LANG2, (src, dst) -> isReplacedElsewhere(diff.getSrcPath(), src, dst)).match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 			if ((PathFileUtils.isCppFile(diff.getSrcPath()) || PathFileUtils.isCFile(diff.getSrcPath())) && (PathFileUtils.isCppFile(diff.getDstPath()) || PathFileUtils.isCFile(diff.getDstPath()))) {
 				new MissingIdenticalNeighbours().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 			}
@@ -203,6 +206,7 @@ public class ProjectASTDiffer
 		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
 			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), classDiff.getOriginalClass().getSourceFile(), classDiff.getNextClass().getSourceFile(), false);
 			boolean decision = (!appends.isEmpty()) || mergeFlag;
+			classDiffsBySrcPath.computeIfAbsent(classDiff.getOriginalClass().getLocationInfo().getFilePath(), k -> new ArrayList<>()).add(classDiff);
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision, appends);
 			if (!appends.isEmpty()) {
 				for (ASTDiff append : appends) {
@@ -214,6 +218,20 @@ public class ProjectASTDiffer
 			}
 			makeASTDiff(classDiff.getNestedClassDiffList(), mergeFlag);
 		}
+	}
+
+	//whether the model replaced the source subtree in a statement mapping of an operation, and the target subtree is outside that operation and the operations calling it or called by it
+	private boolean isReplacedElsewhere(String srcPath, Tree src, Tree dst) {
+		for (UMLAbstractClassDiff classDiff : classDiffsBySrcPath.getOrDefault(srcPath, Collections.emptyList())) {
+			UMLOperationBodyMapper mapper = classDiff.getMapperReplacingExpression(src.getPos(), src.getEndPos());
+			if (mapper != null) {
+				for (Tree tree = dst; tree != null; tree = tree.getParent())
+					if (classDiff.isCallRelatedOperation(mapper, tree.getPos(), tree.getEndPos()))
+						return false;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void makeASTDiffForPackageInfos(List<UMLPackageInfoDiff> umlPackageInfoDiffList, boolean mergeFlag){

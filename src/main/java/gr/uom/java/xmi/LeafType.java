@@ -71,6 +71,9 @@ public class LeafType extends UMLType implements Cloneable {
 			if(arrayInOtherLanguage(typeObject, false)) {
 				return true;
 			}
+			if(equalsTypeScript(typeObject)) {
+				return true;
+			}
 		}
 		if (o instanceof CompositeType compositeType) {
 			return equalsCompositeTypeInOtherLanguage(compositeType);

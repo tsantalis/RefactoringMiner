@@ -275,8 +275,12 @@ public abstract class UMLAbstractClassDiff {
 
 	//the mappers by the offsets of the expressions of the original class they replaced in their statement mappings, computed when first needed
 	private Map<Long, UMLOperationBodyMapper> mappersByReplacedExpressionOffsets;
+	//the mappers by the offsets of the statements of the original class they left unmatched, computed when first needed
+	private Map<Long, UMLOperationBodyMapper> mappersByUnmatchedStatementOffsets;
 	//the offsets of the operations of the next class calling each mapper's operation or called by it, computed when first needed
 	private Map<UMLOperationBodyMapper, Set<Long>> callRelatedOperationOffsets;
+	//the offsets of the operations of the next class, computed when first needed
+	private Set<Long> nextOperationOffsets;
 
 	private static long offsets(int startOffset, int endOffset) {
 		return ((long) startOffset << 32) | endOffset;
@@ -298,6 +302,31 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		return mappersByReplacedExpressionOffsets.get(offsets(startOffset, endOffset));
+	}
+
+	//the mapper that left the statement of the original class at the given offsets unmatched, i.e., a deleted statement, or null
+	public UMLOperationBodyMapper getMapperLeavingStatementUnmatched(int startOffset, int endOffset) {
+		if(mappersByUnmatchedStatementOffsets == null) {
+			mappersByUnmatchedStatementOffsets = new HashMap<>();
+			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+				for(AbstractCodeFragment statement : mapper.getNonMappedLeavesT1()) {
+					LocationInfo location = statement.getLocationInfo();
+					mappersByUnmatchedStatementOffsets.put(offsets(location.getStartOffset(), location.getEndOffset()), mapper);
+				}
+			}
+		}
+		return mappersByUnmatchedStatementOffsets.get(offsets(startOffset, endOffset));
+	}
+
+	//whether the code at the given offsets of the next class is an operation
+	public boolean isNextOperation(int startOffset, int endOffset) {
+		if(nextOperationOffsets == null) {
+			nextOperationOffsets = new HashSet<>();
+			for(UMLOperation operation : nextClass.getOperations()) {
+				nextOperationOffsets.add(offsets(operation.getLocationInfo().getStartOffset(), operation.getLocationInfo().getEndOffset()));
+			}
+		}
+		return nextOperationOffsets.contains(offsets(startOffset, endOffset));
 	}
 
 	//whether the code at the given offsets of the next class is the mapper's operation, or an operation calling it or called by it,

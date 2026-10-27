@@ -220,15 +220,24 @@ public class ProjectASTDiffer
 		}
 	}
 
-	//whether the model replaced the source subtree in a statement mapping of an operation, and the target subtree is outside that operation and the operations calling it or called by it
+	//whether the model replaced the source subtree in a statement mapping of an operation, or left the statement having the subtree as a part unmatched in it,
+	//and the target subtree is in another operation than that operation and the operations calling it or called by it
 	private boolean isReplacedElsewhere(String srcPath, Tree src, Tree dst) {
 		for (UMLAbstractClassDiff classDiff : classDiffsBySrcPath.getOrDefault(srcPath, Collections.emptyList())) {
 			UMLOperationBodyMapper mapper = classDiff.getMapperReplacingExpression(src.getPos(), src.getEndPos());
+			//a whole unmatched statement may have moved to another operation, i.e., an identical statement
+			for (Tree tree = src.getParent(); mapper == null && tree != null; tree = tree.getParent())
+				if (tree.getPos() != src.getPos() || tree.getEndPos() != src.getEndPos())
+					mapper = classDiff.getMapperLeavingStatementUnmatched(tree.getPos(), tree.getEndPos());
 			if (mapper != null) {
-				for (Tree tree = dst; tree != null; tree = tree.getParent())
+				//only a move to an unrelated operation, and not, i.e., to a field initializer
+				boolean inOperation = false;
+				for (Tree tree = dst; tree != null; tree = tree.getParent()) {
 					if (classDiff.isCallRelatedOperation(mapper, tree.getPos(), tree.getEndPos()))
 						return false;
-				return true;
+					inOperation |= classDiff.isNextOperation(tree.getPos(), tree.getEndPos());
+				}
+				return inOperation;
 			}
 		}
 		return false;

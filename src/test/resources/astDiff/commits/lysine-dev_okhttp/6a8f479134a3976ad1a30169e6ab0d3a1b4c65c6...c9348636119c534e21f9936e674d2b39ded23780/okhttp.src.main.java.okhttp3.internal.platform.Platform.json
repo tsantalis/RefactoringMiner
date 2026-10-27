@@ -3112,6 +3112,39 @@
   "firstEndPos" : 4320,
   "secondEndPos" : 4297
 }, {
+  "firstType" : "THROWS_KEYWORD",
+  "secondType" : "type_identifier",
+  "firstLabel" : "throws",
+  "secondLabel" : "throws",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "user_type",
+  "firstPos" : 4328,
+  "secondPos" : 4187,
+  "firstEndPos" : 4334,
+  "secondEndPos" : 4193
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "IOException",
+  "secondLabel" : "IOException",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "callable_reference",
+  "firstPos" : 4335,
+  "secondPos" : 4194,
+  "firstEndPos" : 4346,
+  "secondEndPos" : 4205
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "callable_reference",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "value_argument",
+  "firstPos" : 4335,
+  "secondPos" : 4194,
+  "firstEndPos" : 4346,
+  "secondEndPos" : 4212
+}, {
   "firstType" : "Block",
   "secondType" : "function_body",
   "firstLabel" : "",

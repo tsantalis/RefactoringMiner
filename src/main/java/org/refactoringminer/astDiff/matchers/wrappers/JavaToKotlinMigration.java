@@ -3731,6 +3731,63 @@ public class JavaToKotlinMigration {
         mappingStore.addMapping(annotation1.getChild(0), keyword2);
     }
 
+    //align Java MethodDeclaration -> THROWS_KEYWORD 'throws' and the thrown types with Kotlin function_declaration -> modifiers -> annotation @Throws(X::class, ...),
+    //the Kotlin annotation declaring the exceptions of a function for its Java callers, i.e., throws IOException -> @Throws(IOException::class)
+    public static void handleThrowsMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {
+        Tree keyword1 = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.THROWS_KEYWORD);
+        Tree modifiers2 = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.MODIFIERS);
+        if(keyword1 == null || modifiers2 == null)
+            return;
+        Tree name2 = null;
+        List<Tree> classLiterals2 = Collections.emptyList();
+        for(Tree annotation2 : modifiers2.getChildren()) {
+            Tree invocation2 = TreeUtilFunctions.findChildByType(annotation2, LANG2.CONSTRUCTOR_INVOCATION);
+            Tree userType2 = invocation2 != null ? TreeUtilFunctions.findChildByType(invocation2, LANG2.USER_TYPE) : null;
+            Tree lastName2 = userType2 != null && !userType2.getChildren().isEmpty() ? userType2.getChild(userType2.getChildren().size() - 1) : null;
+            if(lastName2 != null && lastName2.getType().name.equals(LANG2.TYPE_IDENTIFIER) && lastName2.getLabel().equals("Throws")) {
+                name2 = lastName2;
+                Tree arguments2 = TreeUtilFunctions.findChildByType(invocation2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                if(arguments2 != null)
+                    classLiterals2 = TreeUtilFunctions.findChildrenByTypeRecursively(arguments2, LANG2.CALLABLE_REFERENCE);
+                break;
+            }
+        }
+        if(name2 == null)
+            return;
+        //the name of the annotation is the Kotlin equivalent of the throws keyword, so it is labeled as the Java keyword, like the override modifier
+        removeDstMappings(mappingStore, name2);
+        name2.setLabel(keyword1.getLabel());
+        mappingStore.addMapping(keyword1, name2);
+        //the thrown types follow the throws keyword, and each one is mapped to the class literal of the type with the same name
+        List<Tree> children1 = srcOperationNode.getChildren();
+        for(int i = children1.indexOf(keyword1) + 1; i < children1.size() && !children1.get(i).getType().name.equals(LANG1.BLOCK); i++) {
+            Tree type1 = children1.get(i);
+            List<Tree> names1 = leaves(type1);
+            for(Tree classLiteral2 : classLiterals2) {
+                if(classLiteral2.getChildren().isEmpty())
+                    continue;
+                List<Tree> names2 = leaves(classLiteral2.getChild(0));
+                if(names1.isEmpty() || names2.isEmpty() || !names1.get(names1.size() - 1).getLabel().equals(names2.get(names2.size() - 1).getLabel()) || mappingStore.isDstMapped(classLiteral2))
+                    continue;
+                mappingStore.addMapping(type1, classLiteral2);
+                for(int k = 1; k <= Math.min(names1.size(), names2.size()) && names1.get(names1.size() - k).getLabel().equals(names2.get(names2.size() - k).getLabel()); k++) {
+                    removeDstMappings(mappingStore, names2.get(names2.size() - k));
+                    mappingStore.addMapping(names1.get(names1.size() - k), names2.get(names2.size() - k));
+                }
+                break;
+            }
+        }
+    }
+
+    //the leaves of the tree in source code order
+    private static List<Tree> leaves(Tree tree) {
+        List<Tree> leaves = new ArrayList<>();
+        for(Tree t : tree.preOrder())
+            if(t.isLeaf())
+                leaves.add(t);
+        return leaves;
+    }
+
     //moves the modifier from the Kotlin modifiers to the declaration, keeping the source code order of the annotations and modifiers
     private static void liftFromModifiers(ExtendedMultiMappingStore mappingStore, Tree modifiers2, Tree modifier2) {
         Tree declaration2 = modifiers2.getParent();

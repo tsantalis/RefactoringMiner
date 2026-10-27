@@ -171,6 +171,18 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	//the Kotlin code without the L suffix of its long literals that are written without it in the Java code, i.e., 0L -> 0 when the Java code has 0
+	private static String withoutKotlinLongSuffix(AbstractCodeFragment fragment2, String javaCode) {
+		String code2 = fragment2.getString();
+		for(LeafExpression numberLiteral2 : fragment2.getNumberLiterals()) {
+			String l = numberLiteral2.getString();
+			if(l.endsWith("L") && !javaCode.contains(l)) {
+				code2 = code2.replaceAll(l, l.substring(0, l.length()-1));
+			}
+		}
+		return code2;
+	}
+
 	protected static boolean javaToKotlin(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo info, Constants LANG1, Constants LANG2) {
 		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
@@ -194,9 +206,10 @@ public class StringBasedHeuristics {
 						declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
 					return true;
 				}
-				//Java variable declaration replaced with Kotlin variable declaration with the same initializer, i.e., int b1 = 0; -> var b1 = 0
+				//Java variable declaration replaced with Kotlin variable declaration with the same initializer, i.e., int b1 = 0; -> var b1 = 0, long delta = 0; -> var delta = 0L
 				if(declaration1.getInitializer() != null && declaration2.getInitializer() != null &&
-						declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.getInitializer().getString().equals(declaration2.getInitializer().getString())) {
+						declaration1.getVariableName().equals(declaration2.getVariableName()) &&
+						declaration1.getInitializer().getString().equals(withoutKotlinLongSuffix(declaration2.getInitializer(), declaration1.getInitializer().getString()))) {
 					return true;
 				}
 			}

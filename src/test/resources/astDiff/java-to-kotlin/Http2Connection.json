@@ -21521,6 +21521,50 @@
   "secondLabel" : "",
   "firstParentType" : "Block",
   "secondParentType" : "function_body",
+  "firstPos" : 23910,
+  "secondPos" : 21235,
+  "firstEndPos" : 23925,
+  "secondEndPos" : 21249
+}, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 23915,
+  "secondPos" : 21245,
+  "firstEndPos" : 23924,
+  "secondEndPos" : 21246
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "delta",
+  "secondLabel" : "delta",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 23915,
+  "secondPos" : 21239,
+  "firstEndPos" : 23920,
+  "secondEndPos" : 21244
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "long_literal",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 23923,
+  "secondPos" : 21247,
+  "firstEndPos" : 23924,
+  "secondEndPos" : 21249
+}, {
+  "firstType" : "VariableDeclarationStatement",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
   "firstPos" : 23932,
   "secondPos" : 21256,
   "firstEndPos" : 23969,
@@ -23945,6 +23989,28 @@
   "secondPos" : 23459,
   "firstEndPos" : 26609,
   "secondEndPos" : 23547
+}, {
+  "firstType" : "VariableDeclarationStatement",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 26616,
+  "secondPos" : 23554,
+  "firstEndPos" : 26642,
+  "secondEndPos" : 23589
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "streamsCopy",
+  "secondLabel" : "streamsCopy",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 26630,
+  "secondPos" : 23558,
+  "firstEndPos" : 26641,
+  "secondEndPos" : 23569
 }, {
   "firstType" : "SynchronizedStatement",
   "secondType" : "call_expression",

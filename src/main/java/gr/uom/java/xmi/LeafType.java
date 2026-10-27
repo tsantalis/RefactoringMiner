@@ -68,6 +68,9 @@ public class LeafType extends UMLType implements Cloneable {
 			if(equalClassType(typeObject) && equalTypeArgumentsAndArrayDimension(typeObject)) {
 				return true;
 			}
+			if(arrayInOtherLanguage(typeObject, false)) {
+				return true;
+			}
 		}
 		if (o instanceof CompositeType compositeType) {
 			return equalsCompositeTypeInOtherLanguage(compositeType);
@@ -95,6 +98,9 @@ public class LeafType extends UMLType implements Cloneable {
 				return true;
 			}
 			if(!this.LANG.equals(leafType.LANG) && (this.classType.toLowerCase().equals(leafType.classType.toLowerCase()) || rootTypeInOtherLanguage(leafType)) && equalTypeArgumentsAndArrayDimension(type)) {
+				return true;
+			}
+			if(arrayInOtherLanguage(leafType, true)) {
 				return true;
 			}
 			if(equalsTypeScript(type)) {
@@ -174,6 +180,37 @@ public class LeafType extends UMLType implements Cloneable {
 			return true;
 		}
 		return false;
+	}
+
+	//the Kotlin classes of the Java arrays of primitive types
+	private static final java.util.Map<String, String> KOTLIN_PRIMITIVE_ARRAYS = java.util.Map.of(
+			"boolean", "BooleanArray", "byte", "ByteArray", "char", "CharArray", "short", "ShortArray",
+			"int", "IntArray", "long", "LongArray", "float", "FloatArray", "double", "DoubleArray");
+
+	//a Java array is a Kotlin Array of its element type, or a Kotlin primitive array, i.e., Http2Stream[] -> Array<Http2Stream>, byte[] -> ByteArray,
+	//with the element types compared by their qualified names, when qualified
+	private boolean arrayInOtherLanguage(LeafType leafType, boolean qualified) {
+		if(this.LANG.equals(leafType.LANG))
+			return false;
+		return (this.getArrayDimension() > 0 && javaArrayInKotlin(this, this.getArrayDimension(), leafType, qualified)) ||
+				(leafType.getArrayDimension() > 0 && javaArrayInKotlin(leafType, leafType.getArrayDimension(), this, qualified));
+	}
+
+	//whether the Kotlin type is the Java array with the given number of dimensions, i.e., the Java int[][] is the Kotlin Array<IntArray>
+	private static boolean javaArrayInKotlin(LeafType java, int dimensions, UMLType kotlin, boolean qualified) {
+		if(!(kotlin instanceof LeafType kotlinType) || kotlinType.getArrayDimension() != 0)
+			return false;
+		if(dimensions == 0) {
+			boolean equalClassType = qualified ?
+					java.classType.toLowerCase().equals(kotlinType.classType.toLowerCase()) || java.rootTypeInOtherLanguage(kotlinType) :
+					java.equalClassType(kotlinType);
+			return equalClassType && java.typeArgumentsToString().equals(kotlinType.typeArgumentsToString());
+		}
+		if(dimensions == 1 && kotlinType.nonQualifiedClassType.equals(KOTLIN_PRIMITIVE_ARRAYS.get(java.nonQualifiedClassType)))
+			return true;
+		if(!kotlinType.nonQualifiedClassType.equals("Array") || kotlinType.getTypeArguments().size() != 1)
+			return false;
+		return javaArrayInKotlin(java, dimensions - 1, kotlinType.getTypeArguments().get(0), qualified);
 	}
 
 	//Kotlin Any is the root of the class hierarchy, like Java Object

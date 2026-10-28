@@ -17,6 +17,7 @@ import gr.uom.java.xmi.PythonFileProcessor;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLCommentGroup;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.StatementObject;
@@ -383,6 +384,19 @@ public class UMLCommentListDiff {
 		return false;
 	}
 
+	//comments embedded in a statement, such as argument labels, have no previous statement, but belong to their enclosing statement
+	private boolean isCommentNestedInNonMappedStatement(UMLComment comment, boolean before) {
+		if(operationBodyMapper != null) {
+			List<AbstractCodeFragment> nonMappedLeaves = before ? operationBodyMapper.getNonMappedLeavesT1() : operationBodyMapper.getNonMappedLeavesT2();
+			for(AbstractCodeFragment leaf : nonMappedLeaves) {
+				if(leaf.getLocationInfo().subsumes(comment.getLocationInfo())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean mappedParent(UMLComment left, UMLComment right) {
 		if(left.getParent() != null && right.getParent() != null) {
 			if(left.getParent().getParent() == null && right.getParent().getParent() == null) {
@@ -492,7 +506,7 @@ public class UMLCommentListDiff {
 					if(pair.getLeft().getText().equals(deletedComment.getText()) &&
 							pair.getRight().getText().equals(deletedComment.getText()) &&
 							!deletedComment.isCommentedCode() && !deletedComment.nestedInCatchBlock() &&
-							!isDeletedCommentWithPreviousDeletedStatement(deletedComment)) {
+							!isDeletedCommentWithPreviousDeletedStatement(deletedComment) && !isCommentNestedInNonMappedStatement(deletedComment, true)) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(deletedComment, pair.getRight());
 						commonComments.add(newPair);
 						deletedComments.remove(deletedComment);
@@ -508,7 +522,7 @@ public class UMLCommentListDiff {
 					if(pair.getLeft().getText().equals(addedComment.getText()) &&
 							pair.getRight().getText().equals(addedComment.getText()) &&
 							!addedComment.isCommentedCode() && !addedComment.nestedInCatchBlock() &&
-							!isAddedCommentWithPreviousAddedStatement(addedComment)) {
+							!isAddedCommentWithPreviousAddedStatement(addedComment) && !isCommentNestedInNonMappedStatement(addedComment, false)) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(pair.getLeft(), addedComment);
 						commonComments.add(newPair);
 						addedComments.remove(addedComment);

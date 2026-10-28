@@ -2145,8 +2145,7 @@
         "description": "the argument comments of the unchanged directory metadata are not marked",
         "kind": "unchanged",
         "file": "src/main/java/com/google/devtools/build/lib/remote/ByteStreamBuildEventArtifactUploader.java",
-        "code": "/* directory= */ true,",
-        "todo": "RM (to report): ByteStreamBuildEventArtifactUploader.java maps none of the comments /* directory= */ .. /* isBuildToolLog= */ of the unchanged `return new PathMetadata(...)` of readPathMetadata (L212-216 -> L233-237); each is multi-mapped to its copy there and to the one of the new MINIMAL block (L216-220), so they read as moved"
+        "code": "/* directory= */ true,"
       }
     ]
   },

@@ -4212,6 +4212,50 @@
   "firstEndPos" : 4049,
   "secondEndPos" : 3752
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ExternalResource",
+  "secondLabel" : "ExternalResource",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 4058,
+  "secondPos" : 3755,
+  "firstEndPos" : 4074,
+  "secondEndPos" : 3771
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "constructor_invocation",
+  "firstPos" : 4058,
+  "secondPos" : 3755,
+  "firstEndPos" : 4074,
+  "secondEndPos" : 3771
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Closeable",
+  "secondLabel" : "Closeable",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 4086,
+  "secondPos" : 3775,
+  "firstEndPos" : 4095,
+  "secondEndPos" : 3784
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 4086,
+  "secondPos" : 3775,
+  "firstEndPos" : 4095,
+  "secondEndPos" : 3784
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
@@ -36343,6 +36387,28 @@
   "firstEndPos" : 32678,
   "secondEndPos" : 29138
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Sink",
+  "secondLabel" : "Sink",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 32690,
+  "secondPos" : 29208,
+  "firstEndPos" : 32694,
+  "secondEndPos" : 29212
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 32690,
+  "secondPos" : 29208,
+  "firstEndPos" : 32694,
+  "secondEndPos" : 29212
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
@@ -37541,6 +37607,39 @@
   "secondPos" : 29947,
   "firstEndPos" : 33590,
   "secondEndPos" : 29965
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "constructor_invocation",
+  "firstPos" : 33599,
+  "secondPos" : 30052,
+  "firstEndPos" : 33623,
+  "secondEndPos" : 30076
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Http2Connection",
+  "secondLabel" : "Http2Connection",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 33599,
+  "secondPos" : 30052,
+  "firstEndPos" : 33614,
+  "secondEndPos" : 30067
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Listener",
+  "secondLabel" : "Listener",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 33615,
+  "secondPos" : 30068,
+  "firstEndPos" : 33623,
+  "secondEndPos" : 30076
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "class_parameter",

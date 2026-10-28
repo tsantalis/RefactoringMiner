@@ -7325,6 +7325,28 @@
   "firstEndPos" : 6645,
   "secondEndPos" : 6170
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Sink",
+  "secondLabel" : "Sink",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 6657,
+  "secondPos" : 6173,
+  "firstEndPos" : 6661,
+  "secondEndPos" : 6177
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 6657,
+  "secondPos" : 6173,
+  "firstEndPos" : 6661,
+  "secondEndPos" : 6177
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",

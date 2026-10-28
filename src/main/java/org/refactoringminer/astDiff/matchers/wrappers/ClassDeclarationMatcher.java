@@ -587,6 +587,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassPermittedTypes(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processInterfaceToSuperclassOrOpposite(classDiff, mappingStore, srcTypeDeclaration, dstTypeDeclaration);
+        if (Constants.isCrossLanguage(LANG1, LANG2))
+            JavaToKotlinMigration.handleSuperTypesMapping(mappingStore, srcTypeDeclaration, dstTypeDeclaration, LANG1, LANG2, optimizationData.getDeferredFlattenings());
         new JavaDocMatcher(optimizationData, classDiff.getOriginalClass().getJavadoc(), classDiff.getNextClass().getJavadoc(), classDiff.getJavadocDiff(), LANG1, LANG2)
                 .match(srcTree, dstTree, mappingStore);
         new CommentMatcher(optimizationData, classDiff.getPackageDeclarationCommentListDiff(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);

@@ -1198,6 +1198,28 @@
   "firstEndPos" : 2362,
   "secondEndPos" : 2075
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Closeable",
+  "secondLabel" : "Closeable",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 2374,
+  "secondPos" : 2117,
+  "firstEndPos" : 2383,
+  "secondEndPos" : 2126
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 2374,
+  "secondPos" : 2117,
+  "firstEndPos" : 2383,
+  "secondEndPos" : 2126
+}, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// Internal state of this connection is guarded by 'this'. No blocking",
@@ -17180,6 +17202,61 @@
   "secondPos" : 17804,
   "firstEndPos" : 20115,
   "secondEndPos" : 17818
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "NamedRunnable",
+  "secondLabel" : "Runnable",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 20124,
+  "secondPos" : 17884,
+  "firstEndPos" : 20137,
+  "secondEndPos" : 17892
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 20124,
+  "secondPos" : 17884,
+  "firstEndPos" : 20137,
+  "secondEndPos" : 17892
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 20149,
+  "secondPos" : 17894,
+  "firstEndPos" : 20168,
+  "secondEndPos" : 17913
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Http2Reader",
+  "secondLabel" : "Http2Reader",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 20149,
+  "secondPos" : 17894,
+  "firstEndPos" : 20160,
+  "secondEndPos" : 17905
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Handler",
+  "secondLabel" : "Handler",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 20161,
+  "secondPos" : 17906,
+  "firstEndPos" : 20168,
+  "secondEndPos" : 17913
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "class_parameter",

@@ -263,6 +263,39 @@
   "firstEndPos" : 787,
   "secondEndPos" : 763
 }, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 803,
+  "secondPos" : 766,
+  "firstEndPos" : 841,
+  "secondEndPos" : 804
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Application",
+  "secondLabel" : "Application",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 803,
+  "secondPos" : 766,
+  "firstEndPos" : 814,
+  "secondEndPos" : 777
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ActivityLifecycleCallbacks",
+  "secondLabel" : "ActivityLifecycleCallbacks",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 815,
+  "secondPos" : 778,
+  "firstEndPos" : 841,
+  "secondEndPos" : 804
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

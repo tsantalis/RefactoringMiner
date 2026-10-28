@@ -2573,6 +2573,61 @@
   "firstEndPos" : 2805,
   "secondEndPos" : 2491
 }, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "constructor_invocation",
+  "firstPos" : 2814,
+  "secondPos" : 2566,
+  "firstEndPos" : 2838,
+  "secondEndPos" : 2590
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Http2Connection",
+  "secondLabel" : "Http2Connection",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 2814,
+  "secondPos" : 2566,
+  "firstEndPos" : 2829,
+  "secondEndPos" : 2581
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Listener",
+  "secondLabel" : "Listener",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 2830,
+  "secondPos" : 2582,
+  "firstEndPos" : 2838,
+  "secondEndPos" : 2590
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Connection",
+  "secondLabel" : "Connection",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 2850,
+  "secondPos" : 2594,
+  "firstEndPos" : 2860,
+  "secondEndPos" : 2604
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 2850,
+  "secondPos" : 2594,
+  "firstEndPos" : 2860,
+  "secondEndPos" : 2604
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",

@@ -3779,6 +3779,76 @@ public class JavaToKotlinMigration {
         }
     }
 
+    //align the Java super-types, which follow extends or implements, with the Kotlin super-types, which all follow the colon,
+    //i.e., class A extends B implements C -> class A : B(), C, pairing the types by name, and then the remaining ones in source code order,
+    //i.e., the changed superclass NamedRunnable -> Runnable; the extends and implements keywords have no Kotlin counterpart
+    public static void handleSuperTypesMapping(ExtendedMultiMappingStore mappingStore, Tree srcTypeDeclaration, Tree dstTypeDeclaration,
+            Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        List<Tree> types1 = new ArrayList<>();
+        boolean inheritance = false;
+        for(Tree child1 : srcTypeDeclaration.getChildren()) {
+            if(child1.getType().name.equals(LANG1.TYPE_INHERITANCE_KEYWORD))
+                inheritance = true;
+            else if(inheritance && child1.getType().name.endsWith("Type"))
+                types1.add(child1);
+            else if(inheritance)
+                break;
+        }
+        List<Tree> types2 = new ArrayList<>();
+        for(Tree child2 : dstTypeDeclaration.getChildren()) {
+            if(child2.getType().name.equals(LANG2.DELEGATION_SPECIFIER)) {
+                Tree type2 = superType(child2, LANG2);
+                if(type2 != null)
+                    types2.add(type2);
+            }
+        }
+        if(types1.isEmpty() || types2.isEmpty())
+            return;
+        List<Pair<Tree, Tree>> pairs = new ArrayList<>();
+        for(Tree type1 : new ArrayList<>(types1)) {
+            String name1 = superTypeName(type1, LANG1);
+            for(Tree type2 : types2) {
+                if(name1 != null && name1.equals(superTypeName(type2, LANG2))) {
+                    pairs.add(new Pair<>(type1, type2));
+                    types1.remove(type1);
+                    types2.remove(type2);
+                    break;
+                }
+            }
+        }
+        for(int i = 0; i < Math.min(types1.size(), types2.size()); i++)
+            pairs.add(new Pair<>(types1.get(i), types2.get(i)));
+        for(Pair<Tree, Tree> pair : pairs) {
+            if(!mappingStore.isSrcMapped(pair.first) && !mappingStore.isDstMapped(pair.second))
+                handleTypeMapping(mappingStore, pair.first, pair.second, LANG1, LANG2, deferredFlattenings);
+        }
+    }
+
+    //the type of the Kotlin super-type entry, which is a constructor call for a superclass with a constructor, i.e., B in B() and C in C
+    private static Tree superType(Tree delegationSpecifier2, Constants LANG2) {
+        Tree type2 = TreeUtilFunctions.findChildByType(delegationSpecifier2, LANG2.USER_TYPE);
+        if(type2 == null) {
+            Tree invocation2 = TreeUtilFunctions.findChildByType(delegationSpecifier2, LANG2.CONSTRUCTOR_INVOCATION);
+            if(invocation2 != null)
+                type2 = TreeUtilFunctions.findChildByType(invocation2, LANG2.USER_TYPE);
+        }
+        return type2;
+    }
+
+    //the simple name of the super-type without its type arguments, i.e., Handler in Http2Reader.Handler and List in List<String>
+    private static String superTypeName(Tree type, Constants LANG) {
+        Tree base = type.getType().name.equals(LANG.PARAMETERIZED_TYPE) && !type.getChildren().isEmpty() ? type.getChild(0) : type;
+        if(base.getType().name.equals(LANG.USER_TYPE)) {
+            String name = null;
+            for(Tree child : base.getChildren())
+                if(child.getType().name.equals(LANG.TYPE_IDENTIFIER))
+                    name = child.getLabel();
+            return name;
+        }
+        List<Tree> names = leaves(base);
+        return names.isEmpty() ? null : names.get(names.size() - 1).getLabel();
+    }
+
     //the leaves of the tree in source code order
     private static List<Tree> leaves(Tree tree) {
         List<Tree> leaves = new ArrayList<>();

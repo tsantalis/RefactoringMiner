@@ -1099,6 +1099,28 @@
   "firstEndPos" : 2026,
   "secondEndPos" : 2001
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ExchangeCodec",
+  "secondLabel" : "ExchangeCodec",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 2038,
+  "secondPos" : 2159,
+  "firstEndPos" : 2051,
+  "secondEndPos" : 2172
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 2038,
+  "secondPos" : 2159,
+  "firstEndPos" : 2051,
+  "secondEndPos" : 2172
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",

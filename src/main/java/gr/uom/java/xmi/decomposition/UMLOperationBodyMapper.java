@@ -3093,6 +3093,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return commentListDiff;
 	}
 
+	//the comments moved along with the code, i.e., Java constructor comments moved to the Kotlin property declarations
+	public void processMovedComments() {
+		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
+		checkUnmatchedStatementsBeingCommented();
+	}
+
 	public UMLImportListDiff getImportListDiff() {
 		return importListDiff;
 	}

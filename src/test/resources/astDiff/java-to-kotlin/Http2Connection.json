@@ -3145,6 +3145,138 @@
   "firstEndPos" : 5200,
   "secondEndPos" : 2966
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Flow control was designed more for servers, or proxies than edge clients.",
+  "secondLabel" : "// Flow control was designed more for servers, or proxies than edge clients. If we are a client,",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5434,
+  "secondPos" : 4194,
+  "firstEndPos" : 5510,
+  "secondEndPos" : 4290
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Flow control was designed more for servers, or proxies than edge clients.",
+  "secondLabel" : "// set the flow control window to 16MiB.  This avoids thrashing window updates every 64KiB, yet",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5434,
+  "secondPos" : 4295,
+  "firstEndPos" : 5510,
+  "secondEndPos" : 4390
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Flow control was designed more for servers, or proxies than edge clients.",
+  "secondLabel" : "// small enough to avoid blowing up the heap.",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5434,
+  "secondPos" : 4395,
+  "firstEndPos" : 5510,
+  "secondEndPos" : 4440
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// If we are a client, set the flow control window to 16MiB.  This avoids",
+  "secondLabel" : "// Flow control was designed more for servers, or proxies than edge clients. If we are a client,",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5515,
+  "secondPos" : 4194,
+  "firstEndPos" : 5588,
+  "secondEndPos" : 4290
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// If we are a client, set the flow control window to 16MiB.  This avoids",
+  "secondLabel" : "// set the flow control window to 16MiB.  This avoids thrashing window updates every 64KiB, yet",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5515,
+  "secondPos" : 4295,
+  "firstEndPos" : 5588,
+  "secondEndPos" : 4390
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// If we are a client, set the flow control window to 16MiB.  This avoids",
+  "secondLabel" : "// small enough to avoid blowing up the heap.",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5515,
+  "secondPos" : 4395,
+  "firstEndPos" : 5588,
+  "secondEndPos" : 4440
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// thrashing window updates every 64KiB, yet small enough to avoid blowing",
+  "secondLabel" : "// Flow control was designed more for servers, or proxies than edge clients. If we are a client,",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5593,
+  "secondPos" : 4194,
+  "firstEndPos" : 5667,
+  "secondEndPos" : 4290
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// thrashing window updates every 64KiB, yet small enough to avoid blowing",
+  "secondLabel" : "// set the flow control window to 16MiB.  This avoids thrashing window updates every 64KiB, yet",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5593,
+  "secondPos" : 4295,
+  "firstEndPos" : 5667,
+  "secondEndPos" : 4390
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// thrashing window updates every 64KiB, yet small enough to avoid blowing",
+  "secondLabel" : "// small enough to avoid blowing up the heap.",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5593,
+  "secondPos" : 4395,
+  "firstEndPos" : 5667,
+  "secondEndPos" : 4440
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// up the heap.",
+  "secondLabel" : "// Flow control was designed more for servers, or proxies than edge clients. If we are a client,",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5672,
+  "secondPos" : 4194,
+  "firstEndPos" : 5687,
+  "secondEndPos" : 4290
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// up the heap.",
+  "secondLabel" : "// set the flow control window to 16MiB.  This avoids thrashing window updates every 64KiB, yet",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5672,
+  "secondPos" : 4295,
+  "firstEndPos" : 5687,
+  "secondEndPos" : 4390
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// up the heap.",
+  "secondLabel" : "// small enough to avoid blowing up the heap.",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 5672,
+  "secondPos" : 4395,
+  "firstEndPos" : 5687,
+  "secondEndPos" : 4440
+}, {
   "firstType" : "IfStatement",
   "secondType" : "if_expression",
   "firstLabel" : "",
@@ -3738,6 +3870,17 @@
   "secondPos" : 5902,
   "firstEndPos" : 6184,
   "secondEndPos" : 5914
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Like newSingleThreadExecutor, except lazy creates the thread.",
+  "secondLabel" : "// Like newSingleThreadExecutor, except lazy creates the thread.",
+  "firstParentType" : "Block",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6198,
+  "secondPos" : 3612,
+  "firstEndPos" : 6262,
+  "secondEndPos" : 3676
 }, {
   "firstType" : "ASSIGNMENT_OPERATOR",
   "secondType" : "affectation_operator",

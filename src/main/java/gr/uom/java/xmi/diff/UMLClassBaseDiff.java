@@ -836,6 +836,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					for(UMLInitializer addedInitializer : addedInitializers) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, addedInitializer, this);
 						if(moveCodeMapper.mappingsWithoutBlocks() > 1 || moveCodeMapper.exactMatches() > 0) {
+							moveCodeMapper.processMovedComments();
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_FROM_REMOVED_TO_ADDED);
 							if(!moveCodeMappers.contains(moveCodeMapper))
 								moveCodeMappers.add(moveCodeMapper);
@@ -851,6 +852,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 										moveCodeMapper.removeMapping(m);
 									}
 								}
+								moveCodeMapper.processMovedComments();
 								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_FROM_REMOVED_TO_ADDED);
 								if(!moveCodeMappers.contains(moveCodeMapper))
 									moveCodeMappers.add(moveCodeMapper);
@@ -860,6 +862,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						else if(attributeDiff.getRemovedAttribute().getVariableDeclaration().getInitializer() == null && attributeDiff.getAddedAttribute().getVariableDeclaration().getInitializer() != null) {
 							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(attributeDiff.getAddedAttribute().getVariableDeclaration().getInitializer(), removedOperation, attributeDiff.getAddedAttribute(), this, modelDiff);
 							if(moveCodeMapper.mappingsWithoutBlocks() > 0) {
+								moveCodeMapper.processMovedComments();
 								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_FROM_REMOVED_TO_ADDED);
 								if(!moveCodeMappers.contains(moveCodeMapper))
 									moveCodeMappers.add(moveCodeMapper);
@@ -873,6 +876,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(addedAttribute.getCustomGetter().isPresent()) {
 							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, addedAttribute.getCustomGetter().get(), this);
 							if(moveCodeMapper.mappingsWithoutBlocks() > 1 || moveCodeMapper.exactMatches() > 0) {
+								moveCodeMapper.processMovedComments();
 								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_FROM_REMOVED_TO_ADDED);
 								if(!moveCodeMappers.contains(moveCodeMapper))
 									moveCodeMappers.add(moveCodeMapper);

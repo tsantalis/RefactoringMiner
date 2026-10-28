@@ -3536,6 +3536,8 @@ public class JavaToKotlinMigration {
             type1 = TreeUtilFunctions.findChildByType(declaration1, LANG1.PRIMITIVE_TYPE);
         if(type1 == null)
             type1 = TreeUtilFunctions.findChildByType(declaration1, LANG1.PARAMETERIZED_TYPE);
+        if(type1 == null)
+            type1 = TreeUtilFunctions.findChildByType(declaration1, LANG1.ARRAY_TYPE);
         return type1;
     }
 
@@ -3550,7 +3552,8 @@ public class JavaToKotlinMigration {
         return type2;
     }
 
-    //align Kotlin user_type with Java SimpleType, PrimitiveType, and ParameterizedType, i.e., int -> Int, Integer -> Int, List<Header> -> List<Header>
+    //align Kotlin user_type with Java SimpleType, PrimitiveType, ParameterizedType, and ArrayType, i.e., int -> Int, Integer -> Int, List<Header> -> List<Header>,
+    //Http2Stream[] -> Array<Http2Stream>, byte[] -> ByteArray
     private static void alignTypes(ExtendedMultiMappingStore mappingStore, Tree type1, Tree type2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(type1 == null || type2 == null)
             return;
@@ -3614,6 +3617,28 @@ public class JavaToKotlinMigration {
                 for(int i=1; i<type1.getChildren().size(); i++) {
                     alignTypes(mappingStore, type1.getChild(i), type2.getChild(i), LANG1, LANG2, deferredFlattenings);
                 }
+            }
+        }
+        else if(type1.getType().name.equals(LANG1.ARRAY_TYPE) && type1.getChildren().size() == 2 && type2.getChildren().size() > 0 && type2.getChild(0).isLeaf()) {
+            Tree elementType1 = type1.getChild(0);
+            Tree name2 = type2.getChild(0);
+            Tree typeArguments2 = TreeUtilFunctions.findChildByType(type2, LANG2.TYPE_ARGUMENTS);
+            if(name2.getLabel().equals("Array") && typeArguments2 != null && typeArguments2.getChildren().size() == 1) {
+                //align Kotlin user_type -> [type_identifier 'Array', type_arguments -> type_projection -> type] with Java ArrayType -> [type, Dimension]
+                Tree typeProjection2 = typeArguments2.getChild(0);
+                if(!typeProjection2.getType().name.equals(LANG2.TYPE_PROJECTION) || typeProjection2.getChildren().size() != 1)
+                    return;
+                mappingStore.addMapping(type1, type2);
+                mappingStore.addMapping(type1.getChild(1), name2);
+                alignTypes(mappingStore, elementType1, typeProjection2.getChild(0), LANG1, LANG2, deferredFlattenings);
+                //flatten type_projection and type_arguments, innermost first, so that each is still a child of its parent
+                flattenDstChildKeepingMappings(deferredFlattenings, typeArguments2, typeProjection2);
+                flattenDstChildKeepingMappings(deferredFlattenings, type2, typeArguments2);
+            }
+            else if(type2.getChildren().size() == 1 && elementType1.getType().name.equals(LANG1.PRIMITIVE_TYPE) && name2.getLabel().equals(kotlinTypeName(type1, LANG1))) {
+                //align Kotlin user_type -> type_identifier 'ByteArray' with Java ArrayType -> [PrimitiveType 'byte', Dimension]
+                mappingStore.addMapping(type1, type2);
+                mappingStore.addMapping(elementType1, name2);
             }
         }
     }

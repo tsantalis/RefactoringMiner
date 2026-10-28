@@ -1913,6 +1913,28 @@
   "firstEndPos" : 2149,
   "secondEndPos" : 2110
 }, {
+  "firstType" : "ArrayType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "nullable_type",
+  "firstPos" : 2156,
+  "secondPos" : 2124,
+  "firstEndPos" : 2162,
+  "secondEndPos" : 2133
+}, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "type_identifier",
+  "firstLabel" : "byte",
+  "secondLabel" : "ByteArray",
+  "firstParentType" : "ArrayType",
+  "secondParentType" : "user_type",
+  "firstPos" : 2156,
+  "secondPos" : 2124,
+  "firstEndPos" : 2160,
+  "secondEndPos" : 2133
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "maskKey",

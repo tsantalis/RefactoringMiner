@@ -5664,6 +5664,28 @@
   "firstEndPos" : 7741,
   "secondEndPos" : 7806
 }, {
+  "firstType" : "ArrayType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7757,
+  "secondPos" : 7887,
+  "firstEndPos" : 7763,
+  "secondEndPos" : 7896
+}, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "type_identifier",
+  "firstLabel" : "byte",
+  "secondLabel" : "ByteArray",
+  "firstParentType" : "ArrayType",
+  "secondParentType" : "user_type",
+  "firstPos" : 7757,
+  "secondPos" : 7887,
+  "firstEndPos" : 7761,
+  "secondEndPos" : 7896
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "concatLengthPrefixed",

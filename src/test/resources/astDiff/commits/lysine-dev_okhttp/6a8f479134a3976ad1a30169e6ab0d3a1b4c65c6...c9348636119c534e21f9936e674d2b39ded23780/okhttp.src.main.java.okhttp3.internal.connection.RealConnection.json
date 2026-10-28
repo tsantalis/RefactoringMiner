@@ -22637,6 +22637,39 @@
   "firstEndPos" : 22296,
   "secondEndPos" : 21576
 }, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "constructor_invocation",
+  "firstPos" : 22127,
+  "secondPos" : 21423,
+  "firstEndPos" : 22148,
+  "secondEndPos" : 21444
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "RealWebSocket",
+  "secondLabel" : "RealWebSocket",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 22127,
+  "secondPos" : 21423,
+  "firstEndPos" : 22140,
+  "secondEndPos" : 21436
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Streams",
+  "secondLabel" : "Streams",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 22141,
+  "secondPos" : 21437,
+  "firstEndPos" : 22148,
+  "secondEndPos" : 21444
+}, {
   "firstType" : "BooleanLiteral",
   "secondType" : "boolean_literal",
   "firstLabel" : "true",
@@ -22647,6 +22680,17 @@
   "secondPos" : 21445,
   "firstEndPos" : 22153,
   "secondEndPos" : 21449
+}, {
+  "firstType" : "AnonymousClassDeclaration",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "object_literal",
+  "firstPos" : 22169,
+  "secondPos" : 21465,
+  "firstEndPos" : 22295,
+  "secondEndPos" : 21576
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",

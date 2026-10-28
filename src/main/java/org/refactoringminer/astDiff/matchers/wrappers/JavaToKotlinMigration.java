@@ -1026,6 +1026,13 @@ public class JavaToKotlinMigration {
             children1.remove(lengthComparison1.getChild(lengthComparison1.getChildren().size() - 1));
         }
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTEGER_LITERAL, LANG2.FLOAT_LITERAL);
+        //the statement itself is a number literal, i.e., a field initializer 0 -> 0L
+        if(srcStatementNode.getType().name.equals(LANG1.NUMBER_LITERAL)) {
+            children1.add(0, srcStatementNode);
+        }
+        if(dstStatementNode.getType().name.equals(LANG2.INTEGER_LITERAL) || dstStatementNode.getType().name.equals(LANG2.FLOAT_LITERAL)) {
+            children2.add(0, dstStatementNode);
+        }
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 //handle -literal
@@ -3008,6 +3015,27 @@ public class JavaToKotlinMigration {
                 return candidates.get(0);
         }
         return null;
+    }
+
+    //align Kotlin object_literal -> [delegation_specifier -> [constructor_invocation ->] user_type, type_body] with Java ClassInstanceCreation -> [type, AnonymousClassDeclaration],
+    //i.e., new Listener() {...} -> object : Listener() {...}
+    public static void handleAnonymousClassToObjectMapping(ExtendedMultiMappingStore mappingStore, Tree anonymousClass1, Tree object2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        if(anonymousClass1 == null || object2 == null || anonymousClass1.getParent() == null)
+            return;
+        Tree creation1 = anonymousClass1.getParent();
+        if(!creation1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION) || !object2.getType().name.equals(LANG2.OBJECT_LITERAL))
+            return;
+        Tree body2 = TreeUtilFunctions.findChildByType(object2, LANG2.CLASS_BLOCK);
+        if(body2 != null)
+            mappingStore.addMapping(anonymousClass1, body2);
+        Tree delegation2 = TreeUtilFunctions.findChildByType(object2, LANG2.DELEGATION_SPECIFIER);
+        if(delegation2 == null)
+            return;
+        //a superclass has a constructor invocation, while an interface has only the type, i.e., object : Runnable {...}
+        Tree invocation2 = TreeUtilFunctions.findChildByType(delegation2, LANG2.CONSTRUCTOR_INVOCATION);
+        Tree type2 = TreeUtilFunctions.findChildByType(invocation2 != null ? invocation2 : delegation2, LANG2.USER_TYPE);
+        if(creation1.getChildren().size() > 0)
+            alignTypes(mappingStore, creation1.getChild(0), type2, LANG1, LANG2, deferredFlattenings);
     }
 
     //align Java Javadoc -> TagElement -> TextElement with Kotlin multiline_comment by mirroring the Java structure inside the textually identical Kotlin comment

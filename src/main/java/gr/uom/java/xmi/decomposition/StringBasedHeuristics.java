@@ -213,6 +213,11 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
+			//Java initializer replaced with the same Kotlin initializer with long literals, i.e., long x = 0; -> var x = 0L in a field declaration
+			if(statement1 instanceof AbstractExpression && statement2 instanceof AbstractExpression &&
+					statement1.getString().equals(withoutKotlinLongSuffix(statement2, statement1.getString()))) {
+				return true;
+			}
 			String temp = new String(s1);
 			Set<Replacement> appliedReplacements = new LinkedHashSet<>();
 			for(TernaryOperatorExpression ternary1 : statement1.getTernaryOperatorExpressions()) {

@@ -68,6 +68,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 //the comments inside the anonymous class, which are not inside its operations
                 new CommentMatcher(optimizationData, anonymousClassDiff.getCommentListDiff(), LANG1, LANG2).match(srcTree,dstTree,mappingStore);
+                if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                    Tree anonymousClass1 = TreeUtilFunctions.findByLocationInfo(srcTree, anonymousClassDiff.getOriginalClass().getLocationInfo(), LANG1, LANG1.ANONYMOUS_CLASS_DECLARATION);
+                    Tree object2 = TreeUtilFunctions.findByLocationInfo(dstTree, anonymousClassDiff.getNextClass().getLocationInfo(), LANG2, LANG2.OBJECT_LITERAL);
+                    JavaToKotlinMigration.handleAnonymousClassToObjectMapping(mappingStore, anonymousClass1, object2, LANG1, LANG2, optimizationData.getDeferredFlattenings());
+                }
                 //the object literals of JavaScript and TypeScript and the dictionaries of Python, which the anonymous classes of the other languages are not
                 if(!hasObjectLiterals(anonymousClassDiff.getOriginalClass().getLocationInfo().getFilePath()) || !hasObjectLiterals(anonymousClassDiff.getNextClass().getLocationInfo().getFilePath())) {
                     continue;

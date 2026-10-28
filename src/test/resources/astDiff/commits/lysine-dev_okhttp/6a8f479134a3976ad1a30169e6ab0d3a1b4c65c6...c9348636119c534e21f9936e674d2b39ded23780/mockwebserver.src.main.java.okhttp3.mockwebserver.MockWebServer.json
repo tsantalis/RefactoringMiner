@@ -4476,6 +4476,39 @@
   "firstEndPos" : 5047,
   "secondEndPos" : 37494
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "X509TrustManager",
+  "secondLabel" : "X509TrustManager",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 4619,
+  "secondPos" : 37058,
+  "firstEndPos" : 4635,
+  "secondEndPos" : 37074
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "delegation_specifier",
+  "firstPos" : 4619,
+  "secondPos" : 37058,
+  "firstEndPos" : 4635,
+  "secondEndPos" : 37074
+}, {
+  "firstType" : "AnonymousClassDeclaration",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "object_literal",
+  "firstPos" : 4638,
+  "secondPos" : 37075,
+  "firstEndPos" : 5047,
+  "secondEndPos" : 37494
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
@@ -30788,6 +30821,39 @@
   "firstEndPos" : 27656,
   "secondEndPos" : 25253
 }, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "constructor_invocation",
+  "firstPos" : 27663,
+  "secondPos" : 25265,
+  "firstEndPos" : 27684,
+  "secondEndPos" : 25286
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "RealWebSocket",
+  "secondLabel" : "RealWebSocket",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 27663,
+  "secondPos" : 25265,
+  "firstEndPos" : 27676,
+  "secondEndPos" : 25278
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Streams",
+  "secondLabel" : "Streams",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 27677,
+  "secondPos" : 25279,
+  "firstEndPos" : 27684,
+  "secondEndPos" : 25286
+}, {
   "firstType" : "BooleanLiteral",
   "secondType" : "boolean_literal",
   "firstLabel" : "false",
@@ -30798,6 +30864,17 @@
   "secondPos" : 25287,
   "firstEndPos" : 27690,
   "secondEndPos" : 25292
+}, {
+  "firstType" : "AnonymousClassDeclaration",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "object_literal",
+  "firstPos" : 27706,
+  "secondPos" : 25308,
+  "firstEndPos" : 27796,
+  "secondEndPos" : 25372
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",

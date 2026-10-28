@@ -560,6 +560,50 @@
   "firstEndPos" : 1993,
   "secondEndPos" : 1617
 }, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "constructor_invocation",
+  "firstPos" : 1439,
+  "secondPos" : 1130,
+  "firstEndPos" : 1481,
+  "secondEndPos" : 1172
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "FragmentManager",
+  "secondLabel" : "FragmentManager",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 1439,
+  "secondPos" : 1130,
+  "firstEndPos" : 1454,
+  "secondEndPos" : 1145
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "FragmentLifecycleCallbacks",
+  "secondLabel" : "FragmentLifecycleCallbacks",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 1455,
+  "secondPos" : 1146,
+  "firstEndPos" : 1481,
+  "secondEndPos" : 1172
+}, {
+  "firstType" : "AnonymousClassDeclaration",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "object_literal",
+  "firstPos" : 1484,
+  "secondPos" : 1175,
+  "firstEndPos" : 1993,
+  "secondEndPos" : 1617
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

@@ -2606,6 +2606,17 @@
   "firstEndPos" : 4469,
   "secondEndPos" : 5053
 }, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "long_literal",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4472,
+  "secondPos" : 5056,
+  "firstEndPos" : 4473,
+  "secondEndPos" : 5058
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
@@ -29949,6 +29960,39 @@
   "secondParentType" : "property_declaration",
   "firstPos" : 31981,
   "secondPos" : 28880,
+  "firstEndPos" : 32133,
+  "secondEndPos" : 29053
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Listener",
+  "secondLabel" : "Listener",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 31985,
+  "secondPos" : 28889,
+  "firstEndPos" : 31993,
+  "secondEndPos" : 28897
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "constructor_invocation",
+  "firstPos" : 31985,
+  "secondPos" : 28889,
+  "firstEndPos" : 31993,
+  "secondEndPos" : 28897
+}, {
+  "firstType" : "AnonymousClassDeclaration",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "object_literal",
+  "firstPos" : 31996,
+  "secondPos" : 28900,
   "firstEndPos" : 32133,
   "secondEndPos" : 29053
 }, {

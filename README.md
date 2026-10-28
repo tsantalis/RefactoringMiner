@@ -95,7 +95,8 @@ You can also use our tool to visualize the diffs in your browser.
 ## AST diff features
 
 ### Cross-language diff
-OkHttp  migration from Java to Kotlin
+OkHttp migration from Java to Kotlin
+
 https://github.com/user-attachments/assets/c2697984-f649-466d-9db8-8bec6dbf04fd
 
 JavaScript file migrated to TypeScript

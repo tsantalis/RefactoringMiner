@@ -601,6 +601,17 @@ public class JavaToKotlinMigration {
         if(!letWithLambda) {
             removeFromParent(inv2, lambdas2, LANG2.METHOD_INVOCATION);
         }
+        //the Java instance creation replaced with a Kotlin lambda argument has no Kotlin call counterpart, and neither have the calls inside the lambda,
+        //i.e., writerExecutor.scheduleAtFixedRate(new PingRunnable(false, 0, 0), ...) -> writerExecutor.scheduleAtFixedRate({ threadName(...) {...} }, ...)
+        List<Tree> argumentLambdas2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.LAMBDA_LITERAL).stream()
+                .filter(t2 -> t2.getParent() != null && t2.getParent().getType().name.equals(LANG2.VALUE_ARGUMENT)).collect(Collectors.toList());
+        if(argumentLambdas2.size() > 0) {
+            removeFromParent(inv2, argumentLambdas2, LANG2.METHOD_INVOCATION);
+            Set<String> names2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME, LANG2.TYPE_IDENTIFIER).stream().map(Tree::getLabel).collect(Collectors.toSet());
+            inv1.removeIf(t1 -> t1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION) && t1.getParent() != null && t1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) &&
+                    TreeUtilFunctions.findChildByType(t1, LANG1.ANONYMOUS_CLASS_DECLARATION) == null && t1.getChildren().size() > 0 &&
+                    t1.getChild(0).getType().name.equals(LANG1.SIMPLE_TYPE) && t1.getChild(0).getChildren().size() == 1 && !names2.contains(t1.getChild(0).getChild(0).getLabel()));
+        }
         //check if class instance creation has an anonymous class and remove it
         if(anonymous1.size() > anonymous2.size()) {
             List<Tree> invocationToBeRemoved = new ArrayList<Tree>();

@@ -3750,6 +3750,17 @@
   "firstEndPos" : 6186,
   "secondEndPos" : 5915
 }, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6040,
+  "secondPos" : 5687,
+  "firstEndPos" : 6054,
+  "secondEndPos" : 5721
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "writerExecutor",
@@ -3766,11 +3777,22 @@
   "firstLabel" : "scheduleAtFixedRate",
   "secondLabel" : "scheduleAtFixedRate",
   "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "navigation_suffix",
+  "secondParentType" : "call_expression",
   "firstPos" : 6055,
   "secondPos" : 5702,
   "firstEndPos" : 6074,
   "secondEndPos" : 5721
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6075,
+  "secondPos" : 5721,
+  "firstEndPos" : 6184,
+  "secondEndPos" : 5915
 }, {
   "firstType" : "BooleanLiteral",
   "secondType" : "boolean_literal",
@@ -3876,7 +3898,7 @@
   "firstLabel" : "MILLISECONDS",
   "secondLabel" : "MILLISECONDS",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "value_argument",
+  "secondParentType" : "value_arguments",
   "firstPos" : 6172,
   "secondPos" : 5902,
   "firstEndPos" : 6184,

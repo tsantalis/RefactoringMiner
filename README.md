@@ -95,9 +95,8 @@ You can also use our tool to visualize the diffs in your browser.
 ## AST diff features
 
 ### Cross-language diff
-Java methods migrated to Kotlin functions
-<img width="1920" height="1080" alt="JavaToKotlinDiff" src="https://github.com/user-attachments/assets/eeffafcd-b503-472a-b0c4-791fcb0a9472" />
-[A Java test file migrated to Kotlin](https://users.encs.concordia.ca/~nikolaos/diffGallery/MockWebServerTest.html)
+OkHttp  migration from Java to Kotlin
+https://github.com/user-attachments/assets/c2697984-f649-466d-9db8-8bec6dbf04fd
 
 JavaScript file migrated to TypeScript
 <img width="1920" height="1080" alt="JavaScriptToTypeScript" src="https://github.com/user-attachments/assets/8671e26a-0f1b-49ed-86f6-0eab2cf98e01" />

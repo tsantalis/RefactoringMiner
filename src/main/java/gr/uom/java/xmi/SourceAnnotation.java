@@ -1,7 +1,9 @@
 package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.annotation.source.*;
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.StatementObject;
 
 import org.apache.commons.lang3.function.TriFunction;
 
@@ -58,6 +60,22 @@ public abstract class SourceAnnotation {
             }
         }
         return literal;
+    }
+
+    // the calls of the statement creating an argument row, e.g. Arguments.of(a, b) in Stream.of(Arguments.of(a, b), ...)
+    protected static List<AbstractCall> rowCallCandidates(StatementObject statement) {
+        List<AbstractCall> rowCallCandidates = new ArrayList<>();
+        for(AbstractCall nestedCall : statement.getMethodInvocations()) {
+            if(nestedCall.getExpression() != null && !nestedCall.getExpression().equals("Stream") && nestedCall.getName().equals("of")) {
+                rowCallCandidates.add(nestedCall);
+            }
+            else if(nestedCall.getExpression() == null && nestedCall.getName().equals("arguments")) {
+                //it is possible to use the arguments() function
+                //import static org.junit.jupiter.params.provider.Arguments.arguments
+                rowCallCandidates.add(nestedCall);
+            }
+        }
+        return rowCallCandidates;
     }
 
     public List<List<String>> getTestParameters() {

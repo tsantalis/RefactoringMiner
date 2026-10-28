@@ -69,17 +69,7 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                 if (stmtCandidate.isPresent()) {
                     AbstractCall call = stmtCandidate.get().invocationCoveringEntireFragment();
                     if(call != null && call.getName().equals("of")) {
-                        List<AbstractCall> rowCallCandidates = new ArrayList<>();
-                        for(AbstractCall nestedCall : stmtCandidate.get().getMethodInvocations()) {
-                            if(nestedCall.getExpression() != null && !nestedCall.getExpression().equals("Stream") && nestedCall.getName().equals("of")) {
-                                rowCallCandidates.add(nestedCall);
-                            }
-                            else if(nestedCall.getExpression() == null && nestedCall.getName().equals("arguments")) {
-                                //it is possible to use the arguments() function
-                                //import static org.junit.jupiter.params.provider.Arguments.arguments
-                                rowCallCandidates.add(nestedCall);
-                            }
-                        }
+                        List<AbstractCall> rowCallCandidates = rowCallCandidates(stmtCandidate.get());
                         for(AbstractCall nestedCall : rowCallCandidates) {
                             boolean nestedInAnotherRowCall = rowCallCandidates.stream()
                                     .anyMatch(other -> other != nestedCall && other.getLocationInfo().subsumes(nestedCall.getLocationInfo()));

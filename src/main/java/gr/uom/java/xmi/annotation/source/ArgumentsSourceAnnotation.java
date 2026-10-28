@@ -82,17 +82,7 @@ public class ArgumentsSourceAnnotation extends SourceAnnotation implements Singl
     }
 
     private void extractArgumentsOfRows(StatementObject statement) {
-        List<AbstractCall> rowCallCandidates = new ArrayList<>();
-        for(AbstractCall nestedCall : statement.getMethodInvocations()) {
-            if(nestedCall.getExpression() != null && !nestedCall.getExpression().equals("Stream") && nestedCall.getName().equals("of")) {
-                rowCallCandidates.add(nestedCall);
-            }
-            else if(nestedCall.getExpression() == null && nestedCall.getName().equals("arguments")) {
-                //it is possible to use the arguments() function
-                //import static org.junit.jupiter.params.provider.Arguments.arguments
-                rowCallCandidates.add(nestedCall);
-            }
-        }
+        List<AbstractCall> rowCallCandidates = rowCallCandidates(statement);
         for(AbstractCall nestedCall : rowCallCandidates) {
             boolean nestedInAnotherRowCall = rowCallCandidates.stream()
                     .anyMatch(other -> other != nestedCall && other.getLocationInfo().subsumes(nestedCall.getLocationInfo()));

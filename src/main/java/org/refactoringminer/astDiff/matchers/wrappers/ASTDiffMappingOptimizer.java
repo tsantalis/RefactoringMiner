@@ -48,6 +48,27 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
         return closest;
     }
 
+    //the model maps a keyword argument by its value, i.e., vocab_size=vocab_size moved into the initializer of an extracted variable,
+    //so the keyword arguments of mapped values with the same keyword are mapped too, unless the arguments are already mapped
+    private void matchKeywordArguments(Tree srcValue, Tree dstValue, ExtendedMultiMappingStore store, ExtendedMultiMappingStore allMappings) {
+        Tree srcArgument = keywordArgumentOfValue(srcValue, astDiff.LANG1);
+        Tree dstArgument = keywordArgumentOfValue(dstValue, astDiff.LANG2);
+        if (srcArgument != null && dstArgument != null && srcArgument.getChild(0).getLabel().equals(dstArgument.getChild(0).getLabel()) &&
+                !allMappings.isSrcMapped(srcArgument) && !allMappings.isDstMapped(dstArgument)) {
+            store.addMapping(srcArgument, dstArgument);
+            store.addMapping(srcArgument.getChild(0), dstArgument.getChild(0));
+            store.addMapping(srcArgument.getChild(1), dstArgument.getChild(1));
+        }
+    }
+
+    private static Tree keywordArgumentOfValue(Tree value, Constants lang) {
+        Tree argument = value.getParent();
+        if (argument != null && argument.getType().name.equals(lang.KEYWORD_ARGUMENT) && argument.getChildren().size() == 3 &&
+                argument.getChild(2) == value && argument.getChild(0).getType().name.equals(lang.KEYWORD_IDENTIFIER))
+            return argument;
+        return null;
+    }
+
     private void processOptimization(ASTDiff input, OptimizationData optimizationData, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
         Tree srcTree = input.src.getRoot();
         Tree dstTree = input.dst.getRoot();
@@ -88,10 +109,18 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
                 if(Constants.isCrossLanguage(astDiff.LANG1, astDiff.LANG2)) {
                     JavaToKotlinMigration.handleLeafMapping(lastStepMappingStore, srcExp, dstExp, astDiff.LANG1, astDiff.LANG2, lastStepMapping.getRefactorings(), optimizationData.getDeferredFlattenings());
                 }
-                if (needToOverride(input, srcExp, dstExp))
+                ExtendedMultiMappingStore store = needToOverride(input, srcExp, dstExp) ? lastStepMappingStore : input.getAllMappings();
+                if (store == lastStepMappingStore)
                     new IgnoringCommentsLeafMatcher(astDiff.LANG1, astDiff.LANG2).match(srcExp, dstExp, lastStepMappingStore);
                 else
                     new LeafMatcher(astDiff.LANG1, astDiff.LANG2).match(srcExp,dstExp,input.getAllMappings());
+                //the value is the model's fragment on the source side for an extracted variable and on the destination side for an inlined one
+                if (store.isSrcMapped(srcExp))
+                    for (Tree dst : Set.copyOf(store.getDsts(srcExp)))
+                        matchKeywordArguments(srcExp, dst, store, input.getAllMappings());
+                if (store.isDstMapped(dstExp))
+                    for (Tree src : Set.copyOf(store.getSrcs(dstExp)))
+                        matchKeywordArguments(src, dstExp, store, input.getAllMappings());
             }
             else {
                 //Inter-file optimizations

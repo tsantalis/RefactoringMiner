@@ -9108,6 +9108,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 */
+	//the replacements refining a replacement of the other set, paired regardless of their order in the sets, each with at most one replacement of the other set
+	private static int matchingReplacements(Set<Replacement> replacements1, Set<Replacement> replacements2) {
+		int matchingReplacements = 0;
+		Set<Replacement> matched2 = new LinkedHashSet<Replacement>();
+		for(Replacement r1 : replacements1) {
+			for(Replacement r2 : replacements2) {
+				if(!matched2.contains(r2) && refinedReplacement(r1, r2)) {
+					matched2.add(r2);
+					matchingReplacements++;
+					break;
+				}
+			}
+		}
+		return matchingReplacements;
+	}
+
+	//the same replacement, or one replacing more or less of the same code with the same code, i.e., result.append(' ') -> append(' ') and result -> append(' '),
+	//but not the replacement of other code with the same code, i.e., not -> want and id.copy() -> want
+	private static boolean refinedReplacement(Replacement r1, Replacement r2) {
+		if(r1.getBefore().equals(r2.getBefore()) && r1.getAfter().equals(r2.getAfter())) {
+			return true;
+		}
+		if(r1.getAfter().equals(r2.getAfter())) {
+			return r1.getBefore().contains(r2.getBefore()) || r2.getBefore().contains(r1.getBefore());
+		}
+		if(r1.getBefore().equals(r2.getBefore())) {
+			return r1.getAfter().contains(r2.getAfter()) || r2.getAfter().contains(r1.getAfter());
+		}
+		return false;
+	}
+
 	private void checkForOtherPossibleMatchesForFragment2(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, TreeSet<LeafMapping> mappingSet,
 			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic)
@@ -9161,7 +9192,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() <= mappingSet.first().getReplacements().size();
 					if(mappingSet.size() > 1) {
-						matchWithLessReplacements = mappingSet.first().getReplacements().containsAll(replacements) && replacements.size() < mappingSet.first().getReplacements().size();
+						//each replacement refines a replacement of the best mapping, i.e., result.append(' ') -> append(' ') refines result -> append(' ')
+						matchWithLessReplacements = matchingReplacements(replacements, mappingSet.first().getReplacements()) == replacements.size() && replacements.size() < mappingSet.first().getReplacements().size();
 					}
 					boolean differentVariableDeclarationNumber =
 							mappingSet.last().getFragment1().getVariableDeclarations().size() != mappingSet.last().getFragment2().getVariableDeclarations().size() &&

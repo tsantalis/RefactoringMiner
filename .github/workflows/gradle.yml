@@ -26,7 +26,32 @@ jobs:
       OAuthToken: ${{ secrets.OAUTHTOKEN }} 
 
     steps:
+    # Reuse the git objects of an earlier master build, so that the checkout fetches only the objects changed since then,
+    # instead of the whole 3.5 GB tree of test resources. The checkout reuses a .git with the same remote.
+    - name: Restore git objects
+      uses: actions/cache/restore@v4
+      with:
+        path: .git
+        key: git-${{ runner.os }}-${{ github.sha }}
+        restore-keys: git-${{ runner.os }}-
+
+    # The credentials are not kept in .git/config, so that the cached .git does not contain the token
     - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+
+    # Drop the objects of the older snapshot, so that the cache does not grow with every build
+    - name: Drop git objects of older snapshots
+      if: github.ref == 'refs/heads/master'
+      run: git reflog expire --expire=now --all && git repack -a -d -q
+
+    - name: Save git objects
+      if: github.ref == 'refs/heads/master'
+      uses: actions/cache/save@v4
+      with:
+        path: .git
+        key: git-${{ runner.os }}-${{ github.sha }}
+
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:

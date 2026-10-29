@@ -346,6 +346,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 					sourceFolder,
 					filePath,
 					langAnnotation,
+					container,
 					fileContent);
 			annotations.add(umlAnnotation);
 		}

@@ -64,21 +64,23 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		}
 	}
 
-	public UMLAnnotation(LangCompilationUnit cu, String sourceFolder, String filePath, LangAnnotation annotation, String fileContent) {
+	//the arguments of a Python decorator are evaluated where the decorated declaration is defined, like the default values of the parameters,
+	//so they belong to the container of the decorated operation or class, i.e., a dictionary argument is an anonymous class of that container
+	public UMLAnnotation(LangCompilationUnit cu, String sourceFolder, String filePath, LangAnnotation annotation, VariableDeclarationContainer container, String fileContent) {
 		this.typeName = annotation.getName().getIdentifier();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, annotation, CodeElementType.ANNOTATION);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		// Handle single-member annotations (e.g., @decorator(value))
 		if (annotation.isSingleMemberAnnotation()) {
 			this.value = new AbstractExpression(cu, sourceFolder, filePath,
-					annotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), fileContent);
+					annotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, container, new LinkedHashMap<>(), fileContent);
 		}
 		// Handle normal annotations with named parameters (e.g., @dataclass(frozen=True, order=False))
 		else if (annotation.isNormalAnnotation()) {
 			Map<String, LangASTNode> langPairs = annotation.getMemberValuePairs();
 			for (Map.Entry<String, LangASTNode> entry : langPairs.entrySet()) {
 				AbstractExpression value = new AbstractExpression(cu, sourceFolder, filePath,
-						entry.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, new LinkedHashMap<>(), fileContent);
+						entry.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, container, new LinkedHashMap<>(), fileContent);
 				memberValuePairs.put(entry.getKey(), value);
 			}
 		}
@@ -88,7 +90,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 			// This matches common Python decorator patterns like @lru_cache(128)
 			if (annotation.getArguments().size() == 1) {
 				this.value = new AbstractExpression(cu, sourceFolder, filePath,
-						annotation.getArguments().get(0), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), fileContent);
+						annotation.getArguments().get(0), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, container, new LinkedHashMap<>(), fileContent);
 			}
 			// For multiple positional arguments, we could store them as indexed pairs
 			// e.g., "0" -> first_arg, "1" -> second_arg, etc.
@@ -96,7 +98,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 				for (int i = 0; i < annotation.getArguments().size(); i++) {
 					LangASTNode node = annotation.getArguments().get(i);
 					AbstractExpression value = new AbstractExpression(cu, sourceFolder, filePath,
-							node, CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, new LinkedHashMap<>(), fileContent);
+							node, CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, container, new LinkedHashMap<>(), fileContent);
 					arguments.add(value);
 				}
 			}

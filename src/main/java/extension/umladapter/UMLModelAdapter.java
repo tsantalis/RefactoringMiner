@@ -207,12 +207,15 @@ public class UMLModelAdapter {
         }
         UMLClass umlClass = new UMLClass(moduleName, className, locationInfo, typeDecl.isTopLevel(), imports);
 
+        //the container of the class-level code also holds the decorator arguments, i.e., a dictionary argument of a class decorator
+        ModuleContainer moduleContainer = new ModuleContainer(locationInfo, typeDecl.getName());
         for (LangAnnotation langAnnotation : typeDecl.getAnnotations()) {
             umlClass.addAnnotation(new UMLAnnotation(
                     typeDecl.getRootCompilationUnit(),
                     sourceFolder,
                     filePath,
                     langAnnotation,
+                    moduleContainer,
                     fileContent));
         }
 
@@ -276,7 +279,6 @@ public class UMLModelAdapter {
             }
         }
         if (typeDecl.getStatements().size() > 0) {
-            ModuleContainer moduleContainer = new ModuleContainer(locationInfo, typeDecl.getName());
             OperationBody opBody = new LangOperationBody(
                     typeDecl.getRootCompilationUnit(),
                     sourceFolder,
@@ -317,6 +319,7 @@ public class UMLModelAdapter {
                     sourceFolder,
                     filePath,
                     langAnnotation,
+                    umlOperation,
                     fileContent));
         }
 

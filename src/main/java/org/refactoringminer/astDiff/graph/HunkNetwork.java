@@ -37,6 +37,7 @@ public class HunkNetwork {
   private final Set<ASTDiff> diffs = new HashSet<>();
   private final Set<String> pairedSrcPaths = new HashSet<>();
   private final Set<String> pairedDstPaths = new HashSet<>();
+  private final Map<SrcDst, Map<String, Set<String>>> memberUses = new EnumMap<>(SrcDst.class);
   @Nullable
   private final MemberUsageFinder memberUsageFinder;
   @Nullable
@@ -358,10 +359,111 @@ public class HunkNetwork {
   }
 
   private List<Node> editingNodes(List<Node> changes, LocationInfo use, boolean editing) {
+    return editingNodes(changes, use, editing, null);
+  }
+
+  // The changes editing the use of the member (a local when none): the ones whose own code holds it, not carrying it over
+  private List<Node> editingNodes(List<Node> changes, LocationInfo use, boolean editing, @Nullable String member) {
     if (!editing) {
       return changes;
     }
-    return changes.stream().filter(change -> !carriesOver(change, use.getStartOffset(), use.getEndOffset())).toList();
+    return changes.stream().filter(change -> !carriesOver(change, use.getStartOffset(), use.getEndOffset())
+            && (member == null || !movesUse(change, use, member))).toList();
+  }
+
+  // Whether the use lies in code the change moves as it is to another member, such as a body extracted to a new method,
+  // where it uses the member it used there: it relies on nothing anew. What it uses of the member it arrives in (a
+  // parameter for a local it read) is code of the change, or binds it anew
+  private boolean movesUse(Node change, LocationInfo use, String member) {
+    if (memberUsageFinder == null) {
+      return false;
+    }
+
+    // The moved code is the change, or code of it, as the statements a new method receives
+    List<Node> moves = new ArrayList<>(List.of(change));
+    if (change.getSubs() != null) {
+      moves.addAll(change.getSubs());
+    }
+    Tree useTree = null;
+    for (Node move : moves) {
+      if (!move.getNodeType().equals(NodeType.SRC_MOVE) && !move.getNodeType().equals(NodeType.DST_MOVE)) {
+        continue;
+      }
+      for (Tree tree : move.getTree().preOrder()) {
+        if (tree.getPos() == use.getStartOffset() && tree.getEndPos() == use.getEndOffset()) {
+          useTree = tree;
+          break;
+        }
+      }
+    }
+    if (useTree == null) {
+      return false;
+    }
+
+    boolean src = change.isSrc();
+    SrcDst counterpartSrcDst = src ? SrcDst.DST : SrcDst.SRC;
+    for (ASTDiff diff : diffs) {
+      if (!(src ? diff.getSrcPath() : diff.getDstPath()).equals(change.getPath())) {
+        continue;
+      }
+
+      MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
+      Tree counterpart = src ? mappingStore.getDstForSrc(useTree) : mappingStore.getSrcForDst(useTree);
+      Tree counterpartRoot = src ? diff.dst.getRoot() : diff.src.getRoot();
+      if (counterpart == null || (counterpart != counterpartRoot && !counterpart.getParents().contains(counterpartRoot))
+              || !useTree.isIsomorphicTo(counterpart)) {
+        continue;
+      }
+
+      String counterpartPath = src ? diff.getDstPath() : diff.getSrcPath();
+      UMLOperation operation = rmIndex.locate(change.getSrcDst(), change.getPath(), useTree).operation();
+      UMLOperation counterpartOperation = rmIndex.locate(counterpartSrcDst, counterpartPath, counterpart).operation();
+      if (operation == null || counterpartOperation == null
+              || rmLinks.isSameMember(src ? operation : counterpartOperation, src ? counterpartOperation : operation)) {
+        return false;
+      }
+
+      return memberUses(counterpartSrcDst).getOrDefault(locationKey(counterpartPath, counterpart.getPos(), counterpart.getEndPos()), Set.of())
+              .contains(member);
+    }
+    return false;
+  }
+
+  // The members each use of a revision binds to, by the location of the use
+  private Map<String, Set<String>> memberUses(SrcDst srcDst) {
+    return memberUses.computeIfAbsent(srcDst, side -> {
+      Map<String, Set<String>> uses = new HashMap<>();
+      UMLModel umlModel = side.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
+      for (UMLClass umlClass : umlModel.getClassList()) {
+        for (UMLOperation operation : umlClass.getOperations()) {
+          for (AbstractCall invocation : findInvocations(operation, side)) {
+            LocationInfo location = invocation.getLocationInfo();
+            uses.computeIfAbsent(locationKey(location.getFilePath(), location.getStartOffset(), location.getEndOffset()),
+                    key -> new HashSet<>()).add(memberKey(operation));
+          }
+        }
+        List<UMLAttribute> attributes = new ArrayList<>(umlClass.getAttributes());
+        attributes.addAll(umlClass.getEnumConstants());
+        for (UMLAttribute attribute : attributes) {
+          for (LeafExpression access : memberUsageFinder.findAccesses(attribute, umlModel)) {
+            LocationInfo location = access.getLocationInfo();
+            uses.computeIfAbsent(locationKey(location.getFilePath(), location.getStartOffset(), location.getEndOffset()),
+                    key -> new HashSet<>()).add(memberKey(attribute));
+          }
+        }
+      }
+      return uses;
+    });
+  }
+
+  private static String locationKey(String path, int start, int end) {
+    return path + ":" + start + ":" + end;
+  }
+
+  // The member a use binds to, the same in both revisions when its class and its signature are
+  private static String memberKey(Object member) {
+    return member instanceof UMLOperation operation ? operation.getKey()
+            : ((UMLAttribute) member).getClassName() + "." + ((UMLAttribute) member).getName();
   }
 
   // Whether the use lies in code the change carries over as it is, such as a statement out of a removed try, a chain
@@ -682,7 +784,9 @@ public class HunkNetwork {
   //    that the changes reach only from test code, unless that code is changed itself.
   //  - Dependencies of deleted code only (the metrics constants of removed latency recording, the old revision's
   //    log field). Idea: keep a dependency relied on by deleted code only when it is a callee or a member whose
-  //    removal changes behavior (an invocation, a field written), and drop the constants and loggers it read.
+  //    removal changes behavior (an invocation, a field written), and drop the constants and loggers it read. The code
+  //    of a removed class already brings none (see isInRemovedClass), nor does code moved as it is to another member
+  //    (see movesUse).
   private void processExtensions(SrcDst srcDst) {
     HashMap<Node, Set<Node>> usesUsedNodes = new HashMap<>();
 
@@ -776,6 +880,9 @@ public class HunkNetwork {
 
     List<Node> usedNodes = util.findOverlappingNodes(usedLocation.getFilePath(), srcDst, usedStart, usedEnd,
             (n) -> !n.isContext() && !n.isExtension() && n.getTree().getPos() < usedEnd && usedStart < n.getTree().getEndPos());
+    if (usedNodes.isEmpty() && usedTree != null) {
+      usedNodes = counterpartChanges(srcDst, usedLocation.getFilePath(), usedTree);
+    }
     if (!usedNodes.isEmpty()) {
       // A changed declaration is no extension, but its uses outside it rely on its changes as they would on it
       for (Node useNode : useNodes) {
@@ -794,11 +901,57 @@ public class HunkNetwork {
     }
 
     for (Node useNode : editingUseNodes) {
+      if (isInRemovedClass(useNode)) {
+        continue;
+      }
+
       Node usedExtensionNode = addExtensionNode(usedTree, useNode);
 
       usesUsedNodes.putIfAbsent(useNode, new HashSet<>());
       usesUsedNodes.get(useNode).add(usedExtensionNode);
     }
+  }
+
+  // Whether the change lies in a class RM gives as removed, not moved, renamed or merged: what such code used tells
+  // nothing of the revision without it (what still uses it does), so it brings no unchanged declaration
+  private boolean isInRemovedClass(Node change) {
+    if (!change.isSrc()) {
+      return false;
+    }
+
+    for (UMLClass removedClass : modelDiff.getRemovedClasses()) {
+      LocationInfo location = removedClass.getLocationInfo();
+      if (location.getFilePath().equals(change.getPath()) && location.getStartOffset() <= change.getTree().getPos()
+              && change.getTree().getEndPos() <= location.getEndOffset()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // The changes of the declaration in the other revision, when only that revision changes it, as a field whose private
+  // modifier is removed: the declaration is changed all the same
+  private List<Node> counterpartChanges(SrcDst srcDst, String path, Tree declaration) {
+    boolean src = srcDst.equals(SrcDst.SRC);
+    for (ASTDiff diff : diffs) {
+      if (!(src ? diff.getSrcPath() : diff.getDstPath()).equals(path)) {
+        continue;
+      }
+
+      MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
+      Tree counterpart = src ? mappingStore.getDstForSrc(declaration) : mappingStore.getSrcForDst(declaration);
+      // The mappings of a diff may reach trees of other files, whose content is not the one of its other path
+      Tree counterpartRoot = src ? diff.dst.getRoot() : diff.src.getRoot();
+      if (counterpart == null || (counterpart != counterpartRoot && !counterpart.getParents().contains(counterpartRoot))) {
+        continue;
+      }
+
+      int start = counterpart.getPos();
+      int end = counterpart.getEndPos();
+      return util.findOverlappingNodes(src ? diff.getDstPath() : diff.getSrcPath(), src ? SrcDst.DST : SrcDst.SRC, start, end,
+              n -> !n.isContext() && !n.isExtension() && n.getTree().getPos() < end && start < n.getTree().getEndPos());
+    }
+    return List.of();
   }
 
   private Set<Node> getArgumentNodes(UMLOperation umlOperation, VariableDeclaration parameterDeclaration, SrcDst srcDst) {
@@ -938,9 +1091,10 @@ public class HunkNetwork {
   }
 
   // A changed method of the new revision overriding or implementing a changed method relies on it as a caller does: it
-  // fulfills the contract the overridden method declares. An old override relies on nothing the change needs.
-  // TODO: an unchanged overridden method is no extension of the changes of the overriding one yet, though its contract
-  //  (an interface method and its javadoc) is what a reviewer judges an implementation against
+  // fulfills the contract the overridden method declares. An old override relies on nothing the change needs. A new
+  // method overriding unchanged ones relies on the nearest of them, whose contract (an interface method and its javadoc,
+  // a hook and its default) is what a reviewer judges it against.
+  // TODO: an unchanged overridden method is no extension of the changes of an existing overriding one yet
   private void processOverrides() {
     if (receiverTypeResolver == null) {
       return;
@@ -948,14 +1102,27 @@ public class HunkNetwork {
 
     SrcDst srcDst = SrcDst.DST;
     UMLModel umlModel = modelDiff.getChildModel();
-    for (UMLClass umlClass : umlModel.getClassList()) {
+    // Finding what a method overrides attaches the files declaring it to the model
+    for (UMLClass umlClass : new ArrayList<>(umlModel.getClassList())) {
       for (UMLOperation operation : umlClass.getOperations()) {
         List<Node> overridingChanges = declarationChanges(operation, srcDst);
         if (overridingChanges.isEmpty()) {
           continue;
         }
 
-        for (UMLOperation overridden : receiverTypeResolver.findOverridden(operation, umlClass, umlModel)) {
+        List<UMLOperation> allOverridden = receiverTypeResolver.findAttachedOverridden(operation, umlClass, umlModel);
+        List<Node> newDeclarations = overridingChanges.stream().filter(change -> change.getNodeType().equals(NodeType.ADDITION)
+                && change.getRM().declaredOperation() == operation).toList();
+        for (UMLOperation overridden : nearestOverridden(allOverridden, umlModel)) {
+          if (declarationChanges(overridden, srcDst).isEmpty()) {
+            Tree overriddenTree = declarationTree(srcDst, overridden.getLocationInfo());
+            for (Node newDeclaration : overriddenTree == null ? List.<Node>of() : newDeclarations) {
+              addDefUse(addExtensionNode(overriddenTree, newDeclaration), newDeclaration);
+            }
+          }
+        }
+
+        for (UMLOperation overridden : allOverridden) {
           for (Node overriddenChange : declarationChanges(overridden, srcDst)) {
             for (Node overridingChange : overridingChanges) {
               addDefUse(overriddenChange, overridingChange);
@@ -975,6 +1142,30 @@ public class HunkNetwork {
         }
       }
     }
+  }
+
+  // The overridden methods no other of them overrides, as the method of a class rather than the interface method the
+  // class implements
+  private List<UMLOperation> nearestOverridden(List<UMLOperation> overridden, UMLModel umlModel) {
+    List<UMLOperation> nearest = new ArrayList<>(overridden);
+    for (UMLOperation operation : overridden) {
+      for (UMLClass declaring : umlModel.getClassList()) {
+        if (declaring.getOperations().contains(operation)) {
+          nearest.removeAll(receiverTypeResolver.findOverridden(operation, declaring, umlModel));
+        }
+      }
+    }
+    return nearest;
+  }
+
+  @Nullable
+  private Tree declarationTree(SrcDst srcDst, LocationInfo location) {
+    // A file the model holds without its code, as one only its declarations are read from, declares no tree
+    if (!(srcDst.equals(SrcDst.SRC) ? contentsContexts.getSrcContexts() : contentsContexts.getDstContexts()).containsKey(location.getFilePath())) {
+      return null;
+    }
+    Tree root = contentsContexts.getRoot(srcDst, location.getFilePath());
+    return TreeUtilFunctions.findByLocationInfo(root, location, new Constants(location.getFilePath()));
   }
 
   private void addDefUse(Node used, Node using) {
@@ -1065,7 +1256,8 @@ public class HunkNetwork {
     for (AbstractCall invocation : findInvocations(operation, srcDst)) {
       LocationInfo invocationLocationInfo = invocation.getLocationInfo();
       result.addAll(editingNodes(findReachedChanges(invocationLocationInfo.getFilePath(), srcDst,
-              invocationLocationInfo.getStartOffset(), invocationLocationInfo.getEndOffset()), invocationLocationInfo, editing));
+              invocationLocationInfo.getStartOffset(), invocationLocationInfo.getEndOffset()), invocationLocationInfo, editing,
+              memberKey(operation)));
     }
 
     return result;
@@ -1090,7 +1282,7 @@ public class HunkNetwork {
     for (LeafExpression access : memberUsageFinder.findAccesses(attribute, umlModel)) {
       LocationInfo accessLocation = access.getLocationInfo();
       result.addAll(editingNodes(util.findOverlappingNodes(accessLocation.getFilePath(), srcDst, accessLocation.getStartOffset(),
-              accessLocation.getEndOffset(), n -> !n.isContext() && !n.isExtension()), accessLocation, editing));
+              accessLocation.getEndOffset(), n -> !n.isContext() && !n.isExtension()), accessLocation, editing, memberKey(attribute)));
     }
     return result;
   }

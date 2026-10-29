@@ -75,6 +75,17 @@ public class ReceiverTypeResolver {
   }
 
   /**
+   * The methods {@link #findOverridden} gives, as operations of the model: the files declaring them are attached to it,
+   * as the files of the members a call or a name binds to are.
+   */
+  public List<UMLOperation> findAttachedOverridden(UMLOperation operation, UMLAbstractClass declaring, UMLModel umlModel) {
+    List<UMLOperation> overridden = findOverridden(operation, declaring, umlModel);
+    Set<String> paths = new LinkedHashSet<>();
+    overridden.forEach(superOperation -> paths.add(superOperation.getLocationInfo().getFilePath()));
+    return attach(paths) ? findOverridden(operation, declaring, umlModel) : overridden;
+  }
+
+  /**
    * Java: the methods of the supertypes of its class that the operation overrides or implements, those of its name and
    * parameter types (a type variable of the supertype method standing for any type) that are not private nor static.
    */
@@ -1586,7 +1597,21 @@ public class ReceiverTypeResolver {
       return getJdkFunctionalParameterType(parameterType, candidate.jdkBindings(), candidate.jdkOwner(), index);
     }
     ReceiverType functionalType = calledParameterType(candidate, taking.getValue());
-    return functionalType == null ? null : getFunctionalParameterType(functionalType, index, scope.umlModel());
+    if (functionalType == null) {
+      return null;
+    }
+    // the type parameters of the called method stand for what the other arguments give them, as a Class<E> argument
+    // Foo.class gives E the type Foo in the Consumer<? super E> the lambda is
+    Map<String, ReceiverType> bindings = new HashMap<>(functionalType.bindings());
+    for (UMLTypeParameter typeParameter : candidate.operation().getTypeParameters()) {
+      ReceiverType inferred = bindings.containsKey(typeParameter.getName()) ? null
+              : inferTypeParameter(candidate.operation(), typeParameter.getName(), call, callScope);
+      if (inferred != null) {
+        bindings.put(typeParameter.getName(), inferred);
+      }
+    }
+    functionalType = new ReceiverType(functionalType.type(), functionalType.context(), functionalType.files(), bindings);
+    return getFunctionalParameterType(functionalType, index, scope.umlModel());
   }
 
   @Nullable

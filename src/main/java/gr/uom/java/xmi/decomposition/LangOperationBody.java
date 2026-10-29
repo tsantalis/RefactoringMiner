@@ -372,9 +372,11 @@ public class LangOperationBody extends OperationBody {
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
-		else if(statement instanceof LangAsyncStatement) {
-			// In Python, the async statement (keyword) is used to define asynchronous functions, also known as coroutines. 
-			// These functions are designed to work with Python's asyncio library for concurrent programming, allowing for efficient handling of I/O-bound operations like network requests or file operations without blocking the main program execution.
+		else if(statement instanceof LangAsyncStatement asyncStatement) {
+			//the async statement wraps the asynchronous for or with statement, which spans the async keyword, i.e., async with connect(url) as connection: ...
+			if(asyncStatement.getBody() != null) {
+				processStatement(cu, sourceFolder, filePath, parent, asyncStatement.getBody(), fileContent);
+			}
 		}
 		else if(statement instanceof LangMethodDeclaration) {
 			LangMethodDeclaration methodDecl = (LangMethodDeclaration)statement;

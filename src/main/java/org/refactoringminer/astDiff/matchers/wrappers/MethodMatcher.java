@@ -633,9 +633,15 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if (identifiers != null) {
                         mappingStore.addMapping(identifiers.first, identifiers.second);
                     }
+                    //the async keyword of a decorated coroutine, i.e., @router.post("/webhook") async def receive_github_webhook(...)
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> asyncKeywords = Helpers.findPairOfType(function_definitions.first, function_definitions.second,LANG1.ASYNC_KEYWORD,LANG2.ASYNC_KEYWORD);
+                    if (asyncKeywords != null) {
+                        mappingStore.addMapping(asyncKeywords.first, asyncKeywords.second);
+                    }
                     com.github.gumtreediff.utils.Pair<Tree,Tree> parameters = Helpers.findPairOfType(function_definitions.first, function_definitions.second,LANG1.PARAMETERS,LANG2.PARAMETERS);
                     if (parameters != null) {
                         mappingStore.addMapping(parameters.first, parameters.second);
+                        matchParameterSeparators(parameters.first, parameters.second, mappingStore);
                     }
                     com.github.gumtreediff.utils.Pair<Tree,Tree> arrows = Helpers.findPairOfType(function_definitions.first, function_definitions.second,LANG1.ARROW_PYTHON,LANG2.ARROW_PYTHON);
                     if (arrows != null) {
@@ -877,6 +883,18 @@ public class MethodMatcher extends BodyMapperMatcher{
         return node;
     }
 
+    //the separators of the Python keyword-only and positional-only parameters are not parameters, i.e., def f(a, /, b, *, c)
+    private void matchParameterSeparators(Tree srcParameters, Tree dstParameters, ExtendedMultiMappingStore mappingStore) {
+        com.github.gumtreediff.utils.Pair<Tree,Tree> keywordSeparators = Helpers.findPairOfType(srcParameters, dstParameters, LANG1.KEYWORD_SEPARATOR, LANG2.KEYWORD_SEPARATOR);
+        if (keywordSeparators != null) {
+            mappingStore.addMappingRecursively(keywordSeparators.first, keywordSeparators.second);
+        }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> positionalSeparators = Helpers.findPairOfType(srcParameters, dstParameters, LANG1.POSITIONAL_SEPARATOR, LANG2.POSITIONAL_SEPARATOR);
+        if (positionalSeparators != null) {
+            mappingStore.addMappingRecursively(positionalSeparators.first, positionalSeparators.second);
+        }
+    }
+
     private void processMethodSignature(Tree srcOperationNode, Tree dstOperationNode, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
         if (srcOperationNode == null || dstOperationNode == null) return;
         com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.SIMPLE_NAME,LANG2.SIMPLE_NAME);
@@ -1035,6 +1053,7 @@ public class MethodMatcher extends BodyMapperMatcher{
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PARAMETERS,LANG2.PARAMETERS);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
+            matchParameterSeparators(matched.first, matched.second, mappingStore);
             if(matched.first.getChildren().size() > 0 && matched.second.getChildren().size() > 0) {
                 Tree firstParam1 = matched.first.getChild(0);
                 Tree firstParam2 = matched.second.getChild(0);

@@ -350,6 +350,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                     }
                 }
+                //the async keyword of an asynchronous for or with statement, and the clause holding the with items, i.e., async with timeout(5), connect(url) as connection: ...
+                Pair<Tree, Tree> asyncKeywords = Helpers.findPairOfType(srcStatementNode, dstStatementNode, LANG1.ASYNC_KEYWORD, LANG2.ASYNC_KEYWORD);
+                if (asyncKeywords != null) {
+                    mappingStore.addMapping(asyncKeywords.first, asyncKeywords.second);
+                }
+                if (srcStatementNode.getType().name.equals(LANG1.WITH_STATEMENT)) {
+                    Pair<Tree, Tree> withClauses = Helpers.findPairOfType(srcStatementNode, dstStatementNode, LANG1.WITH_CLAUSE, LANG2.WITH_CLAUSE);
+                    if (withClauses != null) {
+                        mappingStore.addMapping(withClauses.first, withClauses.second);
+                    }
+                }
                 if(compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
                         compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
                         srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) &&
@@ -1056,10 +1067,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (asPatterns != null) {
                     mappingStore.addMappingRecursively(asPatterns.first,asPatterns.second);
                 }
-                Pair<Tree, Tree> identifiers = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
-                if (identifiers != null) {
-                    mappingStore.addMapping(identifiers.first,identifiers.second);
-                }
+                matchExceptionTypes(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
                 Pair<Tree, Tree> opening = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
                 if (opening != null) {
                     mappingStore.addMapping(opening.first,opening.second);
@@ -1090,7 +1098,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     Pair<Tree, Tree> parameterDeclarations = Helpers.findPairOfType(parameter_lists.first,parameter_lists.second, LANG1.PARAMETER_DECLARATION, LANG2.PARAMETER_DECLARATION);
                     if (parameterDeclarations != null) {
                         mappingStore.addMapping(parameterDeclarations.first,parameterDeclarations.second);
-                        identifiers = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+                        Pair<Tree, Tree> identifiers = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
                         if (identifiers != null) {
                             mappingStore.addMapping(identifiers.first,identifiers.second);
                         }
@@ -1116,6 +1124,27 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    //the exception types of a Python except clause are matched by name, and the rest in order, i.e., except DatabaseError, TimeoutError, ValueError:
+    private static void matchExceptionTypes(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
+        List<Tree> identifiers1 = new ArrayList<>(TreeUtilFunctions.findChildrenByType(srcStatementNode, LANG1.SIMPLE_NAME));
+        List<Tree> identifiers2 = new ArrayList<>(TreeUtilFunctions.findChildrenByType(dstStatementNode, LANG2.SIMPLE_NAME));
+        for (Tree identifier1 : new ArrayList<>(identifiers1)) {
+            for (Tree identifier2 : identifiers2) {
+                if (identifier1.getLabel().equals(identifier2.getLabel())) {
+                    mappingStore.addMapping(identifier1, identifier2);
+                    identifiers1.remove(identifier1);
+                    identifiers2.remove(identifier2);
+                    break;
+                }
+            }
+        }
+        if (identifiers1.size() == identifiers2.size()) {
+            for (int i = 0; i < identifiers1.size(); i++) {
+                mappingStore.addMapping(identifiers1.get(i), identifiers2.get(i));
             }
         }
     }

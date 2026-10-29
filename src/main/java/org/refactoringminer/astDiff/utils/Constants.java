@@ -465,6 +465,9 @@ public class Constants {
     public final String ARROW_PYTHON = "->";
     public final String TYPE = "type";
     public final String WITH_STATEMENT = "with_statement";
+    public final String WITH_CLAUSE = "with_clause";
+    public final String KEYWORD_SEPARATOR = "keyword_separator";
+    public final String POSITIONAL_SEPARATOR = "positional_separator";
     public final String TYPED_DEFAULT_PARAMETER = "typed_default_parameter";
     public final String TYPED_PARAMETER = "typed_parameter";
     public final String KEYWORD_ARGUMENT = "keyword_argument";

@@ -30,6 +30,7 @@ import gr.uom.java.xmi.UMLOperation;
 
 public class UMLCommentListDiff {
 	private static final Pattern LEAD_TRAIL_QUOTE = Pattern.compile("^\"|\"$");
+	private static final Set<String> TASK_TAGS = Set.of("TODO", "FIXME", "XXX");
 	private List<Pair<UMLComment, UMLComment>> commonComments;
 	private List<UMLComment> deletedComments;
 	private List<UMLComment> addedComments;
@@ -61,7 +62,34 @@ public class UMLCommentListDiff {
 	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter, UMLOperationBodyMapper mapper) {
 		this.operationBodyMapper = mapper;
 		this.mappings = mapper.getMappings();
-		init(commentsBefore, commentsAfter);
+		List<Pair<UMLComment, UMLComment>> commentedCodePairs = new ArrayList<Pair<UMLComment,UMLComment>>();
+		List<UMLComment> remainingCommentsBefore = new ArrayList<UMLComment>(commentsBefore);
+		List<UMLComment> remainingCommentsAfter = new ArrayList<UMLComment>(commentsAfter);
+		for(Pair<AbstractCodeFragment, UMLComment> pair : mapper.getCommentedCode()) {
+			matchEndOfLineCommentOfCommentedCode(pair.getLeft(), pair.getRight(), remainingCommentsBefore, remainingCommentsAfter, commentedCodePairs, true);
+		}
+		for(Pair<UMLComment, AbstractCodeFragment> pair : mapper.getUnCommentedCode()) {
+			matchEndOfLineCommentOfCommentedCode(pair.getRight(), pair.getLeft(), remainingCommentsAfter, remainingCommentsBefore, commentedCodePairs, false);
+		}
+		init(remainingCommentsBefore, remainingCommentsAfter);
+		this.commonComments.addAll(commentedCodePairs);
+	}
+
+	//the end-of-line comment of a statement commented out stays at the end of the commented code, i.e., throw new PathIsExploredException(); // XXX into // throw new PathIsExploredException(); // XXX
+	//the same holds for an uncommented statement in the reverse direction
+	private static void matchEndOfLineCommentOfCommentedCode(AbstractCodeFragment statement, UMLComment codeComment, List<UMLComment> statementComments, List<UMLComment> codeComments,
+			List<Pair<UMLComment, UMLComment>> commentedCodePairs, boolean commented) {
+		if(!codeComments.contains(codeComment)) {
+			return;
+		}
+		for(UMLComment statementComment : statementComments) {
+			if(endOfLineComment(statementComment, statement.getLocationInfo()) && codeComment.getText().endsWith(statementComment.getFullText())) {
+				commentedCodePairs.add(commented ? Pair.of(statementComment, codeComment) : Pair.of(codeComment, statementComment));
+				statementComments.remove(statementComment);
+				codeComments.remove(codeComment);
+				return;
+			}
+		}
 	}
 
 	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter) {
@@ -1092,10 +1120,20 @@ public class UMLCommentListDiff {
 		return false;
 	}
 
+	//a task tag and its author are not content, i.e., TODO(zhiting) shared by #TODO(zhiting): update the docs and #TODO(zhiting)
 	private int nonPunctuationWords(List<String> longestSubSequence) {
 		int count = 0;
-		for(String str : longestSubSequence) {
-			if(!Pattern.matches("\\p{Punct}", str) && !str.equals("─")) {
+		for(int i=0; i<longestSubSequence.size(); i++) {
+			String str = longestSubSequence.get(i);
+			if(TASK_TAGS.contains(str)) {
+				if(i+1 < longestSubSequence.size() && longestSubSequence.get(i+1).equals("(")) {
+					int closing = longestSubSequence.subList(i+1, longestSubSequence.size()).indexOf(")");
+					if(closing != -1) {
+						i += 1 + closing;
+					}
+				}
+			}
+			else if(!Pattern.matches("\\p{Punct}", str) && !str.equals("─")) {
 				count++;
 			}
 		}

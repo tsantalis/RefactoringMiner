@@ -102577,13 +102577,13 @@
   "firstType" : "LineComment",
   "secondType" : "LineComment",
   "firstLabel" : "// XXX",
-  "secondLabel" : "// XXX",
+  "secondLabel" : "//                     throw new PathIsExploredException(); // XXX",
   "firstParentType" : "Block",
   "secondParentType" : "Block",
   "firstPos" : 77607,
-  "secondPos" : 80325,
+  "secondPos" : 77550,
   "firstEndPos" : 77613,
-  "secondEndPos" : 80331
+  "secondEndPos" : 77616
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -106185,13 +106185,13 @@
   "firstType" : "LineComment",
   "secondType" : "LineComment",
   "firstLabel" : "// XXX",
-  "secondLabel" : "//                     throw new PathIsExploredException(); // XXX",
+  "secondLabel" : "// XXX",
   "firstParentType" : "Block",
   "secondParentType" : "Block",
   "firstPos" : 80314,
-  "secondPos" : 77550,
+  "secondPos" : 80325,
   "firstEndPos" : 80320,
-  "secondEndPos" : 77616
+  "secondEndPos" : 80331
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

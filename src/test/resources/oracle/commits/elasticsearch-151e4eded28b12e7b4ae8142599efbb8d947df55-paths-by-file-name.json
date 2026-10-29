@@ -44,6 +44,7 @@
   "ClusterHandle.java": [
     "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/ClusterHandle.java"
   ],
+  "Collection.java": [],
   "Connection.java": [
     "x-pack/plugin/core/src/main/java/org/elasticsearch/protocol/xpack/graph/Connection.java"
   ],
@@ -75,6 +76,10 @@
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/index/EsIndex.java",
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/index/EsIndex.java"
   ],
+  "EsRelation.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/EsRelation.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/EsRelation.java"
+  ],
   "EsqlCapabilities.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlCapabilities.java"
   ],
@@ -102,6 +107,7 @@
     "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
   ],
   "InputStream.java": [],
+  "Iterator.java": [],
   "Join.java": [
     "server/src/main/java/org/elasticsearch/cluster/coordination/Join.java",
     "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/logical/Join.java",
@@ -196,6 +202,7 @@
   "Scheduler.java": [
     "server/src/main/java/org/elasticsearch/threadpool/Scheduler.java"
   ],
+  "Set.java": [],
   "Source.java": [
     "build-tools-internal/src/main/java/org/elasticsearch/gradle/internal/doc/Source.java",
     "server/src/main/java/org/elasticsearch/search/lookup/Source.java",
@@ -285,6 +292,7 @@
   "hamcrest.java": [],
   "http.java": [],
   "io.java": [],
+  "java.java": [],
   "junit.java": [],
   "lucene.java": [],
   "org.java": [],

@@ -1,0 +1,365 @@
+{
+  "AbstractNodeSerializationTests.java": [
+    "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/plan/AbstractNodeSerializationTests.java"
+  ],
+  "AbstractNodeTestCase.java": [
+    "x-pack/plugin/esql-core/src/test/java/org/elasticsearch/xpack/esql/core/tree/AbstractNodeTestCase.java",
+    "x-pack/plugin/ql/src/test/java/org/elasticsearch/xpack/ql/tree/AbstractNodeTestCase.java"
+  ],
+  "AbstractPhysicalPlanSerializationTests.java": [
+    "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/plan/physical/AbstractPhysicalPlanSerializationTests.java"
+  ],
+  "AbstractPhysicalPlanSerializationTests.kt": [],
+  "AbstractWireTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/AbstractWireTestCase.java"
+  ],
+  "Accountable.java": [],
+  "Aggregate.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/Aggregate.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/Aggregate.java"
+  ],
+  "AggregateExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/AggregateExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/AggregateExec.java"
+  ],
+  "Alias.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/indices/alias/Alias.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/Alias.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Alias.java"
+  ],
+  "ArrayList.java": [],
+  "BinaryExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/BinaryExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/BinaryExec.java"
+  ],
+  "Block.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/Block.java"
+  ],
+  "BlockFactory.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java"
+  ],
+  "BlockLoader.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/BlockLoader.java"
+  ],
+  "BlockUtils.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockUtils.java"
+  ],
+  "Builder.java": [],
+  "Class.java": [],
+  "Class.kt": [],
+  "Closeable.java": [],
+  "Collection.java": [],
+  "Describable.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/Describable.java"
+  ],
+  "DissectExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/DissectExec.java"
+  ],
+  "ESTestCase.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "EnrichExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/EnrichExec.java"
+  ],
+  "Entry.java": [],
+  "EsQueryExec.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/EsQueryExec.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/EsQueryExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/EsQueryExec.java"
+  ],
+  "EsSourceExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/EsSourceExec.java"
+  ],
+  "EsqlTestUtils.java": [
+    "x-pack/plugin/esql/qa/testFixtures/src/main/java/org/elasticsearch/xpack/esql/EsqlTestUtils.java"
+  ],
+  "EstimatesRowSize.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/EstimatesRowSize.java"
+  ],
+  "EvalExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/EvalExec.java"
+  ],
+  "ExchangeExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/ExchangeExec.java"
+  ],
+  "ExchangeSinkExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/ExchangeSinkExec.java"
+  ],
+  "ExchangeSourceExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/ExchangeSourceExec.java"
+  ],
+  "Expression.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/Expression.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Expression.java"
+  ],
+  "Expressions.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/Expressions.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Expressions.java"
+  ],
+  "FieldExtractExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/FieldExtractExec.java"
+  ],
+  "Filter.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/bucket/filter/Filter.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/Filter.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/Filter.java"
+  ],
+  "FilterExec.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/FilterExec.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/FilterExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/FilterExec.java"
+  ],
+  "FilterStreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/FilterStreamInput.java"
+  ],
+  "FragmentExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/FragmentExec.java"
+  ],
+  "GrokExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/GrokExec.java"
+  ],
+  "HashJoinExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/HashJoinExec.java"
+  ],
+  "InputStream.java": [],
+  "Layout.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/Layout.java"
+  ],
+  "LeafExec.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/LeafExec.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/LeafExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/LeafExec.java"
+  ],
+  "LeafExec.kt": [],
+  "LeafPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/LeafPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/LeafPlan.java"
+  ],
+  "Limit.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/execution/search/Limit.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/Limit.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/Limit.java"
+  ],
+  "LimitExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/LimitExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/LimitExec.java"
+  ],
+  "List.java": [],
+  "LiteralTests.java": [
+    "x-pack/plugin/esql-core/src/test/java/org/elasticsearch/xpack/esql/core/expression/LiteralTests.java",
+    "x-pack/plugin/ql/src/test/java/org/elasticsearch/xpack/ql/expression/LiteralTests.java"
+  ],
+  "LocalExecutionPlanner.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/LocalExecutionPlanner.java"
+  ],
+  "LocalRelation.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/LocalRelation.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/local/LocalRelation.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/logical/LocalRelation.java"
+  ],
+  "LocalSourceExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/LocalSourceExec.java"
+  ],
+  "LocalSourceOperator.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/LocalSourceOperator.java"
+  ],
+  "LocalSupplier.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/local/LocalSupplier.java"
+  ],
+  "LogicalPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/LogicalPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/LogicalPlan.java"
+  ],
+  "LogicalPlanOptimizer.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/LogicalPlanOptimizer.java"
+  ],
+  "LogicalPlanOptimizerTests.java": [
+    "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/optimizer/LogicalPlanOptimizerTests.java"
+  ],
+  "LookupJoinExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/LookupJoinExec.java"
+  ],
+  "LuceneTestCase.java": [],
+  "MapperUtils.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/mapper/MapperUtils.java"
+  ],
+  "MvExpand.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/MvExpand.java"
+  ],
+  "MvExpandExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/MvExpandExec.java"
+  ],
+  "NameId.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/NameId.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/NameId.java"
+  ],
+  "NamedExpression.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/NamedExpression.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/NamedExpression.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "NamedWriteableAwareStreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteableAwareStreamInput.java"
+  ],
+  "NamedWriteableRegistry.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteableRegistry.java"
+  ],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
+  "NodeInfo.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/cluster/node/info/NodeInfo.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/NodeInfo.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/NodeInfo.java"
+  ],
+  "Object.java": [],
+  "Object.kt": [],
+  "Objects.java": [],
+  "Operator.java": [
+    "server/src/main/java/org/elasticsearch/index/query/Operator.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ml/job/config/Operator.java",
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/Operator.java"
+  ],
+  "OptimizerRule.java": [],
+  "OptimizerRules.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/OptimizerRules.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/optimizer/OptimizerRules.java"
+  ],
+  "OrderExec.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/OrderExec.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/OrderExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/OrderExec.java"
+  ],
+  "OutputExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/OutputExec.java"
+  ],
+  "OutputStream.java": [],
+  "ParameterizedRuleExecutor.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/rule/ParameterizedRuleExecutor.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/ParameterizedRuleExecutor.java"
+  ],
+  "PhysicalPlan.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/PhysicalPlan.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/PhysicalPlan.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/PhysicalPlan.java"
+  ],
+  "PlanStreamInput.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/util/PlanStreamInput.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/io/stream/PlanStreamInput.java"
+  ],
+  "PlanWritables.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/PlanWritables.java"
+  ],
+  "PlannerUtils.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/PlannerUtils.java"
+  ],
+  "ProjectExec.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/ProjectExec.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/ProjectExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/ProjectExec.java"
+  ],
+  "QueryPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/QueryPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/QueryPlan.java"
+  ],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "ReplaceLimitAndSortAsTopN.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/ReplaceLimitAndSortAsTopN.java"
+  ],
+  "ReplaceRowAsLocalRelation.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/ReplaceRowAsLocalRelation.java"
+  ],
+  "Resolvable.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/capabilities/Resolvable.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/capabilities/Resolvable.java"
+  ],
+  "Row.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/Row.java"
+  ],
+  "RowExec.java": [],
+  "RowExec.kt": [],
+  "RowExecSerializationTests.java": [],
+  "RowExecSerializationTests.kt": [],
+  "RowOperator.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/RowOperator.java"
+  ],
+  "RowOperatorFactory.java": [],
+  "Rule.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/rule/Rule.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/Rule.java"
+  ],
+  "RuleExecutor.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/rule/RuleExecutor.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/rule/RuleExecutor.java"
+  ],
+  "ShowExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/ShowExec.java"
+  ],
+  "Source.java": [
+    "build-tools-internal/src/main/java/org/elasticsearch/gradle/internal/doc/Source.java",
+    "server/src/main/java/org/elasticsearch/search/lookup/Source.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Source.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Source.java"
+  ],
+  "SourceOperator.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/SourceOperator.java"
+  ],
+  "SourceOperatorFactory.java": [],
+  "SourceTests.java": [
+    "x-pack/plugin/esql-core/src/test/java/org/elasticsearch/xpack/esql/core/tree/SourceTests.java",
+    "x-pack/plugin/ql/src/test/java/org/elasticsearch/xpack/ql/tree/SourceTests.java"
+  ],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "StreamOutput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamOutput.java"
+  ],
+  "String.java": [],
+  "String.kt": [],
+  "SubqueryExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/SubqueryExec.java"
+  ],
+  "Supplier.java": [],
+  "TopN.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/TopN.java"
+  ],
+  "TopNExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/TopNExec.java"
+  ],
+  "UnaryExec.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/UnaryExec.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/UnaryExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/UnaryExec.java"
+  ],
+  "UnaryPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/UnaryPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/logical/UnaryPlan.java"
+  ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
+  "core.java": [],
+  "elasticsearch.java": [],
+  "esql.java": [],
+  "function.java": [],
+  "io.java": [],
+  "lucene.java": [],
+  "org.java": [],
+  "physical.java": [],
+  "plan.java": [],
+  "tests.java": [],
+  "util.java": [],
+  "xpack.java": []
+}

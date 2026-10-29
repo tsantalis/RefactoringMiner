@@ -345,7 +345,6 @@
     "description": "ES|QL replaces the shared mutable QueryParams.EMPTY by a new QueryParams per request and parse; QueryParams gets final fields, size() and addTokenParam() replace positionalParams()/positionalParamTokens(), parsingErrors() returns an Iterator, and equals/hashCode are added",
     "notes": [
       "A comment moved onto the line of its field is a diff of its own, which prints the new field line as added again, besides the diff of the field.",
-      "The old `public QueryParams() {}` is printed as a dependency of the removed EMPTY creation, though a diff printed after it removes it.",
       "LogicalPlanBuilder#plan, which adapts to the Iterator returned by parsingErrors() (and never increments its counter), is linked to it only through the unchanged `var errors = ...` declaration, so nothing serves it and it reads last, after the tests."
     ],
     "expectations": [
@@ -387,7 +386,6 @@
       "The record accessor next() called by the fix is not resolved: the record header declaring the component `next` is printed for no diff.",
       "Releasables.close(Releasable...) serves the test but not the leak fix calling it with a method reference; the test's addInput.add(0, group) brings no AddInput#add.",
       "stats.csv-spec, holding the ES|QL tests of both fixes and the only user of the new capability PER_AGG_FILTERING_ORDS, is not shown.",
-      "The unrelated removed TODO comment of FilteredGroupingAggregatorFunctionTests reads before the production diffs of OrdinalsGroupingOperator and EsqlCapabilities, and the leak fix reads after the test diffs.",
       "The unchanged merges of OrdinalsGroupingOperator passing a filtered function as the input, which make the cast safe, are not shown."
     ],
     "expectations": [
@@ -494,9 +492,8 @@
     "notes": [
       "Constructors used by the tests are printed with their whole @FunctionInfo/@Param annotations.",
       "The Pow field declaration split in two (`base, exponent`) reads as a move between two diffs of the same location, so its old line is printed as removed twice: the diff removing the dataType field below it holds the line too (the Log one reads as one diff).",
-      "Deleted code brings its dependencies: the deleted RationalUnaryPredicate brings ten (isType, childrenResolved, field(), ...) and the removed equals overrides bring the field declarations of their classes; the new AbstractConfigurationFunctionTestCase brings trivial random/EMPTY/default setting helpers.",
-      "The four test headers now extending AbstractConfigurationFunctionTestCase read before it, apart from their buildWithConfiguration overrides, and it does not serve them (a supertype reference is no relation of the model).",
-      "The Left/Right cleanups (production code unrelated to the tests) read last, after all test diffs."
+      "Deleted code brings its dependencies: the removed equals overrides bring the field declarations of their classes; the new AbstractConfigurationFunctionTestCase brings trivial random/EMPTY/default setting helpers.",
+      "The four test headers now extending AbstractConfigurationFunctionTestCase read before it, apart from their buildWithConfiguration overrides, and it does not serve them (a supertype reference is no relation of the model)."
     ],
     "expectations": [
       {
@@ -529,8 +526,7 @@
         "description": "production code unrelated to the tests reads before them",
         "kind": "order",
         "before": "return new LeftEvaluator.Factory(",
-        "after": "public abstract class AbstractConfigurationFunctionTestCase extends AbstractFunctionTestCase {",
-        "todo": "unrelated production code reads after the test diffs"
+        "after": "public abstract class AbstractConfigurationFunctionTestCase extends AbstractFunctionTestCase {"
       }
     ]
   },
@@ -938,7 +934,7 @@
     "base_commit": "3517081b6c8c22263d7ae98c79080498f2d04d69",
     "description": "io_uring reads with IORING_RECV_MULTISHOT when the kernel supports it",
     "notes": [
-      "readComplete is printed whole (its new guard and `pending` sit directly in its body). The outer `} finally {` reads as removed and added, as the old finally block is mapped to the new inner finally that received its statements; the rest of the rewritten finally reads as removed and added code.",
+      "readComplete is printed whole (its new guard and `pending` sit directly in its body). The rest of the rewritten finally reads as removed and added code.",
       "The only change of IoUringBufferRingTest, the third read moved before `if (!incremental)`, is not shown: no change node exists for it (whether RM reports the move is not checked yet).",
       "scheduleRead0 is printed whole (43 lines) for the message added to its first assert, as an assert reads within its block, here the member body."
     ],
@@ -1412,7 +1408,6 @@
     "notes": [
       "Removing static from newTemporaryAppendingIndexWriter/newTemporaryEmptyIndexWriter follows from newTemporaryIndexWriterConfig reading hasIndexSort; nothing links them, the calls being unchanged code.",
       "The documentation and YAML REST tests are not shown.",
-      "The unrelated MapperServiceTests diff (and the StoreTests diff) read before the writers setting the parent field and the Store helpers.",
       "Engine.ROOT_DOC_FIELD_NAME is printed seven elements before the first writer setting it, with unrelated diffs in between.",
       "The MapperServiceTests diff brings trivial builder and test framework declarations as dependencies (XContentBuilder, Settings.Builder, an assertThat used only by removed lines)."
     ],
@@ -1439,8 +1434,7 @@
         "description": "unrelated test code reads after production code",
         "kind": "order",
         "before": "iwc.setParentField(ROOT_DOC_FIELD_NAME);  // Needed to support index sorting in the presence of nested objects.",
-        "after": "public void testIndexSortWithNestedFields() throws IOException {",
-        "todo": "an unrelated test is placed among production diffs"
+        "after": "public void testIndexSortWithNestedFields() throws IOException {"
       }
     ]
   },
@@ -1858,9 +1852,7 @@
     "commit": "ffc63d1f3e09d517f50e80777442b1b8f991788c",
     "base_commit": "b360abcca17bd86c7306ba4bdfdb22432bbcd5fd",
     "description": "HTTP decoders check versions strictly through new valueOf and constructor overloads",
-    "notes": [
-      "Code arriving unchanged in the new valueOf and constructor brings its dependencies: the assigned fields (protocolName, majorVersion, ...), checkNonEmptyAfterTrim, HTTP_1_1_STRING, HTTP_1_1, version0 and checkNotNull; they also serve the removed bodies of the delegating originals."
-    ],
+    "notes": [],
     "expectations": [
       {
         "description": "the body extracted to valueOf(String, boolean) reads against the lines it left: only its edits are marked",
@@ -2002,8 +1994,7 @@
     "description": "notifications return polling stats in a NotifyResult; the broker flags a full polling",
     "notes": [
       "NotifyResult is printed before the broker change, between the field and the accessors of NotificationResponseHeader, far from the client diffs it serves.",
-      "The polling dependency is the three-argument overload, which only delegates; the overload returning POLLING_FULL (polling size limits, failed add) is not shown.",
-      "Code that only moved keeps its dependencies: the polling call hoisted into a local and the body extracted to notificationWithPollingStats (createRequestCommand, invoke, getCode, ...) print about 85 lines of dependencies the change does not use anew."
+      "The polling dependency is the three-argument overload, which only delegates; the overload returning POLLING_FULL (polling size limits, failed add) is not shown."
     ],
     "expectations": [
       {
@@ -2157,7 +2148,7 @@
     "description": "responses of requests pruned on a closed connection fork to the executor of their handler",
     "notes": [
       "Adding a setting to ClusterSettings prints the whole Stream.of list of about 390 settings.",
-      "The TestNode constructor body, only moved into the new TestNode(String, Settings) with one argument changed, brings about 25 dependencies (thread pool builders, the TransportService constructor and methods, transport mocks).",
+      "The TestNode constructor body, only moved into the new TestNode(String, Settings) with one argument changed, reads as added whole; only the declarations its changed argument uses are dependencies.",
       "The new enableStackOverflowAvoidance field, serving only the new constructor, reads before onConnectionClosed, which does not use it."
     ],
     "expectations": [
@@ -2279,6 +2270,543 @@
         "text": "-public class EpollLTSocketAutoReadTest extends SocketAutoReadTest {\n+public class EpollSocketAutoReadTest extends SocketAutoReadTest {",
         "of": "diff",
         "todo": "RM (to report): the type declarations of the classes of a Merge Class are not mapped to the merged class (see the newFactories() expectation)"
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14291",
+    "repository": "netty/netty",
+    "commit": "57558bbcc1c493a94aa937e9c7ae9c386ba16cef",
+    "base_commit": "d0588b0eed4a9269591073ebc6d825930c601e20",
+    "description": "heap arenas keep their last destroyed chunk for reuse, reading the sizing fields PoolChunk now exposes; a test checks the reuse; unrelated histogram and visibility edits of AdaptivePoolingAllocator and a try/finally in DatagramUnicastTest",
+    "notes": [
+      "INIT_DATUM_TARGET drops from 8192 to 9 and sizeBucket moves the bucket mask; their unchanged users (`datumTarget = INIT_DATUM_TARGET`, the sizeBucket call of allocate) are not shown, and HISTO_MAX_BUCKET_MASK is printed without the HISTO_BUCKET_COUNT it is computed from.",
+      "deallocate is printed whole (23 lines) for its protected modifier becoming private; its only caller (release) is not shown.",
+      "Imports are not shown (the new AtomicReference, assertj and Assumptions imports)."
+    ],
+    "expectations": [
+      {
+        "description": "the field made package-private reads as its modifier removed",
+        "kind": "diff",
+        "location": "buffer/src/main/java/io/netty/buffer/PoolChunk.java::PoolChunk",
+        "body": "-    private final int pageSize;\n+    final int pageSize;"
+      },
+      {
+        "description": "the field made package-private serves the new chunk reuse reading it",
+        "kind": "serves",
+        "from": "private final int pageSize;",
+        "to": "lastDestroyedChunk.getAndSet(null)"
+      },
+      {
+        "description": "the fields made package-private read before the reuse reading them",
+        "kind": "order",
+        "before": "private final int chunkSize;",
+        "after": "chunk.maxPageIdx == maxPageIdx"
+      },
+      {
+        "description": "the new form of a field changed only by a removed modifier is not repeated as a dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "final int pageSize;"
+      },
+      {
+        "description": "the new lastDestroyedChunk field serves the destroy and new chunk overrides using it",
+        "kind": "serves",
+        "from": "private final AtomicReference<PoolChunk<byte[]>> lastDestroyedChunk;",
+        "to": "lastDestroyedChunk.set(chunk);"
+      },
+      {
+        "description": "the release moved into the new finally reads as unchanged code",
+        "kind": "unchanged",
+        "file": "testsuite/src/main/java/io/netty/testsuite/transport/socket/DatagramUnicastTest.java",
+        "code": "assertTrue(buf.release());"
+      },
+      {
+        "description": "the new test serves the override disabling it",
+        "kind": "serves",
+        "from": "int bufSize = 1024 * 1024;",
+        "to": "@Disabled(\"Not applicable for unpooled allocators\")"
+      },
+      {
+        "description": "the unchanged user of the changed INIT_DATUM_TARGET is shown",
+        "kind": "contains",
+        "text": "private int datumTarget = INIT_DATUM_TARGET;",
+        "todo": "unchanged code using a changed declaration is not represented (see the TODO on forward extensions in HunkNetwork), though the 9 the constant now holds is judged by the field it initializes"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_107224",
+    "repository": "elastic/elasticsearch",
+    "commit": "9ca2afb97519e237d5463e71ccd62786028ef321",
+    "base_commit": "801b013d39cae57f10818a1d02c9da1cdb424c5e",
+    "description": "the encoder and tags_schema highlighting settings move from HighlightBuilder up to AbstractHighlighterBuilder (field, accessors, parsing, serialization, equality), so fields can set them too; transferOptions applies the encoder for both levels; tests cover field-level tags_schema",
+    "notes": [
+      "setRandomCommonOptions is printed whole (about 85 lines) for the one if moved into it, and testBuildSearchContextHighlight (about 50 lines) for its two edits, as statements read within the member body.",
+      "The YAML changelog is not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the encoder field pulled up reads as one diff located in both classes",
+        "kind": "diff",
+        "location": "server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/HighlightBuilder.java::HighlightBuilder -> server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/AbstractHighlighterBuilder.java::AbstractHighlighterBuilder",
+        "body": "-    private String encoder;\n+    protected String encoder;"
+      },
+      {
+        "description": "the moved encoder setter serves the stream constructor reading it",
+        "kind": "serves",
+        "from": "public HB encoder(String encoder)",
+        "to": "+        encoder(in.readOptionalString());"
+      },
+      {
+        "description": "the new TAGS_SCHEMA_FIELD serves the parser declaring it",
+        "kind": "serves",
+        "from": "TAGS_SCHEMA_FIELD = new ParseField",
+        "to": "parser.declareString(HB::tagsSchema, TAGS_SCHEMA_FIELD);"
+      },
+      {
+        "description": "the methods removed from HighlightBuilder read before the ones they moved to",
+        "kind": "order",
+        "before": "public HighlightBuilder tagsSchema(String schemaName)",
+        "after": "public HB tagsSchema(String schemaName)"
+      },
+      {
+        "description": "testParsingTagsSchema reads as RM maps it: the old second try, with its parse error checks, goes on as the new third try, and its two asserts move into a new second try (two statements moved, where keeping the second try in place would move three)",
+        "kind": "diff",
+        "location": "server/src/test/java/org/elasticsearch/search/fetch/subphase/highlight/HighlightBuilderTests.java::HighlightBuilderTests#testParsingTagsSchema",
+        "body": "     public void testParsingTagsSchema() throws IOException {\n \n         String highlightElement = \"\"\"\n             {\n                 \"tags_schema\" : \"styled\"\n             }\n             \"\"\";\n         try (XContentParser parser = createParser(JsonXContent.jsonXContent, highlightElement)) {\n \n             HighlightBuilder highlightBuilder = HighlightBuilder.fromXContent(parser);\n             assertArrayEquals(\n                 \"setting tags_schema 'styled' should alter pre_tags\",\n                 HighlightBuilder.DEFAULT_STYLED_PRE_TAG,\n                 highlightBuilder.preTags()\n             );\n             assertArrayEquals(\n                 \"setting tags_schema 'styled' should alter post_tags\",\n                 HighlightBuilder.DEFAULT_STYLED_POST_TAGS,\n                 highlightBuilder.postTags()\n             );\n \n             highlightElement = \"\"\"\n                 {\n                     \"tags_schema\" : \"default\"\n                 }\n                 \"\"\";\n         }\n+        try (XContentParser parser = createParser(JsonXContent.jsonXContent, highlightElement)) {\n+\n+            HighlightBuilder highlightBuilder = HighlightBuilder.fromXContent(parser);\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' should alter pre_tags\",\n+                HighlightBuilder.DEFAULT_PRE_TAGS,\n+                highlightBuilder.preTags()\n+            );\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' should alter post_tags\",\n+                HighlightBuilder.DEFAULT_POST_TAGS,\n+                highlightBuilder.postTags()\n+            );\n+\n+        }\n+\n+        highlightElement = \"\"\"\n+            {\n+                \"fields\": {\n+                    \"default_string\": {\n+                        \"tags_schema\": \"default\"\n+                    },\n+                    \"styled_string\": {\n+                        \"tags_schema\": \"styled\"\n+                    }\n+                }\n+            }\n+            \"\"\";\n         try (XContentParser parser = createParser(JsonXContent.jsonXContent, highlightElement)) {\n \n             HighlightBuilder highlightBuilder = HighlightBuilder.fromXContent(parser);\n-            assertArrayEquals(\n-                \"setting tags_schema 'default' should alter pre_tags\",\n-                HighlightBuilder.DEFAULT_PRE_TAGS,\n-                highlightBuilder.preTags()\n-            );\n-            assertArrayEquals(\n-                \"setting tags_schema 'default' should alter post_tags\",\n-                HighlightBuilder.DEFAULT_POST_TAGS,\n-                highlightBuilder.postTags()\n-            );\n+            Field defaultStringField = getFieldBuilderByName(highlightBuilder, \"default_string\");\n+            assertNotNull(defaultStringField);\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' at the field level should alter pre_tags for that field\",\n+                HighlightBuilder.DEFAULT_PRE_TAGS,\n+                defaultStringField.preTags()\n+            );\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' at the field level should alter post_tags for that that field\",\n+                HighlightBuilder.DEFAULT_POST_TAGS,\n+                defaultStringField.postTags()\n+            );\n+\n+            Field styledStringField = getFieldBuilderByName(highlightBuilder, \"styled_string\");\n+            assertNotNull(styledStringField);\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' at the field level should alter pre_tags for that that field\",\n+                HighlightBuilder.DEFAULT_STYLED_PRE_TAG,\n+                styledStringField.preTags()\n+            );\n+            assertArrayEquals(\n+                \"setting tags_schema 'styled' at the field level should alter post_tags for that that field\",\n+                HighlightBuilder.DEFAULT_STYLED_POST_TAGS,\n+                styledStringField.postTags()\n+            );\n \n             XContentParseException e = expectParseThrows(XContentParseException.class, \"\"\"\n                 {\n                     \"tags_schema\" : \"somthing_else\"\n                 }\n                 \"\"\");\n             assertThat(e.getMessage(), containsString(\"[highlight] failed to parse field [tags_schema]\"));\n             assertEquals(\"Unknown tag schema [somthing_else]\", e.getCause().getMessage());\n         }\n     }"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_117133",
+    "repository": "elastic/elasticsearch",
+    "commit": "8d3995b9f1458bcb39ce06ca962de538ef1aa7c7",
+    "base_commit": "1fe3ed1e850c12d21806061e53687c0f1bd96738",
+    "description": "Row is replaced by a LocalRelation in a new logical optimizer rule (ReplaceRowAsLocalRelation) instead of in the mapper, so RowExec, its serialization test, its planning branch and planRow are deleted; tests expect a LocalRelation",
+    "notes": [
+      "The conversion removed from MapperUtils#mapLeaf and the new ReplaceRowAsLocalRelation#rule taking it over are not linked as a move (the loop became a forEach); their shared dependencies are printed before the rule, but the removal reads about 250 lines after it.",
+      "Expression#fold, a dependency of both conversions, is the base method throwing `Should not fold expression`; the foldable expressions whose overrides the conversion calls are not shown, which a reviewing model read as a bug.",
+      "The removed planRow brings the Layout.Builder methods and PhysicalOperation#fromSource it used, and the removed branch of plan brings the node and context parameters.",
+      "plan is printed whole (about 50 lines of its if/else-if chain) for the one branch removed from it."
+    ],
+    "expectations": [
+      {
+        "description": "the branch after the removed else-if branch reads as unchanged code",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/LocalExecutionPlanner.java",
+        "code": "} else if (node instanceof LocalSourceExec localSource) {"
+      },
+      {
+        "description": "the branches after the removed one, only relinked in the chain, bring no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "private PhysicalOperation planHashJoin("
+      },
+      {
+        "description": "the deleted RowExec brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static <S extends StreamInput & PlanStreamInput> Source readFrom(S in)"
+      },
+      {
+        "description": "nor does its deleted serialization test",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static <T> T randomValueOtherThan("
+      },
+      {
+        "description": "the new rule serves its registration in the cleanup batch",
+        "kind": "serves",
+        "from": "public final class ReplaceRowAsLocalRelation",
+        "to": "new ReplaceRowAsLocalRelation()"
+      },
+      {
+        "description": "the deleted RowExec serves the deletion of its test",
+        "kind": "serves",
+        "from": "public class RowExec extends LeafExec",
+        "to": "public class RowExecSerializationTests"
+      },
+      {
+        "description": "the deleted test reads after the production code",
+        "kind": "order",
+        "before": "private PhysicalOperation planRow(",
+        "after": "public class RowExecSerializationTests"
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_9153",
+    "repository": "apache/rocketmq",
+    "commit": "61ef8fa699dd513ec8cda95d0f3a20ebd0966bb4",
+    "base_commit": "de4e48d28acf549c0d83fed8c0b39e13e9fa82fa",
+    "description": "getConsumeStats accepts a topic list: the request header carries it joined by a separator, the client gets overloads taking it, and the broker collects the listed topics without the subscription check (the old topic selection and check extracted to getTopicsForCollecting)",
+    "notes": [
+      "The test casts `(String) isNull()` because the new getConsumeStats(String, String, List<String>, long) makes the call ambiguous; the cast is served by the String overload it binds to, and nothing relates it to the overload making it necessary.",
+      "getConsumeStats of AdminBrokerProcessor is printed whole (about 95 lines) for edits at its top and the subscription block removed from its loop, as statements read within the member body.",
+      "The ExportRocksDBConfigToJsonRequestHeader annotation change (resource = CLUSTER) is unrelated to the rest."
+    ],
+    "expectations": [
+      {
+        "description": "the body extracted to the new five-argument overload reads against the lines it left: only the new signature, the topic list update and the closing brace are marked",
+        "kind": "diff",
+        "location": "client/src/main/java/org/apache/rocketmq/client/impl/MQClientAPIImpl.java::MQClientAPIImpl",
+        "body": "+    public ConsumeStats getConsumeStats(final String addr, final String consumerGroup, final String topic,\n+        final List<String> topicList, final long timeoutMillis)\n+        throws InterruptedException, RemotingTimeoutException, RemotingSendRequestException, RemotingConnectException,\n+        MQBrokerException {\n         GetConsumeStatsRequestHeader requestHeader = new GetConsumeStatsRequestHeader();\n         requestHeader.setConsumerGroup(consumerGroup);\n         requestHeader.setTopic(topic);\n+        requestHeader.updateTopicList(topicList);\n \n         RemotingCommand request = RemotingCommand.createRequestCommand(RequestCode.GET_CONSUME_STATS, requestHeader);\n \n         RemotingCommand response = this.remotingClient.invokeSync(MixAll.brokerVIPChannel(this.clientConfig.isVipChannelEnabled(), addr),\n             request, timeoutMillis);\n         switch (response.getCode()) {\n             case ResponseCode.SUCCESS: {\n                 ConsumeStats consumeStats = ConsumeStats.decode(response.getBody(), ConsumeStats.class);\n                 return consumeStats;\n             }\n             default:\n                 break;\n         }\n \n         throw new MQBrokerException(response.getCode(), response.getRemark(), addr);\n+    }"
+      },
+      {
+        "description": "code only extracted to the new overload uses nothing anew: the callees it kept bring no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static String brokerVIPChannel"
+      },
+      {
+        "description": "nor do the fields it kept reading",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "private final RemotingClient remotingClient;"
+      },
+      {
+        "description": "the new header accessor serves the broker reading the topic list",
+        "kind": "serves",
+        "from": "public List<String> fetchTopicList()",
+        "to": "List<String> topicListProvided = requestHeader.fetchTopicList();"
+      },
+      {
+        "description": "the new header mutator serves the client writing the topic list",
+        "kind": "serves",
+        "from": "public void updateTopicList(List<String> topicList)",
+        "to": "requestHeader.updateTopicList(topicList);"
+      },
+      {
+        "description": "the extracted topic selection reads before the method calling it",
+        "kind": "order",
+        "before": "private Set<String> getTopicsForCollecting(",
+        "after": "Set<String> topicsForCollecting = getTopicsForCollecting("
+      },
+      {
+        "description": "the new five-argument overload serves the overload delegating to it with the topic list",
+        "kind": "serves",
+        "from": "final List<String> topicList, final long timeoutMillis)",
+        "to": "return getConsumeStats(addr, consumerGroup, null, topicList, timeoutMillis);"
+      },
+      {
+        "description": "the separator constant serves the accessors splitting and joining with it",
+        "kind": "serves",
+        "from": "private static final String TOPIC_NAME_SEPARATOR",
+        "to": "public List<String> fetchTopicList()"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_114601",
+    "repository": "elastic/elasticsearch",
+    "commit": "516aa119453d97ec7ac58292e8a91642a5d75893",
+    "base_commit": "73ca4f52b27e1cbc73e8a95eec2ce81c3621c6de",
+    "description": "semantic_text fields may sit in object fields: inference results are inserted at their path in the source map (new XContentMapValues#insertValue) instead of as a top-level key, the mapper rejects a parent object with subobjects disabled, and a test feature announces the fix",
+    "notes": [
+      "The new XContentMapValuesTests methods read as one 315-line diff, with twelve XContentBuilder builder methods (startObject, endObject, field, array, ...) as dependencies.",
+      "The YAML REST tests and the changelog are not shown."
+    ],
+    "expectations": [
+      {
+        "description": "the call site now inserting at the path reads within its loop",
+        "kind": "diff",
+        "location": "x-pack/plugin/inference/src/main/java/org/elasticsearch/xpack/inference/action/filter/ShardBulkInferenceActionFilter.java::ShardBulkInferenceActionFilter.AsyncBulkShardInferenceAction#applyInferenceResponses",
+        "body": "             for (var entry : response.responses.entrySet()) {\n                 var fieldName = entry.getKey();\n                 var responses = entry.getValue();\n                 var model = responses.get(0).model();\n                 // ensure that the order in the original field is consistent in case of multiple inputs\n                 Collections.sort(responses, Comparator.comparingInt(FieldInferenceResponse::inputOrder));\n                 List<String> inputs = responses.stream().filter(r -> r.isOriginalFieldInput).map(r -> r.input).collect(Collectors.toList());\n                 List<ChunkedInferenceServiceResults> results = responses.stream().map(r -> r.chunkedResults).collect(Collectors.toList());\n                 var result = new SemanticTextField(\n                     fieldName,\n                     inputs,\n                     new SemanticTextField.InferenceResult(\n                         model.getInferenceEntityId(),\n                         new SemanticTextField.ModelSettings(model),\n                         toSemanticTextFieldChunks(results, indexRequest.getContentType())\n                     ),\n                     indexRequest.getContentType()\n                 );\n-                newDocMap.put(fieldName, result);\n+                XContentMapValues.insertValue(fieldName, newDocMap, result);\n             }"
+      },
+      {
+        "description": "the new insertValue serves the call site using it",
+        "kind": "serves",
+        "from": "public static void insertValue(String path, Map<?, ?> map, Object newValue)",
+        "to": "XContentMapValues.insertValue(fieldName, newDocMap, result);"
+      },
+      {
+        "description": "the hook the new doValidate overrides is printed",
+        "kind": "dependency",
+        "location": "server/src/main/java/org/elasticsearch/index/mapper/FieldMapper.java::FieldMapper",
+        "body": "protected void doValidate(MappingLookup mappers) {}"
+      },
+      {
+        "description": "the overridden hook serves the new override",
+        "kind": "serves",
+        "from": "protected void doValidate(MappingLookup mappers) {}",
+        "to": "cannot be in an object field with subobjects disabled"
+      },
+      {
+        "description": "the interface method the new getTestFeatures implements is printed with its javadoc",
+        "kind": "dependency",
+        "location": "server/src/main/java/org/elasticsearch/features/FeatureSpecification.java::FeatureSpecification",
+        "body": "/**\n * Returns a set of test features that this node supports.\n * <p>\n * These features will only be exposed if the {@code tests.testfeatures.enabled} system property is set.\n * This should only be used when deploying test clusters.\n */\ndefault Set<NodeFeature> getTestFeatures() {\n    return Set.of();\n}"
+      },
+      {
+        "description": "the new feature serves the test features announcing it",
+        "kind": "serves",
+        "from": "SEMANTIC_TEXT_IN_OBJECT_FIELD_FIX = new NodeFeature",
+        "to": "return Set.of(SemanticTextFieldMapper.SEMANTIC_TEXT_IN_OBJECT_FIELD_FIX);"
+      },
+      {
+        "description": "the tests read after the production code",
+        "kind": "order",
+        "before": "int parentPathIndex = fullPath().lastIndexOf(leafName());",
+        "after": "public void testInsertValueMapTraversal()"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_115624",
+    "repository": "elastic/elasticsearch",
+    "commit": "b03ef72047904e166caad9f9ee9e8ecc979c5e9a",
+    "base_commit": "099a3dbb2565e0d114492fce0bdc48e61519e05a",
+    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec",
+    "notes": [
+      "The csv-spec tests, the only users of the new capability, and the changelog are not shown (RM gap: non-Java files).",
+      "PushDownAndCombineLimits#rule is printed from its else-if branch (about 35 lines) and the edited tests whole, with their expected plans in their doc comments."
+    ],
+    "expectations": [
+      {
+        "description": "the else of the if a new else-if branch now precedes reads as unchanged code",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/PushDownAndCombineLimits.java",
+        "code": "else {"
+      },
+      {
+        "description": "the new limit() serves the mapper turning the inner limit into a LimitExec",
+        "kind": "serves",
+        "from": "public Integer limit() {",
+        "to": "if (mvExpand.limit() != null && mvExpand.limit() >= 0) {"
+      },
+      {
+        "description": "the new limit field serves the serialization asserting it is unset",
+        "kind": "serves",
+        "from": "private final Integer limit;",
+        "to": "assert limit == null;"
+      },
+      {
+        "description": "the tests read after the production code, the mapper included",
+        "kind": "order",
+        "before": "if (mvExpand.limit() != null && mvExpand.limit() >= 0) {",
+        "after": "public void testMissingFieldInMvExpand()"
+      },
+      {
+        "description": "the extracted constructor statements bring no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "protected UnaryPlan(Source source, LogicalPlan child)"
+      },
+      {
+        "description": "the deleted DuplicateLimitAfterMvExpand brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public AttributeSet()"
+      },
+      {
+        "description": "the deleted rule serves the removal of its registration",
+        "kind": "serves",
+        "from": "public final class DuplicateLimitAfterMvExpand",
+        "to": "new DuplicateLimitAfterMvExpand()"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_115624",
+    "repository": "elastic/elasticsearch",
+    "commit": "5755968002086a78a66840628de4680f868407da",
+    "base_commit": "099a3dbb2565e0d114492fce0bdc48e61519e05a",
+    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec",
+    "notes": [
+      "The csv-spec tests, the only users of the new capability, and the changelog are not shown (RM gap: non-Java files).",
+      "PushDownAndCombineLimits#rule is printed from its else-if branch (about 35 lines) and the edited tests whole, with their expected plans in their doc comments."
+    ],
+    "expectations": [
+      {
+        "description": "the else of the if a new else-if branch now precedes reads as unchanged code",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/PushDownAndCombineLimits.java",
+        "code": "else {"
+      },
+      {
+        "description": "the new limit() serves the mapper turning the inner limit into a LimitExec",
+        "kind": "serves",
+        "from": "public Integer limit() {",
+        "to": "if (mvExpand.limit() != null && mvExpand.limit() >= 0) {"
+      },
+      {
+        "description": "the new limit field serves the serialization asserting it is unset",
+        "kind": "serves",
+        "from": "private final Integer limit;",
+        "to": "assert limit == null;"
+      },
+      {
+        "description": "the tests read after the production code, the mapper included",
+        "kind": "order",
+        "before": "if (mvExpand.limit() != null && mvExpand.limit() >= 0) {",
+        "after": "public void testMissingFieldInMvExpand()"
+      },
+      {
+        "description": "the extracted constructor statements bring no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "protected UnaryPlan(Source source, LogicalPlan child)"
+      },
+      {
+        "description": "the deleted DuplicateLimitAfterMvExpand brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public AttributeSet()"
+      },
+      {
+        "description": "the deleted rule serves the removal of its registration",
+        "kind": "serves",
+        "from": "public final class DuplicateLimitAfterMvExpand",
+        "to": "new DuplicateLimitAfterMvExpand()"
+      },
+      {
+        "description": "the new five-argument constructor serves the four-argument one now delegating to it",
+        "kind": "serves",
+        "from": "Attribute expanded, Integer limit) {",
+        "to": "this(source, child, target, expanded, null);"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_115624",
+    "repository": "elastic/elasticsearch",
+    "commit": "5b3fd2e20cbb800a732d463675ce181a66876c3f",
+    "base_commit": "099a3dbb2565e0d114492fce0bdc48e61519e05a",
+    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec",
+    "notes": [
+      "The csv-spec tests, the only users of the new capability, and the changelog are not shown (RM gap: non-Java files).",
+      "PushDownAndCombineLimits#rule is printed from its else-if branch (about 35 lines) and the edited tests whole, with their expected plans in their doc comments."
+    ],
+    "expectations": [
+      {
+        "description": "the else of the if a new else-if branch now precedes reads as unchanged code",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/PushDownAndCombineLimits.java",
+        "code": "else {"
+      },
+      {
+        "description": "the new limit() serves the mapper turning the inner limit into a LimitExec",
+        "kind": "serves",
+        "from": "public Integer limit() {",
+        "to": "if (mvExpand.limit() != null && mvExpand.limit() >= 0) {"
+      },
+      {
+        "description": "the new limit field serves the serialization asserting it is unset",
+        "kind": "serves",
+        "from": "private final Integer limit;",
+        "to": "assert limit == null;"
+      },
+      {
+        "description": "the tests read after the production code, the mapper included",
+        "kind": "order",
+        "before": "if (mvExpand.limit() != null && mvExpand.limit() >= 0) {",
+        "after": "public void testMissingFieldInMvExpand()"
+      },
+      {
+        "description": "the extracted constructor statements bring no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "protected UnaryPlan(Source source, LogicalPlan child)"
+      },
+      {
+        "description": "the deleted DuplicateLimitAfterMvExpand brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public AttributeSet()"
+      },
+      {
+        "description": "the deleted rule serves the removal of its registration",
+        "kind": "serves",
+        "from": "public final class DuplicateLimitAfterMvExpand",
+        "to": "new DuplicateLimitAfterMvExpand()"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_115624",
+    "repository": "elastic/elasticsearch",
+    "commit": "f471d54bc902b36f37035ea1c98754d749018368",
+    "base_commit": "099a3dbb2565e0d114492fce0bdc48e61519e05a",
+    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec",
+    "notes": [
+      "The csv-spec tests, the only users of the new capability, and the changelog are not shown (RM gap: non-Java files).",
+      "PushDownAndCombineLimits#rule is printed from its else-if branch (about 35 lines) and the edited tests whole, with their expected plans in their doc comments.",
+      "This revision still keeps DuplicateLimitAfterMvExpand."
+    ],
+    "expectations": [
+      {
+        "description": "the else of the if a new else-if branch now precedes reads as unchanged code",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/optimizer/rules/logical/PushDownAndCombineLimits.java",
+        "code": "else {"
+      },
+      {
+        "description": "the new limit() serves the mapper turning the inner limit into a LimitExec",
+        "kind": "serves",
+        "from": "public Integer limit() {",
+        "to": "if (mvExpand.limit() != null && mvExpand.limit() >= 0) {"
+      },
+      {
+        "description": "the new limit field serves the serialization asserting it is unset",
+        "kind": "serves",
+        "from": "private final Integer limit;",
+        "to": "assert limit == null;"
+      },
+      {
+        "description": "the tests read after the production code, the mapper included",
+        "kind": "order",
+        "before": "if (mvExpand.limit() != null && mvExpand.limit() >= 0) {",
+        "after": "public void testMissingFieldInMvExpand()"
+      },
+      {
+        "description": "the extracted constructor statements bring no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "protected UnaryPlan(Source source, LogicalPlan child)"
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_119580",
+    "repository": "elastic/elasticsearch",
+    "commit": "d45ed5af3adeadf4f752f98e3a217afa198a4952",
+    "base_commit": "4e0e36b38c4ce71546b3411e2114fcc5dc962c8a",
+    "description": "ES|QL plans stop serializing EsIndex: EsRelation, EsSourceExec, EsQueryExec and EsStatsQueryExec keep the index name and the index-name-to-mode map (with concreteIndices()), writing them directly from a new transport version and the old EsIndex form before it; every user and serialization test is updated",
+    "notes": [
+      "The output is long (88 diffs, 86 dependencies, about 1600 lines): every rewritten test helper brings its random* and builder dependencies.",
+      "indexMode() of EsRelation and of EsSourceExec reads as removed and added unchanged, as RM moves it among the reordered getters (the raw diff keeps it and moves frozen()); a tie of RM's mapping, not reported."
+    ],
+    "expectations": [
+      {
+        "description": "the unchanged operand after the edited ones of equals is not marked",
+        "kind": "unchanged",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/EsRelation.java",
+        "code": "&& frozen == other.frozen"
+      },
+      {
+        "description": "the new concreteIndices() serves the planner reading it",
+        "kind": "serves",
+        "from": "+    public Set<String> concreteIndices() {",
+        "to": "forEachFromRelation(plan, relation -> indices.addAll(relation.concreteIndices()));"
+      },
+      {
+        "description": "the new concreteIndices() serves QueryBuilderResolver reading it in a lambda over forEachDown(EsRelation.class, ...), whose parameter the class literal types",
+        "kind": "serves",
+        "from": "+    public Set<String> concreteIndices() {",
+        "to": "indexNames.set(esRelation.concreteIndices())"
+      },
+      {
+        "description": "the new transport version serves the stream constructors and writers checking it",
+        "kind": "serves",
+        "from": "ESQ_SKIP_ES_INDEX_SERIALIZATION = def(",
+        "to": "EsIndex esIndex = new EsIndex(in);"
+      },
+      {
+        "description": "the serialization tests read after the production code",
+        "kind": "order",
+        "before": "forEachFromRelation(plan, relation -> indices.addAll(relation.concreteIndices()));",
+        "after": "public static EsRelation randomEsRelation()"
       }
     ]
   }

@@ -257,7 +257,9 @@ public class Narrator {
     }
 
     // An element is placed where its latest leaf is, so a change of it can come after another element relying on it;
-    // the elements are kept in order but moved after every element whose changes they rely on
+    // the elements are kept in order but moved after every element whose changes they rely on. Test code reads after the
+    // production code that does not rely on it, whatever component of related code holds them: a reviewer reads what the
+    // change does before what checks it
     private static List<NarrativeElement> orderByReliance(List<NarrativeElement> elements) {
         Map<Node, Integer> mainElements = new HashMap<>();
         for (int i = 0; i < elements.size(); i++) {
@@ -280,13 +282,20 @@ public class Narrator {
             reliedElements.add(relied);
         }
 
+        List<Boolean> tests = elements.stream().map(element -> !element.getMainsToSides().isEmpty()
+                && element.getMainsToSides().keySet().stream().allMatch(main -> TraversalPattern.isTest(main.getPath()))).toList();
+
         List<NarrativeElement> ordered = new ArrayList<>();
         Set<Integer> placed = new HashSet<>();
         while (placed.size() < elements.size()) {
             int next = -1;
-            for (int i = 0; i < elements.size(); i++) {
-                if (!placed.contains(i) && placed.containsAll(reliedElements.get(i))) {
-                    next = i;
+            for (boolean test : List.of(false, true)) {
+                for (int i = 0; i < elements.size() && next == -1; i++) {
+                    if (!placed.contains(i) && tests.get(i) == test && placed.containsAll(reliedElements.get(i))) {
+                        next = i;
+                    }
+                }
+                if (next != -1) {
                     break;
                 }
             }

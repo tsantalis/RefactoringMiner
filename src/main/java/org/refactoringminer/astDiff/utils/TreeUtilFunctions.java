@@ -11,8 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.apache.commons.io.FileUtils;
 
@@ -340,37 +342,63 @@ public class TreeUtilFunctions {
 	}
 
 	public static LineRange getLineRange(Tree tree, String fileContent) {
-		int startLine = -1, endLine = -1, startLineOffset = -1, endLineOffset = -1;
+		int[] lineEnds = LINE_ENDS.computeIfAbsent(fileContent, TreeUtilFunctions::lineEnds);
 
 		int pos = tree.getPos();
 		int endPos = tree.getEndPos();
 
-		int charCount = 0;
-		int lineCount = 1;
-		String[] lines = fileContent.split("\n", -1);
-		for (String line : lines) {
-			int lineStart = charCount;
-			int lineEnd = charCount + line.length() + 1;
+		// A position on a line break lies on both lines around it: the start takes the later one unless the range
+		// ends on the earlier one, and the end takes the earlier one unless the start lies on no line
+		int firstStartLine = firstLine(lineEnds, pos);
+		int firstEndLine = firstLine(lineEnds, endPos);
+		int startLine = firstStartLine == firstEndLine ? firstStartLine : lastLine(lineEnds, pos, firstStartLine);
+		int endLine = startLine != -1 ? firstEndLine : lastLine(lineEnds, endPos, firstEndLine);
 
-			if (pos >= lineStart && pos <= lineEnd) {
-				startLine = lineCount;
-				startLineOffset = pos - lineStart;
+		int startLineOffset = startLine == -1 ? -1 : pos - lineStart(lineEnds, startLine);
+		int endLineOffset = endLine == -1 ? -1 : endPos - lineStart(lineEnds, endLine);
+		return new LineRange(startLine, startLineOffset, endLine, endLineOffset);
+	}
+
+	// For each file content, the offset just past every line and its line break
+	private static final Map<String, int[]> LINE_ENDS = Collections.synchronizedMap(new WeakHashMap<>());
+
+	private static int[] lineEnds(String fileContent) {
+		List<Integer> ends = new ArrayList<>();
+		for (int i = 0; i < fileContent.length(); i++) {
+			if (fileContent.charAt(i) == '\n') {
+				ends.add(i + 1);
 			}
+		}
+		ends.add(fileContent.length() + 1);
+		return ends.stream().mapToInt(Integer::intValue).toArray();
+	}
 
-			if (endPos >= lineStart && endPos <= lineEnd) {
-				endLine = lineCount;
-				endLineOffset = endPos - lineStart;
-			}
+	private static int lineStart(int[] lineEnds, int line) {
+		return line == 1 ? 0 : lineEnds[line - 2];
+	}
 
-			if (startLine != -1 && endLine != -1) {
-				break;
-			}
-
-			charCount = lineEnd;
-			lineCount++;
+	private static int firstLine(int[] lineEnds, int position) {
+		if (position < 0 || position > lineEnds[lineEnds.length - 1]) {
+			return -1;
 		}
 
-		return new LineRange(startLine, startLineOffset, endLine, endLineOffset);
+		int low = 0, high = lineEnds.length - 1;
+		while (low < high) {
+			int middle = (low + high) >>> 1;
+			if (lineEnds[middle] >= position) {
+				high = middle;
+			} else {
+				low = middle + 1;
+			}
+		}
+		return low + 1;
+	}
+
+	private static int lastLine(int[] lineEnds, int position, int firstLine) {
+		if (firstLine == -1 || firstLine == lineEnds.length || position != lineEnds[firstLine - 1]) {
+			return firstLine;
+		}
+		return firstLine + 1;
 	}
 
 	public record LineRange(int startLine, int startLineOffset, int endLine, int endLineOffset) {}

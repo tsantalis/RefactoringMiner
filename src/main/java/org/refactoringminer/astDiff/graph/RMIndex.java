@@ -288,8 +288,15 @@ class RMIndex {
         if (statement instanceof CompositeStatementObject composite) {
           LocationInfo.CodeElementType type = composite.getLocationInfo().getCodeElementType();
           if (RUNNING_ON_CONDITION.contains(type)) {
-            pushRunScope(scopes, located, composite.getLocationInfo(),
-                    composite.getExpressions().stream().map(AbstractCodeFragment::getLocationInfo).toList(), false);
+            List<LocationInfo> sameRunParts = new ArrayList<>(composite.getExpressions().stream()
+                    .map(AbstractCodeFragment::getLocationInfo).toList());
+            // The else-if branch of an if is the next branch of one chain, which runs on its own condition: an if added
+            // to or removed from a chain guards the branches after it as an if returning early guards the code after it
+            if (type == LocationInfo.CodeElementType.IF_STATEMENT && composite.getStatements().size() == 2
+                    && composite.getStatements().get(1).getLocationInfo().getCodeElementType() == LocationInfo.CodeElementType.IF_STATEMENT) {
+              sameRunParts.add(composite.getStatements().get(1).getLocationInfo());
+            }
+            pushRunScope(scopes, located, composite.getLocationInfo(), sameRunParts, false);
           } else if (RUNNING_IN_LOOP.contains(type)) {
             pushRunScope(scopes, located, composite.getLocationInfo(), List.of(), false);
           }
@@ -319,7 +326,7 @@ class RMIndex {
   }
 
   // Code running a part of itself on a condition, in a loop or later (a lambda or an anonymous class, which runs its
-  // whole body later), but the parts running as the code itself does
+  // whole body later), but the parts running as the code itself does, or as the code after it (an else-if branch)
   record RunScope(int start, int end, List<LocationInfo> sameRunParts, boolean later) {
     // Whether the code runs the code at the range differently, below itself
     boolean holdsBelow(int pos, int endPos) {

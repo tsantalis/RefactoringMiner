@@ -139,6 +139,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean lambdaBodyMapper;
 	private boolean identicalLambdaBodyMapper;
 	private boolean moveCode;
+	private Map<String, String> renamedParameters;
 	private boolean anonymousCollapse;
 	//the statements containing the lambdas expanded in the body, keyed by the root composite of the lambda body
 	private Map<CompositeStatementObject, AbstractCodeFragment> expandedLambdaOwners = new LinkedHashMap<CompositeStatementObject, AbstractCodeFragment>();
@@ -11721,11 +11722,57 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
+	//the parameters renamed with very high confidence according to the signatures, before the statements are mapped:
+	//the only removed and added parameters, preceded by the same common parameters, i.e., (pmf, outcomes, alphabet) -> (outcomes, pmf, sample_space),
+	//or else the only removed and added parameters of a type, i.e., ExponentialRetryPolicy retryPolicy -> ExponentialRetryPolicy exponentialRetryPolicy
+	private Map<String, String> renamedParameters() {
+		if(renamedParameters == null) {
+			renamedParameters = new LinkedHashMap<String, String>();
+			List<VariableDeclaration> parameters1 = container1.getParameterDeclarationList();
+			List<VariableDeclaration> parameters2 = container2.getParameterDeclarationList();
+			List<String> names1 = parameters1.stream().map(VariableDeclaration::getVariableName).collect(Collectors.toList());
+			List<String> names2 = parameters2.stream().map(VariableDeclaration::getVariableName).collect(Collectors.toList());
+			List<VariableDeclaration> removed = new ArrayList<VariableDeclaration>();
+			for(VariableDeclaration parameter1 : parameters1) {
+				if(!names2.contains(parameter1.getVariableName())) {
+					removed.add(parameter1);
+				}
+			}
+			List<VariableDeclaration> added = new ArrayList<VariableDeclaration>();
+			for(VariableDeclaration parameter2 : parameters2) {
+				if(!names1.contains(parameter2.getVariableName())) {
+					added.add(parameter2);
+				}
+			}
+			if(removed.size() == 1 && added.size() == 1) {
+				Set<String> commonBefore1 = new LinkedHashSet<String>(names1.subList(0, parameters1.indexOf(removed.get(0))));
+				Set<String> commonBefore2 = new LinkedHashSet<String>(names2.subList(0, parameters2.indexOf(added.get(0))));
+				if(commonBefore1.equals(commonBefore2)) {
+					renamedParameters.put(removed.get(0).getVariableName(), added.get(0).getVariableName());
+				}
+			}
+			else {
+				for(VariableDeclaration parameter1 : removed) {
+					if(parameter1.getType() == null) {
+						continue;
+					}
+					List<VariableDeclaration> removedOfType = removed.stream().filter(p -> parameter1.getType().equals(p.getType())).collect(Collectors.toList());
+					List<VariableDeclaration> addedOfType = added.stream().filter(p -> parameter1.getType().equals(p.getType())).collect(Collectors.toList());
+					if(removedOfType.size() == 1 && addedOfType.size() == 1) {
+						renamedParameters.put(parameter1.getVariableName(), addedOfType.get(0).getVariableName());
+					}
+				}
+			}
+		}
+		return renamedParameters;
+	}
+
 	protected LeafMapping createLeafMapping(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2, Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic) {
 		VariableDeclarationContainer container1 = codeFragmentOperationMap1.containsKey(leaf1) ? codeFragmentOperationMap1.get(leaf1) : this.container1;
 		VariableDeclarationContainer container2 = codeFragmentOperationMap2.containsKey(leaf2) ? codeFragmentOperationMap2.get(leaf2) : this.container2;
 		LeafMapping mapping = new LeafMapping(leaf1, leaf2, container1, container2);
 		mapping.setMappings(mappings);
+		mapping.setRenamedParameters(renamedParameters());
 		mapping.setArgumentization(argumentization);
 		mapping.setEqualNumberOfAssertions(equalNumberOfAssertions);
 		mapping.setIsomorphic(isomorphic);

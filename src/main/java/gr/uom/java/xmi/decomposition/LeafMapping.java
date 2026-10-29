@@ -44,6 +44,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	private Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements;
 	private boolean previousCodeExtracted;
 	private Set<AbstractCodeMapping> mappings = Collections.emptySet();
+	private Map<String, String> renamedParameters = Collections.emptyMap();
 	private Boolean mutuallyMostSimilarParents;
 	private boolean distinguishingSurroundingStatements;
 
@@ -100,6 +101,23 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	//the mappings of the mapper, which provide the mapped neighbouring statements
 	public void setMappings(Set<AbstractCodeMapping> mappings) {
 		this.mappings = mappings;
+	}
+
+	//the parameters renamed with very high confidence according to the signatures, i.e., alphabet -> sample_space
+	public void setRenamedParameters(Map<String, String> renamedParameters) {
+		this.renamedParameters = renamedParameters;
+	}
+
+	//the replacements agreeing with a parameter rename, i.e., alphabet = outcomes -> sample_space = outcomes, not pmf = outcomes;
+	//a renamed parameter replaced otherwise gives no evidence, i.e., len(alphabet) -> len(self.alphabet)
+	private int parameterRenameAgreements() {
+		int agreements = 0;
+		for(Replacement r : getReplacements()) {
+			if(r.getType().equals(ReplacementType.VARIABLE_NAME) && r.getAfter().equals(renamedParameters.get(r.getBefore()))) {
+				agreements++;
+			}
+		}
+		return agreements;
 	}
 
 	//the surrounding statements distinguish identical statements, i.e., the statements of reordered test cases:
@@ -335,6 +353,11 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 		}
 		else {
+			int parameterRenameAgreements1 = this.parameterRenameAgreements();
+			int parameterRenameAgreements2 = o.parameterRenameAgreements();
+			if(parameterRenameAgreements1 != parameterRenameAgreements2) {
+				return -Integer.compare(parameterRenameAgreements1, parameterRenameAgreements2);
+			}
 			//the variable renames backed by declarations with identical initializers distinguish the mappings of statements in loops with identical bodies,
 			//i.e., s.remove() -> openClientSocket.remove(), when Iterator<Socket> s=openClientSockets.iterator() -> val openClientSocket = openClientSockets.iterator()
 			int renamedVariablesWithIdenticalInitializers1 = this.renamedVariablesWithIdenticalInitializers();

@@ -2198,8 +2198,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	//runs before the comment diff, which uses the commented and uncommented statements; a comment with the same text in the other version is not commented or uncommented code
 	private void checkUnmatchedStatementsBeingCommented(List<UMLComment> comments1, List<UMLComment> comments2) {
-		List<UMLComment> uniqueComments1 = commentsWithoutSameText(comments1, comments2);
-		List<UMLComment> uniqueComments2 = commentsWithoutSameText(comments2, comments1);
+		//the comments are filtered only for the side with unmatched statements to compare with
+		List<UMLComment> uniqueComments1 = nonMappedLeavesT2.size() > 0 ? commentsWithoutSameText(comments1, comments2) : Collections.emptyList();
+		List<UMLComment> uniqueComments2 = nonMappedLeavesT1.size() > 0 ? commentsWithoutSameText(comments2, comments1) : Collections.emptyList();
 		// check if unmatched statements from left side have been commented
 		if(uniqueComments2.size() > 0 && nonMappedLeavesT1.size() > 0) {
 			for(UMLComment comment : uniqueComments2) {

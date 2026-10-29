@@ -1,5 +1,7 @@
 # Stage 1: Build stage
-FROM amazoncorretto:17 AS build
+# The distribution does not depend on the target platform, so it is built once on the platform of the builder,
+# instead of once per target platform under emulation, i.e., the arm64 build took 17 minutes under QEMU
+FROM --platform=$BUILDPLATFORM amazoncorretto:17 AS build
 
 RUN yum install -y tar unzip
 

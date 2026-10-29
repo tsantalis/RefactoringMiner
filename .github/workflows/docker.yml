@@ -15,8 +15,18 @@ jobs:
     if: github.repository == 'tsantalis/RefactoringMiner' # To ensure it doesn't get executed in the forks
     runs-on: ubuntu-latest
     steps:
+        # Reuse the git objects cached by the Tests workflow on master, so that the checkout fetches only the objects changed since then
+        - name: Restore git objects
+          uses: actions/cache/restore@v4
+          with:
+            path: .git
+            key: git-${{ runner.os }}-${{ github.sha }}
+            restore-keys: git-${{ runner.os }}-
+
         - name: Checkout Repository
-          uses: actions/checkout@v2
+          uses: actions/checkout@v4
+          with:
+            persist-credentials: false
 
         - name: Setup QEMU
           uses: docker/setup-qemu-action@v1

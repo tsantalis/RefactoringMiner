@@ -8803,6 +8803,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readSize() : Int extracted from public computeShallowSize(graphObject GraphObjectRecord) : Int in class leakcanary.HprofGraph & moved to class leakcanary.GraphObjectRecord.GraphObjectArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public readSize() : Int extracted from public computeShallowSize(graphObject GraphObjectRecord) : Int in class leakcanary.HprofGraph & moved to class leakcanary.GraphObjectRecord.GraphPrimitiveArrayRecord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

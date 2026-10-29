@@ -10,6 +10,7 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.tree.TreeUtils;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.actions.model.MoveIn;
+import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.actions.model.MoveOut;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 
@@ -48,6 +49,10 @@ public class ExtendedChawatheScriptGenerator implements ExtendedEditScriptGenera
 	}
 	private void processMultiMappings() {
 		for (Action action : new SimplifiedMultiMoveActionGenerator().computeActions(multiMappingStore)) {
+			//the multi-mappings with a node in another file are moves in or out of the file
+			if (parentContextMap != null && childContextMap != null && action instanceof MultiMove multiMove &&
+					(!TreeUtilFunctions.getFinalRoot(multiMove.getNode()).equals(origSrc) || !TreeUtilFunctions.getFinalRoot(multiMove.getParent()).equals(origDst)))
+				continue;
 			actions.add(action);
 		}
 	}
@@ -105,6 +110,14 @@ public class ExtendedChawatheScriptGenerator implements ExtendedEditScriptGenera
 				}
 				else
 				{
+					//the sources of a multi-mapped node in another file moved in, like the move out of a multi-mapped source, i.e., a method extracted from two methods of another file
+					for (Tree srcCandidate : multiMappingStore.getSrcs(x)) {
+						if (!srcCandidate.equals(TreeUtilFunctions.getFakeTreeInstance()) && !TreeUtilFunctions.getFinalRoot(srcCandidate).equals(origSrc)) {
+							String nameByTree = findNameByTree(parentContextMap, srcCandidate);
+							if (nameByTree != null)
+								actions.add(new MoveIn(srcCandidate, x, nameByTree, +1));
+						}
+					}
 					continue;
 				}
 			} else {

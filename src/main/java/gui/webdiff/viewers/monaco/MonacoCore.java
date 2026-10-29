@@ -732,14 +732,14 @@ public class MonacoCore {
 			}
 			else if(subsumes(mapping.getFragment1().codeRange(),tree) && classifier.getSrcMoveOutTreeMap().get(tree) != null) {
 				List<Action> actions = classifier.getSrcMoveOutTreeMap().get(tree);
-				return tooltipLeft + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
+				return tooltipLeft + " & " + actions.stream().map(Action::toString).distinct().collect(Collectors.joining(", "));
 			}
 			if(subsumes(mapping.getFragment2().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
 				return tooltipRight;
 			}
 			else if(subsumes(mapping.getFragment2().codeRange(),tree) && classifier.getDstMoveInTreeMap().get(tree) != null) {
 				List<Action> actions = classifier.getDstMoveInTreeMap().get(tree);
-				return tooltipRight + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
+				return tooltipRight + " & " + actions.stream().map(Action::toString).distinct().collect(Collectors.joining(", "));
 			}
 		}
     	return null;
@@ -791,14 +791,14 @@ public class MonacoCore {
 				}
 				else if(subsumes(mapping.getFragment1().codeRange(),tree) && classifier.getSrcMoveOutTreeMap().get(tree) != null) {
                     List<Action> actions = classifier.getSrcMoveOutTreeMap().get(tree);
-                    return tooltipLeft + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
+                    return tooltipLeft + " & " + actions.stream().map(Action::toString).distinct().collect(Collectors.joining(", "));
 				}
 				if(subsumes(mapping.getFragment2().codeRange(),tree) && (classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree))) {
 					return tooltipRight;
 				}
 				else if(subsumes(mapping.getFragment2().codeRange(),tree) && classifier.getDstMoveInTreeMap().get(tree) != null) {
                     List<Action> actions = classifier.getDstMoveInTreeMap().get(tree);
-					return tooltipRight + " & " + actions.stream().map(Action::toString).collect(Collectors.joining(", "));
+					return tooltipRight + " & " + actions.stream().map(Action::toString).distinct().collect(Collectors.joining(", "));
 				}
 			}
 			if(bodyMapper.getCommentListDiff() != null && isComment(tree)) {

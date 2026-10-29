@@ -4617,6 +4617,7 @@ public class UMLModelDiff {
 		if(operationsInRemovedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
 			checkForMovedAndInlinedOperations(getOperationBodyMappersInCommonClasses(), operationsInRemovedClasses);
 		}
+		checkForExtractedOperationsWithinMovedAndInlinedOperations();
 		List<UMLOperation> allOperationsInAddedClasses = getOperationsInAddedClasses();
 		checkForExtractedAndMovedLambdas(getOperationBodyMappersInMovedAndRenamedClasses(), allOperationsInAddedClasses);
 		if(allOperationsInAddedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
@@ -5635,6 +5636,53 @@ public class UMLModelDiff {
 				map.put(renamePattern, set);
 			}
 		}
+	}
+
+	//the moved and inlined operations may have code extracted to added operations called from the target, i.e., computeShallowSize branches extracted to readSize() of the record classes
+	private void checkForExtractedOperationsWithinMovedAndInlinedOperations() throws RefactoringMinerTimedOutException {
+		List<InlineOperationRefactoring> moveAndInlineRefactorings = new ArrayList<InlineOperationRefactoring>();
+		for(Refactoring r : refactorings) {
+			if(r instanceof InlineOperationRefactoring inline && inline.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
+				moveAndInlineRefactorings.add(inline);
+			}
+		}
+		if(moveAndInlineRefactorings.isEmpty()) {
+			return;
+		}
+		List<UMLOperation> addedOperations = new ArrayList<UMLOperation>(getAddedAndExtractedOperationsInCommonClasses());
+		addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
+		addedOperations.addAll(getOperationsInAddedClasses());
+		for(InlineOperationRefactoring inline : moveAndInlineRefactorings) {
+			UMLOperationBodyMapper mapper = inline.getBodyMapper();
+			UMLClassBaseDiff inlinedOperationClassDiff = getUMLClassDiff(inline.getInlinedOperation().getClassName());
+			List<UMLOperation> potentiallyMovedOperations = inlinedOperationClassDiff != null ? inlinedOperationClassDiff.getRemovedOperations() : Collections.emptyList();
+			Set<Refactoring> refactoringsBefore = new LinkedHashSet<Refactoring>(refactorings);
+			checkForExtractedOperationsWithinMovedMethod(mapper, potentiallyMovedOperations, addedOperations, getUMLClassDiff(inline.getTargetOperationAfterInline().getClassName()));
+			Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+			for(Refactoring r : refactorings) {
+				if(!refactoringsBefore.contains(r) && r instanceof ExtractOperationRefactoring extract && expressionOfNonMappedComposite(extract.getBodyMapper(), mapper)) {
+					refactoringsToBeRemoved.add(extract);
+					refactoringsToBeRemoved.addAll(extract.getBodyMapper().getRefactorings());
+				}
+			}
+			refactoringsToBeRemoved.removeAll(refactoringsBefore);
+			refactorings.removeAll(refactoringsToBeRemoved);
+		}
+	}
+
+	//the expression of a composite left unmapped by the inlined operation alone is no evidence of extraction, i.e., if(matching_mode_ == KeyMatchingMode::kLoose) to return a.target().device() == b.target().device() && ...
+	private static boolean expressionOfNonMappedComposite(UMLOperationBodyMapper extractedOperationMapper, UMLOperationBodyMapper inlinedOperationMapper) {
+		if(extractedOperationMapper.getMappings().size() == 1) {
+			AbstractCodeFragment fragment1 = extractedOperationMapper.getMappings().iterator().next().getFragment1();
+			if(fragment1 instanceof AbstractExpression) {
+				for(CompositeStatementObject composite1 : inlinedOperationMapper.getNonMappedInnerNodesT1()) {
+					if(composite1.getExpressions().contains(fragment1)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private void checkForMovedAndInlinedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {

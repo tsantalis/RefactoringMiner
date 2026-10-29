@@ -89,6 +89,35 @@ public class ReplacementAlgorithm {
 		return null;
 	}
 
+	//the subject of a when is replaced with a subject variable and the entries keep their conditions, i.e., when (graphObject) { is GraphInstanceRecord -> ... } -> when (val objectRecord = graph.findObjectByObjectId(instanceId)) { is GraphInstanceRecord -> ... }
+	private static boolean whenSubjectReplacedWithSubjectVariable(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		if(!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT) ||
+				!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT)) {
+			return false;
+		}
+		if(statement1.getVariableDeclarations().isEmpty() == statement2.getVariableDeclarations().isEmpty()) {
+			return false;
+		}
+		//the same conditions, since a nested when with the subject variable may test a subset of the conditions, i.e., when (val record = graphObject.readRecord()) { is BooleanArrayDump -> ... }
+		List<String> conditions1 = whenEntryConditions((CompositeStatementObject)statement1);
+		List<String> conditions2 = whenEntryConditions((CompositeStatementObject)statement2);
+		return !conditions1.isEmpty() && conditions1.size() == conditions2.size() && conditions1.containsAll(conditions2);
+	}
+
+	private static List<String> whenEntryConditions(CompositeStatementObject when) {
+		List<String> conditions = new ArrayList<String>();
+		for(AbstractStatement statement : when.getStatements()) {
+			if(statement instanceof CompositeStatementObject entry && entry.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+				for(AbstractExpression expression : entry.getExpressions()) {
+					if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY_CONDITION)) {
+						conditions.add(expression.getString());
+					}
+				}
+			}
+		}
+		return conditions;
+	}
+
 	//the statements of the Java switch case are nested under the block of the Kotlin when entry, i.e., switch(x) { case A: return null; } -> when(x) { A -> { return null } }
 	private static boolean switchCaseStatementInWhenEntry(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
 		CompositeStatementObject parent2 = statement2.getParent();
@@ -2282,6 +2311,10 @@ public class ReplacementAlgorithm {
 			if(expressions1.size() == 1 && expressions2.size() == 1 && expressions1.get(0).getString().equals(expressions2.get(0).getString())) {
 				return replacementInfo.getReplacements();
 			}
+		}
+		//match when with when having a subject variable in place of the subject and the same entry conditions
+		if(whenSubjectReplacedWithSubjectVariable(statement1, statement2)) {
+			return replacementInfo.getReplacements();
 		}
 		//match if with when entry having the same condition, i.e., if(x > 0) -> x > 0 -> {...}
 		Pair<AbstractExpression, AbstractExpression> sameConditions = sameConditionInIfAndWhenEntry(statement1, statement2);

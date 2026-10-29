@@ -21,6 +21,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -176,6 +177,11 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 					}
 				}
 			}
+			//the getter expression became the initializer, i.e., val adapter get() = mAdapter into val adapter = ConcatAdapter(config)
+			if(this.mapper == null && removedAttribute.getCustomGetter().isPresent() && removedAttribute.getCustomGetter().get().getDefaultExpression() != null) {
+				UMLOperation getter1 = removedAttribute.getCustomGetter().get();
+				this.mapper = new UMLOperationBodyMapper(getter1.getDefaultExpression(), lambdaExpressionOfCall(initializer2), getter1, addedAttribute, classDiff, modelDiff);
+			}
 		}
 		else if(initializer1 != null && initializer2 == null) {
 			initializerChanged = true;
@@ -196,6 +202,11 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 					}
 				}
 			}
+			//the initializer or delegate became the getter expression, i.e., val adapter = ConcatAdapter(config) into val adapter get() = mAdapter
+			if(this.mapper == null && addedAttribute.getCustomGetter().isPresent() && addedAttribute.getCustomGetter().get().getDefaultExpression() != null) {
+				UMLOperation getter2 = addedAttribute.getCustomGetter().get();
+				this.mapper = new UMLOperationBodyMapper(lambdaExpressionOfCall(initializer1), getter2.getDefaultExpression(), removedAttribute, getter2, classDiff, modelDiff);
+			}
 		}
 		if(removedAttribute.getCustomGetter().isPresent() && addedAttribute.getCustomGetter().isPresent()) {
 			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedAttribute.getCustomGetter().get(), addedAttribute.getCustomGetter().get(), classDiff);
@@ -205,6 +216,20 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedAttribute.getCustomSetter().get(), addedAttribute.getCustomSetter().get(), classDiff);
 			this.operationBodyMapperList.add(mapper);
 		}
+	}
+
+	//the single statement of the lambda passed to the delegate call, i.e., composeTestRule.activity in by lazy { composeTestRule.activity }
+	private static AbstractCodeFragment lambdaExpressionOfCall(AbstractExpression initializer) {
+		if(initializer.invocationCoveringEntireFragment() != null && initializer.getLambdas().size() == 1) {
+			LambdaExpressionObject lambda = initializer.getLambdas().get(0);
+			if(lambda.getParameters().isEmpty() && lambda.getBody() != null) {
+				List<AbstractCodeFragment> leaves = lambda.getBody().getCompositeStatement().getLeaves();
+				if(leaves.size() == 1 && lambda.getBody().getCompositeStatement().getInnerNodes().size() == 1) {
+					return leaves.get(0);
+				}
+			}
+		}
+		return initializer;
 	}
 
 	// this method is useful only if the attribute has accessor functions in Kotlin

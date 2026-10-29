@@ -3522,6 +3522,13 @@
     "author": "limuyang2",
     "time": "7/17/22 10:47 PM",
     "refactorings": [{
+        "type": "Extract Attribute",
+        "description": "Extract Attribute private mAdapter : Inferred in class com.chad.library.adapter.base.QuickAdapterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type contentAdapter : RecyclerView.Adapter<*> to contentAdapter : BaseQuickAdapter<*,*> in class com.chad.library.adapter.base.QuickAdapterHelper",
         "comment": null,
@@ -8272,6 +8279,13 @@
     "author": "pyricau",
     "time": "7/19/19 02:57 AM",
     "refactorings": [{
+        "type": "Extract Attribute",
+        "description": "Extract Attribute public NULL_REFERENCE : Inferred in class leakcanary.HeapValue.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Move Class",
         "description": "Move Class leakcanary.ReferencePathNode moved to leakcanary.internal.ReferencePathNode",
         "comment": null,

@@ -357,6 +357,26 @@ public class ReplacementAlgorithm {
 		return collection2;
 	}
 
+	//the fragment is only an attribute initialized with the call
+	private static boolean attributeWithInitializer(AbstractCodeFragment statement, List<UMLAttribute> attributes, AbstractCall call) {
+		if(statement.getVariables().size() == 1 && statement.getString().equals(statement.getVariables().get(0).getString())) {
+			for(UMLAttribute attribute : attributes) {
+				AbstractExpression initializer = attribute.getVariableDeclaration().getInitializer();
+				if(attribute.getName().equals(statement.getString()) && initializer != null && initializer.getString().equals(call.actualString())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private static Replacement callReplacedWithAttribute(AbstractCall call, String before, String after, Direction direction) {
+		if(call instanceof ObjectCreation) {
+			return new Replacement(before, after, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION);
+		}
+		return new VariableReplacementWithMethodInvocation(before, after, call, direction);
+	}
+
 	protected static Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper, boolean isomorphic) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
@@ -408,6 +428,19 @@ public class ReplacementAlgorithm {
 		ObjectCreation creationCoveringTheEntireStatement2 = temp2 instanceof ObjectCreation ? (ObjectCreation)temp2 : null;
 		AbstractCall assignmentCreationCoveringTheEntireStatement1 = creationCoveringTheEntireStatement1 == null ? statement1.assignmentCreationCoveringEntireStatement() : creationCoveringTheEntireStatement1;
 		AbstractCall assignmentCreationCoveringTheEntireStatement2 = creationCoveringTheEntireStatement2 == null ? statement2.assignmentCreationCoveringEntireStatement() : creationCoveringTheEntireStatement2;
+		//the call forming one fragment is the initializer of the attribute forming the other fragment, i.e., val adapter = ConcatAdapter(config) into private val mAdapter = ConcatAdapter(config) and val adapter get() = mAdapter
+		if(classDiff != null) {
+			AbstractCall call1 = invocationCoveringEntireFragment1 != null ? invocationCoveringEntireFragment1 : creationCoveringTheEntireStatement1;
+			if(call1 != null && statement1.getString().equals(call1.actualString()) && attributeWithInitializer(statement2, classDiff.getAddedAttributes(), call1)) {
+				replacementInfo.addReplacement(callReplacedWithAttribute(call1, call1.actualString(), statement2.getString(), Direction.INVOCATION_TO_VARIABLE));
+				return replacementInfo.getReplacements();
+			}
+			AbstractCall call2 = invocationCoveringEntireFragment2 != null ? invocationCoveringEntireFragment2 : creationCoveringTheEntireStatement2;
+			if(call2 != null && statement2.getString().equals(call2.actualString()) && attributeWithInitializer(statement1, classDiff.getRemovedAttributes(), call2)) {
+				replacementInfo.addReplacement(callReplacedWithAttribute(call2, statement1.getString(), call2.actualString(), Direction.VARIABLE_TO_INVOCATION));
+				return replacementInfo.getReplacements();
+			}
+		}
 		Map<String, List<AbstractCall>> methodInvocationMap1 = convertToMap(statement1.getMethodInvocations());
 		Map<String, List<AbstractCall>> methodInvocationMap2 = convertToMap(statement2.getMethodInvocations());
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();

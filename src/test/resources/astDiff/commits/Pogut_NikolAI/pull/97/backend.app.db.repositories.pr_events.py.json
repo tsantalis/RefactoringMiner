@@ -2342,6 +2342,17 @@
   "firstEndPos" : 2130,
   "secondEndPos" : 876
 }, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "\"\"\"SELECT r.id FROM repositories r JOIN teams t ON t.id = r.team_id\n               WHERE r.github_repository_id = %s\n                 AND r.archived_at IS NULL AND t.archived_at IS NULL\n               FOR UPDATE OF r\"\"\"",
+  "secondLabel" : "\"\"\"SELECT r.id FROM repositories r JOIN teams t ON t.id = r.team_id\n   WHERE r.github_repository_id = %s AND r.archived_at IS NULL AND t.archived_at IS NULL\"\"\"",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "assignment",
+  "firstPos" : 1864,
+  "secondPos" : 248,
+  "firstEndPos" : 2083,
+  "secondEndPos" : 407
+}, {
   "firstType" : "tuple",
   "secondType" : "tuple",
   "firstLabel" : "",

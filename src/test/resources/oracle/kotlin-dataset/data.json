@@ -6782,6 +6782,13 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
+        "type": "Replace Attribute With Variable",
+        "description": "Replace Attribute With Variable reusedLoadClassRecord : Inferred to reusedLoadClassRecord : Inferred in method public readRecords(recordTypes Set<KClass<HprofRecord>>, listener OnHprofRecordListener) : Long from class shark.StreamingHprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public parseHeaderOf(source BufferedSource) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.Hprof.Companion & moved to class shark.HprofHeader.Companion",
         "comment": null,

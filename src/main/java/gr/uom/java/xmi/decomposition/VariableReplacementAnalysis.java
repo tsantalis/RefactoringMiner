@@ -1149,6 +1149,8 @@ public class VariableReplacementAnalysis {
 	}
 
 	private void findAttributeExtractions() throws RefactoringMinerTimedOutException {
+		//the code extracted and moved to an added class, i.e., a new Python module, has no class diff, so the class diff of the source operation is used
+		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : (modelDiff != null ? modelDiff.getUMLClassDiff(operation1.getClassName()) : null);
 		if(classDiff != null) {
 			List<UMLAttribute> addedAttributes = new ArrayList<>();
 			addedAttributes.addAll(classDiff.getAddedAttributes());
@@ -1302,9 +1304,11 @@ public class VariableReplacementAnalysis {
 						String before = argumentBefore != null ? argumentBefore : replacement.getBefore();
 						for(UMLAttribute addedAttribute : addedAttributes) {
 							VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
-							if(addedAttribute.getName().equals(after) || after.equals(addedAttribute.getNonQualifiedClassName() + "." + addedAttribute.getName())) {
+							boolean attributeReplacesExpression = addedAttribute.getName().equals(after) || after.equals(addedAttribute.getNonQualifiedClassName() + "." + addedAttribute.getName());
+							LeafExpression extractedPrefix = attributeReplacesExpression ? null : extractedPrefixOfStringLiteral(addedAttribute, after, before);
+							if(attributeReplacesExpression || extractedPrefix != null) {
 								boolean attributeInAddedClass = attributesInAddedClasses.containsKey(addedAttribute.getClassName()) && attributesInAddedClasses.get(addedAttribute.getClassName()).contains(addedAttribute);							
-								LeafExpression leafExpression = extractInlineCondition(declaration2, replacement, before, attributeInAddedClass);
+								LeafExpression leafExpression = extractedPrefix != null ? extractedPrefix : extractInlineCondition(declaration2, replacement, before, attributeInAddedClass);
 								if(leafExpression != null && !classDiff.getOriginalClass().importsType(after) && !parameterNameList2.contains(after)) {
 									UMLAbstractClass nextClass = modelDiff !=  null ? modelDiff.findClassInChildModel(addedAttribute.getClassName()) : classDiff.getNextClass();
 									ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), nextClass, insideExtractedOrInlinedMethod);
@@ -1405,6 +1409,41 @@ public class VariableReplacementAnalysis {
 				mapper.removeMapping(mapping);
 			}
 		}
+	}
+
+	//the string literal replaced with a variable, whose initializer concatenates the added attribute with the rest of the literal, i.e., """SELECT ... FOR UPDATE OF r""" -> query,
+	//where query = _ACTIVE_REPOSITORY_SQL + (" FOR UPDATE OF r" if lock else "") and _ACTIVE_REPOSITORY_SQL = """SELECT ...""", ignoring the line breaks and indentation of the literals
+	private LeafExpression extractedPrefixOfStringLiteral(UMLAttribute addedAttribute, String variableName, String stringLiteral) {
+		VariableDeclaration attributeDeclaration = addedAttribute.getVariableDeclaration();
+		if(!isStringLiteral(stringLiteral) || attributeDeclaration == null || attributeDeclaration.getInitializer() == null)
+			return null;
+		String attributeLiteral = attributeDeclaration.getInitializer().getString();
+		VariableDeclaration variableDeclaration = operation2.getVariableDeclaration(variableName);
+		if(!isStringLiteral(attributeLiteral) || variableDeclaration == null || variableDeclaration.getInitializer() == null)
+			return null;
+		String initializer = variableDeclaration.getInitializer().getString();
+		if(!initializer.startsWith(addedAttribute.getName()) || !initializer.substring(addedAttribute.getName().length()).trim().startsWith("+"))
+			return null;
+		String literal = normalizedContent(stringLiteral);
+		String prefix = normalizedContent(attributeLiteral);
+		if(prefix.isEmpty() || literal.length() <= prefix.length() || !literal.startsWith(prefix))
+			return null;
+		String suffix = literal.substring(prefix.length()).trim();
+		for(LeafExpression suffixLiteral : variableDeclaration.getInitializer().getStringLiterals()) {
+			if(normalizedContent(suffixLiteral.getString()).equals(suffix)) {
+				List<LeafExpression> subExpressions = attributeDeclaration.getInitializer().findExpression(attributeLiteral);
+				return subExpressions.isEmpty() ? null : subExpressions.get(0);
+			}
+		}
+		return null;
+	}
+
+	private static boolean isStringLiteral(String s) {
+		return s.length() > 1 && s.startsWith("\"") && s.endsWith("\"");
+	}
+
+	private static String normalizedContent(String stringLiteral) {
+		return stringLiteral.substring(1, stringLiteral.length() - 1).replaceAll("\\s+", " ").trim();
 	}
 
 	private LeafExpression extractInlineCondition(VariableDeclaration variableDeclaration, Replacement replacement, String replacementAsString, boolean attributeInAddedOrRemovedClass) {

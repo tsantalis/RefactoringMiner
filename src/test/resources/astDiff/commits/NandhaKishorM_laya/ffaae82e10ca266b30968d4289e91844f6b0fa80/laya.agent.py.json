@@ -27330,97 +27330,9 @@
   "firstParentType" : "block",
   "secondParentType" : "block",
   "firstPos" : 19592,
-  "secondPos" : 19581,
-  "firstEndPos" : 20770,
-  "secondEndPos" : 19662
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 19592,
-  "secondPos" : 20592,
-  "firstEndPos" : 20770,
-  "secondEndPos" : 20690
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 19592,
-  "secondPos" : 21958,
-  "firstEndPos" : 20770,
-  "secondEndPos" : 22034
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 19592,
-  "secondPos" : 23941,
-  "firstEndPos" : 20770,
-  "secondEndPos" : 25061
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 19592,
   "secondPos" : 27016,
   "firstEndPos" : 20770,
   "secondEndPos" : 28295
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"\"\"Evaluate typed questions across state in a single, parallel forward pass.\n\n        Args:\n            state: Text string, JSON dict, or conversation turn list.\n            questions: Dictionary mapping question_id -> question definition.\n                - choice: {\"type\": \"choice\", \"instructions\": \"...\", \"criteria\": {\"optA\": \"...\", ...}}\n                - score:  {\"type\": \"score\",  \"instructions\": \"...\", \"criteria\": [\"lvl0\", \"lvl1\", ...]}\n                - noul:   {\"type\": \"noul\", \"instructions\": \"...\",\n                           \"criteria\": {\"false\": \"...\", \"true\": \"...\"},\n                           \"labels\": {\"false\": \"B\", \"true\": \"A\"}}\n\n                  Noul criteria and labels are optional. Labels only control the text shown to the\n                  model; their keys retain false/true semantics, and the returned `noul` value is\n                  always P(true). Labels default to false/true for compatibility.\n\n        Returns:\n            Dictionary with answers, probabilities, calibrated confidence, and token usage.\n            Empty questions return empty answers and zero token usage without tokenization\n            or a model forward pass.\n        \"\"\"",
-  "secondLabel" : "\"\"\"Tokenize one state against every (already validated + normalized) question.\"\"\"",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 19592,
-  "secondPos" : 19581,
-  "firstEndPos" : 20770,
-  "secondEndPos" : 19662
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"\"\"Evaluate typed questions across state in a single, parallel forward pass.\n\n        Args:\n            state: Text string, JSON dict, or conversation turn list.\n            questions: Dictionary mapping question_id -> question definition.\n                - choice: {\"type\": \"choice\", \"instructions\": \"...\", \"criteria\": {\"optA\": \"...\", ...}}\n                - score:  {\"type\": \"score\",  \"instructions\": \"...\", \"criteria\": [\"lvl0\", \"lvl1\", ...]}\n                - noul:   {\"type\": \"noul\", \"instructions\": \"...\",\n                           \"criteria\": {\"false\": \"...\", \"true\": \"...\"},\n                           \"labels\": {\"false\": \"B\", \"true\": \"A\"}}\n\n                  Noul criteria and labels are optional. Labels only control the text shown to the\n                  model; their keys retain false/true semantics, and the returned `noul` value is\n                  always P(true). Labels default to false/true for compatibility.\n\n        Returns:\n            Dictionary with answers, probabilities, calibrated confidence, and token usage.\n            Empty questions return empty answers and zero token usage without tokenization\n            or a model forward pass.\n        \"\"\"",
-  "secondLabel" : "\"\"\"Run the model on a collated batch, with the GPU->CPU OOM fallback, and return numpy outputs.\"\"\"",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 19592,
-  "secondPos" : 20592,
-  "firstEndPos" : 20770,
-  "secondEndPos" : 20690
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"\"\"Evaluate typed questions across state in a single, parallel forward pass.\n\n        Args:\n            state: Text string, JSON dict, or conversation turn list.\n            questions: Dictionary mapping question_id -> question definition.\n                - choice: {\"type\": \"choice\", \"instructions\": \"...\", \"criteria\": {\"optA\": \"...\", ...}}\n                - score:  {\"type\": \"score\",  \"instructions\": \"...\", \"criteria\": [\"lvl0\", \"lvl1\", ...]}\n                - noul:   {\"type\": \"noul\", \"instructions\": \"...\",\n                           \"criteria\": {\"false\": \"...\", \"true\": \"...\"},\n                           \"labels\": {\"false\": \"B\", \"true\": \"A\"}}\n\n                  Noul criteria and labels are optional. Labels only control the text shown to the\n                  model; their keys retain false/true semantics, and the returned `noul` value is\n                  always P(true). Labels default to false/true for compatibility.\n\n        Returns:\n            Dictionary with answers, probabilities, calibrated confidence, and token usage.\n            Empty questions return empty answers and zero token usage without tokenization\n            or a model forward pass.\n        \"\"\"",
-  "secondLabel" : "\"\"\"Turn one state's logit rows (starting at `offset`) into typed answers.\"\"\"",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 19592,
-  "secondPos" : 21958,
-  "firstEndPos" : 20770,
-  "secondEndPos" : 22034
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"\"\"Evaluate typed questions across state in a single, parallel forward pass.\n\n        Args:\n            state: Text string, JSON dict, or conversation turn list.\n            questions: Dictionary mapping question_id -> question definition.\n                - choice: {\"type\": \"choice\", \"instructions\": \"...\", \"criteria\": {\"optA\": \"...\", ...}}\n                - score:  {\"type\": \"score\",  \"instructions\": \"...\", \"criteria\": [\"lvl0\", \"lvl1\", ...]}\n                - noul:   {\"type\": \"noul\", \"instructions\": \"...\",\n                           \"criteria\": {\"false\": \"...\", \"true\": \"...\"},\n                           \"labels\": {\"false\": \"B\", \"true\": \"A\"}}\n\n                  Noul criteria and labels are optional. Labels only control the text shown to the\n                  model; their keys retain false/true semantics, and the returned `noul` value is\n                  always P(true). Labels default to false/true for compatibility.\n\n        Returns:\n            Dictionary with answers, probabilities, calibrated confidence, and token usage.\n            Empty questions return empty answers and zero token usage without tokenization\n            or a model forward pass.\n        \"\"\"",
-  "secondLabel" : "\"\"\"Evaluate the same questions over many states, packing them into shared forward passes.\n\n        This is the throughput path. `system_one`/`predict` handle one state per forward pass; on a\n        GPU that leaves most of the batch dimension idle. `predict_batch` collates several states'\n        question rows into one tensor, so a call that would take N sequential forward passes takes\n        one (or `ceil(len(states) / batch_size)`), which is several times faster per decision on GPU.\n\n        Args:\n            states: A list of states (each a text string, JSON dict, or conversation turn list).\n                    The same `questions` are evaluated against every state.\n            questions: Question definitions, exactly as accepted by `system_one`.\n            batch_size: Optional cap on states per forward pass. `None` sends them all in one pass;\n                        set it to bound peak memory when batching many or long states.\n\n        Returns:\n            A list of per-state result dicts, each identical in shape to `system_one`'s output and\n            aligned with `states` by index.\n        \"\"\"",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 19592,
-  "secondPos" : 23941,
-  "firstEndPos" : 20770,
-  "secondEndPos" : 25061
 }, {
   "firstType" : "string",
   "secondType" : "string",

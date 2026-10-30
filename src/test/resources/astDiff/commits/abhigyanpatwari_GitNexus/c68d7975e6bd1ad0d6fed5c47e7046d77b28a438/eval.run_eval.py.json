@@ -8421,97 +8421,9 @@
   "firstParentType" : "block",
   "secondParentType" : "block",
   "firstPos" : 4684,
-  "secondPos" : 4628,
-  "firstEndPos" : 4834,
-  "secondEndPos" : 4666
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 4684,
-  "secondPos" : 4827,
-  "firstEndPos" : 4834,
-  "secondEndPos" : 4876
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 4684,
-  "secondPos" : 5526,
-  "firstEndPos" : 4834,
-  "secondEndPos" : 5595
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 4684,
-  "secondPos" : 6001,
-  "firstEndPos" : 4834,
-  "secondEndPos" : 6088
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "block",
-  "secondParentType" : "block",
-  "firstPos" : 4684,
   "secondPos" : 7088,
   "firstEndPos" : 4834,
   "secondEndPos" : 7238
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
-  "secondLabel" : "\"\"\"Construct the model from config.\"\"\"",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 4684,
-  "secondPos" : 4628,
-  "firstEndPos" : 4834,
-  "secondEndPos" : 4666
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
-  "secondLabel" : "\"\"\"Construct the environment for the instance.\"\"\"",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 4684,
-  "secondPos" : 4827,
-  "firstEndPos" : 4834,
-  "secondEndPos" : 4876
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
-  "secondLabel" : "\"\"\"Construct the GitNexus agent with trajectory output configured.\"\"\"",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 4684,
-  "secondPos" : 5526,
-  "firstEndPos" : 4834,
-  "secondEndPos" : 5595
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
-  "secondLabel" : "\"\"\"Pull the git diff patch from the container, falling back to the agent submission.\"\"\"",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 4684,
-  "secondPos" : 6001,
-  "firstEndPos" : 4834,
-  "secondEndPos" : 6088
 }, {
   "firstType" : "string",
   "secondType" : "string",

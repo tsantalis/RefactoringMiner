@@ -114,7 +114,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if (Constants.isCrossLanguage(LANG1, LANG2) && bodyMapper.getOperationInvocation() != null)
             processAnonymousArgumentReplacedWithLambda(srcTree, dstTree, bodyMapper, mappingStore);
-        if (isPartOfExtractedMethod)
+        //the model relates the docs only when doc elements moved along with the code, i.e., not two unrelated Python docstrings
+        if (isPartOfExtractedMethod && bodyMapper.getJavadocDiff().isPresent())
             new JavaDocMatcher(optimizationData, bodyMapper.getContainer1().getJavadoc(), bodyMapper.getContainer2().getJavadoc(), bodyMapper.getJavadocDiff(), LANG1, LANG2).match(srcTree,dstTree,mappingStore);
         new CommentMatcher(optimizationData, bodyMapper.getCommentListDiff(), LANG1, LANG2).match(srcTree,dstTree,mappingStore);
 

@@ -149,7 +149,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcOperationNode, dstOperationNode, mappingStore);
                 }
                 if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
-                    processArgumentMappings(srcTree, dstTree, extractOperationRefactoring.getArgumentMappings());
+                    new ArgumentMappingsMatcher(optimizationData, extractOperationRefactoring.getArgumentMappings()).match(srcTree, dstTree, mappingStore);
             } else if (refactoring instanceof InlineOperationRefactoring) {
                 InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
@@ -162,7 +162,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcOperationNode, dstOperationNode, mappingStore);
                 }
                 if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
-                    processArgumentMappings(srcTree, dstTree, inlineOperationRefactoring.getArgumentMappings());
+                    new ArgumentMappingsMatcher(optimizationData, inlineOperationRefactoring.getArgumentMappings()).match(srcTree, dstTree, mappingStore);
             } else if (refactoring instanceof MoveCodeRefactoring) {
                 MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
                 if (!moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
@@ -421,7 +421,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
         return !before.getLocationInfo().getFilePath().equals(srcPath) || !after.getLocationInfo().getFilePath().equals(dstPath);
     }
 
-    private static boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, Refactoring refactoring) {
+    static boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, Refactoring refactoring) {
         int count = 0;
         for (Refactoring r : refactoringList) {
             if(r.toString().equals(refactoring.toString()))
@@ -429,16 +429,6 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
         }
         return count > 1;
     }
-    private void processArgumentMappings(Tree srcTree, Tree dstTree, List<AbstractCodeMapping> argumentMappings) {
-        for(AbstractCodeMapping expressionMapping : argumentMappings) {
-            Constants LANG1 = new Constants(expressionMapping.getFragment1().getLocationInfo().getFilePath());
-            Constants LANG2 = new Constants(expressionMapping.getFragment2().getLocationInfo().getFilePath());
-            Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,expressionMapping.getFragment1().getLocationInfo(),LANG1);
-            Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,expressionMapping.getFragment2().getLocationInfo(),LANG2);
-            new LeafMatcher(LANG1, LANG2).match(t1,t2,optimizationData.getSubtreeMappings());
-        }
-    }
-
     private boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
         int counter1 = 0;
         int counter2 = 0;
@@ -511,12 +501,16 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
         }
     }
 
+    static boolean involvesMultipleClasses(Refactoring refactoring) {
+        return refactoring.getInvolvedClassesBeforeRefactoring().size() > 1 || refactoring.getInvolvedClassesAfterRefactoring().size() > 1;
+    }
+
     private List<Refactoring> getClassDiffRefactorings(UMLClassBaseDiff classDiff, List<Refactoring> modelDiffRefactorings) {
         List<Refactoring> classDiffRefactorings = new ArrayList<>();
         for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
             Set<ImmutablePair<String, String>> involvedClassesBeforeRefactoring = modelDiffRefactoring.getInvolvedClassesBeforeRefactoring();
             Set<ImmutablePair<String, String>> involvedClassesAfterRefactoring = modelDiffRefactoring.getInvolvedClassesAfterRefactoring();
-            if (involvedClassesBeforeRefactoring.size() > 1 || involvedClassesAfterRefactoring.size() > 1) continue; //Must extend the logic to work for cases with more than one involving classes such as ExtractAndMoveMethodRefactoring
+            if (involvesMultipleClasses(modelDiffRefactoring)) continue; //Must extend the logic to work for cases with more than one involving classes such as ExtractAndMoveMethodRefactoring
             UMLClass umlClassBefore = classDiff.getOriginalClass();
             UMLClass umlClassAfter = classDiff.getNextClass();
             ImmutablePair<String, String> refactoringClassBefore = involvedClassesBeforeRefactoring.iterator().next();

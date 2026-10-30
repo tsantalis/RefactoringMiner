@@ -6,6 +6,7 @@ import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.*;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
@@ -134,6 +135,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 Constants LANG1 = new Constants(srcPath);
                 Constants LANG2 = new Constants(dstPath);
                 findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(extractOperationRefactoring.getBodyMapper(), true, LANG1, LANG2));
+                processArgumentMappings(refactoring, extractOperationRefactoring.getArgumentMappings());
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
                 InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
@@ -142,6 +144,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 Constants LANG1 = new Constants(srcPath);
                 Constants LANG2 = new Constants(dstPath);
                 findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(inlineOperationRefactoring.getBodyMapper(), true, LANG1, LANG2));
+                processArgumentMappings(refactoring, inlineOperationRefactoring.getArgumentMappings());
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_CODE)) {
                 MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
@@ -193,6 +196,15 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 }
             }
         }
+    }
+
+    //the arguments of the call to a method extracted from or inlined to another class are in the diff of the caller, which the RefactoringMatcher of a class diff does not process
+    private void processArgumentMappings(Refactoring refactoring, List<AbstractCodeMapping> argumentMappings) {
+        if (argumentMappings.isEmpty() || !RefactoringMatcher.involvesMultipleClasses(refactoring) || RefactoringMatcher.multipleInstancesWithSameDescription(modelDiffRefactorings, refactoring))
+            return;
+        String srcPath = argumentMappings.get(0).getFragment1().getLocationInfo().getFilePath();
+        String dstPath = argumentMappings.get(0).getFragment2().getLocationInfo().getFilePath();
+        findDiffsAndApplyMatcher(srcPath, dstPath, new ArgumentMappingsMatcher(argumentMappings));
     }
 
     private void findDiffsAndApplyMatcher(String srcPath, String dstPath, OptimizationAwareMatcher matcher) {

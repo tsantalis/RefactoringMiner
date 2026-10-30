@@ -55,7 +55,15 @@ public class UtilMethods {
         return new GitHistoryRefactoringMinerImpl().diffAtCommitWithGitHubAPI(repo, commit, new File(REPOS)).getDiffSet();
     }
 
+    //a pull request case has pull/<id> as commit, i.e., https://github.com/Pogut/NikolAI/pull/97, and its files are cached in REPOS
+    private static final String PULL_REQUEST_PREFIX = "pull/";
+    private static final int PULL_REQUEST_TIMEOUT = 600;
+
     public static Set<ASTDiff> getProjectDiffLocally(CaseInfo info) throws Exception {
+        if(info.getCommit().startsWith(PULL_REQUEST_PREFIX)) {
+            int pullRequestId = Integer.parseInt(info.getCommit().substring(PULL_REQUEST_PREFIX.length()));
+            return new GitHistoryRefactoringMinerImpl().diffAtPullRequest(info.getRepo(), pullRequestId, PULL_REQUEST_TIMEOUT, new File(REPOS)).getDiffSet();
+        }
         if(info.getSrc_files() != null) {
             String cloneURL = info.getRepo();
             String repoName = cloneURL.substring(cloneURL.lastIndexOf('/') + 1, cloneURL.lastIndexOf('.'));

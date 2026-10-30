@@ -2246,6 +2246,32 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public ProjectASTDiff diffAtPullRequest(String cloneURL, int pullRequestId, int timeout) throws Exception {
+		return diffAtPullRequest(cloneURL, pullRequestId, timeout, null);
+	}
+
+	/**
+	 * With a root folder, the files fetched for the pull request are kept there, as
+	 * {@code <repoName>-pull-<pullRequestId>.json} and the contents under
+	 * {@code <repoName>-pull-<pullRequestId>/before} and {@code .../after}, and read from there afterwards,
+	 * with no GitHub access.
+	 */
+	public ProjectASTDiff diffAtPullRequest(String cloneURL, int pullRequestId, int timeout, File rootFolder) throws Exception {
+		String repoName = cloneURL.substring(cloneURL.lastIndexOf('/') + 1, cloneURL.lastIndexOf('.'));
+		String cacheName = repoName + "-pull-" + pullRequestId;
+		File jsonFile = rootFolder == null ? null : new File(rootFolder, cacheName + ".json");
+		if(jsonFile != null && jsonFile.exists()) {
+			ChangedFileInfo changedFileInfo = new ObjectMapper().readValue(jsonFile, ChangedFileInfo.class);
+			Map<String, String> filesBefore = new ConcurrentHashMap<String, String>();
+			Map<String, String> filesCurrent = new ConcurrentHashMap<String, String>();
+			for(String fileName : changedFileInfo.getFilesBefore()) {
+				filesBefore.put(fileName, FileUtils.readFileToString(new File(rootFolder, cacheName + "/before/" + fileName), StandardCharsets.UTF_8));
+			}
+			for(String fileName : changedFileInfo.getFilesCurrent()) {
+				filesCurrent.put(fileName, FileUtils.readFileToString(new File(rootFolder, cacheName + "/after/" + fileName), StandardCharsets.UTF_8));
+			}
+			return diffAtPullRequest(cloneURL, pullRequestId, timeout, filesBefore, filesCurrent, changedFileInfo.getFilesBefore(), changedFileInfo.getFilesCurrent(),
+					changedFileInfo.getRenamedFilesHint(), changedFileInfo.getRepositoryDirectoriesBefore(), changedFileInfo.getRepositoryDirectoriesCurrent());
+		}
 		GHRepository repository = getGitHubRepository(cloneURL);
 		GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
 		Map<String, String> filesBefore = new ConcurrentHashMap<String, String>();
@@ -2255,6 +2281,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
 		List<String> commitFileNames = new ArrayList<>();
+		String headSha = pullRequest.getHead().getSha();
+		String baseSha = pullRequest.getBase().getSha();
 		if(repository.isPrivate()) {
 			PagedIterable<GHPullRequestCommitDetail> commits = pullRequest.listCommits();
 			for(GHPullRequestCommitDetail commit : commits) {
@@ -2273,8 +2301,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 			ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
 			int count = 1;
-			String headSha = pullRequest.getHead().getSha();
-			String mergeBaseSha = repository.getCompare(pullRequest.getBase().getSha(), headSha).getMergeBaseCommit().getSHA1();
+			String mergeBaseSha = repository.getCompare(baseSha, headSha).getMergeBaseCommit().getSHA1();
+			baseSha = mergeBaseSha;
 			for(GHPullRequestFileDetail commitFile : files) {
 				String fileName = commitFile.getFilename();
 				if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
@@ -2293,6 +2321,33 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			pool.shutdown();
 			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
 		}
+		List<String> orderedFilesBefore = new ArrayList<>();
+		List<String> orderedFilesCurrent = new ArrayList<>();
+		for(String fileName : new LinkedHashSet<>(commitFileNames)) {
+			if(filesBefore.containsKey(fileName)) {
+				orderedFilesBefore.add(fileName);
+			}
+			if(filesCurrent.containsKey(fileName)) {
+				orderedFilesCurrent.add(fileName);
+			}
+		}
+		if(jsonFile != null) {
+			for(String fileName : orderedFilesBefore) {
+				FileUtils.writeStringToFile(new File(rootFolder, cacheName + "/before/" + fileName), filesBefore.get(fileName), StandardCharsets.UTF_8);
+			}
+			for(String fileName : orderedFilesCurrent) {
+				FileUtils.writeStringToFile(new File(rootFolder, cacheName + "/after/" + fileName), filesCurrent.get(fileName), StandardCharsets.UTF_8);
+			}
+			ChangedFileInfo changedFileInfo = new ChangedFileInfo(baseSha, headSha, orderedFilesBefore, orderedFilesCurrent, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
+			new ObjectMapper().writeValue(jsonFile, changedFileInfo);
+		}
+		return diffAtPullRequest(cloneURL, pullRequestId, timeout, filesBefore, filesCurrent, orderedFilesBefore, orderedFilesCurrent,
+				renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+	}
+
+	private ProjectASTDiff diffAtPullRequest(String cloneURL, int pullRequestId, int timeout, Map<String, String> filesBefore, Map<String, String> filesCurrent,
+			List<String> orderedFilesBefore, List<String> orderedFilesCurrent, Map<String, String> renamedFilesHint,
+			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws Exception {
 		Set<ProjectASTDiff> diffs = new HashSet<>();
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;
@@ -2301,13 +2356,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				try {
 					Map<String, String> filesContentsBefore = new LinkedHashMap<String, String>();
 					Map<String, String> filesContentsCurrent = new LinkedHashMap<String, String>();
-					for(String fileName : commitFileNames) {
-						if(filesBefore.containsKey(fileName)) {
-							filesContentsBefore.put(fileName, filesBefore.get(fileName));
-						}
-						if(filesCurrent.containsKey(fileName)) {
-							filesContentsCurrent.put(fileName, filesCurrent.get(fileName));
-						}
+					for(String fileName : orderedFilesBefore) {
+						filesContentsBefore.put(fileName, filesBefore.get(fileName));
+					}
+					for(String fileName : orderedFilesCurrent) {
+						filesContentsCurrent.put(fileName, filesCurrent.get(fileName));
 					}
 					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(filesContentsBefore, filesContentsCurrent, renamedFilesHint, true);
 					UMLModel currentUMLModel = createModelForASTDiff(filesContentsCurrent, repositoryDirectoriesCurrent);

@@ -255,6 +255,23 @@ public class MappingOptimizer {
 		}
 	}
 
+	//a composite moved to the extracted method returning instead of its body, which stayed in the caller,
+	//i.e., if(cond) { await mark_published(...); return True } -> if(cond) { return comment } in the extracted method,
+	//so the parent mapper mapping the composite to if(comment is not None) { ... } through its body is removed
+	private static int parentMappingOfCompositeMovedToExtractedMethod(List<AbstractCodeMapping> mappings, List<UMLOperationBodyMapper> mappers) {
+		if(mappings.size() != 2)
+			return -1;
+		for(int i=0; i<2; i++) {
+			UMLOperationBodyMapper childMapper = mappers.get(i);
+			if(mappings.get(i) instanceof CompositeStatementObjectMapping && mappings.get(1-i) instanceof CompositeStatementObjectMapping &&
+					childMapper.getParentMapper() != null && childMapper.getParentMapper().equals(mappers.get(1-i)) &&
+					childMapper.compositeMovedToExtractedMethod((CompositeStatementObject)mappings.get(i).getFragment1(), (CompositeStatementObject)mappings.get(i).getFragment2())) {
+				return 1-i;
+			}
+		}
+		return -1;
+	}
+
 	private void optimizeDuplicateMappings(Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings,
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers, Collection<Refactoring> refactorings) {
 		for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
@@ -416,7 +433,11 @@ public class MappingOptimizer {
 				editDistances.add(mapping.editDistance());
 			}
 			Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
-			if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
+			int parentMappingOfMovedComposite = parentMappingOfCompositeMovedToExtractedMethod(mappings, mappers);
+			if(parentMappingOfMovedComposite != -1) {
+				indicesToBeRemoved.add(parentMappingOfMovedComposite);
+			}
+			else if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
 				int getterCount = 0;
 				int setterCount = 0;
 				boolean callerToExtractedMethodHasCompositeReplacement = false;

@@ -5767,33 +5767,80 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean continueBecomesReturn(CompositeStatementObject statement1, CompositeStatementObject statement2) {
-		boolean continueBody = false;
-		if(statement1.getStatements().size() > 0) {
-			AbstractStatement firstStatement = statement1.getStatements().get(0);
-			if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CONTINUE_STATEMENT)) {
-				continueBody = true;
+		return firstStatementOfType(statement1, CodeElementType.CONTINUE_STATEMENT) && firstStatementOfType(statement2, CodeElementType.RETURN_STATEMENT);
+	}
+
+	//in an extracted method, a composite returns instead of leaving the extracted code or of doing what stayed in the caller,
+	//i.e., if(len(comments) < 100) { break } -> if(len(comments) < _PAGE_SIZE) { return None },
+	//or if(cond) { await mark_published(...); return True } -> if(cond) { return comment }, when the caller calls mark_published with the returned comment
+	public boolean compositeMovedToExtractedMethod(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		return breakBecomesReturnInExtractedMethod(statement1, statement2) || bodyKeptInCaller(statement1, statement2);
+	}
+
+	private boolean extractedCompositeReturns(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		return parentMapper != null && operationInvocation != null && container1.equals(parentMapper.container1) &&
+				!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+				!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+				firstStatementOfType(statement2, CodeElementType.RETURN_STATEMENT);
+	}
+
+	private boolean breakBecomesReturnInExtractedMethod(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		return extractedCompositeReturns(statement1, statement2) && firstStatementOfType(statement1, CodeElementType.BREAK_STATEMENT);
+	}
+
+	//the body stays in the caller, but not the composite itself, i.e., if(term == null) { ... } kept identical in the caller is copied, not moved
+	private boolean bodyKeptInCaller(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		if(!extractedCompositeReturns(statement1, statement2) ||
+				!(statement1.getString().equals(statement2.getString()) || getArgumentizedString(statement1).equals(getArgumentizedString(statement2))))
+			return false;
+		List<AbstractCodeFragment> leaves1 = statement1.getLeaves();
+		if(leaves1.isEmpty())
+			return false;
+		for(AbstractCodeFragment leaf1 : leaves1) {
+			if(!parentMapper.alreadyMatched1(leaf1))
+				return false;
+		}
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+			if(mapping.getFragment1().equals(statement1) && mapping.getFragment1().getString().equals(mapping.getFragment2().getString()))
+				return false;
+		}
+		return true;
+	}
+
+	//the condition tests something else, when a replacement covers the entire condition, i.e., if(beeLine.isComment(sql)) -> if(tokens[0].equalsIgnoreCase("source")),
+	//or replaces a variable, i.e., if(extra == null) -> if(cmd == null), but not if(len(comments) < 100) -> if(len(comments) < _PAGE_SIZE)
+	private static boolean conditionReplaced(CompositeStatementObject statement1, CompositeStatementObject statement2, Set<Replacement> replacements) {
+		Set<String> variables1 = new LinkedHashSet<String>();
+		for(LeafExpression variable : statement1.getVariables()) {
+			variables1.add(variable.getString());
+		}
+		for(Replacement replacement : replacements) {
+			if(replacement.getBefore().equals(statement1.getString()) || replacement.getAfter().equals(statement2.getString()) || variables1.contains(replacement.getBefore()))
+				return true;
+			for(AbstractExpression expression1 : statement1.getExpressions()) {
+				if(replacement.getBefore().equals(expression1.getString()))
+					return true;
+			}
+			for(AbstractExpression expression2 : statement2.getExpressions()) {
+				if(replacement.getAfter().equals(expression2.getString()))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean firstStatementOfType(CompositeStatementObject statement, CodeElementType type) {
+		if(statement.getStatements().size() > 0) {
+			AbstractStatement firstStatement = statement.getStatements().get(0);
+			if(firstStatement.getLocationInfo().getCodeElementType().equals(type)) {
+				return true;
 			}
 			else if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 				CompositeStatementObject comp = (CompositeStatementObject) firstStatement;
-				if(comp.getStatements().size() > 0 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.CONTINUE_STATEMENT)) {
-					continueBody = true;
-				}
+				return comp.getStatements().size() > 0 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(type);
 			}
 		}
-		boolean returnBody = false;
-		if(statement2.getStatements().size() > 0) {
-			AbstractStatement firstStatement = statement2.getStatements().get(0);
-			if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
-				returnBody = true;
-			}
-			else if(firstStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-				CompositeStatementObject comp = (CompositeStatementObject) firstStatement;
-				if(comp.getStatements().size() > 0 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
-					returnBody = true;
-				}
-			}
-		}
-		return continueBody && returnBody;
+		return false;
 	}
 
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
@@ -5838,7 +5885,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
 								}
-								else if(score == 0 && continueBecomesReturn(statement1, statement2)) {
+								else if(score == 0 && (continueBecomesReturn(statement1, statement2) || compositeMovedToExtractedMethod(statement1, statement2))) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
 								}
@@ -5979,6 +6026,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 								else if(identicalCommentsInBody(statement1, statement2)) {
+									score = 0.99;
+								}
+								else if(breakBecomesReturnInExtractedMethod(statement1, statement2) && !conditionReplaced(statement1, statement2, replacements)) {
 									score = 0.99;
 								}
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
@@ -6223,7 +6273,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
 								}
-								else if(score == 0 && continueBecomesReturn(statement1, statement2)) {
+								else if(score == 0 && (continueBecomesReturn(statement1, statement2) || compositeMovedToExtractedMethod(statement1, statement2))) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
 								}
@@ -6380,6 +6430,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 								else if(identicalCommentsInBody(statement1, statement2)) {
+									score = 0.99;
+								}
+								else if(breakBecomesReturnInExtractedMethod(statement1, statement2) && !conditionReplaced(statement1, statement2, replacements)) {
 									score = 0.99;
 								}
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&

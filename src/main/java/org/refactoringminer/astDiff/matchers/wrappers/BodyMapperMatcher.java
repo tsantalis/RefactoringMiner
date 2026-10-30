@@ -1444,9 +1444,39 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                                 mappingStore.removeMapping(t1, t2);
                         }
                     }
+                    matchParentsOfArgumentAndParameter(tree1, tree2, mappingStore);
                 }
             }
         }
+    }
+
+    //the parents of an argument and the parameter replacing it, whose other children are mapped, i.e., repo=event.repository.name -> repo=repo,
+    //where the keyword and = are mapped, while the argument is mapped to the argument of the call
+    private static void matchParentsOfArgumentAndParameter(Tree tree1, Tree tree2, ExtendedMultiMappingStore mappingStore) {
+        Tree child1 = outermostWithSameRange(tree1);
+        Tree child2 = outermostWithSameRange(tree2);
+        Tree parent1 = child1.getParent();
+        Tree parent2 = child2.getParent();
+        if (parent1 == null || parent2 == null || mappingStore.isSrcMapped(parent1) || mappingStore.isDstMapped(parent2) ||
+                !parent1.getType().name.equals(parent2.getType().name) || parent1.getChildren().size() != parent2.getChildren().size() ||
+                parent1.getChildPosition(child1) != parent2.getChildPosition(child2))
+            return;
+        for (int i = 0; i < parent1.getChildren().size(); i++) {
+            Tree otherChild1 = parent1.getChild(i);
+            if (otherChild1 == child1)
+                continue;
+            Set<Tree> dsts = mappingStore.getDsts(otherChild1);
+            if (dsts == null || !dsts.contains(parent2.getChild(i)))
+                return;
+        }
+        mappingStore.addMapping(parent1, parent2);
+    }
+
+    private static Tree outermostWithSameRange(Tree tree) {
+        Tree outermost = tree;
+        while (outermost.getParent() != null && outermost.getParent().getPos() == tree.getPos() && outermost.getParent().getEndPos() == tree.getEndPos())
+            outermost = outermost.getParent();
+        return outermost;
     }
 
     //the = before the mapped initializers, i.e., idx_t file_index = DConstants::INVALID_INDEX; -> idx_t scan_chunk_file_index = DConstants::INVALID_INDEX;

@@ -9301,6 +9301,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
+						if(mappingSet.size() > 1) {
+							//each replacement refines a replacement of the best mapping, like in checkForOtherPossibleMatchesForFragment2
+							matchWithLessReplacements = matchingReplacements(replacements, mappingSet.first().getReplacements()) == replacements.size() && replacements.size() < mappingSet.first().getReplacements().size();
+						}
 						boolean variableDeclarationNameMismatch = mapping.sameVariableDeclarationName() && !mappingSet.first().sameVariableDeclarationName();
 						if(allowAdd || nested || matchWithLessReplacements || variableDeclarationNameMismatch || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
 							mappingSet.add(mapping);

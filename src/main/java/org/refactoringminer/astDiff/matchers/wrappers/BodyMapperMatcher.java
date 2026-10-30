@@ -27,6 +27,7 @@ import org.refactoringminer.util.PathFileUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /* Created by pourya on 2024-05-22*/
@@ -1403,6 +1404,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             else
                 new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
+            removeArgumentToParameterMappings(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         }
         optimizeVariableDeclarations(abstractCodeMapping);
         if (!isPartOfExtractedMethod && srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.RETURN_STATEMENT)) {
@@ -1410,6 +1412,40 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+        }
+    }
+
+    //an argument replaced with a parameter of an extracted or inlined method is mapped as a whole to the parameter, i.e., keyPair -> pemKeyPair,
+    //or to the argument of the call, but its parts are not mapped to the parameter,
+    //i.e., the owner identifier of event.repository.owner.login is not mapped to the parameter owner of find_app_comment(github, owner, repo, ...)
+    private void removeArgumentToParameterMappings(Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping mapping, ExtendedMultiMappingStore mappingStore) {
+        if (bodyMapper.getOperationInvocation() == null)
+            return;
+        Map<String, String> extractedParameterToArgument = bodyMapper.getParameterToArgumentMap2().orElse(Map.of());
+        Map<String, String> inlinedParameterToArgument = bodyMapper.getParameterToArgumentMap1().orElse(Map.of());
+        for (Replacement replacement : mapping.getReplacements()) {
+            if (!replacement.getBefore().equals(extractedParameterToArgument.get(replacement.getAfter())) &&
+                    !replacement.getAfter().equals(inlinedParameterToArgument.get(replacement.getBefore())))
+                continue;
+            for (LeafExpression expression1 : mapping.getFragment1().findExpression(replacement.getBefore())) {
+                Tree tree1 = TreeUtilFunctions.findByLocationInfo(srcStatementNode, expression1.getLocationInfo(), LANG1);
+                for (LeafExpression expression2 : mapping.getFragment2().findExpression(replacement.getAfter())) {
+                    Tree tree2 = TreeUtilFunctions.findByLocationInfo(dstStatementNode, expression2.getLocationInfo(), LANG2);
+                    if (tree1 == null || tree2 == null)
+                        continue;
+                    for (Tree t1 : tree1.preOrder()) {
+                        if (t1.getPos() == tree1.getPos() && t1.getEndPos() == tree1.getEndPos())
+                            continue;
+                        Set<Tree> dsts = mappingStore.getDsts(t1);
+                        if (dsts == null)
+                            continue;
+                        for (Tree t2 : new ArrayList<>(dsts)) {
+                            if (t2 == tree2 || t2.getParents().contains(tree2))
+                                mappingStore.removeMapping(t1, t2);
+                        }
+                    }
+                }
+            }
         }
     }
 

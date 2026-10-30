@@ -7,6 +7,7 @@ import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.actions.model.Action;
 import com.github.gumtreediff.tree.Tree;
 
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -345,7 +346,7 @@ public class MonacoCore {
 
     private static boolean isComment(Tree t) {
     	String type = t.getType().toString();
-    	return type.startsWith("LineComment") || type.startsWith("BlockComment") || type.endsWith("_comment");
+    	return type.startsWith("LineComment") || type.startsWith("BlockComment") || type.endsWith("_comment") || type.equals("comment");
     }
 
     private void appendRange(StringBuilder b, Tree t, String kind, String tip) {
@@ -604,10 +605,10 @@ public class MonacoCore {
     		}
     		else if(r instanceof MoveOperationRefactoring || r instanceof MoveAttributeRefactoring || r instanceof MoveClassRefactoring ||
     				r instanceof MoveAndRenameClassRefactoring) {
-    			if(isDeclaration(t)) {
+    			if(isDeclaration(t) || isMovedAttributeStatementOrComment(t, r)) {
     				String tooltipLeft = "moved to file: " + r.getInvolvedClassesAfterRefactoring().iterator().next().left;
     				String tooltipRight = "moved from file: " + r.getInvolvedClassesBeforeRefactoring().iterator().next().left;
-    				String tooltip = generateTooltip(t, c, (UMLOperationBodyMapper)null, tooltipLeft, tooltipRight);
+    				String tooltip = moveTooltip(t, c, tooltipLeft, tooltipRight);
 					if(tooltip != null)
 						tooltips.add(tooltip);
     			}
@@ -745,37 +746,66 @@ public class MonacoCore {
     	return null;
     }
 
+	//the move of a declaration or of the statement or comments of a moved attribute, as the actions of the tree classifier report it
+	private static String moveTooltip(Tree tree, ExtendedTreeClassifier classifier, String tooltipLeft, String tooltipRight) {
+		if(classifier.getSrcMoveOutTreeMap().get(tree) != null) {
+			List<Action> actions = classifier.getSrcMoveOutTreeMap().get(tree);
+			for(Action action : actions) {
+				if(action.toString().startsWith("moved to file: ")) {
+					String file = action.toString().substring("moved to file: ".length());
+					if(tooltipLeft.contains(file)) {
+						return action.toString();
+					}
+				}
+			}
+		}
+		else if(classifier.getMultiMapSrc().containsKey(tree)) {
+			return tooltipLeft;
+		}
+		if(classifier.getDstMoveInTreeMap().get(tree) != null) {
+			List<Action> actions = classifier.getDstMoveInTreeMap().get(tree);
+			for(Action action : actions) {
+				if(action.toString().startsWith("moved from file: ")) {
+					String file = action.toString().substring("moved from file: ".length());
+					if(tooltipRight.contains(file)) {
+						return action.toString();
+					}
+				}
+			}
+		}
+		else if(classifier.getMultiMapDst().containsKey(tree)) {
+			return tooltipRight;
+		}
+		return null;
+	}
+
+	//a Python attribute is an assignment statement, i.e., MAX_COMMENT_CHARS: Final = 60_000, not a declaration, and its comments move with it
+	private static boolean isMovedAttributeStatementOrComment(Tree t, Refactoring r) {
+		if(r instanceof MoveAttributeRefactoring move) {
+			for(UMLAttribute attribute : List.of(move.getOriginalAttribute(), move.getMovedAttribute())) {
+				if(isStatement(t) && attribute.getVariableDeclaration() != null && sameRange(attribute.getVariableDeclaration().codeRange(), t)) {
+					return true;
+				}
+				for(UMLComment comment : attribute.getComments()) {
+					if(isComment(t) && sameRange(comment.getLocationInfo().codeRange(), t)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private static boolean sameRange(CodeRange range, Tree t) {
+		return range.getStartOffset() == t.getPos() && range.getEndOffset() == t.getEndPos();
+	}
+
 	private String generateTooltip(Tree tree, ExtendedTreeClassifier classifier, UMLOperationBodyMapper bodyMapper,
 			String tooltipLeft, String tooltipRight) {
 		if(isDeclaration(tree)) {
-			if(classifier.getSrcMoveOutTreeMap().get(tree) != null) {
-				List<Action> actions = classifier.getSrcMoveOutTreeMap().get(tree);
-				for(Action action : actions) {
-					if(action.toString().startsWith("moved to file: ")) {
-						String file = action.toString().substring("moved to file: ".length());
-						if(tooltipLeft.contains(file)) {
-							return action.toString();
-						}
-					}
-				}
-			}
-			else if(classifier.getMultiMapSrc().containsKey(tree)) {
-				return tooltipLeft;
-			}
-			if(classifier.getDstMoveInTreeMap().get(tree) != null) {
-				List<Action> actions = classifier.getDstMoveInTreeMap().get(tree);
-				for(Action action : actions) {
-					if(action.toString().startsWith("moved from file: ")) {
-						String file = action.toString().substring("moved from file: ".length());
-						if(tooltipRight.contains(file)) {
-							return action.toString();
-						}
-					}
-				}
-			}
-			else if(classifier.getMultiMapDst().containsKey(tree)) {
-				return tooltipRight;
-			}
+			String tooltip = moveTooltip(tree, classifier, tooltipLeft, tooltipRight);
+			if(tooltip != null)
+				return tooltip;
 		}
 		if(bodyMapper != null) {
 			//a Kotlin statements block moved as a whole, i.e., the body of an extracted method, as its statements are mapped individually

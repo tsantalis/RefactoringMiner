@@ -209,8 +209,10 @@ public class PyASTFlattener implements LangASTFlattener {
     @Override
     public void visit(LangAssignment langAssignment) {
         langAssignment.getLeftSide().accept(this);
-        builder.append(langAssignment.getOperator());
-        langAssignment.getRightSide().accept(this);
+        if (langAssignment.getRightSide() != null) {
+            builder.append(langAssignment.getOperator());
+            langAssignment.getRightSide().accept(this);
+        }
     }
 
     @Override

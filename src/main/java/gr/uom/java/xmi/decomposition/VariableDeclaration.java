@@ -505,20 +505,22 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.annotations = new ArrayList<>();
 		this.modifiers = new ArrayList<>();
 
-		// Extract the right-hand side of the assignment as the initializer
-		this.initializer = new AbstractExpression(
-				assignment.getRootCompilationUnit(),
-				sourceFolder,
-				filePath,
-				assignment.getRightSide(),
-				LocationInfo.CodeElementType.EXPRESSION,
-				container,
-				activeVariableDeclarations,
-				fileContent
-		);
-		AbstractCall creationCoveringEntireFragment = initializer.creationCoveringEntireFragment();
-		if(creationCoveringEntireFragment != null ) {
-			this.type = ((ObjectCreation)creationCoveringEntireFragment).getType();
+		// Extract the right-hand side of the assignment as the initializer, which a declaration without a value does not have, i.e., id: int
+		if(assignment.getRightSide() != null) {
+			this.initializer = new AbstractExpression(
+					assignment.getRootCompilationUnit(),
+					sourceFolder,
+					filePath,
+					assignment.getRightSide(),
+					LocationInfo.CodeElementType.EXPRESSION,
+					container,
+					activeVariableDeclarations,
+					fileContent
+			);
+			AbstractCall creationCoveringEntireFragment = initializer.creationCoveringEntireFragment();
+			if(creationCoveringEntireFragment != null ) {
+				this.type = ((ObjectCreation)creationCoveringEntireFragment).getType();
+			}
 		}
 		if(assignment.getTypeAnnotation() != null) {
 			this.type = UMLType.extractTypeObject(assignment.getTypeAnnotation(), "[", "]", null, LANG);

@@ -325,10 +325,12 @@ public class LangVisitor implements LangASTVisitor {
 
     @Override
     public void visit(LangAssignment langAssignment) {
-        // Add assignments
-        LeafExpression assignment = new LeafExpression(cu, sourceFolder, filePath,
-                langAssignment, LocationInfo.CodeElementType.ASSIGNMENT, container);
-        assignments.add(assignment);
+        // Add assignments, but not declarations without a value, i.e., id: int
+        if (langAssignment.getRightSide() != null) {
+            LeafExpression assignment = new LeafExpression(cu, sourceFolder, filePath,
+                    langAssignment, LocationInfo.CodeElementType.ASSIGNMENT, container);
+            assignments.add(assignment);
+        }
 
         if (langAssignment.getLeftSide() != null) {
             langAssignment.getLeftSide().accept(this);

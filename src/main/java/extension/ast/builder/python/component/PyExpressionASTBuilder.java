@@ -197,11 +197,8 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
                 }
             }
             PythonParser.Annotated_rhsContext rhsCtx = ctx.annotated_rhs();
-            if (rhsCtx == null) {
-                return target;
-            }
-            // annotated assignment, i.e., MAX_COMMENT_CHARS: Final = 60_000
-            LangASTNode rhs = rhsCtx.yield_expr() != null ? mainBuilder.visit(rhsCtx.yield_expr()) : mainBuilder.visit(rhsCtx.star_expressions());
+            // annotated assignment, i.e., MAX_COMMENT_CHARS: Final = 60_000, or a declaration without a value, i.e., id: int
+            LangASTNode rhs = rhsCtx == null ? null : rhsCtx.yield_expr() != null ? mainBuilder.visit(rhsCtx.yield_expr()) : mainBuilder.visit(rhsCtx.star_expressions());
             LangAssignment assignment = LangASTNodeFactory.createAssignment("=", target, rhs, ctx);
             assignment.setTypeAnnotation(ctx.expression().getText());
             return assignment;

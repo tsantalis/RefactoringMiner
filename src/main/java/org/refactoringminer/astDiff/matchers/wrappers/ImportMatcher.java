@@ -83,7 +83,10 @@ public class ImportMatcher implements TreeMatcher {
             Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo(), LANG2);
             if (srcImportStatement != null && dstImportStatement != null) {
                 mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
-                handleParent(mappingStore, srcImportStatement, dstImportStatement);
+                //a name moved to another import statement, i.e., MAX_COMMENT_CHARS from the grouped from app.services.pr_review import (...), already mapped with its other names
+                if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                        !mappingStore.isSrcMapped(srcImportStatement.getParent()) && !mappingStore.isDstMapped(dstImportStatement.getParent()))
+                    handleParent(mappingStore, srcImportStatement, dstImportStatement);
             }
         }
     }

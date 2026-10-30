@@ -4694,21 +4694,25 @@ public class UMLModelDiff {
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings, map);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
+			detectImportChangesOfMovedAttributes(classDiff, refactorings);
 			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings, map);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
+			detectImportChangesOfMovedAttributes(classDiff, refactorings);
 			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings, map);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
+			detectImportChangesOfMovedAttributes(classDiff, refactorings);
 			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings, map);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
+			detectImportChangesOfMovedAttributes(classDiff, refactorings);
 			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		Map<Pair<UMLAbstractClass, UMLAbstractClass>, List<MoveOperationRefactoring>> classPairsBasedOnMovedMethods = new LinkedHashMap<>();
@@ -5160,6 +5164,27 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	//the import of a moved attribute changed with the attribute, i.e., from app.services.pr_review import MAX_COMMENT_CHARS -> from app.github.comments import MAX_COMMENT_CHARS
+	private void detectImportChangesOfMovedAttributes(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {
+		if(classDiff.hasBothAddedAndRemovedImports()) {
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof MoveAttributeRefactoring) {
+					MoveAttributeRefactoring move = (MoveAttributeRefactoring)ref;
+					classDiff.findImportChanges(importName(move.getOriginalAttribute()), importName(move.getMovedAttribute()));
+				}
+			}
+		}
+	}
+
+	//the attributes of a Python module are imported with the module name, i.e., app.services.pr_review.MAX_COMMENT_CHARS
+	private static String importName(UMLAttribute attribute) {
+		String className = attribute.getClassName();
+		if(className.endsWith(".__module__")) {
+			className = className.substring(0, className.length() - ".__module__".length());
+		}
+		return className + "." + attribute.getName();
 	}
 
 	private void detectImportDeclarationChanges(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {

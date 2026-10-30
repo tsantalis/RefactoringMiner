@@ -30,7 +30,7 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
     }
 
     private void processClassAttributes(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
-        Set<Pair<UMLAttribute, UMLAttribute>> pairs = classDiff.getCommonAtrributes();
+        List<Pair<UMLAttribute, UMLAttribute>> pairs = classDiff.getCommonAtrributes();
         for (org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> pair : pairs) {
             FieldDeclarationMatcher fieldDeclarationMatcher = new FieldDeclarationMatcher(optimizationData, pair.getLeft(), pair.getRight(),
                     (pair.getLeft().getJavadoc() != null && pair.getRight().getJavadoc() != null) ?

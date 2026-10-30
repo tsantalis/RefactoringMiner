@@ -520,6 +520,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(creationCoveringEntireFragment != null ) {
 			this.type = ((ObjectCreation)creationCoveringEntireFragment).getType();
 		}
+		if(assignment.getTypeAnnotation() != null) {
+			this.type = UMLType.extractTypeObject(assignment.getTypeAnnotation(), "[", "]", null, LANG);
+		}
 
 		this.isAttribute = false;
 		this.isParameter = false;

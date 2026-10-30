@@ -113,10 +113,7 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
 					}
 				}
 				else {
-    				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attribute, attributeWithTheSameName);
-    				if(!commonAtrributes.contains(pair)) {
-    					commonAtrributes.add(pair);
-    				}
+    				addCommonAttributes(attribute, attributeWithTheSameName);
     				if(attributeDiff.encapsulated()) {
     					refactorings.addAll(attributeDiff.getRefactorings());
     				}
@@ -137,10 +134,7 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
 					}
 				}
 				else {
-    				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attributeWithTheSameName, attribute);
-    				if(!commonAtrributes.contains(pair)) {
-    					commonAtrributes.add(pair);
-    				}
+    				addCommonAttributes(attributeWithTheSameName, attribute);
     				if(attributeDiff.encapsulated()) {
     					refactorings.addAll(attributeDiff.getRefactorings());
     				}

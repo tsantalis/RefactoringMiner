@@ -2595,6 +2595,94 @@
   "firstEndPos" : 2258,
   "secondEndPos" : 2337
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "# GitHub rejects comments longer than 65,536 characters.",
+  "secondLabel" : "# GitHub rejects comments longer than 65,536 characters.",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 2259,
+  "secondPos" : 333,
+  "firstEndPos" : 2315,
+  "secondEndPos" : 389
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 2316,
+  "secondPos" : 390,
+  "firstEndPos" : 2349,
+  "secondEndPos" : 423
+}, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 2316,
+  "secondPos" : 390,
+  "firstEndPos" : 2349,
+  "secondEndPos" : 423
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "MAX_COMMENT_CHARS",
+  "secondLabel" : "MAX_COMMENT_CHARS",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 2316,
+  "secondPos" : 390,
+  "firstEndPos" : 2333,
+  "secondEndPos" : 407
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Final",
+  "secondLabel" : "Final",
+  "firstParentType" : "type",
+  "secondParentType" : "type",
+  "firstPos" : 2335,
+  "secondPos" : 409,
+  "firstEndPos" : 2340,
+  "secondEndPos" : 414
+}, {
+  "firstType" : "type",
+  "secondType" : "type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 2335,
+  "secondPos" : 409,
+  "firstEndPos" : 2340,
+  "secondEndPos" : 414
+}, {
+  "firstType" : "assignment_operator_literal",
+  "secondType" : "assignment_operator_literal",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 2341,
+  "secondPos" : 415,
+  "firstEndPos" : 2342,
+  "secondEndPos" : 416
+}, {
+  "firstType" : "integer",
+  "secondType" : "integer",
+  "firstLabel" : "60_000",
+  "secondLabel" : "60_000",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 2343,
+  "secondPos" : 417,
+  "firstEndPos" : 2349,
+  "secondEndPos" : 423
+}, {
   "firstType" : "assignment",
   "secondType" : "assignment",
   "firstLabel" : "",

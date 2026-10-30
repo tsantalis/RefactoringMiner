@@ -619,10 +619,13 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 	}
 
 	public UMLAttribute attributeWithTheSameNameIgnoringChangedType(UMLAttribute attribute) {
+		List<UMLAttribute> attributesWithTheSameName = new ArrayList<UMLAttribute>();
 		for(UMLAttribute originalAttribute : attributes) {
 			if(originalAttribute.equalsIgnoringChangedType(attribute))
-				return originalAttribute;
+				attributesWithTheSameName.add(originalAttribute);
 		}
+		if(attributesWithTheSameName.size() > 0)
+			return attributeWithIdenticalInitializer(attributesWithTheSameName, attribute);
 		for(UMLAttribute originalAttribute : enumConstants) {
 			if(originalAttribute.equalsIgnoringChangedType(attribute))
 				return originalAttribute;
@@ -1488,14 +1491,29 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 	}
 
     public UMLAttribute containsAttribute(UMLAttribute otherAttribute) {
-    	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
-    	while(attributeIt.hasNext()) {
-    		UMLAttribute attribute = attributeIt.next();
+    	List<UMLAttribute> equalAttributes = new ArrayList<UMLAttribute>();
+    	for(UMLAttribute attribute : attributes) {
     		if(attribute.equals(otherAttribute)) {
-    			return attribute;
+    			equalAttributes.add(attribute);
     		}
     	}
+    	if(equalAttributes.size() > 0)
+    		return attributeWithIdenticalInitializer(equalAttributes, otherAttribute);
     	return null;
+    }
+
+    //a module can assign the same name more than once, i.e., tool = known_args.tool and later tool = bench_data.tool, and each assignment is an attribute
+    private static UMLAttribute attributeWithIdenticalInitializer(List<UMLAttribute> attributesWithTheSameName, UMLAttribute otherAttribute) {
+    	if(attributesWithTheSameName.size() > 1 && otherAttribute.getVariableDeclaration() != null && otherAttribute.getVariableDeclaration().getInitializer() != null) {
+    		String initializer = otherAttribute.getVariableDeclaration().getInitializer().getString();
+    		for(UMLAttribute attribute : attributesWithTheSameName) {
+    			if(attribute.getVariableDeclaration() != null && attribute.getVariableDeclaration().getInitializer() != null &&
+    					attribute.getVariableDeclaration().getInitializer().getString().equals(initializer)) {
+    				return attribute;
+    			}
+    		}
+    	}
+    	return attributesWithTheSameName.get(0);
     }
 
     public UMLAttribute containsAttributeWithTheSameSignature(UMLAttribute otherAttribute) {

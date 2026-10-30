@@ -44,10 +44,7 @@ public class UMLClassMoveDiff extends UMLClassBaseDiff {
 					}
     			}
     			else {
-    				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attribute, matchingAttribute);
-    				if(!commonAtrributes.contains(pair)) {
-    					commonAtrributes.add(pair);
-    				}
+    				addCommonAttributes(attribute, matchingAttribute);
     				if(attributeDiff.encapsulated()) {
     					refactorings.addAll(attributeDiff.getRefactorings());
     				}
@@ -70,10 +67,7 @@ public class UMLClassMoveDiff extends UMLClassBaseDiff {
 					}
     			}
     			else {
-    				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(matchingAttribute, attribute);
-    				if(!commonAtrributes.contains(pair)) {
-    					commonAtrributes.add(pair);
-    				}
+    				addCommonAttributes(matchingAttribute, attribute);
     				if(attributeDiff.encapsulated()) {
     					refactorings.addAll(attributeDiff.getRefactorings());
     				}

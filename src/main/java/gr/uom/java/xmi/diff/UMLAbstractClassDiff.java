@@ -95,7 +95,8 @@ public abstract class UMLAbstractClassDiff {
 	protected List<UMLOperationBodyMapper> operationBodyMapperList;
 	protected List<UMLAttributeDiff> attributeDiffList;
 	protected List<UMLEnumConstantDiff> enumConstantDiffList;
-	protected Set<Pair<UMLAttribute, UMLAttribute>> commonAtrributes;
+	protected List<Pair<UMLAttribute, UMLAttribute>> commonAtrributes;
+	private Set<AttributeIdentityPair> commonAttributeIdentities = new HashSet<AttributeIdentityPair>();
 	protected Set<Pair<UMLEnumConstant, UMLEnumConstant>> commonEnumConstants;
 	protected UMLAbstractClass originalClass;
 	protected UMLAbstractClass nextClass;
@@ -153,7 +154,7 @@ public abstract class UMLAbstractClassDiff {
 		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.enumConstantDiffList = new ArrayList<UMLEnumConstantDiff>();
-		this.commonAtrributes = new LinkedHashSet<Pair<UMLAttribute, UMLAttribute>>();
+		this.commonAtrributes = new ArrayList<Pair<UMLAttribute, UMLAttribute>>();
 		this.commonEnumConstants = new LinkedHashSet<Pair<UMLEnumConstant, UMLEnumConstant>>();
 		this.nestedClassDiffList = new ArrayList<UMLClassDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
@@ -378,8 +379,27 @@ public abstract class UMLAbstractClassDiff {
 		return attributeDiffList;
 	}
 
-	public Set<Pair<UMLAttribute, UMLAttribute>> getCommonAtrributes() {
+	public List<Pair<UMLAttribute, UMLAttribute>> getCommonAtrributes() {
 		return commonAtrributes;
+	}
+
+	//the attributes are compared by identity, since a module can assign the same name more than once, i.e., tool = known_args.tool and later tool = bench_data.tool
+	protected void addCommonAttributes(UMLAttribute attribute1, UMLAttribute attribute2) {
+		if(commonAttributeIdentities.add(new AttributeIdentityPair(attribute1, attribute2))) {
+			commonAtrributes.add(Pair.of(attribute1, attribute2));
+		}
+	}
+
+	private record AttributeIdentityPair(UMLAttribute left, UMLAttribute right) {
+		@Override
+		public boolean equals(Object o) {
+			return o instanceof AttributeIdentityPair other && left == other.left && right == other.right;
+		}
+
+		@Override
+		public int hashCode() {
+			return 31 * System.identityHashCode(left) + System.identityHashCode(right);
+		}
 	}
 
 	public List<UMLEnumConstantDiff> getEnumConstantDiffList() {

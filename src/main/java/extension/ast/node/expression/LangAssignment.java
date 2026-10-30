@@ -9,6 +9,8 @@ public class LangAssignment extends LangExpression {
     private String operator;
     private LangASTNode leftSide;
     private LangASTNode rightSide;
+    //the annotation of an annotated assignment, i.e., Final in MAX_COMMENT_CHARS: Final = 60_000
+    private String typeAnnotation;
 
     public LangAssignment() {super(NodeTypeEnum.ASSIGNMENT);}
 
@@ -58,6 +60,14 @@ public class LangAssignment extends LangExpression {
 
     public void setRightSide(LangASTNode rightSide) {
         this.rightSide = rightSide;
+    }
+
+    public String getTypeAnnotation() {
+        return typeAnnotation;
+    }
+
+    public void setTypeAnnotation(String typeAnnotation) {
+        this.typeAnnotation = typeAnnotation;
     }
 
     public String toString() {

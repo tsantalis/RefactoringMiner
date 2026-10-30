@@ -27,6 +27,7 @@ import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -407,6 +408,15 @@ public class ReplacementAlgorithm {
 	}
 
 	protected static Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
+			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper, boolean isomorphic) throws RefactoringMinerTimedOutException {
+		Set<Replacement> replacements = exactMatchingReplacements(statement1, statement2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, operationBodyMapper, isomorphic);
+		if(replacements != null && fieldOfAnotherObjectReplaced(statement1, replacements, operationBodyMapper)) {
+			return null;
+		}
+		return replacements;
+	}
+
+	private static Set<Replacement> exactMatchingReplacements(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper, boolean isomorphic) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
 		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
@@ -5918,6 +5928,46 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return false;
+	}
+
+	//in an extract and move scenario, the fields of the receiver of the call are accessed directly in the extracted method,
+	//so the same field of another local object cannot be replaced with code not accessing that object, i.e., (CsmToken)kept.element -> (CsmToken)element,
+	//or ((CsmToken)kept.element) -> csmToken, when removed.isWhiteSpace() is extracted to the class of removed declaring element,
+	//unless the other object holds an instance of the target class, i.e., assembly.flowControl -> flowControl, when assembly.publication is the receiver before the move
+	private static boolean fieldOfAnotherObjectReplaced(AbstractCodeFragment statement1, Set<Replacement> replacements, UMLOperationBodyMapper operationBodyMapper) {
+		AbstractCall callSiteInvocation = operationBodyMapper.getOperationInvocation();
+		UMLOperationBodyMapper parentMapper = operationBodyMapper.getParentMapper();
+		UMLModelDiff modelDiff = operationBodyMapper.getModelDiff();
+		if(callSiteInvocation == null || callSiteInvocation.getExpression() == null || parentMapper == null || modelDiff == null ||
+				!operationBodyMapper.getContainer1().equals(parentMapper.getContainer1()) ||
+				operationBodyMapper.getContainer2().getClassName().equals(operationBodyMapper.getCallSiteOperation().getClassName()))
+			return false;
+		UMLAbstractClass targetClass = modelDiff.findClassInChildModel(operationBodyMapper.getContainer2().getClassName());
+		if(targetClass == null)
+			return false;
+		String receiver = callSiteInvocation.getExpression();
+		for(LeafExpression variable : statement1.getVariables()) {
+			String variable1 = variable.getString();
+			int dot = variable1.indexOf(".");
+			if(dot > 0 && dot == variable1.lastIndexOf(".")) {
+				String object1 = variable1.substring(0, dot);
+				VariableDeclaration declaration1 = operationBodyMapper.getContainer1().getVariableDeclaration(object1);
+				if(!receiver.equals(object1) && !receiver.startsWith(object1 + ".") && declaration1 != null &&
+						targetClass.containsAttributeWithName(variable1.substring(dot + 1)) && !holdsInstanceOf(declaration1, targetClass, modelDiff)) {
+					for(Replacement replacement : replacements) {
+						if(replacement.getBefore().contains(variable1) && !replacement.getAfter().contains(object1 + ".")) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private static boolean holdsInstanceOf(VariableDeclaration declaration, UMLAbstractClass targetClass, UMLModelDiff modelDiff) {
+		UMLAbstractClass declarationClass = modelDiff.findClassInParentModel(declaration.getType().getClassType());
+		return declarationClass != null && !declarationClass.attributesOfType(targetClass.getName()).isEmpty();
 	}
 
 	private static void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type,

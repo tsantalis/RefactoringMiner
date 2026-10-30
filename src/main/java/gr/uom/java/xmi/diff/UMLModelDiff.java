@@ -8523,7 +8523,8 @@ public class UMLModelDiff {
 							operationBodyMapper.addMapping(mapping);
 							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(v1, attributeDeclaration, operationBodyMapper.getMappings(), operationBodyMapper.getClassDiff(), this);
 							RenameVariableRefactoring ref = new RenameVariableRefactoring(v1, attributeDeclaration, operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2(), variableReferences, false);
-							this.refactorings.add(ref);
+							//reported with the refactorings of the mapper only if the move is accepted
+							operationBodyMapper.getRefactoringsAfterPostProcessing().add(ref);
 							mappings++;
 							break;
 						}

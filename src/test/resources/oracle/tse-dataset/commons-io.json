@@ -760,6 +760,11 @@
         },
         {
           "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate requireExists(file File, fileParamName String) : File inlined to private requireDirectoryExists(directory File, name String) : void in class org.apache.commons.io.FileUtils",
+          "validation": true
+        },
+        {
+          "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate requireFile(file File, name String) : File inlined to private checkFileExists(file File, name String) : File in class org.apache.commons.io.FileUtils",
           "validation": false
         },

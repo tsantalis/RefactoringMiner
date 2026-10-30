@@ -799,8 +799,23 @@ public class ReplacementAlgorithm {
 		}
 		
 		// replace variables with the corresponding arguments
+		Set<String> variablesBeforeArguments1 = new LinkedHashSet<String>(variables1);
+		Set<String> variablesBeforeArguments2 = new LinkedHashSet<String>(variables2);
 		replaceVariablesWithArguments(variables1, parameterToArgumentMap);
 		replaceVariablesWithArguments(variables2, parameterToArgumentMap);
+		// the arguments replacing the parameters, which are in the same places of both argumentized statements, are not replaced with other variables,
+		// i.e., event.repository.id in (event.repository.id,) -> (github_repository_id,) is not replaced with query in "SELECT ..." -> query
+		Set<String> argumentsMatchedByArgumentization = new LinkedHashSet<String>();
+		for(String variable : variables2) {
+			if(!variablesBeforeArguments2.contains(variable) && variablesBeforeArguments1.contains(variable) && sameOccurrencesInArgumentizedStrings(variable, replacementInfo))
+				argumentsMatchedByArgumentization.add(variable);
+		}
+		for(String variable : variables1) {
+			if(!variablesBeforeArguments1.contains(variable) && variablesBeforeArguments2.contains(variable) && sameOccurrencesInArgumentizedStrings(variable, replacementInfo))
+				argumentsMatchedByArgumentization.add(variable);
+		}
+		variables1.removeAll(argumentsMatchedByArgumentization);
+		variables2.removeAll(argumentsMatchedByArgumentization);
 		
 		Set<String> methodInvocations1 = new LinkedHashSet<String>(methodInvocationMap1.keySet());
 		Set<String> methodInvocations2 = new LinkedHashSet<String>(methodInvocationMap2.keySet());
@@ -5827,6 +5842,13 @@ public class ReplacementAlgorithm {
 			set.add(expression.getString());
 		}
 		return set;
+	}
+
+	private static boolean sameOccurrencesInArgumentizedStrings(String variable, ReplacementInfo replacementInfo) {
+		int occurrences1 = ReplacementUtil.countInstances(replacementInfo.getArgumentizedString1(), variable);
+		int occurrences2 = ReplacementUtil.countInstances(replacementInfo.getArgumentizedString2(), variable);
+		return occurrences1 > 0 && occurrences1 == occurrences2 &&
+				ReplacementUtil.sameCharsBeforeAfter(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), variable);
 	}
 
 	private static void replaceVariablesWithArguments(Set<String> variables, Map<String, String> parameterToArgumentMap) {

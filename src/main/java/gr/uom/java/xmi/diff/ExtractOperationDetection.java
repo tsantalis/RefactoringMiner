@@ -589,6 +589,9 @@ public class ExtractOperationDetection {
 					}
 				}
 			}
+			if(systemCallReplacedWithDelegation(operationBodyMapper)) {
+				return false;
+			}
 			if(operationBodyMapper.isNested() && operationBodyMapper.getParentMapper() != null) {
 				if(operationBodyMapper.getParentMapper().getMappings().size() == 1 &&
 						operationBodyMapper.getParentMapper().getContainer1().isDelegate() != null &&
@@ -716,6 +719,25 @@ public class ExtractOperationDetection {
 				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()) ||
 				(mappings >= 1 && mappingOwnedByLambda && mappings >= operationBodyMapper.nonMappedLeafElementsT2())) ||
 				argumentExtractedWithDefaultReturnAdded(operationBodyMapper);
+	}
+
+	//the added method only delegates to an overload, and its only mapped statement is a system call replaced with the delegation, i.e., System.arraycopy(args, 0, newArgs, 0, n) ->
+	//arraycopy(source, sourcePos, allocator.get(), destPos, length) in arraycopy(source, sourcePos, destPos, length, allocator) added to ArrayUtils,
+	//as in UMLOperationBodyMapper.containsOnlySystemCalls, while a replaced call of the project, i.e., parser.parse(X.class) -> parse(List.of(clazz)), is extracted
+	static boolean systemCallReplacedWithDelegation(UMLOperationBodyMapper operationBodyMapper) {
+		if(operationBodyMapper.getMappings().size() != 1)
+			return false;
+		AbstractCodeMapping mapping = operationBodyMapper.getMappings().iterator().next();
+		AbstractCall delegateCall = operationBodyMapper.getContainer2().isDelegate();
+		if(delegateCall != null && mapping.getFragment1().getString().startsWith("System.") && mapping.getFragment2().getMethodInvocations().contains(delegateCall)) {
+			for(Replacement replacement : mapping.getReplacements()) {
+				if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME) || replacement.getType().equals(ReplacementType.METHOD_INVOCATION_EXPRESSION) ||
+						replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean argumentExtractedWithDefaultReturnAdded(UMLOperationBodyMapper operationBodyMapper) {

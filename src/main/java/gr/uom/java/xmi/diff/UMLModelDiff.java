@@ -7011,7 +7011,7 @@ public class UMLModelDiff {
 		Constants LANG1 = operationBodyMapper.LANG1;
 		Constants LANG2 = operationBodyMapper.LANG2;
 		List<AbstractCodeMapping> mappingList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
-		if(operationBodyMapper.containsOnlySystemCalls()) {
+		if(operationBodyMapper.containsOnlySystemCalls() || ExtractOperationDetection.systemCallReplacedWithDelegation(operationBodyMapper)) {
 			return false;
 		}
 		if(addedOperationInvocation.getContainer() != null && parentMapper.getMappings().isEmpty()) {

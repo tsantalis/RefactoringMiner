@@ -60,6 +60,7 @@ import gr.uom.java.xmi.diff.TryWithResourcesRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class ReplacementAlgorithm {
@@ -1463,7 +1464,8 @@ public class ReplacementAlgorithm {
 		findReplacements(arrayAccesses1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS, container1, container2, classDiff);
 		
 		findReplacements(methodInvocations1, arrayAccesses2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
-		findReplacements(arrayAccesses1, methodInvocations2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
+		findReplacements(arrayAccesses1, withCallToAddedOperationCoveringTheEntireStatement(statement2, methodInvocations2, methodInvocationMap2, invocationCoveringTheEntireStatement2, invocationCoveringTheEntireStatement1, operationBodyMapper),
+				replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
 		
 		findReplacements(variables1, prefixExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
 		findReplacements(prefixExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION, container1, container2, classDiff);
@@ -5849,6 +5851,62 @@ public class ReplacementAlgorithm {
 		int occurrences2 = ReplacementUtil.countInstances(replacementInfo.getArgumentizedString2(), variable);
 		return occurrences1 > 0 && occurrences1 == occurrences2 &&
 				ReplacementUtil.sameCharsBeforeAfter(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), variable);
+	}
+
+	//the call to an operation added in the commit, covering the entire statement, replaces the array access computing the same value in the other statement,
+	//i.e., repository_id = repository["id"] -> repository_id = await active_repository_id(connection, event.repository.id, lock=True), where repository["id"] is extracted;
+	//the call covering the entire statement is otherwise only matched with a call covering the other statement
+	private static Set<String> withCallToAddedOperationCoveringTheEntireStatement(AbstractCodeFragment statement, Set<String> methodInvocations, Map<String, List<AbstractCall>> methodInvocationMap,
+			AbstractCall invocationCoveringTheEntireStatement, AbstractCall invocationCoveringTheEntireOtherStatement, UMLOperationBodyMapper operationBodyMapper) {
+		if(invocationCoveringTheEntireStatement == null || invocationCoveringTheEntireOtherStatement != null || !callsAddedOperation(invocationCoveringTheEntireStatement, operationBodyMapper))
+			return methodInvocations;
+		Set<String> invocations = new LinkedHashSet<String>(methodInvocations);
+		for(String methodInvocation : methodInvocationMap.keySet()) {
+			for(AbstractCall call : methodInvocationMap.get(methodInvocation)) {
+				if(invocationCoveringTheEntireStatement.getLocationInfo().equals(call.getLocationInfo())) {
+					invocations.add(statement.getString().contains(AWAIT + methodInvocation) ? AWAIT + methodInvocation : methodInvocation);
+				}
+			}
+		}
+		return invocations;
+	}
+
+	private static final String AWAIT = "await ";
+
+	private static boolean callsAddedOperation(AbstractCall call, UMLOperationBodyMapper operationBodyMapper) {
+		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
+		UMLModelDiff modelDiff = operationBodyMapper.getModelDiff();
+		VariableDeclarationContainer caller = operationBodyMapper.getContainer2();
+		if(classDiff != null) {
+			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+				if(call.matchesOperation(addedOperation, caller, classDiff, modelDiff))
+					return true;
+			}
+		}
+		if(modelDiff != null) {
+			for(UMLClassDiff commonClassDiff : modelDiff.getCommonClassDiffList()) {
+				if(commonClassDiff.equals(classDiff))
+					continue;
+				for(UMLOperation addedOperation : commonClassDiff.getAddedOperations()) {
+					if(call.matchesOperation(addedOperation, caller, classDiff, modelDiff))
+						return true;
+				}
+			}
+			if(modelDiff.findOperationInAddedClasses(call, caller, classDiff) != null)
+				return true;
+			//a function of an added module imported by the caller, i.e., active_repository_id imported from the new module registrations
+			if(call.getExpression() == null && classDiff != null) {
+				for(UMLClass addedClass : modelDiff.getAddedClasses()) {
+					if(classDiff.getNextClass().importsType(addedClass.getName())) {
+						for(UMLOperation operation : addedClass.getOperations()) {
+							if(call.matchesOperation(operation, caller, classDiff, modelDiff))
+								return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static void replaceVariablesWithArguments(Set<String> variables, Map<String, String> parameterToArgumentMap) {

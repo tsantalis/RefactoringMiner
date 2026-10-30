@@ -400,16 +400,7 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
 
     public LangASTNode visitAwait_primary(PythonParser.Await_primaryContext ctx) {
         if (ctx.AWAIT() != null) {
-            PythonParser.PrimaryContext primary = ctx.primary();
-            while (primary.atom() == null && primary.primary() != null) {
-                primary = primary.primary();
-            }
-            LangASTNode operand;
-            if (primary.atom() != null) {
-                operand = mainBuilder.visit(primary.atom());
-            } else {
-                operand = mainBuilder.visit(ctx.primary());
-            }
+            LangASTNode operand = mainBuilder.visit(ctx.primary());
             return LangASTNodeFactory.createAwaitExpression(ctx, operand);
         }
         return mainBuilder.visit(ctx.primary());

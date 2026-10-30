@@ -769,7 +769,9 @@ public class LangVisitor implements LangASTVisitor {
 
     @Override
     public void visit(LangAwaitExpression langAwaitExpression) {
-
+        if (langAwaitExpression.getExpression() != null) {
+            langAwaitExpression.getExpression().accept(this);
+        }
     }
 
     @Override

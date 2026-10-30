@@ -96,6 +96,37 @@ public class MappingOptimizer {
 		}
 	}
 
+	private boolean callsExtractedMethod(AbstractCodeFragment fragment, Set<UMLOperationBodyMapper> childMappers) {
+		for(UMLOperationBodyMapper childMapper : childMappers) {
+			if(childMapper.getOperationInvocation() == null || fragment.getString().contains(childMapper.getOperationInvocation().actualString())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean introducesCall(AbstractCodeMapping mapping) {
+		Set<String> names1 = new LinkedHashSet<String>();
+		for(AbstractCall call : mapping.getFragment1().getMethodInvocations()) {
+			names1.add(call.getName());
+		}
+		for(AbstractCall call : mapping.getFragment2().getMethodInvocations()) {
+			if(!names1.contains(call.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private AbstractExpression findExpressionOfComposite(Set<AbstractCodeFragment> fragments, CompositeStatementObject composite) {
+		for(AbstractExpression expression : composite.getExpressions()) {
+			if(fragments.contains(expression)) {
+				return expression;
+			}
+		}
+		return null;
+	}
+
 	private AbstractCodeFragment findFragmentContainingExpression(Set<AbstractCodeFragment> fragments, AbstractExpression expression) {
 		for(AbstractCodeFragment fragment : fragments) {
 			if(fragment instanceof CompositeStatementObject) {
@@ -197,9 +228,19 @@ public class MappingOptimizer {
 				}
 			}
 			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+				AbstractExpression expressionOfComposite = null;
 				if(oneToManyMappings.containsKey(mapping.getFragment1())) {
 					oneToManyMappings.get(mapping.getFragment1()).add(mapping);
 					oneToManyMappers.get(mapping.getFragment1()).add(parentMapper);
+				}
+				//a child mapper mapped the expression of a composite mapped in the parent mapper, although the expression was not replaced with a call,
+				//i.e., if(repository is None) -> if(repository_id is None) duplicated as return None if row is None else ..., but not if(pool == null || pool.isClosed()) -> if(poolInactive())
+				//or if(!acquireEquipment(shoppingItem)) -> if(!acquireEquipment(shoppingItem, person)) calling the extracted method
+				else if(mapping.getFragment1() instanceof CompositeStatementObject &&
+						(expressionOfComposite = findExpressionOfComposite(oneToManyMappings.keySet(), (CompositeStatementObject)mapping.getFragment1())) != null &&
+						!introducesCall(mapping) && !callsExtractedMethod(mapping.getFragment2(), parentMapper.getChildMappers())) {
+					oneToManyMappings.get(expressionOfComposite).add(mapping);
+					oneToManyMappers.get(expressionOfComposite).add(parentMapper);
 				}
 				else {
 					List<AbstractCodeMapping> mappings = new ArrayList<>();

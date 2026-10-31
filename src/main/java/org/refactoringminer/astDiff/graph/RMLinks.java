@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.graph;
 import com.github.gumtreediff.tree.Tree;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -18,15 +19,44 @@ import java.util.*;
 /**
  * The statements RM gives as the same statement in both revisions: the ones the body mappers of the members it matches
  * map, the value of an extracted (inlined) variable and the statements it is replaced in, and the declarations of the
- * fields it matches, which hold the code of their initializers (see {@link RMIndex} for what RM gives of one revision).
+ * fields it matches, which hold the code of their initializers, and the members it matches (see {@link RMIndex} for what RM
+ * gives of one revision).
  */
 class RMLinks {
   private final UMLModelDiff modelDiff;
   @Nullable
   private Map<SrcDst, Map<String, List<Statement>>> statements;
+  @Nullable
+  private Map<VariableDeclarationContainer, Set<VariableDeclarationContainer>> matchedMembers;
 
   RMLinks(UMLModelDiff modelDiff) {
     this.modelDiff = modelDiff;
+  }
+
+  // Whether RM gives the members as one member of both revisions: the same declaration, or the ones a body mapper of
+  // their classes matches, but not the members code is moved between (an extracted or inlined method)
+  boolean isSameMember(VariableDeclarationContainer srcMember, VariableDeclarationContainer dstMember) {
+    if (srcMember == dstMember) {
+      return true;
+    }
+    if (matchedMembers == null) {
+      matchedMembers = new IdentityHashMap<>();
+      for (UMLAbstractClassDiff classDiff : classDiffs()) {
+        for (UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs()) {
+          matchedMembers.computeIfAbsent(mapper.getContainer1(), member -> Collections.newSetFromMap(new IdentityHashMap<>()))
+                  .add(mapper.getContainer2());
+        }
+      }
+    }
+    return matchedMembers.getOrDefault(srcMember, Set.of()).contains(dstMember);
+  }
+
+  private List<UMLAbstractClassDiff> classDiffs() {
+    List<UMLAbstractClassDiff> classDiffs = new ArrayList<>(modelDiff.getCommonClassDiffList());
+    classDiffs.addAll(modelDiff.getClassMoveDiffList());
+    classDiffs.addAll(modelDiff.getInnerClassMoveDiffList());
+    classDiffs.addAll(modelDiff.getClassRenameDiffList());
+    return classDiffs;
   }
 
   // The innermost statement RM holds the tree in
@@ -49,11 +79,7 @@ class RMLinks {
 
     statements = Map.of(SrcDst.SRC, new HashMap<>(), SrcDst.DST, new HashMap<>());
     Map<String, Statement> located = new HashMap<>();
-    List<UMLAbstractClassDiff> classDiffs = new ArrayList<>(modelDiff.getCommonClassDiffList());
-    classDiffs.addAll(modelDiff.getClassMoveDiffList());
-    classDiffs.addAll(modelDiff.getInnerClassMoveDiffList());
-    classDiffs.addAll(modelDiff.getClassRenameDiffList());
-    for (UMLAbstractClassDiff classDiff : classDiffs) {
+    for (UMLAbstractClassDiff classDiff : classDiffs()) {
       for (UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs()) {
         pushStatements(mapper, located);
       }

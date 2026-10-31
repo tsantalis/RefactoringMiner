@@ -1966,5 +1966,31 @@
         ]
       }
     ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_119580",
+    "repository": "elastic/elasticsearch",
+    "commit": "d45ed5af3adeadf4f752f98e3a217afa198a4952",
+    "files": [
+      "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/session/QueryBuilderResolver.java"
+    ],
+    "usages": [
+      {
+        "description": "method on an implicitly typed lambda parameter typed by a class literal argument (Node.forEachDown(Class<E>, Consumer<? super E>))",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/session/QueryBuilderResolver.java",
+        "line": 108,
+        "code": "esRelation.concreteIndices()",
+        "target": {
+          "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/EsRelation.java",
+          "className": "org.elasticsearch.xpack.esql.plan.logical.EsRelation",
+          "member": "concreteIndices()"
+        },
+        "aspects": [
+          "form:qualified on a lambda parameter",
+          "receiver:implicitly typed lambda parameter bound by a class literal argument of a generic method"
+        ]
+      }
+    ]
   }
 ]

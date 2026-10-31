@@ -396,7 +396,9 @@ public class RawRepresentation {
 
   // A diff prints as changed every change of its element within its lines, so the changes of a group within the lines
   // another diff shows, such as a parameter renamed in the signature a diff of the body starts with, are presented by
-  // that diff rather than printed again by one of their own
+  // that diff rather than printed again by one of their own. A diff with no context in the revision of a change, as a
+  // new file printed against the lines its moved code left, does not take that change: it reads on its own, linked to
+  // the diff as where the code went
   private static List<Map<Node, Set<Node>>> absorbShownChanges(List<Map<Node, Set<Node>>> contextGroups, int length,
                                                               Graph<Node, Edge> graph) {
     List<Map<Node, Set<Node>>> groups = new ArrayList<>(contextGroups);
@@ -410,10 +412,12 @@ public class RawRepresentation {
           continue;
         }
 
+        DiffContexts contexts = resolveContexts(groups.get(i), graph);
         for (int j = 0; j < groups.size(); j++) {
           Set<Node> changes = MergeGroup.changesOf(groups.get(j));
           if (i == j || changes.isEmpty() || !changes.stream().allMatch(change -> showing.shownLines().stream()
-                  .anyMatch(shown -> changeWithinLines(change, shown)))) {
+                  .anyMatch(shown -> changeWithinLines(change, shown)))
+                  || changes.stream().anyMatch(change -> (change.isSrc() ? contexts.srcContext() : contexts.dstContext()) == null)) {
             continue;
           }
 
@@ -810,15 +814,16 @@ public class RawRepresentation {
       dst = new DiffSide(dstContext, dstChanges, headerTop(dstContext, dstChanges, srcContext, srcChanges, mappingStores),
               headerBottom(dstContext));
       diffLines = mergedLines(src, dst, mappingStores, graph);
-      location = MergeGroup.sortNodes(srcChanges.isEmpty() ? dstChanges : srcChanges).get(0).getContextString();
-    } else if (contexts.locationContext() && srcChanges.size() == 1 && dstChanges.size() == 1) {
+      location = changesLocation(srcChanges, dstChanges);
+    } else if (contexts.locationContext() && srcChanges.size() == 1 && dstChanges.size() == 1
+            && sharesLinesWithin(src, dst, srcContext, dstContext, graph)) {
       // A change updated in place reads against its counterpart, which nothing of the context is printed around
       Node srcChange = srcChanges.iterator().next();
       Node dstChange = dstChanges.iterator().next();
       src = new DiffSide(srcChange, srcChanges);
       dst = new DiffSide(dstChange, dstChanges);
       diffLines = mergedLines(src, dst, mappingStores(srcChange, dstChange), graph);
-      location = srcChange.getContextString();
+      location = changesLocation(srcChanges, dstChanges);
     } else if (partnerWindow != null) {
       // The changes share their lines with code the other revision holds too, so those lines are printed against
       // the lines holding that code there
@@ -843,11 +848,17 @@ public class RawRepresentation {
       // The context only says where these changes live, so nothing of it is printed but them
       printsContext = false;
       diffLines = new ArrayList<>();
+      // A changed line holding code the other revision holds too, as a field whose initializer moves away, is printed
+      // with the lines holding that code there, or it would read as removed (added) whole
+      boolean bothChanged = !srcChanges.isEmpty() && !dstChanges.isEmpty();
+      List<MappingStore> mappingStores = bothChanged ? mappingStores(srcContext, dstContext) : List.of();
       if (src != null) {
-        diffLines.addAll(src.changeLines(isWholeFile(srcContext, graph) ? unrepresentedLines(srcContext) : Set.of()));
+        diffLines.addAll(src.changeLines(isWholeFile(srcContext, graph) ? unrepresentedLines(srcContext) : Set.of(),
+                bothChanged ? partnerLines(dst, src, mappingStores, graph) : Set.of()));
       }
       if (dst != null) {
-        diffLines.addAll(dst.changeLines(isWholeFile(dstContext, graph) ? unrepresentedLines(dstContext) : Set.of()));
+        diffLines.addAll(dst.changeLines(isWholeFile(dstContext, graph) ? unrepresentedLines(dstContext) : Set.of(),
+                bothChanged ? partnerLines(src, dst, mappingStores, graph) : Set.of()));
       }
 
       Set<Node> located = srcChanges.isEmpty() ? dstChanges : srcChanges;
@@ -1045,6 +1056,37 @@ public class RawRepresentation {
     return new int[]{Collections.min(partnerLines), Collections.max(partnerLines)};
   }
 
+  // Whether the code each change shares its lines with lies on the lines of the other change, as when a change is updated
+  // in place, and not elsewhere, as a field declaration whose initializer moves away
+  private static boolean sharesLinesWithin(DiffSide src, DiffSide dst, Node srcContext, Node dstContext, Graph<Node, Edge> graph) {
+    List<MappingStore> mappingStores = mappingStores(srcContext, dstContext);
+    int[] srcLines = changedLines(src);
+    int[] dstLines = changedLines(dst);
+    return partnerLines(src, dst, mappingStores, graph).stream().allMatch(line -> dstLines[0] <= line && line <= dstLines[1])
+            && partnerLines(dst, src, mappingStores, graph).stream().allMatch(line -> srcLines[0] <= line && line <= srcLines[1]);
+  }
+
+  // The lines of the partner holding the code the changes of the changed side share their lines with, but the ones
+  // holding changes, which their own diffs print
+  private static Set<Integer> partnerLines(DiffSide changed, DiffSide partner, List<MappingStore> mappingStores, Graph<Node, Edge> graph) {
+    Set<Node> changes = new HashSet<>(changed.changes);
+    List<Integer> partnerLines = new ArrayList<>();
+    for (Node change : changed.changes) {
+      TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(change.getTree(), change.getFileContent());
+      collectPartnerLines(changed.context.getTree(), changed, changes, new int[]{range.startLine(), range.endLine()}, mappingStores,
+              partner.context, partnerLines);
+    }
+
+    Set<Integer> lines = new HashSet<>(partnerLines);
+    for (Node node : graph.vertexSet()) {
+      if (node.isBase() && node.getSrcDst().equals(partner.context.getSrcDst()) && node.getPath().equals(partner.context.getPath())) {
+        TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(node.getTree(), node.getFileContent());
+        lines.removeIf(line -> range.startLine() <= line && line <= range.endLine());
+      }
+    }
+    return lines;
+  }
+
   private static void collectPartnerLines(Tree tree, DiffSide side, Set<Node> changes, int[] lines, List<MappingStore> mappingStores,
                                           Node partnerContext, List<Integer> partnerLines) {
     TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(tree, side.context.getFileContent());
@@ -1078,8 +1120,8 @@ public class RawRepresentation {
     tagChanges(src, dst, mappingStores, inPlace, graph);
     tagChanges(dst, src, mappingStores, inPlace, graph);
 
-    closeChangedLines(src, dst, mappingStores);
-    propagateChanges(src, dst, anchors);
+    closeChangedLines(src, dst, mappingStores, inPlace);
+    propagateChanges(src, dst, anchors, inPlace);
     return mergeSides(src, dst, meetingPoints(src, dst, anchors));
   }
 
@@ -1090,25 +1132,28 @@ public class RawRepresentation {
     src.tagMoved(src.context.getTree(), dst, mappingStores);
     dst.tagMoved(dst.context.getTree(), src, mappingStores);
 
-    closeChangedLines(src, dst, mappingStores);
-    propagateChanges(src, dst, anchors);
+    closeChangedLines(src, dst, mappingStores, Set.of());
+    propagateChanges(src, dst, anchors, Set.of());
     return mergeSides(src, dst, meetingPoints(src, dst, anchors));
   }
 
   // A changed line printed without the lines holding the counterparts of its code would read as adding that code:
-  // the lines of the other side holding code of a changed line are changed too
-  private static void closeChangedLines(DiffSide src, DiffSide dst, List<MappingStore> mappingStores) {
+  // the lines of the other side holding code of a changed line are changed too, but a line both revisions hold as it is
+  // in place, which reads the same in both (see DiffSide#tag)
+  private static void closeChangedLines(DiffSide src, DiffSide dst, List<MappingStore> mappingStores, Set<List<Integer>> inPlace) {
     List<int[]> leafLines = new ArrayList<>();
     collectLeafLines(src.context.getTree(), src, dst, mappingStores, leafLines);
+    Set<Integer> srcSameLines = sameLines(src, dst, inPlace, true);
+    Set<Integer> dstSameLines = sameLines(src, dst, inPlace, false);
 
     boolean closed = false;
     while (!closed) {
       closed = true;
       for (int[] leafLine : leafLines) {
-        if (src.changed.contains(leafLine[0]) && dst.changed.add(leafLine[1])) {
+        if (src.changed.contains(leafLine[0]) && !dstSameLines.contains(leafLine[1]) && dst.changed.add(leafLine[1])) {
           closed = false;
         }
-        if (dst.changed.contains(leafLine[1]) && src.changed.add(leafLine[0])) {
+        if (dst.changed.contains(leafLine[1]) && !srcSameLines.contains(leafLine[0]) && src.changed.add(leafLine[0])) {
           closed = false;
         }
       }
@@ -1354,15 +1399,30 @@ public class RawRepresentation {
     votes.computeIfAbsent(srcLine, line -> new HashMap<>()).merge(dstLine, 1, Integer::sum);
   }
 
-  private static void propagateChanges(DiffSide src, DiffSide dst, List<int[]> anchors) {
+  // The line holding the code of a changed line on the other side is changed too, but a line both revisions hold as it is
+  // in place, as the line of an else-if branch now following the closing brace of the branch before the removed one
+  private static void propagateChanges(DiffSide src, DiffSide dst, List<int[]> anchors, Set<List<Integer>> inPlace) {
+    Set<Integer> srcSameLines = sameLines(src, dst, inPlace, true);
+    Set<Integer> dstSameLines = sameLines(src, dst, inPlace, false);
     for (int[] anchor : anchors) {
-      if (src.changed.contains(anchor[0])) {
+      if (src.changed.contains(anchor[0]) && !dstSameLines.contains(anchor[1])) {
         dst.changed.add(anchor[1]);
       }
-      if (dst.changed.contains(anchor[1])) {
+      if (dst.changed.contains(anchor[1]) && !srcSameLines.contains(anchor[0])) {
         src.changed.add(anchor[0]);
       }
     }
+  }
+
+  // The lines of one side that the in-place chain pairs with a line of the same code on the other side
+  private static Set<Integer> sameLines(DiffSide src, DiffSide dst, Set<List<Integer>> inPlace, boolean srcSide) {
+    Set<Integer> sameLines = new HashSet<>();
+    for (List<Integer> linePair : inPlace) {
+      if (sameLine(src, linePair.get(0), dst, linePair.get(1))) {
+        sameLines.add(srcSide ? linePair.get(0) : linePair.get(1));
+      }
+    }
+    return sameLines;
   }
 
   private static List<DiffNode.DiffLine> mergeSides(DiffSide src, DiffSide dst, List<int[]> anchors) {
@@ -1416,9 +1476,18 @@ public class RawRepresentation {
   }
 
   private static String diffLocation(Node srcContext, Node dstContext) {
-    String srcLocation = srcContext.getInclusiveContextString();
-    String dstLocation = dstContext.getInclusiveContextString();
+    return diffLocation(srcContext.getInclusiveContextString(), dstContext.getInclusiveContextString());
+  }
 
+  // Where the first changes of each revision live, which reads "<before> -> <after>" when the code is elsewhere in the
+  // new revision, as a field pulled up to a superclass
+  private static String changesLocation(Set<Node> srcChanges, Set<Node> dstChanges) {
+    String srcLocation = srcChanges.isEmpty() ? "" : MergeGroup.sortNodes(srcChanges).get(0).getContextString();
+    String dstLocation = dstChanges.isEmpty() ? "" : MergeGroup.sortNodes(dstChanges).get(0).getContextString();
+    return diffLocation(srcLocation, dstLocation);
+  }
+
+  private static String diffLocation(String srcLocation, String dstLocation) {
     if (srcLocation.equals(dstLocation) || dstLocation.isEmpty()) {
       return srcLocation;
     }
@@ -1476,14 +1545,21 @@ public class RawRepresentation {
       }
 
       Set<Integer> inPlaceLines = new HashSet<>();
+      // A line both revisions hold as it is, in place, holds no code of its own: the code of a new or a removed parent
+      // on it, as the else of an if a new else-if branch now holds, is the same code in both
+      Set<Integer> sameLines = new HashSet<>();
       for (List<Integer> linePair : inPlace) {
-        inPlaceLines.add(context.isSrc() ? linePair.get(0) : linePair.get(1));
+        int line = context.isSrc() ? linePair.get(0) : linePair.get(1);
+        inPlaceLines.add(line);
+        if (other != null && line(line).trim().equals(other.line(context.isSrc() ? linePair.get(1) : linePair.get(0)).trim())) {
+          sameLines.add(line);
+        }
       }
 
       String content = context.getFileContent();
       TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(tree, content);
       for (int line = Math.max(lineRange.startLine(), top); line <= Math.min(lineRange.endLine(), bottom); line++) {
-        if (keptLines.contains(line)) {
+        if (keptLines.contains(line) || sameLines.contains(line)) {
           continue;
         }
 
@@ -1687,12 +1763,21 @@ public class RawRepresentation {
       return changeLines;
     }
 
-    private List<int[]> changeRanges(Set<Integer> bridged) {
-      List<int[]> ranges = new ArrayList<>();
+    private List<int[]> changeRanges(Set<Integer> bridged, Set<Integer> partnerLines) {
+      List<int[]> changeRanges = new ArrayList<>();
       for (Node change : changes) {
         TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(change.getTree(), context.getFileContent());
-        int startLine = lineRange.startLine();
-        int endLine = lineRange.endLine();
+        changeRanges.add(new int[]{lineRange.startLine(), lineRange.endLine()});
+      }
+      for (int partnerLine : partnerLines) {
+        changeRanges.add(new int[]{partnerLine, partnerLine});
+      }
+      changeRanges.sort(Comparator.comparingInt(range -> range[0]));
+
+      List<int[]> ranges = new ArrayList<>();
+      for (int[] changeRange : changeRanges) {
+        int startLine = changeRange[0];
+        int endLine = changeRange[1];
 
         // Changes apart only by blank lines are printed with those lines, as they lie in the file, and so are the lines
         // bridged, which hold code not represented that changes with them
@@ -1727,9 +1812,9 @@ public class RawRepresentation {
       return diffLines;
     }
 
-    public List<DiffNode.DiffLine> changeLines(Set<Integer> bridged) {
+    public List<DiffNode.DiffLine> changeLines(Set<Integer> bridged, Set<Integer> partnerLines) {
       List<DiffNode.DiffLine> diffLines = new ArrayList<>();
-      for (int[] range : this.changeRanges(bridged)) {
+      for (int[] range : this.changeRanges(bridged, partnerLines)) {
         for (int line = range[0]; line <= range[1]; line++) {
           diffLines.add(new DiffNode.DiffLine(this.prefix, this.line(line)));
         }

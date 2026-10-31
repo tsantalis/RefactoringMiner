@@ -9254,7 +9254,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							mappingSet.last().getFragment1().getVariableDeclarations().size() != mappingSet.last().getFragment2().getVariableDeclarations().size() &&
 							leaf.getVariableDeclarations().size() == leaf2.getVariableDeclarations().size();
 					boolean ownedByLambdaWithMultipleCallsToExtractedMethod = leaf.ownedByLambda() && callsToExtractedMethod > 1;
-					if(matchingMappings == mappingSet.size() || matchWithLessReplacements || differentVariableDeclarationNumber || ownedByLambdaWithMultipleCallsToExtractedMethod) {
+					//the alternative creates the same type with a C++ function template the best mapping creates another type with, i.e., std::make_unique<TieredCache>(x)
+					boolean sameTemplateArguments = LeafMapping.templateArgumentAgreement(replacements) > 0 && LeafMapping.templateArgumentAgreement(first.getReplacements()) < 0;
+					if(matchingMappings == mappingSet.size() || matchWithLessReplacements || differentVariableDeclarationNumber || ownedByLambdaWithMultipleCallsToExtractedMethod || sameTemplateArguments) {
 						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 						mapping.addReplacements(replacements);
 						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
@@ -9364,7 +9366,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							matchWithLessReplacements = matchingReplacements(replacements, first.getReplacements()) == replacements.size() && replacements.size() < first.getReplacements().size();
 						}
 						boolean variableDeclarationNameMismatch = mapping.sameVariableDeclarationName() && !mappingSet.first().sameVariableDeclarationName();
-						if(allowAdd || nested || matchWithLessReplacements || variableDeclarationNameMismatch || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
+						//the alternative creates the same type with a C++ function template, like in checkForOtherPossibleMatchesForFragment2
+						boolean sameTemplateArguments = LeafMapping.templateArgumentAgreement(replacements) > 0 && LeafMapping.templateArgumentAgreement(first.getReplacements()) < 0;
+						if(allowAdd || nested || matchWithLessReplacements || variableDeclarationNameMismatch || sameTemplateArguments || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
 							mappingSet.add(mapping);
 						}
 					}
@@ -9676,9 +9680,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								(mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + LANG1.ASSIGNMENT) ||
 								(call != null && call.getName().equals("collect")) ||
 								mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + ".addAll("));
-						if((equalName || variableRenamed) && declaration1.getType() != null && declaration2.getType() != null &&
-								(declaration1.getType().equals(declaration2.getType()) || declaration1.getType().getClassType().equals("var") || declaration2.getType().getClassType().equals("var") ||
-										OperationInvocation.compatibleTypes(declaration1.getType(), declaration2.getType(), classDiff, modelDiff, false))) {
+						if((equalName || variableRenamed) && compatibleDeclarationTypes(declaration1, declaration2)) {
 							matchingVariableDeclarations1.add(leaf1);
 						}
 					}
@@ -9706,7 +9708,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + LANG1.ASSIGNMENT);
-						if((equalName || variableRenamed) && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
+						if((equalName || variableRenamed) && sameOrInferredDeclarationTypes(declaration1, declaration2)) {
 							matchingVariableDeclarations1.add(leaf1);
 							mappingToBeRemoved = m;
 						}
@@ -9725,6 +9727,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	//the declared types of a declaration split into (or merged from) a declaration and an assignment, where an inferred type matches any type, i.e., Java var and C++ auto
+	private boolean compatibleDeclarationTypes(VariableDeclaration declaration1, VariableDeclaration declaration2) {
+		return sameOrInferredDeclarationTypes(declaration1, declaration2) ||
+				(declaration1.getType() != null && declaration2.getType() != null && OperationInvocation.compatibleTypes(declaration1.getType(), declaration2.getType(), classDiff, modelDiff, false));
+	}
+
+	//the stricter check for a declaration taken from another mapping, i.e., std::unique_ptr<AutotunerCacheInterface> autotuner_cache; for auto autotuner_cache = ...;
+	private static boolean sameOrInferredDeclarationTypes(VariableDeclaration declaration1, VariableDeclaration declaration2) {
+		return declaration1.getType() != null && declaration2.getType() != null &&
+				(declaration1.getType().equals(declaration2.getType()) || inferredType(declaration1) || inferredType(declaration2));
+	}
+
+	private static boolean inferredType(VariableDeclaration declaration) {
+		String classType = declaration.getType().getClassType();
+		return classType.equals("var") || classType.equals("auto");
 	}
 
 	private boolean checkForSplitVariableDeclaration(AbstractCodeFragment leaf1, List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2,
@@ -9747,10 +9766,43 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) &&
 								(mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + LANG2.ASSIGNMENT) ||
 										mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + ".addAll("));
-						if((equalName || variableRenamed) && declaration1.getType() != null && declaration2.getType() != null &&
-								(declaration1.getType().equals(declaration2.getType()) || declaration1.getType().getClassType().equals("var") || declaration2.getType().getClassType().equals("var") ||
-										OperationInvocation.compatibleTypes(declaration1.getType(), declaration2.getType(), classDiff, modelDiff, false))) {
+						if((equalName || variableRenamed) && compatibleDeclarationTypes(declaration1, declaration2)) {
 							matchingVariableDeclarations2.add(leaf2);
+						}
+					}
+				}
+			}
+			if(matchingVariableDeclarations2.isEmpty()) {
+				//the declaration of the same variable is mapped to the declaration of another variable, i.e., l2_cache; -> autotuner_cache;
+				//when auto autotuner_cache = std::make_unique<TieredCache>(...); is split into autotuner_cache; and autotuner_cache = std::make_unique<TieredCache>(...);
+				for(AbstractCodeMapping m : new ArrayList<>(mappings)) {
+					if(m instanceof LeafMapping && m.getFragment1().getVariableDeclarations().size() > 0 && m.getFragment2().getVariableDeclarations().size() > 0) {
+						VariableDeclaration otherDeclaration1 = m.getFragment1().getVariableDeclarations().get(0);
+						VariableDeclaration declaration2 = m.getFragment2().getVariableDeclarations().get(0);
+						if(declaration2.getVariableName().equals(declaration1.getVariableName()) && !otherDeclaration1.getVariableName().equals(declaration2.getVariableName()) &&
+								declaration2.getInitializer() == null && mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + LANG2.ASSIGNMENT) &&
+								sameOrInferredDeclarationTypes(declaration1, declaration2)) {
+							removeMapping(m);
+							LeafMapping newMapping = createLeafMapping(leaf1, m.getFragment2(), parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
+							addMapping(newMapping);
+							mapping.setSplitVariableDeclaration(true);
+							return true;
+						}
+					}
+				}
+				//the declaration released by a merged declaration that took the other declaration it was mapped to, i.e., l2_cache; merged into auto secondary = ...;
+				if(container2.getBody() != null) {
+					for(AbstractCodeFragment leaf2 : container2.getBody().getCompositeStatement().getLeaves()) {
+						if(!leaves2.contains(leaf2) && !alreadyMatched2(leaf2) && leaf2.getVariableDeclarations().size() > 0) {
+							VariableDeclaration declaration2 = leaf2.getVariableDeclarations().get(0);
+							if(declaration2.getVariableName().equals(declaration1.getVariableName()) && declaration2.getInitializer() == null &&
+									mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + LANG2.ASSIGNMENT) &&
+									sameOrInferredDeclarationTypes(declaration1, declaration2)) {
+								LeafMapping newMapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
+								addMapping(newMapping);
+								mapping.setSplitVariableDeclaration(true);
+								return true;
+							}
 						}
 					}
 				}

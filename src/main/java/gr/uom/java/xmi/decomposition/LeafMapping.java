@@ -19,6 +19,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.Constants;
@@ -336,6 +337,26 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return exactMatches;
 	}
 
+	//whether the replaced calls of the same C++ function template keep their template arguments (1), i.e., std::make_unique<TieredCache>(x) -> std::make_unique<TieredCache>(y) create the same type,
+	//or change them (-1), i.e., std::make_unique<LocalCache>(x) -> std::make_unique<TieredCache>(y) create another type, or neither (0)
+	static int templateArgumentAgreement(Set<Replacement> replacements) {
+		int agreement = 0;
+		for(Replacement r : replacements) {
+			if(r instanceof MethodInvocationReplacement replacement) {
+				String name1 = replacement.getInvokedOperationBefore().getName();
+				String name2 = replacement.getInvokedOperationAfter().getName();
+				String template1 = StringBasedHeuristics.withoutTemplateArguments(name1);
+				String template2 = StringBasedHeuristics.withoutTemplateArguments(name2);
+				if(!template1.equals(name1) && !template2.equals(name2) && template1.equals(template2)) {
+					if(!name1.equals(name2))
+						return -1;
+					agreement = 1;
+				}
+			}
+		}
+		return agreement;
+	}
+
 	@Override
 	public int compareTo(LeafMapping o) {
 		CompositeReplacement compositeReplacement1 = this.containsCompositeReplacement();
@@ -424,6 +445,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					return -1;
 				}
 				else if(!this.differOnlyInVal() && o.differOnlyInVal()) {
+					return 1;
+				}
+				int templateArgumentAgreement1 = templateArgumentAgreement(this.getReplacements());
+				int templateArgumentAgreement2 = templateArgumentAgreement(o.getReplacements());
+				if(templateArgumentAgreement1 > 0 && templateArgumentAgreement2 < 0) {
+					return -1;
+				}
+				else if(templateArgumentAgreement1 < 0 && templateArgumentAgreement2 > 0) {
 					return 1;
 				}
 				Set<ReplacementType> thisReplacementTypes = this.getReplacementTypes();

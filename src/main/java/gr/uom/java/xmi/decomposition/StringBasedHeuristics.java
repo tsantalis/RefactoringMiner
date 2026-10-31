@@ -3845,7 +3845,7 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	private static String withoutTemplateArguments(String name) {
+	static String withoutTemplateArguments(String name) {
 		int index = name.indexOf('<');
 		return index > 0 && name.endsWith(">") ? name.substring(0, index) : name;
 	}

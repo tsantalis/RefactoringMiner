@@ -431,8 +431,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 					annotation.getTypeName().equals("BeforeEach") || annotation.getTypeName().equals("BeforeAll")) {
 				return true;
 			}
+			if(LANG.equals(Constants.PYTHON) && isPytestFixture(annotation)) {
+				return true;
+			}
 		}
 		return false;
+	}
+
+	//the pytest fixture decorators, i.e., @pytest.fixture, @pytest_asyncio.fixture, or @fixture imported from pytest, which set up (and after their yield tear down) the state of the tests using them
+	private static boolean isPytestFixture(UMLAnnotation annotation) {
+		String typeName = annotation.getTypeName();
+		return typeName.equals("pytest.fixture") || typeName.equals("pytest_asyncio.fixture") || typeName.equals("fixture");
 	}
 
 	public boolean hasTearDownAnnotation() {
@@ -441,6 +450,9 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			if(annotation.getTypeName().equals("After") || annotation.getTypeName().equals("AfterClass") ||
 					//JUnit 5
 					annotation.getTypeName().equals("AfterEach") || annotation.getTypeName().equals("AfterAll")) {
+				return true;
+			}
+			if(LANG.equals(Constants.PYTHON) && isPytestFixture(annotation)) {
 				return true;
 			}
 		}

@@ -1479,16 +1479,7 @@ public class VariableReplacementAnalysis {
 		else if(classDiff != null) {
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 				boolean process = false;
-				if(mapper.getContainer1().hasSetUpAnnotation() && mapper.getContainer2().hasSetUpAnnotation()) {
-					process = true;
-				}
-				else if(mapper.getContainer1().getName().equals("setUp") && mapper.getContainer2().getName().equals("setUp")) {
-					process = true;
-				}
-				else if(mapper.getContainer1().hasTearDownAnnotation() && mapper.getContainer2().hasTearDownAnnotation()) {
-					process = true;
-				}
-				else if(mapper.getContainer1().getName().equals("tearDown") && mapper.getContainer2().getName().equals("tearDown")) {
+				if(mapper.involvesSetUpMethods() || mapper.involvesTearDownMethods()) {
 					process = true;
 				}
 				else if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {

@@ -8352,7 +8352,7 @@ public class UMLModelDiff {
 		List<UMLOperationBodyMapper> mappersWithUnmatchedStatementsInTearDownT2 = new ArrayList<UMLOperationBodyMapper>();
 		for(UMLClassDiff classDiff  : commonClassDiffList) {
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-				if(mapper.involvesSetUpMethods() || mapper.getContainer1().getName().equals("setUp")) {
+				if(mapper.involvesSetUpMethods()) {
 					if(mapper.getNonMappedLeavesT1().size() > 0 || mapper.getNonMappedInnerNodesT1().size() > 0) {
 						mappersWithUnmatchedStatementsInSetUpT1.add(mapper);
 					}
@@ -8360,7 +8360,7 @@ public class UMLModelDiff {
 						mappersWithUnmatchedStatementsInSetUpT2.add(mapper);
 					}
 				}
-				else if(mapper.involvesTearDownMethods() || mapper.getContainer1().getName().equals("tearDown")) {
+				else if(mapper.involvesTearDownMethods()) {
 					if(mapper.getNonMappedLeavesT1().size() > 0 || mapper.getNonMappedInnerNodesT1().size() > 0) {
 						mappersWithUnmatchedStatementsInTearDownT1.add(mapper);
 					}

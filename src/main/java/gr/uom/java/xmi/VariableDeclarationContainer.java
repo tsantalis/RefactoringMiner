@@ -187,6 +187,14 @@ public interface VariableDeclarationContainer extends LocationInfoProvider, Comm
 	default boolean hasTearDownAnnotation() {
 		return false;
 	}
+	//a test fixture setting up the state of the tests, by annotation or by the JUnit 3 (and Python unittest) convention
+	default boolean isSetUpMethod() {
+		return hasSetUpAnnotation() || getName().equals("setUp") || getName().equals("prepare");
+	}
+	//a test fixture tearing down the state of the tests, by annotation or by the JUnit 3 (and Python unittest) convention
+	default boolean isTearDownMethod() {
+		return hasTearDownAnnotation() || getName().equals("tearDown");
+	}
 	default boolean hasDeprecatedAnnotation() {
 		return false;
 	}

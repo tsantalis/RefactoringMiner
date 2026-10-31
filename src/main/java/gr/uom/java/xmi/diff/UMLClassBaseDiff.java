@@ -501,19 +501,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(mapper.getContainer1() instanceof ModuleContainer && mapper.getContainer2() instanceof ModuleContainer) {
 				continue;
 			}
-			if(mapper.getContainer1().hasSetUpAnnotation() && mapper.getContainer2().hasSetUpAnnotation()) {
+			if(mapper.involvesSetUpMethods()) {
 				setUpMappers.add(mapper);
 			}
-			if(mapper.getContainer1().getName().equals("setUp") && mapper.getContainer2().getName().equals("setUp")) {
-				setUpMappers.add(mapper);
-			}
-			if(mapper.getContainer1().getName().equals("prepare") && mapper.getContainer2().getName().equals("prepare")) {
-				setUpMappers.add(mapper);
-			}
-			if(mapper.getContainer1().hasTearDownAnnotation() && mapper.getContainer2().hasTearDownAnnotation()) {
-				tearDownMappers.add(mapper);
-			}
-			if(mapper.getContainer1().getName().equals("tearDown") && mapper.getContainer2().getName().equals("tearDown")) {
+			if(mapper.involvesTearDownMethods()) {
 				tearDownMappers.add(mapper);
 			}
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
@@ -742,8 +733,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		for(UMLOperation removedOperation : removedOperations) {
-			if(removedOperation.hasSetUpAnnotation() || removedOperation.hasTearDownAnnotation() ||
-					removedOperation.getName().equals("setUp") || removedOperation.getName().equals("tearDown") || removedOperation.getName().equals("prepare")) {
+			if(removedOperation.isSetUpMethod() || removedOperation.isTearDownMethod()) {
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(mapper.nonMappedElementsT2() > 0) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, mapper, this);
@@ -774,8 +764,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		for(UMLOperation addedOperation : addedOperations) {
-			if(addedOperation.hasSetUpAnnotation() || addedOperation.hasTearDownAnnotation() ||
-					addedOperation.getName().equals("setUp") || addedOperation.getName().equals("tearDown") || addedOperation.getName().equals("prepare")) {
+			if(addedOperation.isSetUpMethod() || addedOperation.isTearDownMethod()) {
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(mapper.nonMappedElementsT1() > 0) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, addedOperation, this);

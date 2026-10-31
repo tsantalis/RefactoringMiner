@@ -5472,11 +5472,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public boolean involvesSetUpMethods() {
-		return container1.hasSetUpAnnotation() && container2.hasSetUpAnnotation();
+		return container1.isSetUpMethod() && container2.isSetUpMethod();
 	}
 
 	public boolean involvesTearDownMethods() {
-		return container1.hasTearDownAnnotation() && container2.hasTearDownAnnotation();
+		return container1.isTearDownMethod() && container2.isTearDownMethod();
 	}
 
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2,

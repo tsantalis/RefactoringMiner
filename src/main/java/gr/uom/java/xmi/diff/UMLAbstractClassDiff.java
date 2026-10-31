@@ -4645,10 +4645,10 @@ public abstract class UMLAbstractClassDiff {
 						}
 					}
 				}
-				if((removedOperation.hasSetUpAnnotation() || removedOperation.getName().equals("setUp")) && (addedOperation.hasSetUpAnnotation() || addedOperation.getName().equals("setUp"))) {
+				if(removedOperation.isSetUpMethod() && addedOperation.isSetUpMethod()) {
 					potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
 				}
-				else if((removedOperation.hasTearDownAnnotation() || removedOperation.getName().equals("tearDown")) && (addedOperation.hasTearDownAnnotation() || addedOperation.getName().equals("tearDown"))) {
+				else if(removedOperation.isTearDownMethod() && addedOperation.isTearDownMethod()) {
 					potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
 				}
 				else if(allStatementsMappedOrParameterized(operationBodyMapper)) {

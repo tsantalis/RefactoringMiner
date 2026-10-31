@@ -127,8 +127,7 @@ public class MoveCodeRefactoring extends AbstractMoveRefactoring {
 	@Override
 	public RefactoringType getRefactoringType() {
 		if(moveType.equals(Type.MOVE_TO_ADDED)) {
-			if(targetContainer.hasSetUpAnnotation() || targetContainer.hasTearDownAnnotation() ||
-					targetContainer.getName().equals("setUp") || targetContainer.getName().equals("tearDown") || targetContainer.getName().equals("prepare")) {
+			if(targetContainer.isSetUpMethod() || targetContainer.isTearDownMethod()) {
 				return RefactoringType.EXTRACT_FIXTURE;
 			}
 		}

@@ -9201,6 +9201,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(leaf2 instanceof AbstractExpression) {
 			return;
 		}
+		//the competition of leaf1 decides the rule, not the competitors of leaf2 added below, i.e., L248 added with as many replacements as L247 does not stop L250 with fewer
+		boolean singleMatchOfLeaf1 = mappingSet.size() == 1;
 		if(parentMapper != null && parentMapper.alreadyMatched2(leaf2)) {
 			return;
 		}
@@ -9243,8 +9245,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							matchingMappings++;
 						}
 					}
-					boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() <= mappingSet.first().getReplacements().size();
-					if(mappingSet.size() > 1) {
+					boolean matchWithLessReplacements = singleMatchOfLeaf1 && replacements.size() <= first.getReplacements().size();
+					if(!singleMatchOfLeaf1) {
 						//each replacement refines a replacement of the best mapping, i.e., result.append(' ') -> append(' ') refines result -> append(' ')
 						matchWithLessReplacements = matchingReplacements(replacements, mappingSet.first().getReplacements()) == replacements.size() && replacements.size() < mappingSet.first().getReplacements().size();
 					}
@@ -9294,13 +9296,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf2, TreeSet<LeafMapping> mappingSet,
 			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic)
 			throws RefactoringMinerTimedOutException {
-		AbstractCodeFragment leaf1 = mappingSet.first().getFragment1();
+		LeafMapping first = mappingSet.first();
+		AbstractCodeFragment leaf1 = first.getFragment1();
 		if(leaf1 instanceof AbstractExpression) {
 			return;
 		}
 		if(parentMapper != null && parentMapper.alreadyMatched1(leaf1)) {
 			return;
 		}
+		//the competition of leaf2 decides the rule, not the competitors of leaf1 added below, like in checkForOtherPossibleMatchesForFragment2
+		boolean singleMatchOfLeaf2 = mappingSet.size() == 1;
 		CompositeStatementObject parent1 = leaf1.getParent();
 		while(parent1 != null && parent1.getParent() != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 			parent1 = parent1.getParent();
@@ -9353,10 +9358,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
-						if(mappingSet.size() > 1) {
+						boolean matchWithLessReplacements = singleMatchOfLeaf2 && replacements.size() < first.getReplacements().size();
+						if(!singleMatchOfLeaf2) {
 							//each replacement refines a replacement of the best mapping, like in checkForOtherPossibleMatchesForFragment2
-							matchWithLessReplacements = matchingReplacements(replacements, mappingSet.first().getReplacements()) == replacements.size() && replacements.size() < mappingSet.first().getReplacements().size();
+							matchWithLessReplacements = matchingReplacements(replacements, first.getReplacements()) == replacements.size() && replacements.size() < first.getReplacements().size();
 						}
 						boolean variableDeclarationNameMismatch = mapping.sameVariableDeclarationName() && !mappingSet.first().sameVariableDeclarationName();
 						if(allowAdd || nested || matchWithLessReplacements || variableDeclarationNameMismatch || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {

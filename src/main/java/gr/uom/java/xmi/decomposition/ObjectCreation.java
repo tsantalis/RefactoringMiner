@@ -384,7 +384,12 @@ public class ObjectCreation extends AbstractCall {
 			this.arguments.add(argument.getText());
 		}
 		//the receiver of the creation is the receiver of the qualified expression it is selected from, while the first creation of a chain has no receiver, i.e., ContentValues() in ContentValues().apply {...}
-		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression && dotQualifiedExpression.getSelectorExpression() == invocation) {
+		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression && dotQualifiedExpression.getSelectorExpression() == invocation &&
+				KotlinVisitor.isPackageQualifiedCreation(dotQualifiedExpression)) {
+			//the package is part of the created type, like in a Java creation, i.e., leakcanary.updated.HeapAnalyzer(listener)
+			this.type = UMLType.extractTypeObject(dotQualifiedExpression.getReceiverExpression().getText() + "." + this.type.toString(), "<", ">", this.locationInfo, LANG);
+		}
+		else if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression && dotQualifiedExpression.getSelectorExpression() == invocation) {
 			KtExpression receiver = dotQualifiedExpression.getReceiverExpression();
 			if(receiver != null) {
 				// TODO replace with stringify

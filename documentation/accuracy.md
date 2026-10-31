@@ -10,11 +10,11 @@
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **October 27, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 31, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12713  | 13  | 211  | 0.999  | 0.984|
+|**Total**|12715  | 13  | 211  | 0.999  | 0.984|
 |Extract Method|1021  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|260  |  0  |  8  | 1.000  | 0.970|
@@ -44,7 +44,7 @@ As of **October 27, 2026** the precision and recall of RefactoringMiner on this 
 |Extract Attribute|32  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|149  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|348  |  2  | 11  | 0.994  | 0.969|
+|Rename Variable|349  |  2  | 11  | 0.994  | 0.969|
 |Rename Parameter|511  |  2  | 24  | 0.996  | 0.955|
 |Rename Attribute|149  |  0  |  8  | 1.000  | 0.949|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
@@ -58,7 +58,7 @@ As of **October 27, 2026** the precision and recall of RefactoringMiner on this 
 |Localize Parameter|31  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|445  |  0  | 12  | 1.000  | 0.974|
-|Change Variable Type|818  |  1  |  7  | 0.999  | 0.992|
+|Change Variable Type|819  |  1  |  7  | 0.999  | 0.992|
 |Change Parameter Type|663  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|246  |  0  |  3  | 1.000  | 0.988|
 |Add Method Annotation|329  |  0  |  0  | 1.000  | 1.000|
@@ -297,11 +297,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **October 30, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 31, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2106  |  4  |  0  | 0.998  | 1.000|
+|**Total**|2103  |  4  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
@@ -324,7 +324,7 @@ As of **October 30, 2026** the precision and recall of RefactoringMiner on this 
 |Move And Inline Method|25  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|18  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|15  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|15  |  1  |  0  | 0.938  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|

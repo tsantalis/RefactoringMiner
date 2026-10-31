@@ -101,7 +101,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         for (AbstractCodeMapping abstractCodeMapping : mappings) {
             if (abstractCodeMapping instanceof LeafMapping) {
                 if (optimizationData.getProcessedLeafMappings().add(abstractCodeMapping)) {
-                    processLeafMapping(srcTree,dstTree,abstractCodeMapping,mappingStore, isPartOfExtractedMethod);
+                    processLeafMapping(srcTree,dstTree,abstractCodeMapping,bodyMapper,mappingStore, isPartOfExtractedMethod);
                     if (containsReplacementOfType(abstractCodeMapping, ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION)) {
                         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo(), LANG1);
                         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo(), LANG2);
@@ -111,7 +111,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
             }
             else if (abstractCodeMapping instanceof CompositeStatementObjectMapping)
-                processCompositeMapping(srcTree,dstTree,abstractCodeMapping,mappingStore);
+                processCompositeMapping(srcTree,dstTree,abstractCodeMapping,bodyMapper,mappingStore);
         }
         if (Constants.isCrossLanguage(LANG1, LANG2) && bodyMapper.getOperationInvocation() != null)
             processAnonymousArgumentReplacedWithLambda(srcTree, dstTree, bodyMapper, mappingStore);
@@ -260,7 +260,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
     }
 
-    private void processCompositeMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
+    private void processCompositeMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
         CompositeStatementObjectMapping compositeStatementObjectMapping = (CompositeStatementObjectMapping) abstractCodeMapping;
         LocationInfo srcLocationInfo = compositeStatementObjectMapping.getFragment1().getLocationInfo();
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo,LANG1);
@@ -385,7 +385,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     //handle synchronized(lock) {} in Kotlin to Kotlin
                     processCallExpressionsModeledAsCompositeStatements(mappingStore, srcStatementNode, dstStatementNode);
                 }
-                if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
+                if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS) &&
+                        correspondingParents(compositeStatementObjectMapping, bodyMapper)) {
                     Tree parent1 = srcStatementNode.getParent();
                     Tree parent2 = dstStatementNode.getParent();
                     mappingStore.addMapping(parent1, parent2);
@@ -419,7 +420,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
                     new KeywordMatcher(LANG1, LANG2, LANG1.JUMP_KEYWORD, LANG2.JUMP_KEYWORD, "return").match(srcStatementNode.getParent(),dstStatementNode.getParent(),mappingStore);
                 }
-                else if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
+                else if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS) &&
+                        correspondingParents(abstractCodeMapping, bodyMapper)) {
                     mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
                 }
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ELSE, LANG2.ELSE);
@@ -1198,7 +1200,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         return false;
     }
-    private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
+    private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
         LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo(),LANG1);
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
@@ -1269,7 +1271,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
                     processBodyMapper(srcTree, dstTree, lambdaMapper, mappingStore, isPartOfExtractedMethod);
                 }
-                matchParentStatements(srcStatementNode, dstStatementNode, mappingStore);
+                matchParentStatements(srcStatementNode, dstStatementNode, abstractCodeMapping, bodyMapper, mappingStore);
                 return;
             }
             else {
@@ -1374,7 +1376,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, abstractCodeMapping.getRefactorings(), optimizationData.getDeferredFlattenings());
             }
         }
-        matchParentStatements(srcStatementNode, dstStatementNode, mappingStore);
+        matchParentStatements(srcStatementNode, dstStatementNode, abstractCodeMapping, bodyMapper, mappingStore);
         matchEqualOperatorsOfInitializers(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;
         boolean _leafExp = abstractCodeMapping.getFragment1() instanceof LeafExpression || abstractCodeMapping.getFragment2() instanceof LeafExpression;
@@ -1495,10 +1497,25 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
     }
 
-    private void matchParentStatements(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
-        if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
+    private void matchParentStatements(Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping mapping, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
+        if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS) &&
+                correspondingParents(mapping, bodyMapper)) {
             mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
         }
+    }
+
+    //the parents of two mapped statements correspond in the mapper of two corresponding functions, while in an extracted, inlined or moved code fragment only if the model maps them,
+    //i.e., not the body of skipLong() { skip(LONG_SIZE) } and the body of the scan it is inlined to, which the scan before the commit is mapped to
+    private static boolean correspondingParents(AbstractCodeMapping mapping, UMLOperationBodyMapper bodyMapper) {
+        if(!bodyMapper.isMoveCode() && bodyMapper.getOperationInvocation() == null)
+            return true;
+        CompositeStatementObject parent1 = mapping.getFragment1().getParent();
+        CompositeStatementObject parent2 = mapping.getFragment2().getParent();
+        for(AbstractCodeMapping m : bodyMapper.getMappings()) {
+            if(m.getFragment1() == parent1 && m.getFragment2() == parent2)
+                return true;
+        }
+        return false;
     }
 
     //Kotlin call_expression -> [callee, call_suffix -> [value_arguments?, annotated_lambda -> lambda_literal -> [lambda_parameters?, arrow?, statements]]],

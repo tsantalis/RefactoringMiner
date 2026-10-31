@@ -21486,6 +21486,20 @@
         "validators": null
     }, {
         "type": "Rename Variable",
+        "description": "Rename Variable e : Exception to t : Throwable in method public invoke() : void from class com.jfinal.aop.Invocation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type e : Exception to t : Throwable in method public invoke() : void from class com.jfinal.aop.Invocation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
         "description": "Rename Variable defaultInters : Interceptor[] to globalInters : Interceptor[] in method package buildActionMapping() : void from class com.jfinal.core.ActionMapping",
         "comment": null,
         "validation": "TP",

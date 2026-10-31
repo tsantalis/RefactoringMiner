@@ -741,7 +741,8 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		List<VariableDeclaration> variableDeclarations = getVariableDeclarations();
 		if(variableDeclarations.size() > 0 && variableDeclarations.get(0).getInitializer() != null) {
 			String initializer = variableDeclarations.get(0).getInitializer().toString();
-			if(LANG.equals(Constants.TYPESCRIPT) && variableDeclarations.get(0).getInitializer().getCastExpressions().size() > 0 && initializer.contains(" as ") && variableDeclarations.get(0).getInitializer().getLambdas().size() == 0) {
+			//the cast follows the expression in TypeScript and Kotlin, i.e., HeapAnalyzer(listener).checkForLeaks(heapDump) as HeapAnalysisSuccess
+			if((LANG.equals(Constants.TYPESCRIPT) || LANG.equals(Constants.KOTLIN)) && variableDeclarations.get(0).getInitializer().getCastExpressions().size() > 0 && initializer.contains(" as ") && variableDeclarations.get(0).getInitializer().getLambdas().size() == 0) {
 				int index = initializer.lastIndexOf(" as ");
 				initializer = initializer.substring(0, index);
 			}

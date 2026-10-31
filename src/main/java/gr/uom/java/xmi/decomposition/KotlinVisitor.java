@@ -452,6 +452,9 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			//the class of a static field access is a type, i.e., Protocol.HTTP_1_1
 			types.add(receiver.getText());
 		}
+		else if(isPackageQualifiedCreation(expression)) {
+			//the package of a qualified creation is part of the created type, like in a Java creation, i.e., leakcanary.updated in leakcanary.updated.HeapAnalyzer(listener)
+		}
 		else {
 			this.visitExpression(expression.getReceiverExpression(), data);
 		}
@@ -463,6 +466,12 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			LeafExpression qualifiedName = new LeafExpression(cu, sourceFolder, filePath, receiver, CodeElementType.QUALIFIED_NAME, container);
 			variables.add(qualifiedName);
 		}
+	}
+
+	//a creation qualified with a package, i.e., leakcanary.updated.HeapAnalyzer(listener), since packages and properties are lower case while classes are upper case
+	static boolean isPackageQualifiedCreation(KtDotQualifiedExpression expression) {
+		return expression.getSelectorExpression() instanceof KtCallExpression call && call.getCalleeExpression() instanceof KtNameReferenceExpression callee &&
+				Character.isUpperCase(callee.getReferencedName().charAt(0)) && isPropertyChain(expression.getReceiverExpression());
 	}
 
 	//a chain of property accesses starting with a variable, i.e., hprof.reader

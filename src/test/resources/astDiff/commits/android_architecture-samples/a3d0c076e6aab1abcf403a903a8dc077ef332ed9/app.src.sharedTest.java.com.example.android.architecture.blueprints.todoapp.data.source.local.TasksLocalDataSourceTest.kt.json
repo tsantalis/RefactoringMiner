@@ -9459,6 +9459,72 @@
   "firstEndPos" : 5999,
   "secondEndPos" : 5523
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6008,
+  "secondPos" : 5532,
+  "firstEndPos" : 6058,
+  "secondEndPos" : 5570
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6008,
+  "secondPos" : 5532,
+  "firstEndPos" : 6011,
+  "secondEndPos" : 5535
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 6008,
+  "secondPos" : 5532,
+  "firstEndPos" : 6011,
+  "secondEndPos" : 5535
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "result",
+  "secondLabel" : "tasks",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 6012,
+  "secondPos" : 5536,
+  "firstEndPos" : 6018,
+  "secondEndPos" : 5541
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6012,
+  "secondPos" : 5536,
+  "firstEndPos" : 6018,
+  "secondEndPos" : 5541
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6019,
+  "secondPos" : 5542,
+  "firstEndPos" : 6020,
+  "secondEndPos" : 5543
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -10449,6 +10515,50 @@
   "firstEndPos" : 6472,
   "secondEndPos" : 5978
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6481,
+  "secondPos" : 5987,
+  "firstEndPos" : 6544,
+  "secondEndPos" : 6025
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6481,
+  "secondPos" : 5987,
+  "firstEndPos" : 6484,
+  "secondEndPos" : 5990
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 6481,
+  "secondPos" : 5987,
+  "firstEndPos" : 6484,
+  "secondEndPos" : 5990
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6493,
+  "secondPos" : 5997,
+  "firstEndPos" : 6494,
+  "secondEndPos" : 5998
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -10525,6 +10635,28 @@
   "secondPos" : 6023,
   "firstEndPos" : 6521,
   "secondEndPos" : 6025
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "tasks",
+  "secondLabel" : "tasks",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 6557,
+  "secondPos" : 5991,
+  "firstEndPos" : 6562,
+  "secondEndPos" : 5996
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6557,
+  "secondPos" : 5991,
+  "firstEndPos" : 6562,
+  "secondEndPos" : 5996
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

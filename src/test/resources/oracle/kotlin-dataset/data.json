@@ -1211,14 +1211,14 @@
         "type": "Extract Variable",
         "description": "Extract Variable tasks : Inferred in method public deleteAllTasks_emptyListOfRetrievedTask() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
         "comment": null,
-        "validation": "TP",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable tasks : Inferred in method public getTasks_retrieveSavedTasks() from class com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSourceTest",
         "comment": null,
-        "validation": "TP",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
@@ -8217,7 +8217,7 @@
         "type": "Extract Variable",
         "description": "Extract Variable screens : Inferred in method public onNewIntent(intent Intent) from class leakcanary.internal.navigation.NavigatingActivity",
         "comment": null,
-        "validation": "CTP",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {

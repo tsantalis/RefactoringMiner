@@ -1363,7 +1363,11 @@ public class OperationInvocation extends AbstractCall {
 	}
 
 	private void processExpression(KtExpression expression, List<String> subExpressions) {
-		if(expression instanceof KtDotQualifiedExpression dotQualified) {
+		if(expression instanceof KtDotQualifiedExpression dotQualified && KotlinVisitor.isPackageQualifiedCreation(dotQualified)) {
+			//a creation qualified with a package is a single sub-expression, like a Java creation, i.e., leakcanary.updated.HeapAnalyzer(listener)
+			subExpressions.add(0, expression.getText());
+		}
+		else if(expression instanceof KtDotQualifiedExpression dotQualified) {
 			String expressionAsString = dotQualified.getReceiverExpression().getText();
 			String invocationAsString = expression.getText();
 			String suffix = invocationAsString.substring(expressionAsString.length() + 1, invocationAsString.length());

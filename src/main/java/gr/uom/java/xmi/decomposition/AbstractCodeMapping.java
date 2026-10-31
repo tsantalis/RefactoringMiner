@@ -1655,6 +1655,16 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		}
 	}
 
+	//the expression replaced with the variable became the initializer of the variable, i.e., g(a, c) -> g(a, c, True) for x = g(a, c, True) in return x, y
+	private boolean replacedWithInitializer(String expression, String initializer) {
+		for(Replacement r : replacements) {
+			if(r.getBefore().equals(expression) && r.getAfter().equals(initializer)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean identical(UMLAbstractClassDiff classDiff) {
 		if((getReplacements().size() == 1 || getNonOverlappingReplacements().size() == 1) && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			return true;
@@ -1712,7 +1722,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				if(ref instanceof ExtractVariableRefactoring extract) {
 					for(Replacement r : replacements) {
 						if(extract.getVariableDeclaration().getInitializer() != null &&
-								extract.getVariableDeclaration().getInitializer().getString().equals(r.getBefore())) {
+								(extract.getVariableDeclaration().getInitializer().getString().equals(r.getBefore()) ||
+										replacedWithInitializer(r.getBefore(), extract.getVariableDeclaration().getInitializer().getString()))) {
 							if(r.getAfter().equals(extract.getVariableDeclaration().getVariableName())) {
 								temp = ReplacementUtil.performReplacement(temp, r.getBefore(), extract.getVariableDeclaration().getVariableName());
 							}
@@ -2031,7 +2042,11 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		if(creation1 != null && creation2 != null) {
 			List<String> arguments1 = creation1.arguments();
 			List<String> arguments2 = creation2.arguments();
-			return arguments1.size() > 0 && arguments2.size() > arguments1.size() && arguments2.containsAll(arguments1);
+			if(arguments1.size() > 0 && arguments2.size() > arguments1.size() && arguments2.containsAll(arguments1)) {
+				//the arguments added to the extracted creation, like for the calls in reservedTokenMatch
+				this.replacements.add(new ObjectCreationReplacement(creation1.actualString(), creation2.actualString(), creation1, creation2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT));
+				return true;
+			}
 		}
 		return false;
 	}

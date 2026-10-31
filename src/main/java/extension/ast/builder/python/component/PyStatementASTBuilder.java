@@ -125,13 +125,8 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
     }
 
     public LangASTNode visitReturn_stmt(PythonParser.Return_stmtContext ctx) {
-        LangASTNode expression = null;
-        if (ctx.star_expressions() != null) {
-            List<PythonParser.Star_expressionContext> exprs = ctx.star_expressions().star_expression();
-            if (exprs != null && !exprs.isEmpty()) {
-                expression = mainBuilder.visit(exprs.get(exprs.size() - 1));
-            }
-        }
+        //several expressions are a tuple, i.e., return a, b, like in an assignment
+        LangASTNode expression = ctx.star_expressions() != null ? mainBuilder.visit(ctx.star_expressions()) : null;
         return LangASTNodeFactory.createReturnStatement(expression, ctx);
     }
 
@@ -287,10 +282,8 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
         LangASTNode expression = null;
         PythonParser.Yield_exprContext yieldExpr = ctx.yield_expr();
         if (yieldExpr.star_expressions() != null) {
-            List<PythonParser.Star_expressionContext> exprs = yieldExpr.star_expressions().star_expression();
-            if (exprs != null && !exprs.isEmpty()) {
-                expression = mainBuilder.visit(exprs.get(exprs.size() - 1));
-            }
+            //several expressions are a tuple, i.e., yield a, b
+            expression = mainBuilder.visit(yieldExpr.star_expressions());
         } else if (yieldExpr.expression() != null) {
             // yield from expression
             expression = mainBuilder.visit(yieldExpr.expression());

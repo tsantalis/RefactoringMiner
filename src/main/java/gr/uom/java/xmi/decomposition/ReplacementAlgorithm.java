@@ -256,6 +256,17 @@ public class ReplacementAlgorithm {
 		return false;
 	}
 
+	//the comparison operator asserted by a fluent assertion, i.e., " < " for assertThat(x).isLessThan(y)
+	private static String comparisonOperatorOfAssertion(String name) {
+		switch(name) {
+			case "isLessThan": return " < ";
+			case "isGreaterThan": return " > ";
+			case "isLessThanOrEqualTo": return " <= ";
+			case "isGreaterThanOrEqualTo": return " >= ";
+			default: return null;
+		}
+	}
+
 	private static AbstractCall singleArgumentInvocation(Map<String, List<AbstractCall>> methodInvocationMap, String name) {
 		for(List<AbstractCall> invocations : methodInvocationMap.values()) {
 			for(AbstractCall invocation : invocations) {
@@ -3639,6 +3650,7 @@ public class ReplacementAlgorithm {
 			//assertTrue(>0) to fluid assertThat().isPositive()
 			//assertTrue(<0) to fluid assertThat().isNegative()
 			//assertTrue(==0) to fluid assertThat().isZero()
+			//assertTrue(x < y) to fluid assertThat(x).isLessThan(y), and similarly for >, <=, >=
 			//assertEquals(y, x.size()) to assertThat(x).hasSize(y)
 			if((invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isTrue")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertSame") && invocationCoveringTheEntireStatement2.getName().equals("isSameAs")) ||
@@ -3686,7 +3698,9 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isNegative") &&
 							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" < 0")) ||
 					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && invocationCoveringTheEntireStatement2.getName().equals("isZero") &&
-							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" == 0"))) {
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(0).contains(" == 0")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("assertTrue") && comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement2.getName()) != null &&
+							invocationCoveringTheEntireStatement1.arguments().size() > 0 && invocationCoveringTheEntireStatement1.arguments().get(invocationCoveringTheEntireStatement1.arguments().size()-1).contains(comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement2.getName())))) {
 				for(String key2 : methodInvocationMap2.keySet()) {
 					for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 						if(invocation2.getName().equals("assertThat")) {
@@ -3714,6 +3728,18 @@ public class ReplacementAlgorithm {
 										String before = arg.substring(0, arg.indexOf(" instanceof "));
 										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
 										if(operationBodyMapper.getArgumentizedString(statement2).contains(before) && operationBodyMapper.getArgumentizedString(statement2).contains(after)) {
+											Replacement replacement = new MethodInvocationReplacement(
+													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
+													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
+											replacementInfo.addReplacement(replacement);
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement2.getName()) != null && arg.contains(comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement2.getName()))) {
+										String operator = comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement2.getName());
+										String before = arg.substring(0, arg.indexOf(operator));
+										String after = arg.substring(arg.indexOf(operator) + operator.length(), arg.length());
+										if(arguments.get(0).equals(before) && invocationCoveringTheEntireStatement2.arguments().size() == 1 && invocationCoveringTheEntireStatement2.arguments().get(0).equals(after)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
@@ -3831,7 +3857,9 @@ public class ReplacementAlgorithm {
 					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isNegative") &&
 							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" < 0")) ||
 					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && invocationCoveringTheEntireStatement1.getName().equals("isZero") &&
-							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" == 0"))) {
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(0).contains(" == 0")) ||
+					(invocationCoveringTheEntireStatement2.getName().equals("assertTrue") && comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement1.getName()) != null &&
+							invocationCoveringTheEntireStatement2.arguments().size() > 0 && invocationCoveringTheEntireStatement2.arguments().get(invocationCoveringTheEntireStatement2.arguments().size()-1).contains(comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement1.getName())))) {
 				for(String key1 : methodInvocationMap1.keySet()) {
 					for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 						if(invocation1.getName().equals("assertThat")) {
@@ -3859,6 +3887,18 @@ public class ReplacementAlgorithm {
 										String before = arg.substring(0, arg.indexOf(" instanceof "));
 										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
 										if(operationBodyMapper.getArgumentizedString(statement1).contains(before) && operationBodyMapper.getArgumentizedString(statement1).contains(after)) {
+											Replacement replacement = new MethodInvocationReplacement(
+													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
+													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
+											replacementInfo.addReplacement(replacement);
+											return replacementInfo.getReplacements();
+										}
+									}
+									else if(comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement1.getName()) != null && arg.contains(comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement1.getName()))) {
+										String operator = comparisonOperatorOfAssertion(invocationCoveringTheEntireStatement1.getName());
+										String before = arg.substring(0, arg.indexOf(operator));
+										String after = arg.substring(arg.indexOf(operator) + operator.length(), arg.length());
+										if(arguments.get(0).equals(before) && invocationCoveringTheEntireStatement1.arguments().size() == 1 && invocationCoveringTheEntireStatement1.arguments().get(0).equals(after)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);

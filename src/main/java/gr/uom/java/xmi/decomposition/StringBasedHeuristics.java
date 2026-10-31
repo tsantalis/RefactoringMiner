@@ -2737,7 +2737,7 @@ public class StringBasedHeuristics {
 			else if((invocation2 = statement2.assignmentInvocationCoveringEntireStatement()) != null) {
 				arguments2 = invocation2.arguments();
 			}
-			if(arguments1 != null && arguments2 != null) {
+			if(arguments1 != null && arguments2 != null && sameCallOrReplacedName(invocation1, invocation2, info)) {
 				Set<Replacement> concatReplacements = new LinkedHashSet<>();
 				int equalArguments = 0;
 				int concatenatedArguments = 0;
@@ -2841,6 +2841,21 @@ public class StringBasedHeuristics {
 					info.getReplacements().addAll(concatReplacements);
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+
+	//the arguments of two calls are comparable only if the calls have the same name or their names are replaced, i.e., not hprofFile.writeRecords(records) -> assertThat(readRecords).hasSameSizeAs(records + HeapDumpEndRecord)
+	private static boolean sameCallOrReplacedName(AbstractCall invocation1, AbstractCall invocation2, ReplacementInfo info) {
+		if(invocation1 == null || invocation2 == null || invocation1.getName().equals(invocation2.getName())) {
+			return true;
+		}
+		for(Replacement replacement : info.getReplacements()) {
+			if(replacement instanceof MethodInvocationReplacement methodInvocationReplacement &&
+					methodInvocationReplacement.getInvokedOperationBefore().getName().equals(invocation1.getName()) &&
+					methodInvocationReplacement.getInvokedOperationAfter().getName().equals(invocation2.getName())) {
+				return true;
 			}
 		}
 		return false;

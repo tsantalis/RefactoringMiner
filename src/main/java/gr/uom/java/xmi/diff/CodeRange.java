@@ -8,6 +8,9 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 
+import static org.refactoringminer.util.JSONIndentUtils.NEW_LINE;
+import static org.refactoringminer.util.JSONIndentUtils.SINGLE_TAB;
+
 public class CodeRange {
 	private final int startOffset;
 	private final int endOffset;
@@ -91,7 +94,7 @@ public class CodeRange {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("{").append("\n");
+		sb.append("{").append(NEW_LINE);
 		encodeStringProperty(sb, "filePath", filePath, false);
 		encodeIntProperty(sb, "startLine", startLine, false);
 		encodeIntProperty(sb, "endLine", endLine, false);
@@ -116,22 +119,22 @@ public class CodeRange {
 
 	private void encodeStringProperty(StringBuilder sb, String propertyName, String value, boolean last) {
 		if(value != null)
-			sb.append("\t").append("\t").append("\"" + propertyName + "\"" + ": " + "\"" + value + "\"");
+			sb.append(SINGLE_TAB).append("\"" + propertyName + "\"" + ": " + "\"" + value + "\"");
 		else
-			sb.append("\t").append("\t").append("\"" + propertyName + "\"" + ": " + value);
+			sb.append(SINGLE_TAB).append("\"" + propertyName + "\"" + ": " + value);
 		insertNewLine(sb, last);
 	}
 
 	private void encodeIntProperty(StringBuilder sb, String propertyName, int value, boolean last) {
-		sb.append("\t").append("\t").append("\"" + propertyName + "\"" + ": " + value);
+		sb.append(SINGLE_TAB).append("\"" + propertyName + "\"" + ": " + value);
 		insertNewLine(sb, last);
 	}
 
 	private void insertNewLine(StringBuilder sb, boolean last) {
 		if(last)
-			sb.append("\n");
+			sb.append(NEW_LINE);
 		else
-			sb.append(",").append("\n");
+			sb.append(",").append(NEW_LINE);
 	}
 
 	public static CodeRange computeRange(Set<AbstractCodeFragment> codeFragments) {

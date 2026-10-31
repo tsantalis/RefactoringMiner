@@ -19,6 +19,11 @@ import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.mcp.RefactoringMinerMcpServer;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
+import org.refactoringminer.util.JSONIndentUtils;
+
+import static org.refactoringminer.util.JSONIndentUtils.DOUBLE_TAB;
+import static org.refactoringminer.util.JSONIndentUtils.NEW_LINE;
+import static org.refactoringminer.util.JSONIndentUtils.SINGLE_TAB;
 
 public class RefactoringMiner {
 	private static Path path = null;
@@ -320,29 +325,31 @@ public class RefactoringMiner {
 					normalizedCloneURL.startsWith("https://gitlab.com/") ||
 					normalizedCloneURL.startsWith("https://bitbucket.org/");
 			StringBuilder sb = new StringBuilder();
-			sb.append("{").append("\n");
-			sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(normalizedCloneURL).append("\"").append(",").append("\n");
-			sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
+			sb.append("{").append(NEW_LINE);
+			sb.append(SINGLE_TAB).append("\"").append("repository").append("\"").append(": ").append("\"").append(normalizedCloneURL).append("\"").append(",").append(NEW_LINE);
+			sb.append(SINGLE_TAB).append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append(NEW_LINE);
 			String url = hasBrowsableCloneURL ? GitHistoryRefactoringMinerImpl.extractCommitURL(normalizedCloneURL, currentCommitId) : "";
-			sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
-			sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
-			sb.append("[");
-			int counter = 0;
-			for(Refactoring refactoring : refactoringsAtRevision) {
-				if(url.isEmpty())
-					sb.append(refactoring.toJSON());
-				else
-					sb.append(refactoring.toJSON(url));
-				if(counter < refactoringsAtRevision.size()-1) {
-					sb.append(",");
+			sb.append(SINGLE_TAB).append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append(NEW_LINE);
+			sb.append(SINGLE_TAB).append("\"").append("refactorings").append("\"").append(": ");
+			if(refactoringsAtRevision.isEmpty()) {
+				sb.append("[]").append(NEW_LINE);
+			} else {
+				sb.append("[").append(NEW_LINE);
+				int counter = 0;
+				for(Refactoring refactoring : refactoringsAtRevision) {
+					String refactoringJSON = url.isEmpty() ? refactoring.toJSON() : refactoring.toJSON(url);
+					sb.append(JSONIndentUtils.indentLines(refactoringJSON, DOUBLE_TAB));
+					if(counter < refactoringsAtRevision.size()-1) {
+						sb.append(",");
+					}
+					sb.append(NEW_LINE);
+					counter++;
 				}
-				sb.append("\n");
-				counter++;
+				sb.append(SINGLE_TAB).append("]").append(NEW_LINE);
 			}
-			sb.append("]").append("\n");
 			sb.append("}");
 			try {
-				Files.write(path, sb.toString().getBytes(), StandardOpenOption.APPEND);
+				Files.write(path, JSONIndentUtils.indentLines(sb.toString(), DOUBLE_TAB).getBytes(), StandardOpenOption.APPEND);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -352,7 +359,7 @@ public class RefactoringMiner {
 	private static void betweenCommitsJSON() {
 		if(path != null) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(",").append("\n");
+			sb.append(",").append(NEW_LINE);
 			try {
 				Files.write(path, sb.toString().getBytes(), StandardOpenOption.APPEND);
 			} catch (IOException e) {
@@ -364,9 +371,9 @@ public class RefactoringMiner {
 	private static void startJSON() {
 		if(path != null) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("{").append("\n");
-			sb.append("\"").append("commits").append("\"").append(": ");
-			sb.append("[").append("\n");
+			sb.append("{").append(NEW_LINE);
+			sb.append(SINGLE_TAB).append("\"").append("commits").append("\"").append(": ");
+			sb.append("[").append(NEW_LINE);
 			try {
 				Files.write(path, sb.toString().getBytes(), StandardOpenOption.APPEND);
 			} catch (IOException e) {
@@ -378,8 +385,9 @@ public class RefactoringMiner {
 	private static void endJSON() {
 		if(path != null) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("]").append("\n");
-			sb.append("}");
+			sb.append(NEW_LINE);
+			sb.append(SINGLE_TAB).append("]").append(NEW_LINE);
+			sb.append("}").append(NEW_LINE);
 			try {
 				Files.write(path, sb.toString().getBytes(), StandardOpenOption.APPEND);
 			} catch (IOException e) {

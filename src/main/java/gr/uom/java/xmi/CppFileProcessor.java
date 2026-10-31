@@ -613,6 +613,40 @@ public class CppFileProcessor {
 		translationUnit.accept(new ASTVisitor() {
 			{
 				shouldVisitStatements = true;
+				shouldVisitDeclarations = true;
+			}
+
+			//the constructor with a parameter whose type is a class template CDT does not know is parsed as a member without type named after the parameter type,
+			//i.e., the member SP<CLayerShellResource> for CLayerSurface(SP<CLayerShellResource>); in the class CLayerSurface
+			@Override
+			public int visit(IASTDeclaration declaration) {
+				if(declaration instanceof IASTSimpleDeclaration simpleDeclaration && simpleDeclaration.getParent() instanceof ICPPASTCompositeTypeSpecifier &&
+						simpleDeclaration.getDeclSpecifier() instanceof IASTSimpleDeclSpecifier declSpecifier && declSpecifier.getType() == IASTSimpleDeclSpecifier.t_unspecified &&
+						declSpecifier.getRawSignature().isEmpty() && isPartOfFile(declaration)) {
+					for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+						IASTDeclarator nestedDeclarator = declarator.getNestedDeclarator();
+						if(declarator.getName().toString().isEmpty() && nestedDeclarator != null && nestedDeclarator.getName() instanceof ICPPASTTemplateId templateId &&
+								templateId.getFileLocation() != null) {
+							int start = templateId.getFileLocation().getNodeOffset();
+							ranges.add(new int[] {start, start + templateId.getFileLocation().getNodeLength()});
+							names.putIfAbsent(templateId.getTemplateName().toString().replaceAll("\\s+", ""), templateId.getTemplateName());
+							for(IASTNode argument : templateId.getTemplateArguments()) {
+								argument.accept(new ASTVisitor() {
+									{
+										shouldVisitNames = true;
+									}
+
+									@Override
+									public int visit(IASTName name) {
+										names.putIfAbsent(name.toString().replaceAll("\\s+", ""), name);
+										return PROCESS_SKIP;
+									}
+								});
+							}
+						}
+					}
+				}
+				return PROCESS_CONTINUE;
 			}
 
 			@Override

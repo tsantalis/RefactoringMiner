@@ -339,6 +339,9 @@ public class LangVisitor implements LangASTVisitor {
             langAssignment.getRightSide().accept(this);
         }
 
+        if (langAssignment.isAugmented()) {
+            return;
+        }
         if (langAssignment.getLeftSide() instanceof LangSimpleName) {
             String varName = ((LangSimpleName) langAssignment.getLeftSide()).getIdentifier();
             if (addVariableDeclaration(varName)) {

@@ -9334,9 +9334,9 @@
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 15856,
-  "secondPos" : 12767,
+  "secondPos" : 13036,
   "firstEndPos" : 15920,
-  "secondEndPos" : 12818
+  "secondEndPos" : 13082
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -9345,9 +9345,9 @@
   "firstParentType" : "block",
   "secondParentType" : "block",
   "firstPos" : 15856,
-  "secondPos" : 12767,
+  "secondPos" : 13036,
   "firstEndPos" : 15920,
-  "secondEndPos" : 12818
+  "secondEndPos" : 13082
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -9356,9 +9356,9 @@
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 15856,
-  "secondPos" : 12767,
+  "secondPos" : 13036,
   "firstEndPos" : 15859,
-  "secondEndPos" : 12770
+  "secondEndPos" : 13039
 }, {
   "firstType" : "assignment_operator_literal",
   "secondType" : "assignment_operator_literal",
@@ -9367,20 +9367,20 @@
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 15860,
-  "secondPos" : 12771,
+  "secondPos" : 13040,
   "firstEndPos" : 15861,
-  "secondEndPos" : 12772
+  "secondEndPos" : 13041
 }, {
   "firstType" : "string",
   "secondType" : "string",
   "firstLabel" : "'`events` cannot have zero length if `alphabet` is `None`'",
-  "secondLabel" : "\"Unequal lengths for `values` and `outcomes`\"",
+  "secondLabel" : "'`outcomes` cannot have zero length if '",
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 15862,
-  "secondPos" : 12773,
+  "secondPos" : 13042,
   "firstEndPos" : 15920,
-  "secondEndPos" : 12818
+  "secondEndPos" : 13082
 }, {
   "firstType" : "raise_statement",
   "secondType" : "raise_statement",

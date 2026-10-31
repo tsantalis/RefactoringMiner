@@ -461,6 +461,9 @@ public class UMLModelAdapter {
 
     private static void processAssignmentForAttribute(LangMethodDeclaration methodDeclaration, LangAssignment assignment, String className, List<UMLAttribute> attributes,
                                                String sourceFolder, String filePath, UMLOperation umlOperation, String fileContent) {
+        if (assignment.isAugmented()) {
+            return;
+        }
         LangASTNode leftSide = assignment.getLeftSide();
 
         if (leftSide instanceof LangFieldAccess langFieldAccess) {
@@ -514,6 +517,9 @@ public class UMLModelAdapter {
 
     private static void processClassLevelAssignmentForAttribute(UMLClass typeDeclaration, LangAssignment assignment,
                                                String sourceFolder, String filePath, String fileContent) {
+        if (assignment.isAugmented()) {
+            return;
+        }
         LangASTNode leftSide = assignment.getLeftSide();
 
         if (leftSide instanceof LangSimpleName simpleName) {

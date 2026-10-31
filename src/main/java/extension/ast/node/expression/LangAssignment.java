@@ -42,6 +42,11 @@ public class LangAssignment extends LangExpression {
         return operator;
     }
 
+    //an augmented assignment updates the variable it assigns instead of binding it, i.e., missing += [...], unlike missing = [...], x := 1 or type X = int
+    public boolean isAugmented() {
+        return operator != null && operator.length() > 1 && operator.endsWith("=") && !operator.equals(":=");
+    }
+
     public void setOperator(String operator) {
         this.operator = operator;
     }

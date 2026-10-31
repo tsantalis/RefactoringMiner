@@ -1675,35 +1675,41 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public boolean isMain() {
 		List<UMLType> parameterTypeList = getParameterTypeList();
-		return getName().equals("main") && getReturnParameter().getType().getClassType().equals("void") &&
+		return getName().equals("main") && returnsType("void") &&
 				parameterTypeList.size() == 1 && parameterTypeList.get(0).getClassType().equals("String") &&
 				parameterTypeList.get(0).getArrayDimension() == 1;
 	}
 
+	//the declared return type, or any type when it is inferred, i.e., override fun toString() = "..." in Kotlin
+	private boolean returnsType(String classType) {
+		UMLParameter returnParameter = getReturnParameter();
+		return returnParameter == null || returnParameter.getType().getClassType().equals(classType);
+	}
+
 	private boolean isEquals() {
 		List<UMLType> parameterTypeList = getParameterTypeList();
-		return getName().equals("equals") && getReturnParameter().getType().getClassType().equals("boolean") &&
+		return getName().equals("equals") && returnsType("boolean") &&
 				parameterTypeList.size() == 1 && parameterTypeList.get(0).getClassType().equals("Object");
 	}
 
 	private boolean isHashCode() {
 		List<UMLType> parameterTypeList = getParameterTypeList();
-		return getName().equals("hashCode") && getReturnParameter().getType().getClassType().equals("int") && parameterTypeList.size() == 0;
+		return getName().equals("hashCode") && returnsType("int") && parameterTypeList.size() == 0;
 	}
 
 	private boolean isToString() {
 		List<UMLType> parameterTypeList = getParameterTypeList();
-		return getName().equals("toString") && getReturnParameter().getType().getClassType().equals("String") && parameterTypeList.size() == 0;
+		return getName().equals("toString") && returnsType("String") && parameterTypeList.size() == 0;
 	}
 
 	private boolean isClone() {
 		List<UMLType> parameterTypeList = getParameterTypeList();
-		return getName().equals("clone") && getReturnParameter().getType().getClassType().equals("Object") && parameterTypeList.size() == 0;
+		return getName().equals("clone") && returnsType("Object") && parameterTypeList.size() == 0;
 	}
 
 	private boolean isCompareTo() {
 		List<UMLType> parameterTypeList = getParameterTypeList();
-		return getName().equals("compareTo") && getReturnParameter().getType().getClassType().equals("int") && parameterTypeList.size() == 1;
+		return getName().equals("compareTo") && returnsType("int") && parameterTypeList.size() == 1;
 	}
 
 	public boolean compatibleSignature(UMLOperation removedOperation) {

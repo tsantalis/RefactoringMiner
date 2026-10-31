@@ -1473,7 +1473,8 @@ public class UMLModelDiff {
 			for(UMLClassDiff classDiff : commonClassDiffList) {
 				UMLType superType2 = classDiff.getNewSuperclass();
 				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
-				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getAddedOperations().size() >= classDiff.getOperationBodyMapperList().size()) {
+				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() &&
+						(classDiff.getAddedOperations().size() >= classDiff.getOperationBodyMapperList().size() || betterMatchThanCounterpart(removedClass, classDiff.getNextClass(), classDiff.getOriginalClass(), matcher))) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, classDiff.getNextClass());
 						if(processedClassPairs.contains(pair)) {
@@ -1500,6 +1501,14 @@ public class UMLModelDiff {
 			return optimized;
 		}
 		return diffSet;
+	}
+
+	//a class matches a version of a class with the same name better than the other version of that class does, i.e., the removed npjdist.JointDistribution
+	//matches the new npdist.Distribution it became better than the old npdist.Distribution, which became npscalardist.ScalarDistribution
+	private static boolean betterMatchThanCounterpart(UMLClass umlClass, UMLClass version, UMLClass otherVersion, UMLClassMatcher matcher) {
+		MatchResult classMatch = matcher.match(umlClass, version);
+		MatchResult counterpartMatch = matcher.match(otherVersion, version);
+		return classMatch.isMatch() && classMatch.getMatchedOperations() + classMatch.getMatchedAttributes() > counterpartMatch.getMatchedOperations() + counterpartMatch.getMatchedAttributes();
 	}
 
 	private TreeSet<UMLClassRenameDiff> findRenameMatchesForAddedClass(UMLClass addedClass, UMLClassMatcher matcher) {
@@ -1545,7 +1554,8 @@ public class UMLModelDiff {
 			for(UMLClassDiff classDiff : commonClassDiffList) {
 				UMLType superType1 = classDiff.getOldSuperclass();
 				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
-				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size()) {
+				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() &&
+						(classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size() || betterMatchThanCounterpart(addedClass, classDiff.getOriginalClass(), classDiff.getNextClass(), matcher))) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(classDiff.getOriginalClass(), addedClass);
 						if(processedClassPairs.contains(pair)) {

@@ -6214,6 +6214,72 @@
   "firstEndPos" : 5860,
   "secondEndPos" : 5339
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 5868,
+  "secondPos" : 5356,
+  "firstEndPos" : 5893,
+  "secondEndPos" : 5380
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 5868,
+  "secondPos" : 5356,
+  "firstEndPos" : 5878,
+  "secondEndPos" : 5376
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "sinkBuffer",
+  "secondLabel" : "sinkBuffer",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 5868,
+  "secondPos" : 5356,
+  "firstEndPos" : 5878,
+  "secondEndPos" : 5366
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "writeByte",
+  "secondLabel" : "writeByte",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 5879,
+  "secondPos" : 5367,
+  "firstEndPos" : 5888,
+  "secondEndPos" : 5376
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 5889,
+  "secondPos" : 5376,
+  "firstEndPos" : 5891,
+  "secondEndPos" : 5380
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "b1",
+  "secondLabel" : "b1",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_arguments",
+  "firstPos" : 5889,
+  "secondPos" : 5377,
+  "firstEndPos" : 5891,
+  "secondEndPos" : 5379
+}, {
   "firstType" : "IfStatement",
   "secondType" : "when_entry",
   "firstLabel" : "",

@@ -1433,6 +1433,19 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return s;
 	}
 
+	//a Java if (or else-if) migrated to a Kotlin when entry
+	private boolean ifBranchMigratedToWhenEntry(CompositeStatementObject parent1, CompositeStatementObject parent2) {
+		return LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN) &&
+				parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+				parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY);
+	}
+
+	private static boolean sameCondition(CompositeStatementObject composite1, CodeElementType type1, CompositeStatementObject composite2, CodeElementType type2) {
+		List<String> conditions1 = composite1.getExpressions().stream().filter(e -> e.getLocationInfo().getCodeElementType().equals(type1)).map(e -> e.getString()).toList();
+		List<String> conditions2 = composite2.getExpressions().stream().filter(e -> e.getLocationInfo().getCodeElementType().equals(type2)).map(e -> e.getString()).toList();
+		return !conditions1.isEmpty() && conditions1.equals(conditions2);
+	}
+
 	private boolean identicalDepthIndexAndParentType() {
 		if(getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT) &&
 				getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT)) {
@@ -1462,9 +1475,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			parent2 = parent2.getParent();
 		}
 		if(parent1 != null && parent2 != null) {
-			if(parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType()) &&
+			boolean ifBranchMigratedToWhenEntry = ifBranchMigratedToWhenEntry(parent1, parent2);
+			if((parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType()) || ifBranchMigratedToWhenEntry) &&
 					!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(LANG1.TRY)) {
+					return true;
+				}
+				//the Java if/else-if branches become the entries of a Kotlin when, i.e., if (byteCount <= PAYLOAD_BYTE_MAX) -> byteCount <= PAYLOAD_BYTE_MAX ->
+				if(ifBranchMigratedToWhenEntry && sameCondition(parent1, CodeElementType.IF_STATEMENT_CONDITION, parent2, CodeElementType.WHEN_ENTRY_CONDITION)) {
 					return true;
 				}
 				boolean multipleVarDeclarations = false;

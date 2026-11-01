@@ -6544,61 +6544,6 @@
   "firstEndPos" : 7937,
   "secondEndPos" : 6926
 }, {
-  "firstType" : "VariableDeclarationStatement",
-  "secondType" : "VariableDeclarationStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 7998,
-  "secondPos" : 7873,
-  "firstEndPos" : 8020,
-  "secondEndPos" : 7895
-}, {
-  "firstType" : "PrimitiveType",
-  "secondType" : "PrimitiveType",
-  "firstLabel" : "boolean",
-  "secondLabel" : "boolean",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 7998,
-  "secondPos" : 7873,
-  "firstEndPos" : 8005,
-  "secondEndPos" : 7880
-}, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "VariableDeclarationFragment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 8006,
-  "secondPos" : 7881,
-  "firstEndPos" : 8019,
-  "secondEndPos" : 7894
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "threw",
-  "secondLabel" : "threw",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 8006,
-  "secondPos" : 7881,
-  "firstEndPos" : 8011,
-  "secondEndPos" : 7886
-}, {
-  "firstType" : "BooleanLiteral",
-  "secondType" : "BooleanLiteral",
-  "firstLabel" : "false",
-  "secondLabel" : "false",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 8014,
-  "secondPos" : 7889,
-  "firstEndPos" : 8019,
-  "secondEndPos" : 7894
-}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -7720,6 +7665,28 @@
   "secondPos" : 7835,
   "firstEndPos" : 9379,
   "secondEndPos" : 7860
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "threw",
+  "secondLabel" : "threw",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 9392,
+  "secondPos" : 7881,
+  "firstEndPos" : 9397,
+  "secondEndPos" : 7886
+}, {
+  "firstType" : "BooleanLiteral",
+  "secondType" : "BooleanLiteral",
+  "firstLabel" : "false",
+  "secondLabel" : "false",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 9400,
+  "secondPos" : 7889,
+  "firstEndPos" : 9405,
+  "secondEndPos" : 7894
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",

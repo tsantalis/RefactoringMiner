@@ -6,6 +6,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.getDefect4jAfterDir
 import static org.refactoringminer.astDiff.utils.UtilMethods.getDefect4jBeforeDir;
 import static org.refactoringminer.astDiff.utils.UtilMethods.getDefects4jMappingPath;
 import static org.refactoringminer.astDiff.utils.UtilMethods.getProjectDiffLocally;
+import static org.refactoringminer.astDiff.utils.UtilMethods.getSnapShotPath;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -42,6 +43,8 @@ public class RegenerateExpectedMappings {
 		File datasetFile = new File(System.getProperty("user.dir") + "/src/test/resources/astDiff/" + dataset);
 		List<Map<String, Object>> cases = new ObjectMapper().readValue(datasetFile, List.class);
 		boolean defects4j = dataset.startsWith("defects4j/");
+		//the problematic cases are compared with their previous snapshot, while their expected files hold the curated mappings, which are never overwritten
+		boolean problematic = dataset.endsWith("-problematic.json");
 		//the Refactoring Oracle and Defects4J tests extend ConsideringCommentsVisitorTest, which parses the Java comments
 		if (defects4j || dataset.startsWith("commits/cases"))
 			System.setProperty("rm.jdt.comments", "true");
@@ -53,7 +56,7 @@ public class RegenerateExpectedMappings {
 				continue;
 			@SuppressWarnings("unchecked")
 			List<String> srcFiles = (List<String>) c.get("src_files");
-			List<String> written = defects4j ? regenerateDefects4j(repo, commit) : regenerateCommit(dataset, repo, commit, srcFiles);
+			List<String> written = defects4j ? regenerateDefects4j(repo, commit, problematic) : regenerateCommit(dataset, repo, commit, srcFiles, problematic);
 			System.out.println(repo + " " + commit + ": " + written.size() + " file(s)");
 			regenerated++;
 		}
@@ -69,26 +72,32 @@ public class RegenerateExpectedMappings {
 	}
 
 	//as in the commit tests, i.e., KotlinDiffTest and JavaToKotlinDiffTest
-	private static List<String> regenerateCommit(String dataset, String repo, String commit, List<String> srcFiles) throws Exception {
+	private static List<String> regenerateCommit(String dataset, String repo, String commit, List<String> srcFiles, boolean problematic) throws Exception {
 		CaseInfo info = srcFiles == null ? new CaseInfo(repo, commit) : new CaseInfo(repo, commit, new LinkedHashSet<>(srcFiles));
 		boolean partial = srcFiles != null && !srcFiles.isEmpty();
 		boolean skipOnlyWithMultipleSourceFiles = SKIP_ONLY_WITH_MULTIPLE_SOURCE_FILES.contains(dataset);
 		List<String> written = new ArrayList<>();
-		for (ASTDiff astDiff : getProjectDiffLocally(info)) {
+		//as in RefactoringOracleProblematicCasesTest, the problematic cases are computed from the commit URL
+		Set<ASTDiff> astDiffs = problematic ? getProjectDiffLocally(info.makeURL()) : getProjectDiffLocally(info);
+		for (ASTDiff astDiff : astDiffs) {
 			if (partial && !srcFiles.contains(astDiff.getSrcPath()) && (!skipOnlyWithMultipleSourceFiles || srcFiles.size() > 1))
 				continue;
-			written.add(write(astDiff, getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit())));
+			String path = getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit());
+			written.add(write(astDiff, problematic ? getSnapShotPath(path) : path));
 		}
 		return written;
 	}
 
 	//as in Defects4JPerfectDiffTest, the bug id is the commit
-	private static List<String> regenerateDefects4j(String project, String bugId) throws Exception {
+	private static List<String> regenerateDefects4j(String project, String bugId, boolean problematic) throws Exception {
 		Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtDirectories(
 				Path.of(getDefect4jBeforeDir(project, bugId)), Path.of(getDefect4jAfterDir(project, bugId))).getDiffSet();
 		List<String> written = new ArrayList<>();
 		for (ASTDiff astDiff : astDiffs)
-			written.add(write(astDiff, getFinalFilePath(astDiff, getDefects4jMappingPath(), project, bugId)));
+		{
+			String path = getFinalFilePath(astDiff, getDefects4jMappingPath(), project, bugId);
+			written.add(write(astDiff, problematic ? getSnapShotPath(path) : path));
+		}
 		return written;
 	}
 

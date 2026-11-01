@@ -1321,6 +1321,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			
+			if(container1.getBodyHashCode() != container2.getBodyHashCode()) {
+				repairDeclarationsReplacingAssignments(leaves1, leaves2, isomorphic);
+			}
 			updateNonMappedLeavesT1(leaves1);
 			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -11681,6 +11684,64 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return validReplacements;
+	}
+
+	//a declaration mapped to an identical declaration of deleted code is mapped instead to an unmatched assignment of the same variable and value,
+	//whose previous and next statements are mapped to the previous and next statements of the declaration, i.e., threw = false; -> boolean threw = false;
+	//when the first block declaring threw is deleted, and the identical boolean threw = false; of the deleted block was mapped
+	private void repairDeclarationsReplacingAssignments(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2, boolean isomorphic) throws RefactoringMinerTimedOutException {
+		for(AbstractCodeMapping mapping : new ArrayList<>(mappings)) {
+			if(!(mapping instanceof LeafMapping) || !mappings.contains(mapping)) {
+				continue;
+			}
+			AbstractCodeFragment declaration1 = mapping.getFragment1();
+			AbstractCodeFragment declaration2 = mapping.getFragment2();
+			if(!declaration2.getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT) ||
+					!declaration1.getString().equals(declaration2.getString())) {
+				continue;
+			}
+			List<VariableDeclaration> declarations2 = declaration2.getVariableDeclarations();
+			if(declarations2.size() != 1 || declarations2.get(0).getInitializer() == null) {
+				continue;
+			}
+			//the identical declaration is not surrounded by the counterparts of the statements around the declaration
+			if(containsMapping(sibling(declaration1, -1), sibling(declaration2, -1)) || containsMapping(sibling(declaration1, 1), sibling(declaration2, 1))) {
+				continue;
+			}
+			VariableDeclaration declaration = declarations2.get(0);
+			String assignment = declaration.getVariableName() + LANG1.ASSIGNMENT + declaration.getInitializer().getString() + LANG1.STATEMENT_TERMINATION;
+			for(AbstractCodeFragment leaf1 : new ArrayList<>(leaves1)) {
+				if(leaf1.getString().equals(assignment) &&
+						containsMapping(sibling(leaf1, -1), sibling(declaration2, -1)) && containsMapping(sibling(leaf1, 1), sibling(declaration2, 1))) {
+					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, declaration2, leaves1, leaves2);
+					Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, declaration2, parameterToArgumentMap, replacementInfo, false, this, isomorphic);
+					if(replacements != null) {
+						LeafMapping repairedMapping = createLeafMapping(leaf1, declaration2, parameterToArgumentMap, false, isomorphic);
+						repairedMapping.addReplacements(replacements);
+						repairedMapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+						removeMapping(mapping);
+						addMapping(repairedMapping);
+						leaves1.remove(leaf1);
+						leaves1.add(declaration1);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	//the statement before (-1) or after (1) a statement in its parent, or null
+	private static AbstractCodeFragment sibling(AbstractCodeFragment statement, int offset) {
+		CompositeStatementObject parent = statement.getParent();
+		if(parent == null) {
+			return null;
+		}
+		int index = parent.getStatements().indexOf(statement) + offset;
+		if(index < 0 || index >= parent.getStatements().size() || parent.getStatements().indexOf(statement) < 0) {
+			return null;
+		}
+		return parent.getStatements().get(index);
 	}
 
 	private ReplacementInfo initializeReplacementInfo(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2,

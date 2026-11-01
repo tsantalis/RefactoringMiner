@@ -778,6 +778,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			addWhenEntryExpressionsWithStreamAPICalls(innerNodes1, leaves1, LANG1);
+			addWhenEntryExpressionsWithStreamAPICalls(innerNodes2, leaves2, LANG2);
 			Set<AbstractCodeFragment> streamAPIStatements1 = StreamAPIMatcher.statementsWithStreamAPICalls(leaves1, LANG1);
 			Set<AbstractCodeFragment> streamAPIStatements2 = StreamAPIMatcher.statementsWithStreamAPICalls(leaves2, LANG2);
 			boolean skip = false;
@@ -3743,9 +3745,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	void expandAnonymousAndLambdas(AbstractCodeFragment fragment, List<AbstractCodeFragment> leaves, List<CompositeStatementObject> innerNodes,
 			Set<AbstractCodeFragment> addedLeaves, Set<CompositeStatementObject> addedInnerNodes,
 			List<UMLAnonymousClass> anonymousClassList, Map<AbstractCodeFragment, VariableDeclarationContainer> map, VariableDeclarationContainer parentOperation, boolean excludeRootBlock) {
-		if(fragment instanceof StatementObject) {
-			StatementObject statement = (StatementObject)fragment;
-			if(!leaves.contains(statement)) {
+		//statements and expressions with lambdas, i.e., the expression of a when entry is record.elementIds.forEachIndexed { index, objectId -> ... },
+		//an expression is not a statement, so the caller decides whether it is a leaf
+		if(fragment instanceof StatementObject || fragment instanceof AbstractExpression) {
+			AbstractCodeFragment statement = fragment;
+			if(fragment instanceof StatementObject && !leaves.contains(statement)) {
 				leaves.add(statement);
 				addedLeaves.add(statement);
 			}
@@ -3839,6 +3843,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	//the expressions of when entries calling stream APIs are statements, i.e., is ObjectArrayDumpRecord -> record.elementIds.forEachIndexed { index, objectId -> ... }
+	private static void addWhenEntryExpressionsWithStreamAPICalls(List<CompositeStatementObject> innerNodes, List<AbstractCodeFragment> leaves, Constants LANG) {
+		List<AbstractCodeFragment> expressions = new ArrayList<>();
+		for(CompositeStatementObject innerNode : innerNodes) {
+			if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+				for(AbstractExpression expression : innerNode.getExpressions()) {
+					if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY_EXPRESSION) && !leaves.contains(expression)) {
+						expressions.add(expression);
+					}
+				}
+			}
+		}
+		leaves.addAll(StreamAPIMatcher.statementsWithStreamAPICalls(expressions, LANG));
 	}
 
 	//JavaScript: the functions of object literals are both lambdas and operations of anonymous classes,

@@ -10725,6 +10725,13 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
+        "type": "Replace Loop With Pipeline",
+        "description": "Replace Loop With Pipeline for(i in values.indices) with record.elementIds.forEachIndexed { index, objectId -> in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Change Return Type",
         "description": "Change Return Type Pair<MutableList<String>,Long> to Pair<MutableSet<Long>,Long> in method private readHeapDumpMemoryStore(parser HprofParser, heapDumpMemoryStoreClassId Long) : Pair<MutableSet<Long>,Long> from class leakcanary.updated.HeapAnalyzer",
         "comment": null,
@@ -10734,6 +10741,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable name : Inferred to fieldName : Inferred in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable i : Inferred to index : Inferred in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

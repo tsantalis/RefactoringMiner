@@ -181,6 +181,17 @@ shadowJar {
     archiveFileName = jarName
 }
 
+//i.e., ./gradlew regenerateExpectedMappings -Pdataset=commits/kotlin.json -Pcommits=6daac6d61c,297fa59817
+tasks.register('regenerateExpectedMappings', JavaExec) {
+    group = 'verification'
+    description = 'Regenerate the expected mappings of AST diff test cases as the tests compute them (dataset under src/test/resources/astDiff, commits optional).'
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'org.refactoringminer.astDiff.utils.RegenerateExpectedMappings'
+    args = [project.findProperty('dataset') ?: '', project.findProperty('commits') ?: '']
+    jvmArgs '-Xmx4096M'
+    workingDir = projectDir
+}
+
 tasks.register('runMcp', JavaExec) {
     group = 'application'
     description = 'Run RefactoringMiner as a local stdio MCP server.'

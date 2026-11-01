@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.refactoringminer.astDiff.utils.ExportUtils.*;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
+import org.refactoringminer.astDiff.utils.MappingAssertions;
 
 /* Created by pourya on 2024-02-17*/
 public class RefactoringOracleProblematicCasesTest extends ConsideringCommentsVisitorTest {
@@ -26,6 +26,7 @@ public class RefactoringOracleProblematicCasesTest extends ConsideringCommentsVi
     @ParameterizedTest(name= "{index}: {0}")
     @JsonFileSource(resources = {"/astDiff/commits/cases-problematic.json"})
     public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws Exception {
+        MappingAssertions.Failures failures = new MappingAssertions.Failures();
         File mappingsDirFile = new File(getFinalFolderPath(dir, info.getRepo(), info.getCommit()));
         String[] files = mappingsDirFile.list();
         List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));
@@ -45,13 +46,13 @@ public class RefactoringOracleProblematicCasesTest extends ConsideringCommentsVi
             String expected = null;
             try {
                 expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
-                assertEquals(expected.length(), calculated.length(), msg);
             } catch (IOException e) {
                 fail("File not found: " + finalFilePath + " for " + info.getRepo() + "/commit/" + info.getCommit() + " , srcFileName: " + astDiff.getSrcPath());
             }
-            assertEquals(calculated, expected, msg);
+            failures.check(expected, calculated, msg);
             expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));
         }
+        failures.assertNone();
         for (String expectedButNotGeneratedFile : expectedFilesList) {
             String expectedDiffName = getSrcASTDiffFromFile(expectedButNotGeneratedFile);
             fail(expectedDiffName + " not generated for " + expectedDiffName);

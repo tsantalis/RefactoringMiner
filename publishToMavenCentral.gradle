@@ -166,3 +166,38 @@ shadowJar {
     }
     archiveFileName = jarName
 }
+
+//i.e., ./gradlew regenerateExpectedMappings -Pdataset=commits/kotlin.json -Pcommits=6daac6d61c,297fa59817
+tasks.register('regenerateExpectedMappings', JavaExec) {
+    group = 'verification'
+    description = 'Regenerate the expected mappings of AST diff test cases as the tests compute them (dataset under src/test/resources/astDiff, commits optional).'
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'org.refactoringminer.astDiff.utils.RegenerateExpectedMappings'
+    args = [project.findProperty('dataset') ?: '', project.findProperty('commits') ?: '']
+    jvmArgs '-Xmx4096M'
+    workingDir = projectDir
+}
+
+tasks.register('runMcp', JavaExec) {
+    group = 'application'
+    description = 'Run RefactoringMiner as a local stdio MCP server.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.refactoringminer.mcp.RefactoringMinerMcpServer'
+}
+
+tasks.register('mcpSmoke', JavaExec) {
+    group = 'verification'
+    description = 'Start the MCP server in smoke mode and fail if it writes to stdout.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.refactoringminer.mcp.RefactoringMinerMcpServer'
+    args '--smoke'
+
+    def stdout = new ByteArrayOutputStream()
+    standardOutput = stdout
+
+    doLast {
+        if (stdout.size() != 0) {
+            throw new GradleException("MCP smoke wrote to stdout: ${stdout.toString('UTF-8')}")
+        }
+    }
+}

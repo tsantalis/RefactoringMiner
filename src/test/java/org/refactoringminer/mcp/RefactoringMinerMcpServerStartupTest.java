@@ -7,7 +7,10 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Isolated;
 
+//changes the global user.dir or System.out, so it runs alone, i.e., the parallel tests would read their files from its temporary directory
+@Isolated
 class RefactoringMinerMcpServerStartupTest {
 	@Test
 	void doesNotWriteToStdoutInSmokeMode() throws Exception {

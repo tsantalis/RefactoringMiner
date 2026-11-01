@@ -1,6 +1,5 @@
 package org.refactoringminer.astDiff.tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcDiff;
 import static org.refactoringminer.astDiff.utils.ExportUtils.getFinalFilePath;
@@ -27,6 +26,7 @@ import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import net.joshka.junit.json.params.JsonFileSource;
+import org.refactoringminer.astDiff.utils.MappingAssertions;
 
 public class PythonDiffTest {
 	public static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits/python";
@@ -34,6 +34,7 @@ public class PythonDiffTest {
 
 	@Test
 	public void testSubTreeMappings() throws Exception {
+		MappingAssertions.Failures failures = new MappingAssertions.Failures();
 		Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtDirectories(
 				Path.of(REPOS + "/v1"),
 				Path.of(REPOS + "/v2")).getDiffSet();
@@ -47,15 +48,16 @@ public class PythonDiffTest {
 			} catch (IOException e) {
 				fail("File not found: " + finalFilePath + " , srcFileName: " + astDiff.getSrcPath());
 			}
-			assertEquals(expected.length(), calculated.length(), msg);
-			assertEquals(calculated, expected, msg);
+			failures.check(expected, calculated, msg);
 		}
+		failures.assertNone();
 	}
 	private static final String dir = getCommitsMappingsPath();
     @ParameterizedTest(name= "{index}: {0}")
 
     @JsonFileSource(resources = "/astDiff/commits/python.json")
     public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws Exception {
+        MappingAssertions.Failures failures = new MappingAssertions.Failures();
         File mappingsDirFile = new File(getFinalFolderPath(dir, info.getRepo(), info.getCommit()));
         String[] files = mappingsDirFile.list();
         List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));
@@ -74,13 +76,13 @@ public class PythonDiffTest {
             String expected = null;
             try {
                 expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
-                assertEquals(expected.length(), calculated.length(), msg);
             } catch (IOException e) {
                 fail("File not found: " + finalFilePath + " for " + info.getRepo() + "/commit/" + info.getCommit() + " , srcFileName: " + astDiff.getSrcPath());
             }
-            assertEquals(calculated, expected, msg);
+            failures.check(expected, calculated, msg);
             expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));
         }
+        failures.assertNone();
         for (String expectedButNotGeneratedFile : expectedFilesList) {
             String expectedDiffName = getSrcASTDiffFromFile(expectedButNotGeneratedFile);
             fail(expectedDiffName + " not generated for " + expectedDiffName);

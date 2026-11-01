@@ -14,7 +14,10 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.junit.jupiter.api.parallel.Isolated;
 
+//changes the global user.dir or System.out, so it runs alone, i.e., the parallel tests would read their files from its temporary directory
+@Isolated
 class RefactoringMinerMcpServiceRepositoryTest {
 	@TempDir
 	Path tempDir;

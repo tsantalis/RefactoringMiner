@@ -28,7 +28,10 @@ import org.refactoringminer.astDiff.models.ProjectASTDiff;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
+import org.junit.jupiter.api.parallel.Isolated;
 
+//changes the global user.dir or System.out, so it runs alone, i.e., the parallel tests would read their files from its temporary directory
+@Isolated
 class RefactoringMinerMcpToolsTest {
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 

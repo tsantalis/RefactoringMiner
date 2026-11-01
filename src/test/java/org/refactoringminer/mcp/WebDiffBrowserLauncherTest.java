@@ -17,7 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 
 import gui.webdiff.WebDiff;
+import org.junit.jupiter.api.parallel.Isolated;
 
+//changes the global user.dir or System.out, so it runs alone, i.e., the parallel tests would read their files from its temporary directory
+@Isolated
 class WebDiffBrowserLauncherTest {
 	@Test
 	void launchStartsViewWithoutWritingStartupMessageToStdout() throws Exception {

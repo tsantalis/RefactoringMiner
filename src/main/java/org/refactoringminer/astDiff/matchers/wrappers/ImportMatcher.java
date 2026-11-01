@@ -1,11 +1,13 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.Type;
 import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.diff.UMLImportListDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
+import org.refactoringminer.astDiff.utils.QualifiedNameAlignment;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -46,7 +48,7 @@ public class ImportMatcher implements TreeMatcher {
                     dstImportStatement = dstImportStatement.getParent();
                 }
                 if (srcImportStatement != null && dstImportStatement != null) {
-                    mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
+                    mapImportStatements(mappingStore, srcImportStatement, dstImportStatement);
                     if(Constants.isCrossLanguage(LANG1, LANG2)) {
                         JavaToKotlinMigration.handleImportMapping(mappingStore, srcImportStatement, dstImportStatement, LANG1, LANG2, deferredFlattenings);
                     }
@@ -63,7 +65,7 @@ public class ImportMatcher implements TreeMatcher {
             for (UMLImport srcUMLImport : srcImportSet) {
                 Tree srcImportStatement = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLImport.getLocationInfo(), LANG1);
                 if (srcImportStatement != null && dstImportStatement != null)
-                    mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+                    mapImportStatements(mappingStore, srcImportStatement, dstImportStatement);
             }
         }
         //UnGrouped Imports
@@ -74,7 +76,7 @@ public class ImportMatcher implements TreeMatcher {
             for (UMLImport dstUMLImport : dstImportSet) {
                 Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLImport.getLocationInfo(), LANG2);
                 if (srcImportStatement != null && dstImportStatement != null)
-                    mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+                    mapImportStatements(mappingStore, srcImportStatement, dstImportStatement);
             }
         }
         //Changed Imports
@@ -82,13 +84,46 @@ public class ImportMatcher implements TreeMatcher {
             Tree srcImportStatement = TreeUtilFunctions.findByLocationInfo(srcTree, pair.getLeft().getLocationInfo(), LANG1);
             Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo(), LANG2);
             if (srcImportStatement != null && dstImportStatement != null) {
-                mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+                mapImportStatements(mappingStore, srcImportStatement, dstImportStatement);
                 //a name moved to another import statement, i.e., MAX_COMMENT_CHARS from the grouped from app.services.pr_review import (...), already mapped with its other names
                 if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
                         !mappingStore.isSrcMapped(srcImportStatement.getParent()) && !mappingStore.isDstMapped(dstImportStatement.getParent()))
                     handleParent(mappingStore, srcImportStatement, dstImportStatement);
             }
         }
+    }
+
+    private static void mapImportStatements(ExtendedMultiMappingStore mappingStore, Tree srcImportStatement, Tree dstImportStatement) {
+        mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
+        mapNamesOfQualifiedNamesWithRemovedOrAddedNames(mappingStore, srcImportStatement);
+    }
+
+    //the names of a qualified name with a name removed or added are mapped in label order, as the recursive mapping maps only the children of equally many,
+    //i.e., shark.internal.Reference.LazyDetails -> shark.Reference.LazyDetails, where internal is deleted, or leakcanary.ReferencePathNode -> leakcanary.internal.ReferencePathNode
+    private static void mapNamesOfQualifiedNamesWithRemovedOrAddedNames(ExtendedMultiMappingStore mappingStore, Tree srcImportStatement) {
+        for (Tree src : srcImportStatement.preOrder()) {
+            if (!consistsOfNames(src))
+                continue;
+            Set<Tree> dsts = mappingStore.getDsts(src);
+            if (dsts == null)
+                continue;
+            for (Tree dst : dsts) {
+                if (dst.getType().equals(src.getType()) && dst.getChildren().size() != src.getChildren().size() && consistsOfNames(dst))
+                    QualifiedNameAlignment.mapNamesInLabelOrder(mappingStore, src.getChildren(), dst.getChildren());
+            }
+        }
+    }
+
+    //a qualified name whose children are names of the same type, i.e., the Kotlin identifier of an import with its simple identifiers
+    private static boolean consistsOfNames(Tree tree) {
+        if (tree.getChildren().size() < 2)
+            return false;
+        Type type = tree.getChild(0).getType();
+        for (Tree child : tree.getChildren()) {
+            if (!child.isLeaf() || !child.getType().equals(type))
+                return false;
+        }
+        return true;
     }
 
     private void handleParent(ExtendedMultiMappingStore mappingStore, Tree srcImportStatement, Tree dstImportStatement) {

@@ -186,6 +186,28 @@
   "firstEndPos" : 128,
   "secondEndPos" : 111
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "shark",
+  "secondLabel" : "shark",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 78,
+  "secondPos" : 78,
+  "firstEndPos" : 83,
+  "secondEndPos" : 83
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LibraryLeakReferenceMatcher",
+  "secondLabel" : "LibraryLeakReferenceMatcher",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 101,
+  "secondPos" : 84,
+  "firstEndPos" : 128,
+  "secondEndPos" : 111
+}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",

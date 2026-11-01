@@ -76,6 +76,39 @@
   "firstEndPos" : 89,
   "secondEndPos" : 63
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 53,
+  "secondPos" : 27,
+  "firstEndPos" : 63,
+  "secondEndPos" : 37
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HeapDumpFile",
+  "secondLabel" : "HeapDumpFile",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 64,
+  "secondPos" : 38,
+  "firstEndPos" : 76,
+  "secondEndPos" : 50
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "ASYNC_TASK_M",
+  "secondLabel" : "ASYNC_TASK_M",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 77,
+  "secondPos" : 51,
+  "firstEndPos" : 89,
+  "secondEndPos" : 63
+}, {
   "firstType" : "import_header",
   "secondType" : "import_header",
   "firstLabel" : "",
@@ -95,6 +128,39 @@
   "secondParentType" : "import_header",
   "firstPos" : 97,
   "secondPos" : 71,
+  "firstEndPos" : 146,
+  "secondEndPos" : 107
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 110,
+  "secondPos" : 71,
+  "firstEndPos" : 120,
+  "secondEndPos" : 81
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HeapDumpFile",
+  "secondLabel" : "HeapDumpFile",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 121,
+  "secondPos" : 82,
+  "firstEndPos" : 133,
+  "secondEndPos" : 94
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "ASYNC_TASK_O",
+  "secondLabel" : "ASYNC_TASK_O",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 134,
+  "secondPos" : 95,
   "firstEndPos" : 146,
   "secondEndPos" : 107
 }, {
@@ -120,6 +186,39 @@
   "firstEndPos" : 207,
   "secondEndPos" : 155
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 167,
+  "secondPos" : 115,
+  "firstEndPos" : 177,
+  "secondEndPos" : 125
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HeapDumpFile",
+  "secondLabel" : "HeapDumpFile",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 178,
+  "secondPos" : 126,
+  "firstEndPos" : 190,
+  "secondEndPos" : 138
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "ASYNC_TASK_PRE_M",
+  "secondLabel" : "ASYNC_TASK_PRE_M",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 191,
+  "secondPos" : 139,
+  "firstEndPos" : 207,
+  "secondEndPos" : 155
+}, {
   "firstType" : "import_header",
   "secondType" : "import_header",
   "firstLabel" : "",
@@ -142,6 +241,50 @@
   "firstEndPos" : 269,
   "secondEndPos" : 204
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 228,
+  "secondPos" : 163,
+  "firstEndPos" : 238,
+  "secondEndPos" : 173
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LeakTraceElement",
+  "secondLabel" : "LeakTraceElement",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 239,
+  "secondPos" : 174,
+  "firstEndPos" : 255,
+  "secondEndPos" : 190
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Holder",
+  "secondLabel" : "Holder",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 256,
+  "secondPos" : 191,
+  "firstEndPos" : 262,
+  "secondEndPos" : 197
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "THREAD",
+  "secondLabel" : "THREAD",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 263,
+  "secondPos" : 198,
+  "firstEndPos" : 269,
+  "secondEndPos" : 204
+}, {
   "firstType" : "import_header",
   "secondType" : "import_header",
   "firstLabel" : "",
@@ -161,6 +304,50 @@
   "secondParentType" : "import_header",
   "firstPos" : 277,
   "secondPos" : 212,
+  "firstEndPos" : 335,
+  "secondEndPos" : 257
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 290,
+  "secondPos" : 212,
+  "firstEndPos" : 300,
+  "secondEndPos" : 222
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LeakTraceElement",
+  "secondLabel" : "LeakTraceElement",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 301,
+  "secondPos" : 223,
+  "firstEndPos" : 317,
+  "secondEndPos" : 239
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Type",
+  "secondLabel" : "Type",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 318,
+  "secondPos" : 240,
+  "firstEndPos" : 322,
+  "secondEndPos" : 244
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "STATIC_FIELD",
+  "secondLabel" : "STATIC_FIELD",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 323,
+  "secondPos" : 245,
   "firstEndPos" : 335,
   "secondEndPos" : 257
 }, {

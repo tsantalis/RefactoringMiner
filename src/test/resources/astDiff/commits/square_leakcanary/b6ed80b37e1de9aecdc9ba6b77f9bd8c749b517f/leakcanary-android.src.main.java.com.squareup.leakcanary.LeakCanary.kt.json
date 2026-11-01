@@ -131,6 +131,39 @@
   "firstEndPos" : 123,
   "secondEndPos" : 97
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 84,
+  "secondPos" : 58,
+  "firstEndPos" : 94,
+  "secondEndPos" : 68
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 95,
+  "secondPos" : 69,
+  "firstEndPos" : 103,
+  "secondEndPos" : 77
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HeapAnalyzerService",
+  "secondLabel" : "HeapAnalyzerService",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 104,
+  "secondPos" : 78,
+  "firstEndPos" : 123,
+  "secondEndPos" : 97
+}, {
   "firstType" : "import_header",
   "secondType" : "import_header",
   "firstLabel" : "",
@@ -150,6 +183,39 @@
   "secondParentType" : "import_header",
   "firstPos" : 131,
   "secondPos" : 105,
+  "firstEndPos" : 182,
+  "secondEndPos" : 143
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 144,
+  "secondPos" : 105,
+  "firstEndPos" : 154,
+  "secondEndPos" : 115
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 155,
+  "secondPos" : 116,
+  "firstEndPos" : 163,
+  "secondEndPos" : 124
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "InternalLeakCanary",
+  "secondLabel" : "InternalLeakCanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 164,
+  "secondPos" : 125,
   "firstEndPos" : 182,
   "secondEndPos" : 143
 }, {

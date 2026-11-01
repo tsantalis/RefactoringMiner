@@ -263,6 +263,28 @@
   "firstEndPos" : 807,
   "secondEndPos" : 781
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 767,
+  "secondPos" : 741,
+  "firstEndPos" : 777,
+  "secondEndPos" : 751
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "AbstractAnalysisResultService",
+  "secondLabel" : "AbstractAnalysisResultService",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 778,
+  "secondPos" : 752,
+  "firstEndPos" : 807,
+  "secondEndPos" : 781
+}, {
   "firstType" : "import_header",
   "secondType" : "import_header",
   "firstLabel" : "",
@@ -282,6 +304,28 @@
   "secondParentType" : "import_header",
   "firstPos" : 815,
   "secondPos" : 789,
+  "firstEndPos" : 863,
+  "secondEndPos" : 824
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 828,
+  "secondPos" : 789,
+  "firstEndPos" : 838,
+  "secondEndPos" : 799
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "AnalyzerProgressListener",
+  "secondLabel" : "AnalyzerProgressListener",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 839,
+  "secondPos" : 800,
   "firstEndPos" : 863,
   "secondEndPos" : 824
 }, {
@@ -307,6 +351,28 @@
   "firstEndPos" : 904,
   "secondEndPos" : 852
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 884,
+  "secondPos" : 832,
+  "firstEndPos" : 894,
+  "secondEndPos" : 842
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "CanaryLog",
+  "secondLabel" : "CanaryLog",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 895,
+  "secondPos" : 843,
+  "firstEndPos" : 904,
+  "secondEndPos" : 852
+}, {
   "firstType" : "import_header",
   "secondType" : "import_header",
   "firstLabel" : "",
@@ -329,6 +395,28 @@
   "firstEndPos" : 948,
   "secondEndPos" : 883
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 925,
+  "secondPos" : 860,
+  "firstEndPos" : 935,
+  "secondEndPos" : 870
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HeapAnalyzer",
+  "secondLabel" : "HeapAnalyzer",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 936,
+  "secondPos" : 871,
+  "firstEndPos" : 948,
+  "secondEndPos" : 883
+}, {
   "firstType" : "import_header",
   "secondType" : "import_header",
   "firstLabel" : "",
@@ -348,6 +436,28 @@
   "secondParentType" : "import_header",
   "firstPos" : 956,
   "secondPos" : 891,
+  "firstEndPos" : 988,
+  "secondEndPos" : 910
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 969,
+  "secondPos" : 891,
+  "firstEndPos" : 979,
+  "secondEndPos" : 901
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HeapDump",
+  "secondLabel" : "HeapDump",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 980,
+  "secondPos" : 902,
   "firstEndPos" : 988,
   "secondEndPos" : 910
 }, {
@@ -436,6 +546,61 @@
   "secondParentType" : "import_header",
   "firstPos" : 1029,
   "secondPos" : 951,
+  "firstEndPos" : 1110,
+  "secondEndPos" : 1019
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakcanary",
+  "secondLabel" : "leakcanary",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 1042,
+  "secondPos" : 951,
+  "firstEndPos" : 1052,
+  "secondEndPos" : 961
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "internal",
+  "secondLabel" : "internal",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 1053,
+  "secondPos" : 962,
+  "firstEndPos" : 1061,
+  "secondEndPos" : 970
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LeakCanaryInternals",
+  "secondLabel" : "LeakCanaryInternals",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 1062,
+  "secondPos" : 971,
+  "firstEndPos" : 1081,
+  "secondEndPos" : 990
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Companion",
+  "secondLabel" : "Companion",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 1082,
+  "secondPos" : 991,
+  "firstEndPos" : 1091,
+  "secondEndPos" : 1000
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "setEnabledBlocking",
+  "secondLabel" : "setEnabledBlocking",
+  "firstParentType" : "identifier",
+  "secondParentType" : "identifier",
+  "firstPos" : 1092,
+  "secondPos" : 1001,
   "firstEndPos" : 1110,
   "secondEndPos" : 1019
 }, {

@@ -3,8 +3,14 @@
     "common/src/main/java/io/netty/util/concurrent/AbstractEventExecutor.java"
   ],
   "AbstractExecutorService.java": [],
+  "AbstractFuture.java": [
+    "common/src/main/java/io/netty/util/concurrent/AbstractFuture.java"
+  ],
   "AbstractScheduledEventExecutor.java": [
     "common/src/main/java/io/netty/util/concurrent/AbstractScheduledEventExecutor.java"
+  ],
+  "DefaultPromise.java": [
+    "common/src/main/java/io/netty/util/concurrent/DefaultPromise.java"
   ],
   "EventExecutor.java": [
     "common/src/main/java/io/netty/util/concurrent/EventExecutor.java"
@@ -18,11 +24,21 @@
   "EventLoopGroup.java": [
     "transport/src/main/java/io/netty/channel/EventLoopGroup.java"
   ],
+  "Executor.java": [],
+  "Future.java": [
+    "common/src/main/java/io/netty/util/concurrent/Future.java"
+  ],
   "IoEventLoop.java": [
     "transport/src/main/java/io/netty/channel/IoEventLoop.java"
   ],
   "IoEventLoopGroup.java": [
     "transport/src/main/java/io/netty/channel/IoEventLoopGroup.java"
+  ],
+  "IoExecutionContext.java": [
+    "transport/src/main/java/io/netty/channel/IoExecutionContext.java"
+  ],
+  "IoHandler.java": [
+    "transport/src/main/java/io/netty/channel/IoHandler.java"
   ],
   "Iterable.java": [],
   "Math.java": [],
@@ -32,7 +48,31 @@
   "OrderedEventExecutor.java": [
     "common/src/main/java/io/netty/util/concurrent/OrderedEventExecutor.java"
   ],
+  "PriorityQueueNode.java": [
+    "common/src/main/java/io/netty/util/internal/PriorityQueueNode.java"
+  ],
+  "Promise.java": [
+    "common/src/main/java/io/netty/util/concurrent/Promise.java"
+  ],
+  "PromiseTask.java": [
+    "common/src/main/java/io/netty/util/concurrent/PromiseTask.java"
+  ],
+  "Queue.java": [],
+  "RejectedExecutionHandler.java": [
+    "common/src/main/java/io/netty/util/concurrent/RejectedExecutionHandler.java"
+  ],
+  "RejectedExecutionHandlers.java": [
+    "common/src/main/java/io/netty/util/concurrent/RejectedExecutionHandlers.java"
+  ],
+  "Runnable.java": [],
+  "RunnableFuture.java": [],
   "ScheduledExecutorService.java": [],
+  "ScheduledFuture.java": [
+    "common/src/main/java/io/netty/util/concurrent/ScheduledFuture.java"
+  ],
+  "ScheduledFutureTask.java": [
+    "common/src/main/java/io/netty/util/concurrent/ScheduledFutureTask.java"
+  ],
   "SingleThreadEventExecutor.java": [
     "common/src/main/java/io/netty/util/concurrent/SingleThreadEventExecutor.java"
   ],
@@ -45,6 +85,10 @@
   "String.java": [],
   "SystemPropertyUtil.java": [
     "common/src/main/java/io/netty/util/internal/SystemPropertyUtil.java"
+  ],
+  "ThreadFactory.java": [],
+  "ThreadPerTaskExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/ThreadPerTaskExecutor.java"
   ],
   "TimeUnit.java": [],
   "concurrent.java": [],

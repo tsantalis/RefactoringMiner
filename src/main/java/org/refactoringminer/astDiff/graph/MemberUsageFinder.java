@@ -5,6 +5,7 @@ import gr.uom.java.xmi.decomposition.*;
 
 import java.util.*;
 import java.util.function.BiPredicate;
+import javax.annotation.Nullable;
 
 /**
  * Finds the invocations of the operations and the accesses of the attributes of a model, binding each call and each
@@ -12,7 +13,7 @@ import java.util.function.BiPredicate;
  * {@code UMLModelDiff.findInvocationsInParentModel/ChildModel} and {@code UMLModelDiff.findFieldAccessesInParentModel/ChildModel}.
  *
  * Only the calls and names reaching the changes are bound, overlapping them outside the bodies of the lambdas and
- * anonymous classes within them (the others reach no change node). Binding one attaches the
+ * anonymous classes within them (the others reach no change node), and the names a changed value is assigned to. Binding one attaches the
  * file declaring its target to the model diff when it is not there yet, so the model gets exactly the unchanged files
  * declaring what the changes use.
  *
@@ -59,6 +60,9 @@ public class MemberUsageFinder {
   private final ReceiverTypeResolver resolver;
   private final BiPredicate<UMLModel, LocationInfo> inChange;
   private final Map<UMLModel, Index> indexes = new IdentityHashMap<>();
+  private final Map<UMLModel, Index> useIndexes = new IdentityHashMap<>();
+  // The bound names a value is assigned to, with the assignment
+  private final Map<LocationInfo, LocationInfo> writes = new HashMap<>();
 
   /**
    * @param inChange whether code of a model reaches a change, which limits the calls and names bound
@@ -92,6 +96,123 @@ public class MemberUsageFinder {
     indexes.computeIfAbsent(umlModel, this::buildIndex);
   }
 
+  /**
+   * Whether a value is assigned to the name, a bound access of an attribute: it is the target of an assignment RM
+   * records in its code.
+   */
+  public boolean isWrite(LeafExpression access) {
+    return writes.containsKey(access.getLocationInfo());
+  }
+
+  /**
+   * The assignment of a value to the name, a bound access of an attribute {@link #isWrite} tells is written: the name
+   * with the value assigned to it.
+   */
+  public LocationInfo assignmentOf(LeafExpression access) {
+    return writes.get(access.getLocationInfo());
+  }
+
+  /**
+   * The calls of the operation outside the changes, once {@link #bindUses} bound them.
+   */
+  public List<AbstractCall> findUnchangedInvocations(UMLOperation operation, UMLModel umlModel) {
+    Index index = useIndexes.get(umlModel);
+    return index == null ? List.of() : index.invocations().getOrDefault(operation, List.of());
+  }
+
+  /**
+   * The names referring to the attribute outside the changes, once {@link #bindUses} bound them.
+   */
+  public List<LeafExpression> findUnchangedAccesses(UMLAttribute attribute, UMLModel umlModel) {
+    Index index = useIndexes.get(umlModel);
+    return index == null ? List.of() : index.accesses().getOrDefault(attribute, List.of());
+  }
+
+  /**
+   * Binds the calls and names outside the changes that may refer to one of the given members, by their names, the way
+   * {@link #bindChanges} binds the ones of the changes: the uses of changed members by unchanged code. Called once per
+   * model, after {@link #bindChanges}.
+   */
+  public void bindUses(UMLModel umlModel, Collection<UMLOperation> operations, Collection<UMLAttribute> attributes) {
+    Set<UMLOperation> targetOperations = Collections.newSetFromMap(new IdentityHashMap<>());
+    targetOperations.addAll(operations);
+    Set<UMLAttribute> targetAttributes = Collections.newSetFromMap(new IdentityHashMap<>());
+    targetAttributes.addAll(attributes);
+    Set<String> operationNames = new HashSet<>();
+    operations.forEach(operation -> operationNames.add(operation.getName()));
+    // RM names a constructor invocation by its keyword (super(...), this(...)), not by the class
+    if (operations.stream().anyMatch(UMLOperation::isConstructor)) {
+      operationNames.add("super");
+      operationNames.add("this");
+    }
+    Set<String> attributeNames = new HashSet<>();
+    attributes.forEach(attribute -> attributeNames.add(attribute.getName()));
+
+    Index index = new Index(new IdentityHashMap<>(), new IdentityHashMap<>(), new IdentityHashMap<>());
+    Set<LocationInfo> seenCalls = new HashSet<>();
+    Set<LocationInfo> seenVariables = new HashSet<>();
+    Set<UMLAbstractClass> seenClasses = Collections.newSetFromMap(new IdentityHashMap<>());
+    for (UMLClass umlClass : new ArrayList<>(umlModel.getClassList())) {
+      List<UMLAbstractClass> classes = new ArrayList<>(List.of(umlClass));
+      classes.addAll(umlClass.getAnonymousClassList());
+      for (UMLAbstractClass context : classes) {
+        if (!seenClasses.add(context)) {
+          continue;
+        }
+        for (AbstractCodeFragment fragment : fragmentsOf(context)) {
+          for (AbstractCall call : callsOf(fragment)) {
+            if (!operationNames.contains(simpleName(call.getName())) || !seenCalls.add(call.getLocationInfo())
+                    || inChange.test(umlModel, call.getLocationInfo())) {
+              continue;
+            }
+            UMLOperation target = resolver.resolveInvocationTarget(call, context, umlModel);
+            if (target != null && targetOperations.contains(target)) {
+              index.invocations().computeIfAbsent(target, key -> new ArrayList<>()).add(call);
+            }
+          }
+          for (LeafExpression variable : accessCandidatesOf(fragment)) {
+            if (!attributeNames.contains(simpleName(variable.getString())) || !seenVariables.add(variable.getLocationInfo())
+                    || inChange.test(umlModel, variable.getLocationInfo())) {
+              continue;
+            }
+            AbstractCodeFragment selector = switchSelectorOf(fragment);
+            UMLAttribute target = selector != null && variable.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.SIMPLE_NAME)
+                    ? resolver.resolveCaseLabelTarget(variable, selector, context, umlModel)
+                    : resolver.resolveAccessTarget(variable, context, umlModel);
+            if (target != null && targetAttributes.contains(target)) {
+              index.accesses().computeIfAbsent(target, key -> new ArrayList<>()).add(variable);
+              LocationInfo assignment = assignmentOf(variable, fragment);
+              if (assignment != null) {
+                writes.put(variable.getLocationInfo(), assignment);
+              }
+            }
+          }
+        }
+      }
+    }
+    useIndexes.put(umlModel, index);
+  }
+
+  // The assignment of the fragment the name is the target of, which starts with it
+  @Nullable
+  private static LocationInfo assignmentOf(LeafExpression variable, AbstractCodeFragment fragment) {
+    LocationInfo location = variable.getLocationInfo();
+    for (LeafExpression assignment : fragment.getAssignments()) {
+      LocationInfo assigned = assignment.getLocationInfo();
+      if (assigned.getStartOffset() == location.getStartOffset() && location.getEndOffset() < assigned.getEndOffset()) {
+        return assigned;
+      }
+    }
+    return null;
+  }
+
+  // The name a call or a name refers to a member by, without its qualifier or the type arguments of a created type
+  private static String simpleName(String name) {
+    int typeArguments = name.indexOf('<');
+    String raw = typeArguments < 0 ? name : name.substring(0, typeArguments);
+    return raw.substring(raw.lastIndexOf('.') + 1);
+  }
+
   private Index buildIndex(UMLModel umlModel) {
     Index index = new Index(new IdentityHashMap<>(), new IdentityHashMap<>(), new IdentityHashMap<>());
     Set<LocationInfo> seenCalls = new HashSet<>();
@@ -115,7 +236,10 @@ public class MemberUsageFinder {
             }
           }
           for (LeafExpression variable : accessCandidatesOf(fragment)) {
-            if (!seenVariables.add(variable.getLocationInfo()) || !inChange.test(umlModel, variable.getLocationInfo())) {
+            // A name a changed value is assigned to reaches the change through its assignment
+            LocationInfo assignment = assignmentOf(variable, fragment);
+            if (!seenVariables.add(variable.getLocationInfo()) || !(inChange.test(umlModel, variable.getLocationInfo())
+                    || assignment != null && inChange.test(umlModel, assignment))) {
               continue;
             }
             AbstractCodeFragment selector = switchSelectorOf(fragment);
@@ -124,6 +248,9 @@ public class MemberUsageFinder {
                     : resolver.resolveAccessTarget(variable, context, umlModel);
             if (target != null) {
               index.accesses().computeIfAbsent(target, key -> new ArrayList<>()).add(variable);
+              if (assignment != null) {
+                writes.put(variable.getLocationInfo(), assignment);
+              }
             }
             VariableDeclaration local = context instanceof UMLAnonymousClass
                     && variable.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.SIMPLE_NAME)

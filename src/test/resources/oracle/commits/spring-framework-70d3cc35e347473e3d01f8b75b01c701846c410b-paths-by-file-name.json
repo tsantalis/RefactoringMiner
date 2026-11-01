@@ -1,44 +1,87 @@
 {
   "Assertions.java": [],
   "Builder.java": [],
+  "Charset.java": [],
   "ClientHttpRequestFactory.java": [
     "spring-web/src/main/java/org/springframework/http/client/ClientHttpRequestFactory.java"
+  ],
+  "ClientHttpRequestInterceptor.java": [
+    "spring-web/src/main/java/org/springframework/http/client/ClientHttpRequestInterceptor.java"
+  ],
+  "ClientHttpResponse.java": [
+    "spring-web/src/main/java/org/springframework/http/client/ClientHttpResponse.java",
+    "spring-web/src/main/java/org/springframework/http/client/reactive/ClientHttpResponse.java"
   ],
   "ClientRequestObservationConvention.java": [
     "spring-web/src/main/java/org/springframework/http/client/observation/ClientRequestObservationConvention.java",
     "spring-webflux/src/main/java/org/springframework/web/reactive/function/client/ClientRequestObservationConvention.java"
   ],
+  "Cloneable.java": [],
+  "Closeable.java": [],
+  "CollectionUtils.java": [
+    "spring-core/src/main/java/org/springframework/cglib/core/CollectionUtils.java",
+    "spring-core/src/main/java/org/springframework/util/CollectionUtils.java"
+  ],
+  "Collections.java": [],
+  "Comparable.java": [],
   "Consumer.java": [],
+  "ContentDisposition.java": [
+    "spring-web/src/main/java/org/springframework/http/ContentDisposition.java"
+  ],
   "DefaultRestClient.java": [
     "spring-web/src/main/java/org/springframework/web/client/DefaultRestClient.java"
   ],
   "DefaultRestClientBuilder.java": [
     "spring-web/src/main/java/org/springframework/web/client/DefaultRestClientBuilder.java"
   ],
+  "Double.java": [],
   "Function.java": [
     "spring-core/src/main/java/org/springframework/cglib/core/internal/Function.java"
   ],
+  "HttpEntity.java": [
+    "spring-web/src/main/java/org/springframework/http/HttpEntity.java"
+  ],
   "HttpHeaders.java": [
     "spring-web/src/main/java/org/springframework/http/HttpHeaders.java"
+  ],
+  "HttpInputMessage.java": [
+    "spring-web/src/main/java/org/springframework/http/HttpInputMessage.java"
+  ],
+  "HttpMessage.java": [
+    "spring-web/src/main/java/org/springframework/http/HttpMessage.java"
+  ],
+  "HttpStatusCode.java": [
+    "spring-web/src/main/java/org/springframework/http/HttpStatusCode.java"
+  ],
+  "LinkedCaseInsensitiveMap.java": [
+    "spring-core/src/main/java/org/springframework/util/LinkedCaseInsensitiveMap.java"
   ],
   "List.java": [],
   "Map.java": [],
   "MediaType.java": [
     "spring-web/src/main/java/org/springframework/http/MediaType.java"
   ],
+  "MimeType.java": [
+    "spring-core/src/main/java/org/springframework/util/MimeType.java"
+  ],
   "MockResponse.java": [],
+  "MockWebServer.java": [],
   "MultiValueMap.java": [
     "spring-core/src/main/java/org/springframework/util/MultiValueMap.java"
   ],
   "ObservationConvention.java": [],
   "ObservationRegistry.java": [],
   "RecordedRequest.java": [],
+  "ResponseEntity.java": [
+    "spring-web/src/main/java/org/springframework/http/ResponseEntity.java"
+  ],
   "RestClient.java": [
     "spring-web/src/main/java/org/springframework/web/client/RestClient.java"
   ],
   "RestClientIntegrationTests.java": [
     "spring-web/src/test/java/org/springframework/web/client/RestClientIntegrationTests.java"
   ],
+  "RuntimeException.java": [],
   "S.java": [],
   "Serializable.java": [],
   "String.java": [],
@@ -51,12 +94,15 @@
   ],
   "api.java": [],
   "assertj.java": [],
+  "charset.java": [],
   "core.java": [],
   "function.java": [],
   "io.java": [],
+  "java.java": [],
   "micrometer.java": [],
   "mockwebserver.java": [],
   "net.java": [],
+  "nio.java": [],
   "observation.java": [],
   "util.java": []
 }

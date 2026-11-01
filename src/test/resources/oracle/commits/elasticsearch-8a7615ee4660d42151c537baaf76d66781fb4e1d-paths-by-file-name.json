@@ -2,6 +2,14 @@
   "AbstractLookupService.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/enrich/AbstractLookupService.java"
   ],
+  "Accountable.java": [],
+  "Block.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/Block.java"
+  ],
+  "BlockLoader.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/BlockLoader.java"
+  ],
+  "Closeable.java": [],
   "Comparable.java": [],
   "DataType.java": [
     "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/DataType.java",
@@ -14,6 +22,28 @@
     "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
   ],
   "InputStream.java": [],
+  "MappedFieldType.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MappedFieldType.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "PlanStreamInput.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/util/PlanStreamInput.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/io/stream/PlanStreamInput.java"
+  ],
+  "QueryRewriteContext.java": [
+    "server/src/main/java/org/elasticsearch/index/query/QueryRewriteContext.java"
+  ],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "SearchExecutionContext.java": [
+    "server/src/main/java/org/elasticsearch/index/query/SearchExecutionContext.java"
+  ],
   "StreamInput.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
   ],
@@ -30,8 +60,14 @@
   "VersionId.java": [
     "server/src/main/java/org/elasticsearch/common/VersionId.java"
   ],
+  "Writeable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "apache.java": [],
   "elasticsearch.java": [],
   "io.java": [],
+  "lucene.java": [],
   "org.java": [],
-  "transport.java": []
+  "transport.java": [],
+  "util.java": []
 }

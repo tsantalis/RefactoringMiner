@@ -16,6 +16,11 @@
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/analysis/Analyzer.java",
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/analysis/analyzer/Analyzer.java"
   ],
+  "AnalyzerContext.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/analysis/AnalyzerContext.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/analysis/AnalyzerContext.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/analysis/analyzer/AnalyzerContext.java"
+  ],
   "AnalyzerRules.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/analysis/AnalyzerRules.java",
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/analyzer/AnalyzerRules.java"
@@ -54,10 +59,6 @@
   ],
   "DistributionType.java": [
     "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/local/distribution/DistributionType.java"
-  ],
-  "E.java": [
-    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/scalar/math/E.java",
-    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/scalar/math/E.java"
   ],
   "ESRestTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/rest/ESRestTestCase.java"
@@ -223,6 +224,9 @@
   ],
   "Task.java": [
     "server/src/main/java/org/elasticsearch/tasks/Task.java"
+  ],
+  "TaskAwareRequest.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskAwareRequest.java"
   ],
   "TestRule.java": [],
   "ThreadContext.java": [

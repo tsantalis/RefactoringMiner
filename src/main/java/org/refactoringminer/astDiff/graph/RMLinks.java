@@ -4,12 +4,15 @@ import com.github.gumtreediff.tree.Tree;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
+import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
+import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import org.refactoringminer.api.Refactoring;
 
@@ -19,8 +22,9 @@ import java.util.*;
 /**
  * The statements RM gives as the same statement in both revisions: the ones the body mappers of the members it matches
  * map, the value of an extracted (inlined) variable and the statements it is replaced in, and the declarations of the
- * fields it matches, which hold the code of their initializers, and the members it matches (see {@link RMIndex} for what RM
- * gives of one revision).
+ * fields it matches, which hold the code of their initializers, and the members it matches; also the variables it gives
+ * as renamed, inlined or extracted, and the fields it gives as removed (see {@link RMIndex} for what RM gives of one
+ * revision).
  */
 class RMLinks {
   private final UMLModelDiff modelDiff;
@@ -28,6 +32,10 @@ class RMLinks {
   private Map<SrcDst, Map<String, List<Statement>>> statements;
   @Nullable
   private Map<VariableDeclarationContainer, Set<VariableDeclarationContainer>> matchedMembers;
+  @Nullable
+  private Map<UMLAttribute, UMLAttribute> matchedAttributes;
+  @Nullable
+  private List<Refactoring> variableRefactorings;
 
   RMLinks(UMLModelDiff modelDiff) {
     this.modelDiff = modelDiff;
@@ -39,16 +47,168 @@ class RMLinks {
     if (srcMember == dstMember) {
       return true;
     }
+    return matchedMembers().getOrDefault(srcMember, Set.of()).contains(dstMember);
+  }
+
+  private Map<VariableDeclarationContainer, Set<VariableDeclarationContainer>> matchedMembers() {
     if (matchedMembers == null) {
       matchedMembers = new IdentityHashMap<>();
       for (UMLAbstractClassDiff classDiff : classDiffs()) {
-        for (UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs()) {
+        for (UMLOperationBodyMapper mapper : mappers(classDiff)) {
           matchedMembers.computeIfAbsent(mapper.getContainer1(), member -> Collections.newSetFromMap(new IdentityHashMap<>()))
                   .add(mapper.getContainer2());
         }
       }
     }
-    return matchedMembers.getOrDefault(srcMember, Set.of()).contains(dstMember);
+    return matchedMembers;
+  }
+
+  // The field (or enum constant) of the old revision RM gives as the same as the one of the new revision, if any
+  @Nullable
+  UMLAttribute matchedAttribute(UMLAttribute dstAttribute) {
+    return matchedAttributes().get(dstAttribute);
+  }
+
+  private Map<UMLAttribute, UMLAttribute> matchedAttributes() {
+    if (matchedAttributes == null) {
+      matchedAttributes = new IdentityHashMap<>();
+      for (UMLAbstractClassDiff classDiff : classDiffs()) {
+        classDiff.getCommonAtrributes().forEach(pair -> matchedAttributes.put(pair.getRight(), pair.getLeft()));
+        classDiff.getAttributeDiffList().forEach(diff -> matchedAttributes.put(diff.getAddedAttribute(), diff.getRemovedAttribute()));
+        classDiff.getCommonEnumConstants().forEach(pair -> matchedAttributes.put(pair.getRight(), pair.getLeft()));
+        classDiff.getEnumConstantDiffList().forEach(diff -> matchedAttributes.put(diff.getAddedEnumConstant(), diff.getRemovedEnumConstant()));
+      }
+      modelDiff.getMovedAttributeDiffList().forEach(diff -> matchedAttributes.put(diff.getAddedAttribute(), diff.getRemovedAttribute()));
+    }
+    return matchedAttributes;
+  }
+
+  // Whether the names are the old and the new name of a variable (a local or a parameter) RM gives as renamed (Rename
+  // Variable, Rename Parameter) with its declaration kept but for its name (the same type and initializer), at its
+  // declaration or at a reference to it
+  boolean isRename(String srcPath, Tree srcName, String dstPath, Tree dstName) {
+    for (Refactoring refactoring : variableRefactorings()) {
+      if (refactoring instanceof RenameVariableRefactoring rename && keepsDeclaration(rename)
+              && rename.getOriginalVariable().getVariableName().equals(srcName.getLabel())
+              && rename.getRenamedVariable().getVariableName().equals(dstName.getLabel())
+              && isOf(rename.getOriginalVariable(), rename.getOperationBefore(), srcPath, srcName)
+              && isOf(rename.getRenamedVariable(), rename.getOperationAfter(), dstPath, dstName)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Whether the tree is code RM gives as computing what an inlined (extracted) variable held where it was, only kept or
+  // handed on differently (see #pushStatements): the declaration of the variable, with nothing else of its statement,
+  // its name in a statement it is inlined into (extracted from), or its value there, which the counterpart is
+  boolean restatesVariable(SrcDst srcDst, String path, Tree tree, @Nullable Tree counterpart) {
+    for (Refactoring refactoring : variableRefactorings()) {
+      VariableDeclaration variable;
+      VariableDeclarationContainer container;
+      List<AbstractCodeFragment> references = new ArrayList<>();
+      boolean declaringSide;
+      if (refactoring instanceof InlineVariableRefactoring inline) {
+        variable = inline.getVariableDeclaration();
+        container = srcDst.equals(SrcDst.SRC) ? inline.getOperationBefore() : inline.getOperationAfter();
+        declaringSide = srcDst.equals(SrcDst.SRC);
+        inline.getReferences().forEach(reference -> references.add(declaringSide ? reference.getFragment1() : reference.getFragment2()));
+      } else if (refactoring instanceof ExtractVariableRefactoring extract) {
+        variable = extract.getVariableDeclaration();
+        container = srcDst.equals(SrcDst.SRC) ? extract.getOperationBefore() : extract.getOperationAfter();
+        declaringSide = srcDst.equals(SrcDst.DST);
+        extract.getReferences().forEach(reference -> references.add(declaringSide ? reference.getFragment2() : reference.getFragment1()));
+      } else {
+        continue;
+      }
+      if (!container.getLocationInfo().getFilePath().equals(path) || variable.getInitializer() == null) {
+        continue;
+      }
+      boolean inReference = references.stream().anyMatch(reference -> holds(reference.getLocationInfo(), tree));
+      if (declaringSide) {
+        Statement declaring = held(srcDst, path, tree);
+        if (holds(variable.getLocationInfo(), tree) && declaring != null && declaring.isWhole(tree)
+                || inReference && tree.getChildren().isEmpty() && variable.getVariableName().equals(tree.getLabel())) {
+          return true;
+        }
+      } else {
+        LocationInfo value = variable.getInitializer().getLocationInfo();
+        if (inReference && counterpart != null && counterpart.getPos() == value.getStartOffset()
+                && counterpart.getEndPos() == value.getEndOffset()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  private static boolean keepsDeclaration(RenameVariableRefactoring rename) {
+    VariableDeclaration original = rename.getOriginalVariable();
+    VariableDeclaration renamed = rename.getRenamedVariable();
+    return Objects.equals(original.getType() == null ? null : original.getType().toString(),
+            renamed.getType() == null ? null : renamed.getType().toString())
+            && Objects.equals(original.getInitializer() == null ? null : original.getInitializer().getString(),
+            renamed.getInitializer() == null ? null : renamed.getInitializer().getString());
+  }
+
+  private static boolean isOf(VariableDeclaration variable, VariableDeclarationContainer container, String path, Tree name) {
+    LocationInfo location = container.getLocationInfo();
+    return location.getFilePath().equals(path) && holds(location, name)
+            && (holds(variable.getLocationInfo(), name)
+            || variable.getScope().getStartOffset() <= name.getPos() && name.getEndPos() <= variable.getScope().getEndOffset());
+  }
+
+  private static boolean holds(LocationInfo location, Tree tree) {
+    return location.getStartOffset() <= tree.getPos() && tree.getEndPos() <= location.getEndOffset();
+  }
+
+  private List<Refactoring> variableRefactorings() {
+    if (variableRefactorings == null) {
+      variableRefactorings = new ArrayList<>();
+      for (UMLAbstractClassDiff classDiff : classDiffs()) {
+        for (UMLOperationBodyMapper mapper : mappers(classDiff)) {
+          for (Refactoring refactoring : mapper.getRefactoringsAfterPostProcessing()) {
+            if (refactoring instanceof RenameVariableRefactoring || refactoring instanceof InlineVariableRefactoring
+                    || refactoring instanceof ExtractVariableRefactoring) {
+              variableRefactorings.add(refactoring);
+            }
+          }
+        }
+      }
+    }
+    return variableRefactorings;
+  }
+
+  // The fields (and enum constants) of the old revision RM gives as removed: no field of the new revision is the same
+  List<UMLAttribute> removedAttributes() {
+    List<UMLAttribute> removed = new ArrayList<>();
+    for (UMLAbstractClassDiff classDiff : classDiffs()) {
+      for (UMLAttribute attribute : classDiff.getRemovedAttributes()) {
+        if (matchedAttributes().values().stream().noneMatch(matched -> matched == attribute)) {
+          removed.add(attribute);
+        }
+      }
+    }
+    return removed;
+  }
+
+  // The body mappers of the members of the class diff and of the anonymous classes they hold, at any depth: an anonymous
+  // class in a method of an anonymous class has its own diff in the mapper of that method
+  private static List<UMLOperationBodyMapper> mappers(UMLAbstractClassDiff classDiff) {
+    List<UMLOperationBodyMapper> mappers = new ArrayList<>();
+    Deque<UMLOperationBodyMapper> pending = new ArrayDeque<>(classDiff.getOperationBodyMapperList());
+    Set<UMLOperationBodyMapper> seen = Collections.newSetFromMap(new IdentityHashMap<>());
+    while (!pending.isEmpty()) {
+      UMLOperationBodyMapper mapper = pending.poll();
+      if (!seen.add(mapper)) {
+        continue;
+      }
+      mappers.add(mapper);
+      for (UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
+        pending.addAll(anonymousDiff.getOperationBodyMapperList());
+      }
+    }
+    return mappers;
   }
 
   private List<UMLAbstractClassDiff> classDiffs() {
@@ -80,7 +240,7 @@ class RMLinks {
     statements = Map.of(SrcDst.SRC, new HashMap<>(), SrcDst.DST, new HashMap<>());
     Map<String, Statement> located = new HashMap<>();
     for (UMLAbstractClassDiff classDiff : classDiffs()) {
-      for (UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs()) {
+      for (UMLOperationBodyMapper mapper : mappers(classDiff)) {
         pushStatements(mapper, located);
       }
 

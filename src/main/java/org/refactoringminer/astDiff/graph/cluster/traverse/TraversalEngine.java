@@ -74,7 +74,8 @@ public class TraversalEngine {
     }
 
     private void addUsageComponents() {
-        List<Node> useNodes = Centrality.usedDeclarations(graph).stream().toList();
+        // Unchanged code using the changes is presented with the changes it uses, not as a use of its own
+        List<Node> useNodes = Centrality.usedDeclarations(graph).stream().filter(node -> !node.isExtension()).toList();
         HashMap<Node, UsagePattern> usagePatterns = new HashMap<>();
         for (Node useNode : useNodes) {
             addUsageComponent(useNode, usagePatterns);
@@ -102,12 +103,14 @@ public class TraversalEngine {
         components.add(usageComponent);
         usagePatterns.put(node, usageComponent);
 
-        Set<Node> usedNodes = util.getUsedNodes(node);
+        // A change relies on the changes the unchanged code it uses uses (a bridge) as on the changes it uses itself
+        Set<Node> usedNodes = new LinkedHashSet<>(util.getUsedNodes(node));
+        usedNodes.addAll(util.getBridgedNodes(node));
         for (Node usedNode : usedNodes) {
             usageComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE));
             addContext(usedNode, usageComponent);
 
-            if (util.doesUse(usedNode)) {
+            if (!usedNode.isExtension() && util.doesUse(usedNode)) {
                 addUsageComponent(usedNode, usagePatterns);
 
                 UsagePattern usedComponent = usagePatterns.get(usedNode);

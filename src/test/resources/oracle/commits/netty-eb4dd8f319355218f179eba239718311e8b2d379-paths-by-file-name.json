@@ -17,11 +17,20 @@
   "ChannelOutboundHandler.java": [
     "transport/src/main/java/io/netty/channel/ChannelOutboundHandler.java"
   ],
+  "Http2Connection.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Connection.java"
+  ],
+  "Http2ConnectionAdapter.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionAdapter.java"
+  ],
   "Http2ConnectionHandler.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionHandler.java"
   ],
   "Http2FrameCodec.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java"
+  ],
+  "Http2FrameListener.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameListener.java"
   ],
   "Http2FrameStream.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameStream.java"
@@ -31,5 +40,7 @@
   ],
   "Http2Stream.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Stream.java"
-  ]
+  ],
+  "Listener.java": [],
+  "PropertyKey.java": []
 }

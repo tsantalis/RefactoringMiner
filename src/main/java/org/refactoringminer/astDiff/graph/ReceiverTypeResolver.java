@@ -356,7 +356,9 @@ public class ReceiverTypeResolver {
     int separator = Math.max(name.lastIndexOf('.'), name.lastIndexOf("::"));
     if (separator < 0) {
       SimpleName simpleName = resolveSimpleName(name, scope);
-      return simpleName.typeName() ? new ReceiverType(UMLType.extractTypeObject(name, context.getLANG()), context) : simpleName.type();
+      // a type variable of the scope names the type of its bound
+      return simpleName.typeName() ? new ReceiverType(boundOf(UMLType.extractTypeObject(name, context.getLANG()), scope.container(), context), context)
+              : simpleName.type();
     }
     String qualifier = name.substring(0, separator);
     String member = name.substring(name.charAt(separator) == ':' ? separator + 2 : separator + 1);

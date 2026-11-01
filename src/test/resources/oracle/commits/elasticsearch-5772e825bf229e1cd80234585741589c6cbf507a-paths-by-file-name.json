@@ -2,6 +2,11 @@
   "AbstractQueryBuilder.java": [
     "server/src/main/java/org/elasticsearch/index/query/AbstractQueryBuilder.java"
   ],
+  "BigArrays.java": [
+    "server/src/main/java/org/elasticsearch/common/util/BigArrays.java"
+  ],
+  "BooleanQuery.java": [],
+  "Builder.java": [],
   "BytesReference.java": [
     "server/src/main/java/org/elasticsearch/common/bytes/BytesReference.java"
   ],
@@ -11,6 +16,7 @@
   "BytesStreamOutput.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/BytesStreamOutput.java"
   ],
+  "CodepointSetGenerator.java": [],
   "Comparable.java": [],
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
@@ -19,6 +25,11 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/FilterStreamInput.java"
   ],
   "InputStream.java": [],
+  "Location.java": [
+    "modules/lang-painless/src/main/java/org/elasticsearch/painless/Location.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Location.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Location.java"
+  ],
   "LuceneTestCase.java": [],
   "Matchers.java": [
     "server/src/main/java/org/elasticsearch/common/inject/matcher/Matchers.java"
@@ -63,6 +74,7 @@
   "StreamOutput.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/StreamOutput.java"
   ],
+  "String.java": [],
   "ToXContent.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
   ],
@@ -79,13 +91,17 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
   "apache.java": [],
+  "carrotsearch.java": [],
   "core.java": [],
   "elasticsearch.java": [],
   "esql.java": [],
+  "generators.java": [],
   "hamcrest.java": [],
   "io.java": [],
   "lucene.java": [],
   "org.java": [],
+  "randomizedtesting.java": [],
+  "search.java": [],
   "tests.java": [],
   "util.java": [],
   "xpack.java": []

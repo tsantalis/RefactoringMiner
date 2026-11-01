@@ -1,4 +1,7 @@
 {
+  "AttributeMap.java": [
+    "common/src/main/java/io/netty/util/AttributeMap.java"
+  ],
   "ByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
   ],
@@ -17,11 +20,20 @@
   "ChannelHandlerAdapter.java": [
     "transport/src/main/java/io/netty/channel/ChannelHandlerAdapter.java"
   ],
+  "ChannelHandlerContext.java": [
+    "transport/src/main/java/io/netty/channel/ChannelHandlerContext.java"
+  ],
   "ChannelInboundHandler.java": [
     "transport/src/main/java/io/netty/channel/ChannelInboundHandler.java"
   ],
   "ChannelInboundHandlerAdapter.java": [
     "transport/src/main/java/io/netty/channel/ChannelInboundHandlerAdapter.java"
+  ],
+  "ChannelInboundInvoker.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInboundInvoker.java"
+  ],
+  "ChannelOutboundInvoker.java": [
+    "transport/src/main/java/io/netty/channel/ChannelOutboundInvoker.java"
   ],
   "CodecException.java": [
     "codec/src/main/java/io/netty/handler/codec/CodecException.java"
@@ -32,6 +44,7 @@
   ],
   "HttpNames.java": [],
   "Integer.java": [],
+  "List.java": [],
   "MessageToMessageDecoder.java": [
     "codec/src/main/java/io/netty/handler/codec/MessageToMessageDecoder.java"
   ],
@@ -70,5 +83,6 @@
   ],
   "WebSocketFrameDecoder.java": [
     "codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketFrameDecoder.java"
-  ]
+  ],
+  "util.java": []
 }

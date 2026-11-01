@@ -134,13 +134,18 @@ public class TestBuilder {
 		}
 
 		boolean success = get(FP) == expectedFPs && get(FN) == expectedFNs && get(TP) == expectedTPs;
+		String results = "";
 		if (!success || verbose) {
+			StringBuilder sb = new StringBuilder();
 			for (ProjectMatcher m : map.values()) {
-				m.printResults();
+				sb.append(m.results());
 			}
+			results = sb.toString();
+			System.out.print(results);
 		}
 		System.out.println(buildMarkup());
-		Assertions.assertTrue(success, mainResultMessage);
+		//the commits are part of the failure message, as the printed output of a test can be lost when the tests run in parallel
+		Assertions.assertTrue(success, mainResultMessage + (success ? "" : "\n" + results));
 	}
 
 	public void assertExpectations(int expectedTPs, int expectedFPs, int expectedFNs) throws Exception {
@@ -182,13 +187,18 @@ public class TestBuilder {
 		}
 
 		boolean success = get(FP) == expectedFPs && get(FN) == expectedFNs && get(TP) == expectedTPs;
+		String results = "";
 		if (!success || verbose) {
+			StringBuilder sb = new StringBuilder();
 			for (ProjectMatcher m : map.values()) {
-				m.printResults();
+				sb.append(m.results());
 			}
+			results = sb.toString();
+			System.out.print(results);
 		}
 		System.out.println(buildMarkup());
-		Assertions.assertTrue(success, mainResultMessage);
+		//the commits are part of the failure message, as the printed output of a test can be lost when the tests run in parallel
+		Assertions.assertTrue(success, mainResultMessage + (success ? "" : "\n" + results));
 	}
 
 	private String buildMarkup() {
@@ -383,47 +393,45 @@ public class TestBuilder {
 			errorCommitsCount++;
 		}
 
-		private void printResults() {
+		//the commits with errors, false positives, false negatives, and unknown refactorings, as printed when the expectations fail
+		private String results() {
+			StringBuilder sb = new StringBuilder();
 			String baseUrl = this.cloneUrl.substring(0, this.cloneUrl.length() - 4) + "/commit/";
 			for (Map.Entry<String, CommitMatcher> entry : this.expected.entrySet()) {
 				String commitUrl = baseUrl + entry.getKey();
 				CommitMatcher matcher = entry.getValue();
 				if (matcher.error != null) {
-					System.out.println("error at " + commitUrl + ": " + matcher.error);
+					sb.append("error at " + commitUrl + ": " + matcher.error).append("\n");
 				} else {
 					if (verbose || !matcher.expected.isEmpty() || !matcher.notExpected.isEmpty()
 							|| !matcher.unknown.isEmpty()) {
 						if (!matcher.analyzed) {
-							System.out.println("at not analyzed " + commitUrl);
+							sb.append("at not analyzed " + commitUrl).append("\n");
 						} else {
-							System.out.println("at " + commitUrl);
+							sb.append("at " + commitUrl).append("\n");
 						}
 					}
 					if (verbose && !matcher.truePositive.isEmpty()) {
-						System.out.println(" true positives");
-						for (String ref : matcher.truePositive) {
-							System.out.println("  " + ref);
-						}
+						appendRefactorings(sb, " true positives", matcher.truePositive);
 					}
 					if (!matcher.notExpected.isEmpty()) {
-						System.out.println(" false positives");
-						for (String ref : matcher.notExpected) {
-							System.out.println("  " + ref);
-						}
+						appendRefactorings(sb, " false positives", matcher.notExpected);
 					}
 					if (!matcher.expected.isEmpty()) {
-						System.out.println(" false negatives");
-						for (String ref : matcher.expected) {
-							System.out.println("  " + ref);
-						}
+						appendRefactorings(sb, " false negatives", matcher.expected);
 					}
 					if (!matcher.unknown.isEmpty()) {
-						System.out.println(" unknown");
-						for (String ref : matcher.unknown) {
-							System.out.println("  " + ref);
-						}
+						appendRefactorings(sb, " unknown", matcher.unknown);
 					}
 				}
+			}
+			return sb.toString();
+		}
+
+		private void appendRefactorings(StringBuilder sb, String label, Set<String> refactorings) {
+			sb.append(label).append("\n");
+			for (String ref : refactorings) {
+				sb.append("  " + ref).append("\n");
 			}
 		}
 

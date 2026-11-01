@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -1374,12 +1375,32 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 		else {
 			//the changed type annotations of the declarations are TYPE replacements, not text differences
-			String s1 = removeGenericTypeAfterDot(StringBasedHeuristics.withoutChangedTypeAnnotations(this.getFragment1().getString(), this.getFragment1(), this.getFragment2()).toLowerCase());
+			String s1 = removeGenericTypeAfterDot(StringBasedHeuristics.withoutChangedTypeAnnotations(withMigratedConversions(this.getFragment1().getString()), this.getFragment1(), this.getFragment2()).toLowerCase());
 			String s2 = removeGenericTypeAfterDot(StringBasedHeuristics.withoutChangedTypeAnnotations(this.getFragment2().getString(), this.getFragment2(), this.getFragment1()).toLowerCase());
 			int distance = StringDistance.editDistance(s1, s2);
 			distance1 = (double)distance/(double)Math.max(s1.length(), s2.length());
 		}
 		return distance1;
+	}
+
+	private static final Pattern PRIMITIVE_CAST = Pattern.compile("^\\((byte|short|int|long|float|double|char)\\)\\s*(.+)$");
+
+	//the Java primitive casts replaced with their Kotlin conversions are not text differences, i.e., (int)byteCount -> byteCount.toInt()
+	private String withMigratedConversions(String s1) {
+		if(!LANG1.equals(Constants.JAVA) || !LANG2.equals(Constants.KOTLIN)) {
+			return s1;
+		}
+		for(Replacement r : getReplacements()) {
+			Matcher cast = PRIMITIVE_CAST.matcher(r.getBefore());
+			if(cast.matches()) {
+				String type = cast.group(1);
+				String conversion = cast.group(2) + ".to" + Character.toUpperCase(type.charAt(0)) + type.substring(1) + "()";
+				if(r.getAfter().equals(conversion)) {
+					s1 = s1.replace(r.getBefore(), r.getAfter());
+				}
+			}
+		}
+		return s1;
 	}
 
 	private boolean referencesMapping(LeafMapping o) {

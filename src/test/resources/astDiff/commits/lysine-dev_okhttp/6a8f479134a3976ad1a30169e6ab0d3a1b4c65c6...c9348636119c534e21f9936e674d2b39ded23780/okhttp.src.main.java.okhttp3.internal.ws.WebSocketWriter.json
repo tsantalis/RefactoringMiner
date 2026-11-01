@@ -6456,6 +6456,72 @@
   "firstEndPos" : 5999,
   "secondEndPos" : 5495
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 6008,
+  "secondPos" : 5505,
+  "firstEndPos" : 6047,
+  "secondEndPos" : 5545
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6008,
+  "secondPos" : 5505,
+  "firstEndPos" : 6018,
+  "secondEndPos" : 5526
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "sinkBuffer",
+  "secondLabel" : "sinkBuffer",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 6008,
+  "secondPos" : 5505,
+  "firstEndPos" : 6018,
+  "secondEndPos" : 5515
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "writeShort",
+  "secondLabel" : "writeShort",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6019,
+  "secondPos" : 5516,
+  "firstEndPos" : 6029,
+  "secondEndPos" : 5526
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6030,
+  "secondPos" : 5526,
+  "firstEndPos" : 6045,
+  "secondEndPos" : 5545
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "byteCount",
+  "secondLabel" : "byteCount",
+  "firstParentType" : "CastExpression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 6036,
+  "secondPos" : 5527,
+  "firstEndPos" : 6045,
+  "secondEndPos" : 5536
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",

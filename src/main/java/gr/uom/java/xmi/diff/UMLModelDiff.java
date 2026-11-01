@@ -2148,6 +2148,22 @@ public class UMLModelDiff {
 		return refactorings;
 	}
 
+	//after all refactorings are detected, so that the detection decisions and the matching of the other statements stay as they are
+	private void removeFalseMappingsOfExtractedAndInlinedCode() {
+		Set<UMLOperationBodyMapper> mappers = new LinkedHashSet<>();
+		for(Refactoring r : refactorings) {
+			if(r instanceof ExtractOperationRefactoring extract) {
+				mappers.add(extract.getBodyMapper());
+			}
+			else if(r instanceof InlineOperationRefactoring inline) {
+				mappers.add(inline.getBodyMapper());
+			}
+		}
+		for(UMLOperationBodyMapper mapper : mappers) {
+			new MappingOptimizer(mapper).removeNoValueReturnedAsValue(mapper, refactorings);
+		}
+	}
+
 	private List<Refactoring> filterOutDuplicateRefactorings(Set<Refactoring> refactorings) {
 		List<Refactoring> filtered = new ArrayList<Refactoring>();
 		Map<String, List<Refactoring>> map = new LinkedHashMap<String, List<Refactoring>>();
@@ -5070,6 +5086,7 @@ public class UMLModelDiff {
 			}
 		}
 		refactorings.addAll(inferredMoveOperationRefactorings);
+		removeFalseMappingsOfExtractedAndInlinedCode();
 		return filterOutDuplicateRefactorings(refactorings);
 	}
 

@@ -1403,7 +1403,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs = matchedAnonymousClassDiffs(abstractCodeMapping, false);
             if (!matchedAnonymousClassDiffs.isEmpty())
                 matchLeavesAroundAnonymousClasses(srcTree, dstTree, srcStatementNode, dstStatementNode, matchedAnonymousClassDiffs, mappingStore);
-            else
+            else if (!matchCallReplacedWithReturnedExpression(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore))
                 new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
             removeArgumentToParameterMappings(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
@@ -1482,6 +1482,27 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     }
 
     //the = before the mapped initializers, i.e., idx_t file_index = DConstants::INVALID_INDEX; -> idx_t scan_chunk_file_index = DConstants::INVALID_INDEX;
+    //the call site of an inlined (extracted) method replaced with (from) its returned expression keeps the rest of the statement,
+    //i.e., val size = compute(id) -> val size = when (...) {...}, so the parts of the statement are matched in place
+    //and only the call is matched with the returned expression, which may contain a declaration of its own, i.e., when (val record = find(id))
+    private boolean matchCallReplacedWithReturnedExpression(Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping mapping, ExtendedMultiMappingStore mappingStore) {
+        if (mapping.getReplacements().stream().noneMatch(r -> r.getType().equals(ReplacementType.CALL_REPLACED_WITH_RETURNED_EXPRESSION)))
+            return false;
+        List<Tree> children1 = srcStatementNode.getChildren();
+        List<Tree> children2 = dstStatementNode.getChildren();
+        if (children1.size() != children2.size())
+            return false;
+        for (int i = 0; i < children1.size(); i++) {
+            Tree child1 = children1.get(i);
+            Tree child2 = children2.get(i);
+            if (child1.isIsomorphicTo(child2))
+                mappingStore.addMappingRecursively(child1, child2);
+            else
+                new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(child1, child2, mappingStore);
+        }
+        return true;
+    }
+
     private void matchEqualOperatorsOfInitializers(Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping mapping, ExtendedMultiMappingStore mappingStore) {
         if(!mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER) ||
                 !mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER))
@@ -1590,7 +1611,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 for(AbstractCodeFragment fragment2 : lambdaMapper.getNonMappedLeavesT2()) {
                     if(lambdaMapper.getParentMapper() != null) {
                         for(UMLOperationBodyMapper childMapper : lambdaMapper.getParentMapper().getChildMappers()) {
-                            if(fragment2.getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
+                            //only the invocations of extracted methods are in the second file, the invocations of inlined methods are in the first file
+                            boolean invocationInSecondFile = childMapper.getContainer1() == lambdaMapper.getParentMapper().getContainer1();
+                            if(invocationInSecondFile && fragment2.getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
                                 nonMappedT2--;
                                 break;
                             }

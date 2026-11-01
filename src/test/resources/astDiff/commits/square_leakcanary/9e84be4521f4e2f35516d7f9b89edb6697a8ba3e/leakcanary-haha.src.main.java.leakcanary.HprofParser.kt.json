@@ -14805,6 +14805,83 @@
   "firstEndPos" : 19921,
   "secondEndPos" : 10861
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 20047,
+  "secondPos" : 20466,
+  "firstEndPos" : 20179,
+  "secondEndPos" : 20678
+}, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 20047,
+  "secondPos" : 20514,
+  "firstEndPos" : 20144,
+  "secondEndPos" : 20551
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 20047,
+  "secondPos" : 20514,
+  "firstEndPos" : 20050,
+  "secondEndPos" : 20517
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 20047,
+  "secondPos" : 20514,
+  "firstEndPos" : 20050,
+  "secondEndPos" : 20517
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "record",
+  "secondLabel" : "record",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 20051,
+  "secondPos" : 20518,
+  "firstEndPos" : 20057,
+  "secondEndPos" : 20524
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 20051,
+  "secondPos" : 20518,
+  "firstEndPos" : 20057,
+  "secondEndPos" : 20524
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 20058,
+  "secondPos" : 20525,
+  "firstEndPos" : 20059,
+  "secondEndPos" : 20526
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -14816,6 +14893,17 @@
   "firstEndPos" : 20144,
   "secondEndPos" : 10937
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 20080,
+  "secondPos" : 20527,
+  "firstEndPos" : 20144,
+  "secondEndPos" : 20551
+}, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
   "firstLabel" : "HeapDumpInfoRecord",
@@ -14826,6 +14914,17 @@
   "secondPos" : 10873,
   "firstEndPos" : 20098,
   "secondEndPos" : 10891
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HeapDumpInfoRecord",
+  "secondLabel" : "readHeapDumpInfoRecord",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 20080,
+  "secondPos" : 20527,
+  "firstEndPos" : 20098,
+  "secondEndPos" : 20549
 }, {
   "firstType" : "call_suffix",
   "secondType" : "call_suffix",
@@ -14959,6 +15058,17 @@
   "firstEndPos" : 20143,
   "secondEndPos" : 10936
 }, {
+  "firstType" : "call_suffix",
+  "secondType" : "call_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 20141,
+  "secondPos" : 20549,
+  "firstEndPos" : 20143,
+  "secondEndPos" : 20551
+}, {
   "firstType" : "value_arguments",
   "secondType" : "value_arguments",
   "firstLabel" : "",
@@ -14969,6 +15079,17 @@
   "secondPos" : 10934,
   "firstEndPos" : 20143,
   "secondEndPos" : 10936
+}, {
+  "firstType" : "value_arguments",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_suffix",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 20141,
+  "secondPos" : 20549,
+  "firstEndPos" : 20143,
+  "secondEndPos" : 20551
 }, {
   "firstType" : "when_entry",
   "secondType" : "when_entry",

@@ -74805,6 +74805,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type junit4Paths : String[] to junit4Paths : List<String> in method public addJUnit4Library(inTests boolean, currentModule Module) : void from class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 36330
 }, {

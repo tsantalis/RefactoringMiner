@@ -2979,6 +2979,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public void addChildMapper(UMLOperationBodyMapper mapper) throws RefactoringMinerTimedOutException {
 		this.childMappers.add(mapper);
+		mapCallSite(mapper);
 		//check for variable extracted in parentMapper, but referenced in childMapper
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeFragment statement : getNonMappedLeavesT2()) {
@@ -11729,6 +11730,68 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	//the call site of an inlined (extracted) method is mapped to the statement taking its place, when the returned expression of the method is mapped to it,
+	//i.e., val shallowSize = graph.computeShallowSize(x) -> val shallowSize = when (...) {...} for the inlined return when (...) {...},
+	//as the statement matching leaves them unmatched when the whole initializer is replaced, and the accepted refactoring confirms the pair
+	private void mapCallSite(UMLOperationBodyMapper childMapper) {
+		AbstractCall invocation = childMapper.getOperationInvocation();
+		boolean inlined = childMapper.getContainer2() == container2 && childMapper.getContainer1() != container1;
+		boolean extracted = childMapper.getContainer1() == container1 && childMapper.getContainer2() != container2;
+		if(invocation == null || (!inlined && !extracted)) {
+			return;
+		}
+		//the single mapping of the return statement of the inlined (extracted) method
+		AbstractCodeMapping returnMapping = null;
+		for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+			AbstractCodeFragment returnStatement = inlined ? mapping.getFragment1() : mapping.getFragment2();
+			if(returnStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+				if(returnMapping != null) {
+					return;
+				}
+				returnMapping = mapping;
+			}
+		}
+		if(returnMapping == null) {
+			return;
+		}
+		AbstractCodeFragment replacingStatement = inlined ? returnMapping.getFragment2() : returnMapping.getFragment1();
+		String[] replacingNameAndInitializer = declarationNameAndInitializer(replacingStatement);
+		if(replacingNameAndInitializer == null || (inlined ? alreadyMatched2(replacingStatement) : alreadyMatched1(replacingStatement))) {
+			return;
+		}
+		for(AbstractCodeFragment callSite : inlined ? nonMappedLeavesT1 : nonMappedLeavesT2) {
+			if(callSite.getLocationInfo().subsumes(invocation.getLocationInfo())) {
+				String[] callSiteNameAndInitializer = declarationNameAndInitializer(callSite);
+				if(callSiteNameAndInitializer != null && callSiteNameAndInitializer[0].equals(replacingNameAndInitializer[0]) &&
+						callSiteNameAndInitializer[1].equals(invocation.actualString()) && !(inlined ? alreadyMatched1(callSite) : alreadyMatched2(callSite))) {
+					AbstractCodeFragment fragment1 = inlined ? callSite : replacingStatement;
+					AbstractCodeFragment fragment2 = inlined ? replacingStatement : callSite;
+					String before = inlined ? callSiteNameAndInitializer[1] : replacingNameAndInitializer[1];
+					String after = inlined ? replacingNameAndInitializer[1] : callSiteNameAndInitializer[1];
+					LeafMapping mapping = new LeafMapping(fragment1, fragment2, container1, container2);
+					mapping.addReplacement(new Replacement(before, after, ReplacementType.CALL_REPLACED_WITH_RETURNED_EXPRESSION));
+					addMapping(mapping);
+					nonMappedLeavesT1.remove(fragment1);
+					nonMappedLeavesT2.remove(fragment2);
+				}
+				return;
+			}
+		}
+	}
+
+	//the name and the initializer of a statement declaring a single variable with an initializer, i.e., [x, e] for val x = e, or null
+	//a return statement is not considered, as the returned expression of the inlined (extracted) method has the same role,
+	//i.e., return compute(x) -> return result is explained by the return result of the inlined compute(x)
+	private static String[] declarationNameAndInitializer(AbstractCodeFragment statement) {
+		if(statement.getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT)) {
+			List<VariableDeclaration> declarations = statement.getVariableDeclarations();
+			if(declarations.size() == 1 && declarations.get(0).getInitializer() != null) {
+				return new String[] {declarations.get(0).getVariableName(), declarations.get(0).getInitializer().getString()};
+			}
+		}
+		return null;
 	}
 
 	//the statement before (-1) or after (1) a statement in its parent, or null

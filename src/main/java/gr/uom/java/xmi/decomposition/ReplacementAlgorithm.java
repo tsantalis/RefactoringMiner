@@ -7140,12 +7140,12 @@ public class ReplacementAlgorithm {
 				nonMappedElementsT1 = nonMappedElementsT1 - ignoredNonMappedElements(invocations2, mapper.getNonMappedLeavesT1(), mapper.getNonMappedInnerNodesT1());
 			}
 			for(CompositeStatementObject comp1 : mapper.getNonMappedInnerNodesT1()) {
-				if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+				if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) || nestedInLeaf(comp1, mapper.getNonMappedLeavesT1())) {
 					nonMappedElementsT1--;
 				}
 			}
 			for(CompositeStatementObject comp2 : mapper.getNonMappedInnerNodesT2()) {
-				if(comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+				if(comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) || nestedInLeaf(comp2, mapper.getNonMappedLeavesT2())) {
 					nonMappedElementsT2--;
 				}
 			}
@@ -7205,6 +7205,16 @@ public class ReplacementAlgorithm {
 				operationBodyMapper.getRefactoringsAfterPostProcessing().addAll(mapper.getOperationSignatureDiff().get().getRefactorings());
 			}
 		}
+	}
+
+	//a composite nested in a statement is part of that statement, i.e., the when of val shallowSize = when (...) { ... } and its entries
+	private static boolean nestedInLeaf(CompositeStatementObject composite, List<AbstractCodeFragment> leaves) {
+		for(AbstractCodeFragment leaf : leaves) {
+			if(leaf.getLocationInfo().subsumes(composite.getLocationInfo())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static AbstractCodeFragment findDeclarationWithInitializer(List<? extends AbstractCodeFragment> statements, String variableName, String initializer) {

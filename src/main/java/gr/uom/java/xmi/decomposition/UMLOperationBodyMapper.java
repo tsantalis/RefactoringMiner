@@ -11572,6 +11572,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					loserRefactorings.put(r, Boolean.TRUE);
 				}
 			}
+			//the anonymous class replaced with the lambda of a loser mapping, i.e., object : ForEachCallback {...} matched against { pathNode -> ... }
+			for(Refactoring r : refactorings) {
+				if(r instanceof ReplaceAnonymousWithLambdaRefactoring replaceAnonymous && replaceAnonymous.getBodyMapper() == lambdaMapper) {
+					loserRefactorings.put(r, Boolean.TRUE);
+				}
+			}
 		}
 		if(!loserRefactorings.isEmpty()) {
 			refactorings.removeIf(loserRefactorings::containsKey);

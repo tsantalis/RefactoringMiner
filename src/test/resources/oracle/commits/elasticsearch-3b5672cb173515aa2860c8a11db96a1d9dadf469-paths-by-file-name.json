@@ -1,7 +1,13 @@
 {
+  "AbstractRunnable.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/AbstractRunnable.java"
+  ],
   "ArrayList.java": [],
   "CannedSourceOperator.java": [
     "x-pack/plugin/esql/compute/test/src/main/java/org/elasticsearch/compute/test/CannedSourceOperator.java"
+  ],
+  "CheckedRunnable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/CheckedRunnable.java"
   ],
   "ChunkedToXContent.java": [
     "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContent.java"
@@ -32,6 +38,8 @@
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
   ],
+  "FutureTask.java": [],
+  "Integer.java": [],
   "IsBlockedResult.java": [
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/IsBlockedResult.java"
   ],
@@ -40,6 +48,7 @@
   "Logger.java": [
     "libs/logging/src/main/java/org/elasticsearch/logging/Logger.java"
   ],
+  "Long.java": [],
   "LongSupplier.java": [],
   "LuceneTestCase.java": [],
   "Matchers.java": [
@@ -56,6 +65,7 @@
   "Releasable.java": [
     "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
   ],
+  "Runnable.java": [],
   "SinkOperator.java": [
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/SinkOperator.java"
   ],
@@ -84,6 +94,7 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
   "apache.java": [],
+  "concurrent.java": [],
   "function.java": [],
   "hamcrest.java": [],
   "io.java": [],

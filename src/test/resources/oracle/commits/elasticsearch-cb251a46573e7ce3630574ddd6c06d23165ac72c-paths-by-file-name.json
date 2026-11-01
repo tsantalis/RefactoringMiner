@@ -1,9 +1,32 @@
 {
+  "ArrayList.java": [],
+  "Builder.java": [],
+  "Closeable.java": [],
   "DocumentParserContext.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/DocumentParserContext.java"
   ],
   "Dynamic.java": [],
+  "Field.java": [
+    "server/src/main/java/org/elasticsearch/script/field/Field.java",
+    "x-pack/plugin/watcher/src/main/java/org/elasticsearch/xpack/watcher/notification/slack/message/Field.java"
+  ],
+  "FieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/FieldMapper.java"
+  ],
+  "FilterXContentParser.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/FilterXContentParser.java"
+  ],
+  "FilterXContentParserWrapper.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/FilterXContentParserWrapper.java"
+  ],
+  "HashMap.java": [],
+  "HashSet.java": [],
+  "IndexSettings.java": [
+    "server/src/main/java/org/elasticsearch/index/IndexSettings.java"
+  ],
   "Iterable.java": [],
+  "List.java": [],
+  "Map.java": [],
   "Mapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
     "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/planner/Mapper.java",
@@ -13,16 +36,42 @@
   "MappingLookup.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/MappingLookup.java"
   ],
+  "MappingParserContext.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MappingParserContext.java"
+  ],
+  "MetadataFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MetadataFieldMapper.java"
+  ],
   "ObjectMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/ObjectMapper.java"
   ],
   "RootObjectMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/RootObjectMapper.java"
   ],
+  "RoutingFields.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/RoutingFields.java"
+  ],
+  "SeqNoFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/SeqNoFieldMapper.java"
+  ],
+  "SequenceIDFields.java": [],
+  "Set.java": [],
+  "SourceToParse.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/SourceToParse.java"
+  ],
+  "String.java": [],
   "ToXContent.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
   ],
   "ToXContentFragment.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
-  ]
+  ],
+  "XContentParser.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentParser.java"
+  ],
+  "apache.java": [],
+  "document.java": [],
+  "io.java": [],
+  "lucene.java": [],
+  "util.java": []
 }

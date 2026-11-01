@@ -5,11 +5,24 @@
   "Attribute.java": [
     "common/src/main/java/org/apache/rocketmq/common/attribute/Attribute.java"
   ],
+  "BrokerAttachedPlugin.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/plugin/BrokerAttachedPlugin.java"
+  ],
   "BrokerController.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/BrokerController.java"
   ],
+  "Class.java": [],
   "ConfigManager.java": [
     "common/src/main/java/org/apache/rocketmq/common/ConfigManager.java"
+  ],
+  "ConsumerFilterManager.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/filter/ConsumerFilterManager.java"
+  ],
+  "ConsumerOffsetManager.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/offset/ConsumerOffsetManager.java"
+  ],
+  "ConsumerOrderInfoManager.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/offset/ConsumerOrderInfoManager.java"
   ],
   "FlatFileInterface.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatFileInterface.java"
@@ -34,10 +47,24 @@
     "store/src/main/java/org/apache/rocketmq/store/config/MessageStoreConfig.java",
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreConfig.java"
   ],
+  "MessageStoreFetcher.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/core/MessageStoreFetcher.java"
+  ],
   "MetadataStore.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metadata/MetadataStore.java"
   ],
+  "Meter.java": [],
+  "ScheduleMessageService.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/schedule/ScheduleMessageService.java"
+  ],
+  "ServiceProvider.java": [
+    "common/src/main/java/org/apache/rocketmq/common/utils/ServiceProvider.java"
+  ],
   "String.java": [],
+  "SubscriptionGroupManager.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/subscription/SubscriptionGroupManager.java"
+  ],
+  "Supplier.java": [],
   "System.java": [],
   "TieredMessageStore.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/TieredMessageStore.java"
@@ -46,6 +73,9 @@
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metrics/TieredStoreMetricsManager.java"
   ],
   "TimeUnit.java": [],
+  "TimerMessageStore.java": [
+    "store/src/main/java/org/apache/rocketmq/store/timer/TimerMessageStore.java"
+  ],
   "TopicAttributes.java": [
     "common/src/main/java/org/apache/rocketmq/common/TopicAttributes.java"
   ],
@@ -58,11 +88,18 @@
   "TopicMetadata.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metadata/entity/TopicMetadata.java"
   ],
+  "TopicQueueMappingManager.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/topic/TopicQueueMappingManager.java"
+  ],
   "apache.java": [],
+  "api.java": [],
   "concurrent.java": [],
+  "function.java": [],
   "java.java": [],
   "lang.java": [],
   "logging.java": [],
+  "metrics.java": [],
+  "opentelemetry.java": [],
   "org.java": [],
   "rocketmq.java": [],
   "slf4j.java": [],

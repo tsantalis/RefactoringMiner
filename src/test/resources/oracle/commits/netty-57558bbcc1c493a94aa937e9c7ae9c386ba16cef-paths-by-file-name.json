@@ -2,6 +2,12 @@
   "AbstractBootstrap.java": [
     "transport/src/main/java/io/netty/bootstrap/AbstractBootstrap.java"
   ],
+  "AbstractByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/AbstractByteBuf.java"
+  ],
+  "AbstractByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/AbstractByteBufAllocator.java"
+  ],
   "AbstractByteBufAllocatorTest.java": [
     "buffer/src/test/java/io/netty/buffer/AbstractByteBufAllocatorTest.java"
   ],
@@ -10,6 +16,15 @@
   ],
   "AbstractDatagramTest.java": [
     "testsuite/src/main/java/io/netty/testsuite/transport/socket/AbstractDatagramTest.java"
+  ],
+  "AbstractDerivedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/AbstractDerivedByteBuf.java"
+  ],
+  "AbstractReferenceCountedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/AbstractReferenceCountedByteBuf.java"
+  ],
+  "AbstractUnpooledSlicedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/AbstractUnpooledSlicedByteBuf.java"
   ],
   "AdaptivePoolingAllocator.java": [
     "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java"
@@ -26,18 +41,28 @@
   "ByteBufAllocator.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBufAllocator.java"
   ],
+  "ByteBufAllocatorMetricProvider.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufAllocatorMetricProvider.java"
+  ],
   "ByteBufAllocatorTest.java": [
     "buffer/src/test/java/io/netty/buffer/ByteBufAllocatorTest.java"
   ],
   "ByteBufConvertible.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBufConvertible.java"
   ],
+  "ByteBuffer.java": [],
   "Class.java": [],
   "Cloneable.java": [],
   "Collections.java": [],
   "Comparable.java": [],
+  "CompositeByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/CompositeByteBuf.java"
+  ],
   "DatagramUnicastTest.java": [
     "testsuite/src/main/java/io/netty/testsuite/transport/socket/DatagramUnicastTest.java"
+  ],
+  "DuplicatedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java"
   ],
   "Integer.java": [],
   "Iterable.java": [],
@@ -63,11 +88,17 @@
   "PoolChunkMetric.java": [
     "buffer/src/main/java/io/netty/buffer/PoolChunkMetric.java"
   ],
+  "PooledByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/PooledByteBufAllocator.java"
+  ],
   "PooledByteBufAllocatorTest.java": [
     "buffer/src/test/java/io/netty/buffer/PooledByteBufAllocatorTest.java"
   ],
   "ReferenceCounted.java": [
     "common/src/main/java/io/netty/util/ReferenceCounted.java"
+  ],
+  "SizeClasses.java": [
+    "buffer/src/main/java/io/netty/buffer/SizeClasses.java"
   ],
   "SizeClassesMetric.java": [
     "buffer/src/main/java/io/netty/buffer/SizeClassesMetric.java"
@@ -75,8 +106,17 @@
   "StampedLock.java": [],
   "String.java": [],
   "Thread.java": [],
+  "Unpooled.java": [
+    "buffer/src/main/java/io/netty/buffer/Unpooled.java"
+  ],
   "UnpooledByteBufAllocatorTest.java": [
     "buffer/src/test/java/io/netty/buffer/UnpooledByteBufAllocatorTest.java"
+  ],
+  "UnpooledDuplicatedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledDuplicatedByteBuf.java"
+  ],
+  "UnpooledSlicedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledSlicedByteBuf.java"
   ],
   "api.java": [],
   "assertj.java": [],
@@ -89,6 +129,7 @@
   "lang.java": [],
   "locks.java": [],
   "management.java": [],
+  "nio.java": [],
   "reflect.java": [],
   "util.java": []
 }

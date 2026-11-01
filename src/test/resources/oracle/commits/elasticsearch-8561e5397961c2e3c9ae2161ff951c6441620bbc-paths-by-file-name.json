@@ -1,4 +1,7 @@
 {
+  "AbstractClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/support/AbstractClient.java"
+  ],
   "ActionListener.java": [
     "server/src/main/java/org/elasticsearch/action/ActionListener.java"
   ],
@@ -7,6 +10,9 @@
   ],
   "BaseRestHandler.java": [
     "server/src/main/java/org/elasticsearch/rest/BaseRestHandler.java"
+  ],
+  "Client.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/Client.java"
   ],
   "Closeable.java": [],
   "ESIntegTestCase.java": [
@@ -18,9 +24,18 @@
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
   ],
+  "ElasticsearchClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/ElasticsearchClient.java"
+  ],
   "LuceneTestCase.java": [],
   "Netty4ChunkedContinuationsIT.java": [
     "modules/transport-netty4/src/internalClusterTest/java/org/elasticsearch/http/netty4/Netty4ChunkedContinuationsIT.java"
+  ],
+  "NodeClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/node/NodeClient.java"
+  ],
+  "Params.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/gen/script/Params.java"
   ],
   "Plugin.java": [
     "server/src/main/java/org/elasticsearch/plugins/Plugin.java"
@@ -34,6 +49,15 @@
   "RestChannelConsumer.java": [],
   "RestHandler.java": [
     "server/src/main/java/org/elasticsearch/rest/RestHandler.java"
+  ],
+  "RestRequest.java": [
+    "server/src/main/java/org/elasticsearch/rest/RestRequest.java"
+  ],
+  "ToXContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
+  ],
+  "Traceable.java": [
+    "server/src/main/java/org/elasticsearch/telemetry/tracing/Traceable.java"
   ],
   "apache.java": [],
   "io.java": [],

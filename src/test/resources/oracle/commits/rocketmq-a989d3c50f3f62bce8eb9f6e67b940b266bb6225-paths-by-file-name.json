@@ -5,7 +5,16 @@
   "BrokerIdentity.java": [
     "common/src/main/java/org/apache/rocketmq/common/BrokerIdentity.java"
   ],
+  "Consumer.java": [
+    "example/src/main/java/org/apache/rocketmq/example/benchmark/Consumer.java",
+    "example/src/main/java/org/apache/rocketmq/example/operation/Consumer.java",
+    "example/src/main/java/org/apache/rocketmq/example/ordermessage/Consumer.java",
+    "example/src/main/java/org/apache/rocketmq/example/quickstart/Consumer.java"
+  ],
   "ConsumerLagCalculator.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/metrics/ConsumerLagCalculator.java"
-  ]
+  ],
+  "String.java": [],
+  "function.java": [],
+  "util.java": []
 }

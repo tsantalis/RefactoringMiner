@@ -1,4 +1,5 @@
 {
+  "AbstractAppender.java": [],
   "AbstractBuilder.java": [
     "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/parser/AbstractBuilder.java",
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/AbstractBuilder.java",
@@ -9,15 +10,28 @@
     "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/parser/AbstractStatementParserTests.java"
   ],
   "ArrayList.java": [],
+  "AstBuilder.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/parser/AstBuilder.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/AstBuilder.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/parser/AstBuilder.java"
+  ],
+  "BitSet.java": [],
   "CharSequence.java": [],
+  "Class.java": [],
+  "Closeable.java": [],
+  "CodepointSetGenerator.java": [],
+  "Collection.java": [],
   "Collections.java": [],
+  "Comparable.java": [],
   "CompositeIndicesRequest.java": [
     "server/src/main/java/org/elasticsearch/action/CompositeIndicesRequest.java"
   ],
+  "CompositeQueryContext.java": [],
   "DataType.java": [
     "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/DataType.java",
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/DataType.java"
   ],
+  "ERROR.java": [],
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
   ],
@@ -27,6 +41,9 @@
   "EsqlBaseLexer.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/EsqlBaseLexer.java"
   ],
+  "EsqlBaseParser.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/EsqlBaseParser.java"
+  ],
   "EsqlBaseParserBaseVisitor.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/EsqlBaseParserBaseVisitor.java"
   ],
@@ -35,6 +52,9 @@
   ],
   "EsqlClientException.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/EsqlClientException.java"
+  ],
+  "EsqlFunctionRegistry.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/EsqlFunctionRegistry.java"
   ],
   "EsqlParser.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/EsqlParser.java"
@@ -46,21 +66,48 @@
   "EsqlQueryRequestTests.java": [
     "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/action/EsqlQueryRequestTests.java"
   ],
+  "Exception.java": [],
+  "ExplainCommandContext.java": [],
   "ExpressionBuilder.java": [
     "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/parser/ExpressionBuilder.java",
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/ExpressionBuilder.java",
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/parser/ExpressionBuilder.java"
   ],
+  "FieldsContext.java": [],
+  "FunctionRegistry.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/function/FunctionRegistry.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/FunctionRegistry.java"
+  ],
+  "Future.java": [],
   "HashMap.java": [],
+  "Holder.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/util/Holder.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/util/Holder.java"
+  ],
   "IdentifierBuilder.java": [
     "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/parser/IdentifierBuilder.java",
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/IdentifierBuilder.java",
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/parser/IdentifierBuilder.java"
   ],
+  "InputNamedOrPositionalParamContext.java": [],
+  "InputStream.java": [],
   "Integer.java": [],
   "Iterator.java": [],
+  "Level.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Level.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
+    "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
+  ],
   "Lexer.java": [],
+  "LinkedHashMap.java": [],
   "List.java": [],
+  "Locale.java": [],
+  "Location.java": [
+    "modules/lang-painless/src/main/java/org/elasticsearch/painless/Location.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Location.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Location.java"
+  ],
+  "LogEvent.java": [],
   "LogicalPlanBuilder.java": [
     "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/parser/LogicalPlanBuilder.java",
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/LogicalPlanBuilder.java",
@@ -75,6 +122,7 @@
   "Objects.java": [],
   "ParseTree.java": [],
   "ParseTreeVisitor.java": [],
+  "Parser.java": [],
   "ParserRuleContext.java": [],
   "ParserUtils.java": [
     "test/yaml-rest-runner/src/main/java/org/elasticsearch/test/rest/yaml/section/ParserUtils.java",
@@ -90,6 +138,10 @@
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/ParsingException.java",
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/parser/ParsingException.java"
   ],
+  "PathUtils.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/PathUtils.java"
+  ],
+  "Predicate.java": [],
   "QlClientException.java": [
     "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/QlClientException.java",
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/QlClientException.java"
@@ -98,13 +150,20 @@
     "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/QlException.java",
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/QlException.java"
   ],
+  "QualifiedNamePatternContext.java": [],
   "QueryParam.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/QueryParam.java"
   ],
   "QueryParams.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/QueryParams.java"
   ],
+  "RequestBuilder.java": [
+    "server/src/main/java/org/elasticsearch/action/RequestBuilder.java"
+  ],
   "RuntimeException.java": [],
+  "Set.java": [],
+  "SetOnce.java": [],
+  "SingleStatementContext.java": [],
   "Source.java": [
     "build-tools-internal/src/main/java/org/elasticsearch/gradle/internal/doc/Source.java",
     "server/src/main/java/org/elasticsearch/search/lookup/Source.java",
@@ -112,10 +171,23 @@
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Source.java"
   ],
   "StackTraceElement.java": [],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
   "String.java": [],
   "StringBuffer.java": [],
   "StringBuilder.java": [],
+  "Supplier.java": [],
   "TerminalNode.java": [],
+  "ThreadContext.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/ThreadContext.java"
+  ],
+  "Throwable.java": [],
+  "TimeUnit.java": [],
+  "TimeValue.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
+  ],
   "ToXContent.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
   ],
@@ -124,20 +196,39 @@
   ],
   "Token.java": [],
   "TokenSource.java": [],
+  "TraceContext.java": [
+    "server/src/main/java/org/elasticsearch/telemetry/tracing/TraceContext.java"
+  ],
+  "URI.java": [],
+  "URL.java": [],
+  "WARN.java": [],
   "Writeable.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "XContentParser.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentParser.java"
   ],
   "action.java": [],
   "antlr.java": [],
   "apache.java": [],
+  "appender.java": [],
+  "carrotsearch.java": [],
+  "concurrent.java": [],
   "core.java": [],
   "elasticsearch.java": [],
   "esql.java": [],
+  "function.java": [],
+  "generators.java": [],
   "hamcrest.java": [],
+  "io.java": [],
   "java.java": [],
   "lang.java": [],
+  "log4j.java": [],
+  "logging.java": [],
   "lucene.java": [],
+  "net.java": [],
   "org.java": [],
+  "randomizedtesting.java": [],
   "runtime.java": [],
   "tests.java": [],
   "tree.java": [],

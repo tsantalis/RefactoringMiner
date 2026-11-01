@@ -48,7 +48,7 @@ public class RepresentationTest {
     private static final String ACTUAL_DIR = "build/narrator/representations";
     // The files read from GitHub, kept so that later runs need no GitHub access
     private static final String CACHE_PATH = "src/test/resources/oracle/commits";
-    private static final Pattern ELEMENT = Pattern.compile("<(diff|dependency)((?: [a-z_]+=\"[^\"]*\")*)>\\n(.*?)\\n</\\1>", Pattern.DOTALL);
+    private static final Pattern ELEMENT = Pattern.compile("<(diff|dependency|usage)((?: [a-z_]+=\"[^\"]*\")*)>\\n(.*?)\\n</\\1>", Pattern.DOTALL);
     private static final Pattern ATTRIBUTE = Pattern.compile("([a-z_]+)=\"([^\"]*)\"");
     private static final Map<String, Representation> REPRESENTATIONS = new HashMap<>();
 
@@ -71,8 +71,9 @@ public class RepresentationTest {
 
     /**
      * The output reads in the order it claims and names each change once: an element serves only diffs printed after
-     * it in its chapter, diff ids are unique and no longer than needed, a dependency is printed once per chapter, and
-     * every change of the graph is presented by a diff.
+     * it in its chapter, a usage uses only diffs printed before it in its chapter (a dependency only diffs of its chapter),
+     * diff ids are unique and no longer than needed, a dependency is printed once per chapter, and every change of the graph
+     * is presented by a diff.
      */
     @ParameterizedTest(name = "{0}")
     @MethodSource("testCases")
@@ -96,6 +97,15 @@ public class RepresentationTest {
                 Assertions.assertNotNull(servedElement, "Serves a diff not printed: " + served + " in\n" + element);
                 Assertions.assertEquals(element.chapter, servedElement.chapter, "Serves a diff of another chapter: " + served + " in\n" + element);
                 Assertions.assertTrue(element.index < servedElement.index, "Serves a diff printed before it: " + served + " in\n" + element);
+            }
+            for (String used : element.list("uses")) {
+                Element usedElement = representation.diff(used);
+                Assertions.assertNotNull(usedElement, "Uses a diff not printed: " + used + " in\n" + element);
+                Assertions.assertEquals(element.chapter, usedElement.chapter, "Uses a diff of another chapter: " + used + " in\n" + element);
+                // A dependency bridging diffs reads after the diffs it uses but those relying on it themselves
+                if (element.kind.equals("usage")) {
+                    Assertions.assertTrue(usedElement.index < element.index, "Uses a diff printed after it: " + used + " in\n" + element);
+                }
             }
             for (String moved : element.list("moved_to", "moved_from")) {
                 Assertions.assertNotNull(representation.diff(moved), "Moves to or from a diff not printed: " + moved + " in\n" + element);
@@ -271,11 +281,14 @@ public class RepresentationTest {
      *   <li>{@code dependency}: {@code count} (1 unless given) dependencies at {@code location} printed exactly as
      *   {@code body}.</li>
      *   <li>{@code unchanged}: no diff of {@code file} marks {@code code} (a whole line, trimmed) as removed or added.</li>
+     *   <li>{@code usage}: the usage at {@code location} printed exactly as {@code body}.</li>
      *   <li>{@code serves}: the element holding {@code from} serves the diff holding {@code to}.</li>
+     *   <li>{@code uses}: the usage or the dependency holding {@code from} uses the diff holding {@code to}.</li>
      *   <li>{@code order}: the element holding {@code before} is printed before the element holding {@code after}.</li>
      *   <li>{@code diffs}: {@code count} diffs at {@code location}.</li>
      *   <li>{@code contains} / {@code absent}: some element ({@code count} elements, when given) holds {@code text} / no
-     *   element holds it; only elements of the kind {@code of} ({@code diff} or {@code dependency}) count, when given.</li>
+     *   element holds it; only elements of the kind {@code of} ({@code diff}, {@code dependency} or {@code usage}) count,
+     *   when given.</li>
      * </ul>
      */
     public static class Expectation {
@@ -300,6 +313,14 @@ public class RepresentationTest {
                         "Diff not printed as expected; diffs at the location: " + representation.located("diff", location, null));
                 case "dependency" -> Assertions.assertEquals(count == null ? 1 : count, representation.located("dependency", location, body).size(),
                         "Dependencies printed so at the location; dependencies at the location: " + representation.located("dependency", location, null));
+                case "usage" -> Assertions.assertEquals(1, representation.located("usage", location, body).size(),
+                        "Usage not printed as expected; usages at the location: " + representation.located("usage", location, null));
+                case "uses" -> {
+                    Element used = representation.holding(to, "diff");
+                    Element using = representation.holding(from, null);
+                    Assertions.assertTrue(using.list("uses").contains(used.attributes.get("id")),
+                            "Does not use " + used.attributes.get("id") + ":\n" + using);
+                }
                 case "unchanged" -> Assertions.assertEquals(List.of(),
                         representation.elements.stream().filter(element -> element.changes(file, code)).toList(), "Diffs marking the line as changed");
                 case "serves" -> {

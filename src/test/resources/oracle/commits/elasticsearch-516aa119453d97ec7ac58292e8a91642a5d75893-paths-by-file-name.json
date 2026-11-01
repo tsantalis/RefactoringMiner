@@ -9,10 +9,19 @@
   "ArrayList.java": [],
   "Arrays.java": [],
   "AssertionError.java": [],
+  "AtomicArray.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/AtomicArray.java"
+  ],
   "BigDecimal.java": [],
   "BigInteger.java": [],
   "Boolean.java": [],
   "Builder.java": [],
+  "BulkItemRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/bulk/BulkItemRequest.java"
+  ],
+  "BulkShardRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/bulk/BulkShardRequest.java"
+  ],
   "Byte.java": [],
   "CharSequence.java": [],
   "ChunkedToXContent.java": [
@@ -83,6 +92,9 @@
     "server/src/main/java/org/elasticsearch/index/mapper/ObjectMapper.java"
   ],
   "Objects.java": [],
+  "RawIndexingDataTransportRequest.java": [
+    "server/src/main/java/org/elasticsearch/transport/RawIndexingDataTransportRequest.java"
+  ],
   "RefCounted.java": [
     "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
   ],

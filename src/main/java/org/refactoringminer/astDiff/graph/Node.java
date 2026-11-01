@@ -55,6 +55,7 @@ public class Node implements ReviewNode {
   private UMLs umls = null;
   @Nullable
   private RMInfo rm;
+  private final List<Tree> uses = new ArrayList<>();
 
   public Node(ContentsContexts contentsContexts, RMIndex rmIndex, String path, SrcDst srcDst, Tree tree,
       @Nullable Set<Node> subs, NodeType nodeType) {
@@ -142,6 +143,34 @@ public class Node implements ReviewNode {
       rm = rmIndex.locate(srcDst, path, tree);
     }
     return rm;
+  }
+
+  // The member the tree lies in and the code of it holding the tree (see RMIndex#enclosing); for a statement using changes
+  // (a usage), the code of it holding the uses too (see RMIndex#usageEnclosing)
+  public Enclosing getEnclosing() {
+    return uses.isEmpty() ? rmIndex.enclosing(srcDst, path, tree) : rmIndex.usageEnclosing(srcDst, path, tree, uses);
+  }
+
+  // A use of changes the tree holds, as a call of a changed method in the statement holding it
+  public void addUse(Tree use) {
+    if (!uses.contains(use)) {
+      uses.add(use);
+    }
+  }
+
+  // Whether the uses of changes the tree holds are known, so that it reads by the code holding them (see getEnclosing)
+  public boolean hasUses() {
+    return !uses.isEmpty();
+  }
+
+  /**
+   * @param memberStart the start offset of the member
+   * @param memberEnd   the end offset of the member
+   * @param parts       the ranges of offsets of the code holding the tree, both ends included, whose lines tell where it runs
+   * @param hidden      the ranges of offsets of the bodies of lambdas and anonymous classes within those parts which do
+   *                    not hold the tree, whose lines but the first and the last are left out
+   */
+  public record Enclosing(int memberStart, int memberEnd, List<int[]> parts, List<int[]> hidden) {
   }
 
   public void setUMLs(UMLs umls) {
@@ -261,7 +290,28 @@ public class Node implements ReviewNode {
   }
 
   public String dedentContent() {
+    return dedent(getContent());
+  }
+
+  // The code of the node as a dependency prints it, in brief where RM tells parts of it say nothing more (see
+  // RMIndex#briefs)
+  public String dependencyContent() {
     String content = getContent();
+    if (content == null || nodeType.equals(NodeType.LOCATION_CONTEXT)) {
+      return dedent(content);
+    }
+    StringBuilder brief = new StringBuilder(content);
+    List<RMIndex.Brief> briefs = new ArrayList<>(rmIndex.briefs(srcDst, path, tree));
+    briefs.sort(Comparator.comparingInt(RMIndex.Brief::start).reversed());
+    for (RMIndex.Brief part : briefs) {
+      if (tree.getPos() <= part.start() && part.end() <= tree.getEndPos()) {
+        brief.replace(part.start() - tree.getPos(), part.end() - tree.getPos(), part.text());
+      }
+    }
+    return dedent(brief.toString());
+  }
+
+  private String dedent(String content) {
     if (content == null || nodeType.equals(NodeType.LOCATION_CONTEXT)) {
       return content;
     }

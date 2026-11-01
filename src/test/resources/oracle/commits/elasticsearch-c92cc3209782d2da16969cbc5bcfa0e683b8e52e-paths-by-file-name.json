@@ -1,4 +1,7 @@
 {
+  "AbstractAsyncTask.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/AbstractAsyncTask.java"
+  ],
   "AbstractIndexComponent.java": [
     "server/src/main/java/org/elasticsearch/index/AbstractIndexComponent.java"
   ],
@@ -8,28 +11,53 @@
   "AbstractLifecycleComponent.java": [
     "server/src/main/java/org/elasticsearch/common/component/AbstractLifecycleComponent.java"
   ],
+  "AbstractModule.java": [
+    "server/src/main/java/org/elasticsearch/common/inject/AbstractModule.java"
+  ],
+  "AbstractScopedSettings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/AbstractScopedSettings.java"
+  ],
+  "ActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
   "AllocatedIndex.java": [],
+  "BaseDirectoryWrapper.java": [],
   "BigDecimal.java": [],
   "BigInteger.java": [],
   "Boolean.java": [],
   "BooleanSupplier.java": [],
+  "BufferedChecksum.java": [],
+  "Builder.java": [],
   "Byte.java": [],
+  "ByteSizeDirectory.java": [
+    "server/src/main/java/org/elasticsearch/index/store/ByteSizeDirectory.java"
+  ],
   "ByteSizeValue.java": [
     "server/src/main/java/org/elasticsearch/common/unit/ByteSizeValue.java"
   ],
+  "BytesRef.java": [],
   "CheckedConsumer.java": [
     "libs/core/src/main/java/org/elasticsearch/core/CheckedConsumer.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedConsumer.java"
   ],
+  "Checksum.java": [],
+  "ChecksumIndexInput.java": [],
   "Class.java": [],
   "Closeable.java": [],
   "ClusterStateApplier.java": [
     "server/src/main/java/org/elasticsearch/cluster/ClusterStateApplier.java"
   ],
+  "CodepointSetGenerator.java": [],
   "Collection.java": [],
+  "Collections.java": [],
   "Comparable.java": [],
+  "ConcurrentMergeScheduler.java": [],
   "Consumer.java": [],
   "CoreMatchers.java": [],
+  "CorruptibleDirectory.java": [],
+  "DelegatingActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/DelegatingActionListener.java"
+  ],
   "DenseVectorFieldMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/vectors/DenseVectorFieldMapper.java"
   ],
@@ -37,37 +65,85 @@
     "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
   ],
   "Directory.java": [],
+  "DocIdAndVersion.java": [],
   "DocumentMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/DocumentMapper.java"
   ],
   "Double.java": [],
+  "DummyShardLock.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/DummyShardLock.java"
+  ],
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
+  ],
+  "ElasticsearchConcurrentMergeScheduler.java": [
+    "server/src/main/java/org/elasticsearch/index/engine/ElasticsearchConcurrentMergeScheduler.java"
   ],
   "Engine.java": [
     "server/src/main/java/org/elasticsearch/index/engine/Engine.java"
   ],
+  "EngineConfig.java": [
+    "server/src/main/java/org/elasticsearch/index/engine/EngineConfig.java"
+  ],
   "Enum.java": [],
+  "Exception.java": [],
+  "Executor.java": [],
+  "ExecutorService.java": [],
   "FeatureSpecification.java": [
     "server/src/main/java/org/elasticsearch/features/FeatureSpecification.java"
+  ],
+  "FieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/FieldMapper.java"
   ],
   "FieldTypeTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/index/mapper/FieldTypeTestCase.java"
   ],
+  "FilterDirectory.java": [],
+  "FilterDirectoryReader.java": [],
+  "FilterIndexInput.java": [],
+  "FilterLeafReader.java": [],
   "FilterRepository.java": [
     "server/src/main/java/org/elasticsearch/repositories/FilterRepository.java"
   ],
   "Float.java": [],
   "Flushable.java": [],
+  "Function.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/function/Function.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
+  ],
+  "IdFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/IdFieldMapper.java"
+  ],
   "IgnoredSourceFieldMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/IgnoredSourceFieldMapper.java"
   ],
   "IllegalArgumentException.java": [],
+  "Index.java": [
+    "server/src/main/java/org/elasticsearch/index/Index.java"
+  ],
+  "IndexAnalyzers.java": [
+    "server/src/main/java/org/elasticsearch/index/analysis/IndexAnalyzers.java"
+  ],
+  "IndexInput.java": [],
+  "IndexMetadata.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/IndexMetadata.java"
+  ],
+  "IndexScopedSettings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/IndexScopedSettings.java"
+  ],
+  "IndexSearcher.java": [],
   "IndexService.java": [
     "server/src/main/java/org/elasticsearch/index/IndexService.java"
   ],
   "IndexSettings.java": [
     "server/src/main/java/org/elasticsearch/index/IndexSettings.java"
+  ],
+  "IndexSettingsModule.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/IndexSettingsModule.java"
+  ],
+  "IndexShard.java": [
+    "server/src/main/java/org/elasticsearch/index/shard/IndexShard.java"
   ],
   "IndexShardComponent.java": [
     "server/src/main/java/org/elasticsearch/index/shard/IndexShardComponent.java"
@@ -78,6 +154,7 @@
   "IndexVersion.java": [
     "server/src/main/java/org/elasticsearch/index/IndexVersion.java"
   ],
+  "IndexWriter.java": [],
   "IndexWriterConfig.java": [],
   "IndicesClusterStateService.java": [
     "server/src/main/java/org/elasticsearch/indices/cluster/IndicesClusterStateService.java"
@@ -87,6 +164,7 @@
     "server/src/main/java/org/elasticsearch/index/engine/InternalEngine.java"
   ],
   "Iterable.java": [],
+  "LeafReader.java": [],
   "Level.java": [
     "libs/logging/src/main/java/org/elasticsearch/logging/Level.java",
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
@@ -97,6 +175,9 @@
   ],
   "LinkedFilesDirectory.java": [],
   "List.java": [],
+  "Logger.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Logger.java"
+  ],
   "Long.java": [],
   "Lucene.java": [
     "server/src/main/java/org/elasticsearch/common/lucene/Lucene.java"
@@ -105,6 +186,7 @@
     "server/src/main/java/org/elasticsearch/index/mapper/LuceneDocument.java"
   ],
   "LuceneTestCase.java": [],
+  "MAX_DOCS.java": [],
   "Map.java": [],
   "Mapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
@@ -115,6 +197,12 @@
   "MapperFeatures.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/MapperFeatures.java"
   ],
+  "MapperMetrics.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MapperMetrics.java"
+  ],
+  "MapperRegistry.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MapperRegistry.java"
+  ],
   "MapperService.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/MapperService.java"
   ],
@@ -124,9 +212,23 @@
   "MapperServiceTests.java": [
     "server/src/test/java/org/elasticsearch/index/mapper/MapperServiceTests.java"
   ],
+  "Mapping.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/Mapping.java"
+  ],
   "MappingLookup.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/MappingLookup.java"
   ],
+  "MediaType.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/MediaType.java"
+  ],
+  "MetadataFieldMapper.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MetadataFieldMapper.java"
+  ],
+  "Module.java": [
+    "server/src/main/java/org/elasticsearch/common/inject/Module.java"
+  ],
+  "NIOFSDirectory.java": [],
+  "Names.java": [],
   "NestedLookup.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/NestedLookup.java"
   ],
@@ -142,8 +244,16 @@
     "server/src/main/java/org/elasticsearch/index/mapper/ObjectMapper.java"
   ],
   "OnClose.java": [],
+  "Operation.java": [
+    "modules/lang-painless/src/main/java/org/elasticsearch/painless/Operation.java"
+  ],
+  "OutputStream.java": [],
   "ParsedDocument.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/ParsedDocument.java"
+  ],
+  "ParsedMediaType.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ParsedMediaType.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/content/ParsedMediaType.java"
   ],
   "PassThroughObjectMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/PassThroughObjectMapper.java"
@@ -152,14 +262,37 @@
   "RangeFieldMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/RangeFieldMapper.java"
   ],
+  "RecoveryState.java": [
+    "server/src/main/java/org/elasticsearch/indices/recovery/RecoveryState.java"
+  ],
   "RefCounted.java": [
     "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
   ],
   "Releasable.java": [
     "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
   ],
+  "ReportingService.java": [
+    "server/src/main/java/org/elasticsearch/node/ReportingService.java"
+  ],
   "Repository.java": [
     "server/src/main/java/org/elasticsearch/repositories/Repository.java"
+  ],
+  "RestApiVersion.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RestApiVersion.java"
+  ],
+  "Runnable.java": [],
+  "Scheduler.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/Scheduler.java"
+  ],
+  "ScriptCompiler.java": [
+    "server/src/main/java/org/elasticsearch/script/ScriptCompiler.java"
+  ],
+  "Searcher.java": [],
+  "SequenceNumbers.java": [
+    "server/src/main/java/org/elasticsearch/index/seqno/SequenceNumbers.java"
+  ],
+  "SequentialStoredFieldsLeafReader.java": [
+    "server/src/main/java/org/elasticsearch/common/lucene/index/SequentialStoredFieldsLeafReader.java"
   ],
   "Set.java": [],
   "Setting.java": [
@@ -168,6 +301,7 @@
   "Settings.java": [
     "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
   ],
+  "Shard.java": [],
   "ShardId.java": [
     "server/src/main/java/org/elasticsearch/index/shard/ShardId.java"
   ],
@@ -175,6 +309,17 @@
     "server/src/main/java/org/elasticsearch/env/ShardLock.java"
   ],
   "Short.java": [],
+  "SimilarityService.java": [
+    "server/src/main/java/org/elasticsearch/index/similarity/SimilarityService.java"
+  ],
+  "SnapshotShardContext.java": [
+    "server/src/main/java/org/elasticsearch/repositories/SnapshotShardContext.java"
+  ],
+  "Sort.java": [
+    "libs/tdigest/src/main/java/org/elasticsearch/tdigest/Sort.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/querydsl/container/Sort.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/querydsl/container/Sort.java"
+  ],
   "SourceFieldMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/SourceFieldMapper.java"
   ],
@@ -195,6 +340,12 @@
     "server/src/test/java/org/elasticsearch/index/store/StoreTests.java"
   ],
   "String.java": [],
+  "Supplier.java": [],
+  "System.java": [],
+  "TYPE.java": [],
+  "ThreadPool.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/ThreadPool.java"
+  ],
   "TimeValue.java": [
     "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
@@ -217,15 +368,36 @@
   "VersionId.java": [
     "server/src/main/java/org/elasticsearch/common/VersionId.java"
   ],
+  "VersionType.java": [
+    "server/src/main/java/org/elasticsearch/index/VersionType.java"
+  ],
+  "Versions.java": [
+    "server/src/main/java/org/elasticsearch/common/lucene/uid/Versions.java"
+  ],
+  "VersionsAndSeqNoResolver.java": [
+    "server/src/main/java/org/elasticsearch/common/lucene/uid/VersionsAndSeqNoResolver.java"
+  ],
   "Writeable.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
+  ],
+  "XContent.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContent.java"
   ],
   "XContentBuilder.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
   ],
+  "XContentParserConfiguration.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentParserConfiguration.java"
+  ],
+  "XContentType.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentType.java"
+  ],
   "apache.java": [],
+  "carrotsearch.java": [],
+  "concurrent.java": [],
   "file.java": [],
   "function.java": [],
+  "generators.java": [],
   "hamcrest.java": [],
   "index.java": [],
   "io.java": [],
@@ -237,7 +409,10 @@
   "math.java": [],
   "nio.java": [],
   "org.java": [],
+  "randomizedtesting.java": [],
+  "search.java": [],
   "store.java": [],
   "tests.java": [],
-  "util.java": []
+  "util.java": [],
+  "zip.java": []
 }

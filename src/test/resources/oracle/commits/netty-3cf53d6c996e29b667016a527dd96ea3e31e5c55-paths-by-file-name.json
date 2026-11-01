@@ -25,6 +25,9 @@
   "ChannelConfig.java": [
     "transport/src/main/java/io/netty/channel/ChannelConfig.java"
   ],
+  "ChannelFuture.java": [
+    "transport/src/main/java/io/netty/channel/ChannelFuture.java"
+  ],
   "ChannelInboundInvoker.java": [
     "transport/src/main/java/io/netty/channel/ChannelInboundInvoker.java"
   ],
@@ -33,6 +36,9 @@
   ],
   "ChannelPipeline.java": [
     "transport/src/main/java/io/netty/channel/ChannelPipeline.java"
+  ],
+  "ChannelPromise.java": [
+    "transport/src/main/java/io/netty/channel/ChannelPromise.java"
   ],
   "Comparable.java": [],
   "DefaultAttributeMap.java": [
@@ -43,6 +49,9 @@
     "transport/src/main/java/io/netty/channel/socket/DuplexChannel.java"
   ],
   "ExtendedHandle.java": [],
+  "Future.java": [
+    "common/src/main/java/io/netty/util/concurrent/Future.java"
+  ],
   "InternalLogger.java": [
     "common/src/main/java/io/netty/util/internal/logging/InternalLogger.java"
   ],
@@ -79,6 +88,9 @@
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/Native.java",
     "transport-classes-kqueue/src/main/java/io/netty/channel/kqueue/Native.java"
   ],
+  "Promise.java": [
+    "common/src/main/java/io/netty/util/concurrent/Promise.java"
+  ],
   "RecvByteBufAllocator.java": [
     "transport/src/main/java/io/netty/channel/RecvByteBufAllocator.java"
   ],
@@ -90,5 +102,6 @@
     "transport-native-unix-common/src/main/java/io/netty/channel/unix/UnixChannel.java"
   ],
   "concurrent.java": [],
+  "java.java": [],
   "util.java": []
 }

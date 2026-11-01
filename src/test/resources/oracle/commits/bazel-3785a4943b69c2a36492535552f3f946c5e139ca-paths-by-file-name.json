@@ -2,12 +2,20 @@
   "BuildConfigurationValueTest.java": [
     "src/test/java/com/google/devtools/build/lib/analysis/config/BuildConfigurationValueTest.java"
   ],
+  "BuildOptions.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/config/BuildOptions.java"
+  ],
+  "Cloneable.java": [],
+  "Collectors.java": [],
   "CommandLineItem.java": [
     "src/main/java/com/google/devtools/build/lib/actions/CommandLineItem.java"
   ],
   "Comparable.java": [],
   "ConfigurationTestCase.java": [
     "src/test/java/com/google/devtools/build/lib/analysis/util/ConfigurationTestCase.java"
+  ],
+  "ConfigurationTransitionApi.java": [
+    "src/main/java/com/google/devtools/build/lib/starlarkbuildapi/config/ConfigurationTransitionApi.java"
   ],
   "Converter.java": [
     "src/main/java/com/google/devtools/common/options/Converter.java"
@@ -26,6 +34,13 @@
   "Label.java": [
     "src/main/java/com/google/devtools/build/lib/cmdline/Label.java"
   ],
+  "List.java": [],
+  "Object.java": [
+    "third_party/ijar/test/Object.java"
+  ],
+  "OptionDefinition.java": [
+    "src/main/java/com/google/devtools/common/options/OptionDefinition.java"
+  ],
   "Scratch.java": [
     "src/test/java/com/google/devtools/build/lib/testutil/Scratch.java"
   ],
@@ -33,14 +48,20 @@
   "SkyKey.java": [
     "src/main/java/com/google/devtools/build/skyframe/SkyKey.java"
   ],
+  "StarlarkDefinedConfigTransition.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/config/StarlarkDefinedConfigTransition.java"
+  ],
   "StarlarkValue.java": [
     "src/main/java/net/starlark/java/eval/StarlarkValue.java"
   ],
+  "Stream.java": [],
   "String.java": [],
   "collect.java": [],
   "common.java": [],
   "google.java": [],
   "io.java": [],
   "java.java": [],
-  "lang.java": []
+  "lang.java": [],
+  "stream.java": [],
+  "util.java": []
 }

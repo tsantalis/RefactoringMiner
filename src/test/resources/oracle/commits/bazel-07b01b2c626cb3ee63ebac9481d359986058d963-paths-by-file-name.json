@@ -19,6 +19,9 @@
   ],
   "Callable.java": [],
   "Collection.java": [],
+  "CommandEnvironment.java": [
+    "src/main/java/com/google/devtools/build/lib/runtime/CommandEnvironment.java"
+  ],
   "ConfiguredTarget.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/ConfiguredTarget.java"
   ],
@@ -33,8 +36,15 @@
   ],
   "DeferredValue.java": [],
   "ImmutableList.java": [],
+  "List.java": [],
   "ObjectCodec.java": [
     "src/main/java/com/google/devtools/build/lib/skyframe/serialization/ObjectCodec.java"
+  ],
+  "OptionsParsingResult.java": [
+    "src/main/java/com/google/devtools/common/options/OptionsParsingResult.java"
+  ],
+  "OptionsProvider.java": [
+    "src/main/java/com/google/devtools/common/options/OptionsProvider.java"
   ],
   "ProviderCollection.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/ProviderCollection.java"

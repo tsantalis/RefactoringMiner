@@ -212,7 +212,7 @@ public class TraversalPattern extends GraphWrapper {
 
     // Code of the test source sets, by the layouts of their build tools (src/test, src/javaRestTest, testsuite) or the
     // names of test classes, which a reviewer reads after the code they test
-    static boolean isTest(String path) {
+    public static boolean isTest(String path) {
         String[] segments = path.split("/");
         for (int i = 0; i < segments.length - 1; i++) {
             String segment = segments[i];

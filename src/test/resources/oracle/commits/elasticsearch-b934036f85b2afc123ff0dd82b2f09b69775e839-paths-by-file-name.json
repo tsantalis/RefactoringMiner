@@ -10,11 +10,25 @@
     "server/src/main/java/org/elasticsearch/common/CheckedBiConsumer.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedBiConsumer.java"
   ],
+  "ChunkedToXContent.java": [
+    "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContent.java"
+  ],
+  "ChunkedToXContentObject.java": [
+    "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContentObject.java"
+  ],
+  "Closeable.java": [],
   "ClusterComputeHandler.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ClusterComputeHandler.java"
   ],
+  "ComputeListener.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ComputeListener.java"
+  ],
   "ComputeService.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ComputeService.java"
+  ],
+  "Configuration.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/session/Configuration.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/session/Configuration.java"
   ],
   "DataNodeComputeHandler.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/DataNodeComputeHandler.java"
@@ -28,8 +42,59 @@
   "ElasticsearchException.java": [
     "server/src/main/java/org/elasticsearch/ElasticsearchException.java"
   ],
+  "EsqlExecutionInfo.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlExecutionInfo.java"
+  ],
   "Exception.java": [],
+  "ExchangeSinkExec.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/ExchangeSinkExec.java"
+  ],
+  "ExchangeSourceHandler.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/exchange/ExchangeSourceHandler.java"
+  ],
+  "IndicesRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
+  ],
+  "List.java": [],
+  "Map.java": [],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
+  "OriginalIndices.java": [
+    "server/src/main/java/org/elasticsearch/action/OriginalIndices.java"
+  ],
+  "PhysicalPlan.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/PhysicalPlan.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/PhysicalPlan.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/PhysicalPlan.java"
+  ],
+  "PlannerUtils.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/PlannerUtils.java"
+  ],
+  "QueryBuilder.java": [
+    "server/src/main/java/org/elasticsearch/index/query/QueryBuilder.java"
+  ],
+  "QueryPlan.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/QueryPlan.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/plan/QueryPlan.java"
+  ],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
+  ],
+  "RemoteCluster.java": [],
+  "Rewriteable.java": [
+    "server/src/main/java/org/elasticsearch/index/query/Rewriteable.java"
+  ],
+  "Runnable.java": [],
   "RuntimeException.java": [],
+  "Set.java": [],
+  "String.java": [],
   "Task.java": [
     "server/src/main/java/org/elasticsearch/tasks/Task.java"
   ],
@@ -42,15 +107,27 @@
   "ToXContentFragment.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentFragment.java"
   ],
+  "ToXContentObject.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
   "Traceable.java": [
     "server/src/main/java/org/elasticsearch/telemetry/tracing/Traceable.java"
   ],
   "TransportRequestHandler.java": [
     "server/src/main/java/org/elasticsearch/transport/TransportRequestHandler.java"
   ],
+  "UnaryExec.java": [
+    "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/plan/physical/UnaryExec.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/physical/UnaryExec.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/plan/physical/UnaryExec.java"
+  ],
+  "VersionedNamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/VersionedNamedWriteable.java"
+  ],
   "Writeable.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
   "function.java": [],
+  "io.java": [],
   "util.java": []
 }

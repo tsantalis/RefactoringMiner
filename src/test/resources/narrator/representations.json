@@ -44,6 +44,13 @@
         "kind": "absent",
         "of": "dependency",
         "text": "long timeout = ConfigurationManager.getProxyConfig().getLockTimeoutMsInHandleGroup();"
+      },
+      {
+        "description": "the semaphore whose permit the new expiry paths of lock and unlock bypass is shown",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "private final Semaphore semaphore = new Semaphore(1);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 1, the new early return of unlock(long) guards the unchanged `this.semaphore.release()`, and the new expiry branch of lock returns a lock time without acquiring the semaphore, so whether the lock still excludes (one permit, never released twice) depends on the semaphore field; the tryAcquire call lock only carries over and the unchanged release bring no dependency"
       }
     ]
   },
@@ -53,7 +60,9 @@
     "commit": "30127b88490cde0ff04cf7fabb3e17ab7c3ef067",
     "base_commit": "7a5ea90cb79cc28ae86c368f22d1ab7d2f6f24cc",
     "description": "the NotifyClientTerminationRequest branch wraps its statement in a blank-name check, in two files (an else-if branch in one, an if in the other)",
-    "notes": [],
+    "notes": [
+      "The added import of org.apache.commons.lang3.StringUtils in PlainAccessResource is not shown, as no import of a modified file is: which StringUtils the new blank check calls is invisible (the reviewer asked for UtilAll#isBlank instead)."
+    ],
     "expectations": [
       {
         "description": "one hunk for PlainAccessResource#parse",
@@ -104,6 +113,12 @@
         "location": "broker/src/main/java/org/apache/rocketmq/broker/pop/PopConsumerService.java::PopConsumerService",
         "body": "public void clearCache(String groupId, String topicId, int queueId) {\n    while (consumerLockService.tryLock(groupId, topicId)) {\n    }\n    try {\n        if (popConsumerCache != null) {\n            popConsumerCache.removeRecords(groupId, topicId, queueId);\n        }\n    } finally {\n        consumerLockService.unlock(groupId, topicId);\n    }\n}",
         "count": 1
+      },
+      {
+        "description": "the constructor assignment of the counter the new null check guards is shown",
+        "kind": "contains",
+        "text": "this.popInflightMessageCounter = new PopInflightMessageCounter(this);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, the new `getPopInflightMessageCounter() != null` check is judged by where the value comes from: the getter returns a final field BrokerController's constructor always assigns (unlike popConsumerService, null unless isPopConsumerKVServiceInit), so the check guards only mocked controllers; the dependency stops at the getter returning the field"
       }
     ]
   },
@@ -114,7 +129,9 @@
     "base_commit": "5936695b384d457ed9b6b17ad135a148e11e562a",
     "description": "the fetcher takes the earliest message time from the flat file metadata (the later of the commit log and consume queue minimums, -1 if none) instead of reading the first commit log message; the store takes the minimum of the valid local and remote times (a local 0 now counts)",
     "notes": [
-      "Deleted code brings its dependencies, which add nothing to judging the removal: the removed latency metrics and debug log of TieredMessageStore (the log field, the metrics constants and helpers), and the removed commit log read of MessageStoreFetcherImpl (getCommitLogMinOffset, getCommitLogAsync, STORE_TIMESTAMP_POSITION, getStoreTimeStamp)."
+      "Deleted code brings its dependencies, which add nothing to judging the removal: the removed latency metrics and debug log of TieredMessageStore (the log field, the metrics constants and helpers), and the removed commit log read of MessageStoreFetcherImpl (getCommitLogMinOffset, getCommitLogAsync, STORE_TIMESTAMP_POSITION, getStoreTimeStamp).",
+      "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3: the new `Long.MAX_VALUE != ...getMinTimestamp()` checks of getMinStoreTimestamp are judged by what FlatAppendFile#getMinTimestamp returns, GET_FILE_SIZE_ERROR (-1L) with no segment and FileSegment#getMinTimestamp (Long.MAX_VALUE for an empty segment) otherwise; the dependency shows the getter but neither the constant nor FileSegment#getMinTimestamp (not in the model).",
+      "The test diff prints the changed assertion alone (1 -> 0): the stubbing above it (the fetcher returns 1L) and the unstubbed defaultStore mock (0L) that make 0 expected, i.e. a local 0 now winning over a remote time, are not shown; mock stubbing is no relation of the model, and DefaultMessageStore#getEarliestMessageTime (whether 0 or -1 means no message) is outside it."
     ],
     "expectations": [
       {
@@ -141,6 +158,20 @@
         "text": "OPERATION_API_GET_EARLIEST_MESSAGE_TIME",
         "of": "dependency",
         "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show (a dependency of deleted code only)"
+      },
+      {
+        "description": "the fetcher's changed getEarliestMessageTimeAsync serves the store's reading of its result",
+        "kind": "serves",
+        "from": "flatFile == null ? -1L : flatFile.getMinStoreTimestamp()",
+        "to": ".thenApply(remoteMinTime -> {",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 4, TieredMessageStore calls getEarliestMessageTimeAsync on its MessageStoreFetcher field, which its constructor sets to `new MessageStoreFetcherImpl(this)`, so remoteMinTime is the changed impl's result (-1 when there is no flat file, else getMinStoreTimestamp); the interface call binds to no changed code, so the three changes read store first, unlinked, and the -1 sentinel they share is not tied together"
+      },
+      {
+        "description": "the metrics usage of getMinStoreTimestamp shows the guard on the value it reads",
+        "kind": "contains",
+        "of": "usage",
+        "text": "if (timestamp > 0) {",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 2, the usage in TieredStoreMetricsManager#init stops at `long timestamp = flatFile.getMinStoreTimestamp();` and hides `if (timestamp > 0)`, which tells how the reserve-time gauge treats the -1 the changed method now returns; the users of a local are added for a field read into it, not for a method result"
       }
     ]
   },
@@ -152,7 +183,7 @@
     "description": "a native netty error on a call of a shared connection makes the factory forget its underlying connection (a new onFatalError callback), so that the next create() opens a new one; a test covers it",
     "notes": [
       "The test reads SharedConnection#getUnderlyingConnection through implicitly typed lambda parameters, which are not bound.",
-      "The unchanged readers of connectionAsyncSubject are not shown: createUnderlyingConnectionIfNot, which recreates the connection when the field is null, and close(), which closes only the current connection, so a forgotten one is never closed by the factory."
+      "The unchanged readers of connectionAsyncSubject, which the change sets to null, are usages: createUnderlyingConnectionIfNot, recreating the connection when the field is null, and close(), closing only the current connection, so a forgotten one is never closed by the factory. The tests creating connections are not, being test code."
     ],
     "expectations": [
       {
@@ -184,6 +215,18 @@
         "kind": "contains",
         "text": "io_netty_netty_transport_native_unix_common",
         "todo": "RM gap (non-Java files): RM neither parses nor diffs a Bazel BUILD file, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      },
+      {
+        "description": "the reader recreating the connection when the field the change nulls is null is a usage",
+        "kind": "usage",
+        "location": "src/main/java/com/google/devtools/build/lib/remote/grpc/SharedConnectionFactory.java::SharedConnectionFactory#createUnderlyingConnectionIfNot",
+        "body": "private AsyncSubject<Connection> createUnderlyingConnectionIfNot() {\n  synchronized (this) {\n    if (connectionAsyncSubject == null || connectionAsyncSubject.hasThrowable()) {\n      connectionAsyncSubject =\n          factory\n              .create()\n              .doOnSubscribe(connectionCreationDisposable::set)\n              .toObservable()\n              .subscribeWith(AsyncSubject.create());\n    }\n    return connectionAsyncSubject;\n  }\n}"
+      },
+      {
+        "description": "close(), closing only the current connection the change may forget, is a usage",
+        "kind": "usage",
+        "location": "src/main/java/com/google/devtools/build/lib/remote/grpc/SharedConnectionFactory.java::SharedConnectionFactory#close",
+        "body": "public void close() throws IOException {\n  ...\n  synchronized (this) {\n    if (connectionAsyncSubject != null) {\n      Connection connection = connectionAsyncSubject.getValue();\n      if (connection != null) {\n        connection.close();\n      }\n\n      // If it still has observers, it means the subject hasn't completed. Complete it now.\n      if (connectionAsyncSubject.hasObservers()) {\n        connectionAsyncSubject.onError(new IllegalStateException(\"closed\"));\n      }\n    }\n  }\n}"
       }
     ]
   },
@@ -230,7 +273,6 @@
     "commit": "df1845c4baa1d6707c6e0657cd7c9d46245f570f",
     "base_commit": "6e37567a9d9932fdecd8ace18bb28a570e0827a9",
     "description": "authentication parameter values (not keys) are JSON-escaped; the tests use a value needing escapes",
-    "notes": [],
     "expectations": [
       {
         "description": "the deleted and added declarations of a test read together, with the statements using them",
@@ -249,6 +291,13 @@
         "kind": "serves",
         "from": "private String escapeJson(String raw)",
         "to": "escapeJson(entry.getValue())"
+      },
+      {
+        "description": "the changed map step reads with the whole stream statement building the JSON",
+        "kind": "contains",
+        "of": "diff",
+        "text": "\t\t\t\t.collect(Collectors.joining(\",\", \"{\", \"}\"));",
+        "todo": "the change lies in an expression lambda of the return statement of getAuthenticationParamsJson, and RMInfo#simpleStatement leaves out a statement for a tree in one of its lambdas, so the diff is the lone `.map((entry) -> ...)` line, a chain cut at its lines; a one-line lambda of a chain reads only with its statement, which shows the JSON the escaped values go into (`{`, `,`, `}`, keys left unescaped), as bazel_25259 shows the whole statement around its lambda"
       }
     ]
   },
@@ -260,8 +309,8 @@
     "description": "RestClient applies the defaultRequest consumer of its builder to every request",
     "notes": [
       "A one-line copyright bump prints the whole 15-line license comment as context.",
-      "The test brings every fluent RestClient method it calls as a dependency (get, uri, header, build, ...).",
-      "defaultRequest.accept(this) runs after `uri = initUri();`, so a URI set by the default consumer is ignored (the superseding commit moves the call before it); initUri, called on a context line, is not printed, and header resolves to the RequestHeadersSpec interface declaration, not the adding implementation of DefaultRequestBodyUriSpec the test relies on."
+      "The test brings the fluent RestClient methods it calls as dependencies (mutate, defaultRequest, build, get, uri, header); accept, retrieve and body, called on the results of header, are not resolved.",
+      "defaultRequest.accept(this) runs after `uri = initUri();`, so a URI set by the default consumer is ignored (the superseding commit moves the call before it; see the todo on initUri); header resolves to the RequestHeadersSpec interface declaration, not the adding implementation of DefaultRequestBodyUriSpec the test relies on."
     ],
     "expectations": [
       {
@@ -295,6 +344,13 @@
         "text": "RequestHeadersUriSpec<?> get();",
         "of": "dependency",
         "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show"
+      },
+      {
+        "description": "initUri, called on the line before the new defaultRequest.accept(this) and reading the uri the consumer may set, is shown",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "return (this.uri != null ? this.uri : DefaultRestClient.this.uriBuilderFactory.expand(\"\"));",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, data flow across members: the new defaultRequest.accept(this) hands the spec to a consumer that may set its uri and headers, but initUri, called on the unchanged line before and reading this.uri, is not printed, so a reviewer cannot see that a URI set by the default request is ignored (the superseding commit applies the consumer before)"
       }
     ]
   },
@@ -305,7 +361,7 @@
     "base_commit": "c638f746763733532e3c9db018ea72916955ac3a",
     "description": "the Kibana thread pool test disables rebalancing and replicas, drops its investigation logging and is unmuted",
     "notes": [
-      "The carried-over assertAcked, whose argument the added setSettings step changes, is printed as a dependency; the other dependencies of the index creation are new (setSettings, Settings.builder(), put and SETTING_NUMBER_OF_REPLICAS).",
+      "The other dependencies of the index creation are new (setSettings, Settings.builder(), put and SETTING_NUMBER_OF_REPLICAS); the carried-over assertAcked is printed too (see its todo).",
       "The put(String, Enum<?>) overload called by the added rebalance step is not printed, while the put(String, int) of the index settings is.",
       "The muted-tests.yml entry unmuting this test is not shown."
     ],
@@ -334,6 +390,13 @@
         "kind": "absent",
         "of": "dependency",
         "text": "public CreateIndexRequestBuilder prepareCreate(String index) {"
+      },
+      {
+        "description": "the carried-over assertAcked brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static void assertAcked(RequestBuilder<?, ? extends IsAcknowledgedSupplier> builder) {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): assertAcked is a test framework helper the changed test already called with a request builder of the same type (only its argument gains the setSettings step), so it tells a reviewer nothing"
       }
     ]
   },
@@ -345,7 +408,9 @@
     "description": "ES|QL replaces the shared mutable QueryParams.EMPTY by a new QueryParams per request and parse; QueryParams gets final fields, size() and addTokenParam() replace positionalParams()/positionalParamTokens(), parsingErrors() returns an Iterator, and equals/hashCode are added",
     "notes": [
       "A comment moved onto the line of its field is a diff of its own, which prints the new field line as added again, besides the diff of the field.",
-      "LogicalPlanBuilder#plan, which adapts to the Iterator returned by parsingErrors() (and never increments its counter), is linked to it only through the unchanged `var errors = ...` declaration, so nothing serves it and it reads last, after the tests."
+      "The diff of QueryParams#get(int), replacing params.size() by this.paramsCount in place, carries moved_to the rewritten constructor (and the constructor moved_from it), as if its code had moved there; the constructor's params.size() reads the parameter, not the field (see suspected RM).",
+      "The parameters `QueryParams params` of invokeParser and `String e` of AbstractStatementParserTests#statement(String) are printed as dependencies, as their diffs start below the signatures.",
+      "The usage paramByNameOrPosition (its `return params.get(index);`) is printed before the diff of the same member, which shows its other call of get(int)."
     ],
     "expectations": [
       {
@@ -373,6 +438,25 @@
         "kind": "absent",
         "of": "dependency",
         "text": "private List<QueryParam> params = new ArrayList<>();"
+      },
+      {
+        "description": "createStatement(String, QueryParams), called by the changed createStatement(String) and calling into the changed plan of LogicalPlanBuilder, is a dependency bridging them",
+        "kind": "uses",
+        "from": "public LogicalPlan createStatement(String query, QueryParams params) {",
+        "to": "if (errors.hasNext() == false) {"
+      },
+      {
+        "description": "the changed plan reads before createStatement(String), which relies on it through the bridge",
+        "kind": "order",
+        "before": "if (errors.hasNext() == false) {",
+        "after": "public LogicalPlan createStatement(String query, QueryParams params) {"
+      },
+      {
+        "description": "test framework helpers used by the new test are not printed",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static String randomAlphaOfLength(int codeUnits) {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): ESTestCase#randomAlphaOfLength and ESTestCase#assertThat, reached only from the new test, tell a reviewer nothing"
       }
     ]
   },
@@ -383,8 +467,8 @@
     "base_commit": "57532e7b7fb1348c8abf50b225932cddea5937a9",
     "description": "filtered grouping unwraps a filtered intermediate input (a ClassCastException) and the ordinals segment aggregator releases its prepared inputs (a breaker leak); the test case extracts channels() for a new intermediate row test",
     "notes": [
-      "The record accessor next() called by the fix is not resolved: the record header declaring the component `next` is printed for no diff.",
-      "Releasables.close(Releasable...) serves the test but not the leak fix calling it with a method reference; the test's addInput.add(0, group) brings no AddInput#add.",
+      "The record accessor next() called by the fix is not resolved, so the record header declaring the component `next` is not printed as its dependency.",
+      "Releasables.close(Releasable...) serves the test but not the leak fix calling it with a method reference (see its todo); the test's addInput.add(0, group) brings no AddInput#add.",
       "stats.csv-spec, holding the ES|QL tests of both fixes and the only user of the new capability PER_AGG_FILTERING_ORDS, is not shown.",
       "The unchanged merges of OrdinalsGroupingOperator passing a filtered function as the input, which make the cast safe, are not shown."
     ],
@@ -400,6 +484,26 @@
         "kind": "order",
         "before": "protected List<Integer> channels(AggregatorMode mode)",
         "after": "public void testAddIntermediateRowInput()"
+      },
+      {
+        "description": "the declaration of prepared, only moved out of the try, brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "private final List<GroupingAggregator> aggregators;"
+      },
+      {
+        "description": "Releasables.close(Releasable...) serves the leak fix calling it",
+        "kind": "serves",
+        "from": "public static void close(Releasable... releasables) {",
+        "to": "Releasables.close(page::releaseBlocks, Releasables.wrap(prepared));",
+        "todo": "the call passing the method reference page::releaseBlocks is not bound to Releasables#close(Releasable...), so the leak fix lacks the callee closing the prepared inputs (the test calling it with an array binds it)"
+      },
+      {
+        "description": "test framework helpers used by the new test are not printed",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static <T> void assertThat(T actual, Matcher<? super T> matcher) {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): ESTestCase#assertThat, reached only from the new test, tells a reviewer nothing"
       }
     ]
   },
@@ -410,7 +514,7 @@
     "base_commit": "f0afd9165064edf9d3e18a5b960e57bf96de71f2",
     "description": "the test takes its ref only once a response is processed",
     "notes": [
-      "The moved incRef balances only because the unchanged RestActionListener#onResponse runs ensureOpen() before processResponse and sends a closed channel to onFailure; that caller of the overridden processResponse is not shown.",
+      "RestActionListener#onResponse, calling the overridden processResponse on itself, is a usage with its catch sending a closed channel to onFailure, but ensureOpen() before processResponse, on which the moved incRef balances, is elided. BaseRestHandler#handleRequest is a usage too, calling prepareRequest on itself (the change lies in its anonymous classes).",
       "The muted-tests.yml entry unmuting testClientCancellation is not shown."
     ],
     "expectations": [
@@ -437,6 +541,25 @@
         "kind": "absent",
         "of": "dependency",
         "text": "protected RestActionListener(RestChannel channel) {"
+      },
+      {
+        "description": "the template method calling the changed processResponse is a usage, with the catch sending failures to onFailure",
+        "kind": "usage",
+        "location": "server/src/main/java/org/elasticsearch/rest/action/RestActionListener.java::RestActionListener#onResponse",
+        "body": "public final void onResponse(Response response) {\n    try {\n        ...\n        processResponse(response);\n    } catch (Exception e) {\n        onFailure(e);\n    }\n}"
+      },
+      {
+        "description": "the usage onResponse shows ensureOpen() running before processResponse, on which the moved incRef balances",
+        "kind": "contains",
+        "text": "ensureOpen();",
+        "of": "usage",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 1, control flow inside a member: a statement before the use that throws on some path is a guard of it, but a usage shows only the code holding the use"
+      },
+      {
+        "description": "the usage handleRequest shows the try-with-resources calling prepareRequest by its header, not its whole body",
+        "kind": "absent",
+        "of": "usage",
+        "text": "final SortedSet<String> unconsumedParams = request.unconsumedParams()"
       }
     ]
   },
@@ -445,9 +568,10 @@
     "repository": "elastic/elasticsearch",
     "commit": "50dd67c6e14b7c3bf1d4a1d481afbac75d78dfab",
     "base_commit": "ad28dc9a6ca525e4f6cd2a9bf72c177cd4063ce2",
-    "description": "stateWithoutSnapshot copies the shard generations of a removed snapshot into other in-progress snapshots only for shards present in the ShardGenerations the finalization wrote (EMPTY on failure paths), so that an index deleted during finalization no longer gets a still referenced shard index blob deleted",
+    "description": "stateWithoutSnapshot copies the shard generations of a removed snapshot into other in-progress snapshots only for shards present in the ShardGenerations it is given (the ones the finalization built when it fails or completes after building them, EMPTY on the other failure paths), so that an index deleted during finalization no longer gets a still referenced shard index blob deleted",
     "notes": [
-      "The new IT test brings about 40 dependencies, mostly trivial getters and builder setters."
+      "The new IT test brings about 40 dependencies, mostly trivial getters and builder setters.",
+      "The callers of endSnapshot (five usages), startCloning (cloneSnapshot) and finalizeSnapshotEntry (endSnapshot, runNextQueuedOperation) are printed as usages, about 130 lines, though their changes only pass the new ShardGenerations argument on failure paths, which tells those callers nothing."
     ],
     "expectations": [
       {
@@ -480,6 +604,13 @@
         "kind": "absent",
         "of": "dependency",
         "text": "public ClusterStateUpdateTask() {"
+      },
+      {
+        "description": "buildGenerations, computing the shard generations the finalization passes on (leaving out the shards of indices deleted meanwhile, but not for clones), is shown",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "private static ShardGenerations buildGenerations(SnapshotsInProgress.Entry snapshot, Metadata metadata) {",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 2, data flow in a member: the new argument shardGenerations of the finalization failure handlers (and, through FinalizeSnapshotContext, of stateWithoutSnapshot) is the local `final ShardGenerations shardGenerations = buildGenerations(entry, metadata);`, printed as a dependency, but the buildGenerations defining it, which skips the shards of indices missing from the metadata and on which the fix relies, is not followed"
       }
     ]
   },
@@ -493,7 +624,8 @@
       "Constructors used by the tests are printed with their whole @FunctionInfo/@Param annotations.",
       "The Pow field declaration split in two (`base, exponent`) reads as a move between two diffs of the same location, so its old line is printed as removed twice: the diff removing the dataType field below it holds the line too (the Log one reads as one diff).",
       "Deleted code brings its dependencies: the removed equals overrides bring the field declarations of their classes; the new AbstractConfigurationFunctionTestCase brings trivial random/EMPTY/default setting helpers.",
-      "The four test headers now extending AbstractConfigurationFunctionTestCase read before it, apart from their buildWithConfiguration overrides, and it does not serve them (a supertype reference is no relation of the model)."
+      "The four test headers now extending AbstractConfigurationFunctionTestCase read before it, apart from their buildWithConfiguration overrides, and it does not serve them (a supertype reference is no relation of the model).",
+      "The new equals/hashCode of EsqlConfigurationFunction carry moved_from the removed equals/hashCode pairs of UnaryScalarFunction, Log, Pow, Round, MvSlice, MvSort and MvZip, siblings under EsqlScalarFunction it is no supertype of: no code moved (those classes now inherit the equals/hashCode of Function), so the links read as a pull-up that did not happen; they also make the new methods read as existing overrides (the contract Function#hashCode missing, the template usages of Node#equals; see the todos)."
     ],
     "expectations": [
       {
@@ -527,6 +659,39 @@
         "kind": "order",
         "before": "return new LeftEvaluator.Factory(",
         "after": "public abstract class AbstractConfigurationFunctionTestCase extends AbstractFunctionTestCase {"
+      },
+      {
+        "description": "the hashCode of Function a new override refines is its contract",
+        "kind": "serves",
+        "from": "return Objects.hash(getClass(), children());",
+        "to": "return Objects.hash(getClass(), children(), configuration);",
+        "todo": "the new EsqlConfigurationFunction#hashCode overrides Function#hashCode (`Objects.hash(getClass(), children())`, which it extends by the configuration and which the removed overrides now fall back to), but that contract is not printed: the AST diff maps the statements of the new equals/hashCode as moved from the seven removed equals/hashCode pairs of sibling classes (see the note on moved_from), so they are no ADDITION node and processOverrides finds no new declaration; Function#equals reads only because the new equals calls super.equals"
+      },
+      {
+        "description": "a new override brings no self-calls of the method it overrides",
+        "kind": "absent",
+        "of": "usage",
+        "text": "this.equals(root)",
+        "todo": "Node#transformDown and Node#transformUp, calling this.equals, are printed as usages of the new EsqlConfigurationFunction#equals (template-method rule), which applies only to an existing changed override; the new equals reads as existing because its statements are mapped as moved from the removed overrides (see the note on moved_from), where a new override brings its contract instead"
+      },
+      {
+        "description": "a constructor losing only the assignment of a field the change removes gives its callers nothing (replaceChildren)",
+        "kind": "absent",
+        "of": "usage",
+        "text": "newChildren.get(0), newChildren.get(1));"
+      },
+      {
+        "description": "a constructor losing only the assignment of a field the change removes gives its callers nothing (info)",
+        "kind": "absent",
+        "of": "usage",
+        "text": "NodeInfo.create(this, "
+      },
+      {
+        "description": "replacing a field by the inherited getter returning the same value gives the template caller nothing",
+        "kind": "absent",
+        "of": "usage",
+        "text": "default Object fold() {",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, data flow across members: Left/Right#toEvaluator pass source() instead of the removed field source, the same constructor parameter super(source, ...) stores in Node.source; telling that the value is unchanged takes following the parameter into both fields, so the template caller EvaluatorMapper#fold is printed as a usage (17 lines)"
       }
     ]
   },
@@ -537,7 +702,7 @@
     "base_commit": "0d2db063ec4d8e95941e3b92dc150e294e5f0689",
     "description": "copy_to contexts get a Wrapper constructor resetting dynamic from the root mapping",
     "notes": [
-      "The fix takes effect through the unchanged `new Wrapper(root(), this)` in createCopyToContext, which now resolves to the new constructor as root() returns RootObjectMapper; neither that call, root(), nor the overload Wrapper(ObjectMapper, DocumentParserContext) it resolved to before (inheriting in.dynamic) is shown.",
+      "The unchanged `new Wrapper(root(), this)` of createCopyToContext, which now resolves to the new constructor as root() returns RootObjectMapper, is a usage of it; root() and the overload Wrapper(ObjectMapper, DocumentParserContext) it resolved to before (inheriting in.dynamic) are not shown.",
       "The YAML REST test of the fix is not shown."
     ],
     "expectations": [
@@ -550,14 +715,32 @@
       {
         "description": "the unchanged creation now choosing the new constructor is shown",
         "kind": "contains",
-        "text": "new Wrapper(root(), this)",
-        "todo": "unchanged code using a changed declaration is not represented (see the TODO on forward extensions in HunkNetwork), though it is where the change takes effect"
+        "text": "new Wrapper(root(), this)"
       },
       {
         "description": "the YAML REST test is shown",
         "kind": "contains",
         "text": "copy_to from object with dynamic strict to dynamic field",
         "todo": "RM gap (non-Java files): RM neither parses nor diffs a YAML REST test, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      },
+      {
+        "description": "the unchanged creation resolving to the new constructor is a usage of it, with the anonymous class it creates",
+        "kind": "usage",
+        "location": "server/src/main/java/org/elasticsearch/index/mapper/DocumentParserContext.java::DocumentParserContext#createCopyToContext",
+        "body": "public final DocumentParserContext createCopyToContext(String copyToField, LuceneDocument doc) throws IOException {\n    ...\n    return new Wrapper(root(), this) {\n        @Override\n        public ContentPath path() {\n            return path;\n        }\n\n        @Override\n        public XContentParser parser() {\n            return parser;\n        }\n\n        @Override\n        public boolean isWithinCopyTo() {\n            return true;\n        }\n\n        @Override\n        public LuceneDocument doc() {\n            return doc;\n        }\n    };\n}"
+      },
+      {
+        "description": "the usage uses the diff of the new constructor",
+        "kind": "uses",
+        "from": "return new Wrapper(root(), this) {",
+        "to": "private Wrapper(RootObjectMapper root, DocumentParserContext in)"
+      },
+      {
+        "description": "the readers of a field a new constructor assigns the value it held before are no usages of it",
+        "kind": "absent",
+        "of": "usage",
+        "text": " in.",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, data flow across members: the seven Wrapper delegations reading `in` (nonRootDocuments, isWithinCopyTo, path, parser, rootDoc, doc, addDoc) are printed as usages because the new constructor writes `this.in = in`; but its only caller, createCopyToContext, passes `this`, which the old constructor it resolved to before wrote to `in` as well, so they read the same value; telling so takes following the argument into both constructors"
       }
     ]
   },
@@ -568,12 +751,12 @@
     "base_commit": "9ffe3c88354da86a806d1ee4cd64d4939362e389",
     "description": "lookup joins stop running their lookups with the enrich origin (only the enrich service keeps it), so that document level security applies; the lookup index checks move from the analyzer to a post-analysis verification that also rejects aliases and patterns",
     "notes": [
-      "The EsRelation accessors the new verification calls (indexMode, indexNameWithModes, indexPattern, concreteIndices) are not printed: they are called on the lambda parameter of forEachDown(Class<E>, Consumer<? super E>), whose type is not resolved.",
       "The new override EnrichLookupService#sendChildRequest does not serve the call of sendChildRequest in lookupAsync.",
       "The lookup mode check removed from Analyzer#resolveIndex and added to LookupJoin#postAnalysisVerification, and the ENRICH_ORIGIN try removed from lookupAsync and added to EnrichLookupService#sendChildRequest, are not linked as moves; the changed size mismatch message is seen only by comparing two diffs.",
       "The unchanged LookupFromIndexService, which inherits the base sendChildRequest and so now runs its lookups without ENRICH_ORIGIN (the fix itself), is not shown.",
       "roles.yml, defining the DLS query of dls_user that the expected values of the new test follow from, and the yml/gradle files skipping the alias lookup tests are not shown.",
-      "Deleted code brings its dependencies: the UnresolvedRelation constructor and getters and Node#source for the removed lookup check, the threadContext local for the removed stash."
+      "Deleted code brings its dependencies: the UnresolvedRelation constructor and getters and Node#source for the removed lookup check, the threadContext local for the removed stash.",
+      "resolveIndex is printed whole (about 70 lines) for the lookup check removed from its body, about 30 of them its unchanged unresolved-index handling."
     ],
     "expectations": [
       {
@@ -594,6 +777,38 @@
         "kind": "absent",
         "of": "dependency",
         "text": "private void hasPrivilege(ActionListener<Void> outListener) {"
+      },
+      {
+        "description": "an enum constant with a class body used by the changes is printed without its body",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "void validateWithOtherSettings(Map<Setting<?>, Object> settings) {"
+      },
+      {
+        "description": "the extracted sendChildRequest reads against the lines its call left in lookupAsync",
+        "kind": "contains",
+        "of": "diff",
+        "text": "\n         transportService.sendChildRequest(\n",
+        "todo": "the new AbstractLookupService#sendChildRequest carries moved_from the lookupAsync diff, and its 13-line transportService.sendChildRequest call came from there unchanged but re-indented out of the removed try, yet every line of it reads as added, so a reviewer has to compare the two blocks by eye to see that the hook only moves the call; movedOrigin finds no origin for it (to check first which condition fails, e.g. leaves of the old call mapped to the new call left in lookupAsync, which is no change of this diff, and whether RM's mapping supports the view)"
+      },
+      {
+        "description": "a test-support helper the new test reaches only from test code is not printed",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static boolean hasCapabilities(RestClient client, List<String> requiredCapabilities) throws IOException {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the new testLookupJoinDocLevelSecurity copies the capability guard of its sibling tests, which brings EsqlSpecTestCase#hasCapabilities (25 lines of the qa test framework), with adminClient, Cap.JOIN_LOOKUP_V11 and capabilityName; none of it tells a reviewer anything about document level security"
+      },
+      {
+        "description": "the accessor of the lambda parameter of forEachDown serves the new verification",
+        "kind": "serves",
+        "from": "return indexNameWithModes.keySet();",
+        "to": "if (esr.concreteIndices().contains(esr.indexPattern()) == false) {"
+      },
+      {
+        "description": "an enum constant with a class body used by the changes prints its name and arguments",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "LOOKUP(\"lookup\") { ... }"
       }
     ]
   },
@@ -625,6 +840,24 @@
         "kind": "contains",
         "of": "diff",
         "text": "-    public MedianAbsoluteDeviation(\n-        Source source,\n-        @Param(name = \"field\", type = { \"double\", \"integer\", \"long\", \"unsigned_long\" }) Expression field\n-    ) {\n+    public MedianAbsoluteDeviation(Source source, @Param(name = \"field\", type = { \"double\", \"integer\", \"long\" }) Expression field) {"
+      },
+      {
+        "description": "a constructor whose only change is in the annotations of its parameters gives its callers nothing (info)",
+        "kind": "absent",
+        "of": "usage",
+        "text": "NodeInfo.create(this, "
+      },
+      {
+        "description": "a constructor whose only change is in the annotations of its parameters gives its callers nothing (replaceChildren)",
+        "kind": "absent",
+        "of": "usage",
+        "text": "replaceChildren(List<Expression> newChildren) {"
+      },
+      {
+        "description": "a constructor whose only change is in the annotations of its parameters gives its callers nothing (surrogate)",
+        "kind": "absent",
+        "of": "usage",
+        "text": "public Expression surrogate() {"
       }
     ]
   },
@@ -635,8 +868,8 @@
     "base_commit": "1d3106f288e7cfd4f2b52ea23f1103de8ce71545",
     "description": "driver status reports iterations and cpu time since the last report instead of since the start",
     "notes": [
-      "The test brings 25 dependencies: test helpers (randomLong, randomList, assertThat, logger), TimeValue factories, the trivial DriverStatus/DriverProfile getters and the whole Driver constructor.",
-      "NowSupplier#getAsLong, the fake clock the expected cpuNanos/tookNanos of the test come from, is not printed: run calls it through LongSupplier, and nothing links that call to the override the test passes."
+      "The test brings 28 dependencies: test helpers (randomLong, randomList, assertThat, logger), TimeValue factories, the trivial DriverStatus/DriverProfile getters and the whole Driver constructor.",
+      "NowSupplier#getAsLong, the fake clock the expected cpuNanos/tookNanos of the test come from, is not printed: run calls it through LongSupplier, and nothing links that call to the override the test passes (see the todo)."
     ],
     "expectations": [
       {
@@ -669,6 +902,13 @@
         "text": "public static long randomLong() {",
         "of": "dependency",
         "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the declaration tells a reviewer nothing the change does not already show (a test helper)"
+      },
+      {
+        "description": "NowSupplier#getAsLong, the fake clock the expected cpuNanos and tookNanos of the test come from, is printed",
+        "kind": "contains",
+        "text": "return startNanos + waitTime + tickTime * callCount++;",
+        "of": "dependency",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 4, points-to for dispatch: run calls getAsLong on its LongSupplier parameter, and telling that the test passes a new NowSupplier there (so the call runs its override) takes the creation sites reaching the receiver"
       }
     ]
   },
@@ -717,7 +957,9 @@
     "commit": "4aca40b727475de98a42f6e44ce803e063ca9d63",
     "base_commit": "b360abcca17bd86c7306ba4bdfdb22432bbcd5fd",
     "description": "the scope id is dropped from an IPv6 address when it is 0 and the address is not link-local (a non-zero scope id is kept); a new test covers a global and a link-local address",
-    "notes": [],
+    "notes": [
+      "The callers of the changed address(byte[], int, int) (Socket#remoteAddress and #localAddress, the accepted child channels of EpollServerSocketChannel and KQueueServerSocketChannel, the macOS DnsResolver) are in files outside the model, so no usage shows which addresses now come without a zero scope id (see the TODO on forward extensions in HunkNetwork)."
+    ],
     "expectations": [
       {
         "description": "the statement wrapped in the new condition reads as unchanged code",
@@ -745,7 +987,6 @@
     "commit": "e1c0f00bac63bae3ee9356bacbecaf7901136817",
     "base_commit": "05a87da82746c09aa431eca184ede93d58071021",
     "description": "the comments view gets a scroll-to-top button",
-    "notes": [],
     "expectations": [
       {
         "description": "the new field serves the view setup using it",
@@ -758,6 +999,12 @@
         "kind": "contains",
         "text": "android:id=\"@+id/scrollToTopButton\"",
         "todo": "RM gap (non-Java files): RM neither parses nor diffs an Android layout XML, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      },
+      {
+        "description": "the added string resource labelling the button is shown",
+        "kind": "contains",
+        "text": "<string name=\"scroll_to_top\">Scroll to top</string>",
+        "todo": "RM gap (non-Java files): RM neither parses nor diffs an Android values XML (strings.xml), so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
       }
     ]
   },
@@ -770,7 +1017,8 @@
     "notes": [
       "The removed retainedSlice/retainedDuplicate overrides bring the super implementations taking over (useful) along with the code only their removed lines used (readerIndex/writerIndex/readableBytes, ensureAccessible, the handle field, PooledSlicedByteBuf/PooledDuplicatedByteBuf.newInstance).",
       "The diff of allocate(int, int) starts below its signature, at the if it changes, so its parameters size and maxCapacity are printed as dependencies.",
-      "The unchanged AdaptiveByteBuf#deallocate, the only caller of the new Handle#recycle (whose Recycler.EnhancedHandle branch is now dead), is not shown."
+      "The unchanged AdaptiveByteBuf#deallocate, the only caller of the new Handle#recycle (whose Recycler.EnhancedHandle branch is now dead), is not a usage: it calls recycle on the handle field through the ObjectPool.Handle interface, and telling that the field holds the new anonymous handle takes a data flow analysis.",
+      "The removed retainedSlice/retainedDuplicate overrides, related to no other diff, are printed with their ten dependencies between the new MAGAZINE_BUFFER_QUEUE_CAPACITY constant and the bufferQueue field it serves, so the constant does not sit as close as possible before the diff building on it. Either place (before the constant or after the allocation chain) would do, so no order todo pins it."
     ],
     "expectations": [
       {
@@ -796,6 +1044,13 @@
         "kind": "contains",
         "text": "-        }\n-\n-        @Override\n-        public ByteBuf retainedSlice(int index, int length) {",
         "of": "diff"
+      },
+      {
+        "description": "the unchanged deallocate calling recycle on the handle field, which now holds the new anonymous handle of the magazine, is a usage of the new Handle#recycle",
+        "kind": "contains",
+        "text": "handle.recycle(this);",
+        "of": "usage",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 4, points-to for dispatch: the call binds to ObjectPool.Handle#recycle, and telling that the handle field of AdaptiveByteBuf holds the anonymous handle of Magazine (passed through new AdaptiveByteBuf(handle) in newBuffer) takes a data flow analysis of what the receiver holds (see the TODO on processUsages in HunkNetwork)"
       }
     ]
   },
@@ -807,7 +1062,7 @@
     "description": "Truffle submits compilations according to the compilation activity mode of HotSpot",
     "notes": [
       "submitForCompilation calls getCompilationActivityMode, which this change adds as an interface default (in the diff of the enum) and overrides in HotSpotTruffleRuntime; both diffs serve the call.",
-      "The unchanged caller OptimizedCallTarget#compile, which must handle the new null result of submitForCompilation (and its RejectedExecutionException after a shutdown), is not shown."
+      "The unchanged caller OptimizedCallTarget#compile is a usage, showing the call and its catch of RejectedExecutionException; what it does with the new null result (after the call) is elided (see the todo)."
     ],
     "expectations": [
       {
@@ -833,6 +1088,19 @@
         "kind": "absent",
         "of": "dependency",
         "text": "public abstract BackgroundCompileQueue getCompileQueue();"
+      },
+      {
+        "description": "the caller of submitForCompilation is a usage, within its synchronized check and RejectedExecutionException catch",
+        "kind": "usage",
+        "location": "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/OptimizedCallTarget.java::OptimizedCallTarget#compile",
+        "body": "public final boolean compile(boolean lastTierCompilation) {\n    ...\n    if (!isSubmittedForCompilation()) {\n        ...\n        synchronized (this) {\n            ...\n            if (!isSubmittedForCompilation()) {\n                ...\n                try {\n                    ...\n                    this.compilationTask = task = runtime().submitForCompilation(this, lastTier);\n                } catch (RejectedExecutionException e) {\n                    return false;\n                }\n            }\n        }\n        ...\n    }\n    ...\n}"
+      },
+      {
+        "description": "the usage in compile shows what it does with the task submitForCompilation now returns as null: the `if (task != null)` that queues and waits only for a submitted task",
+        "kind": "contains",
+        "text": "if (task != null) {",
+        "of": "usage",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 2, data flow in a member: the result of the changed call is assigned to task, which the if after the synchronized block tests; the usage shows only the statements enclosing the call, so the handling of the new null result (compile returns false, compilationTask stays null and the target is submitted again later) is elided"
       }
     ]
   },
@@ -872,6 +1140,12 @@
         "kind": "contains",
         "text": "\"//tieredstore\",",
         "todo": "RM gap (non-Java files): RM neither parses nor diffs a Bazel BUILD file, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      },
+      {
+        "description": "the constructor assignment caching the metadata store's topic metadata in the flat file is shown",
+        "kind": "contains",
+        "text": "this.topicMetadata = this.recoverTopicMetadata(topic);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, the new getFileReservedHours reads the topicMetadata field, which the unchanged constructor of FlatMessageFile fills once from the metadata store (recoverTopicMetadata: getTopic, else addTopic(topic, -1L)); whether the reserve time updateTieredStoreTopicMetadata sets on the store's TopicMetadata reaches the expiry depends on that field holding the same object, but only the field declaration is shown"
       }
     ]
   },
@@ -882,8 +1156,7 @@
     "base_commit": "1a73e015b8c764a39d2a03a5a58bf26a78638986",
     "description": "the trace bean picks an IPv4 or IPv6 string for the local address; network utilities are merged and cleaned up",
     "notes": [
-      "isInternalIP, changed by a diff showing only its 172 and 192 branches, is printed whole again as a dependency of its callers; that copy is the only element showing its `ip.length != 4` check, which the new static block of TraceBean hits with an IPv6 address from getIP. The ideal shows that check once, not by reprinting the method.",
-      "The parameter `byte[] ip` of isInternalIP is printed as a dependency of the diff of its branches."
+      "isInternalIP is changed by a diff showing only its 172 and 192 branches, and a changed member is not printed again as a dependency of its callers, so its unchanged `ip.length != 4` check, which the new static block of TraceBean hits with an IPv6 address from getIP, is not shown. The ideal shows that check once, within the isInternalIP diff (see its todo)."
     ],
     "expectations": [
       {
@@ -924,6 +1197,19 @@
         "location": "common/src/main/java/org/apache/rocketmq/common/UtilAll.java::UtilAll#isInternalIP",
         "body": "byte[] ip",
         "count": 0
+      },
+      {
+        "description": "the caller of string2SocketAddress, whose change only inlines the returned local, is not a usage",
+        "kind": "absent",
+        "of": "usage",
+        "text": "return socketAddress2String(string2SocketAddress(addr));"
+      },
+      {
+        "description": "the isInternalIP diff shows the unchanged ipv4 length guard the new static block of TraceBean runs into with an IPv6 address",
+        "kind": "contains",
+        "of": "diff",
+        "text": "throw new RuntimeException(\"illegal ipv4 bytes\");",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stages 1 and 3: the diff of the changed isInternalIP shows only its 172 and 192 branches, and a changed member is not printed again as a dependency of its callers, so no element shows its unchanged `if (ip.length != 4) { throw new RuntimeException(\"illegal ipv4 bytes\"); }`; the new static block of TraceBean passes it the address of getIP, which may now be IPv6 (16 bytes), so it throws. A diff leaving out unchanged code of its member should show what the changes reaching it rely on, here the guard rejecting the input the new caller passes; telling that takes the control flow of isInternalIP (the guard exiting before the branches) and the data flow from getIP into its parameter"
       }
     ]
   },
@@ -935,8 +1221,9 @@
     "description": "io_uring reads with IORING_RECV_MULTISHOT when the kernel supports it",
     "notes": [
       "readComplete is printed whole (its new guard and `pending` sit directly in its body). The rest of the rewritten finally reads as removed and added code.",
-      "The only change of IoUringBufferRingTest, the third read moved before `if (!incremental)`, is not shown: no change node exists for it (whether RM reports the move is not checked yet).",
-      "scheduleRead0 is printed whole (43 lines) for the message added to its first assert, as an assert reads within its block, here the member body."
+      "The only change of IoUringBufferRingTest, the third read moved before `if (!incremental)`, is not shown: RM makes no AST diff for the file (see its todo).",
+      "scheduleRead0 is printed whole (43 lines) for the message added to its first assert, as an assert reads within its block, here the member body.",
+      "IoUring's static block is printed whole (about 100 lines) for the four lines adding recvMultishotSupported, as they reach from its local declarations to its final assignments; the probes of the other flags and the debug log between them tell a reviewer nothing beyond the parallel with acceptMultishotSupported."
     ],
     "expectations": [
       {
@@ -956,7 +1243,7 @@
         "kind": "contains",
         "of": "diff",
         "text": "ByteBuf readBuffer = sendAndRecvMessage(clientChannel, writeBuffer, bufferSyncer);",
-        "todo": "a statement moved within its block (IoUringBufferRingTest, before `if (!incremental)`) has no change node; check whether RM reports the move before blaming either side"
+        "todo": "RM (to report): RM makes no AST diff for IoUringBufferRingTest.java (the diff set of the compare leaves it out), whose only changes are the third read moved within its block before `if (!incremental)` and the newline added at the end of the file, so the move has no change node"
       },
       {
         "description": "the two assert edits of cancelOutstandingReads read as one in-place diff",
@@ -981,6 +1268,40 @@
         "kind": "absent",
         "of": "dependency",
         "text": "static final int IOSQE_BUFFER_SELECT"
+      },
+      {
+        "description": "scheduleRead, called by the changed scheduleNextRead, reading the READ_SCHEDULED the changed readComplete resets and calling the changed scheduleRead0, is a dependency bridging them",
+        "kind": "uses",
+        "from": "protected final void scheduleRead(boolean first) {",
+        "to": "Reset READ_SCHEDULED if there is nothing more to handle"
+      },
+      {
+        "description": "readComplete, which scheduleNextRead relies on through scheduleRead, reads before it",
+        "kind": "order",
+        "before": "Reset READ_SCHEDULED if there is nothing more to handle",
+        "after": "boolean rearm, boolean empty) {"
+      },
+      {
+        "description": "of the readers of ioState, only those testing READ_SCHEDULED are usages",
+        "kind": "contains",
+        "of": "usage",
+        "text": "(ioState & ",
+        "count": 2,
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stopping rules, shared state flags: readComplete newly clears READ_SCHEDULED in ioState, so every reader of ioState is a usage, though only canCloseNow and scheduleFirstReadIfNeeded test that bit; scheduleWriteIfNeeded (WRITE_SCHEDULED), schedulePollAdd, schedulePollIn (POLL_IN_SCHEDULED), flush0 (POLL_OUT_SCHEDULED), writeComplete (CONNECT_SCHEDULED, POLL_OUT_SCHEDULED; 37 lines) and the three poll cancels of cancelOps test other bits the change never touches"
+      },
+      {
+        "description": "the recv flags call only reordered in scheduleReadProviderBuffer brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "private int calculateRecvFlags(boolean first) {",
+        "todo": "`int recvFlags = calculateRecvFlags(first);` moves as it is a few statements up within the try of scheduleReadProviderBuffer; carried-over code uses nothing anew, but a statement moved within its member is not taken as carried over (movesUse looks at moves to another member only), so it brings calculateRecvFlags and the parameters `boolean first` and `boolean socketIsEmpty`; calculateRecvIoPrio, moved likewise, does matter, as the new `ioPrio |= Native.IORING_RECV_MULTISHOT` ORs into what it returns (data flow in a member, stage 2)"
+      },
+      {
+        "description": "the logger's debug declaration, reached by an argument added to a debug call, is no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "void debug(String format, Object... arguments);",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the argument recvMultishotSupported added to the debug log of IoUring's static block relies on the parameter it is passed to, so InternalLogger#debug(String, Object...) is printed with its 13-line javadoc; whether the placeholders and the arguments line up is already in the diff, and the logging contract tells a reviewer nothing"
       }
     ]
   },
@@ -1015,7 +1336,8 @@
     "base_commit": "d9d53d58cf7f32143485f12d4851d5c119d0855a",
     "description": "consume queues can append through the file channel, under a new store config flag",
     "notes": [
-      "The new flag field is printed at the top of the chapter, apart from its accessors, which it alone serves."
+      "The new flag field is printed at the top of the chapter, apart from its accessors, which it alone serves.",
+      "DefaultMappedFile#flush picks fileChannel.force(false) over mappedByteBuffer.force() by `writeBuffer != null || this.fileChannel.position() != 0` (\"We only append data to fileChannel or mappedByteBuffer, never both\"), a position the new appendMessageUsingFileChannel sets; whether the consume queue data now appended through the channel by default reaches the disk on flush hinges on that check, but it is not shown: the position is state of the FileChannel object changed through a JDK call, which no RM fact relates to the change."
     ],
     "expectations": [
       {
@@ -1081,6 +1403,19 @@
         "kind": "serves",
         "from": "private static final class ReadOnlyDuplicatedByteBuf extends DuplicatedByteBuf {",
         "to": "+        return new ReadOnlyDuplicatedByteBuf(this);"
+      },
+      {
+        "description": "ReadOnlyUnsafeDirectByteBuf is shown as inheriting the changed duplicate/slice of ReadOnlyByteBufferBuf",
+        "kind": "contains",
+        "text": "extends ReadOnlyByteBufferBuf",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 4, points-to and type flow for dispatch: a subclass not overriding a changed method runs it, which no relation tells"
+      },
+      {
+        "description": "the inherited release of the new derived buffers, which delegates to the parent, is shown",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "public final boolean release() {",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 4, points-to and type flow for dispatch: the buffers ReadOnlyByteBufferBuf#duplicate/slice now create (ReadOnlyDuplicatedByteBuf, ReadOnlySlicedByteBuf) share the parent's reference count only through the release() and refCnt() they inherit from AbstractDerivedByteBuf (final, delegating to unwrap() through release0/refCnt0), which is what the new tests check with derived.release(); the calls bind to ReferenceCounted#release, so only the interface declaration is printed"
       }
     ]
   },
@@ -1123,7 +1458,7 @@
     "base_commit": "6138a5a39cdbf6e9212d02bd9d02edb36c6618b5",
     "description": "the central queue capacity of the adaptive allocator is capped with Math.min(2, ...) (meant as Math.max)",
     "notes": [
-      "Nothing shows the unchanged users of CENTRAL_QUEUE_CAPACITY: the static check `CENTRAL_QUEUE_CAPACITY < 2` that throws (which Math.min(2, 1) still fails on a one-core host) and the queue it sizes; unchanged users of a changed declaration are not represented. Only the javadoc in the diff (a default of availableProcessors()) hints that min caps wrongly."
+      "The unchanged users of CENTRAL_QUEUE_CAPACITY are usages: the static check `CENTRAL_QUEUE_CAPACITY < 2` that throws (which Math.min(2, 1) still fails on a one-core host) and the queue it sizes."
     ],
     "expectations": [
       {
@@ -1137,6 +1472,24 @@
         "kind": "absent",
         "text": "public static int getInt(String key, int def)",
         "of": "dependency"
+      },
+      {
+        "description": "the static check of CENTRAL_QUEUE_CAPACITY is a usage of the changed capacity",
+        "kind": "usage",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator",
+        "body": "static {\n    if (CENTRAL_QUEUE_CAPACITY < 2) {\n        throw new IllegalArgumentException(\"CENTRAL_QUEUE_CAPACITY: \" + CENTRAL_QUEUE_CAPACITY\n                + \" (expected: >= \" + 2 + ')');\n    }\n    ...\n}"
+      },
+      {
+        "description": "the queue sized by CENTRAL_QUEUE_CAPACITY is a usage of the changed capacity",
+        "kind": "usage",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator#createSharedChunkQueue",
+        "body": "private static Queue<Chunk> createSharedChunkQueue() {\n    return PlatformDependent.newFixedMpmcQueue(CENTRAL_QUEUE_CAPACITY);\n}"
+      },
+      {
+        "description": "the usages read right after the diff of the capacity",
+        "kind": "order",
+        "before": "private static final int CENTRAL_QUEUE_CAPACITY = Math.min(2",
+        "after": "if (CENTRAL_QUEUE_CAPACITY < 2) {"
       }
     ]
   },
@@ -1190,6 +1543,12 @@
         "of": "dependency",
         "text": "public String readString() throws IOException {",
         "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+      },
+      {
+        "description": "the constructor calling the changed one through super(...) reads from its super( line",
+        "kind": "contains",
+        "of": "usage",
+        "text": ") {\n    super(\n        LOOKUP_ACTION_NAME,"
       }
     ]
   },
@@ -1200,8 +1559,9 @@
     "base_commit": "fb17da0647b9dffe00449587dc80171eb14c9a35",
     "description": "a missing routing hash is derived from the id; the test of a null id is removed",
     "notes": [
-      "The removed test brings 15 dependencies; except the SourceToParse constructor (showing the null id that now hits the new assert), they (settings builders, test helpers, the whole IndexShard#prepareIndex) tell nothing about why it is removed.",
-      "The parameters `String routing` and `DocumentParserContext context` are printed as dependencies, as their diffs start below the signatures."
+      "The removed test brings 18 dependencies; except the SourceToParse constructor (showing the null id that now hits the new assert), they (settings builders, test helpers, the whole IndexShard#prepareIndex) tell nothing about why it is removed.",
+      "The parameters `String routing` and `DocumentParserContext context` are printed as dependencies, as their diffs start below the signatures.",
+      "Why the new code may take the routing hash from the id is not shown: TsidExtractingIdFieldMapper#createId writes the routing hash into the first 4 bytes of a time-series _id, and TsidExtractingIdFieldMapper#createField already takes the id as it is when the routing is null (the translog case) and throws the message the removed test expected when the id is null too. That file is outside the model, and no code relation of the changes reaches it."
     ],
     "expectations": [
       {
@@ -1232,7 +1592,8 @@
     "description": "downsampling copies ignore_malformed of the timestamp field and sets the index setting at creation; the test randomizes it",
     "notes": [
       "createDownsampleIndex is printed whole (about 60 lines) for an added if, as a statement reads within its block; its tail (the cluster state task applying copyIndexMetadata after the creation) is the second settings path the change moves the setting out of, so it is relevant context.",
-      "addTimestampField's diff starts at the if within its lambda, so the parameter `builder` is printed as a dependency."
+      "addTimestampField's diff starts at the if within its lambda, so the parameter `builder` is printed as a dependency.",
+      "copyIndexMetadata is not shown. It copies every source setting the new index does not already have, which is how index.mapping.ignore_malformed reached the downsample index before (the reviewers asked how @timestamp picked it up). Only its call in the unchanged tail of createDownsampleIndex is printed. The settings the new if puts reach it only through MetadataCreateIndexService#applyCreateIndexRequest, which is outside the model."
     ],
     "expectations": [
       {
@@ -1259,6 +1620,18 @@
         "kind": "diff",
         "location": "x-pack/plugin/downsample/src/test/java/org/elasticsearch/xpack/downsample/DownsampleActionSingleNodeTests.java::DownsampleActionSingleNodeTests#setup",
         "body": "-        mapping.startObject(FIELD_TIMESTAMP).field(\"type\", \"date\").endObject();\n+        mapping.startObject(FIELD_TIMESTAMP).field(\"type\", \"date\").field(\"ignore_malformed\", false).endObject();"
+      },
+      {
+        "description": "the endObject call kept after the step inserted into the timestamp mapping chain brings no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public XContentBuilder endObject() throws IOException {"
+      },
+      {
+        "description": "the usage of createDownsampleIndex in masterOperation leaves out the bodies of the listener lambdas passed to the call",
+        "kind": "absent",
+        "of": "usage",
+        "text": "logger.info(\"Downsample tasks are not created, because a previous execution already completed downsampling\");"
       }
     ]
   },
@@ -1269,8 +1642,8 @@
     "base_commit": "539d4fdff56492ca7f6b8e59384006650a1ed946",
     "description": "a retried recovery target keeps a placeholder permit so that its assertion holds; restoreFileFromSnapshot also asserts it has references",
     "notes": [
-      "The assignment of the placeholder in retryCopy is printed alone, without the copy of the permit taken just before it and the comment explaining it.",
-      "hasPermitToDownloadSnapshotFiles(), which the placeholder keeps true, is unchanged code next to the added assertion and is not shown.",
+      "The assignment of the placeholder in retryCopy is printed alone as its diff; retryCopy, reading the field before it assigns it, is a usage of that assignment and shows the copy of the permit taken just before it and handed to the new target, but not the comment explaining the placeholder.",
+      "hasPermitToDownloadSnapshotFiles(), which the placeholder keeps true and which the unchanged assertion next to the added one calls, and releaseSnapshotFileDownloadsPermit, which now closes the placeholder, are usages of the changed assignment of retryCopy, as they read the field it writes.",
       "The unrelated restoreFileFromSnapshot diff sits between the placeholder constant and the assignment in retryCopy that the constant alone serves."
     ],
     "expectations": [
@@ -1291,6 +1664,18 @@
         "kind": "dependency",
         "location": "libs/core/src/main/java/org/elasticsearch/core/AbstractRefCounted.java::AbstractRefCounted",
         "body": "@Override\npublic final boolean hasReferences() {\n    return refCount > 0;\n}"
+      },
+      {
+        "description": "hasPermitToDownloadSnapshotFiles, reading the field retryCopy now sets to the placeholder, is a usage",
+        "kind": "contains",
+        "of": "usage",
+        "text": "return snapshotFileDownloadsPermit != null;"
+      },
+      {
+        "description": "releaseSnapshotFileDownloadsPermit, closing whatever the field holds (now the placeholder of a retried target), is a usage",
+        "kind": "contains",
+        "of": "usage",
+        "text": "snapshotFileDownloadsPermit.close();"
       }
     ]
   },
@@ -1396,6 +1781,13 @@
         "kind": "serves",
         "from": "public static Source readEmpty(StreamInput in) throws IOException {",
         "to": "this.source = Source.readEmpty(in);"
+      },
+      {
+        "description": "the named writeable entry registering the changed stream constructor as the reader of the query builder is a usage",
+        "kind": "contains",
+        "of": "usage",
+        "text": "Builder::new",
+        "todo": "the constructor reference Builder::new in the initializer of SingleValueQuery#ENTRY is not bound to Builder(StreamInput): Builder has two constructors and the resolver leaves a reference to an overloaded member unbound, as its arity comes from the target functional type (Writeable.Reader, the parameter type of the NamedWriteableRegistry.Entry constructor, reading one StreamInput); the entry tells that the constructor reads every serialized esql_single_value query builder, also from streams that are not PlanStreamInput (the can_match case the review asked about)"
       }
     ]
   },
@@ -1445,7 +1837,7 @@
     "base_commit": "f3311e5db4c9d9559fac96bb2f48295d63f58b67",
     "description": "a frame stream takes the id of the stream it is set to",
     "notes": [
-      "The callers of setStreamAndProperty, which tell whether the assert above the change can fail, are not shown: onStreamActive0 and the push promise read with a new frame stream whose id is -1, and onStreamAdded with a frame stream whose id initializeNewStream already set to the id of the stream."
+      "The callers of setStreamAndProperty are usages (onStreamActive0 and the push promise read with a new frame stream whose id is -1, onStreamAdded with an initialized one), but the code telling their ids is not: newStream() and initializeNewStream, which sets the id of the frame stream onStreamAdded receives; the declaration of frameStream in onStreamAdded is elided."
     ],
     "expectations": [
       {
@@ -1463,8 +1855,31 @@
       {
         "description": "the unchanged caller setting the stream of a new frame stream is shown",
         "kind": "contains",
-        "text": "newStream().setStreamAndProperty(streamKey, stream)",
-        "todo": "unchanged code using a changed declaration is not represented (see the TODO on forward extensions in HunkNetwork), though the reviewer needed the caller to see the assert holds for new frame streams"
+        "text": "newStream().setStreamAndProperty(streamKey, stream)"
+      },
+      {
+        "description": "the caller setting the stream of a new frame stream of onStreamActive0 is a usage",
+        "kind": "usage",
+        "location": "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java::Http2FrameCodec#onStreamActive0",
+        "body": "private void onStreamActive0(Http2Stream stream) {\n    ...\n    DefaultHttp2FrameStream stream2 = newStream().setStreamAndProperty(streamKey, stream);\n    ...\n}"
+      },
+      {
+        "description": "the caller setting the stream of an initialized frame stream is a usage, within its null check",
+        "kind": "usage",
+        "location": "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java::Http2FrameCodec.ConnectionListener#onStreamAdded",
+        "body": "public void onStreamAdded(Http2Stream stream) {\n    ...\n    if (frameStream != null) {\n        frameStream.setStreamAndProperty(streamKey, stream);\n    }\n}"
+      },
+      {
+        "description": "the push promise read setting the stream of a new frame stream is a usage",
+        "kind": "usage",
+        "location": "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java::Http2FrameCodec.FrameListener#onPushPromiseRead",
+        "body": "public void onPushPromiseRead(ChannelHandlerContext ctx, int streamId, int promisedStreamId,\n                              Http2Headers headers, int padding) {\n    ...\n    onHttp2Frame(ctx, new DefaultHttp2PushPromiseFrame(headers, padding, promisedStreamId)\n            .pushStream(new DefaultHttp2FrameStream()\n                    .setStreamAndProperty(streamKey, connection().stream(promisedStreamId)))\n            .stream(stream));\n}"
+      },
+      {
+        "description": "initializeNewStream, setting the id of the frame stream onStreamAdded passes, is shown",
+        "kind": "contains",
+        "text": "initializeNewStream",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, data flow across members: the frame streams the callers pass are not followed back to the code setting their ids (newStream(), initializeNewStream)"
       }
     ]
   },
@@ -1490,6 +1905,13 @@
         "kind": "dependency",
         "location": "common/src/main/java/org/apache/rocketmq/common/UtilAll.java::UtilAll",
         "body": "public static boolean isBlank(String str) {\n    return StringUtils.isBlank(str);\n}"
+      },
+      {
+        "description": "findBrokerAddressInPublish, which gives the blank address the new check tests, is a dependency",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "public String findBrokerAddressInPublish(final String brokerName) {",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, the new UtilAll.isBlank(brokerAddr) check is judged by where the value comes from: brokerAddr is assigned on the unchanged line before from MQClientInstance#findBrokerAddressInPublish, which returns null for a null brokerName or when brokerAddrTable has no MASTER_ID address for the broker (the 'master node does not exist' of the new message); the callee of an unchanged definition the new read reaches is not followed, and MQClientInstance is not in the model"
       }
     ]
   },
@@ -1500,7 +1922,7 @@
     "base_commit": "58ec269ae467689449dbfb23676536f06d1216c4",
     "description": "the central queue capacity of the adaptive allocator is capped with Math.min(2, ...) (meant as Math.max)",
     "notes": [
-      "Nothing shows the unchanged users of CENTRAL_QUEUE_CAPACITY: the static check `CENTRAL_QUEUE_CAPACITY < 2` that throws (which Math.min(2, 1) still fails on a one-core host) and the queue it sizes; unchanged users of a changed declaration are not represented. Only the javadoc in the diff (a default of availableProcessors()) hints that min caps wrongly."
+      "The unchanged users of CENTRAL_QUEUE_CAPACITY are usages: the static check `CENTRAL_QUEUE_CAPACITY < 2` that throws (which Math.min(2, 1) still fails on a one-core host) and the queue it sizes."
     ],
     "expectations": [
       {
@@ -1508,6 +1930,24 @@
         "kind": "diff",
         "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator",
         "body": "     /**\n      * The capacity if the central queue that allow chunks to be shared across magazines.\n      * The default size is {@link NettyRuntime#availableProcessors()},\n      * and the maximum number of magazines is twice this.\n      * <p>\n      * This means the maximum amount of memory that we can have allocated-but-not-in-use is\n      * 5 * {@link NettyRuntime#availableProcessors()} * {@link #MAX_CHUNK_SIZE} bytes.\n      */\n-    private static final int CENTRAL_QUEUE_CAPACITY = SystemPropertyUtil.getInt(\n-            \"io.netty.allocator.centralQueueCapacity\", NettyRuntime.availableProcessors());\n+    private static final int CENTRAL_QUEUE_CAPACITY = Math.min(2, SystemPropertyUtil.getInt(\n+            \"io.netty.allocator.centralQueueCapacity\", NettyRuntime.availableProcessors()));"
+      },
+      {
+        "description": "the static check of CENTRAL_QUEUE_CAPACITY is a usage of the changed capacity",
+        "kind": "usage",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator",
+        "body": "static {\n    if (CENTRAL_QUEUE_CAPACITY < 2) {\n        throw new IllegalArgumentException(\"CENTRAL_QUEUE_CAPACITY: \" + CENTRAL_QUEUE_CAPACITY\n                + \" (expected: >= \" + 2 + ')');\n    }\n    ...\n}"
+      },
+      {
+        "description": "the queue sized by CENTRAL_QUEUE_CAPACITY is a usage of the changed capacity",
+        "kind": "usage",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator#createSharedChunkQueue",
+        "body": "private static Queue<Chunk> createSharedChunkQueue() {\n    return PlatformDependent.newFixedMpmcQueue(CENTRAL_QUEUE_CAPACITY);\n}"
+      },
+      {
+        "description": "the usages read right after the diff of the capacity",
+        "kind": "order",
+        "before": "private static final int CENTRAL_QUEUE_CAPACITY = Math.min(2",
+        "after": "if (CENTRAL_QUEUE_CAPACITY < 2) {"
       }
     ]
   },
@@ -1533,6 +1973,19 @@
         "kind": "dependency",
         "location": "src/main/java/com/google/devtools/build/lib/analysis/ConfiguredTarget.java::ConfiguredTarget",
         "body": "@Override\ndefault Label getLabel() {\n  return getLookupKey().getLabel();\n}"
+      },
+      {
+        "description": "the graph walk the lookup keys go to, which reads the node of each key, is shown",
+        "kind": "contains",
+        "text": "NodeEntry nodeEntry = inMemoryGraph.get(null, Reason.VENDOR_EXTERNAL_REPOS, key);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, data flow across members: the changed keys flow from targetKeys into collectReposFromTargets(inMemoryGraph, targetKeys), which reads the node of each key from the in-memory graph and dereferences it (nodeEntry.getValue()); this is where a key built for an alias (absent from the graph) failed, so it is what a reviewer checks getLookupKey against"
+      },
+      {
+        "description": "the alias override of getLabel, which the removed builder chain used for alias targets, is shown",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "return actual.getLabel();",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 4, points-to and type flow for dispatch: for an alias target (the case of the new test) target.getLabel() dispatches to AliasConfiguredTarget#getLabel, which returns the label of the actual target, while getConfigurationKey and getLookupKey are the alias's own; the removed chain thus built a key naming no node, which is the bug fixed; the calls bind to ConfiguredTarget, so only its default getLabel (return getLookupKey().getLabel()) is printed"
       }
     ]
   },
@@ -1543,8 +1996,8 @@
     "base_commit": "988c826921de5ed7eda3d88c22c705c6dc470e24",
     "description": "pop lag, inflight and available counts skip the pop buffer when the pop consumer KV service is enabled; a duplicate fallback is removed",
     "notes": [
-      "The fallback after the if/else of getAvailableMsgCount (`if (pullOffset < 0) pullOffset = brokerOffset;`), which makes the removed one a duplicate (the review comment), is not shown: the diff ends with the if statement.",
-      "The code pop groups now fall through to when the pop consumer KV service is enabled (after the early-return ifs of getConsumerLagStats and getInFlightMsgStats) is not shown.",
+      "The fallback after the if/else of getAvailableMsgCount (`if (pullOffset < 0) pullOffset = brokerOffset;`), which makes the removed one a duplicate (the review comment), is not shown: the diff ends with the if statement (todo, data flow in a member, stage 2).",
+      "The code pop groups now fall through to when the pop consumer KV service is enabled (after the early-return ifs of getConsumerLagStats and getInFlightMsgStats) is not shown (todos, control flow in a member, stage 1).",
       "The declarations of pullOffset and brokerOffset are printed as dependencies of the removed fallback only."
     ],
     "expectations": [
@@ -1559,6 +2012,25 @@
         "kind": "diff",
         "location": "broker/src/main/java/org/apache/rocketmq/broker/metrics/ConsumerLagCalculator.java::ConsumerLagCalculator#getConsumerLagStats(String, String, int, boolean)",
         "body": "-        if (isPop) {\n+        if (isPop && !brokerConfig.isPopConsumerKVServiceEnable()) {\n             long pullOffset = popBufferMergeService.getLatestOffset(topic, group, queueId);\n             if (pullOffset < 0) {\n                 pullOffset = offsetManager.queryOffset(group, topic, queueId);\n             }\n             if (pullOffset < 0) {\n                 pullOffset = brokerOffset;\n             }\n             long inFlightNum = popInflightMessageCounter.getGroupPopInFlightMessageNum(topic, group, queueId);\n             long lag = calculateMessageCount(group, topic, queueId, pullOffset, brokerOffset) + inFlightNum;\n             long consumerOffset = pullOffset - inFlightNum;\n             long consumerStoreTimeStamp = getStoreTimeStamp(topic, queueId, consumerOffset);\n             return new Pair<>(lag, consumerStoreTimeStamp);\n         }"
+      },
+      {
+        "description": "the removed fallback reads with the unchanged fallback after the if/else that it duplicated",
+        "kind": "diff",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/metrics/ConsumerLagCalculator.java::ConsumerLagCalculator#getAvailableMsgCount(String, String, int, boolean)",
+        "body": "-        if (isPop) {\n+        if (isPop && !brokerConfig.isPopConsumerKVServiceEnable()) {\n             pullOffset = popBufferMergeService.getLatestOffset(topic, group, queueId);\n             if (pullOffset < 0) {\n                 pullOffset = offsetManager.queryOffset(group, topic, queueId);\n             }\n-            if (pullOffset < 0) {\n-                pullOffset = brokerOffset;\n-            }\n         } else {\n             pullOffset = offsetManager.queryPullOffset(group, topic, queueId);\n         }\n         if (pullOffset < 0) {\n             pullOffset = brokerOffset;\n         }",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 2, data flow in a member: the pullOffset the changed if defines is read next by the unchanged `if (pullOffset < 0) { pullOffset = brokerOffset; }` right after the if/else, which makes the removed fallback a duplicate (the review comment); the diff ends with the if statement"
+      },
+      {
+        "description": "the code pop groups of getConsumerLagStats now fall through to when the pop consumer KV service is enabled is shown",
+        "kind": "contains",
+        "text": "long consumerOffset = offsetManager.queryOffset(group, topic, queueId);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 1, control flow in a member: the changed condition makes pop groups skip the early-return if when the pop consumer KV service is enabled, so the code after it (the lag from the committed offset) now runs for them; nothing after the if is printed"
+      },
+      {
+        "description": "the code pop groups of getInFlightMsgStats now fall through to when the pop consumer KV service is enabled is shown",
+        "kind": "contains",
+        "text": "long commitOffset = offsetManager.queryOffset(group, topic, queueId);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 1, control flow in a member: the changed condition makes pop groups skip the early-return if when the pop consumer KV service is enabled, so the code after it (inflight from the pull and committed offsets) now runs for them; nothing after the if is printed"
       }
     ]
   },
@@ -1599,8 +2071,8 @@
     "base_commit": "7d2bc79fdae52f1420b0e04904f26154ff1f48bf",
     "description": "cgroup v2 cpu.max parsing skips the first token by \\S+ and reads 'max' as no limit",
     "notes": [
-      "Path#getPathFile and the Cpu#getCpus declaration are printed as dependencies of the tests.",
-      "setCpuLimit_v2 prints only its changed statement; its unchanged call cpu.setCpus(5) and assertion, which make it the test of the setCpus fix, are not shown, so setCpus serves no test."
+      "The Cpu#getCpus declaration is printed as a dependency of the test.",
+      "setCpuLimit_v2 prints only its changed statement; its unchanged call cpu.setCpus(5) and assertion, which make it the test of the setCpus fix, are not shown, so setCpus serves no test (todo, data flow in a member, stage 2)."
     ],
     "expectations": [
       {
@@ -1620,6 +2092,13 @@
         "kind": "dependency",
         "location": "src/test/java/com/google/devtools/build/lib/vfs/util/FsApparatus.java::FsApparatus",
         "body": "/**\n * Creates a scratch file in the scratch filesystem with the given {@code pathName} with\n * {@code lines} being its content. The method returns a Path instance for the scratch file.\n */\npublic Path file(String pathName, String... lines) throws IOException {\n  Path file = path(pathName);\n  Path parentDir = file.getParentDirectory();\n  if (!parentDir.exists()) {\n    parentDir.createDirectoryAndParents();\n  }\n  if (file.exists()) {\n    throw new IOException(\"Could not create scratch file (file exists) \"\n        + file);\n  }\n  String fileContent = StringUtilities.joinLines(lines);\n  FileSystemUtils.writeContentAsLatin1(file, fileContent);\n  return file;\n}"
+      },
+      {
+        "description": "the setCpus fix serves setCpuLimit_v2, its test",
+        "kind": "serves",
+        "from": "+      period = scanner.skip(\"\\\\S+\\\\s\").nextInt();",
+        "to": "+    File limit = scratch.file(\"cgroup/cpu/cpu.max\", \"-1 100000\\n\").getPathFile();",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 2, data flow in a member: the file the changed statement creates (limit) is what the unchanged cpu.setCpus(5) parses and the unchanged assertion reads, so setCpuLimit_v2 is the test of the setCpus fix; only its changed statement is printed, which uses nothing of setCpus, so setCpus serves no test"
       }
     ]
   },
@@ -1629,7 +2108,6 @@
     "commit": "3c9b3b81eaec373ad879718c02705357f3f3c02b",
     "base_commit": "720c87e85dd95be8e56166a7f00c652ce0f1d458",
     "description": "the period of the name server address update becomes a broker config",
-    "notes": [],
     "expectations": [
       {
         "description": "the period reads within the scheduled task",
@@ -1642,6 +2120,12 @@
         "kind": "serves",
         "from": "+    private int updateNameServerAddrPeriod = 1000 * 120;",
         "to": "+    public int getUpdateNameServerAddrPeriod() {"
+      },
+      {
+        "description": "the guard of the scheduled task, a name server address given by the user, is shown",
+        "kind": "contains",
+        "text": "if (this.brokerConfig.getNamesrvAddr() != null) {",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 1, control flow in a member: the task whose period becomes the new config is scheduled only when the name server address is given by the user; its sibling branch (fetching the addresses from the address server) keeps its own period, getFetchNamesrvAddrInterval(), which is what the naming review comment compares with; the diff shows the scheduling statement only"
       }
     ]
   },
@@ -1651,7 +2135,6 @@
     "commit": "2e906adddb20431a36d7915a9cf6e1f7bf424cad",
     "base_commit": "217df76c40be0f9d4f82e8cf05d68ea07a23f42f",
     "description": "an unresolved IPv6 host already in brackets is not bracketed again",
-    "notes": [],
     "expectations": [
       {
         "description": "the bracket check reads within the IPv6 branch",
@@ -1670,6 +2153,13 @@
         "kind": "serves",
         "from": "+            if (hostString.charAt(0) == '[' && hostString.charAt(hostString.length() - 1) == ']') {",
         "to": "+    public void testIpv6UnresolvedExplicitAddress()  {"
+      },
+      {
+        "description": "the proxy CONNECT request built from the formatted host is a usage",
+        "kind": "contains",
+        "of": "usage",
+        "text": "String hostString = HttpUtil.formatHostnameForHttp(raddr);",
+        "todo": "forward extensions (see the TODO on forward extensions in HunkNetwork): HttpProxyHandler#newInitialMessage builds the CONNECT url and Host header from formatHostnameForHttp, which is where an unresolved bracketed IPv6 destination got double brackets; its file (handler-proxy) is not in the model, as usages are found only in the changed files and the unchanged files declaring what the changes use"
       }
     ]
   },
@@ -1682,7 +2172,7 @@
     "notes": [
       "The capability added is read only by the csv-spec test, which is not shown.",
       "The comma replacing the semicolon after PER_AGG_FILTERING is not shown, being no change of the AST.",
-      "The unchanged users of the changed static computeReferences are not shown: AggregateExec#computeReferences, and EsqlSession#fieldNames (through QueryPlan#references), where the alias name reached field_caps, the bug the change fixes."
+      "Aggregate#computeReferences() calling the changed static computeReferences is a usage, but AggregateExec#computeReferences and EsqlSession#fieldNames (through QueryPlan#references), where the alias name reached field_caps, are not: their files are not in the model (usages are found in the changed files and the unchanged files declaring what the changes use); a todo pins AggregateExec#computeReferences."
     ],
     "expectations": [
       {
@@ -1702,6 +2192,19 @@
         "kind": "contains",
         "text": "statsByConstantExpression",
         "todo": "RM gap (non-Java files): RM neither parses nor diffs an ES|QL csv-spec test, so the change has no node; the narrator relies on RM to model such files (their units, their AST diff and the references relating them to Java code) and will represent them once RM does"
+      },
+      {
+        "description": "the instance computeReferences calling the changed static one is a usage",
+        "kind": "usage",
+        "location": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plan/logical/Aggregate.java::Aggregate#computeReferences()",
+        "body": "protected AttributeSet computeReferences() {\n    return computeReferences(aggregates, groupings);\n}"
+      },
+      {
+        "description": "the physical AggregateExec#computeReferences calling the changed static one is a usage",
+        "kind": "contains",
+        "of": "usage",
+        "text": "return mode.isInputPartial() ? new AttributeSet(intermediateAttributes) : Aggregate.computeReferences(aggregates, groupings);",
+        "todo": "forward extensions (see the TODO on forward extensions in HunkNetwork): AggregateExec#computeReferences calls the changed static Aggregate.computeReferences, so the physical plan's references lose the aliased groupings too; its file is not in the model, as usages are found only in the changed files and the unchanged files declaring what the changes use"
       }
     ]
   },
@@ -1712,7 +2215,7 @@
     "base_commit": "dc999c4b87d5023bfcf9ec73a8d7481e7bf5bdbf",
     "description": "TooLongFrameException messages give the limit and the actual length",
     "notes": [
-      "RM reports the first throw of decodeBinaryFrame as deleted and inserted while it maps the identical second one, with the argument inserted; the output reads the same.",
+      "RM reports the first throw of decodeBinaryFrame as deleted and inserted while it maps the identical second one, with the argument inserted; the output reads the same, except that the deleted throw brings the no-argument TooLongFrameException constructor as a dependency serving that throw alone, while the three mapped throws that also leave it bring none.",
       "The unchanged MqttCodecTest#validateDecoderExceptionTooLargeMessage asserts the old message (\"too large message:\") and now fails (the finding of the review); only the message text links it to the change, and it reaches decode through channelRead, so nothing RM represents leads to it.",
       "The throws of SpdyHttpDecoder#decode and MqttDecoder#decode read as the statement alone, without the if condition whose operands the new message reports; the Spdy message reports the size of the frame while the condition compares the accumulated content."
     ],
@@ -1745,7 +2248,8 @@
     "description": "BEP test results always carry the exit code of the spawn",
     "notes": [
       "Each test method changed by one assertion is printed whole (46 to 102 lines each), and so is extractExecutionInfo (71 lines, mostly the timing breakdown chain) for its one added statement.",
-      "The caller of extractExecutionInfo throwing unless the spawn set up, which the review relies on, is not shown."
+      "The caller of extractExecutionInfo is a usage showing only the call; the setupSuccess check of runTestAttempt throwing unless the spawn set up, before spawnResults reaches the call, is elided (the usage follows no data flow into the arguments).",
+      "Most new assertions (`result.getData().getExitCode()`, `postedResult.getData().getExitCode()`, `data.getExitCode()`) check the TestResultData exit code, which the unchanged processTestAttempt sets (`dataBuilder.setExitCode(result.spawnResults().get(0).exitCode());` under `if (!result.spawnResults().isEmpty())`). They do not check the ExecutionInfo exit code that the change sets. Only the `getExecutionInfo().getExitCode()` assertions of testRunFlakyTest and testRunTestRemotely check the new statement. The proto accessors that would link them are generated code outside the repository, so nothing RM represents relates the tests to processTestAttempt."
     ],
     "expectations": [
       {
@@ -1763,8 +2267,20 @@
       {
         "description": "the caller of extractExecutionInfo is shown",
         "kind": "contains",
-        "text": "extractExecutionInfo(spawnResult",
-        "todo": "unchanged code using a changed declaration is not represented (see the TODO on forward extensions in HunkNetwork), though the review judges the change by the setupSuccess check of the caller"
+        "text": "extractExecutionInfo(spawnResult"
+      },
+      {
+        "description": "the caller of extractExecutionInfo is a usage: the call within the signature of runTestAttempt, the rest elided",
+        "kind": "usage",
+        "location": "src/main/java/com/google/devtools/build/lib/exec/StandaloneTestStrategy.java::StandaloneTestStrategy#runTestAttempt",
+        "body": "private TestAttemptResult runTestAttempt(\n    TestRunnerAction testAction,\n    ActionExecutionContext actionExecutionContext,\n    Spawn spawn,\n    SpawnStrategyResolver resolver,\n    ResolvedPaths resolvedPaths,\n    FileOutErr fileOutErr,\n    Closeable streamed,\n    long startTimeMillis)\n    throws InterruptedException, ExecException, IOException {\n  ...\n  BuildEventStreamProtos.TestResult.ExecutionInfo executionInfo =\n      extractExecutionInfo(spawnResults.get(0), testResultDataBuilder);\n  ...\n}"
+      },
+      {
+        "description": "the usage runTestAttempt shows the setupSuccess check throwing before spawnResults reaches extractExecutionInfo",
+        "kind": "contains",
+        "text": "if (!e.getSpawnResult().setupSuccess()) {",
+        "of": "usage",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 1-2, control and data flow inside a member: the assignments of spawnResults reaching the call and the throw guarding them are not followed from the arguments of the use"
       }
     ]
   },
@@ -1774,7 +2290,9 @@
     "commit": "b934036f85b2afc123ff0dd82b2f09b69775e839",
     "base_commit": "39a2e88964eed986feedf76099c2dcd27709379c",
     "description": "registering a compute group task handles its cancellation by failing the listener",
-    "notes": [],
+    "notes": [
+      "The usages calling the changed sendRequest and startComputeOnRemoteCluster pass listeners (an anonymous NodeListener, lambdas) whose bodies are elided, as the bodies of lambdas and anonymous classes not holding the use are; the onFailure of the NodeListener is what the new catch now calls on a cancelled group task, so its body bears on the change. Telling a callback the changed code invokes from one it only passes on takes following the argument into the parameter the change calls (see the TODO on data and control flow in HunkNetwork, stage 3)."
+    ],
     "expectations": [
       {
         "description": "the call wrapped in the new try reads as unchanged code within the else branch",
@@ -1798,7 +2316,7 @@
     "description": "a blocked orderly pop returns the rest count without the queue backlog",
     "notes": [
       "The parameters topic and queueId, three local declarations (isOrder, offset, future), the brokerController field, getMessageStore and getMaxOffsetInQueue are printed as dependencies, mostly of the removed accumulation; the declaration of offset shows its first value, not the reassigned one the removed line uses.",
-      "The unchanged caller in processRequest, whose `restNum > 0` triggers notifyMessageArriving and whose restNum goes to the response header, is not shown, though the change exists for its effect there."
+      "The calls of popMsgFromQueue (processRequest, popMsgFromTopic) are usages, but the thenApply of processRequest, whose `restNum > 0` triggers notifyMessageArriving and whose restNum goes to the response header, is not: the result flows there through the future, which no usage follows."
     ],
     "expectations": [
       {
@@ -1819,6 +2337,19 @@
         "location": "broker/src/main/java/org/apache/rocketmq/broker/processor/PopMessageProcessor.java::PopMessageProcessor#popMsgFromQueue",
         "body": "boolean isOrder = requestHeader.isOrder();",
         "count": 1
+      },
+      {
+        "description": "the call of popMsgFromQueue in processRequest is a usage",
+        "kind": "usage",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/processor/PopMessageProcessor.java::PopMessageProcessor#processRequest",
+        "body": "public RemotingCommand processRequest(final ChannelHandlerContext ctx, RemotingCommand request)\n    throws RemotingCommandException {\n    ...\n    if (requestHeader.getQueueId() < 0) {\n        ...\n    } else {\n        ...\n        getMessageFuture = getMessageFuture.thenCompose(restNum ->\n            popMsgFromQueue(topicConfig.getTopicName(), requestHeader.getAttemptId(), false,\n                getMessageResult, requestHeader, queueId, restNum, reviveQid, channel, popTime, finalMessageFilter,\n                startOffsetInfo, msgOffsetInfo, finalOrderCountInfo));\n    }\n    ...\n}"
+      },
+      {
+        "description": "the thenApply of processRequest, where the popped restNum triggers notifyMessageArriving, is a usage",
+        "kind": "contains",
+        "text": "if (restNum > 0) {",
+        "of": "usage",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 5, lambdas and futures: the result of popMsgFromQueue reaches thenApply through the future, which no usage follows"
       }
     ]
   },
@@ -1829,7 +2360,7 @@
     "base_commit": "a09cc1620c9f8ac0cb17851b85a051459ee02964",
     "description": "HTTP/2 frames and frame streams get consistent hashCode and equals",
     "notes": [
-      "The unchanged equals of AbstractHttp2StreamFrame and DefaultHttp2PingFrame, which the changed hashCode methods must agree with, are not shown (no relation links a hashCode to the equals of its class)."
+      "The unchanged equals of AbstractHttp2StreamFrame and DefaultHttp2PingFrame, which the changed hashCode methods must agree with, are not shown (no relation links a hashCode to the equals of its class). AbstractHttp2StreamFrame#equals also calls the new DefaultHttp2FrameStream#equals through its stream field (see the stage 4 todo)."
     ],
     "expectations": [
       {
@@ -1843,6 +2374,13 @@
         "kind": "serves",
         "from": "private volatile Http2Stream stream;",
         "to": "+        public boolean equals(Object o) {"
+      },
+      {
+        "description": "the unchanged equals of AbstractHttp2StreamFrame, which now runs the new DefaultHttp2FrameStream#equals on its stream, is a usage of it",
+        "kind": "contains",
+        "of": "usage",
+        "text": "return stream == other.stream() || stream != null && stream.equals(other.stream());",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 4, points-to and type flow for dispatch: AbstractHttp2StreamFrame#equals calls equals on its Http2FrameStream field, and its changed hashCode calls hashCode on it (`return stream.hashCode();`, which the diff of hashCode does not show); DefaultHttp2FrameStream, the only implementation of Http2FrameStream, gets the new equals and hashCode here, so frame equality and hashing now follow them instead of identity, but the calls bind to Object#equals/hashCode, so no usage links the frames to the new methods"
       }
     ]
   },
@@ -1852,7 +2390,6 @@
     "commit": "ffc63d1f3e09d517f50e80777442b1b8f991788c",
     "base_commit": "b360abcca17bd86c7306ba4bdfdb22432bbcd5fd",
     "description": "HTTP decoders check versions strictly through new valueOf and constructor overloads",
-    "notes": [],
     "expectations": [
       {
         "description": "the body extracted to valueOf(String, boolean) reads against the lines it left: only its edits are marked",
@@ -1877,6 +2414,30 @@
         "kind": "diffs",
         "count": 1,
         "location": "codec-http/src/main/java/io/netty/handler/codec/http/HttpVersion.java::HttpVersion#valueOf(String)"
+      },
+      {
+        "description": "the lax VERSION_PATTERN, the other operand of the new strict conditional, is shown",
+        "kind": "contains",
+        "text": "private static final Pattern VERSION_PATTERN ="
+      },
+      {
+        "description": "the lax VERSION_PATTERN serves the new strict conditional choosing it",
+        "kind": "serves",
+        "from": "private static final Pattern VERSION_PATTERN =",
+        "to": "Matcher m = strict ? VERSION_PATTERN_STRICT.matcher(text) : VERSION_PATTERN.matcher(text);"
+      },
+      {
+        "description": "the usage of createMessage in HttpObjectDecoder#decode ends with the catch clause of the READ_INITIAL try",
+        "kind": "absent",
+        "of": "usage",
+        "text": "State nextState = readHeaders(buffer);"
+      },
+      {
+        "description": "the DefaultHttpRequest constructor, which only receives the version computed by the changed argument, is no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public DefaultHttpRequest(HttpVersion httpVersion, HttpMethod method, String uri,",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): the changed argument `HttpVersion.valueOf(initialLine[2], true)` relies on the parameter it is passed to, so the DefaultHttpRequest constructor (and the DefaultHttpResponse one for HttpResponseDecoder#createMessage) is printed with its javadoc (about 12 lines each); the argument keeps its type and the constructor only passes it on, while what the change does (valueOf may now throw, caught by decode) is in the diffs and the decode usage"
       }
     ]
   },
@@ -1907,6 +2468,19 @@
         "kind": "absent",
         "of": "dependency",
         "text": "public static MapperService newMapperService(\n    NamedXContentRegistry xContentRegistry,\n    Path tempDir,\n    Settings indexSettings,\n    String indexName\n) throws IOException {"
+      },
+      {
+        "description": "the LOGSDB and TIME_SERIES constants the new check compares against are printed without the bodies telling nothing about it",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "void validateWithOtherSettings(Map<Setting<?>, Object> settings) {"
+      },
+      {
+        "description": "the method building the metadata whose index mode and settings the new early return reads is a dependency",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "private IndexMetadata buildIndexMetadataForMapperService(",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, data flow across members: the new early return is judged by the index mode and the settings of tmpIndexMetadata, which buildIndexMetadataForMapperService builds from the template and request settings, putting index.mode itself only for a TIME_SERIES template mode (a LOGSDB template mode is not carried, so whether a logsdb index takes the early return depends on its settings naming the mode); the call is on an unchanged line of the diff, so the method building the value is not printed"
       }
     ]
   },
@@ -1918,7 +2492,7 @@
     "description": "adaptive allocator chunks attach to and detach from magazines so that the used memory stays right",
     "notes": [
       "The attach in Magazine#allocate reads within its if, without the poll of the central queue before it that tells where the chunk comes from.",
-      "Chunk#magazine becomes null while a chunk is detached in the central queue, but the unchanged head of deallocate (`mag.parent`, `mag.preferredChunkSize()`) and the unchanged freeCentralQueue releasing queued chunks are not shown.",
+      "Chunk#magazine becomes null while a chunk is detached in the central queue; the unchanged head of deallocate (`mag.parent`, `mag.preferredChunkSize()`) is a usage, but freeCentralQueue releasing queued chunks is not (it reads no changed member).",
       "offerToQueue, whose false result (a freed allocator) now triggers the re-attach in transferChunk, is not printed: the call moved from the old condition to the guard of the new if.",
       "The parameter `Thread currentThread` of allocateFallback is printed as a dependency of its own body."
     ],
@@ -1934,6 +2508,18 @@
         "kind": "serves",
         "from": "+        void attachToMagazine(Magazine magazine) {",
         "to": "curr.attachToMagazine(this);"
+      },
+      {
+        "description": "the head of deallocate dereferencing the magazine the change may null is a usage, through the local holding the field",
+        "kind": "usage",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator.Chunk#deallocate",
+        "body": "private void deallocate() {\n    Magazine mag = magazine;\n    AdaptivePoolingAllocator parent = mag.parent;\n    int chunkSize = mag.preferredChunkSize();\n    ...\n}"
+      },
+      {
+        "description": "usedMemory, counting the chunks of the central queue apart from the magazine counters the changes now keep free of them, reads with the changes",
+        "kind": "contains",
+        "text": "sum += chunk.capacity();",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, effect slices forward from a changed value: the changes move a chunk's capacity out of its magazine's usedMemory when it is detached for the central queue (transferChunk, deallocate) and back in when attached, because AdaptivePoolingAllocator#usedMemory counts the queued chunks by its own loop (`sum += chunk.capacity();`) and adds the magazine counters, so a chunk transferChunk queued while still counted by its magazine was counted twice (the bug fixed); usedMemory only reads Magazine#usedMemory, a field the changes use but do not change, so it is no usage and the total the fix makes right is not shown"
       }
     ]
   },
@@ -1994,7 +2580,7 @@
     "description": "notifications return polling stats in a NotifyResult; the broker flags a full polling",
     "notes": [
       "NotifyResult is printed before the broker change, between the field and the accessors of NotificationResponseHeader, far from the client diffs it serves.",
-      "The polling dependency is the three-argument overload, which only delegates; the overload returning POLLING_FULL (polling size limits, failed add) is not shown."
+      "No PopLongPollingService#polling overload is printed: the call only moved out of the if condition into the local pollingResult, so it brings no dependency; the five-argument overload returning POLLING_FULL (polling size limits, failed add), which the new branch relies on, is not shown (see the stage 3 todo)."
     ],
     "expectations": [
       {
@@ -2021,6 +2607,13 @@
         "kind": "absent",
         "of": "dependency",
         "text": "public PollingHeader(NotificationRequestHeader requestHeader) {"
+      },
+      {
+        "description": "the polling overload returning POLLING_FULL serves the new branch flagging a full polling",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "return POLLING_FULL;",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, return -> call site: the new `else if (pollingResult == PollingResult.POLLING_FULL)` branch is judged by when PopLongPollingService#polling returns POLLING_FULL, which the five-argument overload does for a full total polling (maxPopPollingSize), a full queue of the key (popPollingSize) and a failed add, reached through the three-argument overload the call binds to, which only delegates; the call only moved out of the if condition into the local, so neither overload is printed"
       }
     ]
   },
@@ -2031,7 +2624,7 @@
     "base_commit": "0cf9c54f6583a82de05c4543b123c6c1f190092f",
     "description": "XContentGenerator#copyCurrentEvent copies big integers and big decimals",
     "notes": [
-      "The new test brings 26 dependencies, 16 of them the XContentBuilder methods building its input (only field(String, BigInteger) and field(String, BigDecimal) bear on the fix).",
+      "The new test brings 30 dependencies, 16 of them the XContentBuilder methods building its input (only field(String, BigInteger) and field(String, BigDecimal) bear on the fix) and 4 the XContentType constants it loops over, printed by their names and arguments.",
       "The fix and its test are linked only through the unchanged JsonXContentGenerator#copyCurrentStructure (the instanceof fast path, else the copyCurrentEvent loop), which is not shown; the fix serves nothing.",
       "The abstract delegate() the anonymous FilterXContentParser of the test overrides is not printed."
     ],
@@ -2059,6 +2652,18 @@
         "kind": "dependency",
         "location": "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentParser.java::XContentParser.NumberType",
         "body": "BIG_DECIMAL"
+      },
+      {
+        "description": "the methods of FilterXContentParser calling delegate() on themselves are no usages of the new override of a test",
+        "kind": "absent",
+        "text": "return delegate().",
+        "of": "usage"
+      },
+      {
+        "description": "the XContentType constants the test loops over are printed without their bodies",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public String mediaTypeWithoutParameters() {"
       }
     ]
   },
@@ -2077,6 +2682,58 @@
         "kind": "diff",
         "location": "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRemotingClient.java::NettyRemotingClient#closeChannel(String, Channel)",
         "body": "                 try {\n                     boolean removeItemFromTable = true;\n                     final ChannelWrapper prevCW = this.channelTables.get(addrRemote);\n \n-                    LOGGER.info(\"closeChannel: begin close the channel[{}] Found: {}\", addrRemote, prevCW != null);\n+                    LOGGER.info(\"closeChannel: begin close the channel[{}], channelId={} Found: {}\", addrRemote, channel.id(), prevCW != null);\n \n                     if (null == prevCW) {\n-                        LOGGER.info(\"closeChannel: the channel[{}] has been removed from the channel table before\", addrRemote);\n+                        LOGGER.info(\"closeChannel: the channel[{}], channelId={} has been removed from the channel table before\", addrRemote, channel.id());\n                         removeItemFromTable = false;\n                     } else if (prevCW.isWrapperOf(channel)) {\n-                        LOGGER.info(\"closeChannel: the channel[{}] has been closed before, and has been created again, nothing to do.\",\n-                            addrRemote);\n+                        LOGGER.info(\"closeChannel: the channel[{}], channelId={} has been closed before, and has been created again, nothing to do.\",\n+                            addrRemote, channel.id());\n                         removeItemFromTable = false;\n                     }\n \n                     if (removeItemFromTable) {\n                         ChannelWrapper channelWrapper = this.channelWrapperTables.remove(channel);\n                         if (channelWrapper != null && channelWrapper.tryClose(channel)) {\n                             this.channelTables.remove(addrRemote);\n                         }\n-                        LOGGER.info(\"closeChannel: the channel[{}] was removed from channel table\", addrRemote);\n+                        LOGGER.info(\"closeChannel: the channel[{}], channelId={}, was removed from channel table\", addrRemote, channel.id());\n                     }\n \n                     RemotingHelper.closeChannel(channel);\n                 } catch (Exception e) {"
+      },
+      {
+        "description": "tryClose, used by the changed closeChannel(Channel) and reading the channelFuture the changed reconnect sets, is one dependency bridging them",
+        "kind": "uses",
+        "from": "public boolean tryClose(Channel channel) {",
+        "to": "channelWrapper reconnect try lock fail"
+      },
+      {
+        "description": "the bridge serves the changed closeChannel(Channel)",
+        "kind": "serves",
+        "from": "public boolean tryClose(Channel channel) {",
+        "to": "eventCloseChannel: the channel[addr={}, id={}] has been removed from the channel table before"
+      },
+      {
+        "description": "reconnect, which closeChannel(Channel) relies on through tryClose, reads before it",
+        "kind": "order",
+        "before": "channelWrapper reconnect try lock fail",
+        "after": "eventCloseChannel: the channel[addr={}, id={}] has been removed from the channel table before"
+      },
+      {
+        "description": "tryClose is printed once",
+        "kind": "contains",
+        "text": "public boolean tryClose(Channel channel) {",
+        "count": 1
+      },
+      {
+        "description": "processMessageReceived, calling processResponseCommand whose change only edits a log message, is no usage",
+        "kind": "absent",
+        "of": "usage",
+        "text": "processResponseCommand(ctx, msg);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stopping rules, values only logged: the only change of processResponseCommand adds the channel id to a log message, which gives its callers nothing, yet processMessageReceived is printed as a usage of it"
+      },
+      {
+        "description": "invokeImpl of NettyRemotingAbstract, calling invoke0 whose changes only edit log messages, is no usage",
+        "kind": "absent",
+        "of": "usage",
+        "text": "return invoke0(channel, request, timeoutMillis);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stopping rules, values only logged: both changes of invoke0 only rewrite log messages (one in a lambda, one in a catch), which gives its callers nothing, yet NettyRemotingAbstract#invokeImpl is printed as a usage of them"
+      },
+      {
+        "description": "no caller of closeChannel(String, Channel), whose changes only edit log messages, is a usage of it",
+        "kind": "absent",
+        "of": "usage",
+        "text": "closeChannel(addr, ",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stopping rules, values only logged: the four changes of closeChannel(String, Channel) only add the channel id to log messages, which gives its callers nothing, yet invokeSync (itself a diff), closeChannels, invokeAsync, invokeOneway and scanChannelTablesOfNameServer are printed as usages of it (about 85 lines) and invoke uses it besides the changed invokeImpl; the same diff also serves the invokeSync diff"
+      },
+      {
+        "description": "parseChannelRemoteAddr, called by closeChannel(Channel) only for an argument of a log message, is no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static String parseChannelRemoteAddr(final Channel channel) {",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stopping rules, values only logged: the new call of RemotingHelper#parseChannelRemoteAddr in closeChannel(Channel) only fills a placeholder of a log message, so its 20-line body tells a reviewer nothing"
       }
     ]
   },
@@ -2086,7 +2743,10 @@
     "commit": "f51dd2cd5350241e08accfe888e0c06d72861868",
     "base_commit": "fbcde9c0fd40c3f461af0cefe1af6eabe9da5091",
     "description": "date field mappers keep the data stream timestamp at a well-known key so that the timestamp and tsid mappers read it without iterating fields; test mapper services apply the default mapping of the index mode",
-    "notes": [],
+    "notes": [
+      "The test changes (the fixed @timestamp of BinaryFieldMapperTests, the later TIME_SERIES_END_TIME of TimeSeriesIdFieldMapperTests and TimeSeriesRoutingHashFieldMapperTests) adapt to the default mapping TestMapperServiceBuilder#build now applies, which enables the timestamp validation of DataStreamTimestampFieldMapper; nothing links them to that change (the settings reach build through unchanged createMapperService overloads, the timestamp through parsing and postParse).",
+      "The unchanged TimeSeriesIdFieldMapper#postParse, the only caller of the changed TsidExtractingIdFieldMapper#createField, is not shown: its file is outside the model (see the TODO on forward extensions in HunkNetwork)."
+    ],
     "expectations": [
       {
         "description": "the parameter renamed in the signature is presented by the diff of the constructor, not again by one of its own",
@@ -2111,6 +2771,19 @@
         "kind": "absent",
         "of": "dependency",
         "text": "public static TransportVersion current() {"
+      },
+      {
+        "description": "the super call only passes the renamed parameter, so it uses nothing anew: the constructor of FieldMapper is no dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "protected FieldMapper("
+      },
+      {
+        "description": "the default mapping the test mapper service now applies, which the end times of the time series tests adapt to, reads before them",
+        "kind": "order",
+        "before": "if (indexSettings.getMode().getDefaultMapping() != null) {",
+        "after": "MapperService.INDEX_MAPPING_DIMENSION_FIELDS_LIMIT_SETTING.getKey(), 200)",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3: TimeSeriesIdFieldMapperTests#createDocumentMapper widens TIME_SERIES_END_TIME because TestMapperServiceBuilder#build now merges the default mapping of the index mode, so DataStreamTimestampFieldMapper validates the timestamp bounds; the settings reach build only through the unchanged createMapperService overloads of MapperServiceTestCase, so no link ties the tests to the change they adapt to and the build diff, being test framework code, reads last"
       }
     ]
   },
@@ -2122,8 +2795,9 @@
     "description": "the minimal BEP upload mode marks unimportant paths omitted when reading their metadata",
     "notes": [
       "Each existing test now passing RemoteBuildEventUploadMode.ALL to newArtifactUploader is a two-line diff.",
-      "The unchanged queryRemoteCache queries every omitted path, so the MINIMAL early return now sends paths that are not logs to findMissingDigests (the review asks what the early return saves); that user of the omitted flag is not shown.",
-      "Deleted code brings its dependencies (PathMetadata#getPath, PathMetadata#isBuildToolLog), and the new MINIMAL test brings about 20 scaffolding dependencies."
+      "The unchanged queryRemoteCache, querying every omitted path, so that the MINIMAL early return now sends paths that are not logs to findMissingDigests, is a usage of shouldUpload.",
+      "Deleted code brings its dependencies (PathMetadata#getPath, PathMetadata#isBuildToolLog), and the new MINIMAL test brings about 20 scaffolding dependencies.",
+      "The comment-only diff of PathConverterImpl#apply serves the new MINIMAL test, which calls apply through PathConverter: processOverrides links a changed override to the callers of the overridden method without the changesBehavior filter of processUsages, so a comment edit is presented as something the test relies on."
     ],
     "expectations": [
       {
@@ -2137,6 +2811,19 @@
         "kind": "unchanged",
         "file": "src/main/java/com/google/devtools/build/lib/remote/ByteStreamBuildEventArtifactUploader.java",
         "code": "/* directory= */ true,"
+      },
+      {
+        "description": "queryRemoteCache querying every omitted path is a usage of the changed shouldUpload",
+        "kind": "usage",
+        "location": "src/main/java/com/google/devtools/build/lib/remote/ByteStreamBuildEventArtifactUploader.java::ByteStreamBuildEventArtifactUploader#queryRemoteCache",
+        "body": "private Single<List<PathMetadata>> queryRemoteCache(\n    RemoteCache remoteCache, RemoteActionExecutionContext context, List<PathMetadata> paths) {\n  ...\n  for (PathMetadata path : paths) {\n    ...\n    if (shouldUpload(path) || path.isOmitted()) {\n      filesToQuery.add(path);\n      digestsToQuery.add(path.getDigest());\n    } else {\n      knownRemotePaths.add(path);\n    }\n  }\n  ...\n}"
+      },
+      {
+        "description": "queryRemoteCache, querying every omitted path, reads the omitted flag the MINIMAL early return of readPathMetadata now sets",
+        "kind": "uses",
+        "from": "if (shouldUpload(path) || path.isOmitted()) {",
+        "to": "/* omitted= */ true,",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 5: the PathMetadata the new MINIMAL early return of readPathMetadata builds with omitted true reaches queryRemoteCache through the map and flatMap lambdas of doUpload, where path.isOmitted() now sends every path that is not a log to findMissingDigests; queryRemoteCache is linked to the shouldUpload diff only, so what functionally changes (the question of the real reviewer) is not tied to the early return"
       }
     ]
   },
@@ -2149,7 +2836,9 @@
     "notes": [
       "Adding a setting to ClusterSettings prints the whole Stream.of list of about 390 settings.",
       "The TestNode constructor body, only moved into the new TestNode(String, Settings) with one argument changed, reads as added whole; only the declarations its changed argument uses are dependencies.",
-      "The new enableStackOverflowAvoidance field, serving only the new constructor, reads before onConnectionClosed, which does not use it."
+      "The new enableStackOverflowAvoidance field, serving only the new constructor, reads before onConnectionClosed, which does not use it.",
+      "The new tests bring about 25 scaffolding dependencies (test framework helpers, ActionListener#assertOnce of 48 lines, the Settings builder steps).",
+      "The notify loop of onConnectionClosed, moved out of the doRun of the anonymous AbstractRunnable it ran in later, now runs on the closing thread, so it brings what it uses as dependencies: the NodeDisconnectedException constructor, and the tracerLog field and shouldTraceAction of its trace logging, which tell a reviewer nothing (see the TODO on noisy dependencies in HunkNetwork)."
     ],
     "expectations": [
       {
@@ -2164,6 +2853,19 @@
         "text": "AwarenessAllocationDecider.CLUSTER_ROUTING_ALLOCATION_AWARENESS_ATTRIBUTE_SETTING,",
         "of": "diff",
         "todo": "a change of one item of a long expression list prints the whole list as its context"
+      },
+      {
+        "description": "test framework helpers used by the new tests are not printed",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static <T> T safeGet(Future<T> future) {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): ESTestCase#safeGet, #assertThat, #assertWarnings, #randomFrom, #randomBoolean and ActionTestUtils#assertNoSuccessListener, reached only from the new tests, tell a reviewer nothing"
+      },
+      {
+        "description": "a constructor delegating to the changed one through this(...) is a usage reading from its this( line",
+        "kind": "contains",
+        "of": "usage",
+        "text": "    Tracer tracer\n) {\n    this(\n        settings,"
       }
     ]
   },
@@ -2175,7 +2877,8 @@
     "description": "an opt-in adaptive back-off lock (useABSLock, false by default) is added beside the existing put message locks and chosen in the CommitLog constructor",
     "notes": [
       "The existing PutMessageReentrantLock and PutMessageSpinLock, which BackOffReentrantLock copies and BackOffSpinLock re-implements with back-off, and the PutMessageLock interface whose methods the new interface redeclares, are not shown.",
-      "Each added file reads with its license header, package and imports, which tell the reviewer nothing."
+      "Each added file reads with its license header, package and imports, which tell the reviewer nothing.",
+      "DLedgerCommitLog (store/dledger, not in the model) extends CommitLog: its constructor calls super(defaultMessageStore), so it gets the adaptive lock too when useABSLock is set, and its own asyncPutMessage and asyncPutMessages lock and unlock putMessageLock. These users of the lock the changed constructor chooses are not usages (see the TODO on forward extensions); only the three CommitLog users and the else branch of DefaultMessageStore creating CommitLog are shown, and the elided if branch of that usage creates the DLedgerCommitLog."
     ],
     "expectations": [
       {
@@ -2191,12 +2894,12 @@
     "repository": "netty/netty",
     "commit": "d3a7403924f4a1bc4aa14603d6abb0f677ad8077",
     "base_commit": "7ed972d070f9c1f8d89cc226568e61e3b5f2a6f5",
-    "description": "epoll drops edge-triggered mode: every read loop ends with shouldStopReading/clearEpollIn instead of epollInFinally; EpollMode and its setters are deprecated no-ops; the ET/LT variants of six tests are merged into one test each",
+    "description": "epoll drops edge-triggered mode: every read loop ends with shouldStopReading/clearEpollIn instead of epollInFinally; EpollMode and its setters are deprecated no-ops; the ET/LT variants of six tests are merged into one test each, and those of the busy-wait echo test are deleted",
     "notes": [
       "RM reports each ET/LT pair of tests as a Merge Class into one EpollSocket*Test, but its AST diff maps only the moved newFactories(): the class declarations, the license header, the package and the imports of both merged classes are unmapped, so each family prints as two whole deleted files and one whole added file (about 120 lines for a 9-line change), where the raw diff shows the ET test renamed with configure() removed.",
       "The five read loop bodies (four epollInReady and EpollDomainSocketChannel#epollInReadFd) are printed whole, as their changes reach from their first statements to their finally blocks.",
       "shouldStopReading reads as new code, though its comment and its condition come from the else branch of the removed epollInFinally, which RM maps to the new if statements of its callers (Move And Inline Method).",
-      "The unchanged callers of the changed maybeMoreDataToRead (the maybeMoreDataSupplier of EpollRecvByteAllocatorHandle) are not shown.",
+      "The unchanged callers of the changed maybeMoreDataToRead (the maybeMoreDataSupplier of EpollRecvByteAllocatorHandle) and the readers of the now no-op getEpollMode (the spliceTo checks) are usages; the location of the supplier names its method (#get), not the field declaring the anonymous class.",
       "Imports are not shown: the removed ObjectUtil and EventLoop imports and the added logger imports are invisible.",
       "The changed continueReading(UncheckedBooleanSupplier), where RDHUP now keeps the loop reading in place of the removed RDHUP re-read of epollInFinally, serves nothing and reads after the read loops, which call it only on unchanged lines.",
       "Deleted code brings its dependencies: AbstractBootstrap#option and ServerBootstrap#childOption for the deleted configure() of the tests, EpollIoOps#with/#without for the removed add/remove, checkNotNull, eventLoop(), isActive(), config(). Some of them are the only sign of code the change leaves dead (checkChannelNotRegistered, epollInReadyRunnable, EPOLLET)."
@@ -2270,6 +2973,33 @@
         "text": "-public class EpollLTSocketAutoReadTest extends SocketAutoReadTest {\n+public class EpollSocketAutoReadTest extends SocketAutoReadTest {",
         "of": "diff",
         "todo": "RM (to report): the type declarations of the classes of a Merge Class are not mapped to the merged class (see the newFactories() expectation)"
+      },
+      {
+        "description": "the maybeMoreDataSupplier calling the changed maybeMoreDataToRead is a usage",
+        "kind": "usage",
+        "location": "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollRecvByteAllocatorHandle.java::EpollRecvByteAllocatorHandle#get",
+        "body": "private final UncheckedBooleanSupplier defaultMaybeMoreDataSupplier = new UncheckedBooleanSupplier() {\n    ...\n    public boolean get() {\n        return maybeMoreDataToRead();\n    }\n};"
+      },
+      {
+        "description": "the changed continueReading serves the read loop of the datagram channel, which calls it on unchanged lines",
+        "kind": "serves",
+        "from": "return isReceivedRdHup() ||",
+        "to": "Try to use scattering reads via recvmmsg(...) syscall.",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 6, ordering by uses on unchanged lines: the read loops show calls of continueReading on unchanged lines, but its diff prints after them, so it cannot serve them"
+      },
+      {
+        "description": "the delegate continueReading that the new RDHUP check bypasses, and that consults the changed maybeMoreDataToRead, is printed",
+        "kind": "contains",
+        "text": "return config.isAutoRead() &&",
+        "of": "dependency",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 4, points-to for dispatch: the new `isReceivedRdHup() ||` of continueReading(UncheckedBooleanSupplier) skips the delegate's check, and the changed maybeMoreDataToRead reaches that check only through the supplier passed to it. The delegate is the MaxMessageHandle of the configured allocator (DefaultMaxMessagesRecvByteBufAllocator, wrapped by the EpollRecvByteAllocatorHandle constructor). Its continueReading (`return config.isAutoRead() && (!respectMaybeMoreData || maybeMoreDataSupplier.get()) && totalMessages < maxMessagePerRead && ...`) tells a reviewer two things. After RDHUP, the read loops now go on regardless of autoRead and maxMessagesPerRead. And maybeMoreDataToRead is consulted only when respectMaybeMoreData is set. Neither the interface method ExtendedHandle#continueReading, which the call binds to through the cast of delegate(), nor the implementation is printed. Telling the implementation takes what the delegate holds, and DefaultMaxMessagesRecvByteBufAllocator.java is not in the model."
+      },
+      {
+        "description": "the unchanged covariant override EpollDatagramChannelConfig#setEpollMode, calling the now no-op setEpollMode through super, is a usage",
+        "kind": "contains",
+        "text": "super.setEpollMode(mode);",
+        "of": "usage",
+        "todo": "forward extensions (see the TODO on forward extensions in HunkNetwork): the unchanged EpollDatagramChannelConfig#setEpollMode (`super.setEpollMode(mode); return this;`) is the setter that callers configuring a datagram channel reach. It now only logs through the no-op setEpollMode and is not deprecated with it. Its file is in the test cache but in neither model once the graph is built (it is read, not attached), so its super call is not found as a usage of the changed setEpollMode; the same overrides of EpollSocketChannelConfig, EpollServerChannelConfig, EpollDomainSocketChannelConfig and EpollDomainDatagramChannelConfig are outside the model too"
       }
     ]
   },
@@ -2278,11 +3008,12 @@
     "repository": "netty/netty",
     "commit": "57558bbcc1c493a94aa937e9c7ae9c386ba16cef",
     "base_commit": "d0588b0eed4a9269591073ebc6d825930c601e20",
-    "description": "heap arenas keep their last destroyed chunk for reuse, reading the sizing fields PoolChunk now exposes; a test checks the reuse; unrelated histogram and visibility edits of AdaptivePoolingAllocator and a try/finally in DatagramUnicastTest",
+    "description": "heap arenas keep their last destroyed chunk for reuse, reading the sizing fields PoolChunk now exposes; a new allocation test checks the reuse, and for the adaptive allocator it needed the histogram fixes of AdaptivePoolingAllocator (INIT_DATUM_TARGET, the bucket mask of sizeBucket); deallocate made private and a try/finally in DatagramUnicastTest are unrelated",
     "notes": [
-      "INIT_DATUM_TARGET drops from 8192 to 9 and sizeBucket moves the bucket mask; their unchanged users (`datumTarget = INIT_DATUM_TARGET`, the sizeBucket call of allocate) are not shown, and HISTO_MAX_BUCKET_MASK is printed without the HISTO_BUCKET_COUNT it is computed from.",
-      "deallocate is printed whole (23 lines) for its protected modifier becoming private; its only caller (release) is not shown.",
-      "Imports are not shown (the new AtomicReference, assertj and Assumptions imports)."
+      "INIT_DATUM_TARGET drops from 8192 to 9 and sizeBucket moves the bucket mask; their unchanged users are usages, but HISTO_MAX_BUCKET_MASK is printed without the HISTO_BUCKET_COUNT it is computed from.",
+      "deallocate is printed whole (23 lines) for its protected modifier becoming private; its only caller (release) is not a usage, as a modifier change gives callers nothing new.",
+      "Imports are not shown (the new AtomicReference, assertj and Assumptions imports).",
+      "The new shouldReuseChunks of AbstractByteBufAllocatorTest also runs in AdaptiveByteBufAllocatorTest (not in the model), where it caught the bug fixed by the INIT_DATUM_TARGET and sizeBucket changes (the PR author: \"The allocation test caught this, because the chunks were too small, causing excess allocation\"). Nothing links the test to AdaptivePoolingAllocator: newAllocator is printed only as its abstract declaration, and the override creating the adaptive allocator is reached only by dispatch from a test file outside the model. So the output gives no hint of the only test covering the histogram changes, which is what the real reviewer asked about."
     ],
     "expectations": [
       {
@@ -2330,8 +3061,33 @@
       {
         "description": "the unchanged user of the changed INIT_DATUM_TARGET is shown",
         "kind": "contains",
-        "text": "private int datumTarget = INIT_DATUM_TARGET;",
-        "todo": "unchanged code using a changed declaration is not represented (see the TODO on forward extensions in HunkNetwork), though the 9 the constant now holds is judged by the field it initializes"
+        "text": "private int datumTarget = INIT_DATUM_TARGET;"
+      },
+      {
+        "description": "the field initialized by the changed INIT_DATUM_TARGET is a usage",
+        "kind": "usage",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator.AllocationStatistics",
+        "body": "private int datumTarget = INIT_DATUM_TARGET;"
+      },
+      {
+        "description": "the sizeBucket call of allocate is a usage of the changed sizeBucket",
+        "kind": "usage",
+        "location": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java::AdaptivePoolingAllocator#allocate(int, int, Thread, AdaptiveByteBuf)",
+        "body": "private AdaptiveByteBuf allocate(int size, int maxCapacity, Thread currentThread, AdaptiveByteBuf buf) {\n    int sizeBucket = AllocationStatistics.sizeBucket(size); // Compute outside of Magazine lock for better ILP.\n    ...\n}"
+      },
+      {
+        "description": "the reader of datumTarget, which the changed INIT_DATUM_TARGET initializes, is shown",
+        "kind": "contains",
+        "text": "if (datumCount++ == datumTarget) {",
+        "of": "usage",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, data flow across members: INIT_DATUM_TARGET only seeds the field datumTarget. recordAllocationSize compares that field with the allocation count to rotate the histograms (`if (datumCount++ == datumTarget) {`). So 8192 -> 9 means that the first rotation, and with it the first adapted chunk size, comes after 10 allocations instead of 8193. The usage stops at the field initializer `private int datumTarget = INIT_DATUM_TARGET;`, as a field initialized from a changed constant does not count as changed for the code reading it."
+      },
+      {
+        "description": "the destroyChunk call of freeChunk is printed with the definition of the local guarding it",
+        "kind": "contains",
+        "text": "destroyChunk = !chunk.parent.free(chunk, handle, normCapacity, nioBuffer);",
+        "of": "usage",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 2, data flow in a member: the freeChunk usage shows `if (destroyChunk) { ... destroyChunk(chunk); }` but elides where the local comes from: `destroyChunk = !chunk.parent.free(chunk, handle, normCapacity, nioBuffer);`, under the arena lock. That definition tells that a pooled chunk reaches the new destroyChunk, which now keeps it for reuse by newChunk, only once its chunk list has freed it entirely. The elided unlock before the call is what the non-atomic check-and-set of the new destroyChunk relies on."
       }
     ]
   },
@@ -2343,7 +3099,8 @@
     "description": "the encoder and tags_schema highlighting settings move from HighlightBuilder up to AbstractHighlighterBuilder (field, accessors, parsing, serialization, equality), so fields can set them too; transferOptions applies the encoder for both levels; tests cover field-level tags_schema",
     "notes": [
       "setRandomCommonOptions is printed whole (about 85 lines) for the one if moved into it, and testBuildSearchContextHighlight (about 50 lines) for its two edits, as statements read within the member body.",
-      "The YAML changelog is not shown."
+      "The YAML changelog is not shown.",
+      "`HB::encoder` of setupParser and `AbstractHighlighterBuilder::encoder` of the test are still not bound: encoder has two overloads, and a method reference is bound only when its receiver type has a single method of the name (MemberUsageFinder, 'Derivable from RM, not derived here yet'); the diff of the pulled-up setters serves setupParser through `HB::tagsSchema`."
     ],
     "expectations": [
       {
@@ -2375,6 +3132,31 @@
         "kind": "diff",
         "location": "server/src/test/java/org/elasticsearch/search/fetch/subphase/highlight/HighlightBuilderTests.java::HighlightBuilderTests#testParsingTagsSchema",
         "body": "     public void testParsingTagsSchema() throws IOException {\n \n         String highlightElement = \"\"\"\n             {\n                 \"tags_schema\" : \"styled\"\n             }\n             \"\"\";\n         try (XContentParser parser = createParser(JsonXContent.jsonXContent, highlightElement)) {\n \n             HighlightBuilder highlightBuilder = HighlightBuilder.fromXContent(parser);\n             assertArrayEquals(\n                 \"setting tags_schema 'styled' should alter pre_tags\",\n                 HighlightBuilder.DEFAULT_STYLED_PRE_TAG,\n                 highlightBuilder.preTags()\n             );\n             assertArrayEquals(\n                 \"setting tags_schema 'styled' should alter post_tags\",\n                 HighlightBuilder.DEFAULT_STYLED_POST_TAGS,\n                 highlightBuilder.postTags()\n             );\n \n             highlightElement = \"\"\"\n                 {\n                     \"tags_schema\" : \"default\"\n                 }\n                 \"\"\";\n         }\n+        try (XContentParser parser = createParser(JsonXContent.jsonXContent, highlightElement)) {\n+\n+            HighlightBuilder highlightBuilder = HighlightBuilder.fromXContent(parser);\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' should alter pre_tags\",\n+                HighlightBuilder.DEFAULT_PRE_TAGS,\n+                highlightBuilder.preTags()\n+            );\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' should alter post_tags\",\n+                HighlightBuilder.DEFAULT_POST_TAGS,\n+                highlightBuilder.postTags()\n+            );\n+\n+        }\n+\n+        highlightElement = \"\"\"\n+            {\n+                \"fields\": {\n+                    \"default_string\": {\n+                        \"tags_schema\": \"default\"\n+                    },\n+                    \"styled_string\": {\n+                        \"tags_schema\": \"styled\"\n+                    }\n+                }\n+            }\n+            \"\"\";\n         try (XContentParser parser = createParser(JsonXContent.jsonXContent, highlightElement)) {\n \n             HighlightBuilder highlightBuilder = HighlightBuilder.fromXContent(parser);\n-            assertArrayEquals(\n-                \"setting tags_schema 'default' should alter pre_tags\",\n-                HighlightBuilder.DEFAULT_PRE_TAGS,\n-                highlightBuilder.preTags()\n-            );\n-            assertArrayEquals(\n-                \"setting tags_schema 'default' should alter post_tags\",\n-                HighlightBuilder.DEFAULT_POST_TAGS,\n-                highlightBuilder.postTags()\n-            );\n+            Field defaultStringField = getFieldBuilderByName(highlightBuilder, \"default_string\");\n+            assertNotNull(defaultStringField);\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' at the field level should alter pre_tags for that field\",\n+                HighlightBuilder.DEFAULT_PRE_TAGS,\n+                defaultStringField.preTags()\n+            );\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' at the field level should alter post_tags for that that field\",\n+                HighlightBuilder.DEFAULT_POST_TAGS,\n+                defaultStringField.postTags()\n+            );\n+\n+            Field styledStringField = getFieldBuilderByName(highlightBuilder, \"styled_string\");\n+            assertNotNull(styledStringField);\n+            assertArrayEquals(\n+                \"setting tags_schema 'default' at the field level should alter pre_tags for that that field\",\n+                HighlightBuilder.DEFAULT_STYLED_PRE_TAG,\n+                styledStringField.preTags()\n+            );\n+            assertArrayEquals(\n+                \"setting tags_schema 'styled' at the field level should alter post_tags for that that field\",\n+                HighlightBuilder.DEFAULT_STYLED_POST_TAGS,\n+                styledStringField.postTags()\n+            );\n \n             XContentParseException e = expectParseThrows(XContentParseException.class, \"\"\"\n                 {\n                     \"tags_schema\" : \"somthing_else\"\n                 }\n                 \"\"\");\n             assertThat(e.getMessage(), containsString(\"[highlight] failed to parse field [tags_schema]\"));\n             assertEquals(\"Unknown tag schema [somthing_else]\", e.getCause().getMessage());\n         }\n     }"
+      },
+      {
+        "description": "the pulled-up tagsSchema and encoder setters serve setupParser declaring them for both levels",
+        "kind": "serves",
+        "from": "public HB tagsSchema(String schemaName)",
+        "to": "parser.declareString(HB::tagsSchema, TAGS_SCHEMA_FIELD);"
+      },
+      {
+        "description": "the unchanged Field stream constructor shows its super(in) call of the changed AbstractHighlighterBuilder(StreamInput)",
+        "kind": "contains",
+        "of": "usage",
+        "text": "super(in);"
+      },
+      {
+        "description": "mergeBeforeChek, which gives the new encoder check of testBuildSearchContextHighlight its meaning, is printed",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "Object fieldLevelValue = highlightBuilderParameterAccessor.apply(fieldBuilder);",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 2, data flow in a member: the added `checkSame.accept(AbstractHighlighterBuilder::encoder, FieldOptions::encoder)` replaces the removed assertion with its explicit `HighlightBuilder.DEFAULT_ENCODER` fallback. What the new check expects (the field value, else the global value, else the value of HighlightBuilder.defaultOptions) is the lambda that mergeBeforeChek returns into checkSame. That happens on an unchanged line of the printed diff, so mergeBeforeChek is no dependency, and a reviewer cannot tell whether the default encoder is still checked. DEFAULT_ENCODER is printed, but only for the removed line."
+      },
+      {
+        "description": "the Field copy constructor, calling the changed copy constructor through super(template, builder), is a usage",
+        "kind": "contains",
+        "of": "usage",
+        "text": "private Field(Field template, QueryBuilder builder) {\n    super(template, builder);"
       }
     ]
   },
@@ -2385,10 +3167,11 @@
     "base_commit": "1fe3ed1e850c12d21806061e53687c0f1bd96738",
     "description": "Row is replaced by a LocalRelation in a new logical optimizer rule (ReplaceRowAsLocalRelation) instead of in the mapper, so RowExec, its serialization test, its planning branch and planRow are deleted; tests expect a LocalRelation",
     "notes": [
-      "The conversion removed from MapperUtils#mapLeaf and the new ReplaceRowAsLocalRelation#rule taking it over are not linked as a move (the loop became a forEach); their shared dependencies are printed before the rule, but the removal reads about 250 lines after it.",
+      "The conversion removed from MapperUtils#mapLeaf and the new ReplaceRowAsLocalRelation#rule taking it over are not linked as a move (the loop became a forEach). Their shared dependencies are printed before the rule, but the removal reads about 320 lines after it (about 90 of them are the recursive usages of plan, see the todo).",
       "Expression#fold, a dependency of both conversions, is the base method throwing `Should not fold expression`; the foldable expressions whose overrides the conversion calls are not shown, which a reviewing model read as a bug.",
       "The removed planRow brings the Layout.Builder methods and PhysicalOperation#fromSource it used, and the removed branch of plan brings the node and context parameters.",
-      "plan is printed whole (about 50 lines of its if/else-if chain) for the one branch removed from it."
+      "plan is printed whole (about 50 lines of its if/else-if chain) for the one branch removed from it.",
+      "MapperUtils#mapLeaf now leaves a Row to unsupported(p). This relies on every plan reaching the mappers having gone through the cleanup batch of the logical optimizer. Its callers Mapper#mapLeaf and LocalMapper#mapLeaf (planner/mapper, not in the model) are not shown as usages (see the TODO on forward extensions)."
     ],
     "expectations": [
       {
@@ -2432,6 +3215,20 @@
         "kind": "order",
         "before": "private PhysicalOperation planRow(",
         "after": "public class RowExecSerializationTests"
+      },
+      {
+        "description": "the recursive calls of plan from the plan* methods of the planner are no usages of the removed branch",
+        "kind": "absent",
+        "of": "usage",
+        "text": "private PhysicalOperation plan",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stopping rules, recursion through the changed member itself: the RowExec branch is removed from plan(PhysicalPlan, LocalExecutionPlannerContext). Its 15 callers within the planner (planAggregation, planEval, planTopN, ..., each planning its child with `plan(x.child(), context)`) are the recursion of plan itself, and the removal gives them nothing to review, as no RowExec can reach them any more. Yet they are printed as 15 usages, about 90 lines between the plan diff and the mapLeaf diff. Only the usage of the entry point plan(PhysicalPlan) should remain."
+      },
+      {
+        "description": "the deleted RowExec serves the removed planRow calling its fields and output",
+        "kind": "serves",
+        "from": "public class RowExec extends LeafExec",
+        "to": "private PhysicalOperation planRow(",
+        "todo": "the removed planRow calls `row.fields()` and `row.output()` on its RowExec parameter, and these are members of the deleted RowExec. Yet the RowExec deletion serves only its test, which it reaches through the creation `new RowExec(...)` (processClassLevelRelations finds the class by name). PlanWritables' removed `RowExec.ENTRY` is not served either. In planRow, `f.child().fold()` is not served by Alias#child and Expression#fold, which serve the two other conversions, and the overloaded `layout.append(row.output())` brings no Layout.Builder#append, as these are called on what RowExec's members return. The calls that do not depend on RowExec (new Layout.Builder(), layout.build(), PhysicalOperation.fromSource) are bound. RowExec is a class of the parent model, but ReceiverTypeResolver finds the file of a type name through a FilePathResolver over the RepositoryStateFiles of the new revision, which has no RowExec.java (deleted), so no call on a RowExec is bound in the old revision; the old revision's files (the new tree without the added files, with the deleted ones) would find it"
       }
     ]
   },
@@ -2444,7 +3241,9 @@
     "notes": [
       "The test casts `(String) isNull()` because the new getConsumeStats(String, String, List<String>, long) makes the call ambiguous; the cast is served by the String overload it binds to, and nothing relates it to the overload making it necessary.",
       "getConsumeStats of AdminBrokerProcessor is printed whole (about 95 lines) for edits at its top and the subscription block removed from its loop, as statements read within the member body.",
-      "The ExportRocksDBConfigToJsonRequestHeader annotation change (resource = CLUSTER) is unrelated to the rest."
+      "The ExportRocksDBConfigToJsonRequestHeader annotation change (resource = CLUSTER) is unrelated to the rest.",
+      "Both annotation changes take effect only by reflection, outside the model (framework links, see the TODO on data and control flow). DefaultAuthorizationContextBuilder#buildContextByAnnotation (auth module) reads the @RocketMQResource fields of a request header, splits the new topicList by its splitter and authorizes each listed topic. It also authorizes a request whose @RocketMQAction has resource = CLUSTER against the cluster, so ExportRocksDBConfigToJsonRequestHeader now gets an authorization context where it got none before (UNKNOWN resource, no annotated field). The header itself reaches the wire through RemotingCommand#makeCustomHeaderToNet and #decodeCommandCustomHeader, which copy its declared fields by reflection; this is how topicList travels as a joined String.",
+      "The subscription check moved into getTopicsForCollecting now runs under its new else and while loop, so it brings what it uses as dependencies: the trivial getConsumerManager and getConsumerOffsetManager accessors, the brokerController field and LOGGER, which tell a reviewer nothing (see the TODO on noisy dependencies in HunkNetwork)."
     ],
     "expectations": [
       {
@@ -2494,6 +3293,12 @@
         "kind": "serves",
         "from": "private static final String TOPIC_NAME_SEPARATOR",
         "to": "public List<String> fetchTopicList()"
+      },
+      {
+        "description": "a call in a switch reads with its case label, the rest of the switch elided",
+        "kind": "usage",
+        "location": "broker/src/main/java/org/apache/rocketmq/broker/processor/AdminBrokerProcessor.java::AdminBrokerProcessor#processRequest",
+        "body": "public RemotingCommand processRequest(ChannelHandlerContext ctx,\n    RemotingCommand request) throws RemotingCommandException {\n    switch (request.getCode()) {\n        ...\n        case RequestCode.GET_CONSUME_STATS:\n            return this.getConsumeStats(ctx, request);\n        ...\n    }\n}"
       }
     ]
   },
@@ -2504,7 +3309,7 @@
     "base_commit": "73ca4f52b27e1cbc73e8a95eec2ce81c3621c6de",
     "description": "semantic_text fields may sit in object fields: inference results are inserted at their path in the source map (new XContentMapValues#insertValue) instead of as a top-level key, the mapper rejects a parent object with subobjects disabled, and a test feature announces the fix",
     "notes": [
-      "The new XContentMapValuesTests methods read as one 315-line diff, with twelve XContentBuilder builder methods (startObject, endObject, field, array, ...) as dependencies.",
+      "The new XContentMapValuesTests methods read as one 315-line diff, with twelve dependencies. Eight are XContentBuilder builder methods (startObject, endObject, startArray, endArray, field, array). The others are XContentFactory#jsonBuilder, Strings#toString, the test's toSourceMap and ESTestCase#assertThat.",
       "The YAML REST tests and the changelog are not shown."
     ],
     "expectations": [
@@ -2557,7 +3362,7 @@
     "repository": "elastic/elasticsearch",
     "commit": "b03ef72047904e166caad9f9ee9e8ecc979c5e9a",
     "base_commit": "099a3dbb2565e0d114492fce0bdc48e61519e05a",
-    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec",
+    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec, and DuplicateLimitAfterMvExpand, which copied the limit below MV_EXPAND before, is removed",
     "notes": [
       "The csv-spec tests, the only users of the new capability, and the changelog are not shown (RM gap: non-Java files).",
       "PushDownAndCombineLimits#rule is printed from its else-if branch (about 35 lines) and the edited tests whole, with their expected plans in their doc comments."
@@ -2588,7 +3393,7 @@
         "after": "public void testMissingFieldInMvExpand()"
       },
       {
-        "description": "the extracted constructor statements bring no dependency",
+        "description": "the constructor statements kept under the signature gaining limit bring no dependency",
         "kind": "absent",
         "of": "dependency",
         "text": "protected UnaryPlan(Source source, LogicalPlan child)"
@@ -2604,6 +3409,25 @@
         "kind": "serves",
         "from": "public final class DuplicateLimitAfterMvExpand",
         "to": "new DuplicateLimitAfterMvExpand()"
+      },
+      {
+        "description": "MvExpand#replaceChild, whose changed return already serves the new MvExpand branch of the pushdown rule, is not repeated as its dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public UnaryPlan replaceChild(LogicalPlan newChild) {\n    return new MvExpand(source(), newChild, target, expanded, limit);\n}"
+      },
+      {
+        "description": "test framework helpers used by the changed tests are not printed",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static <T> void assertThat(T actual, Matcher<? super T> matcher) {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): ESTestCase#assertThat and EsqlTestUtils#as, reached only from the changed tests, tell a reviewer nothing"
+      },
+      {
+        "description": "the trivial accessors the changes call are not printed whole",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public NamedExpression target() {\n    return target;\n}"
       }
     ]
   },
@@ -2612,7 +3436,7 @@
     "repository": "elastic/elasticsearch",
     "commit": "5755968002086a78a66840628de4680f868407da",
     "base_commit": "099a3dbb2565e0d114492fce0bdc48e61519e05a",
-    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec",
+    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec, and DuplicateLimitAfterMvExpand, which copied the limit below MV_EXPAND before, is removed; the four-argument constructor stays, delegating with no limit",
     "notes": [
       "The csv-spec tests, the only users of the new capability, and the changelog are not shown (RM gap: non-Java files).",
       "PushDownAndCombineLimits#rule is printed from its else-if branch (about 35 lines) and the edited tests whole, with their expected plans in their doc comments."
@@ -2665,6 +3489,31 @@
         "kind": "serves",
         "from": "Attribute expanded, Integer limit) {",
         "to": "this(source, child, target, expanded, null);"
+      },
+      {
+        "description": "MvExpand#replaceChild, whose changed return already serves the new MvExpand branch of the pushdown rule, is not repeated as its dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public UnaryPlan replaceChild(LogicalPlan newChild) {\n    return new MvExpand(source(), newChild, target, expanded, limit);\n}"
+      },
+      {
+        "description": "test framework helpers used by the changed tests are not printed",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static <T> void assertThat(T actual, Matcher<? super T> matcher) {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): ESTestCase#assertThat and EsqlTestUtils#as, reached only from the changed tests, tell a reviewer nothing"
+      },
+      {
+        "description": "the trivial accessors the changes call are not printed whole",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public NamedExpression target() {\n    return target;\n}"
+      },
+      {
+        "description": "an accessor returning a field prints on the line of its signature",
+        "kind": "contains",
+        "of": "dependency",
+        "text": "public NamedExpression target() { return target; }"
       }
     ]
   },
@@ -2673,7 +3522,7 @@
     "repository": "elastic/elasticsearch",
     "commit": "5b3fd2e20cbb800a732d463675ce181a66876c3f",
     "base_commit": "099a3dbb2565e0d114492fce0bdc48e61519e05a",
-    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec",
+    "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec, and DuplicateLimitAfterMvExpand, which copied the limit below MV_EXPAND before, is removed",
     "notes": [
       "The csv-spec tests, the only users of the new capability, and the changelog are not shown (RM gap: non-Java files).",
       "PushDownAndCombineLimits#rule is printed from its else-if branch (about 35 lines) and the edited tests whole, with their expected plans in their doc comments."
@@ -2704,7 +3553,7 @@
         "after": "public void testMissingFieldInMvExpand()"
       },
       {
-        "description": "the extracted constructor statements bring no dependency",
+        "description": "the constructor statements kept under the signature gaining limit bring no dependency",
         "kind": "absent",
         "of": "dependency",
         "text": "protected UnaryPlan(Source source, LogicalPlan child)"
@@ -2720,6 +3569,25 @@
         "kind": "serves",
         "from": "public final class DuplicateLimitAfterMvExpand",
         "to": "new DuplicateLimitAfterMvExpand()"
+      },
+      {
+        "description": "MvExpand#replaceChild, whose changed return already serves the new MvExpand branch of the pushdown rule, is not repeated as its dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public UnaryPlan replaceChild(LogicalPlan newChild) {\n    return new MvExpand(source(), newChild, target, expanded, limit);\n}"
+      },
+      {
+        "description": "test framework helpers used by the changed tests are not printed",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static <T> void assertThat(T actual, Matcher<? super T> matcher) {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): ESTestCase#assertThat and EsqlTestUtils#as, reached only from the changed tests, tell a reviewer nothing"
+      },
+      {
+        "description": "the trivial accessors the changes call are not printed whole",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public NamedExpression target() {\n    return target;\n}"
       }
     ]
   },
@@ -2731,8 +3599,8 @@
     "description": "ES|QL pushes LIMIT past MV_EXPAND by keeping the limit inside MvExpand (a new limit field, never serialized) and pushing a copy below it; the mapper turns the inner limit into a LimitExec",
     "notes": [
       "The csv-spec tests, the only users of the new capability, and the changelog are not shown (RM gap: non-Java files).",
-      "PushDownAndCombineLimits#rule is printed from its else-if branch (about 35 lines) and the edited tests whole, with their expected plans in their doc comments.",
-      "This revision still keeps DuplicateLimitAfterMvExpand."
+      "PushDownAndCombineLimits#rule is printed from its else-if branch (about 25 lines) and the edited tests whole, with their expected plans in their doc comments.",
+      "This revision still keeps DuplicateLimitAfterMvExpand, registered right after PushDownAndCombineLimits; it is not shown, as it uses the changed MvExpand#replaceChild from a file outside the model (see its todo)."
     ],
     "expectations": [
       {
@@ -2760,10 +3628,36 @@
         "after": "public void testMissingFieldInMvExpand()"
       },
       {
-        "description": "the extracted constructor statements bring no dependency",
+        "description": "the constructor statements kept under the signature gaining limit bring no dependency",
         "kind": "absent",
         "of": "dependency",
         "text": "protected UnaryPlan(Source source, LogicalPlan child)"
+      },
+      {
+        "description": "MvExpand#replaceChild, whose changed return already serves the new MvExpand branch of the pushdown rule, is not repeated as its dependency",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public UnaryPlan replaceChild(LogicalPlan newChild) {\n    return new MvExpand(source(), newChild, target, expanded, limit);\n}"
+      },
+      {
+        "description": "test framework helpers used by the changed tests are not printed",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public static <T> void assertThat(T actual, Matcher<? super T> matcher) {",
+        "todo": "noisy dependency (see the TODO on noisy dependencies in HunkNetwork): ESTestCase#assertThat and EsqlTestUtils#as, reached only from the changed tests, tell a reviewer nothing"
+      },
+      {
+        "description": "the trivial accessors the changes call are not printed whole",
+        "kind": "absent",
+        "of": "dependency",
+        "text": "public NamedExpression target() {\n    return target;\n}"
+      },
+      {
+        "description": "DuplicateLimitAfterMvExpand, kept in this revision and calling the changed MvExpand#replaceChild, is a usage",
+        "kind": "contains",
+        "of": "usage",
+        "text": "return mvExpand.replaceChild(duplicateLimit);",
+        "todo": "forward extensions (see the TODO on forward extensions in HunkNetwork): DuplicateLimitAfterMvExpand, still registered right after PushDownAndCombineLimits in this revision, copies the limit below MV_EXPAND, which is where the pushdown happened before (the reviewers asked; the later revisions remove the rule); its propagateDuplicateLimitUntilMvExpand calls the changed MvExpand#replaceChild, but its file is not in the model, as usages are found only in the changed files and the unchanged files declaring what the changes use"
       }
     ]
   },
@@ -2772,10 +3666,10 @@
     "repository": "elastic/elasticsearch",
     "commit": "d45ed5af3adeadf4f752f98e3a217afa198a4952",
     "base_commit": "4e0e36b38c4ce71546b3411e2114fcc5dc962c8a",
-    "description": "ES|QL plans stop serializing EsIndex: EsRelation, EsSourceExec, EsQueryExec and EsStatsQueryExec keep the index name and the index-name-to-mode map (with concreteIndices()), writing them directly from a new transport version and the old EsIndex form before it; every user and serialization test is updated",
+    "description": "ES|QL plans stop serializing EsIndex: EsRelation, EsSourceExec and EsQueryExec keep the index name and the index-name-to-mode map instead (EsRelation adds concreteIndices()), writing them directly from a new transport version and as an EsIndex with an empty mapping before it; EsStatsQueryExec, never serialized, keeps the index name only; every user and serialization test is updated",
     "notes": [
-      "The output is long (88 diffs, 86 dependencies, about 1600 lines): every rewritten test helper brings its random* and builder dependencies.",
-      "indexMode() of EsRelation and of EsSourceExec reads as removed and added unchanged, as RM moves it among the reordered getters (the raw diff keeps it and moves frozen()); a tie of RM's mapping, not reported."
+      "The output is long (88 diffs, 77 dependencies, 17 usages, about 1700 lines): every rewritten test helper brings its random* and builder dependencies, and the four NodeInfo.create overloads the old and new info() calls bind (about 160 lines) show that info() must list the properties in the order of the constructor.",
+      "indexMode() of EsRelation and of EsSourceExec reads as removed and added unchanged, as RM moves it among the reordered getters (the raw diff keeps it and moves frozen() in EsRelation and query() in EsSourceExec); a tie of RM's mapping, not reported."
     ],
     "expectations": [
       {
@@ -2807,6 +3701,52 @@
         "kind": "order",
         "before": "forEachFromRelation(plan, relation -> indices.addAll(relation.concreteIndices()));",
         "after": "public static EsRelation randomEsRelation()"
+      },
+      {
+        "description": "the readers of fields and getters only reordered in EsRelation are no usages",
+        "kind": "absent",
+        "text": "EsRelation::new",
+        "of": "usage"
+      },
+      {
+        "description": "the changed EsStatsQueryExec constructor is no dependency of PushStatsToSource calling it",
+        "kind": "absent",
+        "text": "public EsStatsQueryExec(",
+        "of": "dependency"
+      },
+      {
+        "description": "the changed randomEsIndex is no dependency of the rewritten serialization tests",
+        "kind": "absent",
+        "text": "return new EsIndex(name, mapping, randomConcreteIndices());",
+        "of": "dependency"
+      },
+      {
+        "description": "each old field line of EsSourceExec reads as removed once",
+        "kind": "contains",
+        "text": "-    private final QueryBuilder query;",
+        "count": 1,
+        "of": "diff",
+        "todo": "the fields of EsSourceExec are reordered (query and attributes move below the new indexNameWithModes) and index is replaced: the diff of the old index, attributes and query lines (moved_to) marks all three removed, and its moved_from diff marks query removed again after showing attributes as unchanged, so the old `private final QueryBuilder query;` reads as removed twice and attributes as both removed and unchanged; each old line should read once, in one marking (to check first how the AST diff maps the two fields and how the moved_from diff gathers its source lines)"
+      },
+      {
+        "description": "the call of removeUnused, changed only by the rename of the pattern variable, brings no dependency",
+        "kind": "absent",
+        "text": "private static <N extends NamedExpression> List<N> removeUnused(",
+        "of": "dependency"
+      },
+      {
+        "description": "LocalExecutionPlanner#plan, getting the same lookup map as before, is no usage of planLookupJoin",
+        "kind": "absent",
+        "text": "return planLookupJoin(join, context);",
+        "of": "usage",
+        "todo": "data/control flow (see the TODO on data and control flow in HunkNetwork), stage 3, planLookupJoin changes only from `localSourceExec.index().indexNameWithModes()` to `localSourceExec.indexNameWithModes()`, the same map, as every EsQueryExec now keeps the indexNameWithModes of the EsIndex it was built from; its caller LocalExecutionPlanner#plan gains nothing from the change, yet prints as a 45-line usage (its whole instanceof chain); telling a change that gives its users the same values is a stopping rule of that TODO (changes giving users nothing). QueryBuilderResolver#resolveQueryBuilders, the caller of indexNames (`esRelation.index().concreteIndices()` -> `esRelation.concreteIndices()`), is the same case"
+      },
+      {
+        "description": "LocalMapper#mapLeaf, creating the EsSourceExec of every EsRelation, is a usage of the changed EsSourceExec(EsRelation)",
+        "kind": "contains",
+        "text": "return new EsSourceExec(esRelation);",
+        "of": "usage",
+        "todo": "forward extensions (see the TODO on forward extensions in HunkNetwork): LocalMapper#mapLeaf creates the EsSourceExec of every EsRelation with `new EsSourceExec(esRelation)` (LocalMapper.java:62), whose changed body now copies indexName and indexNameWithModes instead of the EsIndex: it is how the map of an EsRelation reaches the lookup EsQueryExec that LocalExecutionPlanner#planLookupJoin reads (the map a reviewer asked the need of), yet no usage prints it. LocalMapper.java is in the test cache of the commit but in neither model once the graph is built (it is read, not attached)"
       }
     ]
   }

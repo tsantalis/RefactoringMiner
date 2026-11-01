@@ -27,6 +27,12 @@
   "DefaultMessageStore.java": [
     "store/src/main/java/org/apache/rocketmq/store/DefaultMessageStore.java"
   ],
+  "DefaultStoreMetricsManager.java": [
+    "store/src/main/java/org/apache/rocketmq/store/metrics/DefaultStoreMetricsManager.java"
+  ],
+  "HAService.java": [
+    "store/src/main/java/org/apache/rocketmq/store/ha/HAService.java"
+  ],
   "HashMap.java": [],
   "InterruptedException.java": [],
   "List.java": [],
@@ -39,6 +45,7 @@
     "store/src/main/java/org/apache/rocketmq/store/config/MessageStoreConfig.java",
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreConfig.java"
   ],
+  "Meter.java": [],
   "PutMessageLock.java": [
     "store/src/main/java/org/apache/rocketmq/store/PutMessageLock.java"
   ],
@@ -50,17 +57,32 @@
   ],
   "ReentrantLock.java": [],
   "Runnable.java": [],
+  "ServiceThread.java": [
+    "common/src/main/java/org/apache/rocketmq/common/ServiceThread.java",
+    "remoting/src/main/java/org/apache/rocketmq/remoting/common/ServiceThread.java"
+  ],
   "String.java": [],
+  "Supplier.java": [],
   "Swappable.java": [
     "store/src/main/java/org/apache/rocketmq/store/Swappable.java"
   ],
   "Thread.java": [],
+  "TopicQueueLock.java": [
+    "store/src/main/java/org/apache/rocketmq/store/TopicQueueLock.java"
+  ],
+  "TransientStorePool.java": [
+    "store/src/main/java/org/apache/rocketmq/store/TransientStorePool.java"
+  ],
+  "api.java": [],
   "atomic.java": [],
   "concurrent.java": [],
+  "function.java": [],
   "java.java": [],
   "junit.java": [],
   "lang.java": [],
   "locks.java": [],
+  "metrics.java": [],
+  "opentelemetry.java": [],
   "time.java": [],
   "util.java": []
 }

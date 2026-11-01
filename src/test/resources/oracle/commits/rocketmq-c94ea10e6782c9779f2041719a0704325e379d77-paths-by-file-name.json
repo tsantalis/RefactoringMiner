@@ -7,6 +7,7 @@
   ],
   "CompletableFuture.java": [],
   "Exception.java": [],
+  "Integer.java": [],
   "MQBrokerException.java": [
     "client/src/main/java/org/apache/rocketmq/client/exception/MQBrokerException.java"
   ],
@@ -15,6 +16,9 @@
   ],
   "MQClientAPIImpl.java": [
     "client/src/main/java/org/apache/rocketmq/client/impl/MQClientAPIImpl.java"
+  ],
+  "MQVersion.java": [
+    "common/src/main/java/org/apache/rocketmq/common/MQVersion.java"
   ],
   "NameServerUpdateCallback.java": [
     "common/src/main/java/org/apache/rocketmq/common/namesrv/NameServerUpdateCallback.java"
@@ -34,6 +38,7 @@
   "NotifyResult.java": [
     "client/src/main/java/org/apache/rocketmq/client/consumer/NotifyResult.java"
   ],
+  "Object.java": [],
   "PollingHeader.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/longpolling/PollingHeader.java"
   ],
@@ -45,6 +50,10 @@
   ],
   "PopMessageRequestHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/PopMessageRequestHeader.java"
+  ],
+  "PopRequest.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/longpolling/PopRequest.java",
+    "client/src/main/java/org/apache/rocketmq/client/impl/consumer/PopRequest.java"
   ],
   "RemotingClient.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/RemotingClient.java"
@@ -82,6 +91,7 @@
     "common/src/main/java/org/apache/rocketmq/common/utils/StartAndShutdown.java"
   ],
   "String.java": [],
+  "StringBuilder.java": [],
   "Throwable.java": [],
   "TopicQueueRequestHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/TopicQueueRequestHeader.java"

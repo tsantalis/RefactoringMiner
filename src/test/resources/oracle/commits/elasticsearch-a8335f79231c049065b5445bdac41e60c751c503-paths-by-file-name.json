@@ -2,6 +2,15 @@
   "AcknowledgedTransportMasterNodeAction.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/AcknowledgedTransportMasterNodeAction.java"
   ],
+  "ActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
+  "ActionRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionRequest.java"
+  ],
+  "ActionType.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionType.java"
+  ],
   "ActionWithReservedState.java": [
     "server/src/main/java/org/elasticsearch/reservedstate/ActionWithReservedState.java"
   ],
@@ -27,8 +36,15 @@
     "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
   ],
   "Double.java": [],
+  "DownsampleAction.java": [
+    "server/src/main/java/org/elasticsearch/action/downsample/DownsampleAction.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ilm/DownsampleAction.java"
+  ],
   "DownsampleActionSingleNodeTests.java": [
     "x-pack/plugin/downsample/src/test/java/org/elasticsearch/xpack/downsample/DownsampleActionSingleNodeTests.java"
+  ],
+  "DownsampleConfig.java": [
+    "server/src/main/java/org/elasticsearch/action/downsample/DownsampleConfig.java"
   ],
   "ESSingleNodeTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESSingleNodeTestCase.java"
@@ -54,6 +70,9 @@
   "IndexSettings.java": [
     "server/src/main/java/org/elasticsearch/index/IndexSettings.java"
   ],
+  "IndicesRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
+  ],
   "Instant.java": [],
   "Integer.java": [],
   "Iterable.java": [],
@@ -75,9 +94,25 @@
   "MappingVisitor.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/stats/MappingVisitor.java"
   ],
+  "MasterNodeRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/support/master/MasterNodeRequest.java"
+  ],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
   "Number.java": [],
   "Object.java": [],
   "Path.java": [],
+  "PathUtilsForTesting.java": [
+    "test/framework/src/main/java/org/elasticsearch/core/PathUtilsForTesting.java"
+  ],
+  "RefCounted.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
+  ],
+  "Request.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Request.java",
+    "x-pack/plugin/inference/src/main/java/org/elasticsearch/xpack/inference/external/request/Request.java"
+  ],
   "Setting.java": [
     "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
   ],
@@ -86,6 +121,9 @@
   ],
   "Short.java": [],
   "String.java": [],
+  "TaskAwareRequest.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskAwareRequest.java"
+  ],
   "TimeValue.java": [
     "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
@@ -107,6 +145,12 @@
   ],
   "TransportMasterNodeAction.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/TransportMasterNodeAction.java"
+  ],
+  "TransportMessage.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportMessage.java"
+  ],
+  "TransportRequest.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportRequest.java"
   ],
   "Version.java": [
     "build-tools/src/main/java/org/elasticsearch/gradle/Version.java",

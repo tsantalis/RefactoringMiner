@@ -7,6 +7,7 @@ import com.github.gumtreediff.tree.Tree;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.graph.*;
 import org.refactoringminer.astDiff.graph.cluster.traverse.NarrativeElement;
+import org.refactoringminer.astDiff.graph.cluster.traverse.TraversalPattern;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -19,7 +20,7 @@ public class RawRepresentation {
     StringBuilder spec = new StringBuilder();
 
     spec.append("### CHANGE REPRESENTATION\n")
-            .append("- The chapter is a set of <diff> and <dependency> elements.\n")
+            .append("- The chapter is a set of <diff>, <dependency> and <usage> elements.\n")
             .append("- A <diff> reads as a unified diff, but it is produced from an accurate AST differentiation between two revisions, ")
             .append("which finds edits at expression and statement granularity and reports them at line granularity.\n")
             .append("- Each <diff> presents the construct the edits sit in, not only a fixed number of lines around them, so it begins and ends where that construct does.\n")
@@ -33,8 +34,16 @@ public class RawRepresentation {
             .append("- Each <dependency> element provides code outside the chapter's own <diff> elements to resolve references to identifiers in edits, ")
             .append("and carries location=\"<file>::<Type>#<member>\" and serves, a comma-separated list of the ids of the diffs in the chapter which rely on it.\n")
             .append("- A <dependency> whose code is changed by the pull request outside the chapter shows that change exactly as a <diff> does, but carries no id.\n")
+            .append("- A <dependency> whose unchanged code uses code that diffs of the chapter change bridges them to the diffs it serves, which rely on those changes through it, ")
+            .append("and carries uses, a comma-separated list of the ids of those diffs. They read before it unless they rely on it themselves.\n")
+            .append("- Each <usage> element shows unchanged code using code that diffs of the chapter change, where those changes take effect, ")
+            .append("and carries location=\"<file>::<Type>#<member>\" and uses, a comma-separated list of the ids of those diffs. ")
+            .append("It shows the statements of the member using the changed code, with the lines of the code holding them (the signature of the member, ")
+            .append("the headers and the ends of the enclosing statements), a line of ... standing for the lines left out. ")
+            .append("Unchanged code a <diff> or a <dependency> already shows is not repeated in a <usage>, but where the <usage> needs it to read.\n")
             .append("- The elements are ordered by dependency in which a <diff> appears after all <diff> elements which it builds upon, and all the <dependency> elements which it relies on. ")
-            .append("A <dependency> element sits as close as possible before the <diff> elements that rely on it. A <diff> element sits as close as possible before the <diff> elements that build upon it.\n\n");
+            .append("A <dependency> element sits as close as possible before the <diff> elements that rely on it. A <diff> element sits as close as possible before the <diff> elements that build upon it. ")
+            .append("A <usage> element sits right after the last <diff> element it uses.\n\n");
 
     return spec.toString();
   }
@@ -155,6 +164,11 @@ public class RawRepresentation {
       printed.add(new DependencyBlock(dependencyNodes.get(0)));
     }
 
+    Set<Graph<Node, Edge>> graphs = Collections.newSetFromMap(new IdentityHashMap<>());
+    elements.forEach(element -> graphs.add(element.getGraph()));
+    Map<DiffNode, List<UsageBlock>> usagesAfter = usageBlocks(graphs, diffNodes, changeDiffNodes, diffBlocks, printed, sameCodeNodes,
+            showingServes);
+
     // set serve ids for diff nodes
     for (DiffNode diffNode : diffNodes) {
       List<Node> changes = new ArrayList<>();
@@ -172,10 +186,15 @@ public class RawRepresentation {
     for (Block block : printed) {
       if (block instanceof DependencyBlock dependencyBlock) {
         Node dependency = dependencyBlock.dependency();
-        renderDependency(rendered, dependency, sameCodeNodes.getOrDefault(dependency, List.of(dependency)), allChangeDiffNodes,
-                renderedChangeDependencies, dependencies, changeDiffNodes, diffNodes);
+        List<Node> dependencyNodes = sameCodeNodes.getOrDefault(dependency, List.of(dependency));
+        renderDependency(rendered, dependency, dependencyNodes, allChangeDiffNodes, renderedChangeDependencies, dependencies,
+                changeDiffNodes, diffNodes, getOrderedIds(bridgedDiffNodes(dependencyNodes, graphs, changeDiffNodes), diffNodes));
       } else if (block instanceof DiffBlock diffBlock) {
         rendered.add(diffBlock.diffNode().render());
+        for (UsageBlock usageBlock : usagesAfter.getOrDefault(diffBlock.diffNode(), List.of())) {
+          rendered.add(usage(usageBlock.usages().get(0).getContextString(), getOrderedIds(usageBlock.used(), diffNodes),
+                  usageBody(usageBlock.usages())));
+        }
       }
     }
 
@@ -183,8 +202,162 @@ public class RawRepresentation {
     return new RepresentedUnit(String.join("\n", rendered), new LinkedHashSet<>(diffNodes));
   }
 
+  // The unchanged code using the changes of the unit, read right after the last diff it uses, one element per member using
+  // them. Code a diff of the unit already shows is not printed again: that diff is served by the diffs it uses, when it
+  // reads after them. Nor is a member whose usages a dependency all shows (the dependency uses the changes instead, see
+  // bridgedDiffNodes), or test code, which exercises the changes rather than takes them into effect
+  private static Map<DiffNode, List<UsageBlock>> usageBlocks(Set<Graph<Node, Edge>> graphs, List<DiffNode> diffNodes,
+                                                             Map<Node, DiffNode> changeDiffNodes, List<DiffBlock> diffBlocks,
+                                                             List<Block> printed, Map<Node, List<Node>> sameCodeNodes,
+                                                             Map<DiffNode, Set<DiffNode>> showingServes) {
+    Map<Node, Set<DiffNode>> usedDiffs = new HashMap<>();
+    for (Graph<Node, Edge> graph : graphs) {
+      for (Map.Entry<Node, DiffNode> changeDiffNode : changeDiffNodes.entrySet()) {
+        if (!graph.containsVertex(changeDiffNode.getKey())) {
+          continue;
+        }
+        for (Edge edge : graph.outgoingEdgesOf(changeDiffNode.getKey())) {
+          Node target = graph.getEdgeTarget(edge);
+          if (edge.getType().equals(EdgeType.DEF_USE) && target.isExtension()) {
+            usedDiffs.computeIfAbsent(target, usage -> new HashSet<>()).add(changeDiffNode.getValue());
+          }
+        }
+      }
+    }
+
+    // A dependency stands for the unchanged code of both revisions printed as one (see sameCodeNodes), which a usage of
+    // the new revision lies in whichever of them is printed
+    List<Node> printedDependencies = new ArrayList<>();
+    for (Block block : printed) {
+      if (block instanceof DependencyBlock dependencyBlock) {
+        for (Node node : sameCodeNodes.getOrDefault(dependencyBlock.dependency(), List.of(dependencyBlock.dependency()))) {
+          printedDependencies.add(node.getDeclaration());
+          Node alternative = node.getAlternative();
+          if (alternative != null) {
+            printedDependencies.add(alternative.getDeclaration());
+          }
+        }
+      }
+    }
+    Map<String, UsageBlock> memberUsages = new LinkedHashMap<>();
+    for (Node usage : usedDiffs.keySet().stream().sorted(Node.COMPARATOR).toList()) {
+      Set<DiffNode> used = usedDiffs.get(usage);
+      Optional<DiffBlock> showing = diffBlocks.stream()
+              .filter(diffBlock -> diffBlock.shownLines().stream().anyMatch(shown -> withinLines(usage, shown))).findFirst();
+      if (showing.isPresent()) {
+        int showingIndex = diffNodes.indexOf(showing.get().diffNode());
+        for (DiffNode usedDiff : used) {
+          if (diffNodes.indexOf(usedDiff) < showingIndex) {
+            showingServes.computeIfAbsent(usedDiff, diffNode -> new HashSet<>()).add(showing.get().diffNode());
+          }
+        }
+        continue;
+      }
+      if (TraversalPattern.isTest(usage.getPath())) {
+        continue;
+      }
+
+      Node.Enclosing enclosing = usage.getEnclosing();
+      String member = usage.getPath() + ":" + enclosing.memberStart() + ":" + enclosing.memberEnd();
+      UsageBlock usageBlock = memberUsages.computeIfAbsent(member, key -> new UsageBlock(new ArrayList<>(), new HashSet<>()));
+      usageBlock.usages().add(usage);
+      usageBlock.used().addAll(used);
+    }
+    // Code a dependency shows is not repeated, but a usage of the member it is read with keeps it, as the declaration of
+    // the local holding a field whose uses the usage shows
+    memberUsages.values().removeIf(usageBlock -> usageBlock.usages().stream()
+            .allMatch(usage -> printedDependencies.stream().anyMatch(dependency -> holds(dependency, usage))));
+
+    Map<DiffNode, List<UsageBlock>> usagesAfter = new HashMap<>();
+    for (UsageBlock usageBlock : memberUsages.values()) {
+      DiffNode last = usageBlock.used().stream().max(Comparator.comparingInt(diffNodes::indexOf)).orElseThrow();
+      usagesAfter.computeIfAbsent(last, diffNode -> new ArrayList<>()).add(usageBlock);
+    }
+    return usagesAfter;
+  }
+
+  private static boolean holds(Node holder, Node node) {
+    return holder.getSrcDst().equals(node.getSrcDst()) && holder.getPath().equals(node.getPath())
+            && holder.getTree().getPos() <= node.getTree().getPos() && node.getTree().getEndPos() <= holder.getTree().getEndPos();
+  }
+
+  // The code of the usages with the code of their member holding them (see Node#getEnclosing), a line of ... standing for
+  // the lines left out
+  private static String usageBody(List<Node> usages) {
+    String content = usages.get(0).getFileContent();
+    List<Integer> lineStarts = new ArrayList<>(List.of(0));
+    for (int i = 0; i < content.length(); i++) {
+      if (content.charAt(i) == '\n') {
+        lineStarts.add(i + 1);
+      }
+    }
+    String[] lines = content.split("\n", -1);
+
+    TreeSet<Integer> shown = new TreeSet<>();
+    Set<Integer> hidden = new HashSet<>();
+    for (Node usage : usages) {
+      Node.Enclosing enclosing = usage.getEnclosing();
+      for (int[] part : enclosing.parts()) {
+        addLines(shown, lineStarts, part[0], part[1]);
+      }
+      for (int[] body : enclosing.hidden()) {
+        // A body holding another usage of the member is shown for that usage
+        if (usages.stream().anyMatch(other -> body[0] <= other.getTree().getPos() && other.getTree().getEndPos() - 1 <= body[1])) {
+          continue;
+        }
+        for (int line = lineOf(lineStarts, body[0]) + 1; line < lineOf(lineStarts, body[1]); line++) {
+          hidden.add(line);
+        }
+      }
+    }
+    shown.removeAll(hidden);
+    // A usage whose uses are known reads by the code holding them (see Node#getEnclosing), others whole
+    for (Node usage : usages) {
+      if (!usage.hasUses()) {
+        addLines(shown, lineStarts, usage.getRM().signatureStart().getPos(), usage.getTree().getEndPos() - 1);
+      }
+    }
+
+    int indentation = shown.stream().filter(line -> !lines[line].isBlank())
+            .mapToInt(line -> lines[line].length() - lines[line].stripLeading().length()).min().orElse(0);
+    List<String> body = new ArrayList<>();
+    Integer previous = null;
+    for (int line : shown) {
+      if (previous != null && line > previous + 1) {
+        for (int skipped = previous + 1; skipped < line; skipped++) {
+          if (!lines[skipped].isBlank()) {
+            String skippedLine = lines[skipped];
+            int skippedIndentation = skippedLine.length() - skippedLine.stripLeading().length();
+            body.add(" ".repeat(Math.max(0, skippedIndentation - indentation)) + "...");
+            break;
+          }
+        }
+      }
+      body.add(lines[line].length() < indentation ? lines[line].strip() : lines[line].substring(indentation).stripTrailing());
+      previous = line;
+    }
+    return String.join("\n", body);
+  }
+
+  private static void addLines(Set<Integer> shown, List<Integer> lineStarts, int start, int end) {
+    int startLine = lineOf(lineStarts, start);
+    int endLine = lineOf(lineStarts, Math.max(start, end));
+    for (int line = startLine; line <= endLine; line++) {
+      shown.add(line);
+    }
+  }
+
+  private static int lineOf(List<Integer> lineStarts, int offset) {
+    int index = Collections.binarySearch(lineStarts, offset);
+    return index >= 0 ? index : -index - 2;
+  }
+
+  private static String usage(String location, List<String> usedIds, String body) {
+    return "<usage location=\"" + location + "\" uses=\"" + String.join(", ", usedIds) + "\">\n" + body + "\n</usage>";
+  }
+
   private static String printedCode(Node dependency) {
-    return dependency.getContextString() + "\n" + dependency.getDeclaration().dedentContent();
+    return dependency.getContextString() + "\n" + dependency.getDeclaration().dependencyContent();
   }
 
   private static boolean isApparent(Node dependency, UnitDependencies dependencies, Map<Node, DiffNode> changeDiffNodes,
@@ -249,12 +422,13 @@ public class RawRepresentation {
   // of its changes the unit relies on
   private static void renderDependency(List<String> rendered, Node dependency, List<Node> dependencyNodes,
                                        Map<Node, DiffNode> allChangeDiffNodes, Set<DiffNode> renderedChangeDependencies,
-                                       UnitDependencies dependencies, Map<Node, DiffNode> changeDiffNodes, List<DiffNode> diffNodes) {
+                                       UnitDependencies dependencies, Map<Node, DiffNode> changeDiffNodes, List<DiffNode> diffNodes,
+                                       List<String> usedIds) {
     DiffNode changeDependency = allChangeDiffNodes.get(dependency);
     if (changeDependency == null) {
       rendered.add(dependency(dependency.getContextString(),
-              getOrderedIds(servedDiffNodes(dependencyNodes, dependencies, changeDiffNodes), diffNodes),
-              dependency.getDeclaration().dedentContent()));
+              getOrderedIds(servedDiffNodes(dependencyNodes, dependencies, changeDiffNodes), diffNodes), usedIds,
+              dependency.getDeclaration().dependencyContent()));
       return;
     }
 
@@ -266,7 +440,28 @@ public class RawRepresentation {
     changes.addAll(changeDependency.getSrcChanges());
     changes.addAll(changeDependency.getDstChanges());
     List<String> servedIds = getOrderedIds(servedDiffNodes(changes, dependencies, changeDiffNodes), diffNodes);
-    rendered.add(dependency(changeDependency.getLocation(), servedIds, changeDependency.renderBody()));
+    rendered.add(dependency(changeDependency.getLocation(), servedIds, List.of(), changeDependency.renderBody()));
+  }
+
+  // The diffs of the unit whose changes unchanged code printed as a dependency uses, making it a bridge between them and
+  // the diffs it serves (see HunkNetwork#processBridges)
+  private static Set<DiffNode> bridgedDiffNodes(List<Node> dependencyNodes, Set<Graph<Node, Edge>> graphs,
+                                                Map<Node, DiffNode> changeDiffNodes) {
+    Set<DiffNode> bridged = new HashSet<>();
+    for (Graph<Node, Edge> graph : graphs) {
+      for (Node dependencyNode : dependencyNodes) {
+        if (!graph.containsVertex(dependencyNode)) {
+          continue;
+        }
+        for (Edge edge : graph.incomingEdgesOf(dependencyNode)) {
+          DiffNode used = changeDiffNodes.get(graph.getEdgeSource(edge));
+          if (edge.getType().equals(EdgeType.DEF_USE) && used != null) {
+            bridged.add(used);
+          }
+        }
+      }
+    }
+    return bridged;
   }
 
   private static List<Block> elementBlocks(NarrativeElement element, List<Node> localSides, int length) {
@@ -1836,7 +2031,7 @@ public class RawRepresentation {
                               boolean locationContext) {
   }
 
-  private static String dependency(String location, List<String> servedIds, String body) {
+  private static String dependency(String location, List<String> servedIds, List<String> usedIds, String body) {
     StringBuilder sb = new StringBuilder("<dependency");
 
     if (!location.isEmpty()) {
@@ -1844,6 +2039,9 @@ public class RawRepresentation {
     }
     if (!servedIds.isEmpty()) {
       sb.append(" serves=\"").append(String.join(", ", servedIds)).append("\"");
+    }
+    if (!usedIds.isEmpty()) {
+      sb.append(" uses=\"").append(String.join(", ", usedIds)).append("\"");
     }
     sb.append(">\n").append(body).append("\n</dependency>");
 
@@ -1860,6 +2058,10 @@ public class RawRepresentation {
   }
 
   private record DiffBlock(DiffNode diffNode, List<ShownLines> shownLines) implements Block {
+  }
+
+  // The usages of the changes in one member, with the diffs of the changes they use
+  private record UsageBlock(List<Node> usages, Set<DiffNode> used) {
   }
 
   // The lines of a revision of a file that a diff prints

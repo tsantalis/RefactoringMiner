@@ -1,4 +1,5 @@
 {
+  "Comparable.java": [],
   "DefaultMQPushConsumerImpl.java": [
     "client/src/main/java/org/apache/rocketmq/client/impl/consumer/DefaultMQPushConsumerImpl.java"
   ],
@@ -9,8 +10,19 @@
   "MQConsumerInner.java": [
     "client/src/main/java/org/apache/rocketmq/client/impl/consumer/MQConsumerInner.java"
   ],
+  "Message.java": [
+    "common/src/main/java/org/apache/rocketmq/common/message/Message.java"
+  ],
+  "MessageExt.java": [
+    "common/src/main/java/org/apache/rocketmq/common/message/MessageExt.java"
+  ],
+  "MessageQueue.java": [
+    "common/src/main/java/org/apache/rocketmq/common/message/MessageQueue.java"
+  ],
+  "Serializable.java": [],
   "String.java": [],
   "UtilAll.java": [
     "common/src/main/java/org/apache/rocketmq/common/UtilAll.java"
-  ]
+  ],
+  "io.java": []
 }

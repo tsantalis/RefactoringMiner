@@ -55,6 +55,9 @@
   "FieldTypeTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/index/mapper/FieldTypeTestCase.java"
   ],
+  "Index.java": [
+    "server/src/main/java/org/elasticsearch/index/Index.java"
+  ],
   "IndexMetadata.java": [
     "server/src/main/java/org/elasticsearch/cluster/metadata/IndexMetadata.java"
   ],
@@ -114,6 +117,9 @@
     "modules/lang-painless/src/main/java/org/elasticsearch/painless/Operation.java"
   ],
   "Origin.java": [],
+  "ParsedDocument.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/ParsedDocument.java"
+  ],
   "Path.java": [],
   "RefCounted.java": [
     "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
@@ -161,6 +167,9 @@
   ],
   "ToXContentObject.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "Translog.java": [
+    "server/src/main/java/org/elasticsearch/index/translog/Translog.java"
   ],
   "TransportMessage.java": [
     "server/src/main/java/org/elasticsearch/transport/TransportMessage.java"

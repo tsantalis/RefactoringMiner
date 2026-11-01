@@ -27,6 +27,7 @@
     "server/src/main/java/org/elasticsearch/index/IndexSettingProvider.java"
   ],
   "Iterable.java": [],
+  "List.java": [],
   "LogsdbIndexModeSettingsProvider.java": [
     "x-pack/plugin/logsdb/src/main/java/org/elasticsearch/xpack/logsdb/LogsdbIndexModeSettingsProvider.java"
   ],
@@ -51,6 +52,9 @@
   ],
   "NamedXContentRegistry.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/NamedXContentRegistry.java"
+  ],
+  "PathUtilsForTesting.java": [
+    "test/framework/src/main/java/org/elasticsearch/core/PathUtilsForTesting.java"
   ],
   "Setting.java": [
     "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
@@ -87,6 +91,7 @@
   "atomic.java": [],
   "concurrent.java": [],
   "hamcrest.java": [],
+  "java.java": [],
   "lucene.java": [],
   "tests.java": [],
   "util.java": []

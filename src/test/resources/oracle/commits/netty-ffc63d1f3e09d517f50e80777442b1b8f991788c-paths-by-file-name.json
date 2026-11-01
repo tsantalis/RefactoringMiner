@@ -26,9 +26,13 @@
   "CharsetUtil.java": [
     "common/src/main/java/io/netty/util/CharsetUtil.java"
   ],
+  "Cloneable.java": [],
   "Comparable.java": [],
   "DecoderResultProvider.java": [
     "codec/src/main/java/io/netty/handler/codec/DecoderResultProvider.java"
+  ],
+  "DefaultHttpHeadersFactory.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/http/DefaultHttpHeadersFactory.java"
   ],
   "DefaultHttpMessage.java": [
     "codec-http/src/main/java/io/netty/handler/codec/http/DefaultHttpMessage.java"
@@ -41,6 +45,9 @@
   ],
   "DefaultHttpResponse.java": [
     "codec-http/src/main/java/io/netty/handler/codec/http/DefaultHttpResponse.java"
+  ],
+  "HttpDecoderConfig.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/http/HttpDecoderConfig.java"
   ],
   "HttpHeaderNames.java": [
     "codec-http/src/main/java/io/netty/handler/codec/http/HttpHeaderNames.java"
@@ -89,6 +96,7 @@
   ],
   "IllegalArgumentException.java": [],
   "Integer.java": [],
+  "Iterable.java": [],
   "Matcher.java": [],
   "ObjectUtil.java": [
     "common/src/main/java/io/netty/util/internal/ObjectUtil.java"

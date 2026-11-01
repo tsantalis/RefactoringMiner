@@ -1,6 +1,7 @@
 package org.refactoringminer.astDiff.graph.cluster.traverse;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -25,6 +26,22 @@ public class Util {
         return graph.incomingEdgesOf(node).stream()
                 .filter(edge -> edge.getType().equals(EdgeType.DEF_USE))
                 .map(edge -> graph.getEdgeSource(edge)).collect(Collectors.toSet());
+    }
+
+    // The changes the node relies on through unchanged code it uses which uses them, a bridge (see HunkNetwork#processBridges)
+    public Set<Node> getBridgedNodes(Node node) {
+        Set<Node> bridged = new HashSet<>();
+        for (Node used : getUsedNodes(node)) {
+            if (!used.isExtension()) {
+                continue;
+            }
+            for (Node bridgedNode : getUsedNodes(used)) {
+                if (!bridgedNode.isExtension() && !bridgedNode.equals(node)) {
+                    bridged.add(bridgedNode);
+                }
+            }
+        }
+        return bridged;
     }
 
     public boolean doesUse(Node node) {

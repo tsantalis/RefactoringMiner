@@ -34,7 +34,6 @@
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
     "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
   ],
-  "Long.java": [],
   "LongStream.java": [],
   "LuceneTestCase.java": [],
   "Map.java": [],
@@ -43,6 +42,10 @@
   ],
   "Path.java": [],
   "PerThreadSourceProvider.java": [],
+  "PlaceholderResolver.java": [],
+  "PropertyPlaceholder.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/PropertyPlaceholder.java"
+  ],
   "QueryPragmas.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/QueryPragmas.java"
   ],

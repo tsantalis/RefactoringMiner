@@ -1,4 +1,5 @@
 {
+  "AbstractExecutorService.java": [],
   "AbstractLifecycleComponent.java": [
     "server/src/main/java/org/elasticsearch/common/component/AbstractLifecycleComponent.java"
   ],
@@ -49,6 +50,9 @@
   "BreakerSettings.java": [
     "server/src/main/java/org/elasticsearch/indices/breaker/BreakerSettings.java"
   ],
+  "ByteSizeValue.java": [
+    "server/src/main/java/org/elasticsearch/common/unit/ByteSizeValue.java"
+  ],
   "Client.java": [
     "server/src/main/java/org/elasticsearch/client/internal/Client.java"
   ],
@@ -61,6 +65,9 @@
   ],
   "ClusterBootstrapService.java": [
     "server/src/main/java/org/elasticsearch/cluster/coordination/ClusterBootstrapService.java"
+  ],
+  "ClusterConnectionManager.java": [
+    "server/src/main/java/org/elasticsearch/transport/ClusterConnectionManager.java"
   ],
   "ClusterFormationFailureHelper.java": [
     "server/src/main/java/org/elasticsearch/cluster/coordination/ClusterFormationFailureHelper.java"
@@ -80,6 +87,10 @@
   "ClusterSettings.java": [
     "server/src/main/java/org/elasticsearch/common/settings/ClusterSettings.java"
   ],
+  "ClusterStateApplier.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterStateApplier.java"
+  ],
+  "CodepointSetGenerator.java": [],
   "Collections.java": [],
   "Collector.java": [
     "x-pack/plugin/monitoring/src/main/java/org/elasticsearch/xpack/monitoring/collector/Collector.java"
@@ -94,6 +105,9 @@
   ],
   "Connection.java": [
     "x-pack/plugin/core/src/main/java/org/elasticsearch/protocol/xpack/graph/Connection.java"
+  ],
+  "ConnectionManager.java": [
+    "server/src/main/java/org/elasticsearch/transport/ConnectionManager.java"
   ],
   "CoordinationDiagnosticsService.java": [
     "server/src/main/java/org/elasticsearch/cluster/coordination/CoordinationDiagnosticsService.java"
@@ -146,6 +160,9 @@
   "ElasticsearchException.java": [
     "server/src/main/java/org/elasticsearch/ElasticsearchException.java"
   ],
+  "ElasticsearchWrapperException.java": [
+    "server/src/main/java/org/elasticsearch/ElasticsearchWrapperException.java"
+  ],
   "ElectionSchedulerFactory.java": [
     "server/src/main/java/org/elasticsearch/cluster/coordination/ElectionSchedulerFactory.java"
   ],
@@ -156,6 +173,8 @@
   "EnableAssignmentDecider.java": [
     "server/src/main/java/org/elasticsearch/persistent/decider/EnableAssignmentDecider.java"
   ],
+  "Enum.java": [],
+  "EnumSet.java": [],
   "Environment.java": [
     "server/src/main/java/org/elasticsearch/env/Environment.java"
   ],
@@ -168,6 +187,7 @@
     "server/src/main/java/org/elasticsearch/threadpool/ExecutorBuilder.java"
   ],
   "ExecutorService.java": [],
+  "ExecutorSettings.java": [],
   "FastVectorHighlighter.java": [
     "server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/FastVectorHighlighter.java"
   ],
@@ -255,6 +275,7 @@
   "IngestSettings.java": [
     "server/src/main/java/org/elasticsearch/ingest/IngestSettings.java"
   ],
+  "InputStream.java": [],
   "InternalClusterInfoService.java": [
     "server/src/main/java/org/elasticsearch/cluster/InternalClusterInfoService.java"
   ],
@@ -278,6 +299,11 @@
   ],
   "LeaderChecker.java": [
     "server/src/main/java/org/elasticsearch/cluster/coordination/LeaderChecker.java"
+  ],
+  "Level.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Level.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
+    "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
   ],
   "LifecycleComponent.java": [
     "server/src/main/java/org/elasticsearch/common/component/LifecycleComponent.java"
@@ -310,6 +336,9 @@
   "Metadata.java": [
     "server/src/main/java/org/elasticsearch/cluster/metadata/Metadata.java",
     "server/src/main/java/org/elasticsearch/script/Metadata.java"
+  ],
+  "MeterRegistry.java": [
+    "server/src/main/java/org/elasticsearch/telemetry/metric/MeterRegistry.java"
   ],
   "MockTransportService.java": [
     "test/framework/src/main/java/org/elasticsearch/test/transport/MockTransportService.java"
@@ -354,6 +383,7 @@
   "PageCacheRecycler.java": [
     "server/src/main/java/org/elasticsearch/common/util/PageCacheRecycler.java"
   ],
+  "Path.java": [],
   "PeerFinder.java": [
     "server/src/main/java/org/elasticsearch/discovery/PeerFinder.java"
   ],
@@ -404,6 +434,9 @@
   "RemoteConnectionStrategy.java": [
     "server/src/main/java/org/elasticsearch/transport/RemoteConnectionStrategy.java"
   ],
+  "RemoteTransportException.java": [
+    "server/src/main/java/org/elasticsearch/transport/RemoteTransportException.java"
+  ],
   "ReportingService.java": [
     "server/src/main/java/org/elasticsearch/node/ReportingService.java"
   ],
@@ -437,6 +470,10 @@
   "SeedHostsResolver.java": [
     "server/src/main/java/org/elasticsearch/discovery/SeedHostsResolver.java"
   ],
+  "SendRequestTransportException.java": [
+    "server/src/main/java/org/elasticsearch/transport/SendRequestTransportException.java"
+  ],
+  "Set.java": [],
   "Setting.java": [
     "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
   ],
@@ -466,12 +503,21 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
   ],
   "String.java": [],
+  "StubbableConnectionManager.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/transport/StubbableConnectionManager.java"
+  ],
+  "StubbableTransport.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/transport/StubbableTransport.java"
+  ],
   "T.java": [],
   "TDigestExecutionHint.java": [
     "server/src/main/java/org/elasticsearch/search/aggregations/metrics/TDigestExecutionHint.java"
   ],
   "TaskAwareRequest.java": [
     "server/src/main/java/org/elasticsearch/tasks/TaskAwareRequest.java"
+  ],
+  "TaskManager.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskManager.java"
   ],
   "TaskTrackingConfig.java": [],
   "TcpTransport.java": [
@@ -491,6 +537,7 @@
     "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/ThrottlingAllocationDecider.java"
   ],
   "Throwable.java": [],
+  "TimeUnit.java": [],
   "TimeValue.java": [
     "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
@@ -503,6 +550,9 @@
   ],
   "ToXContentObject.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContentObject.java"
+  ],
+  "Tracer.java": [
+    "server/src/main/java/org/elasticsearch/telemetry/tracing/Tracer.java"
   ],
   "Transport.java": [
     "server/src/main/java/org/elasticsearch/transport/Transport.java"
@@ -573,6 +623,12 @@
   "TransportVersion.java": [
     "server/src/main/java/org/elasticsearch/TransportVersion.java"
   ],
+  "Version.java": [
+    "build-tools/src/main/java/org/elasticsearch/gradle/Version.java",
+    "server/src/main/java/org/elasticsearch/Version.java",
+    "test/test-clusters/src/main/java/org/elasticsearch/test/cluster/util/Version.java",
+    "x-pack/plugin/mapper-version/src/main/java/org/elasticsearch/xpack/versionfield/Version.java"
+  ],
   "VersionId.java": [
     "server/src/main/java/org/elasticsearch/common/VersionId.java"
   ],
@@ -583,8 +639,11 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
   "apache.java": [],
+  "carrotsearch.java": [],
   "concurrent.java": [],
+  "file.java": [],
   "function.java": [],
+  "generators.java": [],
   "hamcrest.java": [],
   "io.java": [],
   "java.java": [],
@@ -592,6 +651,9 @@
   "log4j.java": [],
   "logging.java": [],
   "lucene.java": [],
+  "nio.java": [],
+  "org.java": [],
+  "randomizedtesting.java": [],
   "stream.java": [],
   "tests.java": [],
   "util.java": []

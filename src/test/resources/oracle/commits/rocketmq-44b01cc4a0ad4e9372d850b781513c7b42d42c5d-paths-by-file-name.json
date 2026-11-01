@@ -2,6 +2,7 @@
   "BrokerController.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/BrokerController.java"
   ],
+  "Channel.java": [],
   "CommandCustomHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/CommandCustomHeader.java"
   ],
@@ -12,7 +13,17 @@
   "ConsumerOrderInfoManager.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/offset/ConsumerOrderInfoManager.java"
   ],
+  "ExpressionMessageFilter.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/filter/ExpressionMessageFilter.java"
+  ],
+  "GetMessageResult.java": [
+    "store/src/main/java/org/apache/rocketmq/store/GetMessageResult.java"
+  ],
   "Long.java": [],
+  "MessageFilter.java": [
+    "common/src/main/java/org/apache/rocketmq/common/filter/MessageFilter.java",
+    "store/src/main/java/org/apache/rocketmq/store/MessageFilter.java"
+  ],
   "MessageStore.java": [
     "store/src/main/java/org/apache/rocketmq/store/MessageStore.java"
   ],
@@ -29,14 +40,20 @@
     "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/RpcRequestHeader.java"
   ],
   "String.java": [],
+  "StringBuilder.java": [],
+  "TopicConfig.java": [
+    "common/src/main/java/org/apache/rocketmq/common/TopicConfig.java"
+  ],
   "TopicQueueRequestHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/TopicQueueRequestHeader.java"
   ],
   "TopicRequestHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/TopicRequestHeader.java"
   ],
+  "channel.java": [],
   "concurrent.java": [],
   "java.java": [],
   "lang.java": [],
+  "netty.java": [],
   "util.java": []
 }

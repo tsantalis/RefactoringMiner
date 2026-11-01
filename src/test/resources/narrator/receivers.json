@@ -1611,5 +1611,25 @@
         ]
       }
     ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_107224",
+    "repository": "elastic/elasticsearch",
+    "commit": "9ca2afb97519e237d5463e71ccd62786028ef321",
+    "files": [
+      "server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/AbstractHighlighterBuilder.java"
+    ],
+    "receivers": [
+      {
+        "description": "type variable of a generic method, naming the type of its bound, as the receiver of a method reference",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/AbstractHighlighterBuilder.java",
+        "line": 663,
+        "code": "HB::tagsSchema",
+        "type": "AbstractHighlighterBuilder<HB>",
+        "files": [],
+        "intermediates": []
+      }
+    ]
   }
 ]

@@ -76,6 +76,8 @@ public class TestAllRefactoringsByCommit {
 	        		}
 	        		Iterator<RefactoringPopulator.Refactoring> iter = testCase.refactorings.iterator();
 	        		int actualTP = 0, actualFP = 0, actualFN = 0;
+	        		List<String> oracleFPs = new ArrayList<>();
+	        		List<String> falseNegatives = new ArrayList<>();
 	        		while(iter.hasNext()){
 	        			RefactoringPopulator.Refactoring expectedRefactoring = iter.next();
 	        			String description = expectedRefactoring.description;
@@ -84,26 +86,42 @@ public class TestAllRefactoringsByCommit {
 	        					actualTP++;
 	        				else if(expectedRefactoring.validation.equals("FP")) {
 	        					actualFP++;
+	        					oracleFPs.add(description);
 	        				}
 	        				foundRefactorings.remove(description);
 	        			}
 	        			else if(expectedRefactoring.validation.contains("TP")) {
 	        				actualFN++;
+	        				falseNegatives.add(description);
 	        			}
 	        		}
 	        		actualFP += foundRefactorings.size();
+	        		List<String> notInOracle = new ArrayList<>(foundRefactorings);
+	        		Collections.sort(notInOracle);
 	        		final int finalActualTP = actualTP;
 	        		final int finalActualFP = actualFP;
 	        		final int finalActualFN = actualFN;
+	        		final String fpDetails = descriptions("detected FPs of the oracle", oracleFPs) + descriptions("detected, not in the oracle", notInOracle);
+	        		final String fnDetails = descriptions("not detected TPs of the oracle", falseNegatives);
 	        		Assertions.assertAll(
-	        		() -> Assertions.assertEquals(expectedTP.get(commitId), finalActualTP, String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), finalActualTP)),
-	        		() -> Assertions.assertEquals(expectedFP.get(commitId), finalActualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), finalActualFP)),
-	        		() -> Assertions.assertEquals(expectedFN.get(commitId), finalActualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), finalActualFN))
+	        		() -> Assertions.assertEquals(expectedTP.get(commitId), finalActualTP, String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), finalActualTP) + fnDetails),
+	        		() -> Assertions.assertEquals(expectedFP.get(commitId), finalActualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), finalActualFP) + fpDetails),
+	        		() -> Assertions.assertEquals(expectedFN.get(commitId), finalActualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), finalActualFN) + fnDetails)
 	        		);
 	        	}
 	        });
     	}
     }
+
+	//the refactoring descriptions listed in an assertion message, so that a failing commit shows which refactorings changed
+	private static String descriptions(String label, List<String> descriptions) {
+		if(descriptions.isEmpty())
+			return "";
+		StringBuilder sb = new StringBuilder("\n").append(label).append(":");
+		for(String description : descriptions)
+			sb.append("\n  ").append(description);
+		return sb.toString();
+	}
 
 	private List<String> normalize(String refactoring) {
 		refactoring = normalizeSingle(refactoring);

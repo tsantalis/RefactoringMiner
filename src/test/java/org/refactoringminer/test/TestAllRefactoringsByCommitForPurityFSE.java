@@ -17,6 +17,7 @@ import org.refactoringminer.utils.RefactoringPurityJsonConverter;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.io.BufferedReader;
@@ -80,6 +81,8 @@ public class TestAllRefactoringsByCommitForPurityFSE {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		detector.detectAtCommitWithGitHubAPI(testCase.repository, testCase.sha1, new File(REPOS), (ModelDiffRefactoringHandler) (commitId, refactorings, modelDiff) -> {
 			int actualTP = 0, actualTN = 0, actualFP = 0, actualFN = 0;
+			List<String> falsePositives = new ArrayList<>();
+			List<String> falseNegatives = new ArrayList<>();
 			for (Refactoring found : refactorings) {
 				PurityCheckResult actual = PurityChecker.check(found, refactorings, modelDiff);
 				String description = found.toString();
@@ -94,9 +97,11 @@ public class TestAllRefactoringsByCommitForPurityFSE {
 						}
 						else if(p.purityValue.equals("0") && actual.isPure()) {
 							actualFP++;
+							falsePositives.add(description);
 						}
 						else if(p.purityValue.equals("1") && !actual.isPure()) {
 							actualFN++;
+							falseNegatives.add(description);
 						}
 					}
 				}
@@ -108,9 +113,19 @@ public class TestAllRefactoringsByCommitForPurityFSE {
 			Assertions.assertAll(
 			() -> Assertions.assertEquals(expectedTP.get(commitId), finalActualTP, String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), finalActualTP)),
 			() -> Assertions.assertEquals(expectedTN.get(commitId), finalActualTN, String.format("Should have %s True Negatives, but has %s", expectedTN.get(commitId), finalActualTN)),
-			() -> Assertions.assertEquals(expectedFP.get(commitId), finalActualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), finalActualFP)),
-			() -> Assertions.assertEquals(expectedFN.get(commitId), finalActualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), finalActualFN))
+			() -> Assertions.assertEquals(expectedFP.get(commitId), finalActualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), finalActualFP) + descriptions("refactorings reported as pure, labeled impure", falsePositives)),
+			() -> Assertions.assertEquals(expectedFN.get(commitId), finalActualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), finalActualFN) + descriptions("refactorings reported as impure, labeled pure", falseNegatives))
 			);
 		});
+	}
+
+	//the refactoring descriptions listed in an assertion message, so that a failing commit shows which refactorings changed
+	private static String descriptions(String label, List<String> descriptions) {
+		if(descriptions.isEmpty())
+			return "";
+		StringBuilder sb = new StringBuilder("\n").append(label).append(":");
+		for(String description : descriptions)
+			sb.append("\n  ").append(description);
+		return sb.toString();
 	}
 }

@@ -39,12 +39,34 @@ public class UMLCommentListDiff {
 	private Set<AbstractCodeMapping> mappings;
 	private UMLOperationBodyMapper operationBodyMapper;
 	private UMLAbstractClassDiff classDiff;
+	//the pairs of an extra identical comment with the counterpart of another comment, i.e., a section separator repeated in the next version
+	private List<Pair<UMLComment, UMLComment>> multiMappedDeletedComments = new ArrayList<Pair<UMLComment, UMLComment>>();
+	private List<Pair<UMLComment, UMLComment>> multiMappedAddedComments = new ArrayList<Pair<UMLComment, UMLComment>>();
 
 	public UMLCommentListDiff() {
 		//empty for use in ModuleContainers
 		this.commonComments = new ArrayList<Pair<UMLComment,UMLComment>>();
 		this.deletedComments = new ArrayList<UMLComment>();
 		this.addedComments = new ArrayList<UMLComment>();
+	}
+
+	public void addCommonComment(Pair<UMLComment, UMLComment> pair) {
+		this.commonComments.add(pair);
+	}
+
+	public List<Pair<UMLComment, UMLComment>> getMultiMappedDeletedComments() {
+		return multiMappedDeletedComments;
+	}
+
+	public List<Pair<UMLComment, UMLComment>> getMultiMappedAddedComments() {
+		return multiMappedAddedComments;
+	}
+
+	//a multi-mapped comment matched with its actual counterpart elsewhere
+	public void removeMultiMapping(Pair<UMLComment, UMLComment> pair) {
+		commonComments.remove(pair);
+		multiMappedDeletedComments.remove(pair);
+		multiMappedAddedComments.remove(pair);
 	}
 
 	public void append(UMLCommentListDiff other) {
@@ -606,6 +628,7 @@ public class UMLCommentListDiff {
 							!isDeletedCommentWithPreviousDeletedStatement(deletedComment) && !isCommentNestedInNonMappedStatement(deletedComment, true)) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(deletedComment, pair.getRight());
 						commonComments.add(newPair);
+						multiMappedDeletedComments.add(newPair);
 						deletedComments.remove(deletedComment);
 						break;
 					}
@@ -622,6 +645,7 @@ public class UMLCommentListDiff {
 							!isAddedCommentWithPreviousAddedStatement(addedComment) && !isCommentNestedInNonMappedStatement(addedComment, false)) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(pair.getLeft(), addedComment);
 						commonComments.add(newPair);
+						multiMappedAddedComments.add(newPair);
 						addedComments.remove(addedComment);
 						break;
 					}

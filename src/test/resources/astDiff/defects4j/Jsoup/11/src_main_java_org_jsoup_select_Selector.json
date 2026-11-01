@@ -15676,6 +15676,17 @@
 }, {
   "firstType" : "LineComment",
   "secondType" : "LineComment",
+  "firstLabel" : "// :not(selector)",
+  "secondLabel" : "// :not(selector)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15009,
+  "secondPos" : 15171,
+  "firstEndPos" : 15026,
+  "secondEndPos" : 15188
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
   "firstLabel" : "// direct child descendants",
   "secondLabel" : "// direct child descendants",
   "firstParentType" : "TypeDeclaration",
@@ -20766,6 +20777,17 @@
   "secondPos" : 18789,
   "firstEndPos" : 18362,
   "secondEndPos" : 18797
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// exclude set. package open so that Elements can implement .not() selector.",
+  "secondLabel" : "// exclude set. package open so that Elements can implement .not() selector.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 18375,
+  "secondPos" : 18810,
+  "firstEndPos" : 18451,
+  "secondEndPos" : 18886
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",

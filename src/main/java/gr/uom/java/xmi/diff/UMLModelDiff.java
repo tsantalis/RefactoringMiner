@@ -117,6 +117,7 @@ public class UMLModelDiff {
 	private Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
 	private Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
 	private List<UMLCommentListDiff> commentsMovedBetweenClasses = new ArrayList<UMLCommentListDiff>();
+	private List<UMLCommentListDiff> commentsMovedBetweenElements = new ArrayList<UMLCommentListDiff>();
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames = new LinkedHashMap<>();
 	private List<UMLClassMoveDiff> classMoveDiffListToBePostProcessed = new ArrayList<>();
 
@@ -426,6 +427,10 @@ public class UMLModelDiff {
 
 	public List<UMLCommentListDiff> getCommentsMovedBetweenClasses() {
 		return commentsMovedBetweenClasses;
+	}
+
+	public List<UMLCommentListDiff> getCommentsMovedBetweenElements() {
+		return commentsMovedBetweenElements;
 	}
 
 	public boolean commonlyImplementedOperations(UMLOperation operation1, UMLOperation operation2, UMLClassBaseDiff classDiff2) {
@@ -5088,6 +5093,7 @@ public class UMLModelDiff {
 		}
 		refactorings.addAll(inferredMoveOperationRefactorings);
 		removeFalseMappingsOfExtractedAndInlinedCode();
+		commentsMovedBetweenElements = CommentsMovedBetweenElements.match(this, refactorings);
 		return filterOutDuplicateRefactorings(refactorings);
 	}
 

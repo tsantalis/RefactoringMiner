@@ -11045,6 +11045,17 @@
 }, {
   "firstType" : "LineComment",
   "secondType" : "LineComment",
+  "firstLabel" : "// Also temporary and cleared for each scope.",
+  "secondLabel" : "// Also temporary and cleared for each scope.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9001,
+  "secondPos" : 9001,
+  "firstEndPos" : 9046,
+  "secondEndPos" : 9046
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
   "firstLabel" : "// Suppose you create an alias.",
   "secondLabel" : "// Suppose you create an alias.",
   "firstParentType" : "TypeDeclaration",

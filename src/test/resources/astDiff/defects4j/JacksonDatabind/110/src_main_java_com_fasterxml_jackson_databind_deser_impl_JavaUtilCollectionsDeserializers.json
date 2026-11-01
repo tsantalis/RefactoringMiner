@@ -2364,6 +2364,17 @@
   "firstEndPos" : 1707,
   "secondEndPos" : 1707
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 02-Mar-2019, tatu: for [databind#2265], need to consider possible alternate type...\n     *    which we essentially coerce into the other one\n     */",
+  "secondLabel" : "/* 02-Mar-2019, tatu: for [databind#2265], need to consider possible alternate type...\n     *    which we essentially coerce into the other one\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1714,
+  "secondPos" : 1714,
+  "firstEndPos" : 1865,
+  "secondEndPos" : 1865
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",

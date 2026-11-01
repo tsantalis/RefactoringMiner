@@ -6260,6 +6260,17 @@
 }, {
   "firstType" : "LineComment",
   "secondType" : "LineComment",
+  "firstLabel" : "// merge multiple <head> or <body> contents into one, delete the remainder, and ensure they are owned by <html>",
+  "secondLabel" : "// merge multiple <head> or <body> contents into one, delete the remainder, and ensure they are owned by <html>",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4108,
+  "secondPos" : 4230,
+  "firstEndPos" : 4219,
+  "secondEndPos" : 4341
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
   "firstLabel" : "// fast method to get first by tag name, used for html, head, body finders",
   "secondLabel" : "// fast method to get first by tag name, used for html, head, body finders",
   "firstParentType" : "TypeDeclaration",

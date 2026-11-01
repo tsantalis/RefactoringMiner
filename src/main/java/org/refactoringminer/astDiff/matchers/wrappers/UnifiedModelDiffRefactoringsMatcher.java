@@ -57,7 +57,10 @@ public class UnifiedModelDiffRefactoringsMatcher {
         // TODO: Its not the most optimized one.
         //  I am iterating through all the astDiffs, and then I am checking if the srcPath or dstPath is equal to the comment's path.
         //  However since this information comes from modelDiff, there is no other clear alternative.
-        for (UMLCommentListDiff commentsMovedBetweenClass : modelDiff.getCommentsMovedBetweenClasses()) {
+        List<UMLCommentListDiff> movedComments = new ArrayList<>(modelDiff.getCommentsMovedBetweenClasses());
+        //the comments whose program element changed within a pair of files, i.e., a section comment above reordered enum constants
+        movedComments.addAll(modelDiff.getCommentsMovedBetweenElements());
+        for (UMLCommentListDiff commentsMovedBetweenClass : movedComments) {
             for (org.apache.commons.lang3.tuple.Pair<UMLComment, UMLComment> commonComment : commentsMovedBetweenClass.getCommonComments()) {
                 UMLComment left = commonComment.getLeft();
                 UMLComment right = commonComment.getRight();

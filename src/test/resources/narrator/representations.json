@@ -1981,8 +1981,7 @@
         "description": "the unchanged TODO comment above the replaced constant is not marked",
         "kind": "unchanged",
         "file": "transport/src/main/java/io/netty/channel/SingleThreadIoEventLoop.java",
-        "code": "// TODO: Is this a sensible default ?",
-        "todo": "RM (to report): SingleThreadIoEventLoop.java reports the identical `// TODO: Is this a sensible default ?` line comment above the replaced constant as deleted (L36) and inserted (L37) instead of mapping it"
+        "code": "// TODO: Is this a sensible default ?"
       }
     ]
   },

@@ -3636,7 +3636,8 @@ public class UMLModelDiff {
 		newInvocations.removeAll(intersection);
 		for(AbstractCall newInvocation : newInvocations) {
 			for(UMLOperation operation : addedOperations) {
-				if(!operation.isAbstract() && !operation.hasEmptyBody() &&
+				//a method is not extracted from its own body, i.e., the call parseHeaderOf(it) in parseHeaderOf(hprofFile) calls the overload parseHeaderOf(source)
+				if(!operation.equals(addedOperation) && !operation.isAbstract() && !operation.hasEmptyBody() &&
 						!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(operation) &&
 						newInvocation.matchesOperation(operation, addedOperation, classDiff, this)) {
 					//check if removedOperation has nested operation with the same name. possible extraction of nested operation to parent container

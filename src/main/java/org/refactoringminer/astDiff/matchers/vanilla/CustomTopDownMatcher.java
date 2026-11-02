@@ -361,13 +361,13 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			//an exact absolute-position match can be a pure coincidence between two unrelated trees
 			//when the src side has multiple identical siblings (e.g. repeated isomorphic statements/calls
 			//in the same list): the global traversal index is not a reliable disambiguator there, so this
-			//short-circuit is skipped in that case and the position-distance metrics below decide instead
-			if (!hasFollowingIdenticalSibling && !other.hasFollowingIdenticalSibling) {
-				boolean thisExact = absolutePositionDistance == 0;
-				boolean otherExact = other.absolutePositionDistance == 0;
-				if (thisExact != otherExact)
-					return thisExact ? -1 : 1;
-			}
+			//short-circuit is skipped in that case and the position-distance metrics below decide instead.
+			//It is a property of each candidate, so that the order is consistent: requiring both candidates to have no following identical sibling
+			//made it cyclic for candidates with and without one, i.e., the ~0u entries of a list of offsets, and the sort failed
+			boolean thisTrustedExact = !hasFollowingIdenticalSibling && absolutePositionDistance == 0;
+			boolean otherTrustedExact = !other.hasFollowingIdenticalSibling && other.absolutePositionDistance == 0;
+			if (thisTrustedExact != otherTrustedExact)
+				return thisTrustedExact ? -1 : 1;
 			result = Double.compare(parentPositionDistance, other.parentPositionDistance);
 			if (result != 0) return result;
 			result = Integer.compare(absolutePositionDistance, other.absolutePositionDistance);

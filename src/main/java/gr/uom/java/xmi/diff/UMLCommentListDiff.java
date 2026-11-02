@@ -4,6 +4,8 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1196,30 +1198,65 @@ public class UMLCommentListDiff {
 
 	//the longest subsequence of tokens of the source found in the target, with more than two tokens or two tokens in quotes,
 	//which replaces a found subsequence only when it contains it
+	//the subsequences from the same start found in the target are the prefixes of the longest one, and each prefix contains the shorter ones,
+	//so the longest one replaces the found subsequence whenever any of its prefixes would
 	private List<String> longestSubSequence(List<String> source, List<String> target) {
+		int[] matchLengths = longestMatchLengths(source, target);
 		List<String> longestSubSequence = null;
+		Set<String> longestSubSequenceTokens = null;
 		for(int i=0; i<source.size(); i++) {
-			for(int j=i+1; j<source.size(); j++) {
-				List<String> subList = source.subList(i,j+1);
-				if(subList.size() > 2 || subListInQuotes(target, subList)) {
-					int indexOfSubList = Collections.indexOfSubList(target, subList);
-					if(indexOfSubList == -1) {
-						//the longer subsequences from the same start contain this one, so they are not found either
-						break;
-					}
-					if(longestSubSequence == null) {
+			int length = matchLengths[i];
+			if(length > 2 || (length == 2 && subListInQuotes(target, source.subList(i, i+2)))) {
+				List<String> subList = source.subList(i, i+length);
+				if(longestSubSequence == null) {
+					longestSubSequence = subList;
+					longestSubSequenceTokens = new HashSet<String>(subList);
+				}
+				else if(subList.size() > longestSubSequence.size()) {
+					Set<String> subListTokens = new HashSet<String>(subList);
+					if(subListTokens.containsAll(longestSubSequenceTokens)) {
 						longestSubSequence = subList;
-					}
-					else if(subList.containsAll(longestSubSequence) && subList.size() > longestSubSequence.size()) {
-						longestSubSequence = subList;
+						longestSubSequenceTokens = subListTokens;
 					}
 				}
 			}
-			if(longestSubSequence != null && longestSubSequence.equals(source)) {
+			if(longestSubSequence != null && longestSubSequence.size() == source.size()) {
 				break;
 			}
 		}
 		return longestSubSequence;
+	}
+
+	//the length of the longest sequence of tokens starting at each position of the source that is found in the target
+	private static int[] longestMatchLengths(List<String> source, List<String> target) {
+		Map<String, Integer> ids = new HashMap<String, Integer>();
+		int[] sourceIds = new int[source.size()];
+		for(int i=0; i<source.size(); i++) {
+			sourceIds[i] = ids.computeIfAbsent(source.get(i), k -> ids.size());
+		}
+		int[] targetIds = new int[target.size()];
+		for(int j=0; j<target.size(); j++) {
+			Integer id = ids.get(target.get(j));
+			targetIds[j] = id != null ? id : -1;
+		}
+		int[] matchLengths = new int[source.size()];
+		//common prefix lengths of the source and target suffixes starting at i+1 (next) and i (current)
+		int[] next = new int[target.size() + 1];
+		int[] current = new int[target.size() + 1];
+		for(int i=source.size()-1; i>=0; i--) {
+			int max = 0;
+			for(int j=target.size()-1; j>=0; j--) {
+				current[j] = sourceIds[i] == targetIds[j] ? next[j+1] + 1 : 0;
+				if(current[j] > max) {
+					max = current[j];
+				}
+			}
+			matchLengths[i] = max;
+			int[] swap = next;
+			next = current;
+			current = swap;
+		}
+		return matchLengths;
 	}
 
 	private List<String> containsAnySubSequence(List<String> list, List<String> longestSubSequence) {

@@ -307,6 +307,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		private final int absolutePositionDistance;
 		private final int neighborAnchorScore;
 		private final int distantAnchorScore;
+		private final double wrappedSiblingsSimilarity;
 		private final boolean hasFollowingIdenticalSibling;
 		private final int srcPosition;
 		private final int dstPosition;
@@ -314,7 +315,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 
 		private ScoredMapping(Tree first, Tree second, double siblingsSimilarity, double parentsSimilarity,
 							  double parentPositionDistance, int absolutePositionDistance, int neighborAnchorScore, int distantAnchorScore,
-							  boolean hasFollowingIdenticalSibling, long order) {
+							  double wrappedSiblingsSimilarity, boolean hasFollowingIdenticalSibling, long order) {
 			this.first = first;
 			this.second = second;
 			this.siblingsSimilarity = siblingsSimilarity;
@@ -323,6 +324,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			this.absolutePositionDistance = absolutePositionDistance;
 			this.neighborAnchorScore = neighborAnchorScore;
 			this.distantAnchorScore = distantAnchorScore;
+			this.wrappedSiblingsSimilarity = wrappedSiblingsSimilarity;
 			this.hasFollowingIdenticalSibling = hasFollowingIdenticalSibling;
 			this.srcPosition = first.getPos();
 			this.dstPosition = second.getPos();
@@ -349,6 +351,10 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			//the nearest mapped siblings beyond the immediate ones break the remaining ties, i.e., the identical ~0u entries of a list of offsets,
 			//whose immediate siblings are identical commas
 			result = Integer.compare(other.distantAnchorScore, distantAnchorScore);
+			if (result != 0) return result;
+			//when one of the candidates is wrapped in a node the other is not, the siblings of the wrapper are compared with the siblings of the other candidate,
+			//i.e., e.rotationRate in e.rotationRate.alpha -> e.rotationRate in e.rotationRate!.alpha, where alpha is mapped next to the non-null expression
+			result = Double.compare(other.wrappedSiblingsSimilarity, wrappedSiblingsSimilarity);
 			if (result != 0) return result;
 			//an exact absolute-position match can be a pure coincidence between two unrelated trees
 			//when the src side has multiple identical siblings (e.g. repeated isomorphic statements/calls
@@ -460,6 +466,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 					Math.abs(src.getMetrics().position - dst.getMetrics().position),
 					neighborAnchorScore(src, dst),
 					distantAnchorScore(src, dst),
+					wrappedSiblingsSimilarity(src.getParent(), dst.getParent()),
 					hasFollowingIdenticalSibling(src),
 					order);
 		}
@@ -573,6 +580,21 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 				}
 				return SimilarityMetrics.diceCoefficient(commonDescendants, srcDescendants.size(), dstDescendants.size());
 			});
+		}
+
+		private double wrappedSiblingsSimilarity(Tree srcParent, Tree dstParent) {
+			if (srcParent == null || dstParent == null)
+				return 0;
+			double srcWrapped = isWrapped(srcParent, dstParent) ? siblingsSimilarity(srcParent.getParent(), dstParent) : 0;
+			double dstWrapped = isWrapped(dstParent, srcParent) ? siblingsSimilarity(srcParent, dstParent.getParent()) : 0;
+			return Math.max(srcWrapped, dstWrapped);
+		}
+
+		//the parent is a wrapper, i.e., the non-null expression e.rotationRate!, when its own parent has the type of the other parent,
+		//i.e., the member expressions e.rotationRate!.alpha and e.rotationRate.alpha
+		private static boolean isWrapped(Tree parent, Tree otherParent) {
+			return parent.getParent() != null && parent.getParent().getType().name.equals(otherParent.getType().name) &&
+					!parent.getType().name.equals(otherParent.getType().name);
 		}
 
 		private Set<Tree> srcDescendants(Tree tree) {

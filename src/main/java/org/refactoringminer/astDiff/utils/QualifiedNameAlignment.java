@@ -18,6 +18,10 @@ public class QualifiedNameAlignment {
 
     //aligns the names of the mapped Java qualified names in label order, and registers the flattening of the nested qualified names, applied after all diffs are matched
     public static void align(ASTDiff diff, DeferredFlattenings deferredFlattenings) {
+        if(isCOrCppFile(diff.getSrcPath()) && isCOrCppFile(diff.getDstPath())) {
+            alignCppQualifiedNames(diff);
+            return;
+        }
         if(!PathFileUtils.isJavaFile(diff.getSrcPath()))
             return;
         //the Java qualified names migrated to Kotlin are mapped with the Kotlin navigation expressions of their names
@@ -125,6 +129,45 @@ public class QualifiedNameAlignment {
             if(!mapped1 && !mapped2 && (dsts == null || !dsts.contains(name2)))
                 mappingStore.addMapping(name1, name2);
         }
+    }
+
+    private static boolean isCOrCppFile(String path) {
+        return PathFileUtils.isCppFile(path) || PathFileUtils.isCFile(path);
+    }
+
+    //aligns the names of the mapped C++ qualified identifiers in label order, i.e., std::string(str) -> internal::StringType<T>(str) maps std to internal and string to StringType,
+    //where the name of a template is the name before its template arguments
+    private static void alignCppQualifiedNames(ASTDiff diff) {
+        ExtendedMultiMappingStore mappingStore = diff.getAllMappings();
+        for(Tree qualified1 : diff.src.getRoot().preOrder()) {
+            if(!isOutermostQualifiedIdentifier(qualified1, diff.LANG1) || !mappingStore.isSrcMapped(qualified1))
+                continue;
+            for(Tree qualified2 : new ArrayList<>(mappingStore.getDsts(qualified1))) {
+                if(isOutermostQualifiedIdentifier(qualified2, diff.LANG2))
+                    mapNamesInLabelOrder(mappingStore, cppNames(qualified1, diff.LANG1), cppNames(qualified2, diff.LANG2));
+            }
+        }
+    }
+
+    private static boolean isOutermostQualifiedIdentifier(Tree tree, Constants LANG) {
+        return tree.getType().name.equals(LANG.QUALIFIED_IDENTIFIER) && (tree.getParent() == null || !tree.getParent().getType().name.equals(LANG.QUALIFIED_IDENTIFIER));
+    }
+
+    //the names of a C++ qualified identifier, i.e., [std, string] for std::string and [internal, StringType] for internal::StringType<T>
+    private static List<Tree> cppNames(Tree qualified, Constants LANG) {
+        List<Tree> names = new ArrayList<>();
+        for(Tree child : qualified.getChildren()) {
+            String type = child.getType().name;
+            if(type.equals(LANG.QUALIFIED_IDENTIFIER))
+                names.addAll(cppNames(child, LANG));
+            else if(type.equals(LANG.TEMPLATE_FUNCTION) || type.equals(LANG.TEMPLATE_TYPE)) {
+                if(!child.getChildren().isEmpty() && child.getChild(0).isLeaf())
+                    names.add(child.getChild(0));
+            }
+            else if(child.isLeaf() && !child.getLabel().isEmpty())
+                names.add(child);
+        }
+        return names;
     }
 
     //maps the names with identical labels in the longest common subsequence, and the names between them in equally long gaps by position,

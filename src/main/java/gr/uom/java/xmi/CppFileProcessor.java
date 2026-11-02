@@ -187,8 +187,10 @@ public class CppFileProcessor {
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
 				preprocessor.buildConditionalBranches(ast.getAllPreprocessorStatements());
 				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
+				int classesBefore = this.umlModel.getClassList().size();
 				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass,
 						ast.getDeclarations(true), comments, new ICPPASTTemplateParameter[0]);
+				distributePreprocessorStatements(moduleClass, this.umlModel.getClassList().subList(classesBefore, this.umlModel.getClassList().size()));
 				this.umlModel.addClass(moduleClass);
 				//add remaining comments to moduleClass
 				//TODO consider assigning comments to individual preprocessor statements
@@ -253,7 +255,12 @@ public class CppFileProcessor {
 		if(isConditional(statement) || statement instanceof IASTPreprocessorEndifStatement) {
 			return locationInfo;
 		}
-		int end = locationInfo.getEndOffset();
+		int end = directiveLineEnd(locationInfo.getEndOffset());
+		return new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.PREPROCESSOR_DIRECTIVE, fileContent);
+	}
+
+	//the end of a directive after the line break of its line, including the comments and continuation lines
+	private int directiveLineEnd(int end) {
 		while(end < fileContent.length() && fileContent.charAt(end) != '\n') {
 			if(fileContent.startsWith("/*", end)) {
 				int close = fileContent.indexOf("*/", end + 2);
@@ -272,7 +279,7 @@ public class CppFileProcessor {
 		if(end < fileContent.length()) {
 			end++;
 		}
-		return new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.PREPROCESSOR_DIRECTIVE, fileContent);
+		return end;
 	}
 
 	private static boolean isConditional(IASTPreprocessorStatement statement) {
@@ -445,7 +452,137 @@ public class CppFileProcessor {
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ERROR,value);
 			}
 			if(preprocessorStatement != null) {
+				if(preprocessorStatement.isConditional()) {
+					preprocessorStatement.setBlockText(fileContent.substring(locationInfo.getStartOffset(), locationInfo.getEndOffset()));
+				}
 				moduleClass.addPreprocessorStatement(preprocessorStatement);
+			}
+		}
+		List<UMLPreprocessorStatement> inactiveDirectives = inactiveDirectives(sourceFolder, allPreprocessorStatements);
+		if(!inactiveDirectives.isEmpty()) {
+			moduleClass.getPreprocessorStatements().addAll(inactiveDirectives);
+			moduleClass.getPreprocessorStatements().sort(Comparator.comparingInt(statement -> statement.getLocationInfo().getStartOffset()));
+		}
+	}
+
+	//CDT gives only the conditional directives of the branches that are not taken, i.e., #ifdef __GNUC__ #pragma GCC diagnostic push #endif without __GNUC__,
+	//so the other directives in these branches are found in the source text
+	private List<UMLPreprocessorStatement> inactiveDirectives(String sourceFolder, IASTPreprocessorStatement[] statements) {
+		List<int[]> spans = new ArrayList<>();
+		Deque<int[]> open = new ArrayDeque<>();
+		for(IASTPreprocessorStatement statement : statements) {
+			if(!isPartOfFile(statement) || statement.getFileLocation() == null) {
+				continue;
+			}
+			int start = statement.getFileLocation().getNodeOffset();
+			int lineEnd = directiveLineEnd(start + statement.getFileLocation().getNodeLength());
+			if(statement instanceof IASTPreprocessorIfStatement || statement instanceof IASTPreprocessorIfdefStatement || statement instanceof IASTPreprocessorIfndefStatement) {
+				open.push(new int[] {taken(statement) ? -1 : lineEnd});
+			}
+			else if((statement instanceof IASTPreprocessorElifStatement || statement instanceof IASTPreprocessorElseStatement) && !open.isEmpty()) {
+				int[] branch = open.peek();
+				if(branch[0] >= 0) {
+					spans.add(new int[] {branch[0], start});
+				}
+				branch[0] = taken(statement) ? -1 : lineEnd;
+			}
+			else if(statement instanceof IASTPreprocessorEndifStatement && !open.isEmpty()) {
+				int[] branch = open.pop();
+				if(branch[0] >= 0) {
+					spans.add(new int[] {branch[0], start});
+				}
+			}
+		}
+		List<UMLPreprocessorStatement> directives = new ArrayList<>();
+		Set<Integer> found = new HashSet<>();
+		for(int[] span : spans) {
+			boolean inBlockComment = false;
+			int lineStart = span[0];
+			while(lineStart < span[1]) {
+				int lineEnd = fileContent.indexOf('\n', lineStart);
+				if(lineEnd < 0 || lineEnd > span[1]) {
+					lineEnd = span[1];
+				}
+				String line = fileContent.substring(lineStart, lineEnd);
+				String trimmed = line.strip();
+				if(!inBlockComment && trimmed.startsWith("#") && found.add(lineStart + line.indexOf('#'))) {
+					UMLPreprocessorStatement directive = inactiveDirective(sourceFolder, lineStart + line.indexOf('#'), trimmed.substring(1).strip());
+					if(directive != null) {
+						directives.add(directive);
+						lineEnd = Math.max(lineEnd, directive.getLocationInfo().getEndOffset() - 1);
+					}
+				}
+				int commentOpen = line.lastIndexOf("/*");
+				int commentClose = line.lastIndexOf("*/");
+				if(commentOpen >= 0 && commentOpen > commentClose) {
+					inBlockComment = true;
+				}
+				else if(commentClose >= 0) {
+					inBlockComment = false;
+				}
+				lineStart = lineEnd + 1;
+			}
+		}
+		return directives;
+	}
+
+	private static boolean taken(IASTPreprocessorStatement statement) {
+		if(statement instanceof IASTPreprocessorIfStatement ifStatement)
+			return ifStatement.taken();
+		if(statement instanceof IASTPreprocessorIfdefStatement ifdefStatement)
+			return ifdefStatement.taken();
+		if(statement instanceof IASTPreprocessorIfndefStatement ifndefStatement)
+			return ifndefStatement.taken();
+		if(statement instanceof IASTPreprocessorElifStatement elifStatement)
+			return elifStatement.taken();
+		if(statement instanceof IASTPreprocessorElseStatement elseStatement)
+			return elseStatement.taken();
+		return true;
+	}
+
+	//a #pragma, #define, #undef, #include or #error of a branch that is not taken, with the values CDT gives for an active one
+	private UMLPreprocessorStatement inactiveDirective(String sourceFolder, int start, String text) {
+		int end = directiveLineEnd(start);
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.PREPROCESSOR_DIRECTIVE, fileContent);
+		String keyword = text.split("[\\s(<\"]", 2)[0];
+		String rest = text.substring(keyword.length()).strip();
+		switch(keyword) {
+			case "pragma":
+				return new UMLPreprocessorStatement(locationInfo, Directive.PRAGMA, rest);
+			case "error":
+				return new UMLPreprocessorStatement(locationInfo, Directive.ERROR, rest);
+			case "undef":
+				return new UMLPreprocessorStatement(locationInfo, Directive.UNDEF, rest);
+			case "include":
+				String header = rest.replaceAll("^[<\"]|[>\"].*$", "");
+				return new UMLPreprocessorStatement(locationInfo, Directive.INCLUDE, header, header);
+			case "define":
+				String name = rest.split("[\\s(]", 2)[0];
+				String expansion = rest.substring(name.length());
+				if(expansion.startsWith("(") && expansion.contains(")")) {
+					expansion = expansion.substring(expansion.indexOf(')') + 1);
+				}
+				return new UMLPreprocessorStatement(locationInfo, Directive.DEFINE, expansion.strip(), name);
+			default:
+				return null;
+		}
+	}
+
+	//the directives within the body of a class belong to the innermost such class, i.e., the #if LANG_CXX11 around the move constructor of each message class,
+	//so that they are compared with the directives of the same class only
+	private static void distributePreprocessorStatements(UMLClass moduleClass, List<UMLClass> classesOfFile) {
+		for(UMLPreprocessorStatement statement : new ArrayList<>(moduleClass.getPreprocessorStatements())) {
+			UMLClass innermost = null;
+			for(UMLClass umlClass : classesOfFile) {
+				if(umlClass != moduleClass && umlClass.getLocationInfo().subsumes(statement.getLocationInfo()) &&
+						(innermost == null || innermost.getLocationInfo().subsumes(umlClass.getLocationInfo()))) {
+					innermost = umlClass;
+				}
+			}
+			if(innermost != null) {
+				//by identity, as the directives with the same condition are equal
+				moduleClass.getPreprocessorStatements().removeIf(s -> s == statement);
+				innermost.addPreprocessorStatement(statement);
 			}
 		}
 	}
@@ -757,6 +894,7 @@ public class CppFileProcessor {
 	private static final String STANDARD_LIBRARY_STUB = stub("/cpp-stubs/std.h");
 	private static final String GOOGLE_TEST_STUB = stub("/cpp-stubs/gtest.h");
 	private static final String ABSEIL_STUB = stub("/cpp-stubs/absl.h");
+	private static final String PROTOCOL_BUFFERS_STUB = stub("/cpp-stubs/protobuf.h");
 
 	//the stub without the lines of its documentation, since CDT gives the comments of the included files with their offsets in these files
 	private static String stub(String resource) {
@@ -769,7 +907,7 @@ public class CppFileProcessor {
 		}
 	}
 
-	//the stub of the file, with the parts of googletest and googlemock when the file includes their headers, and the part of Abseil when the file uses it
+	//the stub of the file, with the parts of googletest and googlemock when the file includes their headers, and the parts of Abseil and Protocol Buffers when the file uses them
 	private static String stubs(String fileContent) {
 		StringBuilder stubs = new StringBuilder(STANDARD_LIBRARY_STUB);
 		if(fileContent.contains("#include \"gtest/") || fileContent.contains("#include \"gmock/") ||
@@ -778,6 +916,10 @@ public class CppFileProcessor {
 		}
 		if(fileContent.contains("absl") || fileContent.contains("ABSL_")) {
 			stubs.append("\n").append(ABSEIL_STUB);
+		}
+		//the code generated by protoc and the code using the Protocol Buffers library
+		if(fileContent.contains("google/protobuf/") || fileContent.contains("GOOGLE_PROTOBUF") || fileContent.contains("PROTOBUF_")) {
+			stubs.append("\n").append(PROTOCOL_BUFFERS_STUB);
 		}
 		return stubs.toString();
 	}
@@ -1053,8 +1195,13 @@ public class CppFileProcessor {
 			}
 		}
 		int close = closingAngleBracket(fileContent, end);
-		if(close < 0 || nextNonWhitespace(fileContent, close + 1) != '(' || types.computeIfAbsent("<>" + lastName, key -> usedAsTemplateType(lastName.toString(), fileContent))) {
+		if(close < 0 || nextNonWhitespace(fileContent, close + 1) != '(') {
 			return null;
+		}
+		//a name also used as a type is a class template, and its template arguments followed by arguments are a functional cast,
+		//i.e., internal::StringType<T>(str) with internal::StringType<T> ToString(T str), which a function template would turn into a call in the type
+		if(types.computeIfAbsent("<>" + lastName, key -> usedAsTemplateType(lastName.toString(), fileContent))) {
+			return inNamespaces(namespaces, "template<class... __rm_t__> struct " + lastName + ";");
 		}
 		return inNamespaces(namespaces, "template<class... __rm_t__> int " + lastName + "(...);");
 	}

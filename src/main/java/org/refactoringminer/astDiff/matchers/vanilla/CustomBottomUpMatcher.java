@@ -69,6 +69,7 @@ public class CustomBottomUpMatcher implements Matcher {
 					&& mappings.hasUnmappedDstChildren(mappings.getDstForSrc(t)))
 				lastChanceMatch(mappings, t, mappings.getDstForSrc(t));
 		}
+		separatorMatching(mappings, src);
 		return mappings;
 	}
 
@@ -166,15 +167,76 @@ public class CustomBottomUpMatcher implements Matcher {
 		histogramMatching(mappings, src, dst);
 	}
 
+	//the separators of a list, i.e., the commas, have no identity of their own and stand between the elements of the list,
+	//so they are mapped after the elements, to the comma after the counterpart of the element before them, i.e., the comma after "use_direct_io" -> "load_mode",
+	//or else to the comma before the counterpart of the element after them, i.e., '/health', {} -> this.path(), {},
+	//or else by position, when the lists have the same length, i.e., [DIRECTIONS.HORIZONTAL, DIRECTIONS.VERTICAL] -> ['horizontal', 'vertical'],
+	//and the commas between unmapped elements remain unmapped, i.e., the comma after the removed /*.use_mmap =*/ true
+	//is not mapped to the comma after the added /*.load_mode =*/ LLAMA_LOAD_MODE_MMAP
+	private void separatorMatching(MappingStore mappings, Tree src) {
+		for (Tree separator1 : src.preOrder()) {
+			if (!isSeparator(separator1, LANG1) || mappings.isSrcMapped(separator1) || separator1.getParent() == null)
+				continue;
+			Tree list1 = separator1.getParent();
+			int i = separator1.positionInParent();
+			Tree separator2 = null;
+			if (i > 0) {
+				Tree element2 = counterpartElement(mappings, list1.getChild(i - 1));
+				if (element2 != null && element2.positionInParent() + 1 < element2.getParent().getChildren().size())
+					separator2 = element2.getParent().getChild(element2.positionInParent() + 1);
+			}
+			if (!isUnmappedSeparator(mappings, separator2, separator1) && i + 1 < list1.getChildren().size()) {
+				Tree element2 = counterpartElement(mappings, list1.getChild(i + 1));
+				separator2 = element2 != null && element2.positionInParent() > 0 ? element2.getParent().getChild(element2.positionInParent() - 1) : null;
+			}
+			if (!isUnmappedSeparator(mappings, separator2, separator1)) {
+				Tree list2 = mappings.getDstForSrc(list1);
+				separator2 = list2 != null && list2.getChildren().size() == list1.getChildren().size() ? list2.getChild(i) : null;
+			}
+			if (isUnmappedSeparator(mappings, separator2, separator1))
+				mappings.addMapping(separator1, separator2);
+		}
+	}
+
+	private boolean isUnmappedSeparator(MappingStore mappings, Tree separator2, Tree separator1) {
+		return separator2 != null && isSeparator(separator2, LANG2) && separator2.getLabel().equals(separator1.getLabel()) && !mappings.isDstMapped(separator2);
+	}
+
+	//the counterpart of an element is the element of the counterpart list containing the counterpart of the element or of its leading part,
+	//i.e., button -> button: any, where button is mapped inside the parameter, or local_device = receive_prep_result.local_device -> local_device,
+	//where the captured name is mapped, but not of a part after it, i.e., Chart.defaults.global in globalDefaults = Chart.defaults.global,
+	//which is moved to another element, or else its counterpart in another list
+	private static Tree counterpartElement(MappingStore mappings, Tree element1) {
+		Tree counterpart = mappings.getDstForSrc(element1);
+		Tree list2 = mappings.getDstForSrc(element1.getParent());
+		if (list2 != null) {
+			for (Tree part = element1; part != null; part = part.isLeaf() ? null : part.getChild(0)) {
+				if (mappings.isSrcMapped(part)) {
+					Tree element2 = mappings.getDstForSrc(part);
+					while (element2.getParent() != null && element2.getParent() != list2)
+						element2 = element2.getParent();
+					if (element2.getParent() == list2)
+						return element2;
+					break;
+				}
+			}
+		}
+		return counterpart != null && counterpart.getParent() != null ? counterpart : null;
+	}
+
+	private static boolean isSeparator(Tree tree, Constants LANG) {
+		return tree.isLeaf() && tree.getType().name.equals(LANG.COMMA);
+	}
+
 	protected void lcsEqualMatching(MappingStore mappings, Tree src, Tree dst) {
 		List<Tree> unmappedSrcChildren = new ArrayList<>();
 		for (Tree c : src.getChildren())
-			if (!mappings.isSrcMapped(c))
+			if (!mappings.isSrcMapped(c) && !isSeparator(c, LANG1))
 				unmappedSrcChildren.add(c);
 
 		List<Tree> unmappedDstChildren = new ArrayList<>();
 		for (Tree c : dst.getChildren())
-			if (!mappings.isDstMapped(c))
+			if (!mappings.isDstMapped(c) && !isSeparator(c, LANG2))
 				unmappedDstChildren.add(c);
 
 		List<int[]> lcs = SequenceAlgorithms.longestCommonSubsequenceWithIsomorphism(
@@ -191,12 +253,12 @@ public class CustomBottomUpMatcher implements Matcher {
 	protected void lcsStructureMatching(MappingStore mappings, Tree src, Tree dst) {
 		List<Tree> unmappedSrcChildren = new ArrayList<>();
 		for (Tree c : src.getChildren())
-			if (!mappings.isSrcMapped(c))
+			if (!mappings.isSrcMapped(c) && !isSeparator(c, LANG1))
 				unmappedSrcChildren.add(c);
 
 		List<Tree> unmappedDstChildren = new ArrayList<>();
 		for (Tree c : dst.getChildren())
-			if (!mappings.isDstMapped(c))
+			if (!mappings.isDstMapped(c) && !isSeparator(c, LANG2))
 				unmappedDstChildren.add(c);
 
 		List<int[]> lcs = SequenceAlgorithms.longestCommonSubsequenceWithIsostructure(
@@ -213,7 +275,7 @@ public class CustomBottomUpMatcher implements Matcher {
 	protected void histogramMatching(MappingStore mappings, Tree src, Tree dst) {
 		Map<Type, List<Tree>> srcHistogram = new HashMap<>();
 		for (var c :  src.getChildren()) {
-			if (mappings.isSrcMapped(c))
+			if (mappings.isSrcMapped(c) || isSeparator(c, LANG1))
 				continue;
 			srcHistogram.putIfAbsent(c.getType(), new ArrayList<>());
 			srcHistogram.get(c.getType()).add(c);
@@ -221,7 +283,7 @@ public class CustomBottomUpMatcher implements Matcher {
 
 		Map<Type, List<Tree>> dstHistogram = new HashMap<>();
 		for (var c : dst.getChildren()) {
-			if (mappings.isDstMapped(c))
+			if (mappings.isDstMapped(c) || isSeparator(c, LANG2))
 				continue;
 			dstHistogram.putIfAbsent(c.getType(), new ArrayList<>());
 			dstHistogram.get(c.getType()).add(c);

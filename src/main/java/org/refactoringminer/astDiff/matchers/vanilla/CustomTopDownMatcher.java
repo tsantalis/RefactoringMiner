@@ -241,18 +241,44 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		dstIgnored.add(adst);
 	}
 
+	//the separators of a list, i.e., the commas, have no identity of their own and follow the elements before them,
+	//so the elements are retained first, then each comma after a mapped element is mapped to the comma after its counterpart,
+	//i.e., the comma after the ~0u of a list of offsets, where an inserted element shifts the identical commas by one,
+	//and the remaining commas, i.e., after elements not mapped yet, are left to the bottom-up matching of their lists,
+	//which maps them after the elements of the lists
 	private void retainBestScoredMapping(List<ScoredMapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
+		List<ScoredMapping> separators = new ArrayList<>();
 		for (ScoredMapping scoredMapping : mappingList) {
-			Tree first = scoredMapping.first;
-			Tree second = scoredMapping.second;
-			if (isVerifiedMapping(first, second) && !(srcIgnored.contains(first) || dstIgnored.contains(second))) {
-				mappings.addMappingRecursively(first, second);
-				srcIgnored.add(first);
-				srcIgnored.addAll(first.getDescendants());
-				dstIgnored.add(second);
-				dstIgnored.addAll(second.getDescendants());
-			}
+			if (isSeparator(scoredMapping.first, LANG1) && isSeparator(scoredMapping.second, LANG2))
+				separators.add(scoredMapping);
+			else
+				retain(scoredMapping.first, scoredMapping.second, srcIgnored, dstIgnored);
 		}
+		for (ScoredMapping scoredMapping : separators) {
+			Tree first = scoredMapping.first;
+			if (srcIgnored.contains(first) || first.getParent() == null || first.positionInParent() == 0)
+				continue;
+			Tree element2 = mappings.getDstForSrc(first.getParent().getChild(first.positionInParent() - 1));
+			if (element2 == null || element2.getParent() == null || element2.positionInParent() + 1 >= element2.getParent().getChildren().size())
+				continue;
+			Tree second = element2.getParent().getChild(element2.positionInParent() + 1);
+			if (isSeparator(second, LANG2) && second.getLabel().equals(first.getLabel()) && !mappings.isDstMapped(second))
+				retain(first, second, srcIgnored, dstIgnored);
+		}
+	}
+
+	private void retain(Tree first, Tree second, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
+		if (isVerifiedMapping(first, second) && !(srcIgnored.contains(first) || dstIgnored.contains(second))) {
+			mappings.addMappingRecursively(first, second);
+			srcIgnored.add(first);
+			srcIgnored.addAll(first.getDescendants());
+			dstIgnored.add(second);
+			dstIgnored.addAll(second.getDescendants());
+		}
+	}
+
+	private static boolean isSeparator(Tree tree, Constants LANG) {
+		return tree.isLeaf() && tree.getType().name.equals(LANG.COMMA);
 	}
 
 	private boolean isVerifiedMapping(Tree first, Tree second) {
@@ -280,13 +306,14 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		private final double parentPositionDistance;
 		private final int absolutePositionDistance;
 		private final int neighborAnchorScore;
+		private final int distantAnchorScore;
 		private final boolean hasFollowingIdenticalSibling;
 		private final int srcPosition;
 		private final int dstPosition;
 		private final long order;
 
 		private ScoredMapping(Tree first, Tree second, double siblingsSimilarity, double parentsSimilarity,
-							  double parentPositionDistance, int absolutePositionDistance, int neighborAnchorScore,
+							  double parentPositionDistance, int absolutePositionDistance, int neighborAnchorScore, int distantAnchorScore,
 							  boolean hasFollowingIdenticalSibling, long order) {
 			this.first = first;
 			this.second = second;
@@ -295,6 +322,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			this.parentPositionDistance = parentPositionDistance;
 			this.absolutePositionDistance = absolutePositionDistance;
 			this.neighborAnchorScore = neighborAnchorScore;
+			this.distantAnchorScore = distantAnchorScore;
 			this.hasFollowingIdenticalSibling = hasFollowingIdenticalSibling;
 			this.srcPosition = first.getPos();
 			this.dstPosition = second.getPos();
@@ -317,6 +345,10 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			//metrics below, which are normalized by sibling count and can favor a shifted candidate
 			//over the untouched one whenever siblings are inserted/removed elsewhere in the same parent
 			result = Integer.compare(other.neighborAnchorScore, neighborAnchorScore);
+			if (result != 0) return result;
+			//the nearest mapped siblings beyond the immediate ones break the remaining ties, i.e., the identical ~0u entries of a list of offsets,
+			//whose immediate siblings are identical commas
+			result = Integer.compare(other.distantAnchorScore, distantAnchorScore);
 			if (result != 0) return result;
 			//an exact absolute-position match can be a pure coincidence between two unrelated trees
 			//when the src side has multiple identical siblings (e.g. repeated isomorphic statements/calls
@@ -427,6 +459,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 					parentPositionDistance(src, dst),
 					Math.abs(src.getMetrics().position - dst.getMetrics().position),
 					neighborAnchorScore(src, dst),
+					distantAnchorScore(src, dst),
 					hasFollowingIdenticalSibling(src),
 					order);
 		}
@@ -483,6 +516,47 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 				}
 			}
 			return score;
+		}
+
+		private int distantAnchorScore(Tree src, Tree dst) {
+			Tree srcParent = src.getParent();
+			Tree dstParent = dst.getParent();
+			if (srcParent == null || dstParent == null) {
+				return 0;
+			}
+			int srcIndex = srcParent.getChildPosition(src);
+			int dstIndex = dstParent.getChildPosition(dst);
+			return anchorScore(srcParent, dstParent, srcIndex, dstIndex, -1) + anchorScore(srcParent, dstParent, srcIndex, dstIndex, 1);
+		}
+
+		//the nearest mapped sibling beyond the immediate one in the direction anchors the candidate, when its counterpart is at the same distance
+		//and the siblings in between are unchanged, i.e., the second ~0u after the unique GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(T, _internal_metadata_)
+		//in a list of offsets, whose immediate siblings, the commas, are identical to many others; an inserted or removed sibling in between shifts the distance
+		private int anchorScore(Tree srcParent, Tree dstParent, int srcIndex, int dstIndex, int direction) {
+			for (int i = srcIndex + direction; i >= 0 && i < srcParent.getChildren().size(); i += direction) {
+				Tree dstForSrcSibling = mappings.getDstForSrc(srcParent.getChild(i));
+				if (dstForSrcSibling != null) {
+					int distance = i - srcIndex;
+					if (dstForSrcSibling.getParent() != dstParent || Math.abs(distance) == 1) {
+						return 0;
+					}
+					int dstSiblingIndex = dstIndex + distance;
+					boolean sameDistance = dstSiblingIndex >= 0 && dstSiblingIndex < dstParent.getChildren().size() && dstParent.getChild(dstSiblingIndex) == dstForSrcSibling;
+					return sameDistance && unchangedBetween(srcParent, dstParent, srcIndex, dstIndex, distance) ? 1 : 0;
+				}
+			}
+			return 0;
+		}
+
+		//the siblings between the candidate and the anchor are isomorphic to their counterparts at the same distance
+		private boolean unchangedBetween(Tree srcParent, Tree dstParent, int srcIndex, int dstIndex, int distance) {
+			int step = Integer.signum(distance);
+			for (int k = step; k != distance; k += step) {
+				if (!srcParent.getChild(srcIndex + k).isIsomorphicTo(dstParent.getChild(dstIndex + k))) {
+					return false;
+				}
+			}
+			return true;
 		}
 
 		private double siblingsSimilarity(Tree srcParent, Tree dstParent) {

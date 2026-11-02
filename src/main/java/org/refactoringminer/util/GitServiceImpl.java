@@ -2,6 +2,7 @@ package org.refactoringminer.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -222,7 +223,7 @@ public class GitServiceImpl implements GitService {
 		Ref refFrom = repository.findRef(startTag);
 		Ref refTo = repository.findRef(endTag);
 		try (Git git = new Git(repository)) {
-			List<RevCommit> revCommits = StreamSupport.stream(git.log().addRange(getActualRefObjectId(refFrom), getActualRefObjectId(refTo)).call()
+			List<RevCommit> revCommits = StreamSupport.stream(git.log().addRange(getActualRefObjectId(repository, refFrom), getActualRefObjectId(repository, refTo)).call()
 					.spliterator(), false)
 			        .filter(r -> r.getParentCount() == 1)
 			        .collect(Collectors.toList());
@@ -231,11 +232,13 @@ public class GitServiceImpl implements GitService {
 		}
 	}
 
-	private ObjectId getActualRefObjectId(Ref ref) {
-		if(ref.getPeeledObjectId() != null) {
-			return ref.getPeeledObjectId();
+	//the commit of an annotated tag, whose ref is peeled only when it is loaded from packed-refs
+	private ObjectId getActualRefObjectId(Repository repository, Ref ref) throws IOException {
+		Ref peeled = ref.isPeeled() ? ref : repository.getRefDatabase().peel(ref);
+		if(peeled.getPeeledObjectId() != null) {
+			return peeled.getPeeledObjectId();
 		}
-		return ref.getObjectId();
+		return peeled.getObjectId();
 	}
 
 	@Override

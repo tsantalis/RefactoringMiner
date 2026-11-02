@@ -35,6 +35,8 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 	private Optional<String> name;
 	private Optional<UMLPreprocessorStatement> previous;
 	private List<String> parentNamespaces = new ArrayList<String>();
+	//the source text of a conditional directive and the block it controls, i.e., #if X ... #endif, which tells apart directives with the same condition
+	private Optional<String> blockText = Optional.empty();
 	
 	public UMLPreprocessorStatement(LocationInfo location, Directive type) {
 		this.location = location;
@@ -88,6 +90,18 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 
 	public Optional<UMLPreprocessorStatement> getPrevious() {
 		return previous;
+	}
+
+	public void setBlockText(String blockText) {
+		this.blockText = Optional.ofNullable(blockText);
+	}
+
+	public Optional<String> getBlockText() {
+		return blockText;
+	}
+
+	public boolean isConditional() {
+		return type == Directive.IF || type == Directive.IFDEF || type == Directive.IFNDEF || type == Directive.ELIF || type == Directive.ELSE;
 	}
 
 	public String toString() {

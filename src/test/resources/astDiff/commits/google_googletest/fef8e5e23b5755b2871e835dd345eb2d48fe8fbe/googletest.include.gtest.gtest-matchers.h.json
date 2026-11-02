@@ -77461,17 +77461,6 @@
   "firstEndPos" : 31599,
   "secondEndPos" : 33105
 }, {
-  "firstType" : "qualified_identifier",
-  "secondType" : "type_identifier",
-  "firstLabel" : "",
-  "secondLabel" : "T",
-  "firstParentType" : "parameter_declaration",
-  "secondParentType" : "parameter_declaration",
-  "firstPos" : 31600,
-  "secondPos" : 33106,
-  "firstEndPos" : 31623,
-  "secondEndPos" : 33107
-}, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
   "firstLabel" : "T",
@@ -77748,15 +77737,15 @@
   "secondEndPos" : 33167
 }, {
   "firstType" : "identifier",
-  "secondType" : "template_function",
+  "secondType" : "identifier",
   "firstLabel" : "string",
-  "secondLabel" : "",
+  "secondLabel" : "StringType",
   "firstParentType" : "qualified_identifier",
-  "secondParentType" : "qualified_identifier",
+  "secondParentType" : "template_function",
   "firstPos" : 31678,
   "secondPos" : 33167,
   "firstEndPos" : 31684,
-  "secondEndPos" : 33180
+  "secondEndPos" : 33177
 }, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",
@@ -78759,17 +78748,6 @@
   "firstEndPos" : 32098,
   "secondEndPos" : 33688
 }, {
-  "firstType" : "qualified_identifier",
-  "secondType" : "type_identifier",
-  "firstLabel" : "",
-  "secondLabel" : "T",
-  "firstParentType" : "parameter_declaration",
-  "secondParentType" : "parameter_declaration",
-  "firstPos" : 32099,
-  "secondPos" : 33689,
-  "firstEndPos" : 32122,
-  "secondEndPos" : 33690
-}, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
   "firstLabel" : "T",
@@ -79046,15 +79024,15 @@
   "secondEndPos" : 33751
 }, {
   "firstType" : "identifier",
-  "secondType" : "template_function",
+  "secondType" : "identifier",
   "firstLabel" : "string",
-  "secondLabel" : "",
+  "secondLabel" : "StringType",
   "firstParentType" : "qualified_identifier",
-  "secondParentType" : "qualified_identifier",
+  "secondParentType" : "template_function",
   "firstPos" : 32178,
   "secondPos" : 33751,
   "firstEndPos" : 32184,
-  "secondEndPos" : 33764
+  "secondEndPos" : 33761
 }, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",

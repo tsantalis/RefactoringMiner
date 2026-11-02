@@ -129337,17 +129337,6 @@
   "firstEndPos" : 38824,
   "secondEndPos" : 38808
 }, {
-  "firstType" : "qualified_identifier",
-  "secondType" : "type_identifier",
-  "firstLabel" : "",
-  "secondLabel" : "T",
-  "firstParentType" : "parameter_declaration",
-  "secondParentType" : "parameter_declaration",
-  "firstPos" : 38797,
-  "secondPos" : 38803,
-  "firstEndPos" : 38820,
-  "secondEndPos" : 38804
-}, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
   "firstLabel" : "T",
@@ -129470,15 +129459,15 @@
   "secondEndPos" : 38831
 }, {
   "firstType" : "identifier",
-  "secondType" : "template_function",
+  "secondType" : "identifier",
   "firstLabel" : "string",
-  "secondLabel" : "",
+  "secondLabel" : "StringType",
   "firstParentType" : "qualified_identifier",
-  "secondParentType" : "qualified_identifier",
+  "secondParentType" : "template_function",
   "firstPos" : 38842,
   "secondPos" : 38831,
   "firstEndPos" : 38848,
-  "secondEndPos" : 38844
+  "secondEndPos" : 38841
 }, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",

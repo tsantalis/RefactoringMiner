@@ -3,7 +3,6 @@ package org.refactoringminer.util;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

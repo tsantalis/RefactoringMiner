@@ -43,12 +43,15 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReplacementAnalysis;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
 
 import static gr.uom.java.xmi.UMLAbstractClass.reactFunctionComponentNames;
 
 public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements Comparable<UMLClassBaseDiff> {
+	//the replacements of a literal with another literal
+	private static final Set<ReplacementType> LITERAL_REPLACEMENTS = Set.of(ReplacementType.STRING_LITERAL, ReplacementType.CHAR_LITERAL, ReplacementType.NUMBER_LITERAL, ReplacementType.BOOLEAN_LITERAL, ReplacementType.STRING_LITERAL_REPLACED_WITH_CHAR_LITERAL);
 
 	private boolean visibilityChanged;
 	private Visibility oldVisibility;
@@ -2079,9 +2082,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private boolean removedOrAddedOperationWithIdenticalBody(UMLOperation originalOperation, UMLOperation nextOperation, List<UMLOperation> removedOperationsToBeRemoved, List<UMLOperation> addedOperationsToBeRemoved) throws RefactoringMinerTimedOutException {
 		List<String> nextOperationStringRepresentation = nextOperation.stringRepresentation();
 		List<String> originalOperationStringRepresentation = originalOperation.stringRepresentation();
+		//the operations with the same name are kept when all their statements correspond with different literals at most,
+		//i.e., generated accessors whose bit masks shift after a field is inserted, return (_has_bits_[0] & 0x04u) != 0; -> return (_has_bits_[0] & 0x08u) != 0;
+		Boolean sameNameOperationsCompletelyMapped = null;
 		if(!nextOperationStringRepresentation.equals(originalOperationStringRepresentation) && nextOperationStringRepresentation.size() > 2) {
 			for(UMLOperation removedOperation : removedOperations) {
 				if(removedOperation.stringRepresentation().equals(nextOperationStringRepresentation) && !containCallToOperation(removedOperation, originalOperation)) {
+					if(sameNameOperationsCompletelyMapped == null) {
+						sameNameOperationsCompletelyMapped = differOnlyInLiterals(originalOperation, nextOperation);
+					}
+					if(sameNameOperationsCompletelyMapped) {
+						break;
+					}
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, nextOperation, this);
 					List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = operationBodyMapper.getExactMatchesWithoutMatchesInNestedContainers();
 					int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
@@ -2105,6 +2117,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(!originalOperationStringRepresentation.equals(nextOperationStringRepresentation) && originalOperationStringRepresentation.size() > 2) {
 			for(UMLOperation addedOperation : addedOperations) {
 				if(addedOperation.stringRepresentation().equals(originalOperationStringRepresentation) && !containCallToOperation(addedOperation, nextOperation)) {
+					if(sameNameOperationsCompletelyMapped == null) {
+						sameNameOperationsCompletelyMapped = differOnlyInLiterals(originalOperation, nextOperation);
+					}
+					if(sameNameOperationsCompletelyMapped) {
+						break;
+					}
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, addedOperation, this);
 					List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = operationBodyMapper.getExactMatchesWithoutMatchesInNestedContainers();
 					int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
@@ -2126,6 +2144,24 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		return false;
+	}
+
+	//all statements of the two operations are mapped, identical or with a different literal
+	private boolean differOnlyInLiterals(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
+		UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, this);
+		if(mapper.getMappings().isEmpty() ||
+				!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedLeavesT2().isEmpty() ||
+				!mapper.getNonMappedInnerNodesT1().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty()) {
+			return false;
+		}
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			for(Replacement replacement : mapping.getReplacements()) {
+				if(!LITERAL_REPLACEMENTS.contains(replacement.getType())) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	protected boolean containsMapperForOperation1(UMLOperation operation) {

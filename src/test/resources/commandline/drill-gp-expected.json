@@ -15633,6 +15633,81 @@
 },
 {
 	"type": "Rename Attribute",
+	"description": "Rename Attribute endpointuuid_ : .google.protobuf.internal.ArenaStringPtr to assignedendpointuuid_ : .google.protobuf.internal.ArenaStringPtr in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Attribute** `endpointuuid_ : .google.protobuf.internal.ArenaStringPtr` to `assignedendpointuuid_ : .google.protobuf.internal.ArenaStringPtr` in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 1104,
+		"endLine": 1104,
+		"startColumn": 48,
+		"endColumn": 60,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original attribute declaration",
+		"codeElement": "endpointuuid_ : ArenaStringPtr"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 1104,
+		"endLine": 1104,
+		"startColumn": 48,
+		"endColumn": 68,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed attribute declaration",
+		"codeElement": "assignedendpointuuid_ : ArenaStringPtr"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute kEndpointUUIDFieldNumber : const int to kAssignedEndpointUUIDFieldNumber : const int in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Attribute** [kEndpointUUIDFieldNumber : const int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L944) to [kAssignedEndpointUUIDFieldNumber : const int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R944) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 944,
+		"endLine": 944,
+		"startColumn": 20,
+		"endColumn": 43,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original attribute declaration",
+		"codeElement": "kEndpointUUIDFieldNumber : const int"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 944,
+		"endLine": 944,
+		"startColumn": 20,
+		"endColumn": 51,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed attribute declaration",
+		"codeElement": "kAssignedEndpointUUIDFieldNumber : const int"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute kOptimalMemAllocationFieldNumber : const int to kMaxAllocationFieldNumber : const int in class UserBitShared.pb.exec.shared.OperatorProfile",
+	"markup": "**Rename Attribute** [kOptimalMemAllocationFieldNumber : const int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL3510) to [kMaxAllocationFieldNumber : const int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR3510) in class `UserBitShared.pb.exec.shared.OperatorProfile`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3510,
+		"endLine": 3510,
+		"startColumn": 20,
+		"endColumn": 51,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original attribute declaration",
+		"codeElement": "kOptimalMemAllocationFieldNumber : const int"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3510,
+		"endLine": 3510,
+		"startColumn": 20,
+		"endColumn": 44,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed attribute declaration",
+		"codeElement": "kMaxAllocationFieldNumber : const int"
+}]
+},
+{
+	"type": "Rename Attribute",
 	"description": "Rename Attribute optimalMemAllocation : long to maxAllocation : long in class org.apache.drill.exec.proto.beans.OperatorProfile",
 	"markup": "**Rename Attribute** [optimalMemAllocation : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655L60) to [maxAllocation : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655R60) in class `org.apache.drill.exec.proto.beans.OperatorProfile`",
 	"leftSideLocations": [{
@@ -15707,6 +15782,556 @@
 }]
 },
 {
+	"type": "Rename Attribute",
+	"description": "Rename Attribute optimal_mem_allocation_ : .google.protobuf.int64 to max_allocation_ : .google.protobuf.int64 in class UserBitShared.pb.exec.shared.OperatorProfile",
+	"markup": "**Rename Attribute** [optimal_mem_allocation_ : .google.protobuf.int64](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL3542) to [max_allocation_ : .google.protobuf.int64](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR3542) in class `UserBitShared.pb.exec.shared.OperatorProfile`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3542,
+		"endLine": 3542,
+		"startColumn": 29,
+		"endColumn": 51,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original attribute declaration",
+		"codeElement": "optimal_mem_allocation_ : .google.protobuf.int64"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3542,
+		"endLine": 3542,
+		"startColumn": 29,
+		"endColumn": 43,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed attribute declaration",
+		"codeElement": "max_allocation_ : .google.protobuf.int64"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method private clear_has_endpointuuid() : void renamed to private clear_has_assignedendpointuuid() : void in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [private clear_has_endpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L1096) renamed to [private clear_has_assignedendpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R1096) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 1096,
+		"endLine": 1096,
+		"startColumn": 8,
+		"endColumn": 31,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private clear_has_endpointuuid() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 1096,
+		"endLine": 1096,
+		"startColumn": 8,
+		"endColumn": 39,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "private clear_has_assignedendpointuuid() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method private clear_has_optimal_mem_allocation() : void renamed to private clear_has_max_allocation() : void in class UserBitShared.pb.exec.shared.OperatorProfile",
+	"markup": "**Rename Method** [private clear_has_optimal_mem_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL3529) renamed to [private clear_has_max_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR3529) in class `UserBitShared.pb.exec.shared.OperatorProfile`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3529,
+		"endLine": 3529,
+		"startColumn": 8,
+		"endColumn": 41,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private clear_has_optimal_mem_allocation() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3529,
+		"endLine": 3529,
+		"startColumn": 8,
+		"endColumn": 33,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "private clear_has_max_allocation() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method private set_has_endpointuuid() : void renamed to private set_has_assignedendpointuuid() : void in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [private set_has_endpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L1095) renamed to [private set_has_assignedendpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R1095) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 1095,
+		"endLine": 1095,
+		"startColumn": 8,
+		"endColumn": 29,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private set_has_endpointuuid() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 1095,
+		"endLine": 1095,
+		"startColumn": 8,
+		"endColumn": 37,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "private set_has_assignedendpointuuid() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method private set_has_optimal_mem_allocation() : void renamed to private set_has_max_allocation() : void in class UserBitShared.pb.exec.shared.OperatorProfile",
+	"markup": "**Rename Method** [private set_has_optimal_mem_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL3528) renamed to [private set_has_max_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR3528) in class `UserBitShared.pb.exec.shared.OperatorProfile`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3528,
+		"endLine": 3528,
+		"startColumn": 8,
+		"endColumn": 39,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private set_has_optimal_mem_allocation() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3528,
+		"endLine": 3528,
+		"startColumn": 8,
+		"endColumn": 31,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "private set_has_max_allocation() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public OperatorProfile::clear_has_optimal_mem_allocation() : void renamed to public OperatorProfile::clear_has_max_allocation() : void in class UserBitShared.pb.exec.shared",
+	"markup": "**Rename Method** [public OperatorProfile::clear_has_optimal_mem_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL8100) renamed to [public OperatorProfile::clear_has_max_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR8100) in class `UserBitShared.pb.exec.shared`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8100,
+		"endLine": 8102,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OperatorProfile::clear_has_optimal_mem_allocation() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8100,
+		"endLine": 8102,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public OperatorProfile::clear_has_max_allocation() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public OperatorProfile::clear_optimal_mem_allocation() : void renamed to public OperatorProfile::clear_max_allocation() : void in class UserBitShared.pb.exec.shared",
+	"markup": "**Rename Method** [public OperatorProfile::clear_optimal_mem_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL8103) renamed to [public OperatorProfile::clear_max_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR8103) in class `UserBitShared.pb.exec.shared`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8103,
+		"endLine": 8106,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OperatorProfile::clear_optimal_mem_allocation() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8103,
+		"endLine": 8106,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public OperatorProfile::clear_max_allocation() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public OperatorProfile::has_optimal_mem_allocation() : bool renamed to public OperatorProfile::has_max_allocation() : bool in class UserBitShared.pb.exec.shared",
+	"markup": "**Rename Method** [public OperatorProfile::has_optimal_mem_allocation() : bool](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL8094) renamed to [public OperatorProfile::has_max_allocation() : bool](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR8094) in class `UserBitShared.pb.exec.shared`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8094,
+		"endLine": 8096,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OperatorProfile::has_optimal_mem_allocation() : bool"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8094,
+		"endLine": 8096,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public OperatorProfile::has_max_allocation() : bool"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public OperatorProfile::optimal_mem_allocation() : .google.protobuf.int64 renamed to public OperatorProfile::max_allocation() : .google.protobuf.int64 in class UserBitShared.pb.exec.shared",
+	"markup": "**Rename Method** [public OperatorProfile::optimal_mem_allocation() : .google.protobuf.int64](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL8107) renamed to [public OperatorProfile::max_allocation() : .google.protobuf.int64](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR8107) in class `UserBitShared.pb.exec.shared`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8107,
+		"endLine": 8110,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OperatorProfile::optimal_mem_allocation() : .google.protobuf.int64"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8107,
+		"endLine": 8110,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public OperatorProfile::max_allocation() : .google.protobuf.int64"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public OperatorProfile::set_has_optimal_mem_allocation() : void renamed to public OperatorProfile::set_has_max_allocation() : void in class UserBitShared.pb.exec.shared",
+	"markup": "**Rename Method** [public OperatorProfile::set_has_optimal_mem_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL8097) renamed to [public OperatorProfile::set_has_max_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR8097) in class `UserBitShared.pb.exec.shared`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8097,
+		"endLine": 8099,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OperatorProfile::set_has_optimal_mem_allocation() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8097,
+		"endLine": 8099,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public OperatorProfile::set_has_max_allocation() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public OperatorProfile::set_optimal_mem_allocation(value .google.protobuf.int64) : void renamed to public OperatorProfile::set_max_allocation(value .google.protobuf.int64) : void in class UserBitShared.pb.exec.shared",
+	"markup": "**Rename Method** [public OperatorProfile::set_optimal_mem_allocation(value .google.protobuf.int64) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL8111) renamed to [public OperatorProfile::set_max_allocation(value .google.protobuf.int64) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR8111) in class `UserBitShared.pb.exec.shared`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8111,
+		"endLine": 8115,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OperatorProfile::set_optimal_mem_allocation(value .google.protobuf.int64) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 8111,
+		"endLine": 8115,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public OperatorProfile::set_max_allocation(value .google.protobuf.int64) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::clear_endpointuuid() : void renamed to public PlanFragment::clear_assignedendpointuuid() : void in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::clear_endpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2775) renamed to [public PlanFragment::clear_assignedendpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2775) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2775,
+		"endLine": 2778,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::clear_endpointuuid() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2775,
+		"endLine": 2778,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::clear_assignedendpointuuid() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::clear_has_endpointuuid() : void renamed to public PlanFragment::clear_has_assignedendpointuuid() : void in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::clear_has_endpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2772) renamed to [public PlanFragment::clear_has_assignedendpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2772) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2772,
+		"endLine": 2774,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::clear_has_endpointuuid() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2772,
+		"endLine": 2774,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::clear_has_assignedendpointuuid() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::endpointuuid() : const .std.string& renamed to public PlanFragment::assignedendpointuuid() : const .std.string& in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::endpointuuid() : const .std.string&](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2779) renamed to [public PlanFragment::assignedendpointuuid() : const .std.string&](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2779) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2779,
+		"endLine": 2782,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::endpointuuid() : const .std.string&"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2779,
+		"endLine": 2782,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::assignedendpointuuid() : const .std.string&"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::has_endpointuuid() : bool renamed to public PlanFragment::has_assignedendpointuuid() : bool in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::has_endpointuuid() : bool](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2766) renamed to [public PlanFragment::has_assignedendpointuuid() : bool](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2766) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2766,
+		"endLine": 2768,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::has_endpointuuid() : bool"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2766,
+		"endLine": 2768,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::has_assignedendpointuuid() : bool"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::mutable_endpointuuid() : .std.string* renamed to public PlanFragment::mutable_assignedendpointuuid() : .std.string* in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::mutable_endpointuuid() : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2808) renamed to [public PlanFragment::mutable_assignedendpointuuid() : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2808) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2808,
+		"endLine": 2812,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::mutable_endpointuuid() : .std.string*"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2808,
+		"endLine": 2812,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::mutable_assignedendpointuuid() : .std.string*"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::release_endpointuuid() : .std.string* renamed to public PlanFragment::release_assignedendpointuuid() : .std.string* in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::release_endpointuuid() : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2813) renamed to [public PlanFragment::release_assignedendpointuuid() : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2813) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2813,
+		"endLine": 2820,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::release_endpointuuid() : .std.string*"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2813,
+		"endLine": 2820,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::release_assignedendpointuuid() : .std.string*"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::set_allocated_endpointuuid(endpointuuid .std.string*) : void renamed to public PlanFragment::set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::set_allocated_endpointuuid(endpointuuid .std.string*) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2821) renamed to [public PlanFragment::set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2821) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2821,
+		"endLine": 2829,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::set_allocated_endpointuuid(endpointuuid .std.string*) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2821,
+		"endLine": 2829,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::set_endpointuuid(value const .std.string&) : void renamed to public PlanFragment::set_assignedendpointuuid(value const .std.string&) : void in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::set_endpointuuid(value const .std.string&) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2783) renamed to [public PlanFragment::set_assignedendpointuuid(value const .std.string&) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2783) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2783,
+		"endLine": 2787,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::set_endpointuuid(value const .std.string&) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2783,
+		"endLine": 2787,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::set_assignedendpointuuid(value const .std.string&) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::set_endpointuuid(value const char*) : void renamed to public PlanFragment::set_assignedendpointuuid(value const char*) : void in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::set_endpointuuid(value const char*) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2796) renamed to [public PlanFragment::set_assignedendpointuuid(value const char*) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2796) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2796,
+		"endLine": 2801,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::set_endpointuuid(value const char*) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2796,
+		"endLine": 2801,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::set_assignedendpointuuid(value const char*) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::set_endpointuuid(value const char*, size size_t) : void renamed to public PlanFragment::set_assignedendpointuuid(value const char*, size size_t) : void in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::set_endpointuuid(value const char*, size size_t) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2802) renamed to [public PlanFragment::set_assignedendpointuuid(value const char*, size size_t) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2802) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2802,
+		"endLine": 2807,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::set_endpointuuid(value const char*, size size_t) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2802,
+		"endLine": 2807,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::set_assignedendpointuuid(value const char*, size size_t) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public PlanFragment::set_has_endpointuuid() : void renamed to public PlanFragment::set_has_assignedendpointuuid() : void in class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Method** [public PlanFragment::set_has_endpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2769) renamed to [public PlanFragment::set_has_assignedendpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2769) in class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2769,
+		"endLine": 2771,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public PlanFragment::set_has_endpointuuid() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2769,
+		"endLine": 2771,
+		"startColumn": 1,
+		"endColumn": 1,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public PlanFragment::set_has_assignedendpointuuid() : void"
+}]
+},
+{
 	"type": "Rename Method",
 	"description": "Rename Method public clearEndpointUUID() : Builder renamed to public clearAssignedEndpointUUID() : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
 	"markup": "**Rename Method** [public clearEndpointUUID() : Builder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0L7183) renamed to [public clearAssignedEndpointUUID() : Builder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0R7183) in class `org.apache.drill.exec.proto.BitControl.PlanFragment.Builder`",
@@ -15754,6 +16379,81 @@
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "renamed method declaration",
 		"codeElement": "public clearMaxAllocation() : Builder"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public clear_endpointuuid() : void renamed to public clear_assignedendpointuuid() : void in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public clear_endpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L943) renamed to [public clear_assignedendpointuuid() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R943) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 943,
+		"endLine": 943,
+		"startColumn": 8,
+		"endColumn": 27,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public clear_endpointuuid() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 943,
+		"endLine": 943,
+		"startColumn": 8,
+		"endColumn": 35,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public clear_assignedendpointuuid() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public clear_optimal_mem_allocation() : void renamed to public clear_max_allocation() : void in class UserBitShared.pb.exec.shared.OperatorProfile",
+	"markup": "**Rename Method** [public clear_optimal_mem_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL3509) renamed to [public clear_max_allocation() : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR3509) in class `UserBitShared.pb.exec.shared.OperatorProfile`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3509,
+		"endLine": 3509,
+		"startColumn": 8,
+		"endColumn": 37,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public clear_optimal_mem_allocation() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3509,
+		"endLine": 3509,
+		"startColumn": 8,
+		"endColumn": 29,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public clear_max_allocation() : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public endpointuuid() : const .std.string& renamed to public assignedendpointuuid() : const .std.string& in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public endpointuuid() : const .std.string&](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L945) renamed to [public assignedendpointuuid() : const .std.string&](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R945) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 945,
+		"endLine": 945,
+		"startColumn": 22,
+		"endColumn": 43,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public endpointuuid() : const .std.string&"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 945,
+		"endLine": 945,
+		"startColumn": 22,
+		"endColumn": 51,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public assignedendpointuuid() : const .std.string&"
 }]
 },
 {
@@ -16183,6 +16883,131 @@
 },
 {
 	"type": "Rename Method",
+	"description": "Rename Method public has_endpointuuid() : bool renamed to public has_assignedendpointuuid() : bool in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public has_endpointuuid() : bool](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L942) renamed to [public has_assignedendpointuuid() : bool](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R942) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 942,
+		"endLine": 942,
+		"startColumn": 8,
+		"endColumn": 31,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public has_endpointuuid() : bool"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 942,
+		"endLine": 942,
+		"startColumn": 8,
+		"endColumn": 39,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public has_assignedendpointuuid() : bool"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public has_optimal_mem_allocation() : bool renamed to public has_max_allocation() : bool in class UserBitShared.pb.exec.shared.OperatorProfile",
+	"markup": "**Rename Method** [public has_optimal_mem_allocation() : bool](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL3508) renamed to [public has_max_allocation() : bool](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR3508) in class `UserBitShared.pb.exec.shared.OperatorProfile`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3508,
+		"endLine": 3508,
+		"startColumn": 8,
+		"endColumn": 41,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public has_optimal_mem_allocation() : bool"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3508,
+		"endLine": 3508,
+		"startColumn": 8,
+		"endColumn": 33,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public has_max_allocation() : bool"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public mutable_endpointuuid() : .std.string* renamed to public mutable_assignedendpointuuid() : .std.string* in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public mutable_endpointuuid() : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L952) renamed to [public mutable_assignedendpointuuid() : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R952) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 952,
+		"endLine": 952,
+		"startColumn": 16,
+		"endColumn": 39,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public mutable_endpointuuid() : .std.string*"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 952,
+		"endLine": 952,
+		"startColumn": 16,
+		"endColumn": 47,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public mutable_assignedendpointuuid() : .std.string*"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public optimal_mem_allocation() : .google.protobuf.int64 renamed to public max_allocation() : .google.protobuf.int64 in class UserBitShared.pb.exec.shared.OperatorProfile",
+	"markup": "**Rename Method** [public optimal_mem_allocation() : .google.protobuf.int64](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL3511) renamed to [public max_allocation() : .google.protobuf.int64](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR3511) in class `UserBitShared.pb.exec.shared.OperatorProfile`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3511,
+		"endLine": 3511,
+		"startColumn": 29,
+		"endColumn": 58,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public optimal_mem_allocation() : .google.protobuf.int64"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3511,
+		"endLine": 3511,
+		"startColumn": 29,
+		"endColumn": 50,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public max_allocation() : .google.protobuf.int64"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public release_endpointuuid() : .std.string* renamed to public release_assignedendpointuuid() : .std.string* in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public release_endpointuuid() : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L953) renamed to [public release_assignedendpointuuid() : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R953) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 953,
+		"endLine": 953,
+		"startColumn": 16,
+		"endColumn": 39,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public release_endpointuuid() : .std.string*"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 953,
+		"endLine": 953,
+		"startColumn": 16,
+		"endColumn": 47,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public release_assignedendpointuuid() : .std.string*"
+}]
+},
+{
+	"type": "Rename Method",
 	"description": "Rename Method public setEndpointUUID(endpointUUID String) : PlanFragment renamed to public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment in class org.apache.drill.exec.proto.beans.PlanFragment",
 	"markup": "**Rename Method** [public setEndpointUUID(endpointUUID String) : PlanFragment](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7L280) renamed to [public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7R280) in class `org.apache.drill.exec.proto.beans.PlanFragment`",
 	"leftSideLocations": [{
@@ -16307,6 +17132,131 @@
 }]
 },
 {
+	"type": "Rename Method",
+	"description": "Rename Method public set_allocated_endpointuuid(endpointuuid .std.string*) : void renamed to public set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public set_allocated_endpointuuid(endpointuuid .std.string*) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L954) renamed to [public set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R954) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 954,
+		"endLine": 954,
+		"startColumn": 8,
+		"endColumn": 62,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public set_allocated_endpointuuid(endpointuuid .std.string*) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 954,
+		"endLine": 954,
+		"startColumn": 8,
+		"endColumn": 78,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public set_endpointuuid(value const .std.string&) : void renamed to public set_assignedendpointuuid(value const .std.string&) : void in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public set_endpointuuid(value const .std.string&) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L946) renamed to [public set_assignedendpointuuid(value const .std.string&) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R946) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 946,
+		"endLine": 946,
+		"startColumn": 8,
+		"endColumn": 51,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public set_endpointuuid(value const .std.string&) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 946,
+		"endLine": 946,
+		"startColumn": 8,
+		"endColumn": 59,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public set_assignedendpointuuid(value const .std.string&) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public set_endpointuuid(value const char*) : void renamed to public set_assignedendpointuuid(value const char*) : void in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public set_endpointuuid(value const char*) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L950) renamed to [public set_assignedendpointuuid(value const char*) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R950) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 950,
+		"endLine": 950,
+		"startColumn": 8,
+		"endColumn": 42,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public set_endpointuuid(value const char*) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 950,
+		"endLine": 950,
+		"startColumn": 8,
+		"endColumn": 50,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public set_assignedendpointuuid(value const char*) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public set_endpointuuid(value const char*, size size_t) : void renamed to public set_assignedendpointuuid(value const char*, size size_t) : void in class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Method** [public set_endpointuuid(value const char*, size size_t) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L951) renamed to [public set_assignedendpointuuid(value const char*, size size_t) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R951) in class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 951,
+		"endLine": 951,
+		"startColumn": 8,
+		"endColumn": 55,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public set_endpointuuid(value const char*, size size_t) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 951,
+		"endLine": 951,
+		"startColumn": 8,
+		"endColumn": 63,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public set_assignedendpointuuid(value const char*, size size_t) : void"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public set_optimal_mem_allocation(value .google.protobuf.int64) : void renamed to public set_max_allocation(value .google.protobuf.int64) : void in class UserBitShared.pb.exec.shared.OperatorProfile",
+	"markup": "**Rename Method** [public set_optimal_mem_allocation(value .google.protobuf.int64) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eL3512) renamed to [public set_max_allocation(value .google.protobuf.int64) : void](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-c2b374cf9c1e5a5037b5ba929696f4e031962fe5cd5aa36e9eb8c2e55f69890eR3512) in class `UserBitShared.pb.exec.shared.OperatorProfile`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3512,
+		"endLine": 3512,
+		"startColumn": 8,
+		"endColumn": 66,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public set_optimal_mem_allocation(value .google.protobuf.int64) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/UserBitShared.pb.h",
+		"startLine": 3512,
+		"endLine": 3512,
+		"startColumn": 8,
+		"endColumn": 58,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public set_max_allocation(value .google.protobuf.int64) : void"
+}]
+},
+{
 	"type": "Rename Parameter",
 	"description": "Rename Parameter endpointUUID : String to assignedEndpointUUID : String in method public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment from class org.apache.drill.exec.proto.beans.PlanFragment",
 	"markup": "**Rename Parameter** [endpointUUID : String](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7L280) to [assignedEndpointUUID : String](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7R280) in method `public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment` from class `org.apache.drill.exec.proto.beans.PlanFragment`",
@@ -16347,6 +17297,92 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the renamed variable",
 		"codeElement": null
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter endpointuuid : .std.string* to assignedendpointuuid : .std.string* in method public PlanFragment::set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void from class BitControl.pb.exec.bit.control",
+	"markup": "**Rename Parameter** [endpointuuid : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L2821) to [assignedendpointuuid : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R2821) in method `public PlanFragment::set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void` from class `BitControl.pb.exec.bit.control`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2821,
+		"endLine": 2821,
+		"startColumn": 54,
+		"endColumn": 80,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "endpointuuid : .std.string*"
+}, {
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2827,
+		"endLine": 2827,
+		"startColumn": 3,
+		"endColumn": 112,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2822,
+		"endLine": 2826,
+		"startColumn": 3,
+		"endColumn": 3,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2821,
+		"endLine": 2821,
+		"startColumn": 62,
+		"endColumn": 96,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "assignedendpointuuid : .std.string*"
+}, {
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2827,
+		"endLine": 2827,
+		"startColumn": 3,
+		"endColumn": 128,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 2822,
+		"endLine": 2826,
+		"startColumn": 3,
+		"endColumn": 3,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter endpointuuid : .std.string* to assignedendpointuuid : .std.string* in method public set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void from class BitControl.pb.exec.bit.control.PlanFragment",
+	"markup": "**Rename Parameter** [endpointuuid : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2L954) to [assignedendpointuuid : .std.string*](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2ede1fe3f12bd55aaeeba62283867140cd3731ebacc9ec52760995baf730bf2R954) in method `public set_allocated_assignedendpointuuid(assignedendpointuuid .std.string*) : void` from class `BitControl.pb.exec.bit.control.PlanFragment`",
+	"leftSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 954,
+		"endLine": 954,
+		"startColumn": 35,
+		"endColumn": 61,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "endpointuuid : .std.string*"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/native/client/src/protobuf/BitControl.pb.h",
+		"startLine": 954,
+		"endLine": 954,
+		"startColumn": 43,
+		"endColumn": 77,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "assignedendpointuuid : .std.string*"
 }]
 },
 {

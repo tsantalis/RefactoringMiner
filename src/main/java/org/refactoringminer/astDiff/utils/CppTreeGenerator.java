@@ -2084,26 +2084,31 @@ public class CppTreeGenerator {
 	private void absorbEmptyMacros(List<Node> nodes) {
 		int previousEnd = 0;
 		for(Node node : nodes) {
-			if(node.type.equals("declaration") || node.type.equals("function_definition") || node.type.equals("field_declaration")) {
-				boolean absorbed = true;
-				while(absorbed) {
-					absorbed = false;
-					for(int[] expansion : source.expansions) {
-						if(expansion[0] >= previousEnd && expansion[1] <= node.start && skip(expansion[1], node.start) == node.start && !inExtra(expansion[0])) {
-							List<Node> tokens = tokens(expansion[0], expansion[1]);
-							Node macro = tokens.size() == 1 && tokens.get(0).type.equals("identifier") ? tokens.get(0) : macroCall(expansion[0], expansion[1]);
-							if(macro != null) {
-								node.children.add(0, macro);
-								macro.parent = node;
-								node.start = expansion[0];
-								absorbed = true;
-							}
-							break;
+			absorbEmptyMacros(node, previousEnd);
+			previousEnd = Math.max(previousEnd, node.end);
+		}
+	}
+
+	//the macros expanded to nothing between the offset and a declaration become its first children
+	private void absorbEmptyMacros(Node node, int previousEnd) {
+		if(node.type.equals("declaration") || node.type.equals("function_definition") || node.type.equals("field_declaration")) {
+			boolean absorbed = true;
+			while(absorbed) {
+				absorbed = false;
+				for(int[] expansion : source.expansions) {
+					if(expansion[0] >= previousEnd && expansion[1] <= node.start && skip(expansion[1], node.start) == node.start && !inExtra(expansion[0])) {
+						List<Node> tokens = tokens(expansion[0], expansion[1]);
+						Node macro = tokens.size() == 1 && tokens.get(0).type.equals("identifier") ? tokens.get(0) : macroCall(expansion[0], expansion[1]);
+						if(macro != null) {
+							node.children.add(0, macro);
+							macro.parent = node;
+							node.start = expansion[0];
+							absorbed = true;
 						}
+						break;
 					}
 				}
 			}
-			previousEnd = Math.max(previousEnd, node.end);
 		}
 	}
 
@@ -2226,6 +2231,7 @@ public class CppTreeGenerator {
 			int close = find(">", open, end(declaration));
 			Node parameters = node("template_parameter_list", open, close + 1, new ArrayList<>());
 			Node inner = declarationOrReparsed(specialization.getDeclaration(), Context.TOP);
+			absorbEmptyMacros(inner, close + 1);
 			return node("template_declaration", declaration, parameters, inner);
 		}
 		if(declaration instanceof IASTFunctionDefinition function) {
@@ -2281,7 +2287,11 @@ public class CppTreeGenerator {
 			parameterNodes.add(templateParameter(parameter));
 		}
 		children.add(node("template_parameter_list", open, close + 1, parameterNodes));
-		children.add(declarationOrReparsed(template.getDeclaration(), Context.TOP));
+		Node declaration = declarationOrReparsed(template.getDeclaration(), Context.TOP);
+		//the macros expanded to nothing after the template parameters belong to the declaration, like the location of the declaration in the model,
+		//i.e., GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE in template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE T* Arena::CreateMaybeMessage<T>(Arena* arena) {...}
+		absorbEmptyMacros(declaration, close + 1);
+		children.add(declaration);
 		return node("template_declaration", template, children);
 	}
 

@@ -3749,9 +3749,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	void expandAnonymousAndLambdas(AbstractCodeFragment fragment, List<AbstractCodeFragment> leaves, List<CompositeStatementObject> innerNodes,
 			Set<AbstractCodeFragment> addedLeaves, Set<CompositeStatementObject> addedInnerNodes,
 			List<UMLAnonymousClass> anonymousClassList, Map<AbstractCodeFragment, VariableDeclarationContainer> map, VariableDeclarationContainer parentOperation, boolean excludeRootBlock) {
-		//statements and expressions with lambdas, i.e., the expression of a when entry is record.elementIds.forEachIndexed { index, objectId -> ... },
-		//an expression is not a statement, so the caller decides whether it is a leaf
-		if(fragment instanceof StatementObject || fragment instanceof AbstractExpression) {
+		//statements and the expressions of when entries with lambdas, i.e., is ObjectArrayDumpRecord -> record.elementIds.forEachIndexed { index, objectId -> ... };
+		//an expression is not a statement, so the caller decides whether it is a leaf. Other expressions, i.e., the body of an expression lambda, are not expanded
+		if(fragment instanceof StatementObject || fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY_EXPRESSION)) {
 			AbstractCodeFragment statement = fragment;
 			if(fragment instanceof StatementObject && !leaves.contains(statement)) {
 				leaves.add(statement);

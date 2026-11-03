@@ -3839,7 +3839,8 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
-			if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
+			//a scalar and an array of the same class type are different types, i.e., String sha512 = Util.getSHA512(x) -> String[] parts = IdentityMemo.get(x, Block::statementParts)
+			if(typeReplacement && (!type1.compatibleTypes(type2) || type1.getArrayDimension() != type2.getArrayDimension()) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
 				return true;
 			}
 			if(type1.equals(type2) && type1.getClassType().equals("int") && variableRename && initializerReplacement) {

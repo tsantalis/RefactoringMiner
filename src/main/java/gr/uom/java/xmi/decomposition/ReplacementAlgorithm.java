@@ -3182,6 +3182,12 @@ public class ReplacementAlgorithm {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, type);
 			replacementInfo.addReplacement(replacement);
+			//calls on receivers identical only after replacements are not the same call evolving, when the declared variables have also everything replaced,
+			//i.e., String sha512 = Util.getSHA512(x) -> String[] parts = IdentityMemo.get(x, Block::statementParts), but not boolean result = UriUtil.routeMatchesUri(r, u) -> CloudRoute route = UriUtil.matchRoute(l, s)
+			if(!invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2) &&
+					variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2, container1, container2)) {
+				return null;
+			}
 			if(invocationCoveringTheEntireStatement2.arguments().size() > 0) {
 				for(String argument2 : invocationCoveringTheEntireStatement2.arguments()) {
 					LeafExpression matchingVariable = null;

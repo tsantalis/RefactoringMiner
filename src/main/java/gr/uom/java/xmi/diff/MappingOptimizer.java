@@ -535,7 +535,7 @@ public class MappingOptimizer {
 					}
 				}
 				if(!anonymousClassDeclarationMatch && !splitConditional && !splitDeclaration)
-					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances, compositeChildMatchingScores);
+					determineIndicesToBeRemovedAmongRemaining(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances, compositeChildMatchingScores);
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				boolean splitConditional = false;
@@ -739,6 +739,38 @@ public class MappingOptimizer {
 			}
 		}
 		return matchingParentMappers;
+	}
+
+	//the mappings that are not already removed still compete, i.e., for(match : matches) is mapped by the parent mapper to for(arg : call.arguments()) with replacements,
+	//and exactly by the mappers of addRow, extracted twice, so the mapping of the second extraction, without a parent mapping, is removed and the parent mapping still loses
+	private void determineIndicesToBeRemovedAmongRemaining(List<Boolean> nestedMapper, List<Boolean> identical,
+			List<Integer> exactMappingsNestedUnderCompositeExcludingBlocks,
+			List<Integer> replacementTypeCount, List<Boolean> replacementCoversEntireStatement,
+			List<Boolean> extractInlineOverlappingRefactoring, Set<Integer> indicesToBeRemoved, List<Double> editDistances, List<Double> compositeChildMatchingScores) {
+		List<Integer> remaining = new ArrayList<>();
+		for(int i=0; i<identical.size(); i++) {
+			if(!indicesToBeRemoved.contains(i)) {
+				remaining.add(i);
+			}
+		}
+		if(remaining.size() < 2) {
+			return;
+		}
+		Set<Integer> remainingIndicesToBeRemoved = new LinkedHashSet<>();
+		determineIndicesToBeRemoved(sublist(nestedMapper, remaining), sublist(identical, remaining), sublist(exactMappingsNestedUnderCompositeExcludingBlocks, remaining),
+				sublist(replacementTypeCount, remaining), sublist(replacementCoversEntireStatement, remaining), sublist(extractInlineOverlappingRefactoring, remaining),
+				remainingIndicesToBeRemoved, sublist(editDistances, remaining), sublist(compositeChildMatchingScores, remaining));
+		for(int index : remainingIndicesToBeRemoved) {
+			indicesToBeRemoved.add(remaining.get(index));
+		}
+	}
+
+	private static <T> List<T> sublist(List<T> list, List<Integer> indices) {
+		List<T> sublist = new ArrayList<>();
+		for(int index : indices) {
+			sublist.add(list.get(index));
+		}
+		return sublist;
 	}
 
 	private void determineIndicesToBeRemoved(List<Boolean> nestedMapper, List<Boolean> identical,

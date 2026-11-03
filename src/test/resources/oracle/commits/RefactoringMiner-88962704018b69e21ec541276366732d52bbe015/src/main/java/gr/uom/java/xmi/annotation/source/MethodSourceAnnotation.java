@@ -1,0 +1,174 @@
+package gr.uom.java.xmi.annotation.source;
+
+import gr.uom.java.xmi.*;
+import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.StatementObject;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.annotation.MarkerAnnotation;
+import gr.uom.java.xmi.annotation.SingleMemberAnnotation;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class MethodSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation {
+    public static final String ANNOTATION_TYPENAME = "MethodSource";
+    private final UMLOperation annotatedOperation;
+    private final List<UMLAbstractClass> declaringClasses;
+    private UMLOperation resolvedProviderMethod;
+
+    public MethodSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
+        super(annotation, ANNOTATION_TYPENAME);
+        this.annotatedOperation = operation;
+        this.declaringClasses = declaringClasses;
+        List<String> values = getValue();
+        if(values.size() > 0) {
+            String methodSourceName = values.get(0);
+            processMethodSourceName(operation, methodSourceName);
+        }
+    }
+
+    public static boolean isMethodSourceAnnotation(UMLAnnotation annotation) {
+        return annotation.getTypeName().equals("MethodSource");
+    }
+
+    public UMLOperation getResolvedProviderMethod() {
+        return resolvedProviderMethod;
+    }
+
+    private void processMethodSourceName(UMLOperation operation, String methodSourceName) {
+        List<UMLOperation> sameNameMethods = new ArrayList<UMLOperation>();
+        for(UMLAbstractClass declaringClass : this.declaringClasses) {
+            sameNameMethods.addAll(declaringClass.getOperations().stream().filter(op -> op.getName().equals(methodSourceName)).collect(Collectors.toList()));
+            for (int maxIterations = sameNameMethods.size(); sameNameMethods.size() > 1 && maxIterations-- > 0; ) {
+                for (Iterator<UMLOperation> iterator = sameNameMethods.iterator(); iterator.hasNext(); ) {
+                    UMLOperation method = iterator.next();
+                    if (method.getAnnotations().containsAll(operation.getAnnotations())) {
+                        iterator.remove();
+                        break;
+                    }
+                    if (method.equalSignature(operation)) {
+                        iterator.remove();
+                        break;
+                    }
+                }
+            }
+        }
+        if(sameNameMethods.size() > 0) {
+            UMLOperation sourceMethod = sameNameMethods.get(0);
+            this.resolvedProviderMethod = sourceMethod;
+            Optional<VariableDeclaration> returnedVarCandidates = sourceMethod.getBody().getAllVariableDeclarations().stream().filter(v -> sourceMethod.getReturnParameter().getType().equals(v.getType())).findAny();
+            if (returnedVarCandidates.isEmpty()) {
+                Optional<StatementObject> stmtCandidate = sourceMethod.getBody().getCompositeStatement().getStatements().stream()
+                        .filter(s -> s instanceof StatementObject)
+                        .map(s -> (StatementObject) s)
+                        .filter(AbstractCodeFragment::isLastStatement)
+                        .findAny();
+                if (stmtCandidate.isPresent()) {
+                    AbstractCall call = stmtCandidate.get().invocationCoveringEntireFragment();
+                    if(call != null && call.getName().equals("of")) {
+                        List<AbstractCall> rowCallCandidates = rowCallCandidates(stmtCandidate.get());
+                        for(AbstractCall nestedCall : rowCallCandidates) {
+                            boolean nestedInAnotherRowCall = rowCallCandidates.stream()
+                                    .anyMatch(other -> other != nestedCall && other.getLocationInfo().subsumes(nestedCall.getLocationInfo()));
+                            if(!nestedInAnotherRowCall) {
+                                List<String> resolvedArguments = new ArrayList<>();
+                                List<LeafExpression> leafExpressions = new ArrayList<>();
+                                Set<LocationInfo> claimedLocations = new HashSet<>();
+                                List<LocationInfo> resolvedArgumentSpans = new ArrayList<>();
+                                for(String arg : nestedCall.arguments()) {
+                                    LeafExpression constantLiteral = resolveConstantLiteral(arg);
+                                    if(constantLiteral != null) {
+                                        resolvedArguments.add(constantLiteral.getString());
+                                        leafExpressions.add(constantLiteral);
+                                        resolvedArgumentSpans.add(constantLiteral.getLocationInfo());
+                                    }
+                                    else {
+                                        resolvedArguments.add(arg);
+                                        List<LeafExpression> matches = stmtCandidate.get().findExpression(arg);
+                                        for(LeafExpression match : matches) {
+                                            boolean nestedInEarlierArgument = resolvedArgumentSpans.stream().anyMatch(span -> span.subsumes(match.getLocationInfo()));
+                                            if(nestedCall.getLocationInfo().subsumes(match.getLocationInfo()) && !claimedLocations.contains(match.getLocationInfo()) && !nestedInEarlierArgument) {
+                                                leafExpressions.add(match);
+                                                claimedLocations.add(match.getLocationInfo());
+                                                resolvedArgumentSpans.add(match.getLocationInfo());
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                testParameters.add(resolvedArguments);
+                                testParameterLeafExpressions.add(leafExpressions);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private LeafExpression resolveConstantLiteral(String name) {
+        for(UMLAbstractClass declaringClass : declaringClasses) {
+            for(UMLAttribute attribute : declaringClass.getAttributes()) {
+                if(attribute.getName().equals(name) && attribute.isFinal() && attribute.isStatic()) {
+                    AbstractExpression initializer = attribute.getVariableDeclaration().getInitializer();
+                    if(initializer != null) {
+                        List<LeafExpression> literals = new ArrayList<>();
+                        literals.addAll(initializer.getStringLiterals());
+                        literals.addAll(initializer.getNumberLiterals());
+                        literals.addAll(initializer.getBooleanLiterals());
+                        literals.addAll(initializer.getNullLiterals());
+                        if(!literals.isEmpty()) {
+                            return literals.get(0);
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<String> getValue() {
+        if(annotation.isMarkerAnnotation()) {
+            return Collections.singletonList(annotatedOperation.getName());
+        }
+        else if (annotation.isNormalAnnotation()) {
+            ArrayList<String> values = new ArrayList<>();
+            for (AbstractExpression value : annotation.getMemberValuePairs().values()) {
+                values.addAll(extractLiteralFromValue(value));
+            }
+            return values;
+        }
+        else if(annotation.isSingleMemberAnnotation()) {
+            ArrayList<String> values = new ArrayList<>();
+            AbstractExpression value = annotation.getValue();
+            values.addAll(extractLiteralFromValue(value));
+            if(values.isEmpty()) {
+                for(UMLAbstractClass declaringClass : declaringClasses) {
+                    for(UMLAttribute attribute : declaringClass.getAttributes()) {
+                        if(value.getString().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() !=  null) {
+                            values.addAll(extractLiteralFromValue(attribute.getVariableDeclaration().getInitializer()));
+                        }
+                    }
+                }
+            }
+            return values;
+        }
+        else {
+            return extractLiteralFromValue(annotation.getValue());
+        }
+    }
+
+    private static List<String> extractLiteralFromValue(AbstractExpression expr) {
+        if(expr.getTypeLiterals().size() > 0) {
+            return Collections.singletonList(expr.getTypeLiterals().get(0).getString());
+        }
+        else if (expr.getStringLiterals().size() > 0) {
+            return Collections.singletonList(expr.getStringLiterals().get(0).getString().replace("\"", ""));
+        }
+        return Collections.emptyList();
+    }
+}

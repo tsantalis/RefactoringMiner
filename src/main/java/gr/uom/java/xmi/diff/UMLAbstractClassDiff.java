@@ -3254,9 +3254,10 @@ public abstract class UMLAbstractClassDiff {
 							uniqueMappingCount++;
 						}
 					}
-					if((initialNumberOfAddedOperations <= 2 || initialNumberOfRemovedOperations <= 2 || mappersWithParameterizedTest.size() == mapperSet.size()) && commonMappingCount > 0 && uniqueMappingCount > 0 && (mappingCounter.size() == 1 || mappersWithZeroAddedStatements.size() == mapperSet.size())) {
+					boolean splitBySpecializedParameter = splitBySpecializedParameter(removedOperation, mapperSet);
+					if((initialNumberOfAddedOperations <= 2 || initialNumberOfRemovedOperations <= 2 || mappersWithParameterizedTest.size() == mapperSet.size()) && commonMappingCount > 0 && (uniqueMappingCount > 0 || splitBySpecializedParameter) && (mappingCounter.size() == 1 || mappersWithZeroAddedStatements.size() == mapperSet.size())) {
 						for(UMLOperationBodyMapper mapper : mapperSet) {
-							if(!mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter() &&
+							if((splitBySpecializedParameter || !mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter() &&
 									!betterMatchedByOtherRemovedOperation(mapper, removedOperations)) {
 								newCandidate.addSplitMethod(mapper.getContainer2());
 							}
@@ -3338,6 +3339,7 @@ public abstract class UMLAbstractClassDiff {
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						List<List<String>> parameterValues = getParameterValues(firstMapper.getOperation2());
+						UMLOperationBodyMapper unreadableValuesMapper = parameterValues.isEmpty() ? parameterizedWithUnreadableValues(mapperSet) : null;
 						if(firstMapper.getOperation2().hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
 							checkForParameterizedTest(removedOperations, addedOperations, firstMapper.getOperation2(), mapperSet,
 									firstMapperWithIdenticalMethodName, parameterValues,
@@ -3345,6 +3347,14 @@ public abstract class UMLAbstractClassDiff {
 										removedOperationIterator.remove();
 									},
 									() -> addedOperations.remove(firstMapper.getOperation2()));
+						}
+						else if(unreadableValuesMapper != null) {
+							checkForParameterizedTest(removedOperations, addedOperations, unreadableValuesMapper.getOperation2(), new TreeSet<>(List.of(unreadableValuesMapper)),
+									firstMapperWithIdenticalMethodName, parameterValues,
+									(UMLOperationBodyMapper mapper) -> {
+										removedOperationIterator.remove();
+									},
+									() -> addedOperations.remove(unreadableValuesMapper.getOperation2()));
 						}
 						else {
 							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
@@ -3526,8 +3536,18 @@ public abstract class UMLAbstractClassDiff {
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						List<List<String>> parameterValues = getParameterValues(addedOperation);
+						UMLOperationBodyMapper unreadableValuesMapper = parameterValues.isEmpty() ? parameterizedWithUnreadableValues(mapperSet) : null;
 						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
 							checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
+									firstMapperWithIdenticalMethodName, parameterValues,
+									(UMLOperationBodyMapper mapper) -> {
+										UMLOperation removedOperation = mapper.getOperation1();
+										removedOperations.remove(removedOperation);
+									},
+									() -> addedOperationIterator.remove());
+						}
+						else if(unreadableValuesMapper != null) {
+							checkForParameterizedTest(removedOperations, addedOperations, addedOperation, new TreeSet<>(List.of(unreadableValuesMapper)),
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
 										UMLOperation removedOperation = mapper.getOperation1();
@@ -3670,7 +3690,25 @@ public abstract class UMLAbstractClassDiff {
 		Map<Integer, Integer> overallMatchingTestParameters = new LinkedHashMap<Integer, Integer>();
 		boolean internalParameterizeTest = false;
 		Set<String> commonTokensInName = null;
+		//the value rows best matched by the removed test with the name of the parameterized test, which a removed test with another name must extend to be merged into it
+		Set<Integer> rowsOfIdenticalNameTest = null;
+		VariableDeclarationContainer identicalNameTest = null;
 		for(UMLOperationBodyMapper mapper : mapperSet) {
+			if(mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) {
+				identicalNameTest = mapper.getContainer2();
+				Map<Integer, Integer> rows = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements(), mapper, getOriginalClass());
+				rowsOfIdenticalNameTest = bestMatchingRows(rows.isEmpty() ? matchParamsWithRemovedStatements(parameterValues, parameterNames, mapper.getNonMappedLeavesT1()) : rows);
+				break;
+			}
+		}
+		for(UMLOperationBodyMapper mapper : mapperSet) {
+			//a removed test that still exists with its own name became that test, not a test merged into a parameterized test with another name,
+			//i.e., testReadCharArray() is parameterized as testReadCharArray(Class<Throwable> clazz), not merged into testReady(Class<Throwable> clazz),
+			//while the removed testTestFileRelativePath_1() is merged into testTestFileRelativePath(String s)
+			if(!mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) &&
+					nextClass.getOperations().stream().anyMatch(op -> !op.equals(mapper.getContainer2()) && op.getName().equals(mapper.getContainer1().getName()))) {
+				continue;
+			}
 			Set<String> commonTokens = new LinkedHashSet<>();
 			String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer1().getName());
 			String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer2().getName());
@@ -3711,6 +3749,13 @@ public abstract class UMLAbstractClassDiff {
 			Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements(), mapper, getOriginalClass());
 			if (matchingTestParameters.isEmpty()) {
 				matchingTestParameters = matchParamsWithRemovedStatements(parameterValues, parameterNames, mapper.getNonMappedLeavesT1());
+			}
+			//a removed test with another name merged into the parameterized test contributes a value row of its own,
+			//i.e., testAppendCharSequence() and the deleted testHashCode() throw the IOException of the only row matched by testAppendChar() and testClose() in their parameterized tests,
+			//while the theory testParamShadow(Tuple<String,String> cmd, boolean shadow) split into testParamShadow(cmd) and testParamNoShadow(cmd) is paired with both
+			if(rowsOfIdenticalNameTest != null && mapper.getContainer2().equals(identicalNameTest) && !mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) &&
+					rowsOfIdenticalNameTest.containsAll(bestMatchingRows(matchingTestParameters))) {
+				continue;
 			}
 			int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
 			if(max >= 1 && (overallMaxMatchingTestParameters == -1 || max >= overallMaxMatchingTestParameters)) {
@@ -3782,7 +3827,10 @@ public abstract class UMLAbstractClassDiff {
 		}
 		UMLOperation previouslyRemovedOperation = null;
 		for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
-			ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper, runsWithParameterizedRunner(mapper.getOperation1()));
+			//a removed test with parameters was already data-driven, i.e., the JUnit 4 theory testParamGradlines(Tuple<String,String> cmd, int gradlines) -> testParamGradlines(Tuple<String,String> cmd),
+			//unlike a helper with parameters called by the removed tests, i.e., private reentrySubscriberRequestCountIsCorrect(boolean firstIsReentry)
+			boolean migrated = runsWithParameterizedRunner(mapper.getOperation1()) || (mapper.getOperation1().isTest() && !mapper.getOperation1().getParameterNameList().isEmpty());
+			ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper, migrated);
 			refactorings.add(refactoring);
 			mapper.computeRefactoringsWithinBody();
 			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
@@ -3828,6 +3876,18 @@ public abstract class UMLAbstractClassDiff {
 			}
 			UMLType superclass = umlClass.getSuperclass();
 			umlClass = superclass != null && modelDiff != null ? modelDiff.findClassInParentModel(superclass.getClassType()) : null;
+		}
+		//an abstract base test with the parameters injected through its constructor, while the runner is declared on its subclasses,
+		//i.e., abstract class ExpressionTest extended by @RunWith(Parameterized.class) class AdditionExpressionTest
+		UMLAbstractClass testClass = modelDiff != null ? modelDiff.findClassInParentModel(operation.getClassName()) : originalClass;
+		if(testClass != null && modelDiff != null) {
+			for(UMLClass subclass : modelDiff.getParentModel().getClassList()) {
+				UMLType superclass = subclass.getSuperclass();
+				if(superclass != null && superclass.getClassType().equals(testClass.getNonQualifiedName()) &&
+						subclass.getAnnotations().stream().anyMatch(UMLAbstractClassDiff::isParameterizedRunner)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -4147,6 +4207,92 @@ public abstract class UMLAbstractClassDiff {
 		return parameterValues;
 	}
 
+	//a removed test split into tests that each fix one value of a parameter none of them declares, i.e., the theory testParamShadow(Tuple<String,String> cmd, boolean shadow)
+	//split into testParamShadow(cmd) with "[shadow =true]" and testParamNoShadow(cmd) with "[shadow = false]", while copies of a test keep the same values
+	private static boolean splitBySpecializedParameter(UMLOperation removedOperation, Set<UMLOperationBodyMapper> mapperSet) {
+		if(mapperSet.size() < 2 || !removedOperation.isTest()) {
+			return false;
+		}
+		for(String parameterName : removedOperation.getParameterNameList()) {
+			Set<List<String>> specializations = new LinkedHashSet<>();
+			for(UMLOperationBodyMapper mapper : mapperSet) {
+				if(!(mapper.getContainer2() instanceof UMLOperation operation2) || (!operation2.isTest() && !operation2.hasParameterizedTestAnnotation()) ||
+						operation2.getParameterNameList().contains(parameterName)) {
+					break;
+				}
+				List<String> specialization = new ArrayList<>();
+				for(AbstractCodeMapping mapping : mapper.getMappings()) {
+					if(usesVariable(mapping.getFragment1(), parameterName) && !usesVariable(mapping.getFragment2(), parameterName)) {
+						specialization.add(mapping.getFragment2().getString());
+					}
+				}
+				if(specialization.isEmpty()) {
+					break;
+				}
+				specializations.add(specialization);
+			}
+			if(specializations.size() == mapperSet.size()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean usesVariable(AbstractCodeFragment fragment, String variableName) {
+		return fragment.getVariables().stream().anyMatch(v -> v.getString().equals(variableName));
+	}
+
+	//the rows with the most values found in a removed test, as values shared by all rows, i.e., the folder name of each @CsvSource row, match every row
+	private static Set<Integer> bestMatchingRows(Map<Integer, Integer> matchingTestParameters) {
+		int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
+		Set<Integer> rows = new LinkedHashSet<>();
+		for(Map.Entry<Integer, Integer> entry : matchingTestParameters.entrySet()) {
+			if(entry.getValue() == max) {
+				rows.add(entry.getKey());
+			}
+		}
+		return rows;
+	}
+
+	//the pair of tests the matching selects, when the removed test became a test parameterized with values that cannot be read, or null,
+	//as without the values only the identity of the test tells which removed test was parameterized, i.e., testAppendChar() -> testAppendChar(Class<Exception> clazz),
+	//but not testAppendCharSequence() -> testAppendChar(Class<Exception> clazz)
+	private UMLOperationBodyMapper parameterizedWithUnreadableValues(TreeSet<UMLOperationBodyMapper> mapperSet) {
+		if(mapperSet.stream().noneMatch(m -> m.getOperation2() != null && m.getOperation2().hasParameterizedTestAnnotation())) {
+			return null;
+		}
+		UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
+		UMLOperation removedOperation = bestMapper.getOperation1();
+		UMLOperation addedOperation = bestMapper.getOperation2();
+		if(removedOperation != null && addedOperation != null && removedOperation.getName().equals(addedOperation.getName()) &&
+				addedOperation.hasParameterizedTestAnnotation() && !removedOperation.hasParameterizedTestAnnotation() &&
+				parameterizedWithUnreadableValues(removedOperation, addedOperation)) {
+			return bestMapper;
+		}
+		return null;
+	}
+
+	//a test parameterized with values that cannot be read, i.e., the objects created by its provider in @MethodSource("encodingProviders") test(EncodingProvider encodingProvider),
+	//when it has a source annotation and uses each of its new parameters in its body, so the parameterization is reported without the links to the values,
+	//but not a test that already had these parameters, i.e., the JUnit 4 theory quotaDependencyTest(ActionType actionType) -> quotaDependency(ActionType actionType)
+	private static boolean parameterizedWithUnreadableValues(UMLOperation removedOperation, UMLOperation addedOperation) {
+		List<String> parameterNames = addedOperation.getParameterNameList();
+		if(parameterNames.isEmpty() || addedOperation.getAnnotations().stream().noneMatch(SourceAnnotation::isSourceAnnotation)) {
+			return false;
+		}
+		List<String> removedParameterNames = removedOperation.getParameterNameList();
+		if(parameterNames.stream().anyMatch(removedParameterNames::contains)) {
+			return false;
+		}
+		List<String> variables = addedOperation.getAllVariables();
+		for(String parameterName : parameterNames) {
+			if(variables.stream().noneMatch(v -> v.equals(parameterName) || v.startsWith(parameterName + "."))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public List<List<String>> getParameterValues(UMLOperation addedOperation) {
 		List<List<String>> parameterValues = new ArrayList<>();
 		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
@@ -4189,6 +4335,14 @@ public abstract class UMLAbstractClassDiff {
 					if(providerClass != null) {
 						inputDeclarations.add(providerClass);
 					}
+				}
+			}
+		}
+		if(annotation.getTypeName().equals(MethodSourceAnnotation.ANNOTATION_TYPENAME) && modelDiff != null) {
+			for(String providerClassName : MethodSourceAnnotation.providerClassNames(annotation)) {
+				UMLAbstractClass providerClass = modelDiff.findClassInChildModel(providerClassName);
+				if(providerClass != null && !inputDeclarations.contains(providerClass)) {
+					inputDeclarations.add(providerClass);
 				}
 			}
 		}

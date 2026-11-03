@@ -70,6 +70,31 @@ line range:175-177==line range:159-161
 line range:167-169==line range:151-153
 line range:171-173==line range:155-157
 line range:175-177==line range:159-161
+public testSetWith() : void -> public testSetWith(vf IValueFactory, integers IInteger[]) : void
+line range:182-182==line range:166-166
+line range:184-184==line range:168-168
+line range:185-185==line range:169-169
+line range:186-186==line range:170-170
+line range:187-187==line range:171-171
+line range:188-188==line range:172-172
+line range:189-189==line range:173-173
+line range:190-191==line range:174-175
+line range:197-197==line range:181-181
+line range:202-202==line range:186-186
+line range:207-207==line range:191-191
+line range:208-208==line range:192-192
+line range:196-198==line range:180-182
+line range:195-199==line range:179-183
+line range:201-203==line range:185-187
+line range:200-204==line range:184-188
+line range:194-205==line range:178-189
+line range:193-209==line range:177-193
+line range:206-209==line range:190-193
+line range:196-198==line range:180-182
+line range:195-199==line range:179-183
+line range:201-203==line range:185-187
+line range:200-204==line range:184-188
+line range:194-205==line range:178-189
 public testListNamedType() : void -> public testListNamedType(vf IValueFactory) : void
 line range:214-214==line range:198-198
 line range:216-216==line range:200-200
@@ -94,6 +119,38 @@ line range:239-241==line range:223-225
 line range:243-245==line range:227-229
 line range:239-241==line range:223-225
 line range:243-245==line range:227-229
+public testListWith() : void -> public testListWith(vf IValueFactory, integers IInteger[]) : void
+line range:250-250==line range:234-234
+line range:252-252==line range:236-236
+line range:253-253==line range:237-237
+line range:254-254==line range:238-238
+line range:255-255==line range:239-239
+line range:256-256==line range:240-240
+line range:257-258==line range:241-242
+line range:259-260==line range:243-244
+line range:265-265==line range:249-249
+line range:264-266==line range:248-250
+line range:263-267==line range:247-251
+line range:262-268==line range:246-252
+line range:264-266==line range:248-250
+line range:263-267==line range:247-251
+line range:262-268==line range:246-252
+public testTupleIValue() : void -> public testTupleIValue(vf IValueFactory, integers IInteger[]) : void
+line range:274-274==line range:258-258
+line range:276-276==line range:260-260
+line range:277-277==line range:261-261
+line range:278-278==line range:262-262
+line range:279-279==line range:263-263
+line range:280-280==line range:264-264
+line range:281-282==line range:265-266
+line range:283-284==line range:267-268
+line range:289-289==line range:273-273
+line range:288-290==line range:272-274
+line range:287-291==line range:271-275
+line range:286-292==line range:270-276
+line range:288-290==line range:272-274
+line range:287-291==line range:271-275
+line range:286-292==line range:270-276
 public testInteger() : void -> public testInteger(vf IValueFactory) : void
 line range:297-297==line range:281-281
 public testDubble() : void -> public testDubble(vf IValueFactory) : void

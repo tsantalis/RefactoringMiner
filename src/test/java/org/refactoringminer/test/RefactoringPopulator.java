@@ -139,7 +139,8 @@ public class RefactoringPopulator {
 		ReplaceConditionalWithAssumption(new BigInteger("20282409603651670423947251286016")),
 		ExtractFixture(new BigInteger("40564819207303340847894502572032")),
 		MoveAnnotation(new BigInteger("81129638414606681695789005144064")),
-		All(new BigInteger("162259276829213363391578010288127"));
+		MigrateParameterizedTest(new BigInteger("162259276829213363391578010288128")),
+		All(new BigInteger("324518553658426726783156020576255"));
 
 		private BigInteger value;
 

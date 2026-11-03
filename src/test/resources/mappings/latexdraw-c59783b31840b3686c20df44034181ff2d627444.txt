@@ -414,6 +414,22 @@ public testAngle1Angle2(cmd String, angle1 double, angle2 double) : void -> publ
 null==@ValueSource(strings = {"\\psarc","\\pswedge"})
 net.sf.latexdraw.parser.pst.TestParsingShape -> net.sf.latexdraw.parser.pst.TestParsingShape
 @RunWith(Theories.class)==null
+public testParamGradlines(cmd Tuple<String,String>, gradlines int) : void -> package testParamGradlines(cmd Tuple<String,String>) : void
+line range:53-53==line range:63-63
+public testParamShadowangle(cmd Tuple<String,String>, angle double) : void -> package testParamShadowangle(cmd Tuple<String,String>) : void
+line range:58-58==line range:69-69
+public testParamGradangle(cmd Tuple<String,String>, angle double) : void -> package testParamGradangle(cmd Tuple<String,String>) : void
+line range:66-66==line range:78-78
+public testParamGradmidpoint(cmd Tuple<String,String>, pt double) : void -> package testParamGradmidpoint(cmd Tuple<String,String>) : void
+line range:74-74==line range:87-87
+public testParamHatchangle(cmd Tuple<String,String>, angle double) : void -> package testParamHatchangle(cmd Tuple<String,String>) : void
+line range:82-82==line range:96-96
+public testParamDoubleLine(cmd Tuple<String,String>, dble boolean) : void -> package testParamDoubleLine(cmd Tuple<String,String>) : void
+line range:220-220==line range:258-258
+public testStrokeOpacity(cmd Tuple<String,String>, opacity double) : void -> package testStrokeOpacity(cmd Tuple<String,String>) : void
+line range:228-228==line range:276-276
+public testOpacity(cmd Tuple<String,String>, opacity double) : void -> package testOpacity(cmd Tuple<String,String>) : void
+line range:236-236==line range:285-285
 public testParamDimen(cmd Tuple<String,String>, pos BorderPos) : void -> package testParamDimen(cmd Tuple<String,String>, pos BorderPos) : void
 null==@ParameterizedTest
 public testParamDimen(cmd Tuple<String,String>, pos BorderPos) : void -> package testParamDimen(cmd Tuple<String,String>, pos BorderPos) : void
@@ -494,10 +510,6 @@ public testParamLinewidth(cmd Tuple<String,String>, val double, unit String) : v
 null==@ParameterizedTest
 public testParamLinewidth(cmd Tuple<String,String>, val double, unit String) : void -> package testParamLinewidth(cmd Tuple<String,String>, unit String) : void
 null==@MethodSource(value = "cmdUnitProvider")
-public testParamShadow(cmd Tuple<String,String>, shadow boolean) : void -> package testParamNoShadow(cmd Tuple<String,String>) : void
-null==@ParameterizedTest
-public testParamShadow(cmd Tuple<String,String>, shadow boolean) : void -> package testParamNoShadow(cmd Tuple<String,String>) : void
-null==@MethodSource(value = "cmds")
 public testParamDoubleLine(cmd Tuple<String,String>, dble boolean) : void -> package testParamDoubleLine(cmd Tuple<String,String>) : void
 null==@ParameterizedTest
 public testParamDoubleLine(cmd Tuple<String,String>, dble boolean) : void -> package testParamDoubleLine(cmd Tuple<String,String>) : void

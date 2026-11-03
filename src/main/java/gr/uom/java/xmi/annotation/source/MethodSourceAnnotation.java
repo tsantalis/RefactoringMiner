@@ -23,11 +23,47 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
         super(annotation, ANNOTATION_TYPENAME);
         this.annotatedOperation = operation;
         this.declaringClasses = declaringClasses;
-        List<String> values = getValue();
-        if(values.size() > 0) {
-            String methodSourceName = values.get(0);
+        //every provider of the annotation, i.e., @MethodSource({"a", "b"})
+        for(String methodSourceName : getValue()) {
             processMethodSourceName(operation, methodSourceName);
         }
+    }
+
+    //the classes of the providers referenced by their fully qualified method names, i.e., @MethodSource("net.aholbrook.paseto.Sources#encodingProviders")
+    public static List<String> providerClassNames(UMLAnnotation annotation) {
+        List<AbstractExpression> values = new ArrayList<>();
+        if(annotation.getValue() != null) {
+            values.add(annotation.getValue());
+        }
+        values.addAll(annotation.getMemberValuePairs().values());
+        List<String> classNames = new ArrayList<>();
+        for(AbstractExpression value : values) {
+            for(LeafExpression literal : value.getStringLiterals()) {
+                String className = providerClassName(literal.getString().replace("\"", ""));
+                if(className != null && !classNames.contains(className)) {
+                    classNames.add(className);
+                }
+            }
+        }
+        return classNames;
+    }
+
+    //the class part of Class#method, with the binary name of a nested class, i.e., Outer$Inner, as its source name, or null for a local method
+    private static String providerClassName(String methodSourceName) {
+        int index = methodSourceName.indexOf('#');
+        return index > 0 ? methodSourceName.substring(0, index).replace('$', '.') : null;
+    }
+
+    //the method part of Class#method or #method, without the parameter types, i.e., factory(int)
+    private static String providerMethodName(String methodSourceName) {
+        int index = methodSourceName.indexOf('#');
+        String methodName = index != -1 ? methodSourceName.substring(index + 1) : methodSourceName;
+        int parenthesis = methodName.indexOf('(');
+        return parenthesis != -1 ? methodName.substring(0, parenthesis) : methodName;
+    }
+
+    private static boolean declares(UMLAbstractClass declaringClass, String className) {
+        return declaringClass.getName().equals(className) || declaringClass.getName().endsWith("." + className);
     }
 
     public static boolean isMethodSourceAnnotation(UMLAnnotation annotation) {
@@ -39,9 +75,14 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
     }
 
     private void processMethodSourceName(UMLOperation operation, String methodSourceName) {
+        String providerClassName = providerClassName(methodSourceName);
+        String providerMethodName = providerMethodName(methodSourceName);
         List<UMLOperation> sameNameMethods = new ArrayList<UMLOperation>();
         for(UMLAbstractClass declaringClass : this.declaringClasses) {
-            sameNameMethods.addAll(declaringClass.getOperations().stream().filter(op -> op.getName().equals(methodSourceName)).collect(Collectors.toList()));
+            if(providerClassName != null && !declares(declaringClass, providerClassName)) {
+                continue;
+            }
+            sameNameMethods.addAll(declaringClass.getOperations().stream().filter(op -> op.getName().equals(providerMethodName)).collect(Collectors.toList()));
             for (int maxIterations = sameNameMethods.size(); sameNameMethods.size() > 1 && maxIterations-- > 0; ) {
                 for (Iterator<UMLOperation> iterator = sameNameMethods.iterator(); iterator.hasNext(); ) {
                     UMLOperation method = iterator.next();
@@ -58,7 +99,9 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
         }
         if(sameNameMethods.size() > 0) {
             UMLOperation sourceMethod = sameNameMethods.get(0);
-            this.resolvedProviderMethod = sourceMethod;
+            if(this.resolvedProviderMethod == null) {
+                this.resolvedProviderMethod = sourceMethod;
+            }
             Optional<VariableDeclaration> returnedVarCandidates = sourceMethod.getBody().getAllVariableDeclarations().stream().filter(v -> sourceMethod.getReturnParameter().getType().equals(v.getType())).findAny();
             if (returnedVarCandidates.isEmpty()) {
                 Optional<StatementObject> stmtCandidate = sourceMethod.getBody().getCompositeStatement().getStatements().stream()
@@ -69,44 +112,56 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                 if (stmtCandidate.isPresent()) {
                     AbstractCall call = stmtCandidate.get().invocationCoveringEntireFragment();
                     if(call != null && call.getName().equals("of")) {
-                        List<AbstractCall> rowCallCandidates = rowCallCandidates(stmtCandidate.get());
+                        StatementObject statement = stmtCandidate.get();
+                        List<AbstractCall> rowCallCandidates = rowCallCandidates(statement);
                         for(AbstractCall nestedCall : rowCallCandidates) {
                             boolean nestedInAnotherRowCall = rowCallCandidates.stream()
                                     .anyMatch(other -> other != nestedCall && other.getLocationInfo().subsumes(nestedCall.getLocationInfo()));
                             if(!nestedInAnotherRowCall) {
-                                List<String> resolvedArguments = new ArrayList<>();
-                                List<LeafExpression> leafExpressions = new ArrayList<>();
-                                Set<LocationInfo> claimedLocations = new HashSet<>();
-                                List<LocationInfo> resolvedArgumentSpans = new ArrayList<>();
-                                for(String arg : nestedCall.arguments()) {
-                                    LeafExpression constantLiteral = resolveConstantLiteral(arg);
-                                    if(constantLiteral != null) {
-                                        resolvedArguments.add(constantLiteral.getString());
-                                        leafExpressions.add(constantLiteral);
-                                        resolvedArgumentSpans.add(constantLiteral.getLocationInfo());
-                                    }
-                                    else {
-                                        resolvedArguments.add(arg);
-                                        List<LeafExpression> matches = stmtCandidate.get().findExpression(arg);
-                                        for(LeafExpression match : matches) {
-                                            boolean nestedInEarlierArgument = resolvedArgumentSpans.stream().anyMatch(span -> span.subsumes(match.getLocationInfo()));
-                                            if(nestedCall.getLocationInfo().subsumes(match.getLocationInfo()) && !claimedLocations.contains(match.getLocationInfo()) && !nestedInEarlierArgument) {
-                                                leafExpressions.add(match);
-                                                claimedLocations.add(match.getLocationInfo());
-                                                resolvedArgumentSpans.add(match.getLocationInfo());
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                testParameters.add(resolvedArguments);
-                                testParameterLeafExpressions.add(leafExpressions);
+                                addRow(nestedCall.arguments(), nestedCall.getLocationInfo(), statement, new HashSet<>());
+                            }
+                        }
+                        //a row of one value is not created by a row call, i.e., Stream.of(new JacksonJsonProvider(), new GsonJsonProvider()) or Stream.of(Locale.forLanguageTag("ar-EG"), ...)
+                        if(rowCallCandidates.isEmpty()) {
+                            Set<LocationInfo> claimedLocations = new HashSet<>();
+                            for(String arg : call.arguments()) {
+                                addRow(List.of(arg), call.getLocationInfo(), statement, claimedLocations);
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    //the values of a row created within rowLocation, with the leaf expressions not claimed by the previous values
+    private void addRow(List<String> arguments, LocationInfo rowLocation, StatementObject statement, Set<LocationInfo> claimedLocations) {
+        List<String> resolvedArguments = new ArrayList<>();
+        List<LeafExpression> leafExpressions = new ArrayList<>();
+        List<LocationInfo> resolvedArgumentSpans = new ArrayList<>();
+        for(String arg : arguments) {
+            LeafExpression constantLiteral = resolveConstantLiteral(arg);
+            if(constantLiteral != null) {
+                resolvedArguments.add(constantLiteral.getString());
+                leafExpressions.add(constantLiteral);
+                resolvedArgumentSpans.add(constantLiteral.getLocationInfo());
+            }
+            else {
+                resolvedArguments.add(arg);
+                List<LeafExpression> matches = statement.findExpression(arg);
+                for(LeafExpression match : matches) {
+                    boolean nestedInEarlierArgument = resolvedArgumentSpans.stream().anyMatch(span -> span.subsumes(match.getLocationInfo()));
+                    if(rowLocation.subsumes(match.getLocationInfo()) && !claimedLocations.contains(match.getLocationInfo()) && !nestedInEarlierArgument) {
+                        leafExpressions.add(match);
+                        claimedLocations.add(match.getLocationInfo());
+                        resolvedArgumentSpans.add(match.getLocationInfo());
+                        break;
+                    }
+                }
+            }
+        }
+        testParameters.add(resolvedArguments);
+        testParameterLeafExpressions.add(leafExpressions);
     }
 
     private LeafExpression resolveConstantLiteral(String name) {
@@ -167,7 +222,11 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
             return Collections.singletonList(expr.getTypeLiterals().get(0).getString());
         }
         else if (expr.getStringLiterals().size() > 0) {
-            return Collections.singletonList(expr.getStringLiterals().get(0).getString().replace("\"", ""));
+            List<String> values = new ArrayList<>();
+            for(LeafExpression literal : expr.getStringLiterals()) {
+                values.add(literal.getString().replace("\"", ""));
+            }
+            return values;
         }
         return Collections.emptyList();
     }

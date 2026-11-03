@@ -36,6 +36,10 @@ public abstract class SourceAnnotation {
         this.testParameterLeafExpressions = new ArrayList<>();
     }
 
+    public static boolean isSourceAnnotation(UMLAnnotation annotation) {
+        return implementations.containsKey(annotation.getTypeName());
+    }
+
     public static SourceAnnotation create(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
         if (implementations.containsKey(annotation.getTypeName())) {
             return implementations.get(annotation.getTypeName()).apply(annotation, operation, declaringClasses);

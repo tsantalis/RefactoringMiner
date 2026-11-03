@@ -16,6 +16,8 @@ com.iluwatar.eip.wiretap.routes.WireTapRouteTest -> com.iluwatar.eip.wiretap.rou
 @RunWith(SpringJUnit4ClassRunner.class)==null
 com.iluwatar.front.controller.CommandTest -> com.iluwatar.front.controller.CommandTest
 @RunWith(Parameterized.class)==null
+public testDisplay() : void -> public testDisplay(request String, displayMessage String) : void
+line range:88-88==line range:67-67
 public data() : List<Object[]> -> package dataProvider() : List<Object[]>
 @Parameters==null
 public testDisplay() : void -> public testDisplay(request String, displayMessage String) : void
@@ -26,6 +28,8 @@ public testDisplay() : void -> public testDisplay(request String, displayMessage
 @Test==null
 com.iluwatar.front.controller.FrontControllerTest -> com.iluwatar.front.controller.FrontControllerTest
 @RunWith(Parameterized.class)==null
+public testDisplay() : void -> public testDisplay(command Command, displayMessage String) : void
+line range:88-88==line range:67-67
 public data() : List<Object[]> -> package dataProvider() : List<Object[]>
 @Parameters==null
 public testDisplay() : void -> public testDisplay(command Command, displayMessage String) : void
@@ -36,6 +40,8 @@ public testDisplay() : void -> public testDisplay(command Command, displayMessag
 @Test==null
 com.iluwatar.front.controller.ViewTest -> com.iluwatar.front.controller.ViewTest
 @RunWith(Parameterized.class)==null
+public testDisplay() : void -> public testDisplay(view View, displayMessage String) : void
+line range:88-88==line range:67-67
 public data() : List<Object[]> -> package dataProvider() : List<Object[]>
 @Parameters==null
 public testDisplay() : void -> public testDisplay(view View, displayMessage String) : void
@@ -46,6 +52,10 @@ public testDisplay() : void -> public testDisplay(view View, displayMessage Stri
 @Test==null
 com.iluwatar.intercepting.filter.FilterTest -> com.iluwatar.intercepting.filter.FilterTest
 @RunWith(Parameterized.class)==null
+public testExecute() : void -> public testExecute(filter Filter, order Order, expectedResult String) : void
+line range:107-107==line range:90-90
+public testNext() : void -> public testNext(filter Filter) : void
+line range:114-114==line range:98-98
 public getTestData() : List<Object[]> -> package getTestData() : List<Object[]>
 @Parameters==null
 public testExecute() : void -> public testExecute(filter Filter, order Order, expectedResult String) : void
@@ -60,6 +70,10 @@ public testNext() : void -> public testNext(filter Filter) : void
 null==@MethodSource("getTestData")
 public testNext() : void -> public testNext(filter Filter) : void
 @Test==null
+public testInterpret() : void -> public testInterpret(first NumberExpression, second NumberExpression, result int) : void
+line range:120-120==line range:94-94
+public testToString() : void -> public testToString(first NumberExpression, second NumberExpression) : void
+line range:130-130==line range:105-105
 public testInterpret() : void -> public testInterpret(first NumberExpression, second NumberExpression, result int) : void
 null==@ParameterizedTest
 public testInterpret() : void -> public testInterpret(first NumberExpression, second NumberExpression, result int) : void
@@ -82,6 +96,8 @@ public data() : List<Object[]> -> public expressionProvider() : Stream<Arguments
 @Parameters==null
 com.iluwatar.interpreter.NumberExpressionTest -> com.iluwatar.interpreter.NumberExpressionTest
 @RunWith(Parameterized.class)==null
+public testFromString() : void -> public testFromString(first NumberExpression) : void
+line range:66-66==line range:59-59
 public data() : List<Object[]> -> public expressionProvider() : Stream<Arguments>
 @Parameters==null
 public testFromString() : void -> public testFromString(first NumberExpression) : void
@@ -96,6 +112,10 @@ public data() : List<Object[]> -> public expressionProvider() : Stream<Arguments
 @Parameters==null
 com.iluwatar.iterator.TreasureChestTest -> com.iluwatar.iterator.TreasureChestTest
 @RunWith(Parameterized.class)==null
+public testIterator() : void -> public testIterator(expectedItem Item) : void
+line range:82-82==line range:65-65
+public testGetItems() : void -> public testGetItems(expectedItem Item) : void
+line range:108-108==line range:92-92
 public data() : List<Object[]> -> public dataProvider() : List<Object[]>
 @Parameterized.Parameters==null
 public testIterator() : void -> public testIterator(expectedItem Item) : void
@@ -112,6 +132,12 @@ public testGetItems() : void -> public testGetItems(expectedItem Item) : void
 @Test==null
 com.iluwatar.mediator.PartyMemberTest -> com.iluwatar.mediator.PartyMemberTest
 @RunWith(Parameterized.class)==null
+public testPartyAction() : void -> public testPartyAction(memberSupplier Supplier<PartyMember>) : void
+line range:92-92==line range:75-75
+public testAct() : void -> public testAct(memberSupplier Supplier<PartyMember>) : void
+line range:107-107==line range:91-91
+public testToString() : void -> public testToString(memberSupplier Supplier<PartyMember>) : void
+line range:130-130==line range:115-115
 public data() : Collection<Supplier<PartyMember>[]> -> package dataProvider() : Collection<Supplier<PartyMember>[]>
 @Parameterized.Parameters==null
 public testPartyAction() : void -> public testPartyAction(memberSupplier Supplier<PartyMember>) : void
@@ -141,6 +167,8 @@ com.iluwatar.observer.OrcsTest -> com.iluwatar.observer.OrcsTest
 public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
 @Parameterized.Parameters==null
 public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
+line range:84-84==line range:73-73
+public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
 null==@ParameterizedTest
 public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
 null==@MethodSource("dataProvider")
@@ -150,6 +178,8 @@ com.iluwatar.observer.generic.GHobbitsTest -> com.iluwatar.observer.generic.GHob
 @RunWith(Parameterized.class)==null
 public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
 @Parameterized.Parameters==null
+public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
+line range:85-85==line range:73-73
 public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
 null==@ParameterizedTest
 public testObserver() : void -> public testObserver(weather WeatherType, response String) : void
@@ -162,6 +192,8 @@ public data() : Collection<Object[]> -> package dataProvider() : Collection<Obje
 @Parameterized.Parameters==null
 com.iluwatar.prototype.PrototypeTest -> com.iluwatar.prototype.PrototypeTest
 @RunWith(Parameterized.class)==null
+public testPrototype() : void -> public testPrototype(testedPrototype P, expectedToString String) : void
+line range:77-77==line range:53-53
 public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
 @Parameterized.Parameters==null
 public testPrototype() : void -> public testPrototype(testedPrototype P, expectedToString String) : void
@@ -184,6 +216,10 @@ com.iluwatar.repository.RepositoryTest -> com.iluwatar.repository.RepositoryTest
 @RunWith(SpringJUnit4ClassRunner.class)==null
 com.iluwatar.specification.creature.CreatureTest -> com.iluwatar.specification.creature.CreatureTest
 @RunWith(Parameterized.class)==null
+public testGetName() : void -> public testGetName(testedCreature Creature, name String) : void
+line range:104-104==line range:58-58
+public testToString() : void -> public testToString(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
+line range:124-124==line range:83-83
 public data() : Collection<Object[]> -> public dataProvider() : Collection<Object[]>
 @Parameterized.Parameters==null
 public testGetName() : void -> public testGetName(testedCreature Creature, name String) : void
@@ -218,6 +254,8 @@ public testToString() : void -> public testToString(testedCreature Creature, nam
 @Test==null
 com.iluwatar.strategy.DragonSlayingStrategyTest -> com.iluwatar.strategy.DragonSlayingStrategyTest
 @RunWith(Parameterized.class)==null
+public testExecute() : void -> public testExecute(strategy DragonSlayingStrategy, expectedResult String) : void
+line range:108-108==line range:84-84
 public data() : Collection<Object[]> -> package dataProvider() : Collection<Object[]>
 @Parameterized.Parameters==null
 public testExecute() : void -> public testExecute(strategy DragonSlayingStrategy, expectedResult String) : void

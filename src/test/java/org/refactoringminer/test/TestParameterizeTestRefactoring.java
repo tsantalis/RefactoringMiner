@@ -290,6 +290,71 @@ class TestParameterizeTestRefactoring {
         assertEquals(0, refactoringsFound.size(), "Not all found refactoring instances were expected:" + refactoringsFound.stream().map(Object::toString).collect(Collectors.joining(",")));
     }
 
+    private static final String TESTS_BEFORE_PROVIDERS = String.join("\n",
+            "package com.test;",
+            "import org.junit.jupiter.api.Test;",
+            "import static org.junit.jupiter.api.Assertions.assertEquals;",
+            "public class TestClass {",
+            "    @Test",
+            "    void testA() { assertEquals(1, \"a\".length()); }",
+            "    @Test",
+            "    void testB() { assertEquals(2, \"bb\".length()); }",
+            "}");
+
+    private static String parameterizedTestWithProviders(String methodSource) {
+        return String.join("\n",
+                "package com.test;",
+                "import java.util.stream.Stream;",
+                "import org.junit.jupiter.params.ParameterizedTest;",
+                "import org.junit.jupiter.params.provider.Arguments;",
+                "import org.junit.jupiter.params.provider.MethodSource;",
+                "import static org.junit.jupiter.api.Assertions.assertEquals;",
+                "public class TestClass {",
+                "    @ParameterizedTest",
+                "    @MethodSource(" + methodSource + ")",
+                "    void test(int expected, String s) { assertEquals(expected, s.length()); }",
+                "}");
+    }
+
+    private static long parameterizeTests(Map<String, String> filesBefore, Map<String, String> filesAfter) throws Exception {
+        UMLModel modelBefore = GitHistoryRefactoringMinerImpl.createModel(filesBefore, new LinkedHashSet<>());
+        UMLModel modelAfter = GitHistoryRefactoringMinerImpl.createModel(filesAfter, new LinkedHashSet<>());
+        return modelBefore.diff(modelAfter).getRefactorings().stream().filter(r -> r.getRefactoringType().equals(RefactoringType.PARAMETERIZE_TEST)).count();
+    }
+
+    //#1205 R2: a provider of another class referenced by its fully qualified method name
+    @Test
+    void testMethodSourceOfAnotherClass() throws Exception {
+        String data = String.join("\n",
+                "package com.test;",
+                "import java.util.stream.Stream;",
+                "import org.junit.jupiter.params.provider.Arguments;",
+                "public class Data {",
+                "    static Stream<Arguments> cases() { return Stream.of(Arguments.of(1, \"a\"), Arguments.of(2, \"bb\")); }",
+                "}");
+        Map<String, String> filesBefore = Map.of("src/test/java/com/test/TestClass.java", TESTS_BEFORE_PROVIDERS);
+        Map<String, String> filesAfter = Map.of("src/test/java/com/test/TestClass.java", parameterizedTestWithProviders("\"com.test.Data#cases\""),
+                "src/test/java/com/test/Data.java", data);
+        assertEquals(2, parameterizeTests(filesBefore, filesAfter));
+    }
+
+    //#1205 R2: every provider of a @MethodSource listing several, each with one of the rows
+    @Test
+    void testMethodSourceWithSeveralProviders() throws Exception {
+        String data = String.join("\n",
+                "package com.test;",
+                "import java.util.stream.Stream;",
+                "import org.junit.jupiter.params.provider.Arguments;",
+                "public class Data {",
+                "    static Stream<Arguments> casesA() { return Stream.of(Arguments.of(1, \"a\")); }",
+                "    static Stream<Arguments> casesB() { return Stream.of(Arguments.of(2, \"bb\")); }",
+                "}");
+        Map<String, String> filesBefore = Map.of("src/test/java/com/test/TestClass.java", TESTS_BEFORE_PROVIDERS);
+        Map<String, String> filesAfter = Map.of("src/test/java/com/test/TestClass.java", parameterizedTestWithProviders("{\"com.test.Data#casesA\", \"com.test.Data#casesB\"}"),
+                "src/test/java/com/test/Data.java", data);
+        assertEquals(2, parameterizeTests(filesBefore, filesAfter));
+    }
+
     private static List<RefactoringType> matchRefactorings(List<RefactoringType> expectedRefactorings, List<RefactoringType> refactoringsFound) {
         List<RefactoringType> matchedRefactorings = new ArrayList<>();
         for (Iterator<RefactoringType> i = expectedRefactorings.iterator(); i.hasNext(); ) {

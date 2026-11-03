@@ -3351,12 +3351,13 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
-		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null && modelDiff != null &&
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null &&
 				invocationCoveringTheEntireStatement1.getExpression().toLowerCase().contains("log") && invocationCoveringTheEntireStatement2.getExpression().toLowerCase().contains("log")) {
-			//check for added inner class
+			//check for added inner class, which requires the model diff, otherwise match the camel case tokens of the new logger method with the old logger arguments
 			UMLClass addedInnerClass = null;
-			for(UMLClass c : modelDiff.getAddedClasses()) {
+			List<UMLClass> addedClasses = modelDiff != null ? modelDiff.getAddedClasses() : Collections.emptyList();
+			for(UMLClass c : addedClasses) {
 				if(c.getName().startsWith(container1.getClassName() + ".") && c.getName().startsWith(container2.getClassName() + ".")) {
 					addedInnerClass = c;
 					break;

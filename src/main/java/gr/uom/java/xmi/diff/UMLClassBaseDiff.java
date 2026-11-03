@@ -2058,7 +2058,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(!removedOperation.getAnnotations().isEmpty() && this.getOriginalClass().uniqueAnnotation(removedOperation)) {
 				for(UMLOperation addedOperation : addedOperations) {
 					if(!addedOperation.getAnnotations().isEmpty() && this.getNextClass().uniqueAnnotation(addedOperation)) {
-						if(removedOperation.getAnnotations().equals(addedOperation.getAnnotations()) && removedOperation.hasEmptyBody() && addedOperation.hasEmptyBody()) {
+						//the unique identical annotations pair renamed operations with empty bodies, i.e., @Theory allIntsOk(int) -> @Theory theory(int),
+						//and operations with the same name whose bodies are rewritten, when an annotation has arguments identifying the operation,
+						//i.e., @router.get("/api/me") me(user) -> me(user, settings), but not a marker annotation, i.e., @Override or @Inject
+						if(removedOperation.getAnnotations().equals(addedOperation.getAnnotations()) &&
+								((removedOperation.hasEmptyBody() && addedOperation.hasEmptyBody()) ||
+								(removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getAnnotations().stream().anyMatch(a -> !a.isMarkerAnnotation())))) {
 							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 							this.addOperationBodyMapper(operationBodyMapper);
 							UMLOperationDiff operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff().get();

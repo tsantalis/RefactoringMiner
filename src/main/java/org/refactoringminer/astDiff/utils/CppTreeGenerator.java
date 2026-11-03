@@ -3636,13 +3636,16 @@ public class CppTreeGenerator {
 			}
 			//a macro expansion or a problem followed by the semicolon or the rest of the statement, i.e., CHECK(x); where the macro ends with a semicolon,
 			//or ASSIGN_OR_RETURN(auto x, f({{a, b}}, c)); that CDT split at the argument it cannot parse, like the problem statement of the model
+			//the statements of the same expansion have its range, i.e., GET_ACTION_STRING(zoomLevel, "zoom_level"); expanded to a declaration, calls and an if statement,
+			//so they are parsed again with it as one statement, instead of a copy of the call for each of them
 			int end = end(statement);
 			int j = i + 1;
-			if(reparse(statement) && !(statement instanceof IASTCompoundStatement)) {
-				while(j < active.size() && (CppVisitor.unbalancedParentheses(content.substring(start(statement), end))
+			if(reparse(statement) && !blockInCode(statement)) {
+				while(j < active.size() && (start(active.get(j)) >= start(statement) && end(active.get(j)) <= end
+						|| (CppVisitor.unbalancedParentheses(content.substring(start(statement), end))
 						|| !content.substring(start(statement), end).stripTrailing().endsWith(";") && !content.substring(start(statement), end).stripTrailing().endsWith("}"))
-						&& (active.get(j) instanceof IASTNullStatement || active.get(j) instanceof IASTProblemHolder)) {
-					end = end(active.get(j));
+						&& (active.get(j) instanceof IASTNullStatement || active.get(j) instanceof IASTProblemHolder))) {
+					end = Math.max(end, end(active.get(j)));
 					j++;
 				}
 			}
@@ -3662,6 +3665,11 @@ public class CppTreeGenerator {
 			return node("compound_statement", start(compound), start(compound) + 1, children);
 		}
 		return node("compound_statement", compound, children);
+	}
+
+	//a block written in the code, whose statements are converted, unlike the block of an expansion, i.e., { if (x) return y; } of FLATBUFFERS_GET_FIELD_BIT_WIDTH(u, 8);
+	private boolean blockInCode(IASTStatement statement) {
+		return statement instanceof IASTCompoundStatement && content.startsWith("{", start(statement));
 	}
 
 	private Node ifStatement(IASTIfStatement ifStatement) {

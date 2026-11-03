@@ -44,10 +44,11 @@ public class JdtVisitor  extends AbstractJdtVisitor {
             push(i, METHOD_INVOCATION_RECEIVER, "", i.getExpression().getStartPosition(),
                     i.getExpression().getLength());
             i.getExpression().accept(this);
-            for (Object argument : i.typeArguments()) {
-                ((ASTNode) argument).accept(this);
-            }
             popNode();
+        }
+        //the type arguments follow the receiver, i.e., Collections.<String>emptyList(), so they are children of the invocation, not of the receiver
+        for (Object argument : i.typeArguments()) {
+            ((ASTNode) argument).accept(this);
         }
         pushNode(i.getName(), getLabel(i.getName()));
         popNode();
@@ -139,8 +140,21 @@ public class JdtVisitor  extends AbstractJdtVisitor {
             handlePostVisit((RecordDeclaration) n);
         else if (n instanceof EnumDeclaration)
             handlePostVisit((EnumDeclaration) n);
+        else if (n instanceof TagElement)
+            handlePostVisit((TagElement) n);
 
         popNode();
+    }
+
+    //JDT ends a tag before an inline tag it contains when the inline tag is not closed, i.e., {@link EurekaClient) whenever ... in the description,
+    //which ends at the end of the line, so the tag is extended to the end of its last fragment
+    private void handlePostVisit(TagElement e) {
+        Tree t = this.trees.peek();
+        int end = t.getEndPos();
+        for (Tree c : t.getChildren())
+            end = Math.max(end, c.getEndPos());
+        if (end > t.getEndPos())
+            t.setLength(end - t.getPos());
     }
 
     private void handlePostVisit(EnumDeclaration n) {
@@ -269,8 +283,11 @@ public class JdtVisitor  extends AbstractJdtVisitor {
     private void handlePostVisit(Assignment a) {
         Tree t = this.trees.peek();
         String label  = a.getOperator().toString();
-        Tree s = context.createTree(ASSIGNMENT_OPERATOR, label);
         PosAndLength pl = searchAssignmentOperatorPosition(a);
+        //the assignment that JDT recovers from a syntax error has no operator in the code, i.e., a Groovy string "${x}y" as a statement
+        if (pl.length == 0)
+            return;
+        Tree s = context.createTree(ASSIGNMENT_OPERATOR, label);
         s.setPos(pl.pos);
         s.setLength(pl.length);
         t.getChildren().add(1, s);
@@ -300,8 +317,11 @@ public class JdtVisitor  extends AbstractJdtVisitor {
     private void handlePostVisit(InfixExpression e) {
         Tree t = this.trees.peek();
         String label  = e.getOperator().toString();
-        Tree s = context.createTree(INFIX_EXPRESSION_OPERATOR, label);
         PosAndLength pl = searchInfixOperatorPosition(e);
+        //the infix expression that JDT recovers from a syntax error may have no operator in the code
+        if (pl.length == 0)
+            return;
+        Tree s = context.createTree(INFIX_EXPRESSION_OPERATOR, label);
         s.setPos(pl.pos);
         s.setLength(pl.length);
         t.getChildren().add(1, s);
@@ -403,8 +423,8 @@ public class JdtVisitor  extends AbstractJdtVisitor {
                     length = scanner.getCurrentTokenEndPosition() - pos + 1;
                     break;
                 }
-                // Fallback for 'permits' (not tokenized in older JDT versions)
-                if (token == ITerminalSymbols.TokenNameIdentifier) {
+                //permits is an identifier before Java 17 and a restricted keyword token from Java 17, so it is found by its text
+                if (keyword.equals("permits")) {
                     char[] tokenChars = scanner.getCurrentTokenSource();
                     if (String.valueOf(tokenChars).equals(keyword)) {
                         pos = scanner.getCurrentTokenStartPosition();

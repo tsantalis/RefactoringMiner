@@ -10,8 +10,10 @@ import gr.uom.java.xmi.LocationInfo;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -67,19 +69,38 @@ public class TreeUtilFunctions {
 		return getTreeBetweenPositions(tree, startoffset, endoffset, LANG, type);
 	}
 
+	//the first tree in pre-order with the given range; the range of a tree contains the ranges of its descendants,
+	//so only the children containing the range are visited
 	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition) {
-		for (Tree t: tree.preOrder()) {
+		Deque<Tree> stack = new ArrayDeque<>();
+		stack.push(tree);
+		while (!stack.isEmpty()) {
+			Tree t = stack.pop();
 			if (t.getPos() == position && t.getEndPos() == endPosition)
 				return t;
+			List<Tree> children = t.getChildren();
+			for (int i = children.size() - 1; i >= 0; i--) {
+				Tree child = children.get(i);
+				if (child.getPos() <= position && child.getEndPos() >= endPosition)
+					stack.push(child);
+			}
 		}
 		return null;
 	}
 
+	//the first tree in pre-order of one of the given types within the range; only the children overlapping the range are visited
 	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition, Constants LANG, String... type) {
-		for (Tree t: tree.preOrder()) {
-			if (t.getPos() >= position && t.getEndPos() <= endPosition) {
-				if (isFromType(t, type))
-					return t;
+		Deque<Tree> stack = new ArrayDeque<>();
+		stack.push(tree);
+		while (!stack.isEmpty()) {
+			Tree t = stack.pop();
+			if (t.getPos() >= position && t.getEndPos() <= endPosition && isFromType(t, type))
+				return t;
+			List<Tree> children = t.getChildren();
+			for (int i = children.size() - 1; i >= 0; i--) {
+				Tree child = children.get(i);
+				if (child.getPos() <= endPosition && child.getEndPos() >= position)
+					stack.push(child);
 			}
 		}
 		return null;

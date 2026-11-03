@@ -2044,7 +2044,8 @@ public class PythonTreeGenerator {
 		tree.setPos(Math.max(node.start, 0));
 		tree.setLength(Math.max(node.end - node.start, 0));
 		for(Node child : node.children) {
-			if(!child.ignored) {
+			//a node without code, i.e., an ERROR node of the recovery with only a newline or an indent, and the try statement of such nodes, has no range
+			if(!child.ignored && child.start >= 0) {
 				tree.addChild(toTree(child, context));
 			}
 		}

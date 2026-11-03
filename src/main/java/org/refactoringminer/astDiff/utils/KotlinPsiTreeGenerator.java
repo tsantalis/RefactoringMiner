@@ -1649,7 +1649,8 @@ public class KotlinPsiTreeGenerator {
 			switch(type(c)) {
 				case "when" -> {}
 				case "WHEN_ENTRY" -> add(t, whenEntry(c));
-				case "LPAR", "RPAR", "LBRACE", "RBRACE" -> {}
+				//the semicolons separating the entries, i.e., "a" -> x; "b" -> y, are not the subject
+				case "LPAR", "RPAR", "LBRACE", "RBRACE", "SEMICOLON" -> {}
 				default -> {
 					if(isComment(c)) add(t, comment(c));
 					else {

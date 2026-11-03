@@ -7,6 +7,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
+import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
+import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition;
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
+import org.eclipse.cdt.core.parser.DefaultLogService;
+import org.eclipse.cdt.core.parser.FileContent;
+import org.eclipse.cdt.core.parser.IncludeFileContentProvider;
+import org.eclipse.cdt.core.parser.ScannerInfo;
+import org.eclipse.cdt.internal.core.index.EmptyCIndex;
+import gr.uom.java.xmi.CppLanguage;
 import org.eclipse.cdt.core.dom.ast.IASTBreakStatement;
 import org.eclipse.cdt.core.dom.ast.IASTCaseStatement;
 import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier;
@@ -76,8 +89,7 @@ public class CppOperationBody extends OperationBody {
 				}
 			}
 		}
-		IASTStatement[] statements = methodBody.getStatements();
-		for(IASTStatement statement : statements) {
+		for(IASTStatement statement : blockStatements(methodBody, fileContent)) {
 			processStatement(sourceFolder, filePath, compositeStatement, statement, fileContent);
 		}
 		for(AbstractCall invocation : getAllOperationInvocations()) {
@@ -107,8 +119,7 @@ public class CppOperationBody extends OperationBody {
 				}
 			}
 		}
-		IASTStatement[] statements = methodBody.getStatements();
-		for(IASTStatement statement : statements) {
+		for(IASTStatement statement : blockStatements(methodBody, fileContent)) {
 			processStatement(sourceFolder, filePath, compositeStatement, statement, fileContent);
 		}
 		for(AbstractCall invocation : getAllOperationInvocations()) {
@@ -126,11 +137,10 @@ public class CppOperationBody extends OperationBody {
 	private void processStatement(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {
 		//https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.cdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcdt%2Fcore%2Fdom%2Fast%2FIASTStatement.html
 		if(statement instanceof IASTCompoundStatement compoundStatement) {
-			IASTStatement[] blockStatements = compoundStatement.getStatements();
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, compoundStatement, parent.getDepth()+1, CodeElementType.BLOCK, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
-			for(IASTStatement blockStatement : blockStatements) {
+			for(IASTStatement blockStatement : blockStatements(compoundStatement, fileContent)) {
 				processStatement(sourceFolder, filePath, child, blockStatement, fileContent);
 			}
 		}
@@ -354,7 +364,7 @@ public class CppOperationBody extends OperationBody {
 			addAllInActiveVariableDeclarations(variableDeclarations);
 			IASTStatement tryBody = tryBlockStatement.getTryBody();
 			if(tryBody instanceof IASTCompoundStatement compoundStatement) {
-				for(IASTStatement blockStatement : compoundStatement.getStatements()) {
+				for(IASTStatement blockStatement : blockStatements(compoundStatement, fileContent)) {
 					processStatement(sourceFolder, filePath, child, blockStatement, fileContent);
 				}
 			}
@@ -370,7 +380,7 @@ public class CppOperationBody extends OperationBody {
 				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
 				IASTStatement catchBody = catchHandler.getCatchBody();
 				if(catchBody instanceof IASTCompoundStatement compoundStatement) {
-					for(IASTStatement blockStatement : compoundStatement.getStatements()) {
+					for(IASTStatement blockStatement : blockStatements(compoundStatement, fileContent)) {
 						processStatement(sourceFolder, filePath, catchClauseStatementObject, blockStatement, fileContent);
 					}
 				}
@@ -449,10 +459,97 @@ public class CppOperationBody extends OperationBody {
 		addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
 		IASTStatement catchBody = catchHandler.getCatchBody();
 		if(catchBody instanceof IASTCompoundStatement compoundStatement) {
-			for(IASTStatement blockStatement : compoundStatement.getStatements()) {
+			for(IASTStatement blockStatement : blockStatements(compoundStatement, fileContent)) {
 				processStatement(sourceFolder, filePath, catchClauseStatementObject, blockStatement, fileContent);
 			}
 		}
 		removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
 	}
+
+	private static final String MACRO_CALL_PREFIX = "void __rm_macro_call__(){";
+
+	//the statements of the block, where the statements of an expansion of a function-like macro defined in the file, which are not a single expression statement,
+	//and the semicolon after the call are the call, i.e., GET_ACTION_STRING(zoomLevel, "zoom_level"); expanded to declarations, calls and an if statement,
+	//which all have the range of the call, like the statement of the AST diff tree
+	private static List<IASTStatement> blockStatements(IASTCompoundStatement block, String fileContent) {
+		IASTStatement[] statements = block.getStatements();
+		List<IASTStatement> result = new ArrayList<>();
+		for(int i = 0; i < statements.length; i++) {
+			IASTFileLocation expansion = fileMacroExpansion(statements[i]);
+			if(expansion == null) {
+				result.add(statements[i]);
+				continue;
+			}
+			int j = i + 1;
+			while(j < statements.length && expansion.equals(fileMacroExpansion(statements[j]))) {
+				j++;
+			}
+			if(j == i + 1 && statements[i] instanceof IASTExpressionStatement) {
+				result.add(statements[i]);
+				continue;
+			}
+			int start = expansion.getNodeOffset();
+			int end = start + expansion.getNodeLength();
+			int next = j;
+			if(next < statements.length && statements[next] instanceof IASTNullStatement && statements[next].getFileLocation() != null &&
+					statements[next].getFileLocation().getNodeOffset() >= end && fileContent.substring(end, statements[next].getFileLocation().getNodeOffset()).isBlank()) {
+				end = statements[next].getFileLocation().getNodeOffset() + statements[next].getFileLocation().getNodeLength();
+				next++;
+			}
+			IASTStatement call = macroCall(fileContent, start, end);
+			if(call != null) {
+				result.add(call);
+				i = next - 1;
+			}
+			else {
+				for(int k = i; k < j; k++) {
+					result.add(statements[k]);
+				}
+				i = j - 1;
+			}
+		}
+		return result;
+	}
+
+	//the range of the expansion of a function-like macro defined in the file that the statement comes from
+	private static IASTFileLocation fileMacroExpansion(IASTStatement statement) {
+		IASTNodeLocation[] locations = statement.getNodeLocations();
+		if(locations.length == 1 && locations[0] instanceof IASTMacroExpansionLocation location &&
+				location.getExpansion().getMacroDefinition() instanceof IASTPreprocessorFunctionStyleMacroDefinition definition &&
+				definition.isPartOfTranslationUnitFile() && statement.getFileLocation() != null) {
+			IASTFileLocation fileLocation = location.getExpansion().getFileLocation();
+			return fileLocation != null && fileLocation.getNodeOffset() == statement.getFileLocation().getNodeOffset() ? fileLocation : null;
+		}
+		return null;
+	}
+
+	//the call statement between the offsets parsed without the macro, in a copy of the file with only the call, so that its offsets are the offsets in the file
+	private static IASTStatement macroCall(String fileContent, int start, int end) {
+		if(start < MACRO_CALL_PREFIX.length() || end >= fileContent.length()) {
+			return null;
+		}
+		char[] code = new char[fileContent.length()];
+		for(int k = 0; k < code.length; k++) {
+			char c = fileContent.charAt(k);
+			code[k] = c == '\n' || c == '\r' ? c : ' ';
+		}
+		MACRO_CALL_PREFIX.getChars(0, MACRO_CALL_PREFIX.length(), code, 0);
+		fileContent.getChars(start, end, code, start);
+		code[end] = '}';
+		try {
+			IASTTranslationUnit translationUnit = CppLanguage.getDefault().getASTTranslationUnit(FileContent.create("__rm_macro_call__.cpp", code), new ScannerInfo(),
+					IncludeFileContentProvider.getEmptyFilesProvider(), EmptyCIndex.INSTANCE, GPPLanguage.OPTION_IS_SOURCE_UNIT, new DefaultLogService());
+			IASTDeclaration[] declarations = translationUnit.getDeclarations();
+			if(declarations.length == 1 && declarations[0] instanceof IASTFunctionDefinition function && function.getBody() instanceof IASTCompoundStatement body &&
+					body.getStatements().length == 1 && body.getStatements()[0] instanceof IASTExpressionStatement call && call.getFileLocation() != null &&
+					call.getFileLocation().getNodeOffset() == start && call.getFileLocation().getNodeOffset() + call.getFileLocation().getNodeLength() == end) {
+				return call;
+			}
+		}
+		catch(Exception e) {
+			return null;
+		}
+		return null;
+	}
+
 }

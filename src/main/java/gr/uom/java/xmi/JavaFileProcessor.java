@@ -113,8 +113,18 @@ public class JavaFileProcessor {
 		try {
 			CompilationUnit compilationUnit = getCompilationUnit(DEFAULT_JAVA_CORE_VERSION, parser, charArray, filePath);
 			String maxRecommendedVersionFromProblems = getMaxRecommendedVersionFromProblems(compilationUnit);
-			if (maxRecommendedVersionFromProblems != null)
+			if (maxRecommendedVersionFromProblems != null) {
 				compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray, filePath);
+				//the features with their own keywords, i.e., sealed interfaces (17) and records (16), are syntax errors without a recommended version,
+				//so a file using them with an older feature, i.e., text blocks (15), still has syntax errors at the recommended version
+				if (compilationUnit.getProblems().length > 0 && !maxRecommendedVersionFromProblems.equals(VERSION_21)) {
+					CompilationUnit latest = getCompilationUnit(VERSION_21, parser, charArray, filePath);
+					if (latest.getProblems().length < compilationUnit.getProblems().length) {
+						compilationUnit = latest;
+						maxRecommendedVersionFromProblems = VERSION_21;
+					}
+				}
+			}
 			processCompilationUnit(filePath, compilationUnit, javaFileContent);
 			if(astDiff) {
 				IScanner scanner = ToolFactory.createScanner(true, false, false, (maxRecommendedVersionFromProblems == null) ? DEFAULT_JAVA_CORE_VERSION : maxRecommendedVersionFromProblems );

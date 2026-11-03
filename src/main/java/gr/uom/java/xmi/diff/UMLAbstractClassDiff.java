@@ -3702,11 +3702,13 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		for(UMLOperationBodyMapper mapper : mapperSet) {
-			//a removed test that still exists with its own name became that test, not a test merged into a parameterized test with another name,
+			//a removed test that still exists as a test with its own name became that test, not a test merged into a parameterized test with another name,
 			//i.e., testReadCharArray() is parameterized as testReadCharArray(Class<Throwable> clazz), not merged into testReady(Class<Throwable> clazz),
-			//while the removed testTestFileRelativePath_1() is merged into testTestFileRelativePath(String s)
+			//while the removed testTestFileRelativePath_1() is merged into testTestFileRelativePath(String s), and the test quants() into quantsNearBlack(int yCode)
+			//next to the helper quants(String name, int yCode)
 			if(!mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) &&
-					nextClass.getOperations().stream().anyMatch(op -> !op.equals(mapper.getContainer2()) && op.getName().equals(mapper.getContainer1().getName()))) {
+					nextClass.getOperations().stream().anyMatch(op -> !op.equals(mapper.getContainer2()) && op.getName().equals(mapper.getContainer1().getName()) &&
+							(op.isTest() || op.hasParameterizedTestAnnotation()))) {
 				continue;
 			}
 			Set<String> commonTokens = new LinkedHashSet<>();

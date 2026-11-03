@@ -3357,7 +3357,10 @@ public abstract class UMLAbstractClassDiff {
 									() -> addedOperations.remove(unreadableValuesMapper.getOperation2()));
 						}
 						else {
-							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
+							//a test parameterized with values that cannot be read belongs to the removed test with its name,
+							//i.e., subVector2D_ifi(CoordinateSystem2D cs) to subVector2D_ifi(), not to subVector2DVector2D_ifi()
+							mapperSet.removeIf(mapper -> parameterizedFromOtherRemovedTest(mapper, removedOperations));
+							UMLOperationBodyMapper bestMapper = mapperSet.isEmpty() ? null : findBestMapper(mapperSet);
 							int size = mapperSet.size();
 							betterMatchForAddedOperation(mapperSet, bestMapper);
 							if(mapperSet.size() > size) {
@@ -4256,28 +4259,43 @@ public abstract class UMLAbstractClassDiff {
 		return rows;
 	}
 
-	//the pair of tests the matching selects, when the removed test became a test parameterized with values that cannot be read, or null,
+	//the pair of tests with the same name, when the removed test became a test parameterized with values that cannot be read, or null,
 	//as without the values only the identity of the test tells which removed test was parameterized, i.e., testAppendChar() -> testAppendChar(Class<Exception> clazz),
 	//but not testAppendCharSequence() -> testAppendChar(Class<Exception> clazz)
 	private UMLOperationBodyMapper parameterizedWithUnreadableValues(TreeSet<UMLOperationBodyMapper> mapperSet) {
-		if(mapperSet.stream().noneMatch(m -> m.getOperation2() != null && m.getOperation2().hasParameterizedTestAnnotation())) {
-			return null;
-		}
-		UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
-		UMLOperation removedOperation = bestMapper.getOperation1();
-		UMLOperation addedOperation = bestMapper.getOperation2();
-		if(removedOperation != null && addedOperation != null && removedOperation.getName().equals(addedOperation.getName()) &&
-				addedOperation.hasParameterizedTestAnnotation() && !removedOperation.hasParameterizedTestAnnotation() &&
-				parameterizedWithUnreadableValues(removedOperation, addedOperation)) {
-			return bestMapper;
+		for(UMLOperationBodyMapper mapper : mapperSet) {
+			UMLOperation removedOperation = mapper.getOperation1();
+			UMLOperation addedOperation = mapper.getOperation2();
+			if(removedOperation != null && addedOperation != null && removedOperation.getName().equals(addedOperation.getName()) &&
+					parameterizedWithUnreadableValues(removedOperation, addedOperation)) {
+				return mapper;
+			}
 		}
 		return null;
+	}
+
+	//the added test of the mapper is parameterized with values that cannot be read from another removed test with its name
+	private boolean parameterizedFromOtherRemovedTest(UMLOperationBodyMapper mapper, List<UMLOperation> removedOperations) {
+		UMLOperation addedOperation = mapper.getOperation2();
+		if(addedOperation == null || mapper.getOperation1() == null || mapper.getOperation1().getName().equals(addedOperation.getName())) {
+			return false;
+		}
+		for(UMLOperation removedOperation : removedOperations) {
+			if(!removedOperation.equals(mapper.getOperation1()) && removedOperation.getName().equals(addedOperation.getName()) &&
+					parameterizedWithUnreadableValues(removedOperation, addedOperation)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	//a test parameterized with values that cannot be read, i.e., the objects created by its provider in @MethodSource("encodingProviders") test(EncodingProvider encodingProvider),
 	//when it has a source annotation and uses each of its new parameters in its body, so the parameterization is reported without the links to the values,
 	//but not a test that already had these parameters, i.e., the JUnit 4 theory quotaDependencyTest(ActionType actionType) -> quotaDependency(ActionType actionType)
-	private static boolean parameterizedWithUnreadableValues(UMLOperation removedOperation, UMLOperation addedOperation) {
+	private boolean parameterizedWithUnreadableValues(UMLOperation removedOperation, UMLOperation addedOperation) {
+		if(!addedOperation.hasParameterizedTestAnnotation() || removedOperation.hasParameterizedTestAnnotation()) {
+			return false;
+		}
 		List<String> parameterNames = addedOperation.getParameterNameList();
 		if(parameterNames.isEmpty() || addedOperation.getAnnotations().stream().noneMatch(SourceAnnotation::isSourceAnnotation)) {
 			return false;
@@ -4292,7 +4310,7 @@ public abstract class UMLAbstractClassDiff {
 				return false;
 			}
 		}
-		return true;
+		return getParameterValues(addedOperation).isEmpty();
 	}
 
 	public List<List<String>> getParameterValues(UMLOperation addedOperation) {

@@ -5049,6 +5049,9 @@ public class UMLModelDiff {
 											else
 												ref = new MoveOperationRefactoring(operationBodyMapper);
 											inferredMoveOperationRefactorings.add(ref);
+											//the variables of the inferred move, i.e., the unchanged parameters matched in the AST diff, as for the other moved operations
+											operationBodyMapper.computeRefactoringsWithinBody();
+											inferredMoveOperationRefactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 											UMLOperationDiff operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff().get();
 											Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
 											inferredMoveOperationRefactorings.addAll(signatureRefactorings);
@@ -5078,6 +5081,9 @@ public class UMLModelDiff {
 											else
 												ref = new MoveOperationRefactoring(operationBodyMapper);
 											inferredMoveOperationRefactorings.add(ref);
+											//the variables of the inferred move, i.e., the unchanged parameters matched in the AST diff, as for the other moved operations
+											operationBodyMapper.computeRefactoringsWithinBody();
+											inferredMoveOperationRefactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
 											UMLOperationDiff operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff().get();
 											Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
 											inferredMoveOperationRefactorings.addAll(signatureRefactorings);

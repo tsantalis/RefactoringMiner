@@ -2846,9 +2846,13 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	//the arguments of two calls are comparable only if the calls have the same name or their names are replaced, i.e., not hprofFile.writeRecords(records) -> assertThat(readRecords).hasSameSizeAs(records + HeapDumpEndRecord)
+	//the arguments of two calls are comparable only if the calls have the same name, their names are replaced, or they have the same receiver,
+	//i.e., LOG.refreshing(x) -> LOG.trace("Refreshing " + x) of an inlined logger message, but not hprofFile.writeRecords(records) -> assertThat(readRecords).hasSameSizeAs(records + HeapDumpEndRecord)
 	private static boolean sameCallOrReplacedName(AbstractCall invocation1, AbstractCall invocation2, ReplacementInfo info) {
 		if(invocation1 == null || invocation2 == null || invocation1.getName().equals(invocation2.getName())) {
+			return true;
+		}
+		if(invocation1.getExpression() != null && invocation1.getExpression().equals(invocation2.getExpression())) {
 			return true;
 		}
 		for(Replacement replacement : info.getReplacements()) {

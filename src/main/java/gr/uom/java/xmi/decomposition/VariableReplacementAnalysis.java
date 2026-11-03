@@ -1466,6 +1466,14 @@ public class VariableReplacementAnalysis {
 						return subExpressions.get(0);
 					}
 				}
+				//the replaced literal is extracted with additions around it, i.e., "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+" -> REPOSITORY_NAME_PATTERN = "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+				String literal = normalizedContent(replacementAsString);
+				if(!literal.isEmpty() && normalizedContent(variableDeclaration.getInitializer().getString()).contains(literal)) {
+					List<LeafExpression> subExpressions = variableDeclaration.getInitializer().findExpression(variableDeclaration.getInitializer().getString());
+					if(subExpressions.size() > 0) {
+						return subExpressions.get(0);
+					}
+				}
 			}
 			if(!attributeInAddedOrRemovedClass && replacement instanceof VariableReplacementWithMethodInvocation) {
 				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;

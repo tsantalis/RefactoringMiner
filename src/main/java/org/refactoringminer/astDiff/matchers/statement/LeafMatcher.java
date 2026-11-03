@@ -91,6 +91,11 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
         public MappingStore match(Tree src, Tree dst, MappingStore mappings) {
             List<Pair<Tree, Tree>> pairs = LRAify(src, dst, mappings, LANG1, LANG2);
             for (Pair<Tree, Tree> pair : pairs) {
+                //the fake roots of the segments have no metrics, and computing them lazily recomputes the metrics of their descendants,
+                //so the first call within the comparator of a sort, i.e., by the parent position in InnerNodesMatcherThetaD,
+                //changes the positions of the elements being sorted and breaks the contract of the comparator
+                pair.first.getMetrics();
+                pair.second.getMetrics();
                 super.match(pair.first, pair.second, mappings);
             }
             return mappings;

@@ -256,13 +256,14 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 </details>
 
 <details>
-<summary>Test-specific (5)</summary>
+<summary>Test-specific (6)</summary>
 
 	1. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
 	2. Assert Throws
 	3. Assert Timeout
 	4. Replace Conditional with Assumption
 	5. Extract Fixture
+	6. Migrate Parameterized Test (JUnit 4 @RunWith(Parameterized.class) to JUnit 5 @ParameterizedTest)
 </details>
 
 # Contributors

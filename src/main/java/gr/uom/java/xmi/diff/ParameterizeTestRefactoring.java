@@ -23,9 +23,15 @@ public class ParameterizeTestRefactoring extends ChangeTypeRefactoring {
 	private UMLOperation dataProviderAfter;
 	private List<LeafMapping> data;
 	private List<DataProviderOverride> dataProviderOverrides;
+	private boolean migrated;
 
-	public ParameterizeTestRefactoring(UMLOperationBodyMapper bodyMapper) {
+	/**
+	 * @param migrated the removed test was already parameterized, i.e., a JUnit 4 test under the Parameterized runner ported to a JUnit 5 @ParameterizedTest,
+	 * reported as Migrate Parameterized Test, while Parameterize Test introduces a parameterized test that did not exist before
+	 */
+	public ParameterizeTestRefactoring(UMLOperationBodyMapper bodyMapper, boolean migrated) {
 		this.bodyMapper = bodyMapper;
+		this.migrated = migrated;
 		this.removedOperation = bodyMapper.getOperation1();
 		this.parameterizedTestOperation = bodyMapper.getOperation2();
 		this.data = new ArrayList<LeafMapping>();
@@ -164,7 +170,7 @@ public class ParameterizeTestRefactoring extends ChangeTypeRefactoring {
 
 	@Override
 	public RefactoringType getRefactoringType() {
-		return RefactoringType.PARAMETERIZE_TEST;
+		return migrated ? RefactoringType.MIGRATE_PARAMETERIZED_TEST : RefactoringType.PARAMETERIZE_TEST;
 	}
 
 	@Override

@@ -153,6 +153,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 				getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION) ||
 				getRefactoringType().equals(RefactoringType.INLINE_OPERATION) ||
 				getRefactoringType().equals(RefactoringType.PARAMETERIZE_TEST) ||
+				getRefactoringType().equals(RefactoringType.MIGRATE_PARAMETERIZED_TEST) ||
 				getRefactoringType().equals(RefactoringType.RENAME_METHOD))
 			sb.append(" in class ");
 		else if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))

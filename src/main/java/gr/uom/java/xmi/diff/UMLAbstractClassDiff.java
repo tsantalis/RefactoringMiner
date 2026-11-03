@@ -3782,7 +3782,7 @@ public abstract class UMLAbstractClassDiff {
 		}
 		UMLOperation previouslyRemovedOperation = null;
 		for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
-			ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
+			ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper, runsWithParameterizedRunner(mapper.getOperation1()));
 			refactorings.add(refactoring);
 			mapper.computeRefactoringsWithinBody();
 			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
@@ -3800,6 +3800,48 @@ public abstract class UMLAbstractClassDiff {
 		if(overallMaxMatchingTestParameters > -1 || mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
 			addedOperationHandler.run();
 		}
+	}
+
+	//a JUnit 4 test under the Parameterized runner, declared on its class or on a superclass, already runs once per parameter set,
+	//i.e., @RunWith(Parameterized.class) class UserTypeWithTimeZoneTest with the parameters injected through its constructor or @Parameter fields,
+	//or a class declaring a @Parameterized.Parameters provider, i.e., abstract class BaseContentCodingTest with the runner on its subclasses,
+	//so its port to a JUnit 5 @ParameterizedTest migrates the parameterized test instead of introducing one
+	private boolean runsWithParameterizedRunner(UMLOperation operation) {
+		UMLAbstractClass umlClass = modelDiff != null ? modelDiff.findClassInParentModel(operation.getClassName()) : null;
+		if(umlClass == null && originalClass.getName().equals(operation.getClassName())) {
+			umlClass = originalClass;
+		}
+		Set<UMLAbstractClass> visited = new HashSet<UMLAbstractClass>();
+		while(umlClass != null && visited.add(umlClass)) {
+			for(UMLAnnotation annotation : umlClass.getAnnotations()) {
+				if(isParameterizedRunner(annotation)) {
+					return true;
+				}
+			}
+			//an abstract base test with the @Parameterized.Parameters provider, while the runner is declared on its subclasses
+			for(UMLOperation provider : umlClass.getOperations()) {
+				for(UMLAnnotation annotation : provider.getAnnotations()) {
+					if(annotation.getTypeName().equals("Parameterized.Parameters") || annotation.getTypeName().endsWith(".Parameterized.Parameters")) {
+						return true;
+					}
+				}
+			}
+			UMLType superclass = umlClass.getSuperclass();
+			umlClass = superclass != null && modelDiff != null ? modelDiff.findClassInParentModel(superclass.getClassType()) : null;
+		}
+		return false;
+	}
+
+	//@RunWith(Parameterized.class), @RunWith(value = Parameterized.class) or with qualified names
+	private static boolean isParameterizedRunner(UMLAnnotation annotation) {
+		if(annotation.getTypeName().equals("RunWith") || annotation.getTypeName().endsWith(".RunWith")) {
+			AbstractExpression value = annotation.getValue() != null ? annotation.getValue() : annotation.getMemberValuePairs().get("value");
+			if(value != null) {
+				String runner = value.getString();
+				return runner.equals("Parameterized.class") || runner.endsWith(".Parameterized.class");
+			}
+		}
+		return false;
 	}
 
 	//resolves the JUnit4 @Parameters DataProvider and JUnit5 @MethodSource DataProvider methods for

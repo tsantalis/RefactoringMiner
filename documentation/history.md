@@ -130,3 +130,4 @@ Currently, it supports the detection of the following refactorings:
 **<ins>supported by RefactoringMiner 3.1 and newer versions</ins>**
 
 106. Move Annotation
+107. Migrate Parameterized Test (JUnit 4 @RunWith(Parameterized.class) to JUnit 5 @ParameterizedTest)

@@ -195,4 +195,24 @@
 {
   "repo" : "https://github.com/opencv/opencv.git",
   "commit" : "6f71f201eea2d5ce988b8238948313b95cc0afbc"
+},
+{
+  "repo" : "https://github.com/apache/drill.git",
+  "commit" : "1517a87eb1effb2aac0c75b5f5ea6abc25407ab0",
+  "src_files" : [
+    "contrib/native/client/src/protobuf/BitControl.pb.cc",
+    "contrib/native/client/src/protobuf/BitControl.pb.h",
+    "contrib/native/client/src/protobuf/UserBitShared.pb.cc",
+    "contrib/native/client/src/protobuf/UserBitShared.pb.h"
+  ]
+},
+{
+  "repo" : "https://github.com/apache/drill.git",
+  "commit" : "a3f8b3669bcb771ecb25de50d6d7f1431e763d8d",
+  "src_files" : [
+    "contrib/native/client/src/protobuf/BitControl.pb.cc",
+    "contrib/native/client/src/protobuf/BitControl.pb.h",
+    "contrib/native/client/src/protobuf/UserBitShared.pb.cc",
+    "contrib/native/client/src/protobuf/UserBitShared.pb.h"
+  ]
 }]

@@ -3866,13 +3866,21 @@ public abstract class UMLAbstractClassDiff {
 
 	//a JUnit 4 test under the Parameterized runner, declared on its class or on a superclass, already runs once per parameter set,
 	//i.e., @RunWith(Parameterized.class) class UserTypeWithTimeZoneTest with the parameters injected through its constructor or @Parameter fields,
-	//or a class declaring a @Parameterized.Parameters provider, i.e., abstract class BaseContentCodingTest with the runner on its subclasses,
+	//or a class declaring a static @Parameters provider of the Parameterized runner or of a runner extending it, i.e., abstract class BaseContentCodingTest with the runner on its subclasses,
+	//@Parameterized.Parameters, @Parameters with @RunWith(ParallelParameterized.class) or @CustomParameterizedRunner.Parameters with @RunWith(CustomParameterizedRunner.class),
+	//or a JUnit 4 test class with a constructor taking parameters, since the default runner needs a constructor without parameters, i.e., the runner on a superclass
+	//the commit did not change, as class BayeuxClientTest extends AbstractClientServerTest { public BayeuxClientTest(Transport transport) },
 	//or a class declaring a JUnit 4 rule re-running every test once per value, i.e., @Rule CoordinateSystem2DTestRule replaced with @ParameterizedTest @EnumSource(CoordinateSystem2D.class),
 	//so its port to a JUnit 5 @ParameterizedTest migrates the parameterized test instead of introducing one
 	private boolean alreadyDataDriven(UMLOperation operation) {
 		UMLAbstractClass umlClass = modelDiff != null ? modelDiff.findClassInParentModel(operation.getClassName()) : null;
 		if(umlClass == null && originalClass.getName().equals(operation.getClassName())) {
 			umlClass = originalClass;
+		}
+		//the constructor of an abstract base test may take the values its subclasses pass with super(...), so only the class declaring the test is checked
+		if(umlClass instanceof UMLClass testClass && !testClass.isAbstract() && testClass.imports("org.junit.Test") &&
+				testClass.getOperations().stream().anyMatch(o -> o.isConstructor() && !o.getParameterNameList().isEmpty())) {
+			return true;
 		}
 		Set<UMLAbstractClass> visited = new HashSet<UMLAbstractClass>();
 		while(umlClass != null && visited.add(umlClass)) {
@@ -3881,10 +3889,13 @@ public abstract class UMLAbstractClassDiff {
 					return true;
 				}
 			}
-			//an abstract base test with the @Parameterized.Parameters provider, while the runner is declared on its subclasses
+			//an abstract base test with the @Parameters provider, while the runner is declared on its subclasses
 			for(UMLOperation provider : umlClass.getOperations()) {
 				for(UMLAnnotation annotation : provider.getAnnotations()) {
-					if(annotation.getTypeName().equals("Parameterized.Parameters") || annotation.getTypeName().endsWith(".Parameterized.Parameters")) {
+					String name = annotation.getTypeName();
+					//a static provider, unlike the @Parameters of a JUnitParams or TestNG test method
+					if(name.equals("Parameterized.Parameters") || name.endsWith(".Parameterized.Parameters") ||
+							(provider.isStatic() && (name.equals("Parameters") || name.endsWith(".Parameters")))) {
 						return true;
 					}
 				}

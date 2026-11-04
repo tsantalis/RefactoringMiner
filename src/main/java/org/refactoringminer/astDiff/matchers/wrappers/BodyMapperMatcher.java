@@ -1126,6 +1126,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         if (type_identifiers != null) {
                             mappingStore.addMappingRecursively(type_identifiers.first,type_identifiers.second);
                         }
+                        //the qualifier of the caught type, i.e., const in catch (const std::exception & e)
+                        Pair<Tree, Tree> type_qualifiers = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.TYPE_QUALIFIER, LANG2.TYPE_QUALIFIER);
+                        if (type_qualifiers != null && type_qualifiers.first.isIsoStructuralTo(type_qualifiers.second)) {
+                            mappingStore.addMappingRecursively(type_qualifiers.first,type_qualifiers.second);
+                        }
                     }
                 }
             }

@@ -301,8 +301,9 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             else {
                 new LeafMatcher(LANG1, LANG2).match(srcType,dstType,mappingStore);
             }
+            //the class type keeps the qualifiers the name of a qualified type drops, i.e., const .google.protobuf.internal.MigrationSchema named MigrationSchema
             if (srcType != null && dstType != null)
-                Helpers.matchTypeQualifiers(srcType, dstType, srcUMLAttribute.getType().toString(), dstUMLAttribute.getType().toString(), LANG1, LANG2, mappingStore);
+                Helpers.matchTypeQualifiers(srcType, dstType, srcUMLAttribute.getType().getClassType(), dstUMLAttribute.getType().getClassType(), LANG1, LANG2, mappingStore);
             Tree srcVarDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG1);
             Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG2);
             mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);

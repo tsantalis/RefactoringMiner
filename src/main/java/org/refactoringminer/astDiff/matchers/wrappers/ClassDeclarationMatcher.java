@@ -1640,6 +1640,11 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         else {
             new LeafMatcher(LANG1, LANG2).match(alias1[2], alias2[2], mappingStore);
         }
+        //the type wrappers of the values of a type alias statement and of an explicit type alias
+        if (alias1[2].getParent().getType().name.equals(LANG1.TYPE) && alias2[2].getParent().getType().name.equals(LANG2.TYPE) &&
+                !mappingStore.isSrcMapped(alias1[2].getParent()) && !mappingStore.isDstMapped(alias2[2].getParent())) {
+            mappingStore.addMapping(alias1[2].getParent(), alias2[2].getParent());
+        }
         //the type parameters of the same name, i.e., T in type_params=(T,) and in type CodecT[T] = Codec[T]
         List<Tree> typeParameters2 = pythonTypeParameters(dstSubTree, LANG2);
         for (Tree typeParameter1 : pythonTypeParameters(srcSubTree, LANG1)) {
@@ -1682,23 +1687,24 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     //the name, the assignment operator and the value of a Python type alias statement, or null,
     //i.e., type_alias_statement: type, type (identifier, or generic_type with identifier and type_parameter), =, type (value)
     //and expression_statement: assignment (identifier, type (TypeAlias), =, value)
+    //the value of a type alias without its type wrapper, so that it matches the value of a TypeAliasType call or of an attribute, i.e., Literal["a", "b"] in X: TypeAlias = Literal["a", "b"]
+    private static Tree typeValue(Tree value, Constants LANG) {
+        return value.getType().name.equals(LANG.TYPE) && value.getChildren().size() == 1 ? value.getChild(0) : value;
+    }
+
     private static Tree[] pythonTypeAlias(Tree statement, Constants LANG) {
         if (statement.getType().name.equals(LANG.TYPE_ALIAS_STATEMENT) && statement.getChildren().size() == 4) {
             Tree name = statement.getChild(1);
             while (!name.getType().name.equals(LANG.SIMPLE_NAME) && !name.getChildren().isEmpty()) {
                 name = name.getChild(0);
             }
-            Tree value = statement.getChild(3);
-            if (value.getType().name.equals(LANG.TYPE) && value.getChildren().size() == 1) {
-                value = value.getChild(0);
-            }
-            return name.getType().name.equals(LANG.SIMPLE_NAME) ? new Tree[] {name, statement.getChild(2), value} : null;
+            return name.getType().name.equals(LANG.SIMPLE_NAME) ? new Tree[] {name, statement.getChild(2), typeValue(statement.getChild(3), LANG)} : null;
         }
         if (statement.getType().name.equals(LANG.EXPRESSION_STATEMENT) && statement.getChildren().size() == 1) {
             Tree assignment = statement.getChild(0);
             if (assignment.getType().name.equals(LANG.ASSIGNMENT) && assignment.getChildren().size() == 4 &&
                     assignment.getChild(0).getType().name.equals(LANG.SIMPLE_NAME) && assignment.getChild(1).getType().name.equals(LANG.TYPE)) {
-                return new Tree[] {assignment.getChild(0), assignment.getChild(2), assignment.getChild(3)};
+                return new Tree[] {assignment.getChild(0), assignment.getChild(2), typeValue(assignment.getChild(3), LANG)};
             }
             //the assignment of an attribute replacing a type alias, i.e., ForwardRef = typing.ForwardRef
             if (assignment.getType().name.equals(LANG.ASSIGNMENT) && assignment.getChildren().size() == 3 &&

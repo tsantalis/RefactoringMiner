@@ -7,6 +7,9 @@ import extension.ast.node.declaration.LangSingleVariableDeclaration;
 import extension.ast.node.declaration.LangTypeDeclaration;
 import extension.ast.node.expression.LangAssignment;
 import extension.ast.node.expression.LangFieldAccess;
+import extension.ast.node.expression.LangMethodInvocation;
+import extension.ast.node.literal.LangStringLiteral;
+import extension.ast.node.literal.LangTupleLiteral;
 import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
@@ -21,6 +24,7 @@ import gr.uom.java.xmi.decomposition.LangOperationBody;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
+import java.util.regex.Pattern;
 import java.util.*;
 
 import org.refactoringminer.util.PathFileUtils;
@@ -515,6 +519,85 @@ public class UMLModelAdapter {
         }
     }
 
+    //the annotation of a PEP 613 type alias, also qualified, i.e., TypeAlias, typing.TypeAlias and t.TypeAlias
+    private static final Pattern TYPE_ALIAS_ANNOTATION = Pattern.compile("(?:[A-Za-z_]\\w*\\.)*TypeAlias");
+
+    //a PEP 695 type statement, a PEP 613 annotated assignment of a type alias, or the assignment of a type alias created at runtime with TypeAliasType,
+    //i.e., type Vector = list[float], Vector: TypeAlias = list[float] and Vector = TypeAliasType("Vector", list[float])
+    private static boolean isTypeAlias(LangAssignment assignment) {
+        return assignment.getRightSide() != null && (assignment.isTypeAliasStatement() ||
+                (assignment.getTypeAnnotation() != null && TYPE_ALIAS_ANNOTATION.matcher(assignment.getTypeAnnotation().strip()).matches()) ||
+                typeAliasTypeCall(assignment) != null);
+    }
+
+    //the call of the PEP 695 runtime constructor of a type alias, named as the variable it is assigned to, i.e., typing.TypeAliasType and typing_extensions.TypeAliasType,
+    //whose arguments are the name, the value and the type_params tuple, i.e., CodecT = compat.TypeAliasType("CodecT", Codec, type_params=(T,))
+    private static LangMethodInvocation typeAliasTypeCall(LangAssignment assignment) {
+        if (assignment.getRightSide() instanceof LangMethodInvocation call && "TypeAliasType".equals(call.getName()) &&
+                assignment.getLeftSide() instanceof LangSimpleName name && assignment.getTypeAnnotation() == null &&
+                call.getArguments().size() >= 2 && call.getArguments().size() <= 3 &&
+                call.getArguments().get(0) instanceof LangStringLiteral aliasName && name.getIdentifier().equals(aliasName.getValue())) {
+            return call;
+        }
+        return null;
+    }
+
+    private static final Pattern STRING_LITERAL = Pattern.compile("\"((?:\\\\.|[^\"\\\\])*)\"|'((?:\\\\.|[^'\\\\])*)'");
+
+    //the contents of a value made only of adjacent string literals, possibly parenthesized, or null, i.e., int | list[int] for ("int | " "list[int]")
+    private static String forwardReference(String value) {
+        String strings = value.strip();
+        while (strings.startsWith("(") && strings.endsWith(")")) {
+            strings = strings.substring(1, strings.length() - 1).strip();
+        }
+        java.util.regex.Matcher matcher = STRING_LITERAL.matcher(strings);
+        StringBuilder contents = new StringBuilder();
+        int end = 0;
+        while (matcher.find()) {
+            if (!strings.substring(end, matcher.start()).isBlank()) {
+                return null;
+            }
+            contents.append(matcher.group(1) != null ? matcher.group(1) : matcher.group(2));
+            end = matcher.end();
+        }
+        return end > 0 && strings.substring(end).isBlank() ? contents.toString() : null;
+    }
+
+    private static UMLTypeAlias createTypeAlias(LangAssignment assignment, LangSimpleName aliasName, String sourceFolder, String filePath, String fileContent) {
+        LocationInfo locationInfo = new LocationInfo(assignment.getRootCompilationUnit(), sourceFolder, filePath, assignment, CodeElementType.TYPE_ALIAS);
+        LangMethodInvocation typeAliasTypeCall = typeAliasTypeCall(assignment);
+        LangASTNode valueNode = typeAliasTypeCall != null ? typeAliasTypeCall.getArguments().get(1) : assignment.getRightSide();
+        LocationInfo valueLocationInfo = new LocationInfo(assignment.getRootCompilationUnit(), sourceFolder, filePath, valueNode, CodeElementType.TYPE);
+        String value = fileContent.substring(valueLocationInfo.getStartOffset(), valueLocationInfo.getEndOffset());
+        //the value of a PEP 613 type alias may be a string, as a forward reference, also written as adjacent strings,
+        //i.e., ContextT: TypeAlias = "ctx.TypeContext[AbstractMarshaller]" and ValueT: TypeAlias = ("int | " "list[ValueT]")
+        String forwardReference = forwardReference(value);
+        if (forwardReference != null) {
+            value = forwardReference;
+        }
+        //the layout of the value is not part of its type, i.e., dict[\n    str,\n    int,\n] is dict[str, int]
+        value = value.strip().replaceAll("\\s+", " ").replaceAll("([\\[(])\\s+", "$1").replaceAll("\\s+([\\]),])", "$1").replaceAll(",([\\])])", "$1");
+        UMLType rightType = UMLType.extractPythonTypeObject(value, null, PathFileUtils.getLang(filePath));
+        UMLTypeAlias typeAlias = new UMLTypeAlias(aliasName.getIdentifier(), rightType, locationInfo);
+        for (LangASTNode typeParameter : assignment.getTypeParameters()) {
+            if (typeParameter instanceof LangSingleVariableDeclaration declaration) {
+                LocationInfo typeParameterLocationInfo = new LocationInfo(assignment.getRootCompilationUnit(), sourceFolder, filePath, declaration, CodeElementType.TYPE_PARAMETER);
+                typeAlias.addTypeParameter(new UMLTypeParameter(declaration.getLangSimpleName().getIdentifier(), typeParameterLocationInfo));
+            }
+        }
+        //the type parameters of the runtime constructor are a tuple of type variables, i.e., T in type_params=(T,)
+        if (typeAliasTypeCall != null && typeAliasTypeCall.getArguments().size() == 3 &&
+                typeAliasTypeCall.getArguments().get(2) instanceof LangTupleLiteral typeParameters) {
+            for (LangASTNode typeParameter : typeParameters.getElements()) {
+                if (typeParameter instanceof LangSimpleName typeVariable) {
+                    LocationInfo typeParameterLocationInfo = new LocationInfo(assignment.getRootCompilationUnit(), sourceFolder, filePath, typeVariable, CodeElementType.TYPE_PARAMETER);
+                    typeAlias.addTypeParameter(new UMLTypeParameter(typeVariable.getIdentifier(), typeParameterLocationInfo));
+                }
+            }
+        }
+        return typeAlias;
+    }
+
     private static void processClassLevelAssignmentForAttribute(UMLClass typeDeclaration, LangAssignment assignment,
                                                String sourceFolder, String filePath, String fileContent) {
         if (assignment.isAugmented()) {
@@ -522,6 +605,10 @@ public class UMLModelAdapter {
         }
         LangASTNode leftSide = assignment.getLeftSide();
 
+        if (leftSide instanceof LangSimpleName aliasName && isTypeAlias(assignment)) {
+            typeDeclaration.addTypeAlias(createTypeAlias(assignment, aliasName, sourceFolder, filePath, fileContent));
+            return;
+        }
         if (leftSide instanceof LangSimpleName simpleName) {
             String attributeName = simpleName.getIdentifier();
 

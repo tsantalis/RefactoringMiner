@@ -287,7 +287,9 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 				arrayDimension++;
 			}
 		}
+		//the type arguments are between the first opening tag and the last closing tag, which is not before it, i.e., not in int] | list[int of dict[str, int] | list[int]
 		if(qualifiedName.contains(openingTag) && qualifiedName.contains(closingTag) && !qualifiedName.contains(">=") && !qualifiedName.contains("<=") &&
+				qualifiedName.indexOf(openingTag) < qualifiedName.lastIndexOf(closingTag) &&
 				!closingTagBeforeOpeningTag(qualifiedName.substring(qualifiedName.indexOf(openingTag)+1, qualifiedName.lastIndexOf(closingTag)), openingTag, closingTag)) {
 			String typeArguments = qualifiedName.substring(qualifiedName.indexOf(openingTag)+1, qualifiedName.lastIndexOf(closingTag));
 			parameterized = true;
@@ -319,6 +321,49 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		typeObject.parameterized = parameterized;
 		typeObject.locationInfo = location;
 		return (LeafType)typeObject;
+	}
+
+	//a Python type expression, which may be a union of types and may be parenthesized over several lines,
+	//i.e., (int | dict[str, int] | list[int]) is the union of int, dict[str, int] and list[int]
+	public static UMLType extractPythonTypeObject(String expression, LocationInfo location, Constants LANG) {
+		String type = expression.strip();
+		while(type.startsWith("(") && type.endsWith(")") && closingParenthesis(type, 0) == type.length() - 1) {
+			type = type.substring(1, type.length() - 1).strip();
+		}
+		List<String> members = new ArrayList<String>();
+		int depth = 0, start = 0;
+		char quote = 0;
+		for(int i=0; i<type.length(); i++) {
+			char c = type.charAt(i);
+			if(quote != 0) {
+				if(c == quote && type.charAt(i - 1) != '\\') quote = 0;
+			}
+			else if(c == '"' || c == '\'') quote = c;
+			else if(c == '(' || c == '[' || c == '{') depth++;
+			else if(c == ')' || c == ']' || c == '}') depth--;
+			else if(c == '|' && depth == 0) {
+				members.add(type.substring(start, i).strip());
+				start = i + 1;
+			}
+		}
+		members.add(type.substring(start).strip());
+		if(members.size() > 1) {
+			List<UMLType> types = new ArrayList<UMLType>();
+			for(String member : members) {
+				types.add(extractPythonTypeObject(member, location, LANG));
+			}
+			return new ListCompositeType(types, Kind.UNION);
+		}
+		return extractTypeObject(type, "[", "]", location, LANG);
+	}
+
+	private static int closingParenthesis(String s, int open) {
+		int depth = 0;
+		for(int i=open; i<s.length(); i++) {
+			if(s.charAt(i) == '(') depth++;
+			else if(s.charAt(i) == ')' && --depth == 0) return i;
+		}
+		return -1;
 	}
 
 	private static boolean closingTagBeforeOpeningTag(String typeArguments, String openingTag, String closingTag) {

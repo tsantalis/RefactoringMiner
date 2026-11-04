@@ -1,5 +1,8 @@
 package extension.ast.node.expression;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import extension.ast.node.LangASTNode;
 import extension.ast.node.NodeTypeEnum;
 import extension.ast.node.PositionInfo;
@@ -11,6 +14,8 @@ public class LangAssignment extends LangExpression {
     private LangASTNode rightSide;
     //the annotation of an annotated assignment, i.e., Final in MAX_COMMENT_CHARS: Final = 60_000
     private String typeAnnotation;
+    //the type parameters of a type alias statement, i.e., T in type Pair[T] = tuple[T, T]
+    private List<LangASTNode> typeParameters = new ArrayList<>();
 
     public LangAssignment() {super(NodeTypeEnum.ASSIGNMENT);}
 
@@ -73,6 +78,19 @@ public class LangAssignment extends LangExpression {
 
     public void setTypeAnnotation(String typeAnnotation) {
         this.typeAnnotation = typeAnnotation;
+    }
+
+    public List<LangASTNode> getTypeParameters() {
+        return typeParameters;
+    }
+
+    public void setTypeParameters(List<LangASTNode> typeParameters) {
+        this.typeParameters = typeParameters;
+    }
+
+    //a PEP 695 type alias statement, i.e., type X = int, built as an assignment with the type operator
+    public boolean isTypeAliasStatement() {
+        return "type".equals(operator);
     }
 
     public String toString() {

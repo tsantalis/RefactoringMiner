@@ -10,6 +10,7 @@ import extension.ast.node.expression.LangMethodInvocation;
 import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.literal.LangDictionaryLiteral;
 import extension.ast.node.literal.LangTupleLiteral;
+import extension.ast.node.expression.LangAssignment;
 import extension.ast.node.statement.LangBlock;
 import extension.base.lang.python.PythonParser;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -84,12 +85,17 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
         return null;
     }
 
-    // TODO
+    //the PEP 695 type alias statement, as an assignment with the type operator, i.e., type Pair[T] = tuple[T, T]
     public LangASTNode visitType_alias(PythonParser.Type_aliasContext ctx) {
         String name = ctx.name().getText();
         LangASTNode value = mainBuilder.visit(ctx.expression());
         LangASTNode left = LangASTNodeFactory.createSimpleName(name, ctx.name());
-        return LangASTNodeFactory.createAssignment("type", left, value, ctx);
+        LangASTNode assignment = LangASTNodeFactory.createAssignment("type", left, value, ctx);
+        if (ctx.type_params() != null && assignment instanceof LangAssignment langAssignment &&
+                mainBuilder.visit(ctx.type_params()) instanceof LangBlock typeParameters) {
+            langAssignment.setTypeParameters(typeParameters.getStatements());
+        }
+        return assignment;
     }
 
     public LangASTNode visitIf_stmt(PythonParser.If_stmtContext ctx) {

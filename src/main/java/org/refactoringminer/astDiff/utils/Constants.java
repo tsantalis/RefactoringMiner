@@ -600,6 +600,7 @@ public class Constants {
     public final String SWITCH_BODY = "switch_body";
     public final String TYPE_ALIAS_DECLARATION = "type_alias_declaration";
     public final String TYPE_ALIAS = "type_alias";
+    public final String TYPE_ALIAS_STATEMENT = "type_alias_statement";
     public final String OBJECT_TYPE = "object_type";
     public final String PROPERTY_SIGNATURE = "property_signature";
     public final String PROPERTY_IDENTIFIER = "property_identifier";

@@ -84,6 +84,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if(classDiff.getTypeAliasListDiff().isPresent()) {
             processTypeAliasList(srcTree, dstTree, classDiff.getTypeAliasListDiff().get(), mappingStore);
         }
+        processTypeAliasesReplacedWithAttributes(srcTree, dstTree, classDiff.getTypeAliasesReplacedWithAttributes(), mappingStore);
         if(classDiff.getNamedExportListDiff().isPresent()) {
             processNamedExportList(srcTree, dstTree, classDiff.getNamedExportListDiff().get(), mappingStore);
         }
@@ -1584,6 +1585,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, typeAliasPair.getLeft().getLocationInfo(), LANG1);
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, typeAliasPair.getRight().getLocationInfo(), LANG2);
             if (srcSubTree == null || dstSubTree == null) return;
+            if (processPythonTypeAlias(srcSubTree, dstSubTree, mappingStore)) continue;
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
             if(srcSubTree.getParent().getType().name.equals(LANG1.TEMPLATE_DECLARATION) && dstSubTree.getParent().getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
                 mappingStore.addMapping(srcSubTree.getParent(), dstSubTree.getParent());
@@ -1603,6 +1605,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, alias1.getLocationInfo(), LANG1);
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, alias2.getLocationInfo(), LANG2);
             if (srcSubTree == null || dstSubTree == null) return;
+            if (processPythonTypeAlias(srcSubTree, dstSubTree, mappingStore)) continue;
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
             if(srcSubTree.getParent().getType().name.equals(LANG1.TEMPLATE_DECLARATION) && dstSubTree.getParent().getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
                 mappingStore.addMapping(srcSubTree.getParent(), dstSubTree.getParent());
@@ -1616,6 +1619,141 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
+    }
+
+    //the Python type aliases, a PEP 695 type statement or a PEP 613 annotated assignment, also replacing one another,
+    //i.e., Vector: TypeAlias = list[float] -> type Vector = list[float], whose statements, names, assignment operators and values are matched
+    private boolean processPythonTypeAlias(Tree srcSubTree, Tree dstSubTree, ExtendedMultiMappingStore mappingStore) {
+        Tree[] alias1 = pythonTypeAlias(srcSubTree, LANG1);
+        Tree[] alias2 = pythonTypeAlias(dstSubTree, LANG2);
+        if (alias1 == null || alias2 == null) return false;
+        if (srcSubTree.getType().name.equals(dstSubTree.getType().name)) {
+            new LeafMatcher(LANG1, LANG2).match(srcSubTree, dstSubTree, mappingStore);
+            return true;
+        }
+        mappingStore.addMapping(srcSubTree, dstSubTree);
+        mappingStore.addMapping(alias1[0], alias2[0]);
+        mappingStore.addMapping(alias1[1], alias2[1]);
+        if (alias1[2].isIsomorphicTo(alias2[2])) {
+            mappingStore.addMappingRecursively(alias1[2], alias2[2]);
+        }
+        else {
+            new LeafMatcher(LANG1, LANG2).match(alias1[2], alias2[2], mappingStore);
+        }
+        //the type parameters of the same name, i.e., T in type_params=(T,) and in type CodecT[T] = Codec[T]
+        List<Tree> typeParameters2 = pythonTypeParameters(dstSubTree, LANG2);
+        for (Tree typeParameter1 : pythonTypeParameters(srcSubTree, LANG1)) {
+            for (Tree typeParameter2 : typeParameters2) {
+                if (typeParameter1.getLabel().equals(typeParameter2.getLabel()) && !mappingStore.isSrcMapped(typeParameter1) && !mappingStore.isDstMapped(typeParameter2)) {
+                    mappingStore.addMapping(typeParameter1, typeParameter2);
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    //the names of the type parameters of a Python type alias statement, i.e., T in type Pair[T] = tuple[T, T], and in Pair = TypeAliasType("Pair", tuple[T, T], type_params=(T,))
+    private static List<Tree> pythonTypeParameters(Tree statement, Constants LANG) {
+        List<Tree> typeParameters = new ArrayList<>();
+        if (statement.getType().name.equals(LANG.TYPE_ALIAS_STATEMENT) && statement.getChildren().size() == 4) {
+            for (Tree descendant : statement.getChild(1).preOrder()) {
+                if (descendant.getType().name.equals(LANG.SIMPLE_NAME) && descendant.getParent().getType().name.equals(LANG.TYPE) &&
+                        descendant.getParent().getParent() != null && descendant.getParent().getParent().getType().name.equals("type_parameter")) {
+                    typeParameters.add(descendant);
+                }
+            }
+        }
+        else {
+            for (Tree descendant : statement.preOrder()) {
+                if (descendant.getType().name.equals("keyword_argument") && descendant.getChildren().size() == 3 &&
+                        descendant.getChild(0).getLabel().equals("type_params")) {
+                    for (Tree element : descendant.getChild(2).getChildren()) {
+                        if (element.getType().name.equals(LANG.SIMPLE_NAME)) {
+                            typeParameters.add(element);
+                        }
+                    }
+                }
+            }
+        }
+        return typeParameters;
+    }
+
+    //the name, the assignment operator and the value of a Python type alias statement, or null,
+    //i.e., type_alias_statement: type, type (identifier, or generic_type with identifier and type_parameter), =, type (value)
+    //and expression_statement: assignment (identifier, type (TypeAlias), =, value)
+    private static Tree[] pythonTypeAlias(Tree statement, Constants LANG) {
+        if (statement.getType().name.equals(LANG.TYPE_ALIAS_STATEMENT) && statement.getChildren().size() == 4) {
+            Tree name = statement.getChild(1);
+            while (!name.getType().name.equals(LANG.SIMPLE_NAME) && !name.getChildren().isEmpty()) {
+                name = name.getChild(0);
+            }
+            Tree value = statement.getChild(3);
+            if (value.getType().name.equals(LANG.TYPE) && value.getChildren().size() == 1) {
+                value = value.getChild(0);
+            }
+            return name.getType().name.equals(LANG.SIMPLE_NAME) ? new Tree[] {name, statement.getChild(2), value} : null;
+        }
+        if (statement.getType().name.equals(LANG.EXPRESSION_STATEMENT) && statement.getChildren().size() == 1) {
+            Tree assignment = statement.getChild(0);
+            if (assignment.getType().name.equals(LANG.ASSIGNMENT) && assignment.getChildren().size() == 4 &&
+                    assignment.getChild(0).getType().name.equals(LANG.SIMPLE_NAME) && assignment.getChild(1).getType().name.equals(LANG.TYPE)) {
+                return new Tree[] {assignment.getChild(0), assignment.getChild(2), assignment.getChild(3)};
+            }
+            //the assignment of an attribute replacing a type alias, i.e., ForwardRef = typing.ForwardRef
+            if (assignment.getType().name.equals(LANG.ASSIGNMENT) && assignment.getChildren().size() == 3 &&
+                    assignment.getChild(0).getType().name.equals(LANG.SIMPLE_NAME)) {
+                return new Tree[] {assignment.getChild(0), assignment.getChild(1), typeAliasTypeValue(assignment.getChild(2), LANG)};
+            }
+        }
+        return null;
+    }
+
+    //the statements of the Python type aliases replaced with attributes of the same name, and the reverse, whose names, assignment operators and values are matched,
+    //i.e., ForwardRef: typing.TypeAlias = typing.ForwardRef -> ForwardRef = typing.ForwardRef
+    private void processTypeAliasesReplacedWithAttributes(Tree srcTree, Tree dstTree, List<org.apache.commons.lang3.tuple.Pair<LocationInfoProvider, LocationInfoProvider>> pairs, ExtendedMultiMappingStore mappingStore) {
+        for (org.apache.commons.lang3.tuple.Pair<LocationInfoProvider, LocationInfoProvider> pair : pairs) {
+            Tree srcStatement = statementOf(TreeUtilFunctions.findByLocationInfo(srcTree, pair.getLeft().getLocationInfo(), LANG1), LANG1);
+            Tree dstStatement = statementOf(TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo(), LANG2), LANG2);
+            if (srcStatement == null || dstStatement == null) continue;
+            Tree[] declaration1 = pythonTypeAlias(srcStatement, LANG1);
+            Tree[] declaration2 = pythonTypeAlias(dstStatement, LANG2);
+            if (declaration1 == null || declaration2 == null) continue;
+            mappingStore.addMapping(srcStatement, dstStatement);
+            if (srcStatement.getType().name.equals(dstStatement.getType().name)) {
+                mappingStore.addMapping(srcStatement.getChild(0), dstStatement.getChild(0));
+            }
+            mappingStore.addMapping(declaration1[0], declaration2[0]);
+            mappingStore.addMapping(declaration1[1], declaration2[1]);
+            if (declaration1[2].isIsomorphicTo(declaration2[2])) {
+                mappingStore.addMappingRecursively(declaration1[2], declaration2[2]);
+            }
+            else {
+                new LeafMatcher(LANG1, LANG2).match(declaration1[2], declaration2[2], mappingStore);
+            }
+        }
+    }
+
+    //the value of a type alias created at runtime is the second argument of TypeAliasType, i.e., Codec in CodecT = compat.TypeAliasType("CodecT", Codec, type_params=(T,))
+    private static Tree typeAliasTypeValue(Tree value, Constants LANG) {
+        if (value.getType().name.equals(LANG.METHOD_INVOCATION) && value.getChildren().size() == 2 &&
+                value.getChild(1).getType().name.equals(LANG.METHOD_INVOCATION_ARGUMENTS) && value.getChild(1).getChildren().size() >= 2) {
+            Tree callee = value.getChild(0);
+            Tree name = callee.getChildren().isEmpty() ? callee : callee.getChild(callee.getChildren().size() - 1);
+            if (name.getType().name.equals(LANG.SIMPLE_NAME) && name.getLabel().equals("TypeAliasType")) {
+                return value.getChild(1).getChild(1);
+            }
+        }
+        return value;
+    }
+
+    //the statement of a Python type alias, or of the name of an attribute, i.e., the expression_statement of ForwardRef in ForwardRef = typing.ForwardRef
+    private static Tree statementOf(Tree tree, Constants LANG) {
+        Tree current = tree;
+        while (current != null && !current.getType().name.equals(LANG.TYPE_ALIAS_STATEMENT) && !current.getType().name.equals(LANG.EXPRESSION_STATEMENT)) {
+            current = current.getParent();
+        }
+        return current;
     }
 
     private void processNamedExportList(Tree srcTree, Tree dstTree, UMLNamedExportListDiff namedExportListDiff, ExtendedMultiMappingStore mappingStore) {

@@ -24,6 +24,7 @@ import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
+import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
@@ -32,6 +33,7 @@ import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.Visibility;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -75,6 +77,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Optional<UMLJavadocDiff> packageDeclarationJavadocDiff;
 	private Optional<UMLParameterListDiff> primaryConstructorParameterListDiff;
 	private Optional<UMLTypeAliasListDiff> typeAliasListDiff;
+	//the type aliases replaced with attributes of the same name, and the attributes replaced with type aliases, in the original and the next class,
+	//i.e., ForwardRef: typing.TypeAlias = typing.ForwardRef -> ForwardRef = typing.ForwardRef
+	private List<Pair<LocationInfoProvider, LocationInfoProvider>> typeAliasesReplacedWithAttributes = new ArrayList<>();
 	private Optional<UMLNamedExportListDiff> namedExportListDiff;
 	private Optional<UMLPreprocessorStatementListDiff> preprocessorStatementListDiff;
 	private Optional<UMLForwardDeclarationListDiff> forwardDeclarationListDiff;
@@ -140,6 +145,46 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return typeAliasListDiff;
 	}
 
+	public List<Pair<LocationInfoProvider, LocationInfoProvider>> getTypeAliasesReplacedWithAttributes() {
+		return typeAliasesReplacedWithAttributes;
+	}
+
+	//a type alias of a class, whose name is not a type alias of the other class but an attribute that is not in the class of the type alias, and the reverse,
+	//i.e., the explicit ForwardRef: typing.TypeAlias = typing.ForwardRef replaced with the assignment ForwardRef = typing.ForwardRef
+	private void processTypeAliasesReplacedWithAttributes() {
+		for(UMLTypeAlias typeAlias : getOriginalClass().getTypeAliasList()) {
+			UMLAttribute attribute = attributeReplacingTypeAlias(typeAlias, getNextClass(), getOriginalClass());
+			if(attribute != null) {
+				typeAliasesReplacedWithAttributes.add(Pair.of(typeAlias, attribute));
+			}
+		}
+		for(UMLTypeAlias typeAlias : getNextClass().getTypeAliasList()) {
+			UMLAttribute attribute = attributeReplacingTypeAlias(typeAlias, getOriginalClass(), getNextClass());
+			if(attribute != null) {
+				typeAliasesReplacedWithAttributes.add(Pair.of(attribute, typeAlias));
+			}
+		}
+	}
+
+	private static UMLAttribute attributeReplacingTypeAlias(UMLTypeAlias typeAlias, UMLClass otherClass, UMLClass aliasClass) {
+		for(UMLTypeAlias otherTypeAlias : otherClass.getTypeAliasList()) {
+			if(otherTypeAlias.getName().equals(typeAlias.getName())) {
+				return null;
+			}
+		}
+		for(UMLAttribute attribute : aliasClass.getAttributes()) {
+			if(attribute.getName().equals(typeAlias.getName())) {
+				return null;
+			}
+		}
+		for(UMLAttribute attribute : otherClass.getAttributes()) {
+			if(attribute.getName().equals(typeAlias.getName())) {
+				return attribute;
+			}
+		}
+		return null;
+	}
+
 	public Optional<UMLNamedExportListDiff> getNamedExportListDiff() {
 		return namedExportListDiff;
 	}
@@ -201,6 +246,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			UMLTypeAliasListDiff typeAliasListDiff = new UMLTypeAliasListDiff(getOriginalClass().getTypeAliasList(), getNextClass().getTypeAliasList());
 			this.typeAliasListDiff = Optional.of(typeAliasListDiff);
 		}
+		processTypeAliasesReplacedWithAttributes();
 		processInitializers();
 		processModifiers();
 		processTypeParameters();

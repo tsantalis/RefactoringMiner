@@ -3838,7 +3838,7 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
 			//a removed test with parameters was already data-driven, i.e., the JUnit 4 theory testParamGradlines(Tuple<String,String> cmd, int gradlines) -> testParamGradlines(Tuple<String,String> cmd),
 			//unlike a helper with parameters called by the removed tests, i.e., private reentrySubscriberRequestCountIsCorrect(boolean firstIsReentry)
-			boolean migrated = runsWithParameterizedRunner(mapper.getOperation1()) || (mapper.getOperation1().isTest() && !mapper.getOperation1().getParameterNameList().isEmpty());
+			boolean migrated = alreadyDataDriven(mapper.getOperation1()) || (mapper.getOperation1().isTest() && !mapper.getOperation1().getParameterNameList().isEmpty());
 			ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper, migrated);
 			refactorings.add(refactoring);
 			mapper.computeRefactoringsWithinBody();
@@ -3863,7 +3863,9 @@ public abstract class UMLAbstractClassDiff {
 	//i.e., @RunWith(Parameterized.class) class UserTypeWithTimeZoneTest with the parameters injected through its constructor or @Parameter fields,
 	//or a class declaring a @Parameterized.Parameters provider, i.e., abstract class BaseContentCodingTest with the runner on its subclasses,
 	//so its port to a JUnit 5 @ParameterizedTest migrates the parameterized test instead of introducing one
-	private boolean runsWithParameterizedRunner(UMLOperation operation) {
+	//the old test was already data-driven: its class or a superclass runs with the Parameterized runner, declares the @Parameterized.Parameters provider,
+	//or declares a JUnit 4 rule re-running every test once per value, i.e., @Rule CoordinateSystem2DTestRule replaced with @ParameterizedTest @EnumSource(CoordinateSystem2D.class)
+	private boolean alreadyDataDriven(UMLOperation operation) {
 		UMLAbstractClass umlClass = modelDiff != null ? modelDiff.findClassInParentModel(operation.getClassName()) : null;
 		if(umlClass == null && originalClass.getName().equals(operation.getClassName())) {
 			umlClass = originalClass;
@@ -3883,6 +3885,9 @@ public abstract class UMLAbstractClassDiff {
 					}
 				}
 			}
+			if(modelDiff != null && rerunsTestsWithRule(umlClass)) {
+				return true;
+			}
 			UMLType superclass = umlClass.getSuperclass();
 			umlClass = superclass != null && modelDiff != null ? modelDiff.findClassInParentModel(superclass.getClassType()) : null;
 		}
@@ -3894,6 +3899,56 @@ public abstract class UMLAbstractClassDiff {
 				UMLType superclass = subclass.getSuperclass();
 				if(superclass != null && superclass.getClassType().equals(testClass.getNonQualifiedName()) &&
 						subclass.getAnnotations().stream().anyMatch(UMLAbstractClassDiff::isParameterizedRunner)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	//a @Rule or @ClassRule field whose rule class (in the old code) evaluates the wrapped statement in a loop, so the tests run once per value
+	private boolean rerunsTestsWithRule(UMLAbstractClass umlClass) {
+		for(UMLAttribute attribute : umlClass.getAttributes()) {
+			boolean rule = false;
+			for(UMLAnnotation annotation : attribute.getAnnotations()) {
+				String name = annotation.getTypeName();
+				if(name.equals("Rule") || name.endsWith(".Rule") || name.equals("ClassRule") || name.endsWith(".ClassRule")) {
+					rule = true;
+					break;
+				}
+			}
+			if(rule && attribute.getType() != null) {
+				UMLAbstractClass ruleClass = modelDiff.findClassInParentModel(attribute.getType().getClassType());
+				if(ruleClass != null) {
+					for(UMLOperation operation : ruleClass.getOperations()) {
+						if(evaluatesInLoop(operation)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	//base.evaluate() inside a loop of the operation or of an anonymous class it creates, i.e., the Statement returned by TestRule.apply
+	private static boolean evaluatesInLoop(UMLOperation operation) {
+		if(operation.getBody() != null) {
+			for(CompositeStatementObject node : operation.getBody().getCompositeStatement().getInnerNodes()) {
+				CodeElementType type = node.getLocationInfo().getCodeElementType();
+				if(type.equals(CodeElementType.ENHANCED_FOR_STATEMENT) || type.equals(CodeElementType.FOR_STATEMENT) ||
+						type.equals(CodeElementType.WHILE_STATEMENT) || type.equals(CodeElementType.DO_STATEMENT)) {
+					for(AbstractCall call : node.getAllMethodInvocations()) {
+						if(call.getName().equals("evaluate") && call.arguments().isEmpty()) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		for(UMLAnonymousClass anonymous : operation.getAnonymousClassList()) {
+			for(UMLOperation anonymousOperation : anonymous.getOperations()) {
+				if(evaluatesInLoop(anonymousOperation)) {
 					return true;
 				}
 			}
@@ -4323,7 +4378,7 @@ public abstract class UMLAbstractClassDiff {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, parameterizedTest, this);
 				//the body of the parameterized test is mapped from the helper
 				mapper.removeAllMappings(new LinkedHashSet<>(mapper.getMappings()));
-				ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper, runsWithParameterizedRunner(removedOperation));
+				ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper, alreadyDataDriven(removedOperation));
 				if(provider != null && !iteratesProvider) {
 					UMLOperationBodyMapper providerMapper = new UMLOperationBodyMapper(removedOperation, provider, this);
 					//the provider merges the values of the removed tests calling their helpers with the same rows, i.e., All() and AllRunOnce() into All_TestData()

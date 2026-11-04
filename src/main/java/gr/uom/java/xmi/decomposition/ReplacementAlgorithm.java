@@ -6178,6 +6178,10 @@ public class ReplacementAlgorithm {
 	}
 
 	private static boolean holdsInstanceOf(VariableDeclaration declaration, UMLAbstractClass targetClass, UMLModelDiff modelDiff) {
+		//a declaration without a type, i.e., a lambda parameter, gives no evidence
+		if(declaration.getType() == null) {
+			return false;
+		}
 		UMLAbstractClass declarationClass = modelDiff.findClassInParentModel(declaration.getType().getClassType());
 		return declarationClass != null && !declarationClass.attributesOfType(targetClass.getName()).isEmpty();
 	}

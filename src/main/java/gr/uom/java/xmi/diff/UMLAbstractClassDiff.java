@@ -2435,7 +2435,8 @@ public abstract class UMLAbstractClassDiff {
 								for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
 									List<String> list = testParameters.get(parameterRow);
 									int index = parameterNames.indexOf(variable);
-									if(ReplacementUtil.contains(r.getBefore(), list.get(index))) {
+									//a row may have fewer values than parameters, i.e., a single-value row of a test with several parameters
+									if(index < list.size() && ReplacementUtil.contains(r.getBefore(), list.get(index))) {
 										Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 										matchingTestParameters.put(parameterRow, previousValue + 1);
 									}
@@ -2446,6 +2447,9 @@ public abstract class UMLAbstractClassDiff {
 										for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
 											List<String> list = testParameters.get(parameterRow);
 											int index = parameterNames.indexOf(variable);
+											if(index >= list.size()) {
+												continue;
+											}
 											if(list.get(index).equals(initializer)) {
 												Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 												matchingTestParameters.put(parameterRow, previousValue + 1);
@@ -3943,7 +3947,8 @@ public abstract class UMLAbstractClassDiff {
 		//if no such pairing exists yet
 		UMLOperation junit4DataProvider = null;
 		for(UMLOperationBodyMapper mapper : this.operationBodyMapperList) {
-			if(mapper.getOperation1().hasParametersAnnotation()) {
+			//the mappers of initializers and attributes have no operations
+			if(mapper.getOperation1() != null && mapper.getOperation1().hasParametersAnnotation()) {
 				junit4DataProvider = mapper.getOperation1();
 				break;
 			}

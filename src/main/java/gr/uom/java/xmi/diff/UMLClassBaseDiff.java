@@ -2034,14 +2034,28 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				int lastIndex = nextClass.getOperations().lastIndexOf(operation);
 				int finalIndex = index;
 				if(index != lastIndex) {
-					if(containsMapperForOperation2(nextClass.getOperations().get(index))) {
+					//the equal operations without a mapper, i.e., the overloads of a Python method differing only in their return type
+					List<Integer> candidates = new ArrayList<>();
+					for(int i=index; i<=lastIndex; i++) {
+						UMLOperation candidate = nextClass.getOperations().get(i);
+						if(candidate.equals(operation) && !containsMapperForOperation2(candidate)) {
+							candidates.add(i);
+						}
+					}
+					if(candidates.isEmpty()) {
 						finalIndex = lastIndex;
 					}
-					else if(!operation.isConstructor()) {
-						double d1 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(index).getReturnParameter().getType());
-						double d2 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(lastIndex).getReturnParameter().getType());
-						if(d2 < d1) {
-							finalIndex = lastIndex;
+					else {
+						finalIndex = candidates.get(0);
+						if(!operation.isConstructor()) {
+							double minDistance = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(finalIndex).getReturnParameter().getType());
+							for(int i=1; i<candidates.size(); i++) {
+								double distance = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(candidates.get(i)).getReturnParameter().getType());
+								if(distance < minDistance) {
+									minDistance = distance;
+									finalIndex = candidates.get(i);
+								}
+							}
 						}
 					}
 				}

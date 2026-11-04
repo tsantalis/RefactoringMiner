@@ -74,7 +74,8 @@ public class PositionUtils {
         Token last = boundaryToken(ctx, false);
         if (last == null)
             return ctx.getStop();
-        if (ctx.getStop().getType() == PythonLexer.DEDENT) {
+        //a block on the line of its header ends with a NEWLINE, and the comment at the end of that line belongs to it too, i.e., def f(): ...  # type: ignore
+        if (ctx.getStop().getType() == PythonLexer.DEDENT || ctx.getStop().getType() == PythonLexer.NEWLINE) {
             Token comment = lastTrailingComment(ctx, last);
             if (comment != null)
                 return comment;

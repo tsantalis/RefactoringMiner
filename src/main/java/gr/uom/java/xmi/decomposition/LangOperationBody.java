@@ -382,6 +382,7 @@ public class LangOperationBody extends OperationBody {
 			LangMethodDeclaration methodDecl = (LangMethodDeclaration)statement;
 			String className = container.getClassName() + "." + container.getName();
 			UMLOperation nested = createUMLOperation(methodDecl, className, sourceFolder, filePath, fileContent, comments, activeVariableDeclarations);
+			nested.setConditionallyCreated(conditionallyCreated(parent));
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
 			}
@@ -392,16 +393,7 @@ public class LangOperationBody extends OperationBody {
 		else if(statement instanceof LangTypeDeclaration) {
 			LangTypeDeclaration typeDecl = (LangTypeDeclaration)statement;
 			UMLClass nestedClass = createUMLClass(typeDecl, filePath, Collections.emptyList(), fileContent, comments);
-			if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && parent.getParent() != null && parent.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
-				CompositeStatementObject ifParent = parent.getParent();
-				List<AbstractStatement> ifBlocks = ifParent.getStatements();
-				if(ifBlocks.size() > 0 && ifBlocks.get(0).equals(parent)) {
-					nestedClass.setConditionallyCreated(ConditionallyCreated.IF);
-				}
-				if(ifBlocks.size() > 1 && ifBlocks.get(1).equals(parent)) {
-					nestedClass.setConditionallyCreated(ConditionallyCreated.ELSE);
-				}
-			}
+			nestedClass.setConditionallyCreated(conditionallyCreated(parent));
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedClass(nestedClass);
 			}
@@ -409,5 +401,19 @@ public class LangOperationBody extends OperationBody {
 				((ModuleContainer)container).addNestedClass(nestedClass);
 			}
 		}
+	}
+
+	//a declaration in the if or else block of a conditional, i.e., if typing.TYPE_CHECKING: def f(): ... else: def f(): ...
+	private static ConditionallyCreated conditionallyCreated(CompositeStatementObject parent) {
+		if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && parent.getParent() != null && parent.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			List<AbstractStatement> ifBlocks = parent.getParent().getStatements();
+			if(ifBlocks.size() > 0 && ifBlocks.get(0).equals(parent)) {
+				return ConditionallyCreated.IF;
+			}
+			if(ifBlocks.size() > 1 && ifBlocks.get(1).equals(parent)) {
+				return ConditionallyCreated.ELSE;
+			}
+		}
+		return ConditionallyCreated.NO;
 	}
 }

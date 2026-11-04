@@ -1946,6 +1946,28 @@
   "firstEndPos" : 2903,
   "secondEndPos" : 2831
 }, {
+  "firstType" : "decorator",
+  "secondType" : "decorator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "decorated_definition",
+  "secondParentType" : "decorated_definition",
+  "firstPos" : 2687,
+  "secondPos" : 2615,
+  "firstEndPos" : 2708,
+  "secondEndPos" : 2636
+}, {
+  "firstType" : "@",
+  "secondType" : "@",
+  "firstLabel" : "@",
+  "secondLabel" : "@",
+  "firstParentType" : "decorator",
+  "secondParentType" : "decorator",
+  "firstPos" : 2687,
+  "secondPos" : 2615,
+  "firstEndPos" : 2688,
+  "secondEndPos" : 2616
+}, {
   "firstType" : "call",
   "secondType" : "call",
   "firstLabel" : "",
@@ -2016,8 +2038,8 @@
   "secondType" : "comment",
   "firstLabel" : "# type: ignore[arg-type]",
   "secondLabel" : "# type: ignore[arg-type]",
-  "firstParentType" : "decorator",
-  "secondParentType" : "decorator",
+  "firstParentType" : "decorated_definition",
+  "secondParentType" : "decorated_definition",
   "firstPos" : 2710,
   "secondPos" : 2638,
   "firstEndPos" : 2734,

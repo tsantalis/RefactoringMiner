@@ -37,6 +37,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private String name;
 	private Visibility visibility;
 	private boolean isAbstract;
+	//a function declared in the if or else block of a conditional, i.e., if typing.TYPE_CHECKING: def f(): ... else: def f(): ...
+	private UMLClass.ConditionallyCreated conditionallyCreated = UMLClass.ConditionallyCreated.NO;
 	private List<UMLParameter> parameters;
 	private String className;
 	private boolean isConstructor;
@@ -254,6 +256,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public boolean isAbstract() {
 		return isAbstract;
+	}
+
+	public UMLClass.ConditionallyCreated getConditionallyCreated() {
+		return conditionallyCreated;
+	}
+
+	public void setConditionallyCreated(UMLClass.ConditionallyCreated conditionallyCreated) {
+		this.conditionallyCreated = conditionallyCreated;
 	}
 
 	public void setAbstract(boolean isAbstract) {
@@ -1344,6 +1354,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
+				this.conditionallyCreated.equals(operation.conditionallyCreated) &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
 				equalTypeParameters(operation);
 		}
@@ -1377,6 +1388,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.isExplicit == operation.isExplicit &&
 				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
+				this.conditionallyCreated.equals(operation.conditionallyCreated) &&
 				equalTypeParameters(operation)) {
 			UMLParameter thisReturnParameter = this.getReturnParameter();
 			UMLParameter otherReturnParameter = operation.getReturnParameter();
@@ -1413,6 +1425,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		result = prime * result + (trailingReturnType.isPresent() ? trailingReturnType.get().hashCode() : 0);
 		result = prime * result + (isForwardDeclaration() ? 1231 : 1237);
 		result = prime * result + (thisEmptyBody ? 1231 : 1237);
+		result = prime * result + conditionallyCreated.ordinal();
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((getParameterTypeList() == null) ? 0 : getParameterTypeList().hashCode());
 		result = prime * result + ((visibility == null) ? 0 : visibility.hashCode());

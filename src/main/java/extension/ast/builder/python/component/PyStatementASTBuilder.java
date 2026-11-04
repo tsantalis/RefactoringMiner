@@ -31,6 +31,15 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
                 statements.addAll(statements(stmtCtx));
             }
         }
+        //a block on the line of its header has simple statements, i.e., class MyClass: ... or def f(x): return x
+        else if (ctx.simple_stmts() != null) {
+            for (PythonParser.Simple_stmtContext simpleCtx : ctx.simple_stmts().simple_stmt()) {
+                LangASTNode statement = mainBuilder.visit(simpleCtx);
+                if (statement != null) {
+                    statements.add(statement);
+                }
+            }
+        }
         return LangASTNodeFactory.createBlock(ctx, statements);
     }
 

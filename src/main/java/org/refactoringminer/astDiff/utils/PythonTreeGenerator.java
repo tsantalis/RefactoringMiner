@@ -680,7 +680,8 @@ public class PythonTreeGenerator {
 				decorator.add(expression(expression));
 			}
 			else if(isToken(child, PythonParser.NEWLINE)) {
-				newline(((TerminalNode) child).getSymbol().getTokenIndex(), decorator);
+				//the decorator ends at its expression like its annotation, and a comment at the end of its line is in the decorated definition, i.e., @functools.wraps(obj)  # type: ignore
+				newline(((TerminalNode) child).getSymbol().getTokenIndex(), node);
 			}
 		}
 		node.add(definition);

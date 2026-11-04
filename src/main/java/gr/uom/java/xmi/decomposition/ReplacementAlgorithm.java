@@ -43,10 +43,12 @@ import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethod
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.InitializerReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
@@ -427,6 +429,125 @@ public class ReplacementAlgorithm {
 		return replacements;
 	}
 
+	private static void replaceDestructuredVariablesWithMembers(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo replacementInfo, Set<String> variables1, Set<String> variables2) {
+		for(CompositeStatementObject for1 = enclosingEnhancedFor(statement1); for1 != null; for1 = enclosingEnhancedFor(for1.getParent())) {
+			for(CompositeStatementObject for2 = enclosingEnhancedFor(statement2); for2 != null; for2 = enclosingEnhancedFor(for2.getParent())) {
+				if(destructuredIntoMembers(for1, for2)) {
+					AbstractExpression destructuring = destructuringDeclaration(for1);
+					String variable = for2.getVariableDeclarations().get(0).getVariableName();
+					Set<String> destructuredVariables = variableNames(for1);
+					if(statement1 == for1 && statement2 == for2) {
+						replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replace(destructuring.getString(), variable));
+						replacementInfo.addReplacement(new MergeVariableReplacement(destructuredVariables, variable));
+						variables1.removeAll(destructuredVariables);
+						variables2.remove(variable);
+					}
+					else if(statement1 != for1 && statement2 != for2) {
+						for(String destructuredVariable : destructuredVariables) {
+							Pattern variablePattern = variablePattern(destructuredVariable);
+							if(variablePattern.matcher(replacementInfo.getArgumentizedString1()).find() && memberPattern(variable, destructuredVariable).matcher(statement2.getString()).find()) {
+								String member = variable + "." + destructuredVariable;
+								replacementInfo.setArgumentizedString1(variablePattern.matcher(replacementInfo.getArgumentizedString1()).replaceAll(Matcher.quoteReplacement(member)));
+								replacementInfo.addReplacement(new Replacement(destructuredVariable, member, ReplacementType.VARIABLE_NAME));
+								variables1.remove(destructuredVariable);
+								variables2.remove(variable);
+							}
+						}
+					}
+					return;
+				}
+				if(destructuredIntoMembers(for2, for1)) {
+					AbstractExpression destructuring = destructuringDeclaration(for2);
+					String variable = for1.getVariableDeclarations().get(0).getVariableName();
+					Set<String> destructuredVariables = variableNames(for2);
+					if(statement1 == for1 && statement2 == for2) {
+						replacementInfo.setArgumentizedString1(variablePattern(variable).matcher(replacementInfo.getArgumentizedString1()).replaceFirst(Matcher.quoteReplacement(destructuring.getString())));
+						replacementInfo.addReplacement(new SplitVariableReplacement(variable, destructuredVariables));
+						variables1.remove(variable);
+						variables2.removeAll(destructuredVariables);
+					}
+					else if(statement1 != for1 && statement2 != for2) {
+						for(String destructuredVariable : destructuredVariables) {
+							Pattern memberPattern = memberPattern(variable, destructuredVariable);
+							if(memberPattern.matcher(replacementInfo.getArgumentizedString1()).find() && variablePattern(destructuredVariable).matcher(statement2.getString()).find()) {
+								String member = variable + "." + destructuredVariable;
+								replacementInfo.setArgumentizedString1(memberPattern.matcher(replacementInfo.getArgumentizedString1()).replaceAll(Matcher.quoteReplacement(destructuredVariable)));
+								replacementInfo.addReplacement(new Replacement(member, destructuredVariable, ReplacementType.VARIABLE_NAME));
+								variables1.remove(variable);
+								variables2.remove(destructuredVariable);
+							}
+						}
+					}
+					return;
+				}
+			}
+		}
+	}
+
+	//the statement itself or its closest enclosing enhanced for loop
+	private static CompositeStatementObject enclosingEnhancedFor(AbstractCodeFragment statement) {
+		AbstractCodeFragment current = statement;
+		while(current != null) {
+			if(current instanceof CompositeStatementObject composite && composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+				return composite;
+			}
+			current = current.getParent();
+		}
+		return null;
+	}
+
+	private static AbstractExpression destructuringDeclaration(CompositeStatementObject enhancedFor) {
+		for(AbstractExpression expression : enhancedFor.getExpressions()) {
+			if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_DESTRUCTURING_DECLARATION)) {
+				return expression;
+			}
+		}
+		return null;
+	}
+
+	private static Set<String> variableNames(CompositeStatementObject enhancedFor) {
+		Set<String> names = new LinkedHashSet<String>();
+		for(VariableDeclaration declaration : enhancedFor.getVariableDeclarations()) {
+			names.add(declaration.getVariableName());
+		}
+		return names;
+	}
+
+	//the loop with the destructuring declaration and the loop with a single variable, which has all destructured variables as its members in the body of its loop
+	private static boolean destructuredIntoMembers(CompositeStatementObject destructuringFor, CompositeStatementObject variableFor) {
+		if(destructuringDeclaration(destructuringFor) == null || destructuringFor.getVariableDeclarations().isEmpty() ||
+				destructuringDeclaration(variableFor) != null || variableFor.getVariableDeclarations().size() != 1) {
+			return false;
+		}
+		String variable = variableFor.getVariableDeclarations().get(0).getVariableName();
+		List<AbstractCodeFragment> body = new ArrayList<AbstractCodeFragment>(variableFor.getLeaves());
+		body.addAll(variableFor.getInnerNodes());
+		body.remove(variableFor);
+		for(String destructuredVariable : variableNames(destructuringFor)) {
+			Pattern memberPattern = memberPattern(variable, destructuredVariable);
+			boolean found = false;
+			for(AbstractCodeFragment fragment : body) {
+				if(memberPattern.matcher(fragment.getString()).find()) {
+					found = true;
+					break;
+				}
+			}
+			if(!found) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	//the variable, which is not a member of another variable or a qualified name, i.e., executable in executable.ok(), but not in candidate.executable.ok()
+	private static Pattern variablePattern(String variable) {
+		return Pattern.compile("(?<![\\w.>:])" + Pattern.quote(variable) + "(?!\\w)");
+	}
+
+	private static Pattern memberPattern(String variable, String member) {
+		return Pattern.compile("(?<![\\w.>:])" + Pattern.quote(variable) + "(\\.|->)" + Pattern.quote(member) + "(?!\\w)");
+	}
+
 	private static Set<Replacement> exactMatchingReplacements(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper, boolean isomorphic) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
@@ -455,6 +576,18 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
+		}
+		//a C++ check macro replacing the return of an error in an if statement, i.e., if (x.empty()) { return absl::InternalError("..."); } -> TF_RET_CHECK(!x.empty()) << "...";
+		Replacement checkMacro = CppStatusMacros.conditionalReturnReplacedWithCheckMacro(statement1, statement2);
+		if(checkMacro != null) {
+			replacementInfo.addReplacement(checkMacro);
+			return replacementInfo.getReplacements();
+		}
+		//a C++ assign-or-return macro replacing the declaration of a checked StatusOr, i.e., auto x_or = f(); if (!x_or.ok()) {...} T x = std::move(x_or).value(); -> ASSIGN_OR_RETURN(T x, f());
+		Replacement assignOrReturn = CppStatusMacros.statusOrDeclarationReplacedWithAssignOrReturn(statement1, statement2);
+		if(assignOrReturn != null) {
+			replacementInfo.addReplacement(assignOrReturn);
+			return replacementInfo.getReplacements();
 		}
 		AbstractCall invocationCoveringEntireFragment1 = statement1.invocationCoveringEntireFragment();
 		AbstractCall invocationCoveringEntireFragment2 = statement2.invocationCoveringEntireFragment();
@@ -784,7 +917,10 @@ public class ReplacementAlgorithm {
 		// remove common variables from the two sets
 		variables1.removeAll(variableIntersection);
 		variables2.removeAll(variableIntersection);
-		
+		//the destructuring declaration of a loop replaced with a variable having the destructured variables as its members, and the destructured variables with the members, before the other replacements,
+		//i.e., for (auto& [config, executable] : results) {... executable.ok() ...} -> for (auto& result : results) {... result.executable.ok() ...}
+		replaceDestructuredVariablesWithMembers(statement1, statement2, replacementInfo, variables1, variables2);
+
 		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
 			//the Java contains calls replaced with the Kotlin in/!in checks before the other replacements, i.e., !c.contains(x) -> x !in c,
 			//so that the contains calls are not replaced with Kotlin variables, and the Kotlin in/!in operators with Java operators

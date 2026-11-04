@@ -188,7 +188,18 @@ public class ReplacementUtil {
 					if(!LANG1.equals(LANG2) && !subString2.startsWith("{") && characterBeforeMatch1.equals(",") && characterBeforeMatch2.equals(" ") && start2 > 1 && completeString2.charAt(start2 - 2) == ',') {
 						characterBeforeMatch2 = ",";
 					}
-					if(compatibleCharacterBeforeMatch(characterBeforeMatch1, characterBeforeMatch2, LANG1, LANG2)) {
+					boolean compatible = compatibleCharacterBeforeMatch(characterBeforeMatch1, characterBeforeMatch2, LANG1, LANG2);
+					//the qualified part of an operand negated only in one of the inverted conditions is compared by the character before the negation, i.e., if(!executable.ok()) -> if(candidate.executable.ok()),
+					//but not the entire negated operand, i.e., while(!stack.isEmpty()) -> if(topLevel), or a replaced operand, i.e., if(PARAMS.containsKey(x)) -> if(!request.getHeaders().containsKey(y)),
+					//which would differ only in the negation
+					boolean qualified = subString2.endsWith("." + subString1) || subString1.endsWith("." + subString2);
+					if(!compatible && qualified && character.equals(".") && characterBeforeMatch1.equals(LANG1.NOT) && !characterBeforeMatch2.equals(LANG2.NOT)) {
+						compatible = compatibleCharacterBeforeMatch(start1 == 1 ? "" : String.valueOf(temp.charAt(start1 - 2)), characterBeforeMatch2, LANG1, LANG2);
+					}
+					else if(!compatible && qualified && character.equals(".") && characterBeforeMatch2.equals(LANG2.NOT) && !characterBeforeMatch1.equals(LANG1.NOT)) {
+						compatible = compatibleCharacterBeforeMatch(characterBeforeMatch1, start2 == 1 ? "" : String.valueOf(completeString2.charAt(start2 - 2)), LANG1, LANG2);
+					}
+					if(compatible) {
 						m1.appendReplacement(sb, Matcher.quoteReplacement(subString2 + character));
 						replacementOccurred = true;
 					}

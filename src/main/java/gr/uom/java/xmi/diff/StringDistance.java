@@ -25,12 +25,11 @@ public class StringDistance {
 	private static final Map<StringPair, Integer> EDIT_DISTANCE_LOWER_BOUNDS = new ConcurrentHashMap<>();
 	private record StringPair(String a, String b) {}
 	
+	//the strings longer than MAX_STRING_LENGTH are compared by the part they differ in, so that a statement with a long string literal,
+	//i.e., static const char descriptor[] = {"..."}; in a protobuf source, is at distance 0 from an identical one, not at the length of the longer
 	public static int editDistance(String a, String b, int threshold) {
 		int length1 = a.length();
 		int length2 = b.length();
-		if(length1 > MAX_STRING_LENGTH || length2 > MAX_STRING_LENGTH) {
-			return threshold;
-		}
 		StringPair key = new StringPair(a, b);
 		Integer cached = EDIT_DISTANCE_CACHE.get(key);
 		if(cached != null && threshold >= 0) {
@@ -42,6 +41,9 @@ public class StringDistance {
 		}
 		int prefix = commonPrefixLength(a, b);
 		int suffix = commonSuffixLength(a, b, prefix);
+		if(length1 - suffix - prefix > MAX_STRING_LENGTH || length2 - suffix - prefix > MAX_STRING_LENGTH) {
+			return threshold;
+		}
 		int distance = new LevenshteinDistance(threshold).apply(a.substring(prefix, length1 - suffix), b.substring(prefix, length2 - suffix));
 		if(distance != -1) {
 			cache(key, distance);
@@ -58,9 +60,6 @@ public class StringDistance {
 	public static int editDistance(String a, String b) {
 		int length1 = a.length();
 		int length2 = b.length();
-		if(length1 > MAX_STRING_LENGTH || length2 > MAX_STRING_LENGTH) {
-			return Math.max(length1, length2);
-		}
 		StringPair key = new StringPair(a, b);
 		Integer cached = EDIT_DISTANCE_CACHE.get(key);
 		if(cached != null) {
@@ -68,6 +67,9 @@ public class StringDistance {
 		}
 		int prefix = commonPrefixLength(a, b);
 		int suffix = commonSuffixLength(a, b, prefix);
+		if(length1 - suffix - prefix > MAX_STRING_LENGTH || length2 - suffix - prefix > MAX_STRING_LENGTH) {
+			return Math.max(length1 - suffix - prefix, length2 - suffix - prefix);
+		}
 		int distance = new LevenshteinDistance().apply(a.substring(prefix, length1 - suffix), b.substring(prefix, length2 - suffix));
 		cache(key, distance);
 		return distance;

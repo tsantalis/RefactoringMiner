@@ -225,10 +225,12 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.variableName = name.toString();
 		this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, null, 0);
-		//IScope scope = CPPVisitor.getContainingScope(declarator);
-		//parent is CPPASTStructuredBindingDeclaration
-		IASTNode scopeNode = name.getParent().getParent();
-		int startOffset = scopeNode.getFileLocation().getNodeOffset();
+		//parent is CPPASTStructuredBindingDeclaration, in a declaration statement, a range-based for, a class, a namespace or the translation unit
+		IASTNode scopeNode = getScopeNode(name);
+		if(scopeNode == null) {
+			scopeNode = name.getParent().getParent();
+		}
+		int startOffset = name.getFileLocation().getNodeOffset();
 		int endOffset = scopeNode.getFileLocation().getNodeOffset() + scopeNode.getFileLocation().getNodeLength();
 		this.scope = new VariableScope(filePath, startOffset, endOffset);
 		this.actualSignature = name.getRawSignature();
@@ -249,7 +251,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.isEnumConstant = true;
 	}
 
-	private IASTNode getScopeNode(IASTDeclarator declarator) {
+	//the scope of the variable declared by the declarator, or by the name of a structured binding, which has no declarators, using the declaration they belong to
+	private IASTNode getScopeNode(IASTNode declarator) {
 		if(declarator.getParent() instanceof CPPASTSimpleDeclaration) {
 			if(declarator.getParent().getParent() instanceof CPPASTDeclarationStatement) {
 				return declarator.getParent().getParent().getParent();

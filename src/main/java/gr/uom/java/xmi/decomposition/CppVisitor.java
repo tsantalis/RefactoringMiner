@@ -24,6 +24,7 @@ import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTQualifiedName;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTStructuredBindingDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
 import org.eclipse.cdt.core.dom.ast.IASTCastExpression;
@@ -99,6 +100,12 @@ public class CppVisitor extends ASTVisitor {
 			String type = declaredType(simpleDeclaration.getDeclSpecifier());
 			if(type != null) {
 				types.add(type);
+			}
+			//the bound variables of a structured binding are names, as it has no declarators, i.e., tile and operand in auto& [tile, operand] = tile_and_operand;
+			if(simpleDeclaration instanceof ICPPASTStructuredBindingDeclaration structuredBindingDeclaration) {
+				for(IASTName name : structuredBindingDeclaration.getNames()) {
+					variableDeclarations.add(new VariableDeclaration(sourceFolder, filePath, name, structuredBindingDeclaration.getDeclSpecifier(), container, activeVariableDeclarations, fileContent));
+				}
 			}
 			IASTDeclarator[] declarators = simpleDeclaration.getDeclarators();
 			for(IASTDeclarator declarator : declarators) {

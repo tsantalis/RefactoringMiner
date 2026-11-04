@@ -99,6 +99,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Set<AbstractCodeMapping> mappingSet = bodyMapper.getMappings();
         ArrayList<AbstractCodeMapping> mappings = new ArrayList<>(mappingSet);
         for (AbstractCodeMapping abstractCodeMapping : mappings) {
+            //the statements replaced by a C++ status macro are matched with the macro in the model, but their syntax has nothing in common with the macro call,
+            //i.e., if (x.empty()) { return absl::InternalError("..."); } and TF_RET_CHECK(!x.empty()) << "...", so the AST diff does not match their nodes
+            if (containsReplacementOfType(abstractCodeMapping, ReplacementType.CONDITIONAL_RETURN_REPLACED_WITH_CHECK_MACRO) ||
+                    containsReplacementOfType(abstractCodeMapping, ReplacementType.STATUS_OR_DECLARATION_REPLACED_WITH_ASSIGN_OR_RETURN))
+                continue;
             if (abstractCodeMapping instanceof LeafMapping) {
                 if (optimizationData.getProcessedLeafMappings().add(abstractCodeMapping)) {
                     processLeafMapping(srcTree,dstTree,abstractCodeMapping,bodyMapper,mappingStore, isPartOfExtractedMethod);

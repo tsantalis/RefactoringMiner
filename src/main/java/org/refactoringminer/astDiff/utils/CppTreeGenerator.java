@@ -3496,8 +3496,10 @@ public class CppTreeGenerator {
 				return declaration(declarationStatement.getDeclaration(), Context.BLOCK);
 			}
 			List<Node> nodes = reparse(start(statement), end(statement), Context.BLOCK);
-			//a statement with a body that CDT parsed is converted when the code parsed again has errors, so that its body is converted
-			if(failed(nodes) && !problem(statement) && hasNestedStatement(statement)) {
+			//a statement with a body that CDT parsed is converted when the code parsed again has errors, so that its body is converted,
+			//like a declaration that CDT parsed, i.e., static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {...};
+			//that the code parsed again in a block splits at the macro, like the declarations of the file in orDeclaration
+			if(failed(nodes) && !problem(statement) && (hasNestedStatement(statement) || statement instanceof IASTDeclarationStatement)) {
 				return statementWithoutReparse(statement);
 			}
 			if(failed(nodes)) {

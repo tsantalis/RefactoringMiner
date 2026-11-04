@@ -11380,6 +11380,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(mapping.getArgumentization() == null) {
 			mapping.setArgumentization(argumentization);
 		}
+		//the condition of the if replaced by a check macro is matched with the macro, like the returned error
+		if(mapping instanceof LeafMapping leafMapping && mapping.containsReplacement(ReplacementType.CONDITIONAL_RETURN_REPLACED_WITH_CHECK_MACRO)) {
+			AbstractExpression condition = CppStatusMacros.conditionOfReplacedIf(mapping.getFragment1());
+			if(condition != null && !alreadyMatched1(condition)) {
+				LeafMapping conditionMapping = new LeafMapping(condition, mapping.getFragment2(), leafMapping.getOperation1(), leafMapping.getOperation2());
+				conditionMapping.addReplacements(mapping.getReplacements());
+				leafMapping.addSubExpressionMapping(conditionMapping);
+			}
+		}
+		//the check and the value of the StatusOr replaced by an assign-or-return macro are matched with the macro, like its declaration
+		if(mapping instanceof LeafMapping leafMapping && mapping.containsReplacement(ReplacementType.STATUS_OR_DECLARATION_REPLACED_WITH_ASSIGN_OR_RETURN)) {
+			for(AbstractCodeFragment replaced : CppStatusMacros.replacedByAssignOrReturn(mapping.getFragment1())) {
+				if(!alreadyMatched1(replaced)) {
+					LeafMapping replacedMapping = new LeafMapping(replaced, mapping.getFragment2(), leafMapping.getOperation1(), leafMapping.getOperation2());
+					replacedMapping.addReplacements(mapping.getReplacements());
+					leafMapping.addSubExpressionMapping(replacedMapping);
+					if(!(replaced instanceof AbstractExpression)) {
+						mappingHashcodesT1.add(replaced.hashCode());
+					}
+				}
+			}
+		}
 		this.mappings.add(mapping);
 		if(mapping.getSubExpressionMappings().size() > 0) {
 			this.mappings.addAll(mapping.getSubExpressionMappings());

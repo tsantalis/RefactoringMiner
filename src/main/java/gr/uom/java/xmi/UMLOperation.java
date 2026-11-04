@@ -479,6 +479,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	//a set-up or tear-down method is not a test, even when it is also annotated as a parameterized test, i.e., @Before setUp() -> @BeforeEach @ParameterizedTest @EnumSource setUp(CoordinateSystem3D cs)
+	public boolean isLifecycleMethod() {
+		return hasSetUpAnnotation() || hasTearDownAnnotation();
+	}
+
+	//a method that is not a test and already had parameters is not a test parameterized, but a helper that became a parameterized test,
+	//i.e., private Any2(IEnumerable<Integer> source, Predicate1<Integer> predicate, boolean expected) renamed to @ParameterizedTest Any(source, predicate, expected)
+	public boolean isHelperWithParameters() {
+		return !isTest() && !getParameterNameList().isEmpty();
+	}
+
 	public boolean hasDataProviderAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
 			if(annotation.getTypeName().equals("DataProvider")) {

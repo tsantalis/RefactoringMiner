@@ -3344,7 +3344,8 @@ public abstract class UMLAbstractClassDiff {
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						List<List<String>> parameterValues = getParameterValues(firstMapper.getOperation2());
 						UMLOperationBodyMapper unreadableValuesMapper = parameterValues.isEmpty() ? parameterizedWithUnreadableValues(mapperSet) : null;
-						if(firstMapper.getOperation2().hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation() && !helperWithParameters(firstMapper.getOperation1())) {
+						if(firstMapper.getOperation2().hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation() && !firstMapper.getOperation1().isHelperWithParameters() &&
+								!firstMapper.getOperation1().isLifecycleMethod() && !firstMapper.getOperation2().isLifecycleMethod()) {
 							checkForParameterizedTest(removedOperations, addedOperations, firstMapper.getOperation2(), mapperSet,
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
@@ -3544,7 +3545,8 @@ public abstract class UMLAbstractClassDiff {
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						List<List<String>> parameterValues = getParameterValues(addedOperation);
 						UMLOperationBodyMapper unreadableValuesMapper = parameterValues.isEmpty() ? parameterizedWithUnreadableValues(mapperSet) : null;
-						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation() && !helperWithParameters(firstMapper.getOperation1())) {
+						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation() && !firstMapper.getOperation1().isHelperWithParameters() &&
+								!firstMapper.getOperation1().isLifecycleMethod() && !addedOperation.isLifecycleMethod()) {
 							checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
@@ -3836,6 +3838,9 @@ public abstract class UMLAbstractClassDiff {
 		}
 		UMLOperation previouslyRemovedOperation = null;
 		for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
+			if(mapper.getOperation1().isLifecycleMethod() || mapper.getOperation2().isLifecycleMethod()) {
+				continue;
+			}
 			//a removed test with parameters was already data-driven, i.e., the JUnit 4 theory testParamGradlines(Tuple<String,String> cmd, int gradlines) -> testParamGradlines(Tuple<String,String> cmd),
 			//unlike a helper with parameters called by the removed tests, i.e., private reentrySubscriberRequestCountIsCorrect(boolean firstIsReentry)
 			boolean migrated = alreadyDataDriven(mapper.getOperation1()) || (mapper.getOperation1().isTest() && !mapper.getOperation1().getParameterNameList().isEmpty());
@@ -4334,11 +4339,6 @@ public abstract class UMLAbstractClassDiff {
 		return null;
 	}
 
-	//a method that is not a test and already had parameters is not a test parameterized, but a helper that became a parameterized test,
-	//i.e., private Any2(IEnumerable<Integer> source, Predicate1<Integer> predicate, boolean expected) renamed to @ParameterizedTest Any(source, predicate, expected)
-	private static boolean helperWithParameters(UMLOperation operation) {
-		return operation != null && !operation.isTest() && !operation.getParameterNameList().isEmpty();
-	}
 
 	//a removed test calling a helper with the values of each case, when the helper became the parameterized test and the calls the rows of its provider,
 	//i.e., All() { this.All(Linq.singleton(0), isEvenFunc, true); ... } with the helper All(source, predicate, expected) -> @ParameterizedTest @MethodSource("All_TestData") All(source, predicate, expected),
@@ -4472,7 +4472,7 @@ public abstract class UMLAbstractClassDiff {
 	//when it has a source annotation and uses each of its new parameters in its body, so the parameterization is reported without the links to the values,
 	//but not a test that already had these parameters, i.e., the JUnit 4 theory quotaDependencyTest(ActionType actionType) -> quotaDependency(ActionType actionType)
 	private boolean parameterizedWithUnreadableValues(UMLOperation removedOperation, UMLOperation addedOperation) {
-		if(!addedOperation.hasParameterizedTestAnnotation() || removedOperation.hasParameterizedTestAnnotation()) {
+		if(!addedOperation.hasParameterizedTestAnnotation() || removedOperation.hasParameterizedTestAnnotation() || removedOperation.isLifecycleMethod() || addedOperation.isLifecycleMethod()) {
 			return false;
 		}
 		List<String> parameterNames = addedOperation.getParameterNameList();

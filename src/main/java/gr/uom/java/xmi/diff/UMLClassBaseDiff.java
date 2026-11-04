@@ -218,6 +218,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				checkForOperationSignatureChanges(this.removedNestedOperations, this.addedOperations);
 			}
 		}
+		checkForTestsParameterizedThroughHelper(this.removedOperations);
 		processAttributes();
 		checkForAttributeChanges();
 		checkForInlinedOperations();

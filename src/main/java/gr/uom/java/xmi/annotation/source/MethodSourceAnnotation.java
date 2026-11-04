@@ -103,7 +103,11 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                 this.resolvedProviderMethod = sourceMethod;
             }
             Optional<VariableDeclaration> returnedVarCandidates = sourceMethod.getBody().getAllVariableDeclarations().stream().filter(v -> sourceMethod.getReturnParameter().getType().equals(v.getType())).findAny();
-            if (returnedVarCandidates.isEmpty()) {
+            VariableDeclaration returnedVariable = returnedVariable(sourceMethod);
+            if(returnedVariable != null) {
+                addRowsOfFilledVariable(sourceMethod, returnedVariable);
+            }
+            else if (returnedVarCandidates.isEmpty()) {
                 Optional<StatementObject> stmtCandidate = sourceMethod.getBody().getCompositeStatement().getStatements().stream()
                         .filter(s -> s instanceof StatementObject)
                         .map(s -> (StatementObject) s)
@@ -132,6 +136,45 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                 }
             }
         }
+    }
+
+    //the local variable returned by the last statement of the provider, i.e., return argsList;
+    private static VariableDeclaration returnedVariable(UMLOperation provider) {
+        for(AbstractCodeFragment statement : provider.getBody().getCompositeStatement().getStatements()) {
+            if(statement instanceof StatementObject && statement.isLastStatement() && statement.getVariables().size() == 1 &&
+                    statement.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.RETURN_STATEMENT)) {
+                String name = statement.getVariables().get(0).getString();
+                if(statement.getString().trim().equals("return " + name + ";")) {
+                    return provider.getVariableDeclaration(name);
+                }
+            }
+        }
+        return null;
+    }
+
+    //a row for each value added to the returned variable, i.e., argsList.add(Linq.singleton(0), isEvenFunc, true) or list.add(Arguments.of("a", 1))
+    private void addRowsOfFilledVariable(UMLOperation provider, VariableDeclaration returnedVariable) {
+        for(AbstractCodeFragment leaf : provider.getBody().getCompositeStatement().getLeaves()) {
+            if(!(leaf instanceof StatementObject statement)) {
+                continue;
+            }
+            AbstractCall call = statement.invocationCoveringEntireFragment();
+            if(call != null && call.getName().equals("add") && call.getExpression() != null && call.getExpression().equals(returnedVariable.getVariableName())) {
+                //only the rows of JUnit are unwrapped, not a value created by a call named of, i.e., argsList.add(Linq.of(new int[]{1})) is a row of one value
+                List<AbstractCall> rowCalls = rowCallCandidates(statement).stream().filter(MethodSourceAnnotation::isArgumentsCall).toList();
+                if(call.arguments().size() == 1 && rowCalls.size() == 1 && rowCalls.get(0).actualString().equals(call.arguments().get(0))) {
+                    addRow(rowCalls.get(0).arguments(), rowCalls.get(0).getLocationInfo(), statement, new HashSet<>());
+                }
+                else {
+                    addRow(call.arguments(), call.getLocationInfo(), statement, new HashSet<>());
+                }
+            }
+        }
+    }
+
+    //Arguments.of(...), Arguments.arguments(...) or arguments(...) creating a row of JUnit
+    private static boolean isArgumentsCall(AbstractCall call) {
+        return (call.getName().equals("of") || call.getName().equals("arguments")) && (call.getExpression() == null || call.getExpression().equals("Arguments") || call.getExpression().endsWith(".Arguments"));
     }
 
     //the values of a row created within rowLocation, with the leaf expressions not claimed by the previous values

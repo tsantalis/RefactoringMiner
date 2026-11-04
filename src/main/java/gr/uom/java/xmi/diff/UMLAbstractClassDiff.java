@@ -3340,7 +3340,7 @@ public abstract class UMLAbstractClassDiff {
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						List<List<String>> parameterValues = getParameterValues(firstMapper.getOperation2());
 						UMLOperationBodyMapper unreadableValuesMapper = parameterValues.isEmpty() ? parameterizedWithUnreadableValues(mapperSet) : null;
-						if(firstMapper.getOperation2().hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
+						if(firstMapper.getOperation2().hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation() && !helperWithParameters(firstMapper.getOperation1())) {
 							checkForParameterizedTest(removedOperations, addedOperations, firstMapper.getOperation2(), mapperSet,
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
@@ -3540,7 +3540,7 @@ public abstract class UMLAbstractClassDiff {
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						List<List<String>> parameterValues = getParameterValues(addedOperation);
 						UMLOperationBodyMapper unreadableValuesMapper = parameterValues.isEmpty() ? parameterizedWithUnreadableValues(mapperSet) : null;
-						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
+						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation() && !helperWithParameters(firstMapper.getOperation1())) {
 							checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
@@ -4269,6 +4269,125 @@ public abstract class UMLAbstractClassDiff {
 			if(removedOperation != null && addedOperation != null && removedOperation.getName().equals(addedOperation.getName()) &&
 					parameterizedWithUnreadableValues(removedOperation, addedOperation)) {
 				return mapper;
+			}
+		}
+		return null;
+	}
+
+	//a method that is not a test and already had parameters is not a test parameterized, but a helper that became a parameterized test,
+	//i.e., private Any2(IEnumerable<Integer> source, Predicate1<Integer> predicate, boolean expected) renamed to @ParameterizedTest Any(source, predicate, expected)
+	private static boolean helperWithParameters(UMLOperation operation) {
+		return operation != null && !operation.isTest() && !operation.getParameterNameList().isEmpty();
+	}
+
+	//a removed test calling a helper with the values of each case, when the helper became the parameterized test and the calls the rows of its provider,
+	//i.e., All() { this.All(Linq.singleton(0), isEvenFunc, true); ... } with the helper All(source, predicate, expected) -> @ParameterizedTest @MethodSource("All_TestData") All(source, predicate, expected),
+	//where All_TestData() { argsList.add(Linq.singleton(0), isEvenFunc, true); ... }, so the statements of the removed test are mapped to the provider, not to the parameterized test mapped from the helper
+	protected void checkForTestsParameterizedThroughHelper(List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
+		Set<UMLOperation> parameterizedTests = new LinkedHashSet<>();
+		for(UMLOperationBodyMapper helperMapper : new ArrayList<>(operationBodyMapperList)) {
+			UMLOperation helper = helperMapper.getOperation1();
+			UMLOperation parameterizedTest = helperMapper.getOperation2();
+			if(helper == null || parameterizedTest == null || !parameterizedTest.hasParameterizedTestAnnotation() ||
+					helper.isTest() || helper.hasParameterizedTestAnnotation() || parameterizedTest.getParameterNameList().isEmpty()) {
+				continue;
+			}
+			List<List<String>> rows = null;
+			for(UMLOperation removedOperation : removedOperations) {
+				if(!removedOperation.isTest() || !removedOperation.getParameterNameList().isEmpty()) {
+					continue;
+				}
+				List<AbstractCall> helperCalls = new ArrayList<>();
+				for(AbstractCall call : removedOperation.getAllOperationInvocations()) {
+					if(call.matchesOperation(helper, removedOperation, this, modelDiff)) {
+						helperCalls.add(call);
+					}
+				}
+				if(helperCalls.isEmpty()) {
+					continue;
+				}
+				if(rows == null) {
+					rows = getParameterValues(parameterizedTest);
+				}
+				UMLOperation provider = providerOf(parameterizedTest);
+				//the removed test iterated the provider itself, i.e., for(Object[] data : TestData()) this.Any((IEnumerable<Integer>) data[0], (boolean) data[1])
+				boolean iteratesProvider = provider != null && removedOperation.getAllOperationInvocations().stream().anyMatch(call -> call.getName().equals(provider.getName()));
+				if(!iteratesProvider && !rows.isEmpty() && !callsWithRowValues(helperCalls, rows)) {
+					continue;
+				}
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, parameterizedTest, this);
+				//the body of the parameterized test is mapped from the helper
+				mapper.removeAllMappings(new LinkedHashSet<>(mapper.getMappings()));
+				ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper, runsWithParameterizedRunner(removedOperation));
+				if(provider != null && !iteratesProvider) {
+					UMLOperationBodyMapper providerMapper = new UMLOperationBodyMapper(removedOperation, provider, this);
+					//the provider merges the values of the removed tests calling their helpers with the same rows, i.e., All() and AllRunOnce() into All_TestData()
+					for(AbstractCodeMapping mapping : providerMapper.getMappings()) {
+						mapper.addMapping(mapping);
+					}
+					mapHelperCallsToRows(mapper, helperCalls, provider);
+					refactoring.setDataProvider(removedOperation, provider);
+				}
+				refactorings.add(refactoring);
+				parameterizedTests.add(removedOperation);
+			}
+		}
+		removedOperations.removeAll(parameterizedTests);
+	}
+
+	//each call to the helper is mapped to the statement adding a row with the same values, as the call and the row differ in the name and the expression of the call,
+	//i.e., this.All(Linq.singleton(0), isEvenFunc, true) -> argsList.add(Linq.singleton(0), isEvenFunc, true)
+	private static void mapHelperCallsToRows(UMLOperationBodyMapper mapper, List<AbstractCall> helperCalls, UMLOperation provider) {
+		Set<AbstractCodeFragment> mapped1 = new LinkedHashSet<>(), mapped2 = new LinkedHashSet<>();
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			mapped1.add(mapping.getFragment1());
+			mapped2.add(mapping.getFragment2());
+		}
+		List<AbstractCodeFragment> rowStatements = provider.getBody().getCompositeStatement().getLeaves();
+		for(AbstractCodeFragment statement1 : mapper.getOperation1().getBody().getCompositeStatement().getLeaves()) {
+			AbstractCall call1 = statement1.invocationCoveringEntireFragment();
+			if(mapped1.contains(statement1) || call1 == null || !helperCalls.contains(call1)) {
+				continue;
+			}
+			List<String> values1 = call1.arguments().stream().map(v -> v.replaceAll("\\s", "")).toList();
+			for(AbstractCodeFragment statement2 : rowStatements) {
+				AbstractCall call2 = statement2.invocationCoveringEntireFragment();
+				if(!mapped2.contains(statement2) && call2 != null && values1.equals(call2.arguments().stream().map(v -> v.replaceAll("\\s", "")).toList())) {
+					LeafMapping mapping = new LeafMapping(statement1, statement2, mapper.getOperation1(), provider);
+					mapping.addReplacement(new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION));
+					mapper.addMapping(mapping);
+					mapped1.add(statement1);
+					mapped2.add(statement2);
+					break;
+				}
+			}
+		}
+	}
+
+	//at least one call passes the values of a row, i.e., this.All(Linq.singleton(0), isEvenFunc, true) and the row [Linq.singleton(0), isEvenFunc, true]
+	private static boolean callsWithRowValues(List<AbstractCall> calls, List<List<String>> rows) {
+		Set<List<String>> rowValues = new LinkedHashSet<>();
+		for(List<String> row : rows) {
+			rowValues.add(row.stream().map(v -> v.replaceAll("\\s", "")).toList());
+		}
+		for(AbstractCall call : calls) {
+			if(rowValues.contains(call.arguments().stream().map(v -> v.replaceAll("\\s", "")).toList())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//the method referenced by the @MethodSource of the parameterized test, or null
+	private UMLOperation providerOf(UMLOperation parameterizedTest) {
+		for(UMLAnnotation annotation : parameterizedTest.getAnnotations()) {
+			if(MethodSourceAnnotation.isMethodSourceAnnotation(annotation)) {
+				try {
+					SourceAnnotation sourceAnnotation = generateSourceAnnotation(annotation, parameterizedTest);
+					if(sourceAnnotation instanceof MethodSourceAnnotation methodSourceAnnotation && methodSourceAnnotation.getResolvedProviderMethod() != null) {
+						return methodSourceAnnotation.getResolvedProviderMethod();
+					}
+				} catch (IllegalArgumentException ignored) {/* Do nothing */}
 			}
 		}
 		return null;

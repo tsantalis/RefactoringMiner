@@ -86,6 +86,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -6973,6 +6974,61 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return mappingSet.first();
 	}
 
+	//the statements of one of the identical composites are mapped to the statements of another composite of the same type, differing only in literals, which has only statements of that composite mapped,
+	//i.e., the bodies of if (bits & 0x4u) {handle_->Clear();} and if (bits & 0x4u) {uuid_.Clear();} when the first body is mapped to if (bits & 0x8u) {handle_->Clear();},
+	//but not when the other composite has the statements of its own counterpart, i.e., return null; moved from if (!valid) {return null;} into a previous if (end) {skip(); return null;}
+	private boolean childrenMappedInAnotherComposite(CompositeStatementObject comp1, CompositeStatementObject comp2) {
+		CodeElementType type = comp1.getLocationInfo().getCodeElementType();
+		for(AbstractCodeMapping mapping : mappings) {
+			AbstractCodeFragment fragment1 = mapping.getFragment1();
+			AbstractCodeFragment fragment2 = mapping.getFragment2();
+			boolean inside1 = fragment1 != comp1 && comp1.getLocationInfo().subsumes(fragment1.getLocationInfo());
+			boolean inside2 = fragment2 != comp2 && comp2.getLocationInfo().subsumes(fragment2.getLocationInfo());
+			if(inside1 && !inside2) {
+				CompositeStatementObject other2 = anotherComposite(fragment2, type, comp2);
+				if(other2 != null && sameExceptLiterals(comp1, other2) && onlyStatementsOf(comp1, other2, true)) {
+					return true;
+				}
+			}
+			if(inside2 && !inside1) {
+				CompositeStatementObject other1 = anotherComposite(fragment1, type, comp1);
+				if(other1 != null && sameExceptLiterals(comp2, other1) && onlyStatementsOf(comp2, other1, false)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	//the composites differ only in their number, string and character literals, i.e., if (bits & 0x00000004u) and if (bits & 0x00000008u)
+	private static boolean sameExceptLiterals(CompositeStatementObject composite, CompositeStatementObject other) {
+		return LITERAL.matcher(composite.getString()).replaceAll("#").equals(LITERAL.matcher(other.getString()).replaceAll("#"));
+	}
+
+	private static final Pattern LITERAL = Pattern.compile("\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*'|\\b0[xX][0-9a-fA-F]+[uUlL]*\\b|\\b\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?[uUlLfFdD]*\\b");
+
+	//the closest composite of the type enclosing the fragment, if it is not the composite and does not enclose it
+	private static CompositeStatementObject anotherComposite(AbstractCodeFragment fragment, CodeElementType type, CompositeStatementObject composite) {
+		CompositeStatementObject parent = fragment.getParent();
+		while(parent != null && !parent.getLocationInfo().getCodeElementType().equals(type)) {
+			parent = parent.getParent();
+		}
+		return parent != null && parent != composite && !parent.getLocationInfo().subsumes(composite.getLocationInfo()) ? parent : null;
+	}
+
+	//all mapped statements within the other composite are mapped to statements within the composite, on the other side
+	private boolean onlyStatementsOf(CompositeStatementObject composite, CompositeStatementObject other, boolean compositeInT1) {
+		for(AbstractCodeMapping mapping : mappings) {
+			AbstractCodeFragment inOther = compositeInT1 ? mapping.getFragment2() : mapping.getFragment1();
+			AbstractCodeFragment counterpart = compositeInT1 ? mapping.getFragment1() : mapping.getFragment2();
+			if(inOther != other && other.getLocationInfo().subsumes(inOther.getLocationInfo()) &&
+					(counterpart == composite || !composite.getLocationInfo().subsumes(counterpart.getLocationInfo()))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	private boolean allLeavesWithinBodyMapped(CompositeStatementObject statement1, CompositeStatementObject statement2) {
 		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
 			int allLeaves1 = 0;
@@ -13124,7 +13180,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
 						!logGuard(comp1) && !nullCheck(comp1, comp2, replacementInfo) &&
-						!parentMapperContainsExactMapping(comp1) && !equalIfElseIfChain) {
+						!parentMapperContainsExactMapping(comp1) && !equalIfElseIfChain && !childrenMappedInAnotherComposite(comp1, comp2)) {
 					return 0.01;
 				}
 			}

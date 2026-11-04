@@ -3636,6 +3636,13 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
+		//check if the argument of the method call in the second statement is the right hand side of the declaration in the first statement, with its arguments replaced with their values,
+		//i.e., auto x = std::make_unique<T>(hlo, tile); -> xs.push_back(std::make_unique<T>(&operand.instruction(), tiles[i])) with hlo inlined and tile the element of tiles at index i
+		List<Replacement> rightHandSideReplacements = CppRangeAdaptors.rightHandSideWithReplacedArguments(statement1, statement2, invocationCoveringTheEntireStatement2, container1);
+		if(rightHandSideReplacements != null) {
+			replacementInfo.addReplacements(new LinkedHashSet<>(rightHandSideReplacements));
+			return replacementInfo.getReplacements();
+		}
 		//check if the argument of the method call in the second statement is the right hand side of an assignment in the first statement
 		if(invocationCoveringTheEntireStatement2 != null &&
 				(r = invocationCoveringTheEntireStatement2.makeReplacementForAssignedArgument(replacementInfo.getArgumentizedString1())) != null &&

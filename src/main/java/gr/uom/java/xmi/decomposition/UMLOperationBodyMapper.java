@@ -5986,6 +5986,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						matchingInnerNodes1 = Collections.emptyList();
 					}
 					TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
+					//the composites matched only by their children, without replacements making the composites identical
+					Set<CompositeStatementObjectMapping> childrenOnlyMappings = new LinkedHashSet<CompositeStatementObjectMapping>();
 					for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 						CompositeStatementObject statement2 = innerNodeIterator2.next();
 						if(!alreadyMatched2(statement2)) {
@@ -6171,6 +6173,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+								childrenOnlyMappings.add(mapping);
 								mappingSet.add(mapping);
 							}
 						}
@@ -6179,7 +6182,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!duplicateMappingInParentMapper(mappingSet)) {
 							CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
 							//checkForOtherPossibleMatchesForFragment2(innerNodes1, innerNodes2, statement1, mappingSet, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration);
-							CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
+							CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : headerMatchOfSplitBody(mappingSet, childrenOnlyMappings);
 							addMapping(minStatementMapping);
 							innerNodes2.remove(minStatementMapping.getFragment2());
 							innerNodeIterator1.remove();
@@ -6389,6 +6392,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(matchingInnerNodes2 == null) {
 						matchingInnerNodes2 = Collections.emptyList();
 					}
+					//the composites matched only by their children, without replacements making the composites identical
+					Set<CompositeStatementObjectMapping> childrenOnlyMappings = new LinkedHashSet<CompositeStatementObjectMapping>();
 					TreeSet<CompositeStatementObjectMapping> mappingSet = parentMapping != null ? new TreeSet<CompositeStatementObjectMapping>(new ScopedCompositeMappingComparatorForExtract(parentMapping)) : new TreeSet<CompositeStatementObjectMapping>();
 					for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 						CompositeStatementObject statement1 = innerNodeIterator1.next();
@@ -6557,6 +6562,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+								childrenOnlyMappings.add(mapping);
 								mappingSet.add(mapping);
 							}
 						}
@@ -6587,7 +6593,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							else {
 								CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
-								CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
+								CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : headerMatchOfSplitBody(mappingSet, childrenOnlyMappings);
 								addMapping(minStatementMapping);
 								innerNodes1.remove(minStatementMapping.getFragment1());
 								innerNodeIterator2.remove();
@@ -6952,6 +6958,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return outermost;
+	}
+
+	//the mapping of the composite matched by replacements, when the children of the composite are split among more than one composite matched only by their children,
+	//i.e., a loop split into several loops, where for (auto& [id, x] : llvm::enumerate(xs)) {a; b; c;} -> for (auto& [i, x] : llvm::enumerate(xs)) {a;} for (id : ids) {b;} for (r : roots) {c;}
+	private CompositeStatementObjectMapping headerMatchOfSplitBody(TreeSet<CompositeStatementObjectMapping> mappingSet, Set<CompositeStatementObjectMapping> childrenOnlyMappings) {
+		if(childrenOnlyMappings.size() > 1) {
+			for(CompositeStatementObjectMapping mapping : mappingSet) {
+				if(!childrenOnlyMappings.contains(mapping)) {
+					return mapping;
+				}
+			}
+		}
+		return mappingSet.first();
 	}
 
 	private boolean allLeavesWithinBodyMapped(CompositeStatementObject statement1, CompositeStatementObject statement2) {

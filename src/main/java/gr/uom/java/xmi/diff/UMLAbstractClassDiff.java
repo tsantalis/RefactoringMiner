@@ -3843,7 +3843,7 @@ public abstract class UMLAbstractClassDiff {
 			}
 			//a removed test with parameters was already data-driven, i.e., the JUnit 4 theory testParamGradlines(Tuple<String,String> cmd, int gradlines) -> testParamGradlines(Tuple<String,String> cmd),
 			//unlike a helper with parameters called by the removed tests, i.e., private reentrySubscriberRequestCountIsCorrect(boolean firstIsReentry)
-			boolean migrated = alreadyDataDriven(mapper.getOperation1()) || (mapper.getOperation1().isTest() && !mapper.getOperation1().getParameterNameList().isEmpty());
+			boolean migrated = alreadyDataDriven(mapper.getOperation1()) || (mapper.getOperation1().isTest() && !mapper.getOperation1().getParameterNameList().isEmpty() && !junit5Test(mapper.getOperation1()));
 			ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper, migrated);
 			refactorings.add(refactoring);
 			mapper.computeRefactoringsWithinBody();
@@ -3867,9 +3867,8 @@ public abstract class UMLAbstractClassDiff {
 	//a JUnit 4 test under the Parameterized runner, declared on its class or on a superclass, already runs once per parameter set,
 	//i.e., @RunWith(Parameterized.class) class UserTypeWithTimeZoneTest with the parameters injected through its constructor or @Parameter fields,
 	//or a class declaring a @Parameterized.Parameters provider, i.e., abstract class BaseContentCodingTest with the runner on its subclasses,
+	//or a class declaring a JUnit 4 rule re-running every test once per value, i.e., @Rule CoordinateSystem2DTestRule replaced with @ParameterizedTest @EnumSource(CoordinateSystem2D.class),
 	//so its port to a JUnit 5 @ParameterizedTest migrates the parameterized test instead of introducing one
-	//the old test was already data-driven: its class or a superclass runs with the Parameterized runner, declares the @Parameterized.Parameters provider,
-	//or declares a JUnit 4 rule re-running every test once per value, i.e., @Rule CoordinateSystem2DTestRule replaced with @ParameterizedTest @EnumSource(CoordinateSystem2D.class)
 	private boolean alreadyDataDriven(UMLOperation operation) {
 		UMLAbstractClass umlClass = modelDiff != null ? modelDiff.findClassInParentModel(operation.getClassName()) : null;
 		if(umlClass == null && originalClass.getName().equals(operation.getClassName())) {
@@ -3878,7 +3877,7 @@ public abstract class UMLAbstractClassDiff {
 		Set<UMLAbstractClass> visited = new HashSet<UMLAbstractClass>();
 		while(umlClass != null && visited.add(umlClass)) {
 			for(UMLAnnotation annotation : umlClass.getAnnotations()) {
-				if(isParameterizedRunner(annotation)) {
+				if(annotation.isParameterizedRunner()) {
 					return true;
 				}
 			}
@@ -3903,12 +3902,27 @@ public abstract class UMLAbstractClassDiff {
 			for(UMLClass subclass : modelDiff.getParentModel().getClassList()) {
 				UMLType superclass = subclass.getSuperclass();
 				if(superclass != null && superclass.getClassType().equals(testClass.getNonQualifiedName()) &&
-						subclass.getAnnotations().stream().anyMatch(UMLAbstractClassDiff::isParameterizedRunner)) {
+						subclass.getAnnotations().stream().anyMatch(UMLAnnotation::isParameterizedRunner)) {
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+
+	//a JUnit 5 @Test cannot receive test data: its parameters are resolved by extensions, i.e., @TempDir Path tempDir or VertxTestContext testContext,
+	//unlike the parameters of a JUnit 4 theory or of a test run by JUnitParams or junit-dataprovider
+	private boolean junit5Test(UMLOperation operation) {
+		for(UMLAnnotation annotation : operation.getAnnotations()) {
+			if(annotation.getTypeName().equals("org.junit.jupiter.api.Test")) {
+				return true;
+			}
+		}
+		UMLAbstractClass umlClass = modelDiff != null ? modelDiff.findClassInParentModel(operation.getClassName()) : null;
+		if(umlClass == null && originalClass.getName().equals(operation.getClassName())) {
+			umlClass = originalClass;
+		}
+		return umlClass != null && umlClass.imports("org.junit.jupiter.api.Test");
 	}
 
 	//a @Rule or @ClassRule field whose rule class (in the old code) evaluates the wrapped statement in a loop, so the tests run once per value
@@ -3926,48 +3940,11 @@ public abstract class UMLAbstractClassDiff {
 				UMLAbstractClass ruleClass = modelDiff.findClassInParentModel(attribute.getType().getClassType());
 				if(ruleClass != null) {
 					for(UMLOperation operation : ruleClass.getOperations()) {
-						if(evaluatesInLoop(operation)) {
+						if(operation.evaluatesInLoop()) {
 							return true;
 						}
 					}
 				}
-			}
-		}
-		return false;
-	}
-
-	//base.evaluate() inside a loop of the operation or of an anonymous class it creates, i.e., the Statement returned by TestRule.apply
-	private static boolean evaluatesInLoop(UMLOperation operation) {
-		if(operation.getBody() != null) {
-			for(CompositeStatementObject node : operation.getBody().getCompositeStatement().getInnerNodes()) {
-				CodeElementType type = node.getLocationInfo().getCodeElementType();
-				if(type.equals(CodeElementType.ENHANCED_FOR_STATEMENT) || type.equals(CodeElementType.FOR_STATEMENT) ||
-						type.equals(CodeElementType.WHILE_STATEMENT) || type.equals(CodeElementType.DO_STATEMENT)) {
-					for(AbstractCall call : node.getAllMethodInvocations()) {
-						if(call.getName().equals("evaluate") && call.arguments().isEmpty()) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		for(UMLAnonymousClass anonymous : operation.getAnonymousClassList()) {
-			for(UMLOperation anonymousOperation : anonymous.getOperations()) {
-				if(evaluatesInLoop(anonymousOperation)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	//@RunWith(Parameterized.class), @RunWith(value = Parameterized.class) or with qualified names
-	private static boolean isParameterizedRunner(UMLAnnotation annotation) {
-		if(annotation.getTypeName().equals("RunWith") || annotation.getTypeName().endsWith(".RunWith")) {
-			AbstractExpression value = annotation.getValue() != null ? annotation.getValue() : annotation.getMemberValuePairs().get("value");
-			if(value != null) {
-				String runner = value.getString();
-				return runner.equals("Parameterized.class") || runner.endsWith(".Parameterized.class");
 			}
 		}
 		return false;

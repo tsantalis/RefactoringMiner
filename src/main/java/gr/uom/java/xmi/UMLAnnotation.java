@@ -317,4 +317,16 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 			h += (entry.getKey() == null ? 0 : entry.getKey().hashCode()) ^ (entry.getValue() == null ? 0 : entry.getValue().getExpression().hashCode());
 		return h;
 	}
+
+	//@RunWith(Parameterized.class), @RunWith(value = Parameterized.class) or with qualified names
+	public boolean isParameterizedRunner() {
+		if(typeName.equals("RunWith") || typeName.endsWith(".RunWith")) {
+			AbstractExpression value = this.value != null ? this.value : memberValuePairs.get("value");
+			if(value != null) {
+				String runner = value.getString();
+				return runner.equals("Parameterized.class") || runner.endsWith(".Parameterized.class");
+			}
+		}
+		return false;
+	}
 }

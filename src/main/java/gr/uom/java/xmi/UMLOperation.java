@@ -479,6 +479,31 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	//base.evaluate() inside a loop of the operation or of an anonymous class it creates, i.e., the Statement returned by TestRule.apply
+	public boolean evaluatesInLoop() {
+		if(getBody() != null) {
+			for(CompositeStatementObject node : getBody().getCompositeStatement().getInnerNodes()) {
+				LocationInfo.CodeElementType type = node.getLocationInfo().getCodeElementType();
+				if(type.equals(LocationInfo.CodeElementType.ENHANCED_FOR_STATEMENT) || type.equals(LocationInfo.CodeElementType.FOR_STATEMENT) ||
+						type.equals(LocationInfo.CodeElementType.WHILE_STATEMENT) || type.equals(LocationInfo.CodeElementType.DO_STATEMENT)) {
+					for(AbstractCall call : node.getAllMethodInvocations()) {
+						if(call.getName().equals("evaluate") && call.arguments().isEmpty()) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		for(UMLAnonymousClass anonymous : getAnonymousClassList()) {
+			for(UMLOperation anonymousOperation : anonymous.getOperations()) {
+				if(anonymousOperation.evaluatesInLoop()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	//a set-up or tear-down method is not a test, even when it is also annotated as a parameterized test, i.e., @Before setUp() -> @BeforeEach @ParameterizedTest @EnumSource setUp(CoordinateSystem3D cs)
 	public boolean isLifecycleMethod() {
 		return hasSetUpAnnotation() || hasTearDownAnnotation();

@@ -4349,7 +4349,7 @@ public abstract class UMLAbstractClassDiff {
 				UMLOperation provider = providerOf(parameterizedTest);
 				//the removed test iterated the provider itself, i.e., for(Object[] data : TestData()) this.Any((IEnumerable<Integer>) data[0], (boolean) data[1])
 				boolean iteratesProvider = provider != null && removedOperation.getAllOperationInvocations().stream().anyMatch(call -> call.getName().equals(provider.getName()));
-				if(!iteratesProvider && !rows.isEmpty() && !callsWithRowValues(helperCalls, rows)) {
+				if(!iteratesProvider && !rows.isEmpty() && !callsWithRowValues(helperCalls, rows, removedOperation, originalClass)) {
 					continue;
 				}
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, parameterizedTest, this);
@@ -4402,15 +4402,54 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	//at least one call passes the values of a row, i.e., this.All(Linq.singleton(0), isEvenFunc, true) and the row [Linq.singleton(0), isEvenFunc, true]
-	private static boolean callsWithRowValues(List<AbstractCall> calls, List<List<String>> rows) {
-		Set<List<String>> rowValues = new LinkedHashSet<>();
-		for(List<String> row : rows) {
-			rowValues.add(row.stream().map(v -> v.replaceAll("\\s", "")).toList());
-		}
+	//the arguments of a call of the removed test to the helper are the values of a row of the parameterized test, i.e., checkArray(String[].class) for @ValueSource(classes = String[].class),
+	//invokeHandler("create.request.json", Action.CREATE) for @CsvSource("create.request.json,CREATE"), or testFileExists(givenFile, expectedFile) with the local variables
+	//File givenFile = new File("target/testFolder/ex1") and File expectedFile = new File("target/testFolder/ex1.png") for @CsvSource("target/testFolder/ex1, target/testFolder/ex1.png")
+	private static boolean callsWithRowValues(List<AbstractCall> calls, List<List<String>> rows, UMLOperation removedOperation, UMLAbstractClass originalClass) {
 		for(AbstractCall call : calls) {
-			if(rowValues.contains(call.arguments().stream().map(v -> v.replaceAll("\\s", "")).toList())) {
+			List<String> arguments = call.arguments();
+			for(List<String> row : rows) {
+				if(row.size() == arguments.size()) {
+					boolean rowValues = true;
+					for(int i=0; i<row.size() && rowValues; i++) {
+						rowValues = argumentWithValue(arguments.get(i), row.get(i), removedOperation, originalClass, new HashSet<>());
+					}
+					if(rowValues) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private static final Pattern SINGLE_ARGUMENT_CONSTRUCTOR = Pattern.compile("^new[\\w.<>]+\\((.+)\\)$");
+	private static final Pattern QUALIFIED_CONSTANT = Pattern.compile("^[A-Z][\\w$]*(?:\\.[\\w$]+)*\\.([A-Za-z_$][\\w$]*)$");
+
+	//an argument with the value of the parameterized test, after resolving the local variables of the removed test and the constants of the class to their initializers,
+	//and with the implicit conversions of JUnit from a string: to an enum constant by its name, i.e., Action.CREATE for CREATE,
+	//and with the constructor of the parameter type, i.e., new File("target/testFolder/ex1.png") for target/testFolder/ex1.png
+	private static boolean argumentWithValue(String argument, String value, UMLOperation removedOperation, UMLAbstractClass originalClass, Set<String> resolved) {
+		String a = argument.replaceAll("\\s", "");
+		String v = value.replaceAll("\\s", "");
+		if(a.equals(v) || sanitizeStringLiteral(a).equals(sanitizeStringLiteral(v))) {
+			return true;
+		}
+		if(resolved.add(a)) {
+			VariableDeclaration declaration = removedOperation.getVariableDeclaration(argument.strip());
+			String initializer = declaration != null && declaration.getInitializer() != null ? declaration.getInitializer().getString() : resolveConstantLiteralValue(argument.strip(), originalClass);
+			if(initializer != null && argumentWithValue(initializer, value, removedOperation, originalClass, resolved)) {
 				return true;
 			}
+		}
+		String name = sanitizeStringLiteral(v);
+		Matcher constant = QUALIFIED_CONSTANT.matcher(a);
+		if(constant.matches() && constant.group(1).equals(name)) {
+			return true;
+		}
+		Matcher constructor = SINGLE_ARGUMENT_CONSTRUCTOR.matcher(a);
+		if(constructor.matches() && !constructor.group(1).contains(",")) {
+			return argumentWithValue(constructor.group(1), value, removedOperation, originalClass, resolved);
 		}
 		return false;
 	}

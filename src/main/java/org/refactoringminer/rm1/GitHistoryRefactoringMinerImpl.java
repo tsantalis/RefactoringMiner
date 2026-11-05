@@ -148,7 +148,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
 		
 		populateFileContentsForCommitRange(repository, commits, fileContentsBefore, repositoryDirectoriesBefore, fileContentsCurrent, repositoryDirectoriesCurrent);
-		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 		
@@ -2686,7 +2686,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
 		
 		populateWithGitHubAPIForCommitRange(cloneURL, startCommit, endCommit, fileContentsBefore, fileContentsCurrent, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
-		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 		
@@ -2951,7 +2951,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit,
 			Map<String, String> fileContentsBefore, Map<String, String> fileContentsCurrent,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws Exception {
-		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 		

@@ -20,8 +20,10 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.Constants;
+import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class CompositeStatementObject extends AbstractStatement {
@@ -229,6 +231,9 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	public String toString() {
+		if(locationInfo.getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && LANG.equals(Constants.PYTHON)) {
+			return pythonCatchClauseString();
+		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(locationInfo.getCodeElementType().getName());
 		if(expressionList.size() > 0) {
@@ -274,7 +279,60 @@ public class CompositeStatementObject extends AbstractStatement {
 		return sb.toString();
 	}
 
+	//the exception types caught by a catch clause, from the except clause of Python or from the declaration of the exception variable,
+	//i.e., [DatabaseError] for except DatabaseError, [IOException, SQLException] for catch(IOException | SQLException e)
+	public List<String> getCatchClauseExceptionTypes() {
+		List<String> types = new ArrayList<>();
+		if(!locationInfo.getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+			return types;
+		}
+		for(AbstractExpression expression : expressionList) {
+			if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.TYPE)) {
+				types.add(expression.getString());
+			}
+		}
+		if(types.isEmpty() && variableDeclarations.size() > 0 && variableDeclarations.get(0).getType() != null) {
+			UMLType type = variableDeclarations.get(0).getType();
+			if(type instanceof ListCompositeType composite) {
+				for(UMLType t : composite.getTypes()) {
+					types.add(t.toString());
+				}
+			}
+			else {
+				types.add(type.toString());
+			}
+		}
+		return types;
+	}
+
+	//an except clause shows its exception types like the declaration of a Java catch clause: except ValueError as e -> catch(ValueError e),
+	//except (DatabaseError, TimeoutError) -> catch(DatabaseError | TimeoutError), a bare except -> catch
+	private String pythonCatchClauseString() {
+		List<String> types = new ArrayList<>();
+		String name = null;
+		for(AbstractExpression expression : expressionList) {
+			if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.TYPE)) {
+				types.add(expression.getString());
+			}
+			else if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME)) {
+				name = expression.getString();
+			}
+		}
+		StringBuilder sb = new StringBuilder(locationInfo.getCodeElementType().getName());
+		if(!types.isEmpty()) {
+			sb.append("(").append(String.join(" | ", types));
+			if(name != null) {
+				sb.append(" ").append(name);
+			}
+			sb.append(")");
+		}
+		return sb.toString();
+	}
+
 	public String toStringForStringRepresentation() {
+		if(locationInfo.getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && LANG.equals(Constants.PYTHON)) {
+			return pythonCatchClauseString();
+		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(locationInfo.getCodeElementType().getName());
 		if(expressionList.size() > 0) {

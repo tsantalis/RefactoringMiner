@@ -607,8 +607,14 @@ public class ExtractOperationDetection {
 		boolean exceptionHandlingExactMatch = false;
 		boolean throwsNewExceptionExactMatch = false;
 		boolean synchronizedBlockExactMatch = false;
+		boolean constantReturnExactMatch = false;
 		if(exactMatchList.size() == 1) {
 			AbstractCodeMapping mapping = exactMatchList.get(0);
+			//a returned constant, like return true, is no evidence of extracted code, i.e., return {"ok": True} in a new Python method returning the same status as the original
+			if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT) &&
+					mapping.getFragment1().getVariables().isEmpty() && mapping.getFragment1().getMethodInvocations().isEmpty() && mapping.getFragment1().getCreations().isEmpty()) {
+				constantReturnExactMatch = true;
+			}
 			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject) {
 				StatementObject statement1 = (StatementObject)mapping.getFragment1();
 				StatementObject statement2 = (StatementObject)mapping.getFragment2();
@@ -714,7 +720,7 @@ public class ExtractOperationDetection {
 		}
 		return (mappings > 0 || (forNestedMapper && identicalMatches > 1)) && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
-				(exactMatches == 1 && !throwsNewExceptionExactMatch && !synchronizedBlockExactMatch && nonMappedElementsT2-exactMatches <= 10) ||
+				(exactMatches == 1 && !throwsNewExceptionExactMatch && !synchronizedBlockExactMatch && !constantReturnExactMatch && nonMappedElementsT2-exactMatches <= 10) ||
 				(!exceptionHandlingExactMatch && exactMatches > 1 && additionalExactMatches.size() <= exactMatches && nonMappedElementsT2-exactMatches < 20) ||
 				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()) ||
 				(mappings >= 1 && mappingOwnedByLambda && mappings >= operationBodyMapper.nonMappedLeafElementsT2())) ||

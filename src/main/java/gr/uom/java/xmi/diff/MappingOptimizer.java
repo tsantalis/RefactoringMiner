@@ -22,6 +22,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
+import gr.uom.java.xmi.decomposition.TryStatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
@@ -278,6 +279,33 @@ public class MappingOptimizer {
 		return -1;
 	}
 
+	//a try statement split between methods, i.e., mapped to several try statements: each mapping of it is backed by statements or catch clauses of the try mapped into the try it is mapped to,
+	//and no statement or catch clause backs two of them, so all its mappings are kept, i.e., the try with the with statement and except DatabaseError
+	//in _persist_pull_request and the try with except RepositoryNotRegisteredError in _handle_pull_request_delivery
+	private static boolean splitTryStatement(List<AbstractCodeMapping> mappings, List<UMLOperationBodyMapper> mappers) {
+		Set<AbstractCodeFragment> backingChildren = new LinkedHashSet<>();
+		for(int i=0; i<mappings.size(); i++) {
+			if(!(mappings.get(i).getFragment1() instanceof TryStatementObject try1) || !(mappings.get(i).getFragment2() instanceof TryStatementObject try2) ||
+					!try1.equals(mappings.get(0).getFragment1())) {
+				return false;
+			}
+			boolean childMapped = false;
+			for(AbstractCodeMapping mapping : mappers.get(i).getMappings()) {
+				if((try1.getStatements().contains(mapping.getFragment1()) && try2.getStatements().contains(mapping.getFragment2())) ||
+						(try1.getCatchClauses().contains(mapping.getFragment1()) && try2.getCatchClauses().contains(mapping.getFragment2()))) {
+					if(!backingChildren.add(mapping.getFragment1())) {
+						return false;
+					}
+					childMapped = true;
+				}
+			}
+			if(!childMapped) {
+				return false;
+			}
+		}
+		return new LinkedHashSet<>(mappers).size() == mappers.size();
+	}
+
 	private void optimizeDuplicateMappings(Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings,
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers, Collection<Refactoring> refactorings) {
 		for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
@@ -307,6 +335,9 @@ public class MappingOptimizer {
 				}
 			}
 			if(identicalExtractedMethod && exactMappers == mappers.size()) {
+				continue;
+			}
+			if(splitTryStatement(mappings, mappers)) {
 				continue;
 			}
 			Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();

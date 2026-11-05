@@ -214,6 +214,13 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
             LangASTNode typeNode = mainBuilder.visit(ctx.expression());
             if (typeNode != null) exceptionTypes.add(typeNode);
         }
+        //an unparenthesized list of exception types (Python 3.14), i.e., except DatabaseError, TimeoutError:
+        else if (ctx.expressions() != null) {
+            for (PythonParser.ExpressionContext expressionCtx : ctx.expressions().expression()) {
+                LangASTNode typeNode = mainBuilder.visit(expressionCtx);
+                if (typeNode != null) exceptionTypes.add(typeNode);
+            }
+        }
         
         if (ctx.name() != null) {
             exceptionVariable = LangASTNodeFactory.createSimpleName(ctx.name().getText(), ctx.name());
@@ -313,6 +320,13 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
         if (ctx.expression() != null) {
             LangASTNode typeNode = mainBuilder.visit(ctx.expression());
             if (typeNode != null) exceptionTypes.add(typeNode);
+        }
+        //an unparenthesized list of exception types (Python 3.14), i.e., except DatabaseError, TimeoutError:
+        else if (ctx.expressions() != null) {
+            for (PythonParser.ExpressionContext expressionCtx : ctx.expressions().expression()) {
+                LangASTNode typeNode = mainBuilder.visit(expressionCtx);
+                if (typeNode != null) exceptionTypes.add(typeNode);
+            }
         }
         
         if (ctx.name() != null) {

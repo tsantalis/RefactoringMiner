@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import static extension.umladapter.UMLModelAdapter.createUMLClass;
 import static extension.umladapter.UMLModelAdapter.createUMLOperation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,9 @@ import extension.ast.node.LangASTNode;
 import extension.ast.node.declaration.LangMethodDeclaration;
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
 import extension.ast.node.declaration.LangTypeDeclaration;
+import extension.ast.node.expression.LangParenthesizedExpression;
 import extension.ast.node.expression.LangSimpleName;
+import extension.ast.node.literal.LangTupleLiteral;
 import extension.ast.node.statement.LangAssertStatement;
 import extension.ast.node.statement.LangAsyncStatement;
 import extension.ast.node.statement.LangBlock;
@@ -44,7 +47,10 @@ import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLType;
+import org.refactoringminer.util.PathFileUtils;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLClass.ConditionallyCreated;
@@ -259,11 +265,17 @@ public class LangOperationBody extends OperationBody {
 				child.addCatchClause(catchClauseStatementObject);
 				parent.addStatement(catchClauseStatementObject);
 				catchClauseStatementObject.setTryContainer(child);
+				//the caught exception types, i.e., ValueError in except ValueError, or DatabaseError and TimeoutError in except (DatabaseError, TimeoutError)
+				List<UMLType> exceptionTypes = new ArrayList<>();
+				for(LangASTNode exceptionType : exceptionTypes(catchClause)) {
+					AbstractExpression typeExpression = new AbstractExpression(cu, sourceFolder, filePath, exceptionType, CodeElementType.TYPE, container, activeVariableDeclarations, fileContent);
+					catchClauseStatementObject.addExpression(typeExpression);
+					exceptionTypes.add(UMLType.extractTypeObject(typeExpression.getString(), PathFileUtils.getLang(filePath)));
+				}
 				LangSimpleName variableDeclaration = catchClause.getExceptionVariable();
 				if(variableDeclaration != null) {
-					// TODO fix catch exception variable declaration
-					//VariableDeclaration vd = new VariableDeclaration(cu, sourceFolder, filePath, variableDeclaration, container, activeVariableDeclarations, javaFileContent);
-					//catchClauseStatementObject.addVariableDeclaration(vd);
+					UMLType type = exceptionTypes.size() == 1 ? exceptionTypes.get(0) : new ListCompositeType(exceptionTypes, ListCompositeType.Kind.UNION);
+					catchClauseStatementObject.addVariableDeclaration(new VariableDeclaration(cu, sourceFolder, filePath, variableDeclaration, type, catchClause, fileContent));
 					AbstractExpression variableDeclarationName = new AbstractExpression(cu, sourceFolder, filePath, variableDeclaration, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent);
 					catchClauseStatementObject.addExpression(variableDeclarationName);
 				}
@@ -415,5 +427,20 @@ public class LangOperationBody extends OperationBody {
 			}
 		}
 		return ConditionallyCreated.NO;
+	}
+
+	//the exception types of an except clause, with a tuple of types expanded, i.e., except (DatabaseError, TimeoutError)
+	private static List<LangASTNode> exceptionTypes(LangCatchClause catchClause) {
+		List<LangASTNode> types = new ArrayList<>();
+		for(LangASTNode exceptionType : catchClause.getExceptionTypes()) {
+			LangASTNode node = exceptionType instanceof LangParenthesizedExpression parenthesized ? parenthesized.getParenthesizedExpression() : exceptionType;
+			if(node instanceof LangTupleLiteral tuple) {
+				types.addAll(tuple.getElements());
+			}
+			else {
+				types.add(node);
+			}
+		}
+		return types;
 	}
 }

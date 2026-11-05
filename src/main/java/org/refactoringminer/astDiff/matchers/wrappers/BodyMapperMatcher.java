@@ -839,7 +839,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
                     new KeywordMatcher(LANG1, LANG2, LANG1.JUMP_KEYWORD, LANG2.JUMP_KEYWORD, "return").match(srcStatementNode.getParent(),dstStatementNode.getParent(),mappingStore);
                 }
-                matchBlocks(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
+                matchBlocks(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2, firstCatchPairedElsewhere(abstractCodeMapping, bodyMapper));
                 //the empty Kotlin try, catch and finally blocks, which have no mapped statements
                 matchEmptyStatements(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
                 Pair<Tree, Tree> finallyBlocks = Helpers.findPairOfType(srcStatementNode, dstStatementNode, LANG1.FINALLY_BLOCK, LANG2.FINALLY_BLOCK);
@@ -985,7 +985,25 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         return null;
     }
 
+    //the first catch clause of the old try statement is paired by RefactoringMiner, in this mapper or a mapper it is nested in, with a catch clause outside the new try statement
+    private static boolean firstCatchPairedElsewhere(AbstractCodeMapping mapping, UMLOperationBodyMapper bodyMapper) {
+        if (!(mapping.getFragment1() instanceof TryStatementObject try1) || !(mapping.getFragment2() instanceof TryStatementObject try2) || try1.getCatchClauses().isEmpty())
+            return false;
+        CompositeStatementObject catch1 = try1.getCatchClauses().get(0);
+        for (UMLOperationBodyMapper mapper = bodyMapper; mapper != null; mapper = mapper.getParentMapper()) {
+            for (AbstractCodeMapping other : mapper.getMappings()) {
+                if (other.getFragment1().equals(catch1) && !try2.getCatchClauses().contains(other.getFragment2()))
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public static void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
+        matchBlocks(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2, false);
+    }
+
+    private static void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2, boolean firstCatchPairedElsewhere) {
         Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.BLOCK, LANG2.BLOCK);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);
@@ -1020,6 +1038,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             for(Tree t : dstStatementNode.getChildren()) {
                 if(t.getType().name.equals(LANG2.CATCH_CLAUSE))
                     children2.add(t);
+            }
+            //the first catch clause of the old try is paired by RefactoringMiner with a clause of another try, i.e., except RepositoryNotRegisteredError of a try split
+            //between two methods, paired with the clause where its body went, not with the first clause of the other part
+            if (firstCatchPairedElsewhere) {
+                catches = null;
             }
             if (catches != null) {
                 Pair<Tree, Tree> exceptions = Helpers.findPairOfType(catches.first,catches.second, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);

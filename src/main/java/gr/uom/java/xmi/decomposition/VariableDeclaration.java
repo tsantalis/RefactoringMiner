@@ -423,6 +423,17 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.actualSignature = signature.toString();
 	}
 
+	//the exception variable of a Python except clause, typed with the caught exception types and scoped to the clause, i.e., e : ValueError in except ValueError as e
+	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath, LangSimpleName name, UMLType type, LangASTNode catchClause, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, name, CodeElementType.SINGLE_VARIABLE_DECLARATION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = name.getIdentifier();
+		this.type = type;
+		this.scope = new VariableScope(cu, filePath, name.getStartChar(), Math.min(catchClause.getEndChar(), fileContent.length()));
+	}
+
 	//the key of a dictionary entry declares an attribute of the anonymous class of the dictionary, i.e., "batch_size": 64, named after the key like a TypeScript string key
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode key, int scopeEndOffset, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();

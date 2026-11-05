@@ -1608,6 +1608,11 @@ public class ReplacementAlgorithm {
 		}
 		findReplacements(variables1, arrayAccesses2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS, container1, container2, classDiff);
 		findReplacements(arrayAccesses1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS, container1, container2, classDiff);
+		//a dict or object literal extracted to or inlined from a variable, i.e., return {"id": 100} -> return payload
+		Set<String> objectLiterals1 = objectLiterals(statement1);
+		Set<String> objectLiterals2 = objectLiterals(statement2);
+		findReplacements(variablesInitializedWith(variables1, objectLiterals2, container1), objectLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_OBJECT_LITERAL, container1, container2, classDiff);
+		findReplacements(objectLiterals1, variablesInitializedWith(variables2, objectLiterals1, container2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_OBJECT_LITERAL, container1, container2, classDiff);
 		
 		findReplacements(methodInvocations1, arrayAccesses2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
 		findReplacements(arrayAccesses1, methodInvocations2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
@@ -6184,6 +6189,30 @@ public class ReplacementAlgorithm {
 		}
 		UMLAbstractClass declarationClass = modelDiff.findClassInParentModel(declaration.getType().getClassType());
 		return declarationClass != null && !declarationClass.attributesOfType(targetClass.getName()).isEmpty();
+	}
+
+	//the variables declared in the container with one of the object literals as initializer
+	private static Set<String> variablesInitializedWith(Set<String> variables, Set<String> objectLiterals, VariableDeclarationContainer container) {
+		Set<String> initializedVariables = new LinkedHashSet<>();
+		if(!objectLiterals.isEmpty() && container != null) {
+			for(String variable : variables) {
+				VariableDeclaration declaration = container.getVariableDeclaration(variable);
+				if(declaration != null && declaration.getInitializer() != null && objectLiterals.contains(declaration.getInitializer().getString())) {
+					initializedVariables.add(variable);
+				}
+			}
+		}
+		return initializedVariables;
+	}
+
+	private static Set<String> objectLiterals(AbstractCodeFragment statement) {
+		Set<String> objectLiterals = new LinkedHashSet<>();
+		for(AnonymousClassDeclarationObject anonymous : statement.getAnonymousClassDeclarations()) {
+			if(anonymous.isObjectLiteral()) {
+				objectLiterals.add(anonymous.toString());
+			}
+		}
+		return objectLiterals;
 	}
 
 	private static void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type,

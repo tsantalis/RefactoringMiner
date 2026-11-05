@@ -1198,13 +1198,26 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		return false;
 	}
 
+	private static List<LeafExpression> findExpression(AbstractCodeFragment fragment, String expression, Replacement replacement) {
+		List<LeafExpression> subExpressions = fragment.findExpression(expression);
+		if(subExpressions.isEmpty() && replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_OBJECT_LITERAL)) {
+			//a dict or object literal, i.e., return {"id": 100} -> return payload
+			for(AnonymousClassDeclarationObject anonymous : fragment.getAnonymousClassDeclarations()) {
+				if(anonymous.isObjectLiteral() && anonymous.toString().equals(expression)) {
+					subExpressions.add(new LeafExpression(anonymous.toString(), anonymous.getLocationInfo()));
+				}
+			}
+		}
+		return subExpressions;
+	}
+
 	private void addSubExpressionMappingsForExtract(AbstractExpression initializer, String before,
 			ExtractVariableRefactoring ref, Replacement replacement) {
 		boolean foundInLambdaMapper = false;
 		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 			for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
 				if(mapping.getReplacements().contains(replacement)) {
-					List<LeafExpression> subExpressions = mapping.getFragment1().findExpression(before);
+					List<LeafExpression> subExpressions = findExpression(mapping.getFragment1(), before, replacement);
 					for(LeafExpression subExpression : subExpressions) {
 						LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
 						ref.addSubExpressionMapping(leafMapping);
@@ -1214,7 +1227,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 		}
 		if(!foundInLambdaMapper) {
-			List<LeafExpression> subExpressions = getFragment1().findExpression(before);
+			List<LeafExpression> subExpressions = findExpression(getFragment1(), before, replacement);
 			for(LeafExpression subExpression : subExpressions) {
 				LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
 				ref.addSubExpressionMapping(leafMapping);
@@ -1614,7 +1627,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 			for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
 				if(mapping.getReplacements().contains(replacement)) {
-					List<LeafExpression> subExpressions = mapping.getFragment2().findExpression(after);
+					List<LeafExpression> subExpressions = findExpression(mapping.getFragment2(), after, replacement);
 					for(LeafExpression subExpression : subExpressions) {
 						LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
 						ref.addSubExpressionMapping(leafMapping);
@@ -1624,7 +1637,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 		}
 		if(!foundInLambdaMapper) {
-			List<LeafExpression> subExpressions = getFragment2().findExpression(after);
+			List<LeafExpression> subExpressions = findExpression(getFragment2(), after, replacement);
 			if(subExpressions.isEmpty() && LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
 				if(initializer.getString().contains(".")) {
 					String temp = new String(initializer.getString());

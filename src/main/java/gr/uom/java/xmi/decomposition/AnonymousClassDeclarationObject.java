@@ -25,6 +25,8 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private LocationInfo locationInfo;
 	private AnonymousClassDeclaration astNode;
 	private String astNodeString;
+	//a TypeScript object literal or a Python dict literal, i.e., {"id": 100}
+	private boolean objectLiteral;
 	private List<LeafExpression> variables = new ArrayList<>();
 	private List<String> types = new ArrayList<>();
 	private List<AbstractCall> methodInvocations = new ArrayList<>();
@@ -68,12 +70,14 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	public AnonymousClassDeclarationObject(String sourceFolder, String filePath, Swc4jAstObjectLit objectLiteral, String fileContent) {
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, objectLiteral, CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
 		this.astNodeString = fileContent.substring(objectLiteral.getSpan().getStart(), objectLiteral.getSpan().getEnd());
+		this.objectLiteral = true;
 	}
 
 	public AnonymousClassDeclarationObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode dictionary, String fileContent) {
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, dictionary, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		//flattened like the statements, which contain it
 		this.astNodeString = LangVisitor.stringify(dictionary);
+		this.objectLiteral = true;
 	}
 
 	public LocationInfo getLocationInfo() {
@@ -90,6 +94,10 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	
 	public String toString() {
 		return astNodeString;
+	}
+
+	public boolean isObjectLiteral() {
+		return objectLiteral;
 	}
 
 	public List<AbstractCall> getMethodInvocations() {

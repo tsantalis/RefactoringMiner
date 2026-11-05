@@ -432,7 +432,9 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     }
 
     public boolean hasSameKind(UMLClass umlClass) {
-    	if(this.isInterface != umlClass.isInterface)
+    	//a TypeScript interface and type alias declare the same kind of type, i.e., interface Item { id: string } and type Item = { id: string }
+    	boolean interfaceAndTypeAlias = (this.isInterface && umlClass.isTypeAlias) || (this.isTypeAlias && umlClass.isInterface);
+    	if(this.isInterface != umlClass.isInterface && !interfaceAndTypeAlias)
     		return false;
     	if(!equalTypeParameters(umlClass))
     		return false;

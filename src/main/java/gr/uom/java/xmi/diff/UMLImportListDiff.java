@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLType;
+import org.refactoringminer.util.PathFileUtils;
 
 public class UMLImportListDiff {
 	private Set<UMLImport> removedImports;
@@ -52,6 +53,17 @@ public class UMLImportListDiff {
 		}
 		oldImportSet.removeAll(removedImportsToBeRemoved);
 		newImportSet.removeAll(addedImportsToBeRemoved);
+		//a JS/TS name imported from another module, i.e., ./api/contract.RunStatus -> @nikolai/api-client.RunStatus
+		for(UMLImport oldImport : oldImportSet) {
+			UMLImport newImport = sameNameFromAnotherModule(oldImport, oldImportSet, newImportSet);
+			if(newImport != null && sameNameFromAnotherModule(newImport, newImportSet, oldImportSet) == oldImport) {
+				changedImports.add(Pair.of(oldImport, newImport));
+				removedImportsToBeRemoved.add(oldImport);
+				addedImportsToBeRemoved.add(newImport);
+			}
+		}
+		oldImportSet.removeAll(removedImportsToBeRemoved);
+		newImportSet.removeAll(addedImportsToBeRemoved);
 		this.removedImports = oldImportSet;
 		this.addedImports = newImportSet;
 		
@@ -78,6 +90,35 @@ public class UMLImportListDiff {
 				this.addedImports.removeAll(value);
 			}
 		}
+	}
+
+	//the only import of the other set that imports the same name of the same kind (default, named or namespace), when the name is the only one of its set,
+	//as a JS/TS import is named after its module and the local name it binds
+	private static UMLImport sameNameFromAnotherModule(UMLImport umlImport, Set<UMLImport> imports, Set<UMLImport> otherImports) {
+		String filePath = umlImport.getLocationInfo().getFilePath();
+		if(!PathFileUtils.isJavaScriptFile(filePath) && !PathFileUtils.isTypeScriptFile(filePath))
+			return null;
+		String name = importedName(umlImport);
+		if(name == null)
+			return null;
+		for(UMLImport other : imports) {
+			if(other != umlImport && name.equals(importedName(other)))
+				return null;
+		}
+		UMLImport match = null;
+		for(UMLImport other : otherImports) {
+			if(name.equals(importedName(other)) && other.isOnDemand() == umlImport.isOnDemand() && other.isStatic() == umlImport.isStatic()) {
+				if(match != null)
+					return null;
+				match = other;
+			}
+		}
+		return match;
+	}
+
+	private static String importedName(UMLImport umlImport) {
+		int index = umlImport.getName().lastIndexOf('.');
+		return index > 0 ? umlImport.getName().substring(index + 1) : null;
 	}
 
 	private UMLImport findMatchingImport(Set<UMLImport> imports, String name) {

@@ -1151,7 +1151,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 		}
-		if(this.isInterface() && umlClass.isInterface()) {
+		if(this.isInterface() && umlClass.isInterface() && totalOperations > 0) {
 			if(commonOperations.size() > Math.floor(totalOperations/2.0)) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 			}

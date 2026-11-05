@@ -12,6 +12,7 @@
     "common/src/main/java/io/netty/util/AttributeMap.java"
   ],
   "AutoCloseable.java": [],
+  "BlockingQueue.java": [],
   "ByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
   ],
@@ -60,6 +61,9 @@
   "IoUringBufferRing.java": [
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringBufferRing.java"
   ],
+  "IoUringBufferRingTest.java": [
+    "transport-native-io_uring/src/test/java/io/netty/channel/uring/IoUringBufferRingTest.java"
+  ],
   "IoUringIoHandle.java": [
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringIoHandle.java"
   ],
@@ -84,5 +88,7 @@
   "String.java": [],
   "UnixChannel.java": [
     "transport-native-unix-common/src/main/java/io/netty/channel/unix/UnixChannel.java"
-  ]
+  ],
+  "concurrent.java": [],
+  "util.java": []
 }

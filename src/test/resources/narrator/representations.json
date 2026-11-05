@@ -935,7 +935,7 @@
     "description": "io_uring reads with IORING_RECV_MULTISHOT when the kernel supports it",
     "notes": [
       "readComplete is printed whole (its new guard and `pending` sit directly in its body). The rest of the rewritten finally reads as removed and added code.",
-      "The only change of IoUringBufferRingTest, the third read moved before `if (!incremental)`, is not shown: no change node exists for it (whether RM reports the move is not checked yet).",
+      "The only change of IoUringBufferRingTest, the third read moved before `if (!incremental)`, is shown as a moved statement. The compare diff dropped the file as a trivial comment change until #1208 was fixed.",
       "scheduleRead0 is printed whole (43 lines) for the message added to its first assert, as an assert reads within its block, here the member body."
     ],
     "expectations": [
@@ -955,8 +955,7 @@
         "description": "the reordered third read of the buffer ring test is shown",
         "kind": "contains",
         "of": "diff",
-        "text": "ByteBuf readBuffer = sendAndRecvMessage(clientChannel, writeBuffer, bufferSyncer);",
-        "todo": "a statement moved within its block (IoUringBufferRingTest, before `if (!incremental)`) has no change node; check whether RM reports the move before blaming either side"
+        "text": "ByteBuf readBuffer = sendAndRecvMessage(clientChannel, writeBuffer, bufferSyncer);"
       },
       {
         "description": "the two assert edits of cancelOutstandingReads read as one in-place diff",

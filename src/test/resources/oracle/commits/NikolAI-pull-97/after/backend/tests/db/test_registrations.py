@@ -1,6 +1,6 @@
 """Real SQL tests for which repositories NikolAI serves (US-8). Need TEST_DATABASE_URL."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 from app.db import connect
 from app.db.repositories.registrations import active_repository_id

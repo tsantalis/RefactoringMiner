@@ -12,14 +12,13 @@ from fastapi.responses import RedirectResponse
 from app.api.dependencies import current_user, database, require_allowed_origin
 from app.core.config import Settings, get_settings
 from app.db.models.users import User
-from app.db.repositories.users import revoke_session
 from app.github.oauth import GitHubOAuthError, authorize_url, fetch_github_user
 from app.services.sessions import (
     SESSION_COOKIE,
     SESSION_LIFETIME,
     STATE_COOKIE,
     STATE_LIFETIME,
-    hash_token,
+    end_session,
     new_state,
     start_session,
     state_is_valid,
@@ -147,7 +146,7 @@ async def logout(
     token = request.cookies.get(SESSION_COOKIE)
     if token:
         async with database(settings) as connection:
-            await revoke_session(connection, hash_token(token))
+            await end_session(connection, token)
     response = Response(status_code=status.HTTP_204_NO_CONTENT)
     _clear_cookie(response, SESSION_COOKIE, SESSION_SAMESITE)
     return response

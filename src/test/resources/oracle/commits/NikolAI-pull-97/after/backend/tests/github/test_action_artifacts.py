@@ -1,6 +1,6 @@
 """Tests for reading refactorings.json out of the RefactoringMiner Action's artifacts (US-8)."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import io
 import tarfile

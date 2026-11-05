@@ -1,6 +1,6 @@
 """Test doubles shared by the suite. Nothing here touches the network."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import json
 from collections.abc import Sequence

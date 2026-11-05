@@ -1,6 +1,6 @@
 """Tests for posting the RefactoringMiner report on a PR once the Action's run completes (US-8)."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import io
 import tarfile
@@ -12,9 +12,11 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from githubkit.exception import GitHubException
+from psycopg import OperationalError
 from pydantic import SecretStr
 
 from app.core.config import Settings
+from app.db.models.refactorings import NewRefactoringRun
 from app.github.payloads import WorkflowRunEvent
 from app.services import refactoring_comments
 from app.services.refactoring_comments import handle_refactoring_run, wants_refactoring_report
@@ -66,7 +68,13 @@ def github(monkeypatch: pytest.MonkeyPatch) -> MagicMock:
     fake = make_fake_github()
     fake.rest.pulls.async_get = AsyncMock(
         return_value=SimpleNamespace(
-            parsed_data=SimpleNamespace(html_url=PR_URL, head=SimpleNamespace(sha=HEAD_SHA))
+            parsed_data=SimpleNamespace(
+                html_url=PR_URL,
+                head=SimpleNamespace(sha=HEAD_SHA),
+                base=SimpleNamespace(sha="base123"),
+                state="open",
+                merged=False,
+            )
         )
     )
     fake.rest.actions.async_list_workflow_run_artifacts = AsyncMock(
@@ -221,3 +229,60 @@ def test_only_successful_refactoring_report_runs_on_a_pull_request_are_reported(
     overrides: dict[str, object], expected: bool
 ) -> None:
     assert wants_refactoring_report(run_event(**overrides)) is expected
+
+
+class FakeConnection:
+    async def __aenter__(self) -> FakeConnection:
+        return self
+
+    async def __aexit__(self, *_: object) -> None:
+        return None
+
+
+def with_database(settings: Settings) -> Settings:
+    return settings.model_copy(update={"database_url": SecretStr("postgresql://db/nikolai")})
+
+
+async def test_saves_the_refactorings_for_the_read_api(
+    github: MagicMock, settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    saved: list[NewRefactoringRun] = []
+
+    async def fake_save(_connection: object, run: NewRefactoringRun) -> bool:
+        saved.append(run)
+        return True
+
+    monkeypatch.setattr(refactoring_comments, "connect", AsyncMock(return_value=FakeConnection()))
+    monkeypatch.setattr(refactoring_comments, "save_refactoring_run", fake_save)
+
+    await handle_refactoring_run(run_event(), with_database(settings))
+
+    (run,) = saved
+    assert (run.pr_number, run.head_sha, run.base_sha, run.workflow_run_id) == (
+        PR_NUMBER,
+        HEAD_SHA,
+        "base123",
+        REFACTORING_WORKFLOW_RUN_ID,
+    )
+    assert [r.type for r in run.refactorings.refactorings] == [
+        "Rename Method",
+        "Extract Method",
+        "Rename Method",
+    ]
+
+
+async def test_a_database_failure_still_leaves_the_comment(
+    github: MagicMock,
+    settings: Settings,
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    monkeypatch.setattr(
+        refactoring_comments, "connect", AsyncMock(side_effect=OperationalError("password=x"))
+    )
+
+    await handle_refactoring_run(run_event(), with_database(settings))
+
+    github.rest.issues.async_create_comment.assert_awaited_once()
+    assert "Could not save the refactorings" in caplog.text
+    assert "password" not in caplog.text

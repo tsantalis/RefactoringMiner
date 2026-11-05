@@ -1,8 +1,9 @@
 """Typed views of the GitHub webhook payloads NikolAI reads (US-2).
 
-Includes the identifiers and PR lifecycle fields needed for persistence (US-4.7).
+Includes the identifiers and PR lifecycle fields needed for persistence (US-4.7), and the
+``workflow_run`` events that bring in the RefactoringMiner Action's results (US-8).
 Pydantic ignores undeclared fields, so new GitHub fields never break parsing. Reference:
-https://docs.github.com/en/webhooks/webhook-events-and-payloads#pull_request
+https://docs.github.com/en/webhooks/webhook-events-and-payloads
 """
 
 # AI contribution: 50%
@@ -80,6 +81,39 @@ class InstallationEvent(_Payload):
 
     action: str
     installation: Installation
+    sender: GitHubUser  # Who installed the App or changed its repositories.
     repositories: list[InstalledRepository] = []
     repositories_added: list[InstalledRepository] = []
     repositories_removed: list[InstalledRepository] = []
+
+
+class RepositoryRef(_Payload):
+    id: int
+
+
+class BranchRef(_Payload):
+    repo: RepositoryRef
+
+
+class WorkflowRunPullRequest(_Payload):
+    number: int
+    base: BranchRef  # The repository the PR merges into.
+
+
+class WorkflowRun(_Payload):
+    id: int
+    name: str
+    event: str  # What started the run, e.g. "pull_request" or "push".
+    head_sha: str
+    conclusion: str | None = None  # "success", "failure"... None until the run completes.
+    # Empty when the PR comes from a fork; can list several PRs sharing one head branch.
+    pull_requests: tuple[WorkflowRunPullRequest, ...] = ()
+
+
+class WorkflowRunEvent(_Payload):
+    """A ``workflow_run`` webhook delivery (US-8), sent when an Actions workflow run changes."""
+
+    action: str  # "requested", "in_progress" or "completed".
+    installation: Installation
+    repository: Repository
+    workflow_run: WorkflowRun

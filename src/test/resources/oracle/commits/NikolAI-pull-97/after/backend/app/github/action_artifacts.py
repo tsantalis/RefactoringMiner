@@ -11,7 +11,7 @@ Artifacts are written by a team's workflow, so they are untrusted: only the one 
 read, never extracted to disk, and every size is capped.
 """
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import asyncio
 import tarfile

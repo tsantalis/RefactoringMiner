@@ -12,7 +12,7 @@ A failure at any step is logged. If the model call fails, a short "couldn't revi
 is posted on the PR; with a database configured, the failure is also recorded for retry.
 """
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import asyncio
 import logging

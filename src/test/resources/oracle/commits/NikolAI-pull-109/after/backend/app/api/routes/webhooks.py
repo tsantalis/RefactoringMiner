@@ -1,9 +1,10 @@
 """GitHub App webhook endpoint (US-2).
 
 Checks that the delivery really comes from GitHub, then hands pull-request events to the
-review service (US-3) as a background task: GitHub waits only about 10 seconds for a reply,
-and a model review takes 4 to 18 seconds. Installation events register and archive the
-repositories the App is installed on (US-10.1).
+review service (US-3), and completed RefactoringMiner Action runs to the refactoring report
+(US-8), as background tasks: GitHub waits only about 10 seconds for a reply, and a model
+review takes 4 to 18 seconds. Installation events register and archive the repositories the
+App is installed on (US-10.1).
 """
 
 # AI contribution: 50%
@@ -25,11 +26,13 @@ from app.db.repositories.pr_events import (
     SavedPREvent,
     save_pr_event,
 )
-from app.github.payloads import InstallationEvent, PullRequestEvent
+from app.db.repositories.registrations import active_repository_id
+from app.github.payloads import InstallationEvent, PullRequestEvent, WorkflowRunEvent
 from app.github.signatures import SIGNATURE_HEADER, verify_signature
 from app.providers.base import LLMProvider
 from app.services.installations import INSTALLATION_EVENTS, apply_installation_event
 from app.services.pr_review import handle_pull_request_event, wants_review
+from app.services.refactoring_comments import handle_refactoring_run, wants_refactoring_report
 
 logger = logging.getLogger(__name__)
 
@@ -76,8 +79,14 @@ async def _apply_installation(
         async with asyncio.timeout(5), await connect(_database_url(settings)) as connection:
             await apply_installation_event(connection, event_name, event)
     except DatabaseError, TimeoutError:
-        # Only the type: psycopg's message can echo the connection string.
-        logger.error("Could not apply %s delivery %s", event_name, delivery)
+        # Only the type: psycopg's message can echo the connection string. GitHub doesn't retry
+        # a failed delivery by itself, and the transaction left nothing applied.
+        logger.error(
+            "Could not apply %s delivery %s; nothing was saved. Redeliver it from the GitHub "
+            "App's Advanced settings once the database is back",
+            event_name,
+            delivery,
+        )
         raise HTTPException(
             status.HTTP_503_SERVICE_UNAVAILABLE, "Could not save installation change"
         ) from None
@@ -117,9 +126,9 @@ async def _save_pull_request(
             )
     except RepositoryNotRegisteredError:
         logger.warning(
-            "Skipped PR delivery %s: repository ID %s has no active registration; "
-            "reinstall the GitHub App on it or run python -m app.db.register_repository, "
-            "then redeliver the event",
+            "Skipped PR delivery %s: repository ID %s has no active registration (or was "
+            "installed but not yet linked to a course team by an instructor); link it or run "
+            "python -m app.db.register_repository, then redeliver the event",
             delivery_id,
             event.repository.id,
         )
@@ -145,6 +154,8 @@ async def receive_github_webhook(
     delivery = request.headers.get("X-GitHub-Delivery", "-")
     if event_name in INSTALLATION_EVENTS:
         return await _apply_installation(body, event_name, delivery, settings)
+    if event_name == "workflow_run":
+        return await _receive_workflow_run(body, delivery, settings, background_tasks)
     if event_name != "pull_request":
         # Includes "ping", which GitHub sends when the webhook is set up.
         logger.info("Ignored a GitHub %r event (delivery %s)", event_name, delivery)
@@ -165,4 +176,47 @@ async def receive_github_webhook(
         return {"ok": True}
     background_tasks.add_task(handle_pull_request_event, event, provider, settings, saved.event_id)
     logger.info("Scheduled a review of %s (delivery %s)", label, delivery)
+    return {"ok": True}
+
+
+async def _receive_workflow_run(
+    body: bytes, delivery: str, settings: Settings, background_tasks: BackgroundTasks
+) -> dict[str, bool]:
+    """Schedule the refactoring report of a completed RefactoringMiner Action run (US-8)."""
+    try:
+        event = WorkflowRunEvent.model_validate_json(body)
+    except ValidationError:
+        logger.warning("Rejected an unreadable workflow_run payload (delivery %s)", delivery)
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "Unexpected workflow_run payload"
+        ) from None
+    if not wants_refactoring_report(event):
+        return {"ok": True}
+    database_url = settings.database_url
+    if database_url is None or not database_url.get_secret_value():
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "Database not configured")
+    try:
+        async with asyncio.timeout(5), await connect(database_url.get_secret_value()) as connection:
+            registered = await active_repository_id(connection, event.repository.id) is not None
+    except DatabaseError, TimeoutError:
+        # Database exceptions may contain connection credentials.
+        logger.error("Could not check the registration for delivery %s", delivery)
+        raise HTTPException(
+            status.HTTP_503_SERVICE_UNAVAILABLE, "Could not check the repository"
+        ) from None
+    if not registered:
+        # The Action also runs on repositories that aren't teams', such as NikolAI's own.
+        logger.info(
+            "No refactoring report for %s: not registered to an active team (delivery %s)",
+            event.repository.full_name,
+            delivery,
+        )
+        return {"ok": True, "ignored": True}
+    background_tasks.add_task(handle_refactoring_run, event, settings)
+    logger.info(
+        "Scheduled the refactoring report of run %d on %s (delivery %s)",
+        event.workflow_run.id,
+        event.repository.full_name,
+        delivery,
+    )
     return {"ok": True}

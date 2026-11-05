@@ -6,7 +6,7 @@ review service (US-3), and completed RefactoringMiner Action runs to the refacto
 review takes 4 to 18 seconds.
 """
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import asyncio
 import json

@@ -6,7 +6,7 @@ Pydantic ignores undeclared fields, so new GitHub fields never break parsing. Re
 https://docs.github.com/en/webhooks/webhook-events-and-payloads
 """
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 from datetime import datetime
 from typing import Literal

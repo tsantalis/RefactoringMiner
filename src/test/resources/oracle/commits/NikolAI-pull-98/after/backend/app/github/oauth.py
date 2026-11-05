@@ -6,6 +6,7 @@ https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-githu
 
 # AI contribution: 50%
 
+import re
 from typing import Final
 from urllib.parse import urlencode
 
@@ -16,6 +17,9 @@ AUTHORIZE_URL: Final = "https://github.com/login/oauth/authorize"
 TOKEN_URL: Final = "https://github.com/login/oauth/access_token"  # noqa: S105
 USER_URL: Final = "https://api.github.com/user"
 TIMEOUT_SECONDS: Final = 10.0
+# GitHub's error values are snake_case words such as bad_verification_code. Anything else in that
+# field is not ours to trust, so it is never echoed into the logs.
+ERROR_CODE: Final = re.compile(r"[a-z_]{1,64}")
 
 
 class GitHubOAuthError(RuntimeError):
@@ -49,10 +53,18 @@ async def _exchange_code(
     )
     response.raise_for_status()
     body = response.json()
-    token = body.get("access_token") if isinstance(body, dict) else None
-    if not isinstance(token, str) or not token:
+    if not isinstance(body, dict):
         raise GitHubOAuthError("GitHub returned no user token")
+    token = body.get("access_token")
+    if not isinstance(token, str) or not token:
+        raise GitHubOAuthError(f"GitHub returned no user token: {_error_code(body)}")
     return token
+
+
+def _error_code(body: dict[str, object]) -> str:
+    """Why GitHub refused, e.g. an expired code or a wrong client secret."""
+    code = body.get("error")
+    return code if isinstance(code, str) and ERROR_CODE.fullmatch(code) else "no error code"
 
 
 async def fetch_github_user(

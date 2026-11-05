@@ -1,6 +1,6 @@
 """Tests for reading RefactoringMiner's refactorings.json and rendering NikolAI's report (US-8)."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 from pathlib import Path
 

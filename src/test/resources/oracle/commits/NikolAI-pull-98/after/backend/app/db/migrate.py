@@ -8,7 +8,6 @@ safe to rerun. Run ``python -m app.db.migrate --help`` for database selection op
 
 import argparse
 import asyncio
-from getpass import getpass
 from pathlib import Path
 from typing import Final
 
@@ -16,18 +15,19 @@ from psycopg import AsyncConnection
 from psycopg import Error as DatabaseError
 from psycopg.rows import DictRow
 
-from app.core.config import ConfigurationError, Settings
+from app.core.config import ConfigurationError
 from app.db import connect
+from app.db.command_url import command_database_url
 
 Connection = AsyncConnection[DictRow]
 
 MIGRATIONS_DIR: Final = Path(__file__).resolve().parents[2] / "migrations"
-# Databases set up by init_schema have this file's tables but no record of it.
+# Databases set up before this runner existed have this file's tables but no record of it.
 INITIAL_MIGRATION: Final = "0001_initial_schema.sql"
 
 
 async def _record_initial_schema(connection: Connection) -> None:
-    """Mark 0001 as applied when ``init_schema`` created the tables before this runner existed."""
+    """Mark 0001 as applied when its tables were created before this runner existed."""
     await connection.execute(
         """INSERT INTO schema_migrations (filename)
            SELECT %s WHERE to_regclass('public.users') IS NOT NULL
@@ -79,14 +79,8 @@ async def apply_migrations(
 
 
 async def _run(*, prompt_database_url: bool) -> None:
-    if prompt_database_url:
-        url = getpass("Database URL to migrate (hidden): ").strip()
-    else:
-        secret = Settings().database_url
-        url = secret.get_secret_value().strip() if secret else ""
-    if not url:
-        raise ConfigurationError("Set DATABASE_URL or use --prompt-database-url")
-    async with await connect(url) as connection:
+    prompt = "Database URL to migrate (hidden): " if prompt_database_url else None
+    async with await connect(command_database_url(prompt=prompt)) as connection:
         applied = await apply_migrations(connection)
     for name in applied:
         print(f"Applied {name}")
@@ -100,9 +94,13 @@ def main() -> None:
     args = parser.parse_args()
     try:
         asyncio.run(_run(prompt_database_url=args.prompt_database_url))
-    except DatabaseError:
-        # Connection strings and SQL exceptions can contain credentials.
-        parser.exit(1, "Migration failed: nothing was changed. Check connectivity and the SQL.\n")
+    except DatabaseError as error:
+        # Only the type (a lock timeout, a bad migration): the message can contain credentials.
+        parser.exit(
+            1,
+            f"Migration failed ({type(error).__name__}): nothing was changed. "
+            "Check connectivity and the SQL.\n",
+        )
     except OSError:
         parser.exit(1, "Cannot read the migrations folder from this installation.\n")
     except ConfigurationError, ValueError:

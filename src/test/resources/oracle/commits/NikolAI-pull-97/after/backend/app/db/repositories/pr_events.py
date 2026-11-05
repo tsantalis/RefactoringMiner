@@ -1,6 +1,6 @@
 """Persist validated PR deliveries; webhook routing and review policy live elsewhere."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 from dataclasses import dataclass
 from uuid import UUID

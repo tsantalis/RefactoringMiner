@@ -1,6 +1,6 @@
 """Which GitHub repositories NikolAI serves: those registered to an active team."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 from uuid import UUID
 

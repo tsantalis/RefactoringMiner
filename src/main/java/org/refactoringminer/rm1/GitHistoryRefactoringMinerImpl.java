@@ -1947,7 +1947,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
 							repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
-							commitFile, fileName, headSha, mergeBaseSha);
+							commitFile, fileName, headSha, mergeBaseSha, repository);
 					count++;
 				}
 			}
@@ -2283,44 +2283,32 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		List<String> commitFileNames = new ArrayList<>();
 		String headSha = pullRequest.getHead().getSha();
 		String baseSha = pullRequest.getBase().getSha();
-		if(repository.isPrivate()) {
-			PagedIterable<GHPullRequestCommitDetail> commits = pullRequest.listCommits();
-			for(GHPullRequestCommitDetail commit : commits) {
-				if(commit.getParents().length > 1) {
-					//skip merge commits
-					continue;
+		PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
+		int changedFiles = pullRequest.getChangedFiles();
+		if(changedFiles == 0) {
+			changedFiles = 10;
+		}
+		ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
+		int count = 1;
+		String mergeBaseSha = repository.getCompare(baseSha, headSha).getMergeBaseCommit().getSHA1();
+		baseSha = mergeBaseSha;
+		for(GHPullRequestFileDetail commitFile : files) {
+			String fileName = commitFile.getFilename();
+			if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
+				commitFileNames.add(fileName);
+				logger.info(String.format("Processing file: " + fileName));
+				//sleep every 100 files to avoid HTTP 403 error
+				if (count % 100 == 0) {
+					Thread.sleep(500);
 				}
-				populateWithGitHubAPI(cloneURL, commit.getSha(), commitFileNames, filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+				multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
+						repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
+						commitFile, fileName, headSha, mergeBaseSha, repository);
+				count++;
 			}
 		}
-		else {
-			PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
-			int changedFiles = pullRequest.getChangedFiles();
-			if(changedFiles == 0) {
-				changedFiles = 10;
-			}
-			ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
-			int count = 1;
-			String mergeBaseSha = repository.getCompare(baseSha, headSha).getMergeBaseCommit().getSHA1();
-			baseSha = mergeBaseSha;
-			for(GHPullRequestFileDetail commitFile : files) {
-				String fileName = commitFile.getFilename();
-				if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
-					commitFileNames.add(fileName);
-					logger.info(String.format("Processing file: " + fileName));
-					//sleep every 100 files to avoid HTTP 403 error
-					if (count % 100 == 0) {
-						Thread.sleep(500);
-					}
-					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
-							repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
-							commitFile, fileName, headSha, mergeBaseSha);
-					count++;
-				}
-			}
-			pool.shutdown();
-			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-		}
+		pool.shutdown();
+		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
 		List<String> orderedFilesBefore = new ArrayList<>();
 		List<String> orderedFilesCurrent = new ArrayList<>();
 		for(String fileName : new LinkedHashSet<>(commitFileNames)) {
@@ -2398,6 +2386,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return diffs.iterator().next();
 	}
 
+	//the raw URLs of a private repository need authentication, so its files are read with the contents API
+	private String fetchPullRequestFileContent(GHRepository repository, String path, String sha, URL rawURL) throws IOException {
+		if(repository.isPrivate()) {
+			return streamToString(repository.getFileContent(path, sha).read());
+		}
+		return fetchRawFileContent(rawURL);
+	}
+
 	private String fetchRawFileContent(URL rawURL) throws IOException {
 		URLConnection connection = rawURL.openConnection();
 		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -2407,15 +2403,19 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private void multiThreadedFetch(Map<String, String> filesBefore, Map<String, String> filesCurrent,
 			Map<String, String> renamedFilesHint, Set<String> repositoryDirectoriesBefore,
 			Set<String> repositoryDirectoriesCurrent, Set<String> deletedAndRenamedFileParentDirectories,
-			List<String> commitFileNames, ExecutorService pool, GHPullRequestFileDetail commitFile, String fileName, String headSha, String mergeBaseSha) {
+			List<String> commitFileNames, ExecutorService pool, GHPullRequestFileDetail commitFile, String fileName, String headSha, String mergeBaseSha,
+			GHRepository repository) {
 		if (commitFile.getStatus().equals("modified")) {
 			Runnable r = () -> {
 				try {
 					URL currentRawURL = commitFile.getRawUrl();
-					String currentRawFile = fetchRawFileContent(currentRawURL);
+					String currentRawFile = fetchPullRequestFileContent(repository, fileName, headSha, currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile.getPatch());
 					String parentRawFile = null;
-					if(patchLineList.isEmpty() && commitFile.getChanges() > 0) {
+					if(repository.isPrivate()) {
+						parentRawFile = fetchPullRequestFileContent(repository, fileName, mergeBaseSha, null);
+					}
+					else if(patchLineList.isEmpty() && commitFile.getChanges() > 0) {
 						URL parentRawURL = new URI(currentRawURL.toString().replace(headSha, mergeBaseSha)).toURL();
 						parentRawFile = fetchRawFileContent(parentRawURL);
 					}
@@ -2443,7 +2443,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Runnable r = () -> {
 				try {
 					URL currentRawURL = commitFile.getRawUrl();
-					String currentRawFile = fetchRawFileContent(currentRawURL);
+					String currentRawFile = fetchPullRequestFileContent(repository, fileName, headSha, currentRawURL);
 					filesCurrent.put(fileName, currentRawFile);
 				}
 				catch(IOException e) {
@@ -2456,7 +2456,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Runnable r = () -> {
 				try {
 					URL rawURL = commitFile.getRawUrl();
-					String parentRawFile = fetchRawFileContent(rawURL);
+					String parentRawFile = fetchPullRequestFileContent(repository, fileName, mergeBaseSha, rawURL);
 					filesBefore.put(fileName, parentRawFile);
 					if(fileName.contains("/")) {
 						deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
@@ -2474,10 +2474,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				try {
 					String previousFilename = commitFile.getPreviousFilename();
 					URL currentRawURL = commitFile.getRawUrl();
-					String currentRawFile = fetchRawFileContent(currentRawURL);
+					String currentRawFile = fetchPullRequestFileContent(repository, fileName, headSha, currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile.getPatch());
 					String parentRawFile;
-					if(patchLineList.isEmpty() && commitFile.getChanges() > 0) {
+					if(repository.isPrivate()) {
+						parentRawFile = fetchPullRequestFileContent(repository, previousFilename, mergeBaseSha, null);
+					}
+					else if(patchLineList.isEmpty() && commitFile.getChanges() > 0) {
 						String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 						String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
 						URL parentRawURL = new URI(currentRawURL.toString().replace(headSha, mergeBaseSha).replace(encodedFileName, encodedPreviousFilename)).toURL();

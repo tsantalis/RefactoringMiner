@@ -45,16 +45,23 @@ def _changed_repositories(
 async def apply_installation_event(
     connection: AsyncConnection[DictRow], event_name: str, event: InstallationEvent
 ) -> InstallationChange:
-    """Register added repositories and archive removed ones. Redelivering changes nothing."""
+    """Register added repositories and archive removed ones, all or nothing.
+
+    One transaction, so a timeout or a database error part way leaves nothing half applied and
+    redelivering the event applies it whole. Redelivering a delivery that worked changes nothing.
+    """
     added, removed = _changed_repositories(event_name, event)
     skipped = 0
-    for repository in added:
-        try:
-            await register_installed_repository(connection, repository.id, repository.full_name)
-        except ValueError:
-            skipped += 1
-            logger.warning("Skipped installed repository %s: unexpected name", repository.id)
-    archived = await archive_repositories(connection, [r.id for r in removed]) if removed else 0
+    async with connection.transaction():
+        for repository in added:
+            try:
+                await register_installed_repository(
+                    connection, repository.id, repository.full_name, event.sender.login
+                )
+            except ValueError:
+                skipped += 1
+                logger.warning("Skipped installed repository %s: unexpected name", repository.id)
+        archived = await archive_repositories(connection, [r.id for r in removed]) if removed else 0
     change = InstallationChange(len(added) - skipped, archived, skipped)
     logger.info(
         "Installation %s %s %s: %d registered, %d archived, %d skipped",

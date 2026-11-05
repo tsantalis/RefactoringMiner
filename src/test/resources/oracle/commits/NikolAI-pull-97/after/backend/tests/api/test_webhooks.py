@@ -4,7 +4,7 @@
 whole flow: signature check, then the review job. GitHub and the model are faked.
 """
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import json
 from collections.abc import Iterator

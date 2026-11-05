@@ -1,6 +1,6 @@
 """Tests for the PR review service: a US-2 webhook event in, a US-3 review comment out."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import json
 from datetime import UTC, datetime

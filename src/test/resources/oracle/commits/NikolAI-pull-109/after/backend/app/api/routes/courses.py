@@ -35,8 +35,8 @@ from app.db.models.courses import (
 from app.db.models.users import User
 from app.db.repositories import courses as repo
 from app.db.repositories.repository_registry import (
-    LinkRefusal,
-    RepositoryLinkError,
+    RepositoryNotFoundError,
+    RepositoryNotLinkableError,
     link_repository,
 )
 from app.services.access import can_read_team
@@ -209,27 +209,35 @@ async def import_course_roster(
         return await import_roster(connection, course_id, body.entries, user.id)
 
 
-_LINK_REFUSALS = {
-    LinkRefusal.NOT_REGISTERED: (status.HTTP_404_NOT_FOUND, "Install the GitHub App on it first"),
-    LinkRefusal.UNINSTALLED: (status.HTTP_409_CONFLICT, "The GitHub App was removed from it"),
-    LinkRefusal.OTHER_COURSE: (status.HTTP_409_CONFLICT, "It belongs to another course"),
-}
-
-
 @router.post("/{course_id}/teams/{team_id}/repositories", dependencies=WRITE)
 async def link_team_repository(
     course_id: UUID, team_id: UUID, body: RepositoryLink, user: SignedIn, settings: AppSettings
 ) -> TeamDetail:
-    """Move a repository the App is installed on into this course team (US-10.1)."""
+    """Move a repository the App is installed on into this course team (US-10.1).
+
+    Any refusal other than "not registered" is the same 409, so the answer doesn't reveal
+    whether a repository belongs to another course (ADR 0001, Consequences).
+    """
     async with database(settings) as connection:
         await _require_role(connection, course_id, user, "instructor")
         if not await repo.find_team(connection, course_id, team_id):
             raise HTTPException(status.HTTP_404_NOT_FOUND, "Team not found")
         try:
             await link_repository(connection, course_id, team_id, body.repository)
-        except RepositoryLinkError as error:
-            code, message = _LINK_REFUSALS[error.refusal]
-            raise HTTPException(code, {"code": error.refusal.value, "message": message}) from None
+        except RepositoryNotFoundError:
+            raise HTTPException(
+                status.HTTP_404_NOT_FOUND, {"code": "repository_not_registered"}
+            ) from None
+        except RepositoryNotLinkableError as error:
+            logger.info("Refused to link %s to team %s: %s", body.repository, team_id, error)
+            raise HTTPException(
+                status.HTTP_409_CONFLICT,
+                {
+                    "code": "repository_not_linkable",
+                    "message": "Link a repository that someone in this course installed the "
+                    "GitHub App on, and that isn't in another course.",
+                },
+            ) from None
         team = await repo.team_detail(connection, course_id, team_id)
     logger.info("User %s linked %s to team %s", user.github_login, body.repository, team_id)
     if team is None:

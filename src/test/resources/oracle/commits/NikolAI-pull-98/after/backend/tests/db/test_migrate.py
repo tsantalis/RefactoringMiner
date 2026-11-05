@@ -11,7 +11,7 @@ from psycopg import OperationalError, errors
 from pydantic import SecretStr
 
 from app.core.config import Settings
-from app.db import connect, init_schema, migrate
+from app.db import command_url, connect, migrate
 
 
 async def _recorded(connection: migrate.Connection) -> list[str]:
@@ -27,11 +27,13 @@ async def test_applies_every_migration_to_an_empty_database(empty_database_url: 
         assert await _recorded(c) == applied
 
 
-async def test_a_database_set_up_by_init_schema_gets_only_the_newer_migrations(
+async def test_a_database_set_up_before_the_runner_gets_only_the_newer_migrations(
     empty_database_url: str,
 ) -> None:
     async with await connect(empty_database_url) as c:
-        await init_schema.initialize_schema(c)
+        # Production's tables came from 0001 alone, with no schema_migrations record.
+        initial = migrate.MIGRATIONS_DIR / migrate.INITIAL_MIGRATION
+        await c.execute(initial.read_text(encoding="utf-8"))
         await c.execute("INSERT INTO teams (name) VALUES ('Keep this data')")
 
         applied = await migrate.apply_migrations(c)
@@ -72,7 +74,7 @@ def cli(monkeypatch: pytest.MonkeyPatch) -> AsyncMock:
     settings = Settings(_env_file=None).model_copy(
         update={"database_url": SecretStr("postgresql://test-only")}
     )
-    monkeypatch.setattr(migrate, "Settings", lambda: settings)
+    monkeypatch.setattr(command_url, "Settings", lambda: settings)
     connect_mock = AsyncMock(return_value=AsyncMock())
     monkeypatch.setattr(migrate, "connect", connect_mock)
     return connect_mock
@@ -107,4 +109,19 @@ def test_cli_failure_hides_connection_details(
         migrate.main()
 
     assert error.value.code == 1
-    assert "secret-password" not in capsys.readouterr().err
+    err = capsys.readouterr().err
+    assert "secret-password" not in err
+    assert "Migration failed (OperationalError)" in err
+
+
+def test_cli_without_a_database_url_fails_cleanly(
+    cli: AsyncMock, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setattr(command_url, "Settings", lambda: Settings(_env_file=None))
+
+    with pytest.raises(SystemExit) as error:
+        migrate.main()
+
+    assert error.value.code == 1
+    assert "DATABASE_URL" in capsys.readouterr().err
+    cli.assert_not_awaited()

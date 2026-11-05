@@ -17,7 +17,12 @@ from typing import Final
 from psycopg import AsyncConnection
 from psycopg.rows import DictRow
 
-from app.db.repositories.users import save_user_and_session
+from app.db.models.users import User
+from app.db.repositories.users import (
+    find_session_user,
+    revoke_session,
+    save_user_and_session,
+)
 from app.github.oauth import GitHubUser
 
 SESSION_COOKIE: Final = "nikolai_session"
@@ -26,8 +31,8 @@ STATE_COOKIE: Final = "nikolai_oauth_state"
 STATE_LIFETIME: Final = timedelta(minutes=10)
 
 
-def hash_token(token: str) -> str:
-    """The only form of a session token that is stored."""
+def _hash_token(token: str) -> str:
+    """The only form of a session token that is stored or looked up."""
     return hashlib.sha256(token.encode()).hexdigest()
 
 
@@ -39,10 +44,20 @@ async def start_session(connection: AsyncConnection[DictRow], user: GitHubUser) 
         github_user_id=user.id,
         github_login=user.login,
         display_name=user.name,
-        token_hash=hash_token(token),
+        token_hash=_hash_token(token),
         lifetime=SESSION_LIFETIME,
     )
     return token
+
+
+async def session_user(connection: AsyncConnection[DictRow], token: str) -> User | None:
+    """The user of the cookie's session while it is unexpired and unrevoked, or None."""
+    return await find_session_user(connection, _hash_token(token))
+
+
+async def end_session(connection: AsyncConnection[DictRow], token: str) -> None:
+    """Revoke the cookie's session. An unknown or already revoked one changes nothing."""
+    await revoke_session(connection, _hash_token(token))
 
 
 def _sign(secret: str, value: str) -> str:

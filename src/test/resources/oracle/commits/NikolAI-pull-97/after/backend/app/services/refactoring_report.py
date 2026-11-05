@@ -5,7 +5,7 @@ from a workflow the team controls, so it is untrusted: it is validated here, and
 is escaped and its links checked before it reaches a PR comment.
 """
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 import re
 from collections import Counter
@@ -31,14 +31,29 @@ class RefactoringReportError(ValueError):
     """``refactorings.json`` is not the shape RefactoringMiner writes."""
 
 
-class Refactoring(BaseModel):
-    """One detected refactoring. ``markup`` already links each code element to its diff line."""
+class CodeLocation(BaseModel):
+    """Where a refactored code element sits, on one side of the diff."""
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, populate_by_name=True)
+
+    file_path: str = Field(alias="filePath")
+    start_line: int | None = Field(default=None, alias="startLine")
+    end_line: int | None = Field(default=None, alias="endLine")
+
+
+class Refactoring(BaseModel):
+    """One detected refactoring. ``markup`` already links each code element to its diff line.
+
+    ``before`` is in the PR's base (the diff's left side), ``after`` in its head (the right).
+    """
+
+    model_config = ConfigDict(frozen=True, populate_by_name=True)
 
     type: str = Field(min_length=1)
     description: str = ""
     markup: str = ""
+    before: tuple[CodeLocation, ...] = Field(default=(), alias="leftSideLocations")
+    after: tuple[CodeLocation, ...] = Field(default=(), alias="rightSideLocations")
 
 
 class _Export(BaseModel):

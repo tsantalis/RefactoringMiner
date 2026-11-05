@@ -16,8 +16,7 @@ from psycopg.rows import DictRow
 from app.core.config import Settings, get_settings
 from app.db import connect
 from app.db.models.users import User
-from app.db.repositories.users import find_session_user
-from app.services.sessions import SESSION_COOKIE, hash_token
+from app.services.sessions import SESSION_COOKIE, session_user
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +50,7 @@ async def current_user(
     if not token:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Sign in required")
     async with database(settings) as connection:
-        user = await find_session_user(connection, hash_token(token))
+        user = await session_user(connection, token)
     if user is None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Sign in required")
     return user

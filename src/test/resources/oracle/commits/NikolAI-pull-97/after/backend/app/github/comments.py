@@ -1,6 +1,6 @@
 """PR comments NikolAI posts through its GitHub App: size limit and lookup."""
 
-# AI contribution: 50% or more AI-generated
+# AI contribution: 50%
 
 from typing import Final, cast
 

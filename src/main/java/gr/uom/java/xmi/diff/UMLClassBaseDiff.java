@@ -1104,47 +1104,66 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return null;
 	}
 
-	public Set<MethodInvocationReplacement> findMethodInvocationReplacementWithMatchingSignatures(UMLOperation operation1, UMLOperation operation2) {
+	//the calls that differ between the statements of a non-exact mapping, when there are as many on each side
+	public record DifferingCalls(List<AbstractCall> calls1, List<AbstractCall> calls2) {
+		private static final DifferingCalls NONE = new DifferingCalls(List.of(), List.of());
+	}
+
+	private static DifferingCalls differingCalls(AbstractCodeMapping mapping) {
+		if(mapping.isExact()) {
+			return DifferingCalls.NONE;
+		}
+		List<AbstractCall> methodInvocations1 = new ArrayList<>(mapping.getFragment1().getMethodInvocations());
+		List<AbstractCall> methodInvocations2 = new ArrayList<>(mapping.getFragment2().getMethodInvocations());
+		Set<AbstractCall> intersection = new LinkedHashSet<>(methodInvocations1);
+		intersection.retainAll(methodInvocations2);
+		methodInvocations1.removeAll(intersection);
+		methodInvocations2.removeAll(intersection);
+		if(methodInvocations1.size() != methodInvocations2.size()) {
+			return DifferingCalls.NONE;
+		}
+		return new DifferingCalls(methodInvocations1, methodInvocations2);
+	}
+
+	//the differing calls of each mapping do not depend on the operations, so a caller checking many pairs of operations
+	//passes the same map to compute them once per mapping
+	public Set<MethodInvocationReplacement> findMethodInvocationReplacementWithMatchingSignatures(UMLOperation operation1, UMLOperation operation2,
+			Map<AbstractCodeMapping, DifferingCalls> differingCallsPerMapping) {
 		Set<MethodInvocationReplacement> replacements = new LinkedHashSet<MethodInvocationReplacement>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
-				if(!mapping.isExact()) {
-					List<AbstractCall> methodInvocations1 = new ArrayList<>(mapping.getFragment1().getMethodInvocations());
-					List<AbstractCall> methodInvocations2 = new ArrayList<>(mapping.getFragment2().getMethodInvocations());
-					Set<AbstractCall> intersection = new LinkedHashSet<>(methodInvocations1);
-					intersection.retainAll(methodInvocations2);
-					methodInvocations1.removeAll(intersection);
-					methodInvocations2.removeAll(intersection);
-					if(methodInvocations1.size() == methodInvocations2.size()) {
-						AbstractCall matchedCallToOperation1 = null;
-						for(AbstractCall call : methodInvocations1) {
-							if(call.matchesOperation(operation1, mapper.getContainer1(), this, modelDiff)) {
-								matchedCallToOperation1 = call;
+				DifferingCalls differingCalls = differingCallsPerMapping.computeIfAbsent(mapping, UMLClassBaseDiff::differingCalls);
+				if(differingCalls != DifferingCalls.NONE) {
+					List<AbstractCall> methodInvocations1 = differingCalls.calls1();
+					List<AbstractCall> methodInvocations2 = differingCalls.calls2();
+					AbstractCall matchedCallToOperation1 = null;
+					for(AbstractCall call : methodInvocations1) {
+						if(call.matchesOperation(operation1, mapper.getContainer1(), this, modelDiff)) {
+							matchedCallToOperation1 = call;
+							break;
+						}
+					}
+					AbstractCall matchedCallToOperation2 = null;
+					if(matchedCallToOperation1 != null) {
+						for(AbstractCall call : methodInvocations2) {
+							if(call.matchesOperation(operation2, mapper.getContainer2(), this, modelDiff)) {
+								matchedCallToOperation2 = call;
 								break;
 							}
 						}
-						AbstractCall matchedCallToOperation2 = null;
+					}
+					if(matchedCallToOperation1 != null && matchedCallToOperation2 != null) {
+						replacements.add(new MethodInvocationReplacement(matchedCallToOperation1.actualString(), matchedCallToOperation2.actualString(), matchedCallToOperation1, matchedCallToOperation2, ReplacementType.METHOD_INVOCATION));
+					}
+					else if(matchedCallToOperation1 != null || matchedCallToOperation2 != null) {
+						int index = 0;
 						if(matchedCallToOperation1 != null) {
-							for(AbstractCall call : methodInvocations2) {
-								if(call.matchesOperation(operation2, mapper.getContainer2(), this, modelDiff)) {
-									matchedCallToOperation2 = call;
-									break;
-								}
-							}
+							index = methodInvocations1.indexOf(matchedCallToOperation1);
 						}
-						if(matchedCallToOperation1 != null && matchedCallToOperation2 != null) {
-							replacements.add(new MethodInvocationReplacement(matchedCallToOperation1.actualString(), matchedCallToOperation2.actualString(), matchedCallToOperation1, matchedCallToOperation2, ReplacementType.METHOD_INVOCATION));
+						else if(matchedCallToOperation2 != null) {
+							index = methodInvocations2.indexOf(matchedCallToOperation2);
 						}
-						else if(matchedCallToOperation1 != null || matchedCallToOperation2 != null) {
-							int index = 0;
-							if(matchedCallToOperation1 != null) {
-								index = methodInvocations1.indexOf(matchedCallToOperation1);
-							}
-							else if(matchedCallToOperation2 != null) {
-								index = methodInvocations2.indexOf(matchedCallToOperation2);
-							}
-							replacements.add(new MethodInvocationReplacement(methodInvocations1.get(index).actualString(), methodInvocations2.get(index).actualString(), methodInvocations1.get(index), methodInvocations2.get(index), ReplacementType.METHOD_INVOCATION));
-						}
+						replacements.add(new MethodInvocationReplacement(methodInvocations1.get(index).actualString(), methodInvocations2.get(index).actualString(), methodInvocations1.get(index), methodInvocations2.get(index), ReplacementType.METHOD_INVOCATION));
 					}
 				}
 			}

@@ -1058,8 +1058,19 @@ public class UMLJavadocDiff {
 			List<UMLDocElement> newAddedDocElements = new ArrayList<>(addedDocElements);
 			for(int i=0; i<commonDocElements.size(); i++) {
 				Pair<UMLDocElement, UMLDocElement> pairI = commonDocElements.get(i);
+				//an element after pair I is before pair J, if and only if the element after pair I that ends first is before pair J,
+				//because an element is before another when it is in the same file and ends before the other starts
+				UMLDocElement firstDeletedAfterI = firstEndingAfter(pairI.getLeft(), newDeletedDocElements);
+				UMLDocElement firstAddedAfterI = firstEndingAfter(pairI.getRight(), newAddedDocElements);
+				if(firstDeletedAfterI == null || firstAddedAfterI == null) {
+					continue;
+				}
 				for(int j=i+1; j<commonDocElements.size(); j++) {
 					Pair<UMLDocElement, UMLDocElement> pairJ = commonDocElements.get(j);
+					if(!firstDeletedAfterI.getLocationInfo().before(pairJ.getLeft().getLocationInfo()) ||
+							!firstAddedAfterI.getLocationInfo().before(pairJ.getRight().getLocationInfo())) {
+						continue;
+					}
 					List<UMLDocElement> leftGroup = new ArrayList<>();
 					for(UMLDocElement deletedDocElement : newDeletedDocElements) {
 						if(deletedDocElement.isBetween(pairI.getLeft(), pairJ.getLeft())) {
@@ -1085,6 +1096,17 @@ public class UMLJavadocDiff {
 			if(newDeletedDocElements.isEmpty() && newAddedDocElements.isEmpty()) {
 				validDecomposition = true;
 			}
+		}
+
+		private static UMLDocElement firstEndingAfter(UMLDocElement start, List<UMLDocElement> docElements) {
+			UMLDocElement first = null;
+			for(UMLDocElement docElement : docElements) {
+				if(start.getLocationInfo().before(docElement.getLocationInfo()) &&
+						(first == null || docElement.getLocationInfo().getEndOffset() < first.getLocationInfo().getEndOffset())) {
+					first = docElement;
+				}
+			}
+			return first;
 		}
 
 		public List<Pair<List<UMLDocElement>, List<UMLDocElement>>> getList() {

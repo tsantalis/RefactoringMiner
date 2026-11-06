@@ -60,6 +60,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -5344,6 +5345,8 @@ public class UMLModelDiff {
 	private void inferMethodSignatureRelatedRefactorings(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings, Map<Pair<UMLOperation, UMLOperation>, Set<MethodInvocationReplacement>> map) throws RefactoringMinerTimedOutException {
 		Set<UMLOperation> removedOperationsToBeRemoved = new LinkedHashSet<UMLOperation>();
 		Set<UMLOperation> addedOperationsToBeRemoved = new LinkedHashSet<UMLOperation>();
+		//the differing calls of the mappings are the same for all the pairs of operations, until a new mapper is added
+		Map<AbstractCodeMapping, UMLClassBaseDiff.DifferingCalls> differingCallsPerMapping = new IdentityHashMap<>();
 		for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
 			for(UMLOperation addedOperation : classDiff.getAddedAndExtractedOperations()) {
 				if(allowInference(classDiff, removedOperation, addedOperation)) {
@@ -5352,6 +5355,7 @@ public class UMLModelDiff {
 						UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 						if(!classDiff.getOperationBodyMapperList().contains(bodyMapper)) {
 							classDiff.addOperationBodyMapper(bodyMapper);
+							differingCallsPerMapping.clear();
 							removedOperationsToBeRemoved.add(removedOperation);
 							addedOperationsToBeRemoved.add(addedOperation);
 							bodyMapper.computeRefactoringsWithinBody();
@@ -5369,7 +5373,7 @@ public class UMLModelDiff {
 						}
 					}
 					else {
-						Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation);
+						Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation, differingCallsPerMapping);
 						if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
 							Set<Pair<UMLOperation, UMLOperation>> conflictingPairs = new LinkedHashSet<Pair<UMLOperation, UMLOperation>>();
 							for(Pair<UMLOperation, UMLOperation> pair : map.keySet()) {
@@ -5418,6 +5422,7 @@ public class UMLModelDiff {
 							if(removedValue != null && addedValue != null && removedValue.getString().equals(addedValue.getString())) {
 								UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 								classDiff.addOperationBodyMapper(bodyMapper);
+								differingCallsPerMapping.clear();
 								removedOperationsToBeRemoved.add(removedOperation);
 								addedOperationsToBeRemoved.add(addedOperation);
 								bodyMapper.computeRefactoringsWithinBody();
@@ -5581,19 +5586,20 @@ public class UMLModelDiff {
 		refactorings.addAll(refactoringsToBeAdded);
 	}
 
-	private Set<MethodInvocationReplacement> findMethodInvocationReplacementWithMatchingSignatures(UMLOperation operation1, UMLOperation operation2) {
+	private Set<MethodInvocationReplacement> findMethodInvocationReplacementWithMatchingSignatures(UMLOperation operation1, UMLOperation operation2,
+			Map<AbstractCodeMapping, UMLClassBaseDiff.DifferingCalls> differingCallsPerMapping) {
 		Set<MethodInvocationReplacement> replacements = new LinkedHashSet<>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
-			replacements.addAll(classDiff.findMethodInvocationReplacementWithMatchingSignatures(operation1, operation2));
+			replacements.addAll(classDiff.findMethodInvocationReplacementWithMatchingSignatures(operation1, operation2, differingCallsPerMapping));
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
-			replacements.addAll(classDiff.findMethodInvocationReplacementWithMatchingSignatures(operation1, operation2));
+			replacements.addAll(classDiff.findMethodInvocationReplacementWithMatchingSignatures(operation1, operation2, differingCallsPerMapping));
 		}
 		for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
-			replacements.addAll(classDiff.findMethodInvocationReplacementWithMatchingSignatures(operation1, operation2));
+			replacements.addAll(classDiff.findMethodInvocationReplacementWithMatchingSignatures(operation1, operation2, differingCallsPerMapping));
 		}
 		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
-			replacements.addAll(classDiff.findMethodInvocationReplacementWithMatchingSignatures(operation1, operation2));
+			replacements.addAll(classDiff.findMethodInvocationReplacementWithMatchingSignatures(operation1, operation2, differingCallsPerMapping));
 		}
 		return replacements;
 	}
@@ -6557,21 +6563,25 @@ public class UMLModelDiff {
 				delegateCall = addedOperation.isDelegateToAnotherClass(this);
 			}
 			if(!getterOrSetterCorrespondingToRenamedAttribute(addedOperation)) {
+				//the source folders of the added methods with the same signature, computed once for all the mappers
+				Set<String> sourceFoldersWithSameSignature = null;
 				for(UMLOperationBodyMapper mapper : mappers) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
 					String className = mapper.getContainer2().getClassName();
 					//if they don't belong to the same source folder, check if there is another added method from the same source folder
-					boolean skip = false;
-					if(!mapper.getContainer2().getLocationInfo().getSourceFolder().equals(addedOperation.getLocationInfo().getSourceFolder())) {
-						for(UMLOperation op : addedOperations) {
-							if(addedOperation.equalSignature(op) && mapper.getContainer2().getLocationInfo().getSourceFolder().equals(op.getLocationInfo().getSourceFolder())) {
-								skip = true;
-								break;
+					String sourceFolder = mapper.getContainer2().getLocationInfo().getSourceFolder();
+					if(!sourceFolder.equals(addedOperation.getLocationInfo().getSourceFolder())) {
+						if(sourceFoldersWithSameSignature == null) {
+							sourceFoldersWithSameSignature = new HashSet<>();
+							for(UMLOperation op : addedOperations) {
+								if(addedOperation.equalSignature(op)) {
+									sourceFoldersWithSameSignature.add(op.getLocationInfo().getSourceFolder());
+								}
 							}
 						}
-					}
-					if(skip) {
-						continue;
+						if(sourceFoldersWithSameSignature.contains(sourceFolder)) {
+							continue;
+						}
 					}
 					if(!className.equals(addedOperation.getClassName()) && (mapper.nonMappedElementsT1() > 0 || includesReplacementInvolvingAddedMethod(mapper, addedOperation, mapper.getContainer2(), mapper.getClassDiff())) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
 						processedOperationPairs.add(pair);
@@ -7877,7 +7887,7 @@ public class UMLModelDiff {
 			}
 		}
 		else if(mappings == 0 && removedOperation.getBody() == null && addedOperation.getBody() == null) {
-			Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation);
+			Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation, new IdentityHashMap<>());
 			if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
 				boolean skip = false;
 				if(umlClassDiff != null && (umlClassDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)

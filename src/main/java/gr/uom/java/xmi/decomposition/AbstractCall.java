@@ -384,11 +384,11 @@ public abstract class AbstractCall extends LeafExpression {
 		for(int i=0; i<arguments1.size(); i++) {
 			String argument1 = arguments1.get(i);
 			String argument2 = arguments2.get(i);
-			boolean anonymousClassArgument1 = anonymousClassArgument(argument1);
+			boolean anonymousClassArgument1 = containsAnonymousClassDeclaration(argument1, LANG);
 			if(anonymousClassArgument1) {
 				anonymousClassArguments1++;
 			}
-			boolean anonymousClassArgument2 = anonymousClassArgument(argument2);
+			boolean anonymousClassArgument2 = containsAnonymousClassDeclaration(argument2, LANG);
 			if(anonymousClassArgument2) {
 				anonymousClassArguments2++;
 			}
@@ -402,8 +402,8 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	//a Java anonymous class prints its body on the next lines, while a TypeScript object literal without function bodies is printed on one line
-	private boolean anonymousClassArgument(String argument) {
-		return argument.contains("{\n") || (LANG.equals(Constants.TYPESCRIPT) && argument.contains("{ "));
+	public static boolean containsAnonymousClassDeclaration(String s, Constants LANG) {
+		return s.contains("{\n") || (LANG.equals(Constants.TYPESCRIPT) && s.contains("{ "));
 	}
 
 	public boolean equalArgumentsExceptForStringLiterals(AbstractCall call) {
@@ -995,7 +995,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	private boolean argumentContainsAnonymousClassDeclaration() {
 		for(String argument : arguments) {
-			if(argument.contains("{\n")) {
+			if(containsAnonymousClassDeclaration(argument, LANG)) {
 				return true;
 			}
 		}

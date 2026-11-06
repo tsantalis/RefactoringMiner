@@ -1866,7 +1866,7 @@ public class UMLModelDiff {
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 				for(AbstractCodeMapping mapping : mapper.getMappings()) {
 					for(Replacement r : mapping.getReplacements()) {
-						if(!r.getBefore().contains("{\n") && !r.getAfter().contains("{\n")) {
+						if(!AbstractCall.containsAnonymousClassDeclaration(r.getBefore(), mapper.LANG1) && !AbstractCall.containsAnonymousClassDeclaration(r.getAfter(), mapper.LANG2)) {
 							String matchingClassNameBefore = matches(r.getBefore(), removedClassNames, mapping.getFragment1());
 							if(matchingClassNameBefore == null) {
 								matchingClassNameBefore = matches(r.getBefore(), renamedRemovedClassMap.keySet(), mapping.getFragment1());

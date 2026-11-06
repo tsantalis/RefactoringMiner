@@ -139,7 +139,9 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
             }
             Set<Tree> srcIgnored = new HashSet<>();
             Set<Tree> dstIgnored = new HashSet<>();
-            Collections.sort(ambiguousList, new CustomTopDownMatcher.ExtendedFullMappingComparator(mappings.getMonoMappingStore(), srcRanks, dstRanks));
+            //a list of fewer than two mappings is never compared, so the one-to-one mappings are not needed
+            if (ambiguousList.size() > 1)
+                Collections.sort(ambiguousList, new CustomTopDownMatcher.ExtendedFullMappingComparator(mappings.getMonoMappingStore(), srcRanks, dstRanks));
             // Select the best ambiguous mappings
             retainBestMapping(ambiguousList, srcIgnored, dstIgnored);
         }

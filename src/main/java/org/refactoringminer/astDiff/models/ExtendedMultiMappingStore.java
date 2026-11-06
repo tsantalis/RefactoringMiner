@@ -19,6 +19,10 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	private final Tree dst;
 	public final Constants LANG1;
 	public final Constants LANG2;
+	//the one-to-one mappings, rebuilt only when the mappings changed since they were built (their users only read them)
+	private MappingStore monoMappingStore;
+	private int changes;
+	private int monoMappingStoreChanges;
 
 	public ExtendedMultiMappingStore(Tree srcTree, Tree dstTree, Constants LANG1, Constants LANG2) {
 		super();
@@ -88,10 +92,14 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	}
 
 	public MappingStore getMonoMappingStore() {
-		MappingStore monoStore = new MappingStore(src,dst);
-		for (Map.Entry<Tree,Tree> entry : getSrcToDstMono().entrySet())
-			monoStore.addMapping(entry.getKey(),entry.getValue());
-		return monoStore;
+		if (monoMappingStore == null || monoMappingStoreChanges != changes) {
+			MappingStore monoStore = new MappingStore(src,dst);
+			for (Map.Entry<Tree,Tree> entry : getSrcToDstMono().entrySet())
+				monoStore.addMapping(entry.getKey(),entry.getValue());
+			monoMappingStore = monoStore;
+			monoMappingStoreChanges = changes;
+		}
+		return monoMappingStore;
 	}
 
 	public Map<Tree,Set<Tree>> dstToSrcMultis() {
@@ -159,6 +167,13 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		if (src == null || dst == null)
 			return;
 		super.addMapping(src, dst);
+		changes++;
+	}
+
+	@Override
+	public void removeMapping(Tree src, Tree dst) {
+		super.removeMapping(src, dst);
+		changes++;
 	}
 
 	public void addWithMaps(MappingStore match, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy) {

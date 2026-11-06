@@ -34,7 +34,7 @@ import org.refactoringminer.util.PathFileUtils;
 //    7.8%, RawRepresentation#movedOrigin 1.8%; the lookups themselves 0.1%); ProjectASTDiffer 11.2%; matching trees
 //    to UML* (RMIndex, RMLinks, findByLocationInfo, Context) 5.6%; binding (ReceiverTypeResolver,
 //    MemberUsageFinder) 15.1% and RM model + UMLModelDiff 10.5% stay either way
-//  - step 0, independent quick win: share the cached mono stores (monoMappings) with Node and RawRepresentation
+//  - step 0 done: ExtendedMultiMappingStore#getMonoMappingStore now rebuilds the store only after the mappings change
 //  - nodes from RM elements (class, operation, attribute, statement, comment, doc, annotation): mapped statements
 //    whose text differs are updates, getNonMappedLeavesT1/T2 and getNonMappedInnerNodesT1/T2 deletions/additions,
 //    child mappers and class move/rename diffs moves; ids from file and offsets
@@ -966,8 +966,7 @@ public class HunkNetwork {
   //  - out of its reach: users in files outside the model (es_114899 EsqlSession#fieldNames, es_120617
   //    LookupFromIndexService), framework links (bazel_25259 @Option converter; check UMLAnnotation#getMemberValuePairs
   //    type literals before calling it an RM gap), contracts between methods (netty_13903 hashCode and equals)
-  //  Flow across members attaches more files (GitHub fetches into the test cache); always use the cached mono mappings
-  //  (monoMappings), as getMonoMappingStore rebuilds them on every call.
+  //  Flow across members attaches more files (GitHub fetches into the test cache).
   // TODO: forward extensions (being used, see processUsages) reach only the files of the model (the changed files and
   //  the unchanged files declaring what the changes use); unchanged users in other files of the repository are not found
   // TODO: noisy dependencies. Every declaration a change uses becomes a dependency printed whole, so the useful ones

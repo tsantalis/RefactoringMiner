@@ -1400,9 +1400,9 @@ public class OperationInvocation extends AbstractCall {
 			else if(prop instanceof Swc4jAstIdentName ident)
 				this.methodName = ident.getSym();
 			else if(prop instanceof Swc4jAstComputedPropName propName)
-				this.methodName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
+				this.methodName = TypeScriptVisitor.text(fileContent, propName.getExpr());
 			ISwc4jAstExpr receiver = memberExpr.getObj();
-			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+			this.expression = TypeScriptVisitor.text(fileContent, receiver);
 		}
 		else if(callee instanceof Swc4jAstParenExpr parenExpr) {
 			ISwc4jAstExpr expr = parenExpr.getExpr();
@@ -1423,9 +1423,9 @@ public class OperationInvocation extends AbstractCall {
 				else if(prop instanceof Swc4jAstIdentName ident)
 					this.methodName = ident.getSym();
 				else if(prop instanceof Swc4jAstComputedPropName propName)
-					this.methodName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
+					this.methodName = TypeScriptVisitor.text(fileContent, propName.getExpr());
 				ISwc4jAstExpr receiver = memberExpr.getObj();
-				this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+				this.expression = TypeScriptVisitor.text(fileContent, receiver);
 			}
 			else if(expr instanceof Swc4jAstIdent ident) {
 				this.methodName = ident.getSym();
@@ -1444,7 +1444,7 @@ public class OperationInvocation extends AbstractCall {
 			if(superProp instanceof Swc4jAstIdentName ident)
 				propertyName = ident.getSym();
 			else if(superProp instanceof Swc4jAstComputedPropName propName) {
-				propertyName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
+				propertyName = TypeScriptVisitor.text(fileContent, propName.getExpr());
 			}
 			this.methodName = "super." + propertyName;
 		}
@@ -1456,7 +1456,7 @@ public class OperationInvocation extends AbstractCall {
 		this.numberOfArguments = invocation.getArgs().size();
 		for(Swc4jAstExprOrSpread arg : invocation.getArgs()) {
 			ISwc4jAstExpr expression = arg.getExpr();
-			String s = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
+			String s = TypeScriptVisitor.text(fileContent, expression);
 			if(arg.getSpread().isPresent()) {
 				s = "..." + s;
 			}

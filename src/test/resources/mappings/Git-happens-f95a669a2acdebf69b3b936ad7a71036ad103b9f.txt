@@ -29,6 +29,9 @@ line range:205-205==line range:232-232
 line range:208-208==line range:235-235
 line range:205-205==line range:232-232
 line range:207-208==line range:234-235
+public getFloorPlanRegistryEntry(buildingId string, floorNumber FloorNumber) : FloorPlanRegistryEntry|null -> private matchesBuildingId(node RawMapNode, buildingId IndoorBuildingId) : boolean
+line range:233-233==line range:272-272
+line range:237-237==line range:273-273
 public getFloorPlanRegistryEntry(buildingId string, floorNumber FloorNumber) : FloorPlanRegistryEntry|null -> private filterEdgesForNodes(edges RawEdge[], nodeIds Set<string>) : RawEdge[]
 line range:255-255==line range:281-281
 line range:254-256==line range:281-281
@@ -51,6 +54,7 @@ line range:253-253==line range:305-305
 line range:259-259==line range:309-309
 line range:260-262==line range:310-312
 line range:264-270==line range:314-320
+line range:242-242==line range:294-295
 line range:232-243==line range:292-296
 line range:254-256==line range:306-306
 line range:227-229==line range:288-290

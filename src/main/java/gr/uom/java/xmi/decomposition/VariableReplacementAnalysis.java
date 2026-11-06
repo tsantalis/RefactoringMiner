@@ -57,6 +57,7 @@ import gr.uom.java.xmi.diff.ReplaceGenericWithDiamondRefactoring;
 import gr.uom.java.xmi.diff.SplitVariableRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnnotationDiff;
+import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -84,9 +85,12 @@ public class VariableReplacementAnalysis {
 	private Set<VariableDeclaration> removedVariables = new LinkedHashSet<>();
 	private Set<VariableDeclaration> removedVariablesStoringTheReturnOfInlinedMethod = new LinkedHashSet<>();
 	private Set<VariableDeclaration> removedVariablesInAnonymousClassDeclarations = new LinkedHashSet<>();
+	private Map<VariableDeclaration, VariableDeclarationContainer> nestedScopesOfRemovedVariables = new LinkedHashMap<>();
     private Set<VariableDeclaration> addedVariables = new LinkedHashSet<>();
     private Set<VariableDeclaration> addedVariablesStoringTheReturnOfExtractedMethod = new LinkedHashSet<>();
     private Set<VariableDeclaration> addedVariablesInAnonymousClassDeclarations = new LinkedHashSet<>();
+	private Map<VariableDeclaration, VariableDeclarationContainer> nestedScopesOfAddedVariables = new LinkedHashMap<>();
+	private Map<VariableDeclarationContainer, VariableDeclarationContainer> matchedNestedScopes = new LinkedHashMap<>();
     private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
     private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables = new LinkedHashSet<>();
 	private Set<RenameVariableRefactoring> variableRenames = new LinkedHashSet<RenameVariableRefactoring>();
@@ -114,6 +118,14 @@ public class VariableReplacementAnalysis {
 		this.nonMappedInnerNodesT2 = mapper.getNonMappedInnerNodesT2();
 		this.operation1 = mapper.getContainer1();
 		this.operation2 = mapper.getContainer2();
+		for(UMLAnonymousClassDiff anonymousClassDiff : mapper.getAnonymousClassDiffs()) {
+			for(UMLOperationBodyMapper anonymousMapper : anonymousClassDiff.getOperationBodyMapperList()) {
+				matchedNestedScopes.put(anonymousMapper.getContainer1(), anonymousMapper.getContainer2());
+			}
+		}
+		collectMatchedLambdas(mapper.getLambdaMappers());
+		collectLambdaParameters(operation1.getAllLambdas(), nestedScopesOfRemovedVariables);
+		collectLambdaParameters(operation2.getAllLambdas(), nestedScopesOfAddedVariables);
 		this.parameterNameList1 = mapper.getParameterNameList1();
 		this.parameterNameList2 = mapper.getParameterNameList2();
 		this.aliasedVariablesInOriginalMethod = operation1.aliasedVariables();
@@ -147,6 +159,9 @@ public class VariableReplacementAnalysis {
 					List<VariableDeclaration> allVariableDeclarations = operation.getAllVariableDeclarations();
 					this.removedVariables.addAll(allVariableDeclarations);
 					this.removedVariablesInAnonymousClassDeclarations.addAll(allVariableDeclarations);
+					for(VariableDeclaration declaration : allVariableDeclarations) {
+						nestedScopesOfRemovedVariables.put(declaration, operation);
+					}
 				}
 			}
 			this.addedVariables.addAll(operation2.getAllVariableDeclarations());
@@ -155,6 +170,9 @@ public class VariableReplacementAnalysis {
 					List<VariableDeclaration> allVariableDeclarations = operation.getAllVariableDeclarations();
 					this.addedVariables.addAll(allVariableDeclarations);
 					this.addedVariablesInAnonymousClassDeclarations.addAll(allVariableDeclarations);
+					for(VariableDeclaration declaration : allVariableDeclarations) {
+						nestedScopesOfAddedVariables.put(declaration, operation);
+					}
 				}
 			}
 		}
@@ -505,7 +523,7 @@ public class VariableReplacementAnalysis {
 								}
 							}
 							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && equalType(removedVariable, addedVariable)) {
+							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && equalType(removedVariable, addedVariable) && !declaredInDifferentNestedScopes(removedVariable, addedVariable)) {
 								removedVariablesToBeRemoved.add(removedVariable);
 								addedVariablesToBeRemoved.add(addedVariable);
 								matchedVariables.add(pair);
@@ -530,7 +548,7 @@ public class VariableReplacementAnalysis {
 								}
 							}
 							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && equalType(removedVariable, addedVariable)) {
+							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && equalType(removedVariable, addedVariable) && !declaredInDifferentNestedScopes(removedVariable, addedVariable)) {
 								removedVariablesToBeRemoved.add(removedVariable);
 								addedVariablesToBeRemoved.add(addedVariable);
 								matchedVariables.add(pair);
@@ -555,7 +573,7 @@ public class VariableReplacementAnalysis {
 								}
 							}
 							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && equalType(removedVariable, addedVariable)) {
+							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && equalType(removedVariable, addedVariable) && !declaredInDifferentNestedScopes(removedVariable, addedVariable)) {
 								removedVariablesToBeRemoved.add(removedVariable);
 								addedVariablesToBeRemoved.add(addedVariable);
 								matchedVariables.add(pair);
@@ -834,6 +852,53 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		return isRemovedVariableCatchException && isAddedVariableCatchException;
+	}
+
+	private void collectMatchedLambdas(Set<UMLOperationBodyMapper> lambdaMappers) {
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			if(!matchedNestedScopes.containsKey(lambdaMapper.getContainer1())) {
+				matchedNestedScopes.put(lambdaMapper.getContainer1(), lambdaMapper.getContainer2());
+				collectMatchedLambdas(lambdaMapper.getLambdaMappers());
+			}
+		}
+	}
+
+	private static void collectLambdaParameters(List<LambdaExpressionObject> lambdas, Map<VariableDeclaration, VariableDeclarationContainer> nestedScopes) {
+		for(LambdaExpressionObject lambda : lambdas) {
+			for(VariableDeclaration parameter : lambda.getParameters()) {
+				nestedScopes.putIfAbsent(parameter, lambda);
+			}
+			collectLambdaParameters(lambda.getAllLambdas(), nestedScopes);
+		}
+	}
+
+	//the variables of nested scopes (operations of anonymous classes and lambdas) matched with other scopes are not matched by name,
+	//i.e., index of getLabelForIndex(index, datasetIndex) is not matched with index of the next method tickFormatFunction(tick, index, ticks),
+	//and message of the callback of addType('tag', ...) is not matched with message of the callback of addType('existingTag', ...),
+	//but recoveryVersion of getLogFile(long recoveryVersion) is matched with that of the renamed getLogFiles(final long recoveryVersion)
+	private boolean declaredInDifferentNestedScopes(VariableDeclaration removedVariable, VariableDeclaration addedVariable) {
+		VariableDeclarationContainer scope1 = nestedScopesOfRemovedVariables.get(removedVariable);
+		VariableDeclarationContainer scope2 = nestedScopesOfAddedVariables.get(addedVariable);
+		if(scope1 == null || scope2 == null) {
+			return false;
+		}
+		VariableDeclarationContainer matched2 = matchedNestedScopes.get(scope1);
+		if(matched2 != null) {
+			return !matched2.equals(scope2);
+		}
+		if(matchedNestedScopes.containsValue(scope2)) {
+			return true;
+		}
+		//the scopes are within mapped statements, whose counterparts do not contain the other scope,
+		//i.e., the callbacks of this.commandHandler.resolver.addType('tag', ...) and addType('existingTag', ...)
+		for(AbstractCodeMapping mapping : mappings) {
+			boolean contains1 = mapping.getFragment1().getLocationInfo().subsumes(scope1.getLocationInfo());
+			boolean contains2 = mapping.getFragment2().getLocationInfo().subsumes(scope2.getLocationInfo());
+			if(contains1 != contains2) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean mappedStatementWithinVariableScopes(VariableDeclaration removedVariable, VariableDeclaration addedVariable) {

@@ -689,6 +689,40 @@ public class ReplacementAlgorithm {
 			this.isomorphic = isomorphic;
 		}
 
+		//return c ? a : b; -> return v; where v is declared with the initializer b (or a), which the replacements turn into v,
+		//i.e., the returned default value of the ternary operator is extracted to the variable that the new code returns
+		private boolean returnedVariableInitializedWithTernaryComponent() {
+			if(parentMapper != null) {
+				return false;
+			}
+			if(!statement1.getString().startsWith(LANG1.RETURN_SPACE) || !statement2.getString().startsWith(LANG2.RETURN_SPACE)) {
+				return false;
+			}
+			if(statement1.getTernaryOperatorExpressions().size() != 1 || statement2.getVariables().size() != 1) {
+				return false;
+			}
+			TernaryOperatorExpression ternary = statement1.getTernaryOperatorExpressions().get(0);
+			String variable = statement2.getVariables().get(0).getString();
+			if(!statement1.getString().equals(LANG1.RETURN_SPACE + ternary.getString() + LANG1.STATEMENT_TERMINATION) ||
+					!statement2.getString().equals(LANG2.RETURN_SPACE + variable + LANG2.STATEMENT_TERMINATION)) {
+				return false;
+			}
+			VariableDeclaration declaration = container2.getVariableDeclaration(variable);
+			if(declaration == null || declaration.getInitializer() == null) {
+				return false;
+			}
+			String initializer = declaration.getInitializer().getString();
+			if(!ternary.getElseExpression().getString().equals(initializer) && !ternary.getThenExpression().getString().equals(initializer)) {
+				return false;
+			}
+			for(Replacement r : replacementInfo.getReplacements()) {
+				if(r.getBefore().equals(initializer) && r.getAfter().equals(variable)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 		private Set<Replacement> match() throws RefactoringMinerTimedOutException {
 			container1 = operationBodyMapper.getContainer1();
 			container2 = operationBodyMapper.getContainer2();
@@ -970,7 +1004,8 @@ public class ReplacementAlgorithm {
 					(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper)) ||
 					partiallyUndoParameterToArgumentMap(s1, s2, parameterToArgumentMap) ||
 					javaToKotlin(s1, s2, statement1, statement2, replacementInfo, LANG1, LANG2) ||
-					multipleVariableDeclarationMatch(variableDeclarations1, variableDeclarations2);
+					multipleVariableDeclarationMatch(variableDeclarations1, variableDeclarations2) ||
+					returnedVariableInitializedWithTernaryComponent();
 			refactoringsAfter = operationBodyMapper.getRefactoringsAfterPostProcessing().size();
 			orderedRefactorings = new ArrayList<>(operationBodyMapper.getRefactoringsAfterPostProcessing());
 			newRefactorings = new LinkedHashSet<>();
@@ -7729,11 +7764,39 @@ public class ReplacementAlgorithm {
 				replacementInfo.addLambdaMapper(mapper);
 			}
 		}
+		//the entire body of the lambda was extracted into a function the other lambda calls, so the bodies have no mappings,
+		//i.e., function(label) { var labelMoment = me.parseTime(label); ... } -> function(label) { appendLabel(scaleLabelMoments, label); }
+		else if(classDiff != null && !methodReference1 && !methodReference2 && !lambda1.hasEmptyBody() && onlyCalls(lambda2) && classDiff.isPartOfMethodExtracted(lambda1, lambda2)) {
+			operationBodyMapper.getNonMappedInnerNodesT1().addAll(mapper.getNonMappedInnerNodesT1());
+			operationBodyMapper.getNonMappedInnerNodesT2().addAll(mapper.getNonMappedInnerNodesT2());
+			operationBodyMapper.getNonMappedLeavesT1().addAll(mapper.getNonMappedLeavesT1());
+			operationBodyMapper.getNonMappedLeavesT2().addAll(mapper.getNonMappedLeavesT2());
+			replacementInfo.addLambdaMapper(mapper);
+		}
 		if(mappings == 0 && lambda1.hasEmptyBody() && lambda2.hasEmptyBody()) {
 			if(mapper.getOperationSignatureDiff().isPresent()) {
 				operationBodyMapper.getRefactoringsAfterPostProcessing().addAll(mapper.getOperationSignatureDiff().get().getRefactorings());
 			}
 		}
+	}
+
+	//the body of the lambda consists only of call statements, i.e., function(label) { appendLabel(scaleLabelMoments, label); }
+	private static boolean onlyCalls(LambdaExpressionObject lambda) {
+		if(lambda.getBody() == null) {
+			return false;
+		}
+		CompositeStatementObject composite = lambda.getBody().getCompositeStatement();
+		List<AbstractCodeFragment> leaves = composite.getLeaves();
+		if(leaves.isEmpty() || composite.getInnerNodes().size() > 1) {
+			return false;
+		}
+		for(AbstractCodeFragment leaf : leaves) {
+			AbstractCall call = leaf.invocationCoveringEntireFragment();
+			if(call == null || !call.getCoverage().equals(StatementCoverageType.ONLY_CALL)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	//a composite nested in a statement is part of that statement, i.e., the when of val shallowSize = when (...) { ... } and its entries

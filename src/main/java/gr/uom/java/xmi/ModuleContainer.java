@@ -292,7 +292,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 				StatementObject statementObject = (StatementObject)statement;
 				list.addAll(statementObject.getMethodInvocations());
 				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
-					if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+					if(lambda.hasCode()) {
 						list.addAll(lambda.getAllOperationInvocations());
 					}
 				}

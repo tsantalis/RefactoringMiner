@@ -69,7 +69,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 
 	public AnonymousClassDeclarationObject(String sourceFolder, String filePath, Swc4jAstObjectLit objectLiteral, String fileContent) {
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, objectLiteral, CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
-		this.astNodeString = fileContent.substring(objectLiteral.getSpan().getStart(), objectLiteral.getSpan().getEnd());
+		this.astNodeString = TypeScriptVisitor.text(fileContent, objectLiteral);
 		this.objectLiteral = true;
 	}
 

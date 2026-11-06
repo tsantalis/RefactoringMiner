@@ -243,13 +243,14 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 	public Swc4jAstVisitorResponse visitFnExpr(Swc4jAstFnExpr node) {
 		LambdaExpressionObject lambda = new LambdaExpressionObject(sourceFolder, filePath, node, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		lambdas.add(lambda);
-		return super.visitFnExpr(node);
+		//like Java, the body of a lambda is modeled by the lambda, not by the statement containing it
+		return Swc4jAstVisitorResponse.OkAndBreak;
 	}
 
 	public Swc4jAstVisitorResponse visitArrowExpr(Swc4jAstArrowExpr node) {
 		LambdaExpressionObject lambda = new LambdaExpressionObject(sourceFolder, filePath, node, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		lambdas.add(lambda);
-		return super.visitArrowExpr(node);
+		return Swc4jAstVisitorResponse.OkAndBreak;
 	}
 
 	public Swc4jAstVisitorResponse visitCallExpr(Swc4jAstCallExpr node) {
@@ -460,5 +461,10 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 
 	public List<ComprehensionExpression> getComprehensions() {
 		return comprehensions;
+	}
+
+	//the text of a node printed by TypeScriptFlattener, so that statements and expressions differing only in their formatting are equal
+	public static String text(String fileContent, ISwc4jAst node) {
+		return TypeScriptFlattener.flatten(node, fileContent);
 	}
 }

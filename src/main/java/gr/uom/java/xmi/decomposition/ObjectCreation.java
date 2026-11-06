@@ -446,9 +446,9 @@ public class ObjectCreation extends AbstractCall {
 			else if(prop instanceof Swc4jAstIdentName ident)
 				this.type = UMLType.extractTypeObject(ident.getSym(), LANG);
 			else if(prop instanceof Swc4jAstComputedPropName propName)
-				this.type = UMLType.extractTypeObject(fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd()), LANG);
+				this.type = UMLType.extractTypeObject(TypeScriptVisitor.text(fileContent, propName.getExpr()), LANG);
 			ISwc4jAstExpr receiver = memberExpr.getObj();
-			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+			this.expression = TypeScriptVisitor.text(fileContent, receiver);
 		}
 		else if(callee instanceof Swc4jAstIdent ident) {
 			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
@@ -462,9 +462,9 @@ public class ObjectCreation extends AbstractCall {
 				else if(prop instanceof Swc4jAstIdentName ident)
 					this.type = UMLType.extractTypeObject(ident.getSym(), LANG);
 				else if(prop instanceof Swc4jAstComputedPropName propName)
-					this.type = UMLType.extractTypeObject(fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd()), LANG);
+					this.type = UMLType.extractTypeObject(TypeScriptVisitor.text(fileContent, propName.getExpr()), LANG);
 				ISwc4jAstExpr receiver = memberExpr.getObj();
-				this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
+				this.expression = TypeScriptVisitor.text(fileContent, receiver);
 			}
 		}
 		this.arguments = new ArrayList<String>();
@@ -474,7 +474,7 @@ public class ObjectCreation extends AbstractCall {
 			this.numberOfArguments = arguments.size();
 			for(Swc4jAstExprOrSpread arg : arguments) {
 				ISwc4jAstExpr expression = arg.getExpr();
-				String s = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
+				String s = TypeScriptVisitor.text(fileContent, expression);
 				if(arg.getSpread().isPresent()) {
 					s = "..." + s;
 				}

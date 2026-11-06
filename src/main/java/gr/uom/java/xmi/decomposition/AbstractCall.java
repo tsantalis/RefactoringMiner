@@ -384,11 +384,11 @@ public abstract class AbstractCall extends LeafExpression {
 		for(int i=0; i<arguments1.size(); i++) {
 			String argument1 = arguments1.get(i);
 			String argument2 = arguments2.get(i);
-			boolean anonymousClassArgument1 = argument1.contains("{\n");
+			boolean anonymousClassArgument1 = anonymousClassArgument(argument1);
 			if(anonymousClassArgument1) {
 				anonymousClassArguments1++;
 			}
-			boolean anonymousClassArgument2 = argument2.contains("{\n");
+			boolean anonymousClassArgument2 = anonymousClassArgument(argument2);
 			if(anonymousClassArgument2) {
 				anonymousClassArguments2++;
 			}
@@ -399,6 +399,11 @@ public abstract class AbstractCall extends LeafExpression {
 			}
 		}
 		return anonymousClassArguments1 == anonymousClassArguments2 && anonymousClassArguments1 > 0;
+	}
+
+	//a Java anonymous class prints its body on the next lines, while a TypeScript object literal without function bodies is printed on one line
+	private boolean anonymousClassArgument(String argument) {
+		return argument.contains("{\n") || (LANG.equals(Constants.TYPESCRIPT) && argument.contains("{ "));
 	}
 
 	public boolean equalArgumentsExceptForStringLiterals(AbstractCall call) {
@@ -1540,15 +1545,10 @@ public abstract class AbstractCall extends LeafExpression {
 	public Replacement makeReplacementForAllArgumentsReturned(String statement, VariableDeclarationContainer containerWithReturnStatement) {
 		if(LANG.equals(Constants.TYPESCRIPT) && statement.startsWith(LANG.RETURN_SPACE) && containerWithReturnStatement instanceof UMLOperation operation) {
 			String s2 = statement.substring(LANG.RETURN_SPACE.length(), statement.length()-LANG.STATEMENT_TERMINATION.length());
-			StringBuilder reconstructReturn = new StringBuilder();
-			reconstructReturn.append("{");
-			for(String arg : arguments) {
-				reconstructReturn.append(arg).append(",");
-			}
-			reconstructReturn.append("}");
-			String s1 = reconstructReturn.toString();
-			String removeWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "");
-			String removeWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "");
+			//the printed object literal has no trailing comma, i.e., f(id, { a, b }) -> return { id, metadata: { a, b } };
+			String s1 = "{" + String.join(",", arguments) + "}";
+			String removeWhitespace1 = s1.replaceAll("\\s", "");
+			String removeWhitespace2 = s2.replaceAll("\\s", "");
 			if(removeWhitespace1.equals(removeWhitespace2)) {
 				return new Replacement(arguments().toString(), s2,
 						ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);

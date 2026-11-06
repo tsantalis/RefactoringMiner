@@ -1017,6 +1017,27 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable dataMoment : Inferred to time : Inferred in method private parse(input, scale) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable minMoment : Inferred to time : Inferred in method private parse(input, scale) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Conditional With Ternary",
+        "description": "Replace Conditional With Ternary if(this.majorUnit && this.majorDisplayFormat && tickTimestamp === tickClone.startOf(this.majorUnit).valueOf()) to var tickOpts = major ? options.ticks.major : options.ticks.minor; in method private tickFormatFunction(tick, index, ticks) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -1035,28 +1056,28 @@
         "validators": null
     }, {
         "type": "Replace Conditional With Ternary",
-        "description": "Replace Conditional With Ternary if(helpers.isNullOrUndef(value)) to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
+        "description": "Replace Conditional With Ternary if(helpers.isNullOrUndef(value)) to return helpers.valueOrDefault(helpers.isArray(value) ? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Replace Conditional With Ternary",
-        "description": "Replace Conditional With Ternary if(helpers.isArray(value)) to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
+        "description": "Replace Conditional With Ternary if(helpers.isArray(value)) to return helpers.valueOrDefault(helpers.isArray(value) ? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Merge Conditional",
-        "description": "Merge Conditional [return value;, if(helpers.isArray(value))] to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
+        "description": "Merge Conditional [return value;, if(helpers.isArray(value))] to return helpers.valueOrDefault(helpers.isArray(value) ? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Merge Conditional",
-        "description": "Merge Conditional [return value;, if(helpers.isArray(value))] to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public module.exports(Chart) from class helpers.core",
+        "description": "Merge Conditional [return value;, if(helpers.isArray(value))] to return helpers.valueOrDefault(helpers.isArray(value) ? value[index] : value, defaultValue); in method public module.exports(Chart) from class helpers.core",
         "comment": "<p>duplicate</p>",
         "validation": "FP",
         "detectionTools": "RefactoringMiner",

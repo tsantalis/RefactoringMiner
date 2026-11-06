@@ -20,6 +20,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
@@ -521,8 +522,16 @@ public class MappingOptimizer {
 				boolean anonymousClassDeclarationMatch = false;
 				boolean splitConditional = false;
 				boolean splitDeclaration = false;
+				boolean returnedValue = false;
 				for(int i=0; i<parentMappingFound.size(); i++) {
 					if(parentMappingFound.get(i) == false) {
+						//the extracted method returns the value of the statement, which the caller receives in a variable,
+						//i.e., results.push({ id, ... }) -> return { id, ... } in the extracted method, and not results.push(building) after const building = toBuildingShape(...),
+						//but not when the extracted method returns a small part of the statement, i.e., return TypeBindings.emptyBindings(); for newType = baseType.refine(subclass, tb, ...)
+						if(parentIsContainerBody.get(i) == true && editDistances.get(i) < editDistances.get(parentMappingFound.indexOf(true)) && returnsValueReceivedInVariable(mappings.get(i), mappers.get(i), mappings.get(parentMappingFound.indexOf(true)), mappers.get(parentMappingFound.indexOf(true)))) {
+							returnedValue = true;
+							continue;
+						}
 						//check if composite mapping in index i has more identical statements
 						boolean skip = false;
 						if(!identicalStatementsForCompositeMappings.isEmpty()) {
@@ -565,7 +574,9 @@ public class MappingOptimizer {
 						}
 					}
 				}
-				if(!anonymousClassDeclarationMatch && !splitConditional && !splitDeclaration)
+				if(returnedValue)
+					indicesToBeRemoved.add(parentMappingFound.indexOf(true));
+				else if(!anonymousClassDeclarationMatch && !splitConditional && !splitDeclaration)
 					determineIndicesToBeRemovedAmongRemaining(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances, compositeChildMatchingScores);
 			}
 			else if(parentIsContainerBody.contains(true)) {
@@ -646,6 +657,25 @@ public class MappingOptimizer {
 			}
 		}
 		updateRefactorings(updatedMappers, refactorings);
+	}
+
+	private boolean returnsValueReceivedInVariable(AbstractCodeMapping extractedMapping, UMLOperationBodyMapper extractedMapper, AbstractCodeMapping parentMapping, UMLOperationBodyMapper parentMapper) {
+		AbstractCall call = extractedMapper.getOperationInvocation();
+		if(call == null || !extractedMapping.getFragment2().getString().startsWith(LANG2.RETURN_SPACE) ||
+				!extractedMapper.getContainer1().equals(parentMapper.getContainer1()) || parentMapping.getFragment2().getString().startsWith(LANG2.RETURN_SPACE)) {
+			return false;
+		}
+		for(VariableDeclaration declaration : parentMapper.getContainer2().getAllVariableDeclarations()) {
+			AbstractCall initializerCall = declaration.getInitializer() != null ? declaration.getInitializer().invocationCoveringEntireFragment() : null;
+			if(initializerCall != null && initializerCall.actualString().equals(call.actualString())) {
+				for(LeafExpression variable : parentMapping.getFragment2().getVariables()) {
+					if(variable.getString().equals(declaration.getVariableName()) || variable.getString().startsWith(declaration.getVariableName() + ".")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean callToExtractedInlinedMethodIsArgument(AbstractCodeMapping mapping, UMLOperationBodyMapper mapper) {

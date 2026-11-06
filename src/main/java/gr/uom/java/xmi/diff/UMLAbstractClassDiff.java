@@ -4923,6 +4923,15 @@ public abstract class UMLAbstractClassDiff {
 					removedOperation.testMethodCheck(addedOperation)) {
 				mapperSet.add(operationBodyMapper);
 			}
+			//the same name and parameter names with changed parameter types, and most of the body extracted, i.e., the remaining body is too small to have more mapped than non-mapped statements
+			else if(removedOperation.isConstructor() == addedOperation.isConstructor() && mappings > 0 &&
+					removedOperation.getName().equals(addedOperation.getName()) &&
+					removedOperation.getParameterNameList().equals(addedOperation.getParameterNameList()) &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					isPartOfMethodExtracted(removedOperation, addedOperation) &&
+					removedOperation.testMethodCheck(addedOperation)) {
+				mapperSet.add(operationBodyMapper);
+			}
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
 					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&

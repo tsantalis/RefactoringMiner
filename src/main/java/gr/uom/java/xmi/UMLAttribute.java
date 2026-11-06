@@ -238,7 +238,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		if(initializer != null) {
 			List<AbstractCall> list = new ArrayList<>(initializer.getMethodInvocations());
 			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
-				if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+				if(lambda.hasCode()) {
 					list.addAll(lambda.getAllOperationInvocations());
 				}
 			}

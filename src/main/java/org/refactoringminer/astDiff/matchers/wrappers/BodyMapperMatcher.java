@@ -4,6 +4,7 @@ import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -1223,6 +1224,97 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
     }
 
+    private static boolean declaredInAnonymousClass(UMLOperationBodyMapper bodyMapper) {
+        return bodyMapper.getContainer1() instanceof UMLAttribute attribute1 && attribute1.isDeclaredInAnonymousClass() &&
+                bodyMapper.getContainer2() instanceof UMLAttribute attribute2 && attribute2.isDeclaredInAnonymousClass();
+    }
+
+    private void matchUnmappedLeaves(Tree srcTree, Tree dstTree, Tree srcNode, Tree dstNode, ExtendedMultiMappingStore mappingStore) {
+        ExtendedMultiMappingStore leafMappings = new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2);
+        new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcNode, dstNode, leafMappings);
+        AnonymousClassMembers members = new AnonymousClassMembers(bodyMapper);
+        for (Mapping mapping : leafMappings) {
+            if (unmapped(mappingStore.getDsts(mapping.first)) && unmapped(mappingStore.getSrcs(mapping.second)) &&
+                    !members.crossMember(mapping.first, mapping.second))
+                mappingStore.addMapping(mapping.first, mapping.second);
+        }
+    }
+
+    //the statement contains members (operations and attributes) of anonymous classes, which the model pairs through the anonymous class diffs,
+    //so its leaves are not mapped across members, i.e., start: message => `${message.author}, ` is not mapped to retry: (message: Message) => `${message.author}, `
+    private void matchLeavesWithinCorrespondingMembers(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
+        AnonymousClassMembers members = new AnonymousClassMembers(bodyMapper);
+        if (members.isEmpty()) {
+            new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode, dstStatementNode, mappingStore);
+            return;
+        }
+        ExtendedMultiMappingStore leafMappings = new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2);
+        new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode, dstStatementNode, leafMappings);
+        for (Mapping mapping : leafMappings) {
+            if (!members.crossMember(mapping.first, mapping.second))
+                mappingStore.addMapping(mapping.first, mapping.second);
+        }
+    }
+
+    //the members of the anonymous classes of a mapper and the members the anonymous class diffs pair them with, including renamed ones
+    private static class AnonymousClassMembers {
+        private final List<LocationInfo> members1 = new ArrayList<>();
+        private final List<LocationInfo> members2 = new ArrayList<>();
+        private final Map<LocationInfo, LocationInfo> paired1 = new java.util.HashMap<>();
+        private final Map<LocationInfo, LocationInfo> paired2 = new java.util.HashMap<>();
+
+        AnonymousClassMembers(UMLOperationBodyMapper mapper) {
+            for (UMLAnonymousClassDiff diff : mapper.getAnonymousClassDiffs()) {
+                for (gr.uom.java.xmi.UMLOperation operation : diff.getOriginalClass().getOperations())
+                    members1.add(operation.getLocationInfo());
+                for (UMLAttribute attribute : diff.getOriginalClass().getAttributes())
+                    members1.add(attribute.getLocationInfo());
+                for (gr.uom.java.xmi.UMLOperation operation : diff.getNextClass().getOperations())
+                    members2.add(operation.getLocationInfo());
+                for (UMLAttribute attribute : diff.getNextClass().getAttributes())
+                    members2.add(attribute.getLocationInfo());
+                for (UMLOperationBodyMapper operationMapper : diff.getOperationBodyMapperList())
+                    pair(operationMapper.getContainer1().getLocationInfo(), operationMapper.getContainer2().getLocationInfo());
+                for (gr.uom.java.xmi.diff.UMLAttributeDiff attributeDiff : diff.getAttributeDiffList())
+                    pair(attributeDiff.getRemovedAttribute().getLocationInfo(), attributeDiff.getAddedAttribute().getLocationInfo());
+            }
+        }
+
+        private void pair(LocationInfo location1, LocationInfo location2) {
+            paired1.put(location1, location2);
+            paired2.put(location2, location1);
+        }
+
+        boolean isEmpty() {
+            return paired1.isEmpty();
+        }
+
+        //the source and destination are in members, at least one of which is paired with another member
+        boolean crossMember(Tree src, Tree dst) {
+            if (paired1.isEmpty())
+                return false;
+            LocationInfo member1 = innermost(members1, src);
+            LocationInfo member2 = innermost(members2, dst);
+            if (member1 == null || member2 == null)
+                return false;
+            LocationInfo pairOf1 = paired1.get(member1);
+            if (pairOf1 != null && !pairOf1.equals(member2))
+                return true;
+            LocationInfo pairOf2 = paired2.get(member2);
+            return pairOf2 != null && !pairOf2.equals(member1);
+        }
+
+        private static LocationInfo innermost(List<LocationInfo> members, Tree node) {
+            LocationInfo innermost = null;
+            for (LocationInfo member : members) {
+                if (member.getStartOffset() <= node.getPos() && node.getEndPos() <= member.getEndOffset() &&
+                        (innermost == null || member.getLength() < innermost.getLength()))
+                    innermost = member;
+            }
+            return innermost;
+        }
+    }
+
     private static boolean withinAnonymousClass(Mapping mapping, List<UMLAnonymousClassDiff> anonymousClassDiffs) {
         for (UMLAnonymousClassDiff anonymousClassDiff : anonymousClassDiffs) {
             LocationInfo location1 = anonymousClassDiff.getOriginalClass().getLocationInfo();
@@ -1428,7 +1520,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             //the initializers with anonymous classes without operations matched through their attributes are not matched again as leaves in the last step,
             //which overrides the mappings of their attributes, i.e., the object literal of StyleSheet.create({...})
             List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs = matchedAnonymousClassDiffs(abstractCodeMapping, true);
-            if (matchedAnonymousClassDiffs.isEmpty())
+            //the initializers of the attributes of an anonymous class are within the statement mapped in the parent mapper, so they only complete its unmapped leaves,
+            //i.e., body: JSON.stringify({ origin: ... }) -> body: JSON.stringify(this.buildRequestBody(origin, destination)) keeps origin mapped in the extracted method
+            if (declaredInAnonymousClass(bodyMapper))
+                matchUnmappedLeaves(srcTree, dstTree, srcStatementNode, dstStatementNode, mappingStore);
+            else if (matchedAnonymousClassDiffs.isEmpty())
                 optimizationData.getLastStepMappings().add(abstractCodeMapping);
             else
                 matchLeavesAroundAnonymousClasses(srcTree, dstTree, srcStatementNode, dstStatementNode, matchedAnonymousClassDiffs, mappingStore);
@@ -1437,7 +1533,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if (!matchedAnonymousClassDiffs.isEmpty())
                 matchLeavesAroundAnonymousClasses(srcTree, dstTree, srcStatementNode, dstStatementNode, matchedAnonymousClassDiffs, mappingStore);
             else if (!matchCallReplacedWithReturnedExpression(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore))
-                new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
+                matchLeavesWithinCorrespondingMembers(srcTree, dstTree, srcStatementNode, dstStatementNode, mappingStore);
             additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
             removeArgumentToParameterMappings(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         }

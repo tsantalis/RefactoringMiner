@@ -699,7 +699,7 @@ public class CompositeStatementObject extends AbstractStatement {
 				StatementObject statementObject = (StatementObject)statement;
 				list.addAll(statementObject.getMethodInvocations());
 				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
-					if(lambda.getString().contains(LANG.LAMBDA_ARROW) || LANG.equals(Constants.KOTLIN)) {
+					if(lambda.hasCode() || LANG.equals(Constants.KOTLIN)) {
 						list.addAll(lambda.getAllOperationInvocations());
 					}
 				}

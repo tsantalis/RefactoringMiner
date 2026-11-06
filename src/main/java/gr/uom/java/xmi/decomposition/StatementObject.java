@@ -306,7 +306,7 @@ public class StatementObject extends AbstractStatement {
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
-		this.statement = fileContent.substring(statement.getSpan().getStart(), statement.getSpan().getEnd());
+		this.statement = TypeScriptVisitor.text(fileContent, statement);
 		if(!this.statement.endsWith("\n")) {
 			this.statement += "\n";
 		}
@@ -349,7 +349,7 @@ public class StatementObject extends AbstractStatement {
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
-		this.statement = fileContent.substring(statement.getSpan().getStart(), statement.getSpan().getEnd());
+		this.statement = TypeScriptVisitor.text(fileContent, statement);
 		if(!this.statement.endsWith("\n")) {
 			this.statement += "\n";
 		}

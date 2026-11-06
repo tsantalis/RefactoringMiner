@@ -243,7 +243,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 
 	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstArrowExpr arrowExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		this.owner = owner;
-		this.asString = fileContent.substring(arrowExpression.getSpan().getStart(), arrowExpression.getSpan().getEnd());
+		this.asString = TypeScriptVisitor.text(fileContent, arrowExpression);
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression, CodeElementType.LAMBDA_EXPRESSION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		List<ISwc4jAstPat> params = arrowExpression.getParams();
@@ -304,7 +304,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 
 	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstFnExpr functionExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		this.owner = owner;
-		this.asString = fileContent.substring(functionExpression.getSpan().getStart(), functionExpression.getSpan().getEnd());
+		this.asString = TypeScriptVisitor.text(fileContent, functionExpression);
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, functionExpression, CodeElementType.LAMBDA_EXPRESSION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		Swc4jAstFunction function = functionExpression.getFunction();
@@ -505,6 +505,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 
 	public String getString() {
 		return asString;
+	}
+
+	//a lambda with code, unlike a method reference, i.e., x -> f(x) or the function expression function(x) { f(x); } of TypeScript, but not String::length
+	public boolean hasCode() {
+		return asString.contains(LANG.LAMBDA_ARROW) || LANG.equals(Constants.TYPESCRIPT);
 	}
 
 	public LeafExpression asLeafExpression() {

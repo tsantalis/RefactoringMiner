@@ -49,9 +49,9 @@ line range:228-236==line range:212-220
 line range:230-235==line range:214-219
 line range:239-239==line range:223-223
 line range:240-253==line range:224-237
-line range:250-250==line range:234-234
 line range:242-245==line range:226-229
 line range:246-249==line range:230-233
+line range:250-250==line range:234-234
 line range:241-251==line range:225-235
 line range:255-258==line range:239-242
 line range:268-271==line range:248-251
@@ -85,7 +85,6 @@ line range:273-273==line range:290-290
 line range:276-286==line range:293-309
 line range:276-286==line range:293-309
 line range:272-287==line range:304-306
-line range:274-274==line range:291-291
 line range:272-287==line range:289-310
 private dijkstra(nodes Map<string,IndoorNode>, adjacency Map<string,{string;number}>, startId string, endId string, restrictToFloor number|null, restrictToBuildingId string|null, excludeVerticalTransit boolean) : {string[];number}|null -> private dijkstra(nodes Map<string,IndoorNode>, adjacency Map<string,{string;number}>, startId string, endId string, restrictToFloor number|null, restrictToBuildingId string|null, excludeVerticalTransit boolean) : {string[];number}|null
 line range:437-437==line range:503-503

@@ -1140,6 +1140,9 @@ public class TypeScriptOperationBody extends OperationBody {
 					attribute.setVisibility(Visibility.PRIVATE);
 					ISwc4jAstExpr expr = assignProp.getValue();
 					vd.setInitializer(new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations));
+					if(umlClass instanceof UMLAnonymousClass anonymous) {
+						attribute.setAnonymousClassContainer(anonymous);
+					}
 					umlClass.addAttribute(attribute);
 				}
 				else if(astProp instanceof Swc4jAstGetterProp getterProp) {
@@ -1204,6 +1207,9 @@ public class TypeScriptOperationBody extends OperationBody {
 								anonymousClass.addParentContainer(attribute);
 							}
 						}
+						if(umlClass instanceof UMLAnonymousClass anonymous) {
+							attribute.setAnonymousClassContainer(anonymous);
+						}
 						umlClass.addAttribute(attribute);
 					}
 				}
@@ -1214,6 +1220,9 @@ public class TypeScriptOperationBody extends OperationBody {
 					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
 					attribute.setVariableDeclaration(vd);
 					attribute.setVisibility(Visibility.PRIVATE);
+					if(umlClass instanceof UMLAnonymousClass anonymous) {
+						attribute.setAnonymousClassContainer(anonymous);
+					}
 					umlClass.addAttribute(attribute);
 				}
 			}
@@ -1225,6 +1234,9 @@ public class TypeScriptOperationBody extends OperationBody {
 					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
 					attribute.setVariableDeclaration(vd);
 					attribute.setVisibility(Visibility.PRIVATE);
+					if(umlClass instanceof UMLAnonymousClass anonymous) {
+						attribute.setAnonymousClassContainer(anonymous);
+					}
 					umlClass.addAttribute(attribute);
 				}
 			}

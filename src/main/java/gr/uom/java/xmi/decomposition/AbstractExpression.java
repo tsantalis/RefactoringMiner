@@ -207,7 +207,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
-		this.expression = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
+		this.expression = TypeScriptVisitor.text(fileContent, expression);
 		this.owner = null;
 		this.lambdaOwner = null;
 	}
@@ -303,7 +303,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		List<AbstractCall> list = new ArrayList<>();
 		list.addAll(getMethodInvocations());
 		for(LambdaExpressionObject lambda : this.getLambdas()) {
-			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+			if(lambda.hasCode()) {
 				list.addAll(lambda.getAllOperationInvocations());
 			}
 		}
@@ -317,7 +317,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		List<AbstractCall> list = new ArrayList<>();
 		list.addAll(getCreations());
 		for(LambdaExpressionObject lambda : this.getLambdas()) {
-			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+			if(lambda.hasCode()) {
 				list.addAll(lambda.getAllCreations());
 			}
 		}
@@ -331,7 +331,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		List<LeafExpression> list = new ArrayList<>();
 		list.addAll(getStringLiterals());
 		for(LambdaExpressionObject lambda : this.getLambdas()) {
-			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+			if(lambda.hasCode()) {
 				list.addAll(lambda.getAllStringLiterals());
 			}
 		}
@@ -345,7 +345,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		List<LambdaExpressionObject> list = new ArrayList<>();
 		list.addAll(getLambdas());
 		for(LambdaExpressionObject lambda : this.getLambdas()) {
-			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+			if(lambda.hasCode()) {
 				list.addAll(lambda.getAllLambdas());
 			}
 		}
@@ -359,7 +359,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		List<VariableDeclaration> list = new ArrayList<>();
 		list.addAll(getVariableDeclarations());
 		for(LambdaExpressionObject lambda : this.getLambdas()) {
-			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+			if(lambda.hasCode()) {
 				list.addAll(lambda.getAllVariableDeclarations());
 			}
 		}
@@ -385,7 +385,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 			list.add(variable.getString());
 		}
 		for(LambdaExpressionObject lambda : this.getLambdas()) {
-			if(lambda.getString().contains(LANG.LAMBDA_ARROW)) {
+			if(lambda.hasCode()) {
 				list.addAll(lambda.getAllVariables());
 			}
 		}

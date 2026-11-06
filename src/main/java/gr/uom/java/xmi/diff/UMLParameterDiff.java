@@ -165,7 +165,7 @@ public class UMLParameterDiff {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		VariableDeclaration originalVariable = getRemovedParameter().getVariableDeclaration();
 		VariableDeclaration newVariable = getAddedParameter().getVariableDeclaration();
-		Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(originalVariable, newVariable, mappings, classDiff, modelDiff);
+		Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(originalVariable, newVariable, mappings);
 		RenameVariableRefactoring renameRefactoring = null;
 		if(isNameChanged()) {
 			renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references, false);

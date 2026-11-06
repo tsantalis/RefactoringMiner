@@ -343,7 +343,7 @@ public class UMLOperationDiff {
 					conflictFound = true;
 					if(matchedPair.getLeft().isParameter() && matchedPair.getRight().isLocalVariable()) {
 						Refactoring rename = new RenameVariableRefactoring(matchedPair.getLeft(), matchedPair.getRight(), removedOperation, addedOperation,
-								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings, classDiff, modelDiff), false);
+								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings), false);
 						refactorings.add(rename);
 						Refactoring addParameter = new AddParameterRefactoring(parameterDiff.getAddedParameter(), removedOperation, addedOperation);
 						refactorings.add(addParameter);
@@ -355,7 +355,7 @@ public class UMLOperationDiff {
 					conflictFound = true;
 					if(matchedPair.getLeft().isLocalVariable() && matchedPair.getRight().isParameter()) {
 						Refactoring rename = new RenameVariableRefactoring(matchedPair.getLeft(), matchedPair.getRight(), removedOperation, addedOperation,
-								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings, classDiff, modelDiff), false);
+								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings), false);
 						refactorings.add(rename);
 						Refactoring removeParameter = new RemoveParameterRefactoring(parameterDiff.getRemovedParameter(), removedOperation, addedOperation);
 						refactorings.add(removeParameter);

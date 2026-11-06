@@ -152,7 +152,7 @@ public class UMLEnumConstantDiff implements UMLDocumentationDiffProvider {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		RenameAttributeRefactoring rename = null;
 		if(isRenamed()) {
-			Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(removedEnumConstant.getVariableDeclaration(), addedEnumConstant.getVariableDeclaration(), classDiff.getOperationBodyMapperList(), classDiff, modelDiff);
+			Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(removedEnumConstant.getVariableDeclaration(), addedEnumConstant.getVariableDeclaration(), classDiff.getOperationBodyMapperList());
 			rename = new RenameAttributeRefactoring(removedEnumConstant, addedEnumConstant, set, references);
 			refactorings.add(rename);
 		}

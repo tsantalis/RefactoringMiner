@@ -2409,7 +2409,7 @@ public class UMLModelDiff {
 				else {
 					classDiff1.getAttributeDiffList().add(attributeDiff);
 					Set<CandidateAttributeRefactoring> candidates = renameMap.get(rename);
-					Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), classDiff1.getOperationBodyMapperList(), classDiff1, this);
+					Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), classDiff1.getOperationBodyMapperList());
 					RenameAttributeRefactoring renameAttribute = new RenameAttributeRefactoring(removedAttribute, addedAttribute, candidates, references);
 					this.refactorings.add(renameAttribute);
 				}
@@ -8596,7 +8596,7 @@ public class UMLModelDiff {
 									operationBodyMapper.getContainer1(),
 									operationBodyMapper.getContainer2());
 							operationBodyMapper.addMapping(mapping);
-							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(v1, attributeDeclaration, operationBodyMapper.getMappings(), operationBodyMapper.getClassDiff(), this);
+							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(v1, attributeDeclaration, operationBodyMapper.getMappings());
 							RenameVariableRefactoring ref = new RenameVariableRefactoring(v1, attributeDeclaration, operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2(), variableReferences, false);
 							//reported with the refactorings of the mapper only if the move is accepted
 							operationBodyMapper.getRefactoringsAfterPostProcessing().add(ref);

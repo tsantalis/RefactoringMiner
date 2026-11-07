@@ -412,15 +412,15 @@ public class MappingOptimizer {
 				parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
 				nestedMapper.add(mapper.isNested());
 				identical.add(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()));
-				if(mapper.getParentMapper() != null) {
-					if(mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
-						//extract method scenario
-						nonMappedNodes.add(mapper.nonMappedElementsT2());
-					}
-					else if(!mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
-						//inline method scenario
-						nonMappedNodes.add(mapper.nonMappedElementsT1());
-					}
+				//one entry per mapping, as the indices of nonMappedNodes are the indices of the mappings
+				if(mapper.getParentMapper() != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1())) {
+					//extract method scenario, also when the parent mapper maps the operation the extracted method delegates to,
+					//i.e., the nested mapper of convertIfNecessary(a, b, c) under the mapper of convertIfNecessary(a, b) { return convertIfNecessary(a, b, null); }
+					nonMappedNodes.add(mapper.nonMappedElementsT2());
+				}
+				else if(mapper.getParentMapper() != null && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+					//inline method scenario
+					nonMappedNodes.add(mapper.nonMappedElementsT1());
 				}
 				else {
 					nonMappedNodes.add(0);

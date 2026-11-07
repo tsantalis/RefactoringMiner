@@ -4021,6 +4021,16 @@ public class StringBasedHeuristics {
 
 	//the type annotation following the declared name, i.e., ": Promise<any>[]" in const promises: Promise<any>[] = []
 	private static String typeAnnotation(AbstractCodeFragment fragment, VariableDeclaration declaration) {
+		String printedAnnotation = declaration.getTypeAnnotation();
+		if(printedAnnotation != null) {
+			//TypeScript statements are printed, so the source offsets do not index their strings
+			String s = fragment.getString();
+			String name = declaration.getVariableName();
+			if(name != null && (s.contains(name + printedAnnotation) || s.contains(name + "?" + printedAnnotation))) {
+				return printedAnnotation;
+			}
+			return null;
+		}
 		LocationInfo typeLocation = declaration.getType().getLocationInfo();
 		if(typeLocation == null || declaration.getVariableName() == null || !typeLocation.getFilePath().equals(fragment.getLocationInfo().getFilePath())) {
 			return null;

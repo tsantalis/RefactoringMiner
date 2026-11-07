@@ -36,6 +36,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
 
 
     protected final UMLOperationBodyMapper bodyMapper;
+    private AnonymousClassMembers anonymousClassMembers;
     protected final boolean isPartOfExtractedMethod;
     protected final Constants LANG1;
     protected final Constants LANG2;
@@ -1232,7 +1233,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     private void matchUnmappedLeaves(Tree srcTree, Tree dstTree, Tree srcNode, Tree dstNode, ExtendedMultiMappingStore mappingStore) {
         ExtendedMultiMappingStore leafMappings = new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2);
         new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcNode, dstNode, leafMappings);
-        AnonymousClassMembers members = new AnonymousClassMembers(bodyMapper);
+        AnonymousClassMembers members = anonymousClassMembers();
         for (Mapping mapping : leafMappings) {
             if (unmapped(mappingStore.getDsts(mapping.first)) && unmapped(mappingStore.getSrcs(mapping.second)) &&
                     !members.crossMember(mapping.first, mapping.second))
@@ -1243,7 +1244,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     //the statement contains members (operations and attributes) of anonymous classes, which the model pairs through the anonymous class diffs,
     //so its leaves are not mapped across members, i.e., start: message => `${message.author}, ` is not mapped to retry: (message: Message) => `${message.author}, `
     private void matchLeavesWithinCorrespondingMembers(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
-        AnonymousClassMembers members = new AnonymousClassMembers(bodyMapper);
+        AnonymousClassMembers members = anonymousClassMembers();
         if (members.isEmpty()) {
             new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode, dstStatementNode, mappingStore);
             return;
@@ -1254,6 +1255,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if (!members.crossMember(mapping.first, mapping.second))
                 mappingStore.addMapping(mapping.first, mapping.second);
         }
+    }
+
+    //built once per matcher, because the anonymous class diffs of the mapper do not change after the model diff
+    private AnonymousClassMembers anonymousClassMembers() {
+        if (anonymousClassMembers == null)
+            anonymousClassMembers = new AnonymousClassMembers(bodyMapper);
+        return anonymousClassMembers;
     }
 
     //the members of the anonymous classes of a mapper and the members the anonymous class diffs pair them with, including renamed ones

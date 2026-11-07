@@ -163,6 +163,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private String actualSignature;
 	private final Constants LANG;
 	private boolean declaredInIfElseStatement;
+	//the printed type annotation following the declared name in TypeScript, i.e., ": Promise<any>[]"
+	private String typeAnnotation;
 
 	//the initializer of a class member or of a condition declaration is a sibling of the declarator in the AST, i.e., bool m_flag = false; and if(auto x = f())
 	public static boolean initializerOutsideDeclarator(IASTDeclarator declarator) {
@@ -749,6 +751,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return type;
 	}
 
+	String getTypeAnnotation() {
+		return typeAnnotation;
+	}
+
 	public VariableScope getScope() {
 		return scope;
 	}
@@ -1193,6 +1199,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(typeAnnotation != null) {
 			ISwc4jAstTsType type = typeAnnotation.getTypeAnn();
 			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
+			this.typeAnnotation = TypeScriptFlattener.flatten(typeAnnotation, fileContent);
 		}
 		else {
 			this.type = new InferredType();

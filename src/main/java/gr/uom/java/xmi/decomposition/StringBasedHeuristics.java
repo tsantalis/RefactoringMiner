@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -4414,14 +4415,14 @@ public class StringBasedHeuristics {
 				ternaryConditionals2.add(ternary.getThenExpression().getString());
 				ternaryConditionals2.add(ternary.getElseExpression().getString());
 			}
-			//the condition of an if statement compared with a statement whose expression became a ternary operator through a replacement,
+			//the condition of an if statement compared with a statement whose expression became a ternary operator with a condition sharing a variable through a replacement,
 			//i.e., the variable assigned in the if statement replaced with the ternary operator, is a candidate conditional replaced with a ternary
 			boolean ifConditionOfStatement1 = statement1 instanceof AbstractExpression expression1 && expression1.getOwner() != null &&
 					expression1.getOwner().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT);
 			boolean containsTernaryOperatorReplacement = false;
 			for(Replacement replacement : info.getReplacements()) {
 				if(replacement.getAfter().contains(LANG2.TERNARY_CONDITION) && replacement.getAfter().contains(LANG2.TERNARY_ELSE) &&
-						!(ifConditionOfStatement1 && !replacement.getBefore().contains(LANG1.TERNARY_CONDITION))) {
+						!(ifConditionOfStatement1 && !replacement.getBefore().contains(LANG1.TERNARY_CONDITION) && ternaryConditionSharesVariable(statement1, statement2))) {
 					containsTernaryOperatorReplacement = true;
 				}
 			}
@@ -5754,5 +5755,20 @@ public class StringBasedHeuristics {
 		return parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 				parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1;
+	}
+
+	private static boolean ternaryConditionSharesVariable(AbstractCodeFragment ifCondition, AbstractCodeFragment statement2) {
+		Set<String> variables1 = new HashSet<>();
+		for(LeafExpression variable : ifCondition.getVariables()) {
+			variables1.add(variable.getString());
+		}
+		for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
+			for(LeafExpression variable : ternary.getCondition().getVariables()) {
+				if(variables1.contains(variable.getString())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

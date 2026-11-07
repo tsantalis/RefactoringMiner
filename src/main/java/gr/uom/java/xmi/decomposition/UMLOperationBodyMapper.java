@@ -4325,17 +4325,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	//a leaf of an expanded lambda body is already non-mapped when the lambda mapper of its statement left it unmapped,
+	//i.e., the body of useEffect(() => {...}) expanded because its nested lambdas changed
 	private void updateNonMappedLeavesT1(List<AbstractCodeFragment> leaves1) {
 		for(AbstractCodeFragment leaf : leaves1) {
-			if(!mappingHashcodesT1.contains(leaf.hashCode())) {
+			if(!mappingHashcodesT1.contains(leaf.hashCode()) && !nonMappedLeavesT1.contains(leaf)) {
 				nonMappedLeavesT1.add(leaf);
 			}
 		}
 	}
 
+	//a leaf of an expanded lambda body is already non-mapped when the lambda mapper of its statement left it unmapped,
+	//i.e., the body of useEffect(() => {...}) expanded because its nested lambdas changed
 	private void updateNonMappedLeavesT2(List<AbstractCodeFragment> leaves2) {
 		for(AbstractCodeFragment leaf : leaves2) {
-			if(!mappingHashcodesT2.contains(leaf.hashCode())) {
+			if(!mappingHashcodesT2.contains(leaf.hashCode()) && !nonMappedLeavesT2.contains(leaf)) {
 				nonMappedLeavesT2.add(leaf);
 			}
 		}
@@ -8389,7 +8393,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								leafIterator2.remove();
 							}
 							else {
-								if(parentMapping != null && parentOrSiblingMapperContainsMapping(mappingSet) != null) {
+								if(parentMapping != null && parentOrSiblingMapperContainsMapping(mappingSet, true) != null) {
 									TreeSet<LeafMapping> scopedMappingSet = initializeMappingSetForExtractScenario(parentMapping);
 									for(LeafMapping mapping : mappingSet) {
 										if(parentMapping.getFragment1().getLocationInfo().subsumes(mappingSet.first().getFragment1().getLocationInfo()) &&
@@ -13397,14 +13401,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private LeafMapping parentOrSiblingMapperContainsMapping(Set<LeafMapping> mappings) {
+		return parentOrSiblingMapperContainsMapping(mappings, false);
+	}
+
+	//includeSiblingsOfAncestors: the siblings of a nested mapper include the child mappers of its ancestors, i.e., the duplicated code of buildLabel(...)
+	//extracted from one branch of the original method, while the other branch is extracted into calculateLabel(...) calling buildLabel(...)
+	private LeafMapping parentOrSiblingMapperContainsMapping(Set<LeafMapping> mappings, boolean includeSiblingsOfAncestors) {
 		if(parentMapper != null) {
 			for(LeafMapping mapping : mappings) {
 				if(parentMapper.mappings.contains(mapping)) {
 					return mapping;
 				}
-				for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
-					if(childMapper.mappings.contains(mapping)) {
-						return mapping;
+				for(UMLOperationBodyMapper ancestor = parentMapper; ancestor != null; ancestor = includeSiblingsOfAncestors ? ancestor.getParentMapper() : null) {
+					for(UMLOperationBodyMapper childMapper : ancestor.getChildMappers()) {
+						if(childMapper.mappings.contains(mapping)) {
+							return mapping;
+						}
 					}
 				}
 			}

@@ -132,8 +132,9 @@ public abstract class OperationBody {
 		return new ArrayList<String>(compositeStatement.getAllVariables());
 	}
 
+	//unmodifiable, shared with the composite statement
 	public List<VariableDeclaration> getAllVariableDeclarations() {
-		return new ArrayList<VariableDeclaration>(compositeStatement.getAllVariableDeclarations());
+		return compositeStatement.getAllVariableDeclarations();
 	}
 
 	public List<VariableDeclaration> getVariableDeclarationsInScope(LocationInfo location) {

@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,6 +32,8 @@ public class CompositeStatementObject extends AbstractStatement {
 	private List<AbstractStatement> statementList;
 	private List<AbstractExpression> expressionList;
 	private List<VariableDeclaration> variableDeclarations;
+	//lazily computed by getAllVariableDeclarations(), after the parser has built the tree
+	private List<VariableDeclaration> allVariableDeclarations;
 	private Optional<TryStatementObject> tryContainer;
 	//for composites which are roots, owner is the VariableDeclarationContainer
 	private Optional<VariableDeclarationContainer> owner = Optional.empty();
@@ -763,7 +766,15 @@ public class CompositeStatementObject extends AbstractStatement {
 		return variables;
 	}
 
+	//unmodifiable, computed once and shared by all callers
 	public List<VariableDeclaration> getAllVariableDeclarations() {
+		if(allVariableDeclarations == null) {
+			allVariableDeclarations = Collections.unmodifiableList(computeAllVariableDeclarations());
+		}
+		return allVariableDeclarations;
+	}
+
+	private List<VariableDeclaration> computeAllVariableDeclarations() {
 		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 		variableDeclarations.addAll(getVariableDeclarations());
 		for(AbstractStatement statement : statementList) {

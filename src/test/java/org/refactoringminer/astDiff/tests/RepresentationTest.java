@@ -50,7 +50,9 @@ public class RepresentationTest {
     private static final String CACHE_PATH = "src/test/resources/oracle/commits";
     private static final Pattern ELEMENT = Pattern.compile("<(diff|dependency|usage)((?: [a-z_]+=\"[^\"]*\")*)>\\n(.*?)\\n</\\1>", Pattern.DOTALL);
     private static final Pattern ATTRIBUTE = Pattern.compile("([a-z_]+)=\"([^\"]*)\"");
-    private static final Map<String, Representation> REPRESENTATIONS = new HashMap<>();
+    private static final Map<String, Representation> REPRESENTATIONS = new java.util.concurrent.ConcurrentHashMap<>();
+    // The expectations of a case run in parallel: the first builds its representation, the others wait for it
+    private static final Map<String, Object> LOADING = new java.util.concurrent.ConcurrentHashMap<>();
 
     static {
         // The cases share one JVM, and the HTTP/2 connection of the default connector gets its streams reset while
@@ -138,10 +140,15 @@ public class RepresentationTest {
     }
 
     private static Representation load(TestCase testCase) throws Exception {
-        Representation representation = REPRESENTATIONS.get(testCase.dataset + "-" + testCase.commit);
-        if (representation != null) {
-            return representation;
+        String key = testCase.dataset + "-" + testCase.commit;
+        synchronized (LOADING.computeIfAbsent(key, k -> new Object())) {
+            Representation representation = REPRESENTATIONS.get(key);
+            return representation != null ? representation : build(testCase);
         }
+    }
+
+    private static Representation build(TestCase testCase) throws Exception {
+        Representation representation;
 
         String url = "https://github.com/" + testCase.repository + "/compare/" + testCase.base_commit + "..." + testCase.commit;
 

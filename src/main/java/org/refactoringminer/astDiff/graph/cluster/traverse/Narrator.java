@@ -126,27 +126,26 @@ public class Narrator {
         }
 
         for (Node contextNode : tc.getMergeContexts()) {
-            Constants constants = new Constants(contextNode.getPath());
-            Tree tree = contextNode.getTree();
-
-            if (matchesGrain(tree.getType().name, constants, grainLevel)) {
+            if (matchesGrain(contextNode, grainLevel)) {
                 return true;
-            }
-            for (Tree parent : tree.getParents()) {
-                if (matchesGrain(parent.getType().name, constants, grainLevel)) {
-                    return true;
-                }
             }
         }
 
         return false;
     }
 
-    private static boolean matchesGrain(String treeType, Constants constants, GrainLevel grainLevel) {
+    // Whether the context lies in the member or the class of the grain, as RM gives them (the operations and the classes
+    // declaring or holding its tree), or in a file
+    private static boolean matchesGrain(Node contextNode, GrainLevel grainLevel) {
         return switch (grainLevel) {
-            case METHOD -> constants.isNamedMethod(treeType);
-            case CLASS -> constants.isType(treeType);
-            case FILE -> constants.isRoot(treeType);
+            case METHOD -> contextNode.getRM().declaredOperation() != null || contextNode.getRM().operation() != null;
+            case CLASS -> contextNode.getRM().declaredClass() != null || contextNode.getRM().type() != null;
+            case FILE -> {
+                Constants constants = new Constants(contextNode.getPath());
+                Tree tree = contextNode.getTree();
+                yield constants.isRoot(tree.getType().name)
+                        || tree.getParents().stream().anyMatch(parent -> constants.isRoot(parent.getType().name));
+            }
             default -> false;
         };
     }
@@ -285,7 +284,7 @@ public class Narrator {
         List<Boolean> tests = elements.stream().map(element -> !element.getMainsToSides().isEmpty()
                 && element.getMainsToSides().keySet().stream().allMatch(main -> TraversalPattern.isTest(main.getPath()))).toList();
 
-        List<NarrativeElement> ordered = new ArrayList<>();
+        List<Integer> ordered = new ArrayList<>();
         Set<Integer> placed = new HashSet<>();
         while (placed.size() < elements.size()) {
             int next = -1;
@@ -310,10 +309,59 @@ public class Narrator {
             }
 
             placed.add(next);
-            ordered.add(elements.get(next));
+            ordered.add(next);
         }
 
-        return ordered;
+        return closeBeforeReliants(ordered, reliedElements, tests).stream().map(elements::get).toList();
+    }
+
+    // An element others rely on sits as close as possible before the first of them, as the representation tells the reviewer
+    // (see RawRepresentation): read at the top of a chapter, a new type or a constant only later diffs use is out of mind
+    // when they come, and it splits code read together (a broker change and the client using what it returns, a field and
+    // its accessors). The order is built from the end: an element is placed once every element relying on it is, and at
+    // once, so it reads right before the first of them, the element placed last freeing it; elements
+    // nothing relies on keep their order, as do the elements placed together. Elements relying on each other keep their
+    // order as well, the latest first. Production code relied on by test code stays with the production code, which a
+    // reviewer reads before what checks it (see orderByReliance)
+    private static List<Integer> closeBeforeReliants(List<Integer> ordered, List<Set<Integer>> reliedElements,
+                                                     List<Boolean> tests) {
+        Map<Integer, Integer> position = new HashMap<>();
+        for (int i = 0; i < ordered.size(); i++) {
+            position.put(ordered.get(i), i);
+        }
+        Map<Integer, Integer> unplacedReliants = new HashMap<>();
+        for (int element : ordered) {
+            for (int relied : reliedElements.get(element)) {
+                unplacedReliants.merge(relied, 1, Integer::sum);
+            }
+        }
+        Comparator<Integer> latestFirst = Comparator.comparingInt((Integer element) -> position.get(element)).reversed();
+        Deque<Integer> freed = new ArrayDeque<>();
+        TreeSet<Integer> rest = new TreeSet<>(latestFirst);
+        rest.addAll(ordered);
+        Deque<Integer> result = new ArrayDeque<>();
+        while (!rest.isEmpty()) {
+            Integer next = freed.poll();
+            if (next == null) {
+                next = rest.stream().filter(element -> unplacedReliants.getOrDefault(element, 0) == 0).findFirst()
+                        .orElse(rest.first());
+            }
+            if (!rest.remove(next)) {
+                continue;
+            }
+            result.addFirst(next);
+            // The elements the placed one frees read right before it, the latest of them closest
+            List<Integer> freedByNext = new ArrayList<>();
+            for (int relied : reliedElements.get(next)) {
+                if (unplacedReliants.merge(relied, -1, Integer::sum) == 0 && rest.contains(relied)
+                        && (tests.get(relied) || !tests.get(next))) {
+                    freedByNext.add(relied);
+                }
+            }
+            freedByNext.sort(latestFirst.reversed());
+            freedByNext.forEach(freed::push);
+        }
+        return new ArrayList<>(result);
     }
 
     public int getProgress(GrainLevel grainLevel) {

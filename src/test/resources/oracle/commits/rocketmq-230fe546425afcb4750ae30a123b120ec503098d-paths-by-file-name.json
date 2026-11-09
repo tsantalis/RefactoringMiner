@@ -5,16 +5,36 @@
   "Attribute.java": [
     "common/src/main/java/org/apache/rocketmq/common/attribute/Attribute.java"
   ],
+  "AttributeUtil.java": [
+    "common/src/main/java/org/apache/rocketmq/common/attribute/AttributeUtil.java"
+  ],
+  "AttributesBuilder.java": [],
+  "AuthConfig.java": [
+    "auth/src/main/java/org/apache/rocketmq/auth/config/AuthConfig.java"
+  ],
   "BrokerAttachedPlugin.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/plugin/BrokerAttachedPlugin.java"
+  ],
+  "BrokerConfig.java": [
+    "common/src/main/java/org/apache/rocketmq/common/BrokerConfig.java"
   ],
   "BrokerController.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/BrokerController.java"
   ],
+  "BrokerIdentity.java": [
+    "common/src/main/java/org/apache/rocketmq/common/BrokerIdentity.java"
+  ],
+  "BrokerStatsManager.java": [
+    "store/src/main/java/org/apache/rocketmq/store/stats/BrokerStatsManager.java"
+  ],
   "Class.java": [],
+  "Cloneable.java": [],
+  "Comparable.java": [],
+  "ConcurrentMap.java": [],
   "ConfigManager.java": [
     "common/src/main/java/org/apache/rocketmq/common/ConfigManager.java"
   ],
+  "Constructor.java": [],
   "ConsumerFilterManager.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/filter/ConsumerFilterManager.java"
   ],
@@ -23,6 +43,12 @@
   ],
   "ConsumerOrderInfoManager.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/offset/ConsumerOrderInfoManager.java"
+  ],
+  "DefaultMessageStore.java": [
+    "store/src/main/java/org/apache/rocketmq/store/DefaultMessageStore.java"
+  ],
+  "FlatFileFactory.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatFileFactory.java"
   ],
   "FlatFileInterface.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatFileInterface.java"
@@ -33,13 +59,24 @@
   "FlatMessageFile.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatMessageFile.java"
   ],
+  "HashMap.java": [],
   "IllegalArgumentException.java": [],
+  "ImmutableMap.java": [],
+  "InstrumentSelector.java": [],
+  "JSON.java": [],
   "Logger.java": [],
+  "LoggerFactory.java": [],
   "Long.java": [],
   "LongRangeAttribute.java": [
     "common/src/main/java/org/apache/rocketmq/common/attribute/LongRangeAttribute.java"
   ],
   "Map.java": [],
+  "MessageArrivingListener.java": [
+    "store/src/main/java/org/apache/rocketmq/store/MessageArrivingListener.java"
+  ],
+  "MessageQueue.java": [
+    "common/src/main/java/org/apache/rocketmq/common/message/MessageQueue.java"
+  ],
   "MessageStore.java": [
     "store/src/main/java/org/apache/rocketmq/store/MessageStore.java"
   ],
@@ -47,16 +84,39 @@
     "store/src/main/java/org/apache/rocketmq/store/config/MessageStoreConfig.java",
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreConfig.java"
   ],
+  "MessageStoreExecutor.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreExecutor.java"
+  ],
+  "MessageStoreFactory.java": [
+    "store/src/main/java/org/apache/rocketmq/store/plugin/MessageStoreFactory.java"
+  ],
   "MessageStoreFetcher.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/core/MessageStoreFetcher.java"
+  ],
+  "MessageStorePluginContext.java": [
+    "store/src/main/java/org/apache/rocketmq/store/plugin/MessageStorePluginContext.java"
+  ],
+  "MessageStoreUtil.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/util/MessageStoreUtil.java"
   ],
   "MetadataStore.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metadata/MetadataStore.java"
   ],
   "Meter.java": [],
+  "NettyClientConfig.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyClientConfig.java"
+  ],
+  "NettyServerConfig.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyServerConfig.java"
+  ],
+  "Preconditions.java": [],
+  "RocksDBMessageStore.java": [
+    "store/src/main/java/org/apache/rocketmq/store/RocksDBMessageStore.java"
+  ],
   "ScheduleMessageService.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/schedule/ScheduleMessageService.java"
   ],
+  "Serializable.java": [],
   "ServiceProvider.java": [
     "common/src/main/java/org/apache/rocketmq/common/utils/ServiceProvider.java"
   ],
@@ -91,17 +151,26 @@
   "TopicQueueMappingManager.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/topic/TopicQueueMappingManager.java"
   ],
+  "alibaba.java": [],
   "apache.java": [],
   "api.java": [],
+  "base.java": [],
+  "collect.java": [],
+  "common.java": [],
   "concurrent.java": [],
+  "fastjson.java": [],
   "function.java": [],
+  "google.java": [],
+  "io.java": [],
   "java.java": [],
   "lang.java": [],
   "logging.java": [],
   "metrics.java": [],
   "opentelemetry.java": [],
   "org.java": [],
+  "reflect.java": [],
   "rocketmq.java": [],
+  "sdk.java": [],
   "slf4j.java": [],
   "util.java": []
 }

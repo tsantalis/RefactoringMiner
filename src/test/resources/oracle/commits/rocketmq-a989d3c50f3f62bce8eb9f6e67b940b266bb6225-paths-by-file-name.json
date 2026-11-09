@@ -1,10 +1,17 @@
 {
+  "AuthConfig.java": [
+    "auth/src/main/java/org/apache/rocketmq/auth/config/AuthConfig.java"
+  ],
   "BrokerConfig.java": [
     "common/src/main/java/org/apache/rocketmq/common/BrokerConfig.java"
+  ],
+  "BrokerController.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/BrokerController.java"
   ],
   "BrokerIdentity.java": [
     "common/src/main/java/org/apache/rocketmq/common/BrokerIdentity.java"
   ],
+  "Cloneable.java": [],
   "Consumer.java": [
     "example/src/main/java/org/apache/rocketmq/example/benchmark/Consumer.java",
     "example/src/main/java/org/apache/rocketmq/example/operation/Consumer.java",
@@ -13,6 +20,16 @@
   ],
   "ConsumerLagCalculator.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/metrics/ConsumerLagCalculator.java"
+  ],
+  "MessageStoreConfig.java": [
+    "store/src/main/java/org/apache/rocketmq/store/config/MessageStoreConfig.java",
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreConfig.java"
+  ],
+  "NettyClientConfig.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyClientConfig.java"
+  ],
+  "NettyServerConfig.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyServerConfig.java"
   ],
   "String.java": [],
   "function.java": [],

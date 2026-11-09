@@ -17,6 +17,7 @@
   "DEFAULT.java": [],
   "ForwardingClientCall.java": [],
   "ForwardingClientCallListener.java": [],
+  "ImmutableList.java": [],
   "List.java": [],
   "Listener.java": [],
   "Marshaller.java": [],
@@ -28,6 +29,7 @@
   "Mockito.java": [],
   "Queue.java": [],
   "Runnable.java": [],
+  "SharedConnection.java": [],
   "SharedConnectionFactory.java": [
     "src/main/java/com/google/devtools/build/lib/remote/grpc/SharedConnectionFactory.java"
   ],
@@ -39,7 +41,11 @@
   "Single.java": [],
   "Status.java": [],
   "TestObserver.java": [],
+  "TokenBucket.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/grpc/TokenBucket.java"
+  ],
   "Truth.java": [],
+  "collect.java": [],
   "common.java": [],
   "core.java": [],
   "google.java": [],
@@ -49,6 +55,7 @@
   "observers.java": [],
   "reactivex.java": [],
   "rxjava3.java": [],
+  "status.java": [],
   "subjects.java": [],
   "truth.java": [],
   "util.java": []

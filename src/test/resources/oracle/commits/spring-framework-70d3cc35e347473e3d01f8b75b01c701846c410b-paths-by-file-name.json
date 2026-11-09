@@ -2,6 +2,10 @@
   "Assertions.java": [],
   "Builder.java": [],
   "Charset.java": [],
+  "ClientHttpRequest.java": [
+    "spring-web/src/main/java/org/springframework/http/client/ClientHttpRequest.java",
+    "spring-web/src/main/java/org/springframework/http/client/reactive/ClientHttpRequest.java"
+  ],
   "ClientHttpRequestFactory.java": [
     "spring-web/src/main/java/org/springframework/http/client/ClientHttpRequestFactory.java"
   ],
@@ -50,6 +54,15 @@
   "HttpMessage.java": [
     "spring-web/src/main/java/org/springframework/http/HttpMessage.java"
   ],
+  "HttpMethod.java": [
+    "spring-web/src/main/java/org/springframework/http/HttpMethod.java"
+  ],
+  "HttpOutputMessage.java": [
+    "spring-web/src/main/java/org/springframework/http/HttpOutputMessage.java"
+  ],
+  "HttpRequest.java": [
+    "spring-web/src/main/java/org/springframework/http/HttpRequest.java"
+  ],
   "HttpStatusCode.java": [
     "spring-web/src/main/java/org/springframework/http/HttpStatusCode.java"
   ],
@@ -80,6 +93,9 @@
   ],
   "RestClientIntegrationTests.java": [
     "spring-web/src/test/java/org/springframework/web/client/RestClientIntegrationTests.java"
+  ],
+  "RestTemplate.java": [
+    "spring-web/src/main/java/org/springframework/web/client/RestTemplate.java"
   ],
   "RuntimeException.java": [],
   "S.java": [],

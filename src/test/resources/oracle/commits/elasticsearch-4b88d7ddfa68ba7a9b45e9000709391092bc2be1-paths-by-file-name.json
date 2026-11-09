@@ -15,7 +15,9 @@
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/AstBuilder.java",
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/parser/AstBuilder.java"
   ],
+  "BiFunction.java": [],
   "BitSet.java": [],
+  "Boolean.java": [],
   "CharSequence.java": [],
   "Class.java": [],
   "Closeable.java": [],
@@ -74,6 +76,11 @@
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/parser/ExpressionBuilder.java"
   ],
   "FieldsContext.java": [],
+  "Function.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/function/Function.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
+  ],
   "FunctionRegistry.java": [
     "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/function/FunctionRegistry.java",
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/FunctionRegistry.java"
@@ -151,6 +158,9 @@
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/QlException.java"
   ],
   "QualifiedNamePatternContext.java": [],
+  "QueryBuilder.java": [
+    "server/src/main/java/org/elasticsearch/index/query/QueryBuilder.java"
+  ],
   "QueryParam.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/parser/QueryParam.java"
   ],

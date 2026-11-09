@@ -44,6 +44,9 @@
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
   ],
+  "FilteredAggregatorFunctionSupplier.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/aggregation/FilteredAggregatorFunctionSupplier.java"
+  ],
   "FilteredGroupingAggregatorFunction.java": [
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/aggregation/FilteredGroupingAggregatorFunction.java"
   ],
@@ -82,6 +85,7 @@
   "NamedWriteable.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
   ],
+  "Objects.java": [],
   "Operator.java": [
     "server/src/main/java/org/elasticsearch/index/query/Operator.java",
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ml/job/config/Operator.java",
@@ -111,6 +115,8 @@
   "SourceOperator.java": [
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/SourceOperator.java"
   ],
+  "String.java": [],
+  "Supplier.java": [],
   "ValuesSourceReaderOperator.java": [
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/lucene/ValuesSourceReaderOperator.java"
   ],

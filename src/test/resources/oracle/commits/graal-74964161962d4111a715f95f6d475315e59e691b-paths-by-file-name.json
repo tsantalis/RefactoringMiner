@@ -4,6 +4,9 @@
   "Feature.java": [
     "sdk/src/org.graalvm.nativeimage/src/org/graalvm/nativeimage/hosted/Feature.java"
   ],
+  "Function.java": [
+    "sulong/projects/com.oracle.truffle.llvm.parser/src/com/oracle/truffle/llvm/parser/listeners/Function.java"
+  ],
   "JfrEventSubstitution.java": [
     "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrEventSubstitution.java"
   ],
@@ -14,6 +17,7 @@
     "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrManager.java"
   ],
   "ResolvedJavaType.java": [],
+  "Runnable.java": [],
   "RuntimeSupport.java": [
     "substratevm/src/com.oracle.svm.core/src/com/oracle/svm/core/jdk/RuntimeSupport.java"
   ],
@@ -26,6 +30,8 @@
   ],
   "ci.java": [],
   "concurrent.java": [],
+  "function.java": [],
+  "java.java": [],
   "meta.java": [],
   "util.java": [],
   "vm.java": []

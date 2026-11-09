@@ -1,4 +1,5 @@
 {
+  "1.java": [],
   "AdaptiveBackOffSpinLock.java": [
     "store/src/main/java/org/apache/rocketmq/store/lock/AdaptiveBackOffSpinLock.java"
   ],
@@ -38,6 +39,9 @@
   "List.java": [],
   "LocalTime.java": [],
   "Map.java": [],
+  "MessageExtEncoder.java": [
+    "store/src/main/java/org/apache/rocketmq/store/MessageExtEncoder.java"
+  ],
   "MessageStore.java": [
     "store/src/main/java/org/apache/rocketmq/store/MessageStore.java"
   ],
@@ -55,6 +59,7 @@
   "PutMessageSpinLock.java": [
     "store/src/main/java/org/apache/rocketmq/store/PutMessageSpinLock.java"
   ],
+  "PutMessageThreadLocal.java": [],
   "ReentrantLock.java": [],
   "Runnable.java": [],
   "ServiceThread.java": [

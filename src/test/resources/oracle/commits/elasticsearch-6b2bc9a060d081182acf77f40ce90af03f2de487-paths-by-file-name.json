@@ -1,11 +1,21 @@
 {
+  "AbstractBytesReference.java": [
+    "server/src/main/java/org/elasticsearch/common/bytes/AbstractBytesReference.java"
+  ],
   "BigDecimal.java": [],
   "BigInteger.java": [],
   "Boolean.java": [],
   "Byte.java": [],
   "ByteArrayOutputStream.java": [],
+  "BytesArray.java": [
+    "server/src/main/java/org/elasticsearch/common/bytes/BytesArray.java"
+  ],
+  "BytesRef.java": [],
   "BytesReference.java": [
     "server/src/main/java/org/elasticsearch/common/bytes/BytesReference.java"
+  ],
+  "BytesStream.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/BytesStream.java"
   ],
   "CheckedFunction.java": [
     "libs/core/src/main/java/org/elasticsearch/core/CheckedFunction.java",
@@ -13,6 +23,7 @@
   ],
   "Closeable.java": [],
   "Collection.java": [],
+  "Collections.java": [],
   "Comparable.java": [],
   "Double.java": [],
   "ESTestCase.java": [
@@ -36,9 +47,20 @@
   "Number.java": [],
   "Object.java": [],
   "OutputStream.java": [],
+  "ParsedMediaType.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ParsedMediaType.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/content/ParsedMediaType.java"
+  ],
+  "RestApiVersion.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/RestApiVersion.java"
+  ],
+  "Set.java": [],
   "Short.java": [],
   "StreamInput.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
+  "StreamOutput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamOutput.java"
   ],
   "String.java": [],
   "ToXContent.java": [

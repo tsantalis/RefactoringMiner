@@ -60,7 +60,21 @@ public class MemberUsageTest {
         LeafExpression node = findNode(model, usage);
         Assertions.assertNotNull(node, "Usage not found in the model: " + usage);
         List<String> targets = new ArrayList<>();
-        for (UMLAbstractClass umlClass : classesOf(model)) {
+        if (usage.kind.equals("write")) {
+            // The name a value is assigned to, among the assignments to every attribute of the model
+            List<UMLAttribute> attributes = new ArrayList<>();
+            for (UMLAbstractClass umlClass : classesOf(model)) {
+                attributes.addAll(umlClass.getAttributes());
+            }
+            Map<UMLAttribute, List<MemberUsageFinder.Write>> writes = finder.findWrites(model, attributes);
+            for (UMLAttribute attribute : attributes) {
+                if (writes.getOrDefault(attribute, List.of()).stream()
+                        .anyMatch(write -> write.name().getLocationInfo().equals(node.getLocationInfo()))) {
+                    targets.add(describe(attribute));
+                }
+            }
+        }
+        for (UMLAbstractClass umlClass : usage.kind.equals("write") ? List.<UMLAbstractClass>of() : classesOf(model)) {
             if (usage.kind.equals("invocation")) {
                 for (UMLOperation operation : umlClass.getOperations()) {
                     if (finder.findInvocations(operation, model).stream().anyMatch(call -> call.getLocationInfo().equals(node.getLocationInfo()))) {

@@ -2,16 +2,21 @@
   "AbstractQueryBuilder.java": [
     "server/src/main/java/org/elasticsearch/index/query/AbstractQueryBuilder.java"
   ],
+  "Collections.java": [],
   "Iterable.java": [],
   "KnnVectorQueryBuilder.java": [
     "server/src/main/java/org/elasticsearch/search/vectors/KnnVectorQueryBuilder.java"
   ],
+  "List.java": [],
   "Map.java": [],
   "Mapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/Mapper.java",
     "x-pack/plugin/eql/src/main/java/org/elasticsearch/xpack/eql/planner/Mapper.java",
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/Mapper.java",
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/planner/Mapper.java"
+  ],
+  "MappingLookup.java": [
+    "server/src/main/java/org/elasticsearch/index/mapper/MappingLookup.java"
   ],
   "NamedWriteable.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
@@ -28,6 +33,8 @@
   "ObjectMapper.java": [
     "server/src/main/java/org/elasticsearch/index/mapper/ObjectMapper.java"
   ],
+  "Objects.java": [],
+  "Predicate.java": [],
   "Queries.java": [
     "server/src/main/java/org/elasticsearch/common/lucene/search/Queries.java",
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/util/Queries.java"
@@ -64,6 +71,7 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
   "apache.java": [],
+  "function.java": [],
   "lucene.java": [],
   "search.java": [],
   "util.java": []

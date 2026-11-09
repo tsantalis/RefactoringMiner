@@ -2,6 +2,9 @@
   "AbstractByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/AbstractByteBuf.java"
   ],
+  "AbstractByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/AbstractByteBufAllocator.java"
+  ],
   "AbstractPooledDerivedByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/AbstractPooledDerivedByteBuf.java"
   ],
@@ -15,17 +18,40 @@
   "AdaptivePoolingAllocator.java": [
     "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java"
   ],
+  "Arrays.java": [],
+  "AtomicLong.java": [],
+  "AtomicReferenceFieldUpdater.java": [],
   "ByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
+  ],
+  "ByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufAllocator.java"
+  ],
+  "ByteBufAllocatorMetric.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufAllocatorMetric.java"
+  ],
+  "ByteBufAllocatorMetricProvider.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufAllocatorMetricProvider.java"
   ],
   "ByteBufConvertible.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBufConvertible.java"
   ],
+  "ByteBuffer.java": [],
+  "ChunkAllocator.java": [],
   "Comparable.java": [],
+  "FastThreadLocal.java": [
+    "common/src/main/java/io/netty/util/concurrent/FastThreadLocal.java"
+  ],
   "FastThreadLocalThread.java": [
     "common/src/main/java/io/netty/util/concurrent/FastThreadLocalThread.java"
   ],
   "Handle.java": [],
+  "Integer.java": [],
+  "Locale.java": [],
+  "MagazineCaching.java": [],
+  "Math.java": [],
+  "MpscArrayQueue.java": [],
+  "MpscAtomicArrayQueue.java": [],
   "ObjectCreator.java": [],
   "ObjectPool.java": [
     "common/src/main/java/io/netty/util/internal/ObjectPool.java"
@@ -40,6 +66,9 @@
     "buffer/src/main/java/io/netty/buffer/PooledSlicedByteBuf.java"
   ],
   "Queue.java": [],
+  "ReferenceCountUpdater.java": [
+    "common/src/main/java/io/netty/util/internal/ReferenceCountUpdater.java"
+  ],
   "ReferenceCounted.java": [
     "common/src/main/java/io/netty/util/ReferenceCounted.java"
   ],
@@ -49,9 +78,13 @@
     "common/src/main/java/io/netty/util/internal/SystemPropertyUtil.java"
   ],
   "Thread.java": [],
+  "atomic.java": [],
   "concurrent.java": [],
   "java.java": [],
+  "jctools.java": [],
   "lang.java": [],
   "locks.java": [],
+  "nio.java": [],
+  "queues.java": [],
   "util.java": []
 }

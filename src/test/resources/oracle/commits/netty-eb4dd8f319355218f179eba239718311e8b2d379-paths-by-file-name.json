@@ -17,14 +17,30 @@
   "ChannelOutboundHandler.java": [
     "transport/src/main/java/io/netty/channel/ChannelOutboundHandler.java"
   ],
+  "CharObjectHashMap.java": [],
+  "CharSequence.java": [],
+  "Closeable.java": [],
+  "Collection.java": [],
+  "Http2CodecUtil.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2CodecUtil.java"
+  ],
   "Http2Connection.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Connection.java"
   ],
   "Http2ConnectionAdapter.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionAdapter.java"
   ],
+  "Http2ConnectionDecoder.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionDecoder.java"
+  ],
+  "Http2ConnectionEncoder.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionEncoder.java"
+  ],
   "Http2ConnectionHandler.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionHandler.java"
+  ],
+  "Http2DataWriter.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2DataWriter.java"
   ],
   "Http2FrameCodec.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java"
@@ -35,12 +51,26 @@
   "Http2FrameStream.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameStream.java"
   ],
+  "Http2FrameWriter.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameWriter.java"
+  ],
   "Http2LifecycleManager.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2LifecycleManager.java"
+  ],
+  "Http2Settings.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Settings.java"
   ],
   "Http2Stream.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Stream.java"
   ],
   "Listener.java": [],
-  "PropertyKey.java": []
+  "ObjectUtil.java": [
+    "common/src/main/java/io/netty/util/internal/ObjectUtil.java"
+  ],
+  "PropertyKey.java": [],
+  "String.java": [],
+  "collection.java": [],
+  "io.java": [],
+  "netty.java": [],
+  "util.java": []
 }

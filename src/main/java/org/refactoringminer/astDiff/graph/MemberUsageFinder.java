@@ -34,6 +34,9 @@ import javax.annotation.Nullable;
  *   parameters by position.</li>
  *   <li>A class declared inside a method does not link to the method's locals it can use, so a simple name in it is
  *   not checked against those locals.</li>
+ *   <li>TypeScript super calls are recorded as plain method invocations named {@code super} ({@code super(...)}) or
+ *   {@code super.m} ({@code super.m()}), not as a SUPER_CONSTRUCTOR_INVOCATION or a SUPER_METHOD_INVOCATION named
+ *   {@code m}, so they are not bound.</li>
  *   <li>The type of a cast and the operator of a postfix expression (Kotlin {@code x!!}) are recorded only as the
  *   expression's text, so they are read from that text; besides names, call receivers, arguments and literals (which RM
  *   keeps as strings), this is the only text read.</li>
@@ -47,9 +50,12 @@ import javax.annotation.Nullable;
  *   with each), conditional expressions and implicitly typed lambda parameters (from the functional interface of the
  *   call taking the lambda). Other arguments (e.g., switch expressions, lambdas themselves) have an unknown type, which
  *   can leave a call between overloads undecided.</li>
- *   <li>The functional type a method or creation reference is converted to, which gives the arity of the referenced
- *   method, can be found the same way as for lambda parameters; it is not yet, so a reference is bound only when the
- *   receiver type has a single member method (constructor) with the name.</li>
+ *   <li>The functional type a method or creation reference is converted to gives the arity of the referenced method
+ *   (less the receiver for an instance method referred to through a type). It is found for a reference passed as an
+ *   argument, from the parameter of the call taking it, when that parameter has a written functional interface type; not
+ *   yet for a reference given as an initializer, an assigned or a returned value, or passed to a parameter typed by a
+ *   type variable. Otherwise a reference is bound only when the receiver type has a single member method (constructor)
+ *   with the name.</li>
  * </ul>
  * <p>
  * The usages of a model are indexed by {@link #bindChanges}, which attaches the files declaring them; it is called
@@ -63,6 +69,8 @@ public class MemberUsageFinder {
   private final Map<UMLModel, Index> useIndexes = new IdentityHashMap<>();
   // The bound names a value is assigned to, with the assignment
   private final Map<LocationInfo, LocationInfo> writes = new HashMap<>();
+  // The code holding each bound call, as RM records it
+  private final Map<AbstractCall, AbstractCodeFragment> callFragments = new IdentityHashMap<>();
 
   /**
    * @param inChange whether code of a model reaches a change, which limits the calls and names bound
@@ -74,6 +82,12 @@ public class MemberUsageFinder {
 
   public List<AbstractCall> findInvocations(UMLOperation operation, UMLModel umlModel) {
     return indexes.get(umlModel).invocations().getOrDefault(operation, List.of());
+  }
+
+  /** The code holding a call {@link #findInvocations} or {@link #findUnchangedInvocations} gives, as RM records it. */
+  @Nullable
+  public AbstractCodeFragment fragmentOf(AbstractCall call) {
+    return callFragments.get(call);
   }
 
   public List<LeafExpression> findAccesses(UMLAttribute attribute, UMLModel umlModel) {
@@ -138,13 +152,7 @@ public class MemberUsageFinder {
     targetOperations.addAll(operations);
     Set<UMLAttribute> targetAttributes = Collections.newSetFromMap(new IdentityHashMap<>());
     targetAttributes.addAll(attributes);
-    Set<String> operationNames = new HashSet<>();
-    operations.forEach(operation -> operationNames.add(operation.getName()));
-    // RM names a constructor invocation by its keyword (super(...), this(...)), not by the class
-    if (operations.stream().anyMatch(UMLOperation::isConstructor)) {
-      operationNames.add("super");
-      operationNames.add("this");
-    }
+    CallCandidates callCandidates = CallCandidates.of(operations);
     Set<String> attributeNames = new HashSet<>();
     attributes.forEach(attribute -> attributeNames.add(attribute.getName()));
 
@@ -161,17 +169,18 @@ public class MemberUsageFinder {
         }
         for (AbstractCodeFragment fragment : fragmentsOf(context)) {
           for (AbstractCall call : callsOf(fragment)) {
-            if (!operationNames.contains(simpleName(call.getName())) || !seenCalls.add(call.getLocationInfo())
+            if (!callCandidates.test(call) || !seenCalls.add(call.getLocationInfo())
                     || inChange.test(umlModel, call.getLocationInfo())) {
               continue;
             }
             UMLOperation target = resolver.resolveInvocationTarget(call, context, umlModel);
             if (target != null && targetOperations.contains(target)) {
               index.invocations().computeIfAbsent(target, key -> new ArrayList<>()).add(call);
+              callFragments.put(call, fragment);
             }
           }
           for (LeafExpression variable : accessCandidatesOf(fragment)) {
-            if (!attributeNames.contains(simpleName(variable.getString())) || !seenVariables.add(variable.getLocationInfo())
+            if (!attributeNames.contains(ReceiverTypeResolver.memberName(variable)) || !seenVariables.add(variable.getLocationInfo())
                     || inChange.test(umlModel, variable.getLocationInfo())) {
               continue;
             }
@@ -193,6 +202,92 @@ public class MemberUsageFinder {
     useIndexes.put(umlModel, index);
   }
 
+  /**
+   * The assignments to the given attributes anywhere in the model, changed or not, by attribute: the name assigned with
+   * the value assigned to it, and the fragment holding it. Binds the names the way {@link #bindUses} does, without
+   * recording them as uses.
+   */
+  public Map<UMLAttribute, List<Write>> findWrites(UMLModel umlModel, Collection<UMLAttribute> attributes) {
+    Set<UMLAttribute> targetAttributes = Collections.newSetFromMap(new IdentityHashMap<>());
+    targetAttributes.addAll(attributes);
+    Set<String> attributeNames = new HashSet<>();
+    attributes.forEach(attribute -> attributeNames.add(attribute.getName()));
+    Map<UMLAttribute, List<Write>> found = new IdentityHashMap<>();
+    if (attributes.isEmpty()) {
+      return found;
+    }
+    Set<LocationInfo> seenVariables = new HashSet<>();
+    Set<UMLAbstractClass> seenClasses = Collections.newSetFromMap(new IdentityHashMap<>());
+    for (UMLClass umlClass : new ArrayList<>(umlModel.getClassList())) {
+      List<UMLAbstractClass> classes = new ArrayList<>(List.of(umlClass));
+      classes.addAll(umlClass.getAnonymousClassList());
+      for (UMLAbstractClass context : classes) {
+        if (!seenClasses.add(context)) {
+          continue;
+        }
+        for (AbstractCodeFragment fragment : fragmentsOf(context)) {
+          for (LeafExpression variable : accessCandidatesOf(fragment)) {
+            LocationInfo assignment = assignmentOf(variable, fragment);
+            if (assignment == null || !attributeNames.contains(ReceiverTypeResolver.memberName(variable))
+                    || !seenVariables.add(variable.getLocationInfo())) {
+              continue;
+            }
+            UMLAttribute target = resolver.resolveAccessTarget(variable, context, umlModel);
+            if (target != null && targetAttributes.contains(target)) {
+              found.computeIfAbsent(target, key -> new ArrayList<>()).add(new Write(variable, assignment, fragment, context));
+            }
+          }
+        }
+      }
+    }
+    return found;
+  }
+
+  /**
+   * The calls (and creations) of the given operations anywhere in the model, changed or not, by operation, with the
+   * fragment holding them. Binds them the way {@link #bindUses} does, without recording them as uses.
+   */
+  public Map<UMLOperation, List<Call>> findCalls(UMLModel umlModel, Collection<UMLOperation> operations) {
+    Set<UMLOperation> targetOperations = Collections.newSetFromMap(new IdentityHashMap<>());
+    targetOperations.addAll(operations);
+    CallCandidates callCandidates = CallCandidates.of(operations);
+    Map<UMLOperation, List<Call>> found = new IdentityHashMap<>();
+    if (operations.isEmpty()) {
+      return found;
+    }
+    Set<LocationInfo> seenCalls = new HashSet<>();
+    Set<UMLAbstractClass> seenClasses = Collections.newSetFromMap(new IdentityHashMap<>());
+    for (UMLClass umlClass : new ArrayList<>(umlModel.getClassList())) {
+      List<UMLAbstractClass> classes = new ArrayList<>(List.of(umlClass));
+      classes.addAll(umlClass.getAnonymousClassList());
+      for (UMLAbstractClass context : classes) {
+        if (!seenClasses.add(context)) {
+          continue;
+        }
+        for (AbstractCodeFragment fragment : fragmentsOf(context)) {
+          for (AbstractCall call : callsOf(fragment)) {
+            if (!callCandidates.test(call) || !seenCalls.add(call.getLocationInfo())) {
+              continue;
+            }
+            UMLOperation target = resolver.resolveInvocationTarget(call, context, umlModel);
+            if (target != null && targetOperations.contains(target)) {
+              found.computeIfAbsent(target, key -> new ArrayList<>()).add(new Call(call, fragment, context));
+            }
+          }
+        }
+      }
+    }
+    return found;
+  }
+
+  /** A call of an operation, the fragment holding it and its class. */
+  public record Call(AbstractCall call, AbstractCodeFragment fragment, UMLAbstractClass context) {
+  }
+
+  /** An assignment to an attribute: the name assigned, the name with its value, the fragment holding it and its class. */
+  public record Write(LeafExpression name, LocationInfo assignment, AbstractCodeFragment fragment, UMLAbstractClass context) {
+  }
+
   // The assignment of the fragment the name is the target of, which starts with it
   @Nullable
   private static LocationInfo assignmentOf(LeafExpression variable, AbstractCodeFragment fragment) {
@@ -206,11 +301,39 @@ public class MemberUsageFinder {
     return null;
   }
 
-  // The name a call or a name refers to a member by, without its qualifier or the type arguments of a created type
-  private static String simpleName(String name) {
-    int typeArguments = name.indexOf('<');
-    String raw = typeArguments < 0 ? name : name.substring(0, typeArguments);
-    return raw.substring(raw.lastIndexOf('.') + 1);
+  /**
+   * The calls that may bind to one of the operations, told apart the way {@link ReceiverTypeResolver} binds them: a
+   * creation by the class it creates, a constructor invocation ({@code this(...)}, {@code super(...)}) by its kind, as RM
+   * records no class with it, and any other call by its name.
+   */
+  private record CallCandidates(Set<String> methodNames, Set<String> constructedClasses) {
+
+    static CallCandidates of(Collection<UMLOperation> operations) {
+      Set<String> methodNames = new HashSet<>();
+      Set<String> constructedClasses = new HashSet<>();
+      for (UMLOperation operation : operations) {
+        if (operation.isConstructor()) {
+          constructedClasses.add(ReceiverTypeResolver.lastSegment(operation.getClassName()));
+        } else {
+          methodNames.add(operation.getName());
+        }
+      }
+      return new CallCandidates(methodNames, constructedClasses);
+    }
+
+    boolean test(AbstractCall call) {
+      if (call instanceof ObjectCreation || call instanceof CreationReference) {
+        UMLType created = call instanceof ObjectCreation creation ? (creation.isArray() ? null : creation.getType())
+                : ((CreationReference) call).getType();
+        return created != null && constructedClasses.contains(ReceiverTypeResolver.lastSegment(created.getClassType()));
+      }
+      LocationInfo.CodeElementType kind = call.getLocationInfo().getCodeElementType();
+      if (kind.equals(LocationInfo.CodeElementType.CONSTRUCTOR_INVOCATION)
+              || kind.equals(LocationInfo.CodeElementType.SUPER_CONSTRUCTOR_INVOCATION)) {
+        return !constructedClasses.isEmpty();
+      }
+      return methodNames.contains(call.getName());
+    }
   }
 
   private Index buildIndex(UMLModel umlModel) {
@@ -233,6 +356,7 @@ public class MemberUsageFinder {
             UMLOperation target = resolver.resolveInvocationTarget(call, context, umlModel);
             if (target != null) {
               index.invocations().computeIfAbsent(target, key -> new ArrayList<>()).add(call);
+              callFragments.put(call, fragment);
             }
           }
           for (LeafExpression variable : accessCandidatesOf(fragment)) {

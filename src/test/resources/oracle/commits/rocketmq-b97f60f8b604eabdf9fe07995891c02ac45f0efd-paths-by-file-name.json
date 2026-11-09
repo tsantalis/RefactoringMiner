@@ -1,11 +1,16 @@
 {
   "Comparable.java": [],
+  "ConcurrentMap.java": [],
   "DefaultMQPushConsumerImpl.java": [
     "client/src/main/java/org/apache/rocketmq/client/impl/consumer/DefaultMQPushConsumerImpl.java"
   ],
   "Exception.java": [],
+  "HashMap.java": [],
   "MQClientException.java": [
     "client/src/main/java/org/apache/rocketmq/client/exception/MQClientException.java"
+  ],
+  "MQClientInstance.java": [
+    "client/src/main/java/org/apache/rocketmq/client/impl/factory/MQClientInstance.java"
   ],
   "MQConsumerInner.java": [
     "client/src/main/java/org/apache/rocketmq/client/impl/consumer/MQConsumerInner.java"
@@ -19,10 +24,22 @@
   "MessageQueue.java": [
     "common/src/main/java/org/apache/rocketmq/common/message/MessageQueue.java"
   ],
+  "MixAll.java": [
+    "common/src/main/java/org/apache/rocketmq/common/MixAll.java"
+  ],
+  "RemotingHelper.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/common/RemotingHelper.java"
+  ],
   "Serializable.java": [],
+  "SocketAddress.java": [],
   "String.java": [],
   "UtilAll.java": [
     "common/src/main/java/org/apache/rocketmq/common/UtilAll.java"
   ],
-  "io.java": []
+  "concurrent.java": [],
+  "io.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "net.java": [],
+  "util.java": []
 }

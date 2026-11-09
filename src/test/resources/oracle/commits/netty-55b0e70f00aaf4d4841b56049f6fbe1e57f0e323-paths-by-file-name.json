@@ -2,6 +2,9 @@
   "AbstractByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/AbstractByteBuf.java"
   ],
+  "AbstractByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/AbstractByteBufAllocator.java"
+  ],
   "AbstractByteBufTest.java": [
     "buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java"
   ],
@@ -21,18 +24,28 @@
   "ByteBufAllocator.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBufAllocator.java"
   ],
+  "ByteBufAllocatorMetricProvider.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufAllocatorMetricProvider.java"
+  ],
   "ByteBufConvertible.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBufConvertible.java"
   ],
   "ByteBuffer.java": [],
+  "ByteOrder.java": [],
   "CharBuffer.java": [],
   "Comparable.java": [],
   "DuplicatedByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java"
   ],
+  "EmptyByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/EmptyByteBuf.java"
+  ],
   "Executable.java": [],
   "GatheringByteChannel.java": [],
   "Integer.java": [],
+  "PlatformDependent.java": [
+    "common/src/main/java/io/netty/util/internal/PlatformDependent.java"
+  ],
   "ReadOnlyByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/ReadOnlyByteBuf.java"
   ],
@@ -45,6 +58,9 @@
   "ReadOnlyUnsafeDirectByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/ReadOnlyUnsafeDirectByteBuf.java"
   ],
+  "ReferenceCountUpdater.java": [
+    "common/src/main/java/io/netty/util/internal/ReferenceCountUpdater.java"
+  ],
   "ReferenceCounted.java": [
     "common/src/main/java/io/netty/util/ReferenceCounted.java"
   ],
@@ -52,12 +68,44 @@
   "SlicedByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/SlicedByteBuf.java"
   ],
+  "SwappedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/SwappedByteBuf.java"
+  ],
   "Unpooled.java": [
     "buffer/src/main/java/io/netty/buffer/Unpooled.java"
   ],
+  "UnpooledByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledByteBufAllocator.java"
+  ],
+  "UnpooledDirectByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledDirectByteBuf.java"
+  ],
+  "UnpooledHeapByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledHeapByteBuf.java"
+  ],
+  "UnpooledSlicedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledSlicedByteBuf.java"
+  ],
+  "UnpooledUnsafeDirectByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledUnsafeDirectByteBuf.java"
+  ],
+  "UnpooledUnsafeHeapByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledUnsafeHeapByteBuf.java"
+  ],
+  "UnpooledUnsafeNoCleanerDirectByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledUnsafeNoCleanerDirectByteBuf.java"
+  ],
+  "UnreleasableByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnreleasableByteBuf.java"
+  ],
+  "WrappedByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/WrappedByteBuf.java"
+  ],
   "api.java": [],
+  "byte.java": [],
   "channels.java": [],
   "function.java": [],
+  "int.java": [],
   "java.java": [],
   "junit.java": [],
   "jupiter.java": [],

@@ -5,6 +5,7 @@
   "AsyncTwoPhaseIndexer.java": [
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/indexing/AsyncTwoPhaseIndexer.java"
   ],
+  "AtomicReference.java": [],
   "AuthorizationState.java": [
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/AuthorizationState.java"
   ],
@@ -12,6 +13,16 @@
   "CheckedBiConsumer.java": [
     "server/src/main/java/org/elasticsearch/common/CheckedBiConsumer.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedBiConsumer.java"
+  ],
+  "ChunkedToXContent.java": [
+    "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContent.java"
+  ],
+  "CodepointSetGenerator.java": [],
+  "Collections.java": [],
+  "Comparable.java": [],
+  "Consumer.java": [],
+  "DestConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/DestConfig.java"
   ],
   "Diffable.java": [
     "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
@@ -32,18 +43,72 @@
     "server/src/main/java/org/elasticsearch/ElasticsearchStatusException.java"
   ],
   "Exception.java": [],
+  "ExceptionsHelper.java": [
+    "server/src/main/java/org/elasticsearch/ExceptionsHelper.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ml/utils/ExceptionsHelper.java",
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/utils/ExceptionsHelper.java"
+  ],
+  "Float.java": [],
+  "Function.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
+  ],
   "HealthStatus.java": [
     "server/src/main/java/org/elasticsearch/health/HealthStatus.java"
   ],
+  "IndexerJobStats.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/indexing/IndexerJobStats.java"
+  ],
+  "InputStream.java": [],
+  "Instant.java": [],
   "Integer.java": [],
+  "LatestConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/latest/LatestConfig.java"
+  ],
+  "List.java": [],
   "LuceneTestCase.java": [],
+  "Map.java": [],
+  "NamedWriteable.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
+  ],
+  "Objects.java": [],
+  "ParseField.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/ParseField.java"
+  ],
+  "PivotConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/pivot/PivotConfig.java"
+  ],
+  "QueryConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/QueryConfig.java"
+  ],
+  "ReportingService.java": [
+    "server/src/main/java/org/elasticsearch/node/ReportingService.java"
+  ],
+  "RequestOptions.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/RequestOptions.java"
+  ],
+  "ResourceNotFoundException.java": [
+    "server/src/main/java/org/elasticsearch/ResourceNotFoundException.java"
+  ],
+  "RestStatus.java": [
+    "server/src/main/java/org/elasticsearch/rest/RestStatus.java"
+  ],
+  "RetentionPolicyConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/RetentionPolicyConfig.java"
+  ],
   "RuntimeException.java": [],
+  "Scheduler.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/Scheduler.java"
+  ],
   "SetOnce.java": [],
   "SettingsConfig.java": [
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/SettingsConfig.java"
   ],
   "SimpleDiffable.java": [
     "server/src/main/java/org/elasticsearch/cluster/SimpleDiffable.java"
+  ],
+  "SourceConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/SourceConfig.java"
   ],
   "StreamInput.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
@@ -54,6 +119,18 @@
     "server/src/main/java/org/elasticsearch/common/Strings.java",
     "server/src/main/java/org/elasticsearch/common/inject/internal/Strings.java",
     "x-pack/plugin/watcher/src/main/java/org/elasticsearch/xpack/watcher/support/Strings.java"
+  ],
+  "Supplier.java": [],
+  "SyncConfig.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/SyncConfig.java"
+  ],
+  "ThreadPool.java": [
+    "server/src/main/java/org/elasticsearch/threadpool/ThreadPool.java"
+  ],
+  "Throwable.java": [],
+  "TimeValue.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
   ],
   "ToXContent.java": [
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/ToXContent.java"
@@ -67,11 +144,23 @@
   "TransformConfig.java": [
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/TransformConfig.java"
   ],
+  "TransformConfigVersion.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/TransformConfigVersion.java"
+  ],
   "TransformContext.java": [
     "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/TransformContext.java"
   ],
+  "TransformField.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/TransformField.java"
+  ],
   "TransformIndexer.java": [
     "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/TransformIndexer.java"
+  ],
+  "TransformIndexerPosition.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/TransformIndexerPosition.java"
+  ],
+  "TransformIndexerStats.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/TransformIndexerStats.java"
   ],
   "TransformInsufficientPermissionsIT.java": [
     "x-pack/plugin/transform/qa/multi-node-tests/src/javaRestTest/java/org/elasticsearch/xpack/transform/integration/TransformInsufficientPermissionsIT.java"
@@ -83,13 +172,33 @@
     "x-pack/plugin/transform/qa/multi-node-tests/src/javaRestTest/java/org/elasticsearch/xpack/transform/integration/TransformRestTestCase.java",
     "x-pack/plugin/transform/qa/single-node-tests/src/javaRestTest/java/org/elasticsearch/xpack/transform/integration/TransformRestTestCase.java"
   ],
+  "TransformTaskState.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/transform/transforms/TransformTaskState.java"
+  ],
+  "VersionId.java": [
+    "server/src/main/java/org/elasticsearch/common/VersionId.java"
+  ],
   "Writeable.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
+  "XContentBuilder.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
+  ],
   "apache.java": [],
+  "atomic.java": [],
+  "carrotsearch.java": [],
+  "concurrent.java": [],
+  "core.java": [],
+  "elasticsearch.java": [],
+  "function.java": [],
+  "generators.java": [],
+  "io.java": [],
   "java.java": [],
   "lang.java": [],
   "lucene.java": [],
+  "org.java": [],
+  "randomizedtesting.java": [],
   "tests.java": [],
+  "time.java": [],
   "util.java": []
 }

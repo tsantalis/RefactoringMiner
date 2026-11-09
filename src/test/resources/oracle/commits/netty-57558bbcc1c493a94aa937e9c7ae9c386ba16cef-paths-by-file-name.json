@@ -64,12 +64,21 @@
   "DuplicatedByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java"
   ],
+  "EmptyByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/EmptyByteBuf.java"
+  ],
+  "FastThreadLocalThread.java": [
+    "common/src/main/java/io/netty/util/concurrent/FastThreadLocalThread.java"
+  ],
   "Integer.java": [],
   "Iterable.java": [],
   "List.java": [],
   "ManagementFactory.java": [],
   "Math.java": [],
   "Method.java": [],
+  "PlatformDependent.java": [
+    "common/src/main/java/io/netty/util/internal/PlatformDependent.java"
+  ],
   "PoolArena.java": [
     "buffer/src/main/java/io/netty/buffer/PoolArena.java"
   ],
@@ -88,6 +97,12 @@
   "PoolChunkMetric.java": [
     "buffer/src/main/java/io/netty/buffer/PoolChunkMetric.java"
   ],
+  "PoolSubpage.java": [
+    "buffer/src/main/java/io/netty/buffer/PoolSubpage.java"
+  ],
+  "PoolSubpageMetric.java": [
+    "buffer/src/main/java/io/netty/buffer/PoolSubpageMetric.java"
+  ],
   "PooledByteBufAllocator.java": [
     "buffer/src/main/java/io/netty/buffer/PooledByteBufAllocator.java"
   ],
@@ -97,6 +112,8 @@
   "ReferenceCounted.java": [
     "common/src/main/java/io/netty/util/ReferenceCounted.java"
   ],
+  "Runnable.java": [],
+  "SB.java": [],
   "SizeClasses.java": [
     "buffer/src/main/java/io/netty/buffer/SizeClasses.java"
   ],
@@ -105,18 +122,37 @@
   ],
   "StampedLock.java": [],
   "String.java": [],
+  "TestInfo.java": [],
   "Thread.java": [],
   "Unpooled.java": [
     "buffer/src/main/java/io/netty/buffer/Unpooled.java"
   ],
+  "UnpooledByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledByteBufAllocator.java"
+  ],
   "UnpooledByteBufAllocatorTest.java": [
     "buffer/src/test/java/io/netty/buffer/UnpooledByteBufAllocatorTest.java"
+  ],
+  "UnpooledDirectByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledDirectByteBuf.java"
   ],
   "UnpooledDuplicatedByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/UnpooledDuplicatedByteBuf.java"
   ],
+  "UnpooledHeapByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledHeapByteBuf.java"
+  ],
   "UnpooledSlicedByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/UnpooledSlicedByteBuf.java"
+  ],
+  "UnpooledUnsafeDirectByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledUnsafeDirectByteBuf.java"
+  ],
+  "UnpooledUnsafeHeapByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledUnsafeHeapByteBuf.java"
+  ],
+  "UnpooledUnsafeNoCleanerDirectByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledUnsafeNoCleanerDirectByteBuf.java"
   ],
   "api.java": [],
   "assertj.java": [],

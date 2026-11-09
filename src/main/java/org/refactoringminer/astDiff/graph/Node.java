@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 import org.refactoringminer.astDiff.graph.cluster.traverse.Util;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -56,6 +57,9 @@ public class Node implements ReviewNode {
   @Nullable
   private RMInfo rm;
   private final List<Tree> uses = new ArrayList<>();
+  // Whether the node stands for the header of a type alone, its tree spanning the header only (see
+  // HunkNetwork#typeHeaderNodes)
+  private boolean typeHeader = false;
 
   public Node(ContentsContexts contentsContexts, RMIndex rmIndex, String path, SrcDst srcDst, Tree tree,
       @Nullable Set<Node> subs, NodeType nodeType) {
@@ -148,10 +152,112 @@ public class Node implements ReviewNode {
   // The member the tree lies in and the code of it holding the tree (see RMIndex#enclosing); for a statement using changes
   // (a usage), the code of it holding the uses too (see RMIndex#usageEnclosing)
   public Enclosing getEnclosing() {
-    return uses.isEmpty() ? rmIndex.enclosing(srcDst, path, tree) : rmIndex.usageEnclosing(srcDst, path, tree, uses);
+    if (enclosing == null || enclosingUses != uses.size()) {
+      enclosing = uses.isEmpty() ? rmIndex.enclosing(srcDst, path, tree) : rmIndex.usageEnclosing(srcDst, path, tree, uses);
+      enclosingUses = uses.size();
+    }
+    return enclosing;
+  }
+
+  // The enclosing code, kept for the uses it was computed with, and the control code, kept for its targets
+  private Enclosing enclosing;
+  private int enclosingUses = -1;
+  private final Map<String, Enclosing> controls = new HashMap<>();
+
+  // The code deciding whether and how often the tree runs within its body, as ranges of offsets (see
+  // RMIndex#controlParts)
+  // The targets are the trees the control is of (changes, uses), which tell the cases of a dispatch whose condition they
+  // edit (see ControlFlow#guardsOf)
+  public Enclosing getControlParts(List<Tree> targets) {
+    List<int[]> ranges = targets.stream().map(target -> new int[]{target.getPos(), target.getEndPos()}).toList();
+    String key = String.join(",", ranges.stream().map(range -> range[0] + ":" + range[1]).toList());
+    return controls.computeIfAbsent(key, k -> rmIndex.controlParts(srcDst, path, tree, ranges));
+  }
+
+  // The code defining the parameters the code of the tree reads: the signature of their member (see RMIndex#parameterParts)
+  public List<int[]> getParameterParts() {
+    return rmIndex.parameterParts(srcDst, path, tree);
+  }
+
+  // The signature of the member holding the tree and its end (see RMIndex#memberSignature)
+  public List<int[]> getMemberSignature() {
+    return rmIndex.memberSignature(srcDst, path, tree);
+  }
+
+  // The end offset of the code the if the tree is runs instead of its branch, which leaves on every path; -1 when the
+  // tree is no such if (see RMIndex#implicitElseEnd)
+  public int getImplicitElseEnd() {
+    return rmIndex.implicitElseEnd(srcDst, path, tree);
+  }
+
+  // The bodies of the block lambdas and anonymous classes of the simple statement at the tree, which run apart from it
+  // (see RMIndex#apartBodies)
+  // The control parts of the statement holding the tree, for the tree as the target (see RMIndex#controlParts): the readers
+  // of what the statement defines, the guards bearing on what it reads and the code holding it, as a change of part of a
+  // declaration (its initializer) relies on them as the whole declaration does
+  public Enclosing getStatementControlParts() {
+    Tree statement = getRM().statementTree();
+    Tree window = statement != null && statement.getPos() <= tree.getPos() && tree.getEndPos() <= statement.getEndPos() ? statement : tree;
+    List<int[]> targets = List.of(new int[]{tree.getPos(), tree.getEndPos()});
+    return controls.computeIfAbsent("statement:" + window.getPos() + ":" + window.getEndPos() + ":" + tree.getPos() + ":" + tree.getEndPos(),
+            k -> rmIndex.controlParts(srcDst, path, window, targets));
+  }
+
+  // The code of the body the tree is that what the targets write reaches by name (see RMIndex#effectParts)
+  public List<int[]> getEffectParts(List<Tree> targets) {
+    return rmIndex.effectParts(srcDst, path, tree, targets.stream().map(target -> new int[]{target.getPos(), target.getEndPos()}).toList());
+  }
+
+  // The comments of the file of the tree (see RMIndex#comments)
+  public List<int[]> getFileComments() {
+    return rmIndex.comments(srcDst, path);
+  }
+
+  // The lines of the comments of the file holding nothing but the markers of a comment, as RM gives their text
+  public Set<Integer> getBlankCommentLines() {
+    return rmIndex.blankCommentLines(srcDst, path);
+  }
+
+  // The definitions within the body the tree is of the locals the targets read, followed back (see RMIndex#definitionParts)
+  public List<int[]> getDefinitionParts(List<Tree> targets) {
+    return rmIndex.definitionParts(srcDst, path, tree, targets.stream().map(target -> new int[]{target.getPos(), target.getEndPos()}).toList());
+  }
+
+  // Whether the given tree of the file of this node lies in the doc comment or the annotations of a declaration
+  public boolean isInLeadingPart(Tree other) {
+    return rmIndex.isInLeadingPart(srcDst, path, other);
+  }
+
+  // Whether RM gives the given tree of the file of this node as a statement
+  public boolean isStatement(Tree other) {
+    return rmIndex.statementAt(srcDst, path, other) != null;
+  }
+
+  // Whether RM gives the given tree of the file of this node as a composite statement
+  public boolean isCompositeStatement(Tree other) {
+    return rmIndex.isCompositeStatement(srcDst, path, other);
+  }
+
+  // Whether the tree is the body of a member: an operation or an initializer (see RMIndex#isMemberBody)
+  public boolean isMemberBody() {
+    return rmIndex.isMemberBody(srcDst, path, tree);
+  }
+
+  public List<int[]> getApartBodies(Tree statement) {
+    return rmIndex.apartBodies(srcDst, path, statement);
+  }
+
+  // The conditions of the composite statement the tree is, if it is one
+  public List<LocationInfo> getConditions() {
+    return rmIndex.conditionsAt(srcDst, path, tree);
   }
 
   // A use of changes the tree holds, as a call of a changed method in the statement holding it
+  // The trees of the code using the changes, for a usage (see addUse)
+  public List<Tree> getUses() {
+    return List.copyOf(uses);
+  }
+
   public void addUse(Tree use) {
     if (!uses.contains(use)) {
       uses.add(use);
@@ -293,12 +399,26 @@ public class Node implements ReviewNode {
     return dedent(getContent());
   }
 
+  // A type read by its header alone: what it is (a class, an interface, a record), its type parameters and the types
+  // it extends and implements, which tell what the code relying on it runs (the method a class falls back to, whether an
+  // exception is checked), without its members, which tell nothing of that
+  void markTypeHeader() {
+    this.typeHeader = true;
+  }
+
+  public boolean isTypeHeader() {
+    return typeHeader;
+  }
+
   // The code of the node as a dependency prints it, in brief where RM tells parts of it say nothing more (see
-  // RMIndex#briefs)
+  // RMIndex#briefs); a type header with ... for the body it leaves out
   public String dependencyContent() {
     String content = getContent();
     if (content == null || nodeType.equals(NodeType.LOCATION_CONTEXT)) {
       return dedent(content);
+    }
+    if (typeHeader) {
+      return dedent(content + rmIndex.elidedTypeBody(srcDst, path, tree.getPos(), tree.getEndPos()));
     }
     StringBuilder brief = new StringBuilder(content);
     List<RMIndex.Brief> briefs = new ArrayList<>(rmIndex.briefs(srcDst, path, tree));

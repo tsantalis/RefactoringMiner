@@ -1,6 +1,19 @@
 {
+  "AbstractFileSystem.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/AbstractFileSystem.java"
+  ],
+  "AbstractFileSystemWithCustomStat.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/AbstractFileSystemWithCustomStat.java"
+  ],
   "AbstractReferenceCounted.java": [],
+  "ActionInput.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/ActionInput.java"
+  ],
   "ArgumentMatchers.java": [],
+  "Artifact.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/Artifact.java"
+  ],
+  "Assume.java": [],
   "BaseEncoding.java": [],
   "BuildEvent.java": [
     "src/main/java/com/google/devtools/build/lib/buildeventstream/BuildEvent.java"
@@ -8,6 +21,7 @@
   "BuildEventArtifactUploader.java": [
     "src/main/java/com/google/devtools/build/lib/buildeventstream/BuildEventArtifactUploader.java"
   ],
+  "ByteArrayInputStream.java": [],
   "ByteStreamBuildEventArtifactUploader.java": [
     "src/main/java/com/google/devtools/build/lib/remote/ByteStreamBuildEventArtifactUploader.java"
   ],
@@ -29,20 +43,62 @@
     "src/main/java/com/google/devtools/build/lib/remote/ChannelConnectionWithServerCapabilitiesFactory.java"
   ],
   "CharSequence.java": [],
+  "Chunker.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/Chunker.java"
+  ],
+  "Clock.java": [
+    "src/main/java/com/google/devtools/build/lib/clock/Clock.java"
+  ],
+  "Closeable.java": [],
+  "CommandLineItem.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/CommandLineItem.java"
+  ],
   "Comparable.java": [],
   "ConnectionFactory.java": [
     "src/main/java/com/google/devtools/build/lib/remote/grpc/ConnectionFactory.java"
   ],
+  "ConnectionPool.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/grpc/ConnectionPool.java"
+  ],
   "Digest.java": [],
   "DigestFunction.java": [],
+  "DigestHashFunction.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/DigestHashFunction.java"
+  ],
   "DigestUtil.java": [
     "src/main/java/com/google/devtools/build/lib/remote/util/DigestUtil.java"
+  ],
+  "DigestUtils.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/DigestUtils.java"
+  ],
+  "DynamicConnectionPool.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/grpc/DynamicConnectionPool.java"
   ],
   "EventHandler.java": [
     "src/main/java/com/google/devtools/build/lib/events/EventHandler.java"
   ],
+  "Exception.java": [],
+  "ExecutionPhaseSkyKey.java": [
+    "src/main/java/com/google/devtools/build/skyframe/ExecutionPhaseSkyKey.java"
+  ],
   "ExtendedEventHandler.java": [
     "src/main/java/com/google/devtools/build/lib/events/ExtendedEventHandler.java"
+  ],
+  "FileApi.java": [
+    "src/main/java/com/google/devtools/build/lib/starlarkbuildapi/FileApi.java"
+  ],
+  "FileArtifactValue.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/FileArtifactValue.java"
+  ],
+  "FileContentsProxy.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/FileContentsProxy.java"
+  ],
+  "FileStateValue.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/FileStateValue.java"
+  ],
+  "FileStatus.java": [
+    "src/main/java/com/google/devtools/build/lib/unix/FileStatus.java",
+    "src/main/java/com/google/devtools/build/lib/vfs/FileStatus.java"
   ],
   "FileSystem.java": [
     "src/main/java/com/google/devtools/build/lib/vfs/FileSystem.java",
@@ -51,11 +107,25 @@
   "FileType.java": [
     "src/main/java/com/google/devtools/build/lib/util/FileType.java"
   ],
+  "FileValue.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/FileValue.java"
+  ],
   "FixedBackoff.java": [],
   "Flowable.java": [],
+  "HasDigest.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/HasDigest.java"
+  ],
   "HasFileType.java": [],
   "HashCode.java": [],
   "HashMap.java": [],
+  "IOException.java": [],
+  "InMemoryFileSystem.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/inmemoryfs/InMemoryFileSystem.java"
+  ],
+  "Iterator.java": [],
+  "JavaClock.java": [
+    "src/main/java/com/google/devtools/build/lib/clock/JavaClock.java"
+  ],
   "ListenableFuture.java": [],
   "ListeningScheduledExecutorService.java": [],
   "LocalFile.java": [],
@@ -64,12 +134,16 @@
   "Matcher.java": [],
   "MaybeFailOnceUploadService.java": [],
   "Message.java": [],
+  "MissingDigestsFinder.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/common/MissingDigestsFinder.java"
+  ],
   "Mockito.java": [],
   "MoreExecutors.java": [],
   "MutableHandlerRegistry.java": [],
   "NamedArtifactGroup.java": [
     "src/main/java/com/google/devtools/build/lib/runtime/NamedArtifactGroup.java"
   ],
+  "Optional.java": [],
   "OutputStream.java": [],
   "Path.java": [
     "src/main/java/com/google/devtools/build/lib/vfs/Path.java"
@@ -80,12 +154,25 @@
   "PathFragment.java": [
     "src/main/java/com/google/devtools/build/lib/vfs/PathFragment.java"
   ],
+  "PathSegmentIterator.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/PathSegmentIterator.java"
+  ],
+  "PathStrippable.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/PathStrippable.java",
+    "src/main/java/com/google/devtools/build/lib/vfs/PathStrippable.java"
+  ],
   "Pattern.java": [],
   "Postable.java": [],
+  "Preconditions.java": [],
+  "Predicate.java": [],
   "Random.java": [],
   "ReferenceCounted.java": [],
   "ReferenceCountedChannel.java": [
     "src/main/java/com/google/devtools/build/lib/remote/ReferenceCountedChannel.java"
+  ],
+  "RegularFileValue.java": [],
+  "RemoteActionExecutionContext.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/common/RemoteActionExecutionContext.java"
   ],
   "RemoteBuildEventUploadMode.java": [
     "src/main/java/com/google/devtools/build/lib/remote/options/RemoteBuildEventUploadMode.java"
@@ -93,6 +180,7 @@
   "RemoteCache.java": [
     "src/main/java/com/google/devtools/build/lib/remote/RemoteCache.java"
   ],
+  "RemoteFileArtifactValue.java": [],
   "RemoteRetrier.java": [
     "src/main/java/com/google/devtools/build/lib/remote/RemoteRetrier.java"
   ],
@@ -102,10 +190,31 @@
   "Reporter.java": [
     "src/main/java/com/google/devtools/build/lib/events/Reporter.java"
   ],
+  "RequestMetadata.java": [],
   "Retrier.java": [
     "src/main/java/com/google/devtools/build/lib/remote/Retrier.java"
   ],
+  "RxFutures.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/util/RxFutures.java"
+  ],
+  "Serializable.java": [],
+  "SettableFuture.java": [],
+  "SharedConnectionFactory.java": [
+    "src/main/java/com/google/devtools/build/lib/remote/grpc/SharedConnectionFactory.java"
+  ],
+  "Single.java": [],
+  "SkyKey.java": [
+    "src/main/java/com/google/devtools/build/skyframe/SkyKey.java"
+  ],
+  "SkyValue.java": [
+    "src/main/java/com/google/devtools/build/skyframe/SkyValue.java"
+  ],
+  "StarlarkValue.java": [
+    "src/main/java/net/starlark/java/eval/StarlarkValue.java"
+  ],
+  "Status.java": [],
   "String.java": [],
+  "Supplier.java": [],
   "SyscallCache.java": [
     "src/main/java/com/google/devtools/build/lib/vfs/SyscallCache.java"
   ],
@@ -124,19 +233,24 @@
   "XattrProvider.java": [
     "src/main/java/com/google/devtools/build/lib/vfs/XattrProvider.java"
   ],
+  "base.java": [],
   "bazel.java": [],
+  "byte.java": [],
   "bytestream.java": [],
   "common.java": [],
   "concurrent.java": [],
   "core.java": [],
   "execution.java": [],
+  "function.java": [],
   "google.java": [],
   "grpc.java": [],
   "hash.java": [],
   "int.java": [],
   "io.java": [],
   "java.java": [],
+  "junit.java": [],
   "lang.java": [],
+  "long.java": [],
   "mockito.java": [],
   "netty.java": [],
   "protobuf.java": [],

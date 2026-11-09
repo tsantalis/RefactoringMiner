@@ -32,6 +32,10 @@ public class ReceiverTypeResolver {
   private final UMLModelDiff modelDiff;
   private final RepositoryStateFiles repositoryStateFiles;
   private final FilePathResolver filePathResolver;
+  // The files of the revision of the parent model, which has the files the change deletes and not the ones it adds
+  private final FilePathResolver parentFilePathResolver;
+  // The classes of the parent model that the child model does not have: the code of the changed files before the change
+  private Set<UMLAbstractClass> parentOnlyClasses;
   @Nullable
   private final ContentsContexts contentsContexts;
   private final Map<Object, NodePool> nodePools = new IdentityHashMap<>();
@@ -45,10 +49,48 @@ public class ReceiverTypeResolver {
 
   public ReceiverTypeResolver(UMLModelDiff modelDiff, RepositoryStateFiles repositoryStateFiles,
                               @Nullable ContentsContexts contentsContexts) {
+    this(modelDiff, repositoryStateFiles, null, Set.of(), contentsContexts);
+  }
+
+  /**
+   * @param parentRepositoryStateFiles the files of the revision of the parent model, when the given files are of the
+   *                                   child model's revision and the change adds, deletes or renames files; names in the
+   *                                   code of the parent model are resolved among them
+   * @param differingPaths             the paths whose files differ between the two revisions or exist in one only; the
+   *                                   other files are parsed once for both
+   */
+  public ReceiverTypeResolver(UMLModelDiff modelDiff, RepositoryStateFiles repositoryStateFiles,
+                              @Nullable RepositoryStateFiles parentRepositoryStateFiles, Set<String> differingPaths,
+                              @Nullable ContentsContexts contentsContexts) {
     this.modelDiff = modelDiff;
     this.repositoryStateFiles = repositoryStateFiles;
     this.filePathResolver = new FilePathResolver(repositoryStateFiles);
+    this.parentFilePathResolver = parentRepositoryStateFiles == null ? filePathResolver
+            : new FilePathResolver(parentRepositoryStateFiles, filePathResolver, differingPaths, path -> modelDiff.getParentModel()
+                    .getClassList().stream().filter(umlClass -> umlClass.getSourceFile().equals(path)).toList());
     this.contentsContexts = contentsContexts;
+  }
+
+  // The files a name in the code of the class refers to are the ones of the revision of that code: a class of the
+  // parent model only is code before the change, the other classes are in both revisions or after the change
+  private FilePathResolver filePathResolver(UMLAbstractClass context) {
+    if (parentFilePathResolver == filePathResolver) {
+      return filePathResolver;
+    }
+    if (parentOnlyClasses == null) {
+      Set<UMLAbstractClass> childClasses = Collections.newSetFromMap(new IdentityHashMap<>());
+      for (UMLClass umlClass : modelDiff.getChildModel().getClassList()) {
+        childClasses.add(umlClass);
+        childClasses.addAll(umlClass.getAnonymousClassList());
+      }
+      parentOnlyClasses = Collections.newSetFromMap(new IdentityHashMap<>());
+      for (UMLClass umlClass : modelDiff.getParentModel().getClassList()) {
+        List<UMLAbstractClass> classes = new ArrayList<>(List.of(umlClass));
+        classes.addAll(umlClass.getAnonymousClassList());
+        classes.stream().filter(parentClass -> !childClasses.contains(parentClass)).forEach(parentOnlyClasses::add);
+      }
+    }
+    return parentOnlyClasses.contains(context) ? parentFilePathResolver : filePathResolver;
   }
 
   @Nullable
@@ -68,10 +110,41 @@ public class ReceiverTypeResolver {
     return target != null && attach(Set.of(target.getLocationInfo().getFilePath())) ? bindInvocation(call, context, umlModel) : target;
   }
 
+  /**
+   * The operation the call binds to, as {@link #resolveInvocationTarget} gives it, without attaching the file declaring
+   * it: an operation of the model when the model holds that file, else one of the file parsed to bind it.
+   */
+  @Nullable
+  public UMLOperation bindInvocationTarget(AbstractCall call, UMLAbstractClass context, UMLModel umlModel) {
+    return bindInvocation(call, context, umlModel);
+  }
+
+  /**
+   * The attribute the name binds to, as {@link #resolveAccessTarget} gives it, without attaching the file declaring it.
+   */
+  @Nullable
+  public UMLAttribute bindAccessTarget(LeafExpression variable, UMLAbstractClass context, UMLModel umlModel) {
+    return bindAccess(variable, context, umlModel);
+  }
+
   @Nullable
   public UMLAttribute resolveAccessTarget(LeafExpression variable, UMLAbstractClass context, UMLModel umlModel) {
     UMLAttribute target = bindAccess(variable, context, umlModel);
     return target != null && attach(Set.of(target.getLocationInfo().getFilePath())) ? bindAccess(variable, context, umlModel) : target;
+  }
+
+  /**
+   * The class the type written in the context names, as a class of the model: the file declaring it is attached to the
+   * model, as the files of the members a call or a name binds to are. None for a type no file of the repository
+   * declares, as a class of the JDK.
+   */
+  @Nullable
+  public UMLAbstractClass resolveAttachedClass(UMLType type, UMLAbstractClass context, UMLModel umlModel) {
+    ClassRef found = getModelClass(new ReceiverType(type, context), umlModel);
+    if (found != null && attach(Set.of(found.umlClass().getLocationInfo().getFilePath()))) {
+      found = getModelClass(new ReceiverType(type, context), umlModel);
+    }
+    return found == null ? null : found.umlClass();
   }
 
   /**
@@ -111,9 +184,14 @@ public class ReceiverTypeResolver {
         if (superCandidate.signature().size() != signature.size()) {
           continue;
         }
+        // The parameter types of the supertype method as the hierarchy binds its type variables (JLS 8.4.2: a method
+        // overrides one whose signature, after the type arguments of the supertype are substituted, has the same
+        // erasure), as recycle(AdaptiveByteBuf) of an anonymous Handle<AdaptiveByteBuf> overrides recycle(T)
         boolean overrides = true;
         for (int i = 0; i < signature.size() && overrides; i++) {
-          overrides = superCandidate.parameters().get(i) == null || superCandidate.signature().get(i).equals(signature.get(i));
+          ReceiverType parameter = superCandidate.parameters().get(i);
+          overrides = parameter == null || superCandidate.signature().get(i).equals(signature.get(i))
+                  || erasure(parameter.type()).equals(signature.get(i));
         }
         if (overrides) {
           overridden.add(superOperation);
@@ -122,6 +200,77 @@ public class ReceiverTypeResolver {
       return false;
     }, external -> {});
     return overridden;
+  }
+
+  /**
+   * Java: the method a call of the operation runs on an instance of the class (JLS 15.12.4.4): the first method with a
+   * body that is the operation or overrides it, looked up from the class through its superclasses, then the default
+   * methods of its interfaces, as the final release of a derived buffer its read-only subclasses inherit. The file
+   * declaring it is attached to the model. None when no such method is found.
+   */
+  @Nullable
+  public UMLOperation findAttachedDispatchTarget(UMLOperation called, UMLAbstractClass runtime, UMLModel umlModel) {
+    UMLOperation target = dispatchTarget(called, runtime, umlModel);
+    return target != null && attach(Set.of(target.getLocationInfo().getFilePath())) ? dispatchTarget(called, runtime, umlModel) : target;
+  }
+
+  /**
+   * The method a call of a method declared outside the repository (a library interface) runs on an instance of the class:
+   * the method with a body of its name and arity, looked up as {@link #findAttachedDispatchTarget} does, when the name and
+   * the arity tell one signature; the model holds no declaration to compare the parameter types with, so overloads of
+   * one arity leave it unknown.
+   */
+  @Nullable
+  public UMLOperation findAttachedDispatchTarget(String name, int arity, UMLAbstractClass runtime, UMLModel umlModel) {
+    UMLOperation target = dispatchTarget(name, arity, runtime, umlModel);
+    return target != null && attach(Set.of(target.getLocationInfo().getFilePath())) ? dispatchTarget(name, arity, runtime, umlModel) : target;
+  }
+
+  @Nullable
+  private UMLOperation dispatchTarget(String name, int arity, UMLAbstractClass runtime, UMLModel umlModel) {
+    if (!runtime.getLANG().equals(Constants.JAVA)) {
+      return null;
+    }
+    UMLOperation[] found = {null};
+    Set<List<String>> signatures = new HashSet<>();
+    walkHierarchy(new ClassRef(runtime, Set.of()), umlModel, current -> {
+      for (UMLOperation operation : current.umlClass().getOperations()) {
+        if (operation.getName().equals(name) && !operation.isStatic() && operation.getParametersWithoutReturnType().size() == arity) {
+          signatures.add(candidate(operation, current).signature());
+          if (found[0] == null && operation.getBody() != null) {
+            found[0] = operation;
+          }
+        }
+      }
+      return false;
+    }, external -> {});
+    return signatures.size() == 1 ? found[0] : null;
+  }
+
+  @Nullable
+  private UMLOperation dispatchTarget(UMLOperation called, UMLAbstractClass runtime, UMLModel umlModel) {
+    if (!runtime.getLANG().equals(Constants.JAVA) || called.isStatic() || called.isConstructor()) {
+      return null;
+    }
+    LocationInfo calledLocation = called.getLocationInfo();
+    UMLOperation[] found = {null};
+    walkHierarchy(new ClassRef(runtime, Set.of()), umlModel, current -> {
+      for (UMLOperation operation : current.umlClass().getOperations()) {
+        if (!operation.getName().equals(called.getName()) || operation.getBody() == null) {
+          continue;
+        }
+        LocationInfo location = operation.getLocationInfo();
+        boolean same = location.getFilePath().equals(calledLocation.getFilePath()) && location.getStartOffset() == calledLocation.getStartOffset();
+        if (same || findOverridden(operation, current.umlClass(), umlModel).stream().anyMatch(overridden ->
+                overridden.getLocationInfo().getFilePath().equals(calledLocation.getFilePath())
+                        && overridden.getLocationInfo().getStartOffset() == calledLocation.getStartOffset())) {
+          found[0] = operation;
+          return true;
+        }
+      }
+      return false;
+    }, external -> {});
+    return found[0];
   }
 
   /** The local variable or parameter a simple name refers to, looked up through the anonymous classes enclosing it. */
@@ -256,7 +405,7 @@ public class ReceiverTypeResolver {
 
   private Set<String> resolveName(String name, UMLAbstractClass context) {
     try {
-      return filePathResolver.resolveName(name, context);
+      return filePathResolver(context).resolveName(name, context);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -783,8 +932,7 @@ public class ReceiverTypeResolver {
       return null;
     }
     if (call instanceof MethodReference || call instanceof CreationReference) {
-      // the arity of a method reference comes from its target functional type, which RM does not represent
-      return candidates.size() == 1 ? candidates.get(0) : null;
+      return candidates.size() == 1 ? candidates.get(0) : selectByTargetArity(call, candidates, scope);
     }
     List<Argument> arguments = argumentsOf(call, scope);
     Set<Candidate> possibleInAnyPhase = new LinkedHashSet<>();
@@ -821,15 +969,123 @@ public class ReceiverTypeResolver {
     return possibleInAnyPhase.size() == 1 ? possibleInAnyPhase.iterator().next() : null;
   }
 
+  /**
+   * The method or constructor a reference passed as an argument refers to, among the candidates of its name: the one
+   * taking as many parameters as the single abstract method of the functional interface of the parameter it is passed
+   * to (JLS 15.13.1). A reference through a type to an instance method takes the receiver as the first of them. A
+   * reference given as anything else than an argument (an initializer, a returned value) is not decided.
+   */
+  @Nullable
+  private Candidate selectByTargetArity(AbstractCall reference, List<Candidate> candidates, ReceiverScope scope) {
+    Map.Entry<AbstractCall, Integer> taking = scope.nodes().callTaking(reference.getLocationInfo(), reference.getString());
+    if (taking == null) {
+      return null;
+    }
+    AbstractCall call = taking.getKey();
+    Candidate called = selectCandidate(call, invocationCandidates(call, scope), scope);
+    if (called == null) {
+      return null;
+    }
+    Integer arity;
+    if (called.jdkMethod() != null) {
+      java.lang.reflect.Type[] parameterTypes = called.jdkMethod().getGenericParameterTypes();
+      int last = parameterTypes.length - 1;
+      if (taking.getValue() > last && !called.varargs()) {
+        return null;
+      }
+      java.lang.reflect.Type parameterType = !called.varargs() || taking.getValue() < last ? parameterTypes[taking.getValue()]
+              : parameterTypes[last] instanceof java.lang.reflect.GenericArrayType array ? array.getGenericComponentType()
+              : ((Class<?>) parameterTypes[last]).getComponentType();
+      Class<?> functionalInterface = parameterType instanceof Class<?> typeClass ? typeClass
+              : parameterType instanceof java.lang.reflect.ParameterizedType parameterized && parameterized.getRawType() instanceof Class<?> raw
+              ? raw : null;
+      java.lang.reflect.Method method = singleAbstractMethod(functionalInterface);
+      arity = method == null ? null : method.getParameterCount();
+    } else {
+      ReceiverType functionalType = calledParameterType(called, taking.getValue());
+      arity = functionalType == null ? null : functionalArity(functionalType, scope.umlModel());
+    }
+    if (arity == null || arity < 0) {
+      return null;
+    }
+    // Type::method may name a static method taking them all, or an instance method of the type taking all but the first
+    boolean throughType = reference instanceof MethodReference && reference.getExpression() != null
+            && isStaticName(reference.getExpression().trim(), scope);
+    List<Candidate> fitting = new ArrayList<>();
+    for (Candidate candidate : candidates) {
+      boolean isStatic = candidate.operation() != null ? candidate.operation().isStatic()
+              : candidate.jdkMethod() != null && java.lang.reflect.Modifier.isStatic(candidate.jdkMethod().getModifiers());
+      boolean constructor = candidate.operation() != null && candidate.operation().isConstructor();
+      if (takesArity(candidate, arity) && (!throughType || isStatic || constructor)
+              || throughType && !isStatic && !constructor && takesArity(candidate, arity - 1)) {
+        fitting.add(candidate);
+      }
+    }
+    return fitting.size() == 1 ? fitting.get(0) : null;
+  }
+
+  // Whether the candidate can be called with as many arguments
+  private static boolean takesArity(Candidate candidate, int arity) {
+    int parameters = candidate.parameters().size();
+    return arity >= 0 && (candidate.required() <= arity && arity <= parameters || candidate.varargs() && arity >= parameters - 1);
+  }
+
+  /**
+   * The number of parameters of the single abstract method of the type, a functional interface; -1 when the type is no
+   * functional interface (a primitive, an array, a class, an interface with several abstract methods), null when it is
+   * not known (a type outside the model and the JDK, a hierarchy reaching such types).
+   */
+  @Nullable
+  private Integer functionalArity(ReceiverType type, UMLModel umlModel) {
+    if (isPrimitive(type.type()) || type.type().getArrayDimension() > 0) {
+      return -1;
+    }
+    ClassRef modelClass = getModelClass(type, umlModel);
+    if (modelClass != null) {
+      if (!(modelClass.umlClass() instanceof UMLClass umlClass) || !umlClass.isInterface()) {
+        return -1;
+      }
+      List<UMLOperation> abstractMethods = new ArrayList<>();
+      Set<List<String>> signatures = new HashSet<>();
+      boolean[] external = {false};
+      walkHierarchy(modelClass, umlModel, current -> {
+        for (UMLOperation operation : current.umlClass().getOperations()) {
+          if (operation.isStatic() || operation.isConstructor() || !signatures.add(candidate(operation, current).signature())) {
+            continue;
+          }
+          if (operation.getBody() == null && !operation.isDefault() && !isObjectMethod(operation)) {
+            abstractMethods.add(operation);
+          }
+        }
+        return false;
+      }, supertype -> external[0] = true);
+      if (abstractMethods.size() == 1) {
+        return abstractMethods.get(0).getParametersWithoutReturnType().size();
+      }
+      if (abstractMethods.size() > 1 || !external[0]) {
+        return -1;
+      }
+      return null;
+    }
+    Class<?> jdkClass = jdkClassOf(type);
+    if (jdkClass == null) {
+      return null;
+    }
+    java.lang.reflect.Method method = singleAbstractMethod(jdkClass);
+    return method == null ? -1 : method.getParameterCount();
+  }
+
   private List<Argument> argumentsOf(AbstractCall call, ReceiverScope scope) {
     List<LeafExpression> nodes = scope.nodes().argumentsOf(call);
     List<Argument> arguments = new ArrayList<>();
     for (int i = 0; i < call.arguments().size(); i++) {
       LeafExpression node = nodes.get(i);
       if (node != null && node.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.NULL_LITERAL)) {
-        arguments.add(new Argument(null, true));
+        arguments.add(new Argument(null, true, false));
       } else {
-        arguments.add(new Argument(node != null ? getNodeType(node, scope) : getNameType(call.arguments().get(i).trim(), scope), false));
+        boolean reference = node instanceof MethodReference || node instanceof CreationReference;
+        arguments.add(new Argument(node != null ? getNodeType(node, scope) : getNameType(call.arguments().get(i).trim(), scope), false,
+                reference));
       }
     }
     return arguments;
@@ -870,6 +1126,12 @@ public class ReceiverTypeResolver {
   private Fit fit(Argument argument, @Nullable ReceiverType parameter, boolean loose, UMLModel umlModel) {
     if (argument.nullLiteral()) {
       return parameter != null && isPrimitive(parameter.type()) ? Fit.NO : Fit.YES;
+    }
+    if (argument.reference() && parameter != null) {
+      // a reference is potentially compatible with a functional interface only (JLS 15.12.2.1), as which method it refers
+      // to follows from that interface
+      Integer arity = functionalArity(parameter, umlModel);
+      return arity != null && arity < 0 ? Fit.NO : Fit.UNKNOWN;
     }
     if (parameter == null) {
       // a type variable takes any reference, and a primitive by boxing
@@ -1023,7 +1285,7 @@ public class ReceiverTypeResolver {
     try {
       String first = name.split("\\.")[0];
       String rest = name.substring(first.length());
-      return filePathResolver.qualifiedNameCandidates(first, context).stream().map(candidate -> candidate + rest).toList();
+      return filePathResolver(context).qualifiedNameCandidates(first, context).stream().map(candidate -> candidate + rest).toList();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -1058,6 +1320,15 @@ public class ReceiverTypeResolver {
     LocationInfo location = fragment.getLocationInfo();
     LeafExpression node = scope.nodes().exactly(location.getStartOffset(), location.getEndOffset());
     return node != null ? getNodeType(node, scope) : getNameType(fragment.getString().trim(), scope);
+  }
+
+  /**
+   * The name the expression refers to a member by, the one the member is looked up by: a simple name itself, or the
+   * member name ending a qualified name or a field access.
+   */
+  static String memberName(LeafExpression name) {
+    return name.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.SIMPLE_NAME)
+            ? name.getString().trim() : trailingIdentifier(name.getString());
   }
 
   private static String trailingIdentifier(String text) {
@@ -1264,7 +1535,7 @@ public class ReceiverTypeResolver {
   private ClassRef getImportedClass(String qualifiedName, ReceiverScope scope) {
     try {
       // the qualified name of an import is resolved as the import itself
-      Set<String> paths = filePathResolver.resolvePaths(scope.context().getSourceFile(), qualifiedName);
+      Set<String> paths = filePathResolver(scope.context()).resolvePaths(scope.context().getSourceFile(), qualifiedName);
       return findClass(paths, lastSegment(qualifiedName), Set.of(), scope.umlModel());
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -1273,7 +1544,7 @@ public class ReceiverTypeResolver {
 
   private Optional<String> singleStaticImportOwner(String name, UMLAbstractClass context) {
     try {
-      return filePathResolver.singleStaticImportOwner(name, context);
+      return filePathResolver(context).singleStaticImportOwner(name, context);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -1281,7 +1552,7 @@ public class ReceiverTypeResolver {
 
   private List<String> onDemandStaticImportOwners(UMLAbstractClass context) {
     try {
-      return filePathResolver.onDemandStaticImportOwners(context);
+      return filePathResolver(context).onDemandStaticImportOwners(context);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -1868,8 +2139,10 @@ public class ReceiverTypeResolver {
   @Nullable
   private static ReceiverType typeArgument(ReceiverType receiverType, UMLType argument) {
     if (argument instanceof WildcardType wildcard) {
-      // "? extends Foo" stands for its upper bound, while "?" and "? super Foo" bound no type to read from
-      if (wildcard.getClassType().equals("Object") || wildcard.toQualifiedString().contains(" super ")) {
+      // "? extends Foo" stands for its upper bound, while "?" and "? super Foo" bound no type to read from (an unbounded
+      // wildcard reads as Object, as a lambda's does, see lambdaTypeArgument)
+      if (wildcard.getClassType().equals("Object") || wildcard.getClassType().equals("?")
+              || wildcard.toQualifiedString().contains(" super ")) {
         return null;
       }
       argument = UMLType.extractTypeObject(wildcard.getClassType(), receiverType.context().getLANG());
@@ -1972,7 +2245,7 @@ public class ReceiverTypeResolver {
       String first = name.split("\\.")[0];
       String rest = name.substring(first.length());
       List<String> candidates = new ArrayList<>();
-      for (String candidate : filePathResolver.qualifiedNameCandidates(first, context)) {
+      for (String candidate : filePathResolver(context).qualifiedNameCandidates(first, context)) {
         candidates.add(candidate + rest);
       }
       candidates.add(name);
@@ -2135,13 +2408,26 @@ public class ReceiverTypeResolver {
     return null;
   }
 
+  /**
+   * The class declaring the operation, of the model or of the file parsed to bind it, without attaching that file.
+   */
+  @Nullable
+  public UMLClass declaringClass(UMLOperation operation, UMLModel umlModel) {
+    for (UMLClass umlClass : classesOfFile(operation.getLocationInfo().getFilePath(), umlModel)) {
+      if (umlClass.getOperations().contains(operation)) {
+        return umlClass;
+      }
+    }
+    return null;
+  }
+
   private List<UMLClass> classesOfFile(String path, UMLModel umlModel) {
     List<UMLClass> modelClasses = umlModel.getClassList().stream().filter(umlClass -> umlClass.getSourceFile().equals(path)).toList();
     if (!modelClasses.isEmpty() || !PathFileUtils.isSupportedFile(path)) {
       return modelClasses;
     }
     try {
-      return filePathResolver.classesOf(path);
+      return (umlModel == modelDiff.getParentModel() ? parentFilePathResolver : filePathResolver).classesOf(path);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -2162,7 +2448,7 @@ public class ReceiverTypeResolver {
     return type != null && !(type instanceof InferredType) && !INFERRED_TYPE_NAMES.contains(type.getClassType());
   }
 
-  private static String lastSegment(String name) {
+  static String lastSegment(String name) {
     String[] segments = name.split("::|\\.");
     return segments.length == 0 ? name : segments[segments.length - 1];
   }
@@ -2218,7 +2504,8 @@ public class ReceiverTypeResolver {
                            List<ReceiverType> parameters, int required, boolean varargs, List<String> signature) {
   }
 
-  private record Argument(@Nullable ReceiverType type, boolean nullLiteral) {
+  // A method or creation reference has no type of its own: it is a value of the functional interface it is passed as
+  private record Argument(@Nullable ReceiverType type, boolean nullLiteral, boolean reference) {
   }
 
   private enum Fit { YES, NO, UNKNOWN }
@@ -2238,8 +2525,13 @@ public class ReceiverTypeResolver {
 
     @Nullable
     Map.Entry<AbstractCall, Integer> callTaking(LambdaExpressionObject lambda) {
-      LocationInfo location = lambda.getLocationInfo();
-      String text = lambda.getString().replaceAll("\\s+", "");
+      return callTaking(lambda.getLocationInfo(), lambda.getString());
+    }
+
+    // The innermost call taking the code at the location as an argument, with the index of that argument
+    @Nullable
+    Map.Entry<AbstractCall, Integer> callTaking(LocationInfo location, String code) {
+      String text = code.replaceAll("\\s+", "");
       Map.Entry<AbstractCall, Integer> innermost = null;
       for (LeafExpression node : nodes) {
         if (!(node instanceof AbstractCall call) || !call.getLocationInfo().subsumes(location)) {

@@ -3,6 +3,8 @@ package org.refactoringminer.astDiff.graph;
 import com.github.gumtreediff.tree.Tree;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -36,6 +38,8 @@ class RMLinks {
   private Map<UMLAttribute, UMLAttribute> matchedAttributes;
   @Nullable
   private List<Refactoring> variableRefactorings;
+  @Nullable
+  private Set<UMLOperation> newOperations;
 
   RMLinks(UMLModelDiff modelDiff) {
     this.modelDiff = modelDiff;
@@ -179,6 +183,29 @@ class RMLinks {
     return variableRefactorings;
   }
 
+  // Whether the operation of the new revision is new to its class: the class RM gives as the same in the revision before
+  // declares no operation of its signature, or RM gives the class as added. That holds whether RM gives the operation as
+  // added or as moved there from elsewhere: the AST diff may map its code as moved from removed code (the equals/hashCode
+  // pairs of sibling classes, es_107947), which tells where its statements come from, not that the class had it. A
+  // method the class declared with the same signature existed, even where RM lists it as added (netty_14291
+  // HeapArena#destroyChunk, whose old body is a comment)
+  boolean isNewOperation(UMLOperation dstOperation) {
+    if (newOperations == null) {
+      newOperations = Collections.newSetFromMap(new IdentityHashMap<>());
+      for (UMLAbstractClassDiff classDiff : classDiffs()) {
+        for (UMLOperation operation : classDiff.getNextClass().getOperations()) {
+          if (classDiff.getOriginalClass().getOperations().stream().noneMatch(original -> original.equalSignature(operation))) {
+            newOperations.add(operation);
+          }
+        }
+      }
+      for (UMLClass addedClass : modelDiff.getAddedClasses()) {
+        newOperations.addAll(addedClass.getOperations());
+      }
+    }
+    return newOperations.contains(dstOperation);
+  }
+
   // The fields (and enum constants) of the old revision RM gives as removed: no field of the new revision is the same
   List<UMLAttribute> removedAttributes() {
     List<UMLAttribute> removed = new ArrayList<>();
@@ -217,6 +244,14 @@ class RMLinks {
     classDiffs.addAll(modelDiff.getInnerClassMoveDiffList());
     classDiffs.addAll(modelDiff.getClassRenameDiffList());
     return classDiffs;
+  }
+
+  // The statement mapping RM gives for the innermost statement holding the tree, with the replacements telling how the
+  // code of the statement differs between the revisions; none when RM maps that statement to none, or to several
+  @Nullable
+  AbstractCodeMapping mappingHolding(SrcDst srcDst, String path, Tree tree) {
+    Statement statement = held(srcDst, path, tree);
+    return statement == null || statement.mappings.size() != 1 ? null : statement.mappings.get(0);
   }
 
   // The innermost statement RM holds the tree in
@@ -263,8 +298,11 @@ class RMLinks {
   // member, which is not carried over
   private void pushStatements(UMLOperationBodyMapper mapper, Map<String, Statement> located) {
     for (AbstractCodeMapping mapping : mapper.getMappings()) {
-      link(statement(SrcDst.SRC, mapping.getFragment1().getLocationInfo(), located),
-              statement(SrcDst.DST, mapping.getFragment2().getLocationInfo(), located));
+      Statement srcStatement = statement(SrcDst.SRC, mapping.getFragment1().getLocationInfo(), located);
+      Statement dstStatement = statement(SrcDst.DST, mapping.getFragment2().getLocationInfo(), located);
+      link(srcStatement, dstStatement);
+      srcStatement.mappings.add(mapping);
+      dstStatement.mappings.add(mapping);
     }
     for (AbstractCodeFragment fragment : mapper.getNonMappedLeavesT1()) {
       statement(SrcDst.SRC, fragment.getLocationInfo(), located);
@@ -318,6 +356,7 @@ class RMLinks {
     private final int start;
     private final int end;
     private final Set<Statement> sameStatements = new HashSet<>();
+    private final List<AbstractCodeMapping> mappings = new ArrayList<>();
 
     private Statement(int start, int end) {
       this.start = start;

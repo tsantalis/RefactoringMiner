@@ -7,6 +7,7 @@
   "CpuTest.java": [
     "src/test/java/com/google/devtools/build/lib/sandbox/cgroups/CpuTest.java"
   ],
+  "File.java": [],
   "FileType.java": [
     "src/main/java/com/google/devtools/build/lib/util/FileType.java"
   ],
@@ -14,6 +15,12 @@
     "src/test/java/com/google/devtools/build/lib/vfs/util/FsApparatus.java"
   ],
   "HasFileType.java": [],
+  "LegacyController.java": [
+    "src/main/java/com/google/devtools/build/lib/sandbox/cgroups/controller/v1/LegacyController.java"
+  ],
+  "LegacyCpu.java": [
+    "src/main/java/com/google/devtools/build/lib/sandbox/cgroups/controller/v1/LegacyCpu.java"
+  ],
   "Path.java": [
     "src/main/java/com/google/devtools/build/lib/vfs/Path.java"
   ],
@@ -29,9 +36,12 @@
     "src/main/java/com/google/devtools/build/lib/sandbox/cgroups/controller/v2/UnifiedCpu.java"
   ],
   "common.java": [],
+  "file.java": [],
   "google.java": [],
+  "io.java": [],
   "java.java": [],
   "lang.java": [],
+  "nio.java": [],
   "regex.java": [],
   "truth.java": [],
   "util.java": []

@@ -2,6 +2,10 @@
   "ActionContext.java": [
     "src/main/java/com/google/devtools/build/lib/actions/ActionContext.java"
   ],
+  "ActionContextRegistry.java": [],
+  "ActionExecutionContext.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/ActionExecutionContext.java"
+  ],
   "BuildEvent.java": [
     "src/main/java/com/google/devtools/build/lib/buildeventstream/BuildEvent.java"
   ],
@@ -18,8 +22,20 @@
   "ChainableEvent.java": [
     "src/main/java/com/google/devtools/build/lib/buildeventstream/ChainableEvent.java"
   ],
+  "Closeable.java": [],
+  "Comparable.java": [],
+  "Event.java": [
+    "src/main/java/com/google/devtools/build/lib/events/Event.java"
+  ],
   "EventHandler.java": [
     "src/main/java/com/google/devtools/build/lib/events/EventHandler.java"
+  ],
+  "EventKind.java": [
+    "src/main/java/com/google/devtools/build/lib/events/EventKind.java"
+  ],
+  "Exception.java": [],
+  "ExecException.java": [
+    "src/main/java/com/google/devtools/build/lib/actions/ExecException.java"
   ],
   "ExecutionInfo.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/test/ExecutionInfo.java"
@@ -27,23 +43,47 @@
   "ExtendedEventHandler.java": [
     "src/main/java/com/google/devtools/build/lib/events/ExtendedEventHandler.java"
   ],
+  "FileOutErr.java": [
+    "src/main/java/com/google/devtools/build/lib/util/io/FileOutErr.java"
+  ],
+  "FileType.java": [
+    "src/main/java/com/google/devtools/build/lib/util/FileType.java"
+  ],
   "FoundationTestCase.java": [
     "src/test/java/com/google/devtools/build/lib/testutil/FoundationTestCase.java"
   ],
+  "HasFileType.java": [],
   "ImmutableList.java": [],
+  "InterruptedException.java": [],
+  "Iterable.java": [],
+  "OutErr.java": [
+    "src/main/java/com/google/devtools/build/lib/util/io/OutErr.java"
+  ],
+  "Path.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/Path.java"
+  ],
   "Postable.java": [],
+  "Preconditions.java": [],
   "Reportable.java": [
     "src/main/java/com/google/devtools/build/lib/events/Reportable.java"
+  ],
+  "SpawnExecException.java": [
+    "src/main/java/com/google/devtools/build/lib/exec/SpawnExecException.java"
   ],
   "SpawnResult.java": [
     "src/main/java/com/google/devtools/build/lib/actions/SpawnResult.java"
   ],
+  "StandaloneProcessedAttemptResult.java": [],
   "StandaloneTestStrategy.java": [
     "src/main/java/com/google/devtools/build/lib/exec/StandaloneTestStrategy.java"
   ],
   "StandaloneTestStrategyTest.java": [
     "src/test/java/com/google/devtools/build/lib/exec/StandaloneTestStrategyTest.java"
   ],
+  "StoredEventHandler.java": [
+    "src/main/java/com/google/devtools/build/lib/events/StoredEventHandler.java"
+  ],
+  "String.java": [],
   "TestActionContext.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/test/TestActionContext.java"
   ],
@@ -59,13 +99,16 @@
   "TestStrategy.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/test/TestStrategy.java"
   ],
+  "Throwable.java": [],
   "Truth.java": [],
+  "base.java": [],
   "build.java": [],
   "buildeventstream.java": [],
   "collect.java": [],
   "common.java": [],
   "devtools.java": [],
   "google.java": [],
+  "io.java": [],
   "lib.java": [],
   "test.java": [],
   "truth.java": [],

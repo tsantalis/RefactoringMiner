@@ -2,15 +2,33 @@
   "AbstractEsqlIntegTestCase.java": [
     "x-pack/plugin/esql/src/internalClusterTest/java/org/elasticsearch/xpack/esql/action/AbstractEsqlIntegTestCase.java"
   ],
+  "ActionRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionRequest.java"
+  ],
+  "ActionType.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionType.java"
+  ],
   "ArrayList.java": [],
+  "Build.java": [
+    "server/src/main/java/org/elasticsearch/Build.java"
+  ],
   "Builder.java": [],
   "ByteSizeValue.java": [
     "server/src/main/java/org/elasticsearch/common/unit/ByteSizeValue.java"
   ],
+  "Client.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/Client.java"
+  ],
+  "Closeable.java": [],
+  "CodepointSetGenerator.java": [],
   "Collections.java": [],
+  "CompositeIndicesRequest.java": [
+    "server/src/main/java/org/elasticsearch/action/CompositeIndicesRequest.java"
+  ],
   "ConcurrentCollections.java": [
     "server/src/main/java/org/elasticsearch/common/util/concurrent/ConcurrentCollections.java"
   ],
+  "ConcurrentHashMap.java": [],
   "Diffable.java": [
     "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
   ],
@@ -20,27 +38,40 @@
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
   ],
+  "ElasticsearchClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/ElasticsearchClient.java"
+  ],
   "Enum.java": [],
   "EsqlActionIT.java": [
     "x-pack/plugin/esql/src/internalClusterTest/java/org/elasticsearch/xpack/esql/action/EsqlActionIT.java"
+  ],
+  "EsqlQueryAction.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlQueryAction.java"
   ],
   "EsqlQueryRequest.java": [
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/esql/action/EsqlQueryRequest.java",
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlQueryRequest.java"
   ],
+  "EsqlQueryResponse.java": [
+    "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/esql/action/EsqlQueryResponse.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/action/EsqlQueryResponse.java"
+  ],
+  "IntFunction.java": [],
+  "Integer.java": [],
   "LeafReaderContext.java": [],
   "Level.java": [
     "libs/logging/src/main/java/org/elasticsearch/logging/Level.java",
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
     "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
   ],
-  "Long.java": [],
+  "List.java": [],
   "LongStream.java": [],
   "LuceneTestCase.java": [],
   "Map.java": [],
   "Matchers.java": [
     "server/src/main/java/org/elasticsearch/injection/guice/matcher/Matchers.java"
   ],
+  "Object.java": [],
   "Path.java": [],
   "PerThreadSourceProvider.java": [],
   "PlaceholderResolver.java": [],
@@ -53,6 +84,11 @@
   "ReinitializingSourceProvider.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ReinitializingSourceProvider.java"
   ],
+  "SecureSettings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/SecureSettings.java"
+  ],
+  "Set.java": [],
+  "SetOnce.java": [],
   "Settings.java": [
     "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
   ],
@@ -89,11 +125,22 @@
   "Writeable.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
+  "XContentBuilder.java": [
+    "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
+  ],
+  "action.java": [],
   "apache.java": [],
+  "carrotsearch.java": [],
+  "concurrent.java": [],
+  "core.java": [],
+  "elasticsearch.java": [],
+  "esql.java": [],
   "file.java": [],
   "function.java": [],
+  "generators.java": [],
   "hamcrest.java": [],
   "index.java": [],
+  "io.java": [],
   "java.java": [],
   "lang.java": [],
   "log4j.java": [],
@@ -101,7 +148,9 @@
   "lucene.java": [],
   "nio.java": [],
   "org.java": [],
+  "randomizedtesting.java": [],
   "stream.java": [],
   "tests.java": [],
-  "util.java": []
+  "util.java": [],
+  "xpack.java": []
 }

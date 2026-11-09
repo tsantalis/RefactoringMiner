@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.graph.cluster.representation;
 
+import org.refactoringminer.util.PathFileUtils;
 import gr.uom.java.xmi.LocationInfo;
 
 import com.github.gumtreediff.matchers.MappingStore;
@@ -14,6 +15,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class RawRepresentation {
   public static String specification() {
@@ -24,6 +26,17 @@ public class RawRepresentation {
             .append("- A <diff> reads as a unified diff, but it is produced from an accurate AST differentiation between two revisions, ")
             .append("which finds edits at expression and statement granularity and reports them at line granularity.\n")
             .append("- Each <diff> presents the construct the edits sit in, not only a fixed number of lines around them, so it begins and ends where that construct does.\n")
+            .append("- A <diff> within the body of a member also shows, around that construct, the code deciding whether and how often it runs: ")
+            .append("the headers and the ends of the conditionals, loops and catch clauses holding it (an else branch with the condition of its if), the case labels it runs on, ")
+            .append("the signature of the member (or the header of the lambda) declaring a parameter it reads, ")
+            .append("the start of the try and its catch and finally clauses when it adds a throw within the body of that try, ")
+            .append("and the checks before it that leave the member (or the loop) when their condition holds, each by its condition and the first line of its return, throw, break or continue, ")
+            .append("or by a call of a method that throws, when the check reads a value the construct reads; a line of ... stands for the lines left out. ")
+            .append("A changed condition of an if whose branch always leaves reads with the code after that if, which runs when the condition does not hold. ")
+            .append("The code after the construct reading the values it gives its locals is shown too, where those values go. ")
+            .append("Diffs of one member sharing those lines read as one diff.\n")
+            .append("- A comment a <diff> edits, but a doc comment, shows the paragraphs holding the lines it changes, and the first and last lines of the comment; ")
+            .append("a line of ... stands for its other lines.\n")
             .append("- Each <diff> carries id=\"#XXXXX\", which identifies it uniquely within the pull request, and location=\"<file>::<Type>#<member>\", ")
             .append("which reads \"<before> -> <after>\" when the location is changed.\n")
             .append("- For code leaving some blocks and arriving in some others, the corresponding diffs are mutually linked by carrying moved_to and moved_from, ")
@@ -32,6 +45,9 @@ public class RawRepresentation {
             .append("code that arrived as it was reads as unchanged lines, and what changed on the way as removed and added lines.\n")
             .append("- A <diff> whose code is relied by other diffs in the chapter carries serves, a comma-separated list of the ids of those relying diffs.\n")
             .append("- Each <dependency> element provides code outside the chapter's own <diff> elements to resolve references to identifiers in edits, ")
+            .append("and the methods and fields giving the values of the locals the edits read anew, ")
+            .append("and the types the edits rely on for what they are (the class whose supertype a removed override falls back to, an exception a catch or a throws clause names, with its superclasses), ")
+            .append("which read by their header alone, a line of ... standing for their body, ")
             .append("and carries location=\"<file>::<Type>#<member>\" and serves, a comma-separated list of the ids of the diffs in the chapter which rely on it.\n")
             .append("- A <dependency> whose code is changed by the pull request outside the chapter shows that change exactly as a <diff> does, but carries no id.\n")
             .append("- A <dependency> whose unchanged code uses code that diffs of the chapter change bridges them to the diffs it serves, which rely on those changes through it, ")
@@ -39,7 +55,8 @@ public class RawRepresentation {
             .append("- Each <usage> element shows unchanged code using code that diffs of the chapter change, where those changes take effect, ")
             .append("and carries location=\"<file>::<Type>#<member>\" and uses, a comma-separated list of the ids of those diffs. ")
             .append("It shows the statements of the member using the changed code, with the lines of the code holding them (the signature of the member, ")
-            .append("the headers and the ends of the enclosing statements), a line of ... standing for the lines left out. ")
+            .append("the headers and the ends of the enclosing statements), of the checks before them that leave when their condition holds and bear on what they read, ")
+            .append("of the definitions of the values the enclosing conditions read, and of the statements reading the value they keep in a local, a line of ... standing for the lines left out. ")
             .append("Unchanged code a <diff> or a <dependency> already shows is not repeated in a <usage>, but where the <usage> needs it to read.\n")
             .append("- The elements are ordered by dependency in which a <diff> appears after all <diff> elements which it builds upon, and all the <dependency> elements which it relies on. ")
             .append("A <dependency> element sits as close as possible before the <diff> elements that rely on it. A <diff> element sits as close as possible before the <diff> elements that build upon it. ")
@@ -243,7 +260,7 @@ public class RawRepresentation {
     for (Node usage : usedDiffs.keySet().stream().sorted(Node.COMPARATOR).toList()) {
       Set<DiffNode> used = usedDiffs.get(usage);
       Optional<DiffBlock> showing = diffBlocks.stream()
-              .filter(diffBlock -> diffBlock.shownLines().stream().anyMatch(shown -> withinLines(usage, shown))).findFirst();
+              .filter(diffBlock -> diffBlock.shownLines().stream().anyMatch(shown -> usageWithinLines(usage, shown))).findFirst();
       if (showing.isPresent()) {
         int showingIndex = diffNodes.indexOf(showing.get().diffNode());
         for (DiffNode usedDiff : used) {
@@ -377,13 +394,29 @@ public class RawRepresentation {
     return true;
   }
 
+  // A usage a diff shows: its statement within the window and the code of it using the changes printed (see
+  // revealRelated)
+  private static boolean usageWithinLines(Node usage, ShownLines shown) {
+    if (usage.getUses().isEmpty() || shown.hidden().isEmpty()) {
+      return withinLines(usage, shown);
+    }
+    if (!usage.getSrcDst().equals(shown.srcDst()) || !usage.getPath().equals(shown.path())) {
+      return false;
+    }
+    TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(usage.getTree(), usage.getFileContent());
+    return shown.top() <= range.startLine() && range.endLine() <= shown.bottom() && usage.getUses().stream().allMatch(use -> {
+      TreeUtilFunctions.LineRange useRange = TreeUtilFunctions.getLineRange(use, usage.getFileContent());
+      return shown.shows(useRange.startLine(), useRange.endLine());
+    });
+  }
+
   private static boolean withinLines(Node node, ShownLines shown) {
     if (!node.getSrcDst().equals(shown.srcDst()) || !node.getPath().equals(shown.path())) {
       return false;
     }
 
     TreeUtilFunctions.LineRange nodeRange = TreeUtilFunctions.getLineRange(node.getTree(), node.getFileContent());
-    return shown.top() <= declarationStartLine(node) && nodeRange.endLine() <= shown.bottom();
+    return shown.shows(declarationStartLine(node), nodeRange.endLine());
   }
 
   // The doc comment and the annotations leading a declaration are not what a diff shows it by: a diff of a method body
@@ -395,7 +428,9 @@ public class RawRepresentation {
   // A body is printed from the start of the code it is the body of, as its header (a signature, a condition, a resource
   // list) cut at the line of its brace reads as broken code, unless it is printed as it is (see RMInfo#bodyFrom). An
   // expression is printed with the rest of the simple statement it is in, as a chain cut at its lines reads as broken
-  // code too
+  // code too. Within that window the lines bearing on no change are left out, as in a usage (see hideApartBodies,
+  // hideOtherItems, hideUnrelatedCode): an agent reads the change with what it relies on and what relies on it, and is
+  // not handed the rest of a long member or list to tell from it
   private static DiffSide contextSide(Node context, Set<Node> changes) {
     String content = context.getFileContent();
     TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(context.getTree(), content);
@@ -403,19 +438,341 @@ public class RawRepresentation {
     if (!rm.body()) {
       Tree statement = rm.simpleStatement();
       if (statement == null) {
-        return new DiffSide(context, changes);
+        // A changed condition of an if whose branch leaves on every path decides the code after it too, which runs
+        // instead of the branch as an else would
+        int elseEnd = context.getImplicitElseEnd();
+        if (elseEnd >= 0 && changes.stream().anyMatch(change -> context.getConditions().stream()
+                .anyMatch(condition -> change.getTree().getPos() < condition.getEndOffset()
+                        && condition.getStartOffset() < change.getTree().getEndPos()))) {
+          int elseEndLine = (int) content.substring(0, elseEnd).chars().filter(c -> c == '\n').count() + 1;
+          return new DiffSide(context, changes, range.startLine(), Math.max(range.endLine(), elseEndLine));
+        }
+        DiffSide side = new DiffSide(context, changes);
+        hideOtherItems(side, context.getTree(), changes);
+        return side;
       }
 
       TreeUtilFunctions.LineRange statementRange = TreeUtilFunctions.getLineRange(statement, content);
-      return new DiffSide(context, changes, Math.min(statementRange.startLine(), range.startLine()),
+      DiffSide side = new DiffSide(context, changes, Math.min(statementRange.startLine(), range.startLine()),
               Math.max(statementRange.endLine(), range.endLine()));
+      // Within a statement, what runs apart is what bears on no change: the bodies of its lambdas and anonymous classes
+      if (!context.getApartBodies(statement).isEmpty()) {
+        hideUnrelated(side, statement, side.top, side.bottom, changes);
+      }
+      hideOtherItems(side, statement, changes);
+      return side;
     }
     if (rm.bodyFrom() == null) {
       return new DiffSide(context, changes);
     }
 
     int headerStart = TreeUtilFunctions.getLineRange(rm.bodyFrom(), content).startLine();
-    return new DiffSide(context, changes, Math.min(headerStart, range.startLine()), range.endLine());
+    DiffSide side = new DiffSide(context, changes, Math.min(headerStart, range.startLine()), range.endLine());
+    if (context.isMemberBody()) {
+      // The body keeps the signature and the lines down to its brace, and its end, the code the changes affect and the
+      // definitions of what they read
+      hideUnrelated(side, context.getTree(), range.startLine(), range.endLine(), changes);
+      List<Integer> lineStarts = lineStarts(content);
+      List<Tree> targets = changes.stream().map(Node::getTree).toList();
+      for (int[] part : Stream.concat(context.getEffectParts(targets).stream(), context.getDefinitionParts(targets).stream()).toList()) {
+        for (int line = lineOf(lineStarts, part[0]) + 1; line <= lineOf(lineStarts, part[1]) + 1; line++) {
+          side.hidden.remove(line);
+        }
+      }
+    }
+    return side;
+  }
+
+  private static List<Integer> lineStarts(String content) {
+    List<Integer> lineStarts = new ArrayList<>(List.of(0));
+    for (int i = 0; i < content.length(); i++) {
+      if (content.charAt(i) == '\n') {
+        lineStarts.add(i + 1);
+      }
+    }
+    return lineStarts;
+  }
+
+  private static void addLines(Set<Integer> lines, TreeUtilFunctions.LineRange range) {
+    for (int line = range.startLine(); line <= range.endLine(); line++) {
+      lines.add(line);
+    }
+  }
+
+  // The code of the window (a member's body, a statement) bearing on none of its changes, read as ...: the window keeps
+  // its first lines down to the given one and its last lines from the given one, and for each change:
+  // - the statement holding it, but the bodies running apart within that statement (block lambdas, anonymous classes),
+  //   when the change lies in a lambda or an anonymous class of the statement itself: they are other callbacks than the
+  //   changed one, as the success listener beside a changed failure handler (es_103817), and a body holding another
+  //   change keeps what that change keeps of it; a change of the call itself, as the period a task is scheduled at
+  //   (rocketmq_8626), bears on the bodies the call runs with it
+  // - the first and last lines of the code holding it within the window, as the call and the lambda a statement lies in,
+  //   or the anonymous class and the method, which tell where the change runs
+  // - the statements next to the one holding it, which tell where it is in its block, as the check a new statement is
+  //   placed before (bazel_25203 setExitCode before the cache hit check): a simple statement whole, as the arguments of
+  //   the calls new assertions count (es_116075), a composite one by its first and last lines
+  // - the control parts of its statement (see Node#getStatementControlParts): the conditionals, loops and catch clauses
+  //   holding it, the guards bearing on what it reads and the readers of the values it gives
+  // - in a member's body, the code what the changes write reaches through names, the state of objects included (see
+  //   Node#getEffectParts), and the definitions of the locals they read, followed back (see Node#getDefinitionParts)
+  // A statement of the window related to no change by place, control or data flow tells nothing of it, and printing a
+  // member whole for one statement (onStart of 170 lines, a static block of 100) buries the change. The code a usage
+  // prints of an unchanged member is chosen the same way. The dependencies and the usages within the window are shown in
+  // place too (see revealRelated)
+  private static void hideUnrelated(DiffSide side, Tree window, int keptTop, int keptBottom, Set<Node> changes) {
+    String content = side.context.getFileContent();
+    List<Integer> lineStarts = lineStarts(content);
+    Set<Integer> kept = new HashSet<>();
+    for (int line = side.top; line <= keptTop; line++) {
+      kept.add(line);
+    }
+    for (int line = keptBottom; line <= side.bottom; line++) {
+      kept.add(line);
+    }
+    for (Node change : changes) {
+      Tree tree = change.getTree();
+      addLines(kept, TreeUtilFunctions.getLineRange(tree, content));
+      RMInfo rm = change.getRM();
+      Tree statement = rm.statementTree();
+      if (statement != null && window.getPos() <= statement.getPos() && statement.getEndPos() <= window.getEndPos()
+              && statement.getPos() <= tree.getPos() && tree.getEndPos() <= statement.getEndPos()) {
+        Set<Integer> statementLines = new HashSet<>();
+        addLines(statementLines, TreeUtilFunctions.getLineRange(statement, content));
+        // A body holding another change keeps what that change keeps of it, as any body does
+        if (inCallback(rm.statement(), tree)) {
+          for (int[] body : change.getApartBodies(statement)) {
+            if (body[0] <= tree.getPos() && tree.getEndPos() <= body[1] + 1) {
+              continue;
+            }
+            for (int line = lineOf(lineStarts, body[0]) + 2; line < lineOf(lineStarts, body[1]) + 1; line++) {
+              statementLines.remove(line);
+            }
+          }
+        }
+        kept.addAll(statementLines);
+        Tree parent = statement.getParent();
+        if (parent != null && statement != window) {
+          List<Tree> siblings = parent.getChildren();
+          int index = siblings.indexOf(statement);
+          for (int neighbour : new int[]{index - 1, index + 1}) {
+            if (neighbour >= 0 && neighbour < siblings.size()) {
+              Tree sibling = siblings.get(neighbour);
+              TreeUtilFunctions.LineRange lines = TreeUtilFunctions.getLineRange(sibling, content);
+              if (change.isCompositeStatement(sibling)) {
+                kept.add(lines.startLine());
+                kept.add(lines.endLine());
+              } else {
+                addLines(kept, lines);
+              }
+            }
+          }
+        }
+      }
+      for (Tree holder = tree.getParent(); holder != null && holder != window.getParent(); holder = holder.getParent()) {
+        TreeUtilFunctions.LineRange lines = TreeUtilFunctions.getLineRange(holder, content);
+        kept.add(lines.startLine());
+        kept.add(lines.endLine());
+      }
+      Node.Enclosing control = change.getStatementControlParts();
+      Set<Integer> controlLines = new HashSet<>();
+      for (int[] part : control.parts()) {
+        for (int line = lineOf(lineStarts, part[0]) + 1; line <= lineOf(lineStarts, Math.max(part[0], part[1])) + 1; line++) {
+          controlLines.add(line);
+        }
+      }
+      // A lambda or an anonymous class within that code reads by its first and last lines, as in a usage
+      for (int[] apart : control.hidden()) {
+        for (int line = lineOf(lineStarts, apart[0]) + 2; line < lineOf(lineStarts, apart[1]) + 1; line++) {
+          controlLines.remove(line);
+        }
+      }
+      kept.addAll(controlLines);
+    }
+    for (int line = side.top; line <= side.bottom; line++) {
+      if (!kept.contains(line)) {
+        side.hidden.add(line);
+      }
+    }
+  }
+
+  // Whether the tree lies in a lambda or an anonymous class of the statement, as RM gives them
+  private static boolean inCallback(@Nullable gr.uom.java.xmi.decomposition.AbstractStatement statement, Tree tree) {
+    if (statement == null) {
+      return false;
+    }
+    List<LocationInfo> callbacks = new ArrayList<>();
+    statement.getLambdas().forEach(lambda -> callbacks.add(lambda.getLocationInfo()));
+    statement.getAnonymousClassDeclarations().forEach(anonymous -> callbacks.add(anonymous.getLocationInfo()));
+    return callbacks.stream().anyMatch(callback -> callback.getStartOffset() < tree.getPos() && tree.getEndPos() <= callback.getEndOffset());
+  }
+
+  // The dependencies and the usages of the changes lying within the window of the side are shown in place, as the local
+  // a change reads declared above it or an unchanged statement of the member reading a field a change writes (netty_14803
+  // the assert on the id the new assignment sets), or calling a changed method (netty_14031 the read loops calling
+  // shouldStopReading): within the member they read where they run, rather than apart. A usage shows by the code of it
+  // using the changes and its first line, as its statement may be a whole loop
+  private static void revealRelated(DiffSide side, Graph<Node, Edge> graph) {
+    if (side.hidden.isEmpty()) {
+      return;
+    }
+    String content = side.context.getFileContent();
+    for (Node node : graph.vertexSet()) {
+      if (!node.isExtension() || !node.getSrcDst().equals(side.context.getSrcDst()) || !node.getPath().equals(side.context.getPath())) {
+        continue;
+      }
+      TreeUtilFunctions.LineRange lines = TreeUtilFunctions.getLineRange(node.getTree(), content);
+      if (lines.startLine() < side.top || side.bottom < lines.endLine()) {
+        continue;
+      }
+      boolean related = graph.edgesOf(node).stream().anyMatch(edge -> edge.getType().equals(EdgeType.DEF_USE)
+              && !(graph.getEdgeSource(edge) == node ? graph.getEdgeTarget(edge) : graph.getEdgeSource(edge)).isExtension());
+      if (!related) {
+        continue;
+      }
+      List<TreeUtilFunctions.LineRange> revealed = new ArrayList<>();
+      if (node.getUses().isEmpty()) {
+        revealed.add(lines);
+      } else {
+        revealed.add(new TreeUtilFunctions.LineRange(lines.startLine(), 0, lines.startLine(), 0));
+        node.getUses().forEach(use -> revealed.add(TreeUtilFunctions.getLineRange(use, content)));
+      }
+      for (TreeUtilFunctions.LineRange range : revealed) {
+        for (int line = range.startLine(); line <= range.endLine(); line++) {
+          side.hidden.remove(line);
+        }
+      }
+    }
+  }
+
+  // Every line the diff prints reads within the code holding it: a construct of the window holding a printed line keeps its
+  // first and last lines, as the loop and the else branch a kept statement lies in (bazel_23374), so that what is left out
+  // never breaks the nesting the printed lines read by
+  private static void keepStructure(DiffSide side) {
+    if (side.hidden.isEmpty()) {
+      return;
+    }
+    String content = side.context.getFileContent();
+    Tree root = side.context.getTree();
+    while (root.getParent() != null) {
+      TreeUtilFunctions.LineRange parent = TreeUtilFunctions.getLineRange(root.getParent(), content);
+      if (parent.startLine() < side.top || side.bottom < parent.endLine()) {
+        break;
+      }
+      root = root.getParent();
+    }
+    Set<Integer> printed = new HashSet<>();
+    for (int line = side.top; line <= side.bottom; line++) {
+      if (!side.hidden.contains(line)) {
+        printed.add(line);
+      }
+    }
+    Set<Integer> structure = new HashSet<>();
+    Deque<Tree> pending = new ArrayDeque<>(List.of(root));
+    while (!pending.isEmpty()) {
+      Tree tree = pending.pop();
+      TreeUtilFunctions.LineRange lines = TreeUtilFunctions.getLineRange(tree, content);
+      if (lines.endLine() - lines.startLine() < 2) {
+        continue;
+      }
+      boolean holdsPrinted = false;
+      for (int line = lines.startLine() + 1; line < lines.endLine() && !holdsPrinted; line++) {
+        holdsPrinted = printed.contains(line) && !side.hidden.contains(line);
+      }
+      if (holdsPrinted) {
+        // A list of items is no construct of its own: its lines are those of its items (see hideOtherItems)
+        if (!isItemList(tree, side.context)) {
+          structure.add(lines.startLine());
+          structure.add(lines.endLine());
+        }
+        tree.getChildren().forEach(pending::push);
+      }
+    }
+    side.hidden.removeAll(structure);
+  }
+
+  // A comment right above a line the diff prints reads with it, as the comment explaining a statement kept next to a
+  // change (netty_14031: why doBeginRead sets the read flag, next to the forced read it no longer makes)
+  private static void keepLeadingComments(DiffSide side) {
+    if (side.hidden.isEmpty()) {
+      return;
+    }
+    List<Integer> lineStarts = lineStarts(side.context.getFileContent());
+    List<int[]> comments = side.context.getFileComments().stream()
+            .map(comment -> new int[]{lineOf(lineStarts, comment[0]) + 1, lineOf(lineStarts, comment[1]) + 1})
+            .filter(lines -> side.top <= lines[0] && lines[1] <= side.bottom).sorted(Comparator.comparingInt(lines -> -lines[0])).toList();
+    boolean kept = true;
+    while (kept) {
+      kept = false;
+      for (int[] lines : comments) {
+        int next = lines[1] + 1;
+        if (side.hidden.contains(lines[0]) && next <= side.bottom && !side.hidden.contains(next)) {
+          for (int line = lines[0]; line <= lines[1]; line++) {
+            kept |= side.hidden.remove(line);
+          }
+        }
+      }
+    }
+  }
+
+  // The items of a list of the code the changes do not touch, as the other settings of a list of 390 a change registers
+  // one more in (es_109236), read as ...: a changed item reads with the code holding the list, which tells what it is (see
+  // keepStructure), and with the items next to it, which tell where it is; the others are items of their own. A list is
+  // the children of one tree of the same kind, each on lines of its own, but the members of an annotation
+  // Whether the tree is a list of items: two expressions or more of one kind; the statements of a block run in order, and
+  // the members of an annotation each have a role of their own, as the name of an option beside its converter, so they
+  // are none
+  private static boolean isItemList(Tree tree, Node context) {
+    List<Tree> items = tree.getChildren();
+    return items.size() >= 2 && items.stream().map(item -> item.getType().name).distinct().count() == 1
+            && !context.isInLeadingPart(tree) && items.stream().noneMatch(context::isStatement);
+  }
+
+  private static void hideOtherItems(DiffSide side, Tree statement, Set<Node> changes) {
+    String content = side.context.getFileContent();
+    // A side with no change of its own leaves to its counterpart what is printed of the lines both hold (see
+    // unchangedLine): it keeps the first and the last lines of its window only
+    if (changes.isEmpty()) {
+      for (int line = side.top + 1; line < side.bottom; line++) {
+        side.hidden.add(line);
+      }
+      return;
+    }
+    for (Node change : changes) {
+      for (Tree list = change.getTree().getParent(); list != null && list != statement.getParent(); list = list.getParent()) {
+        List<Tree> items = list.getChildren();
+        if (!isItemList(list, side.context)) {
+          continue;
+        }
+        Set<Integer> touched = new HashSet<>();
+        for (int i = 0; i < items.size(); i++) {
+          Tree item = items.get(i);
+          if (changes.stream().anyMatch(other -> item.getPos() < other.getTree().getEndPos() && other.getTree().getPos() < item.getEndPos())) {
+            touched.add(i);
+          }
+        }
+        if (touched.isEmpty()) {
+          continue;
+        }
+        Set<Integer> keptLines = new HashSet<>();
+        List<TreeUtilFunctions.LineRange> others = new ArrayList<>();
+        for (int i = 0; i < items.size(); i++) {
+          TreeUtilFunctions.LineRange lines = TreeUtilFunctions.getLineRange(items.get(i), content);
+          int index = i;
+          if (touched.stream().anyMatch(j -> Math.abs(j - index) <= 1)) {
+            addLines(keptLines, lines);
+          } else {
+            others.add(lines);
+          }
+        }
+        for (TreeUtilFunctions.LineRange lines : others) {
+          for (int line = lines.startLine(); line <= lines.endLine(); line++) {
+            if (!keptLines.contains(line)) {
+              side.hidden.add(line);
+            }
+          }
+        }
+      }
+    }
   }
 
   // A dependency changed by another unit is shown as the diff presenting that change there, once for all
@@ -491,7 +848,7 @@ public class RawRepresentation {
 
       blocks.add(diffBlock);
     }
-    blocks = mergeOverlappingDiffs(blocks, length);
+    blocks = addControlLines(mergeOverlappingDiffs(blocks, length), graph, length);
     for (Block block : blocks) {
       if (block instanceof DiffBlock diffBlock) {
         diffNodes.add(diffBlock.diffNode());
@@ -537,10 +894,16 @@ public class RawRepresentation {
       List<ShownLines> shownLines = new ArrayList<>();
       for (ShownLines shown : first.shownLines()) {
         ShownLines other = second.shownLines().stream().filter(side -> side.srcDst().equals(shown.srcDst())).findFirst().orElseThrow();
-        shownLines.add(new ShownLines(shown.srcDst(), shown.path(), shown.top(), other.bottom()));
+        Set<Integer> hidden = new HashSet<>(shown.hidden());
+        hidden.addAll(other.hidden());
+        shownLines.add(new ShownLines(shown.srcDst(), shown.path(), shown.top(), other.bottom(), hidden));
       }
+      List<Control> controls = new ArrayList<>(first.controls());
+      controls.addAll(second.controls());
+      List<Control> counterparts = new ArrayList<>(first.counterparts());
+      counterparts.addAll(second.counterparts());
       DiffBlock mergedBlock = new DiffBlock(DiffNode.of(firstNode.getSrcPath(), firstNode.getDstPath(), srcChanges, dstChanges,
-              firstNode.getLocation(), lines, length), shownLines);
+              firstNode.getLocation(), lines, length), shownLines, controls, counterparts);
 
       List<Block> dependencies = new ArrayList<>(merged.subList(i + 1, next));
       merged.subList(i, next + 1).clear();
@@ -558,6 +921,14 @@ public class RawRepresentation {
     if (!first.diffNode().getLocation().equals(second.diffNode().getLocation()) || first.shownLines().size() != 2
             || second.shownLines().size() != 2) {
       return 0;
+    }
+    // A diff leaving out lines its windows share prints them on neither side alike
+    for (ShownLines shown : first.shownLines()) {
+      ShownLines other = second.shownLines().stream()
+              .filter(side -> side.srcDst().equals(shown.srcDst()) && side.path().equals(shown.path())).findFirst().orElse(null);
+      if (other != null && !(shown.shows(other.top(), shown.bottom()) && other.shows(other.top(), shown.bottom()))) {
+        return 0;
+      }
     }
 
     int shared = -1;
@@ -847,8 +1218,87 @@ public class RawRepresentation {
       located.add(new HashMap<>(Map.of(changesContexts.get(run.get(0)), new HashSet<>(run))));
     }
 
-    isolated.addAll(mergeSharingLines(located));
+    // The changes of a declaration sharing a line with changes printed at a location, as a field whose comment moved onto
+    // its line, are printed there with them: the line reads once, with every change of it
+    List<Map<Node, Set<Node>>> merged = mergeMovesWithin(mergeSharingLines(located), graph);
+    for (Map<Node, Set<Node>> group : new ArrayList<>(isolated)) {
+      Map<Node, Set<Node>> sharing = merged.stream().filter(other -> shareLine(group, other)).findFirst().orElse(null);
+      Map<Node, Set<Node>> relocated = sharing == null ? null : relocate(group, sharing);
+      if (relocated != null) {
+        isolated.remove(group);
+        located.add(relocated);
+        merged = mergeSharingLines(located);
+      }
+    }
+    isolated.addAll(merged);
     return isolated;
+  }
+
+  // Code moved within one location, as fields reordered in their class, reads as one diff with the code it left: apart,
+  // the diff of the old lines and the one of the new lines each print the lines of the other, so a line reads as removed
+  // twice, or as removed and unchanged
+  private static List<Map<Node, Set<Node>>> mergeMovesWithin(List<Map<Node, Set<Node>>> groups, Graph<Node, Edge> graph) {
+    List<Map<Node, Set<Node>>> merged = new ArrayList<>(groups);
+    boolean widened = true;
+    while (widened) {
+      widened = false;
+      search:
+      for (Map<Node, Set<Node>> group : merged) {
+        for (Map<Node, Set<Node>> other : merged) {
+          if (group != other && sameLocation(group, other) && MergeGroup.changesOf(group).stream()
+                  .anyMatch(change -> change.getMappingTargets(graph).stream().anyMatch(MergeGroup.changesOf(other)::contains))) {
+            merged.remove(other);
+            merged.remove(group);
+            Map<Node, Set<Node>> joined = new HashMap<>(group);
+            for (Map.Entry<Node, Set<Node>> context : other.entrySet()) {
+              Node sameSide = joined.keySet().stream().filter(candidate -> candidate.getSrcDst().equals(context.getKey().getSrcDst()))
+                      .findFirst().orElse(context.getKey());
+              Set<Node> changes = new HashSet<>(joined.getOrDefault(sameSide, Set.of()));
+              changes.addAll(context.getValue());
+              joined.put(sameSide, changes);
+            }
+            merged.add(joined);
+            widened = true;
+            break search;
+          }
+        }
+      }
+    }
+    return merged;
+  }
+
+  // Whether the location contexts of both groups declare the same type, in either revision
+  private static boolean sameLocation(Map<Node, Set<Node>> group, Map<Node, Set<Node>> other) {
+    Set<String> types = new HashSet<>();
+    for (Node context : group.keySet()) {
+      if (!context.getNodeType().equals(NodeType.LOCATION_CONTEXT) || context.getRM().declaredClass() == null) {
+        return false;
+      }
+      types.add(context.getRM().declaredClass().getName());
+    }
+    for (Node context : other.keySet()) {
+      if (!context.getNodeType().equals(NodeType.LOCATION_CONTEXT) || context.getRM().declaredClass() == null
+              || !types.contains(context.getRM().declaredClass().getName())) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // The changes of the group by the location contexts of the other group on their sides; none when the other group has
+  // no location context on a side the group changes
+  @Nullable
+  private static Map<Node, Set<Node>> relocate(Map<Node, Set<Node>> group, Map<Node, Set<Node>> other) {
+    Map<Node, Set<Node>> relocated = new HashMap<>();
+    for (Map.Entry<Node, Set<Node>> context : group.entrySet()) {
+      Node location = other.keySet().stream().filter(candidate -> candidate.getNodeType().equals(NodeType.LOCATION_CONTEXT)
+              && candidate.getSrcDst().equals(context.getKey().getSrcDst())).findFirst().orElse(null);
+      if (location == null) {
+        return null;
+      }
+      relocated.computeIfAbsent(location, key -> new HashSet<>()).addAll(context.getValue());
+    }
+    return relocated;
   }
 
   // The changes of a part of the header of a type or a method, as its doc comment or an annotation, are changes of its
@@ -895,16 +1345,11 @@ public class RawRepresentation {
     return merged;
   }
 
+  // Whether a change of the group and one of the other are printed on one line (see MergeGroup#shareLine)
   private static boolean shareLine(Map<Node, Set<Node>> group, Map<Node, Set<Node>> other) {
     for (Node change : MergeGroup.changesOf(group)) {
-      TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(change.getTree(), change.getFileContent());
       for (Node otherChange : MergeGroup.changesOf(other)) {
-        if (!change.getSrcDst().equals(otherChange.getSrcDst()) || !change.getPath().equals(otherChange.getPath())) {
-          continue;
-        }
-
-        TreeUtilFunctions.LineRange otherRange = TreeUtilFunctions.getLineRange(otherChange.getTree(), otherChange.getFileContent());
-        if (range.startLine() <= otherRange.endLine() && otherRange.startLine() <= range.endLine()) {
+        if (MergeGroup.shareLine(change, otherChange)) {
           return true;
         }
       }
@@ -987,14 +1432,22 @@ public class RawRepresentation {
     DiffSide src = null, dst = null;
     if (srcContext != null) {
       src = contextSide(srcContext, srcChanges);
+      revealRelated(src, graph);
+      keepLeadingComments(src);
+      keepStructure(src);
     }
     if (dstContext != null) {
       dst = contextSide(dstContext, dstChanges);
+      revealRelated(dst, graph);
+      keepLeadingComments(dst);
+      keepStructure(dst);
     }
 
     List<DiffNode.DiffLine> diffLines;
     String location;
     boolean printsContext = true;
+    DiffSide controlled = null;
+    DiffSide counterpart = null;
     int[] partnerWindow = contexts.locationContext() ? partnerWindow(contexts) : null;
     // Code that left is linked to where it went, which shows what it changed
     DiffSide origin = contexts.locationContext() && partnerWindow == null && srcChanges.isEmpty() && !dstChanges.isEmpty()
@@ -1061,6 +1514,8 @@ public class RawRepresentation {
     } else if (src != null && dst != null) {
       diffLines = mergedLines(src, dst, mappingStores(srcContext, dstContext), graph);
       location = diffLocation(srcContext, dstContext);
+      controlled = dst;
+      counterpart = src;
     } else {
       // One revision alone holds this context, so there is no counterpart to merge it against:
       // it is printed whole, and what its changes cover carries the marker
@@ -1068,8 +1523,10 @@ public class RawRepresentation {
       side.tagChanges(null, List.of(), Set.of());
       diffLines = side.taggedLines();
       location = side.context.getInclusiveContextString();
+      controlled = side;
     }
 
+    diffLines = collapseHidden(diffLines);
     if (diffLines.stream().noneMatch(diffLine -> diffLine.prefix() != ' ')) {
       return null;
     }
@@ -1085,14 +1542,232 @@ public class RawRepresentation {
     List<ShownLines> shownLines = new ArrayList<>();
     if (printsContext) {
       if (src != null) {
-        shownLines.add(new ShownLines(src.context.getSrcDst(), src.context.getPath(), src.top, src.bottom));
+        shownLines.add(new ShownLines(src.context.getSrcDst(), src.context.getPath(), src.top, src.bottom, Set.copyOf(src.hidden)));
       }
       if (dst != null) {
-        shownLines.add(new ShownLines(dst.context.getSrcDst(), dst.context.getPath(), dst.top, dst.bottom));
+        shownLines.add(new ShownLines(dst.context.getSrcDst(), dst.context.getPath(), dst.top, dst.bottom, Set.copyOf(dst.hidden)));
       }
     }
 
-    return new DiffBlock(diffNode, shownLines);
+    return new DiffBlock(diffNode, shownLines,
+            controlled == null ? List.of() : List.of(new Control(controlled.context, controlled.top, controlled.bottom)),
+            counterpart == null ? List.of() : List.of(new Control(counterpart.context, counterpart.top, counterpart.bottom)));
+  }
+
+  // Each diff printed with the code deciding whether and how often the code of its window runs, above and below that
+  // window (see controlLines). Applied once diffs sharing lines are merged, as one window then reads with it once. Diffs
+  // of one member printed one after the other whose control lines hold the window of another, or which print the same
+  // control lines, as two edits of one loop, read as one diff, printing that code once; what the later ones rely on is
+  // printed before it
+  private static List<Block> addControlLines(List<Block> blocks, Graph<Node, Edge> graph, int length) {
+    List<Block> result = new ArrayList<>();
+    List<Controlled> group = new ArrayList<>();
+    List<Block> held = new ArrayList<>();
+    for (Block block : blocks) {
+      Controlled controlled = block instanceof DiffBlock diffBlock ? controlled(diffBlock, graph) : null;
+      if (block instanceof DependencyBlock) {
+        (group.isEmpty() ? result : held).add(block);
+        continue;
+      }
+      if (!group.isEmpty() && (controlled == null || group.stream().noneMatch(member -> member.readsWith(controlled)))) {
+        result.add(render(group, length));
+        result.addAll(held);
+        group.clear();
+        held.clear();
+      }
+      if (controlled == null) {
+        result.add(block);
+        continue;
+      }
+      result.addAll(held);
+      held.clear();
+      group.add(controlled);
+    }
+    if (!group.isEmpty()) {
+      result.add(render(group, length));
+    }
+    result.addAll(held);
+    return result;
+  }
+
+  // A diff with the window of the side its control lines are of, and those lines
+  private record Controlled(DiffBlock block, Node context, int top, int bottom, Set<Integer> lines,
+                            Map<Node, Set<Integer>> counterpartLines) {
+    // Whether the two diffs read as one: they show one member of one revision, and the control lines of one hold lines
+    // of the window of the other, or both print the same control lines, as two edits of one loop
+    boolean readsWith(Controlled other) {
+      return context.getSrcDst().equals(other.context.getSrcDst()) && context.getPath().equals(other.context.getPath())
+              && block.diffNode().getLocation().equals(other.block.diffNode().getLocation())
+              && (lines.stream().anyMatch(line -> other.top <= line && line <= other.bottom)
+              || other.lines.stream().anyMatch(line -> top <= line && line <= bottom)
+              || lines.stream().anyMatch(other.lines::contains));
+    }
+  }
+
+  @Nullable
+  private static Controlled controlled(DiffBlock diffBlock, Graph<Node, Edge> graph) {
+    if (diffBlock.controls().isEmpty()) {
+      return null;
+    }
+    Control first = diffBlock.controls().get(0);
+    int top = diffBlock.controls().stream().mapToInt(Control::top).min().orElseThrow();
+    int bottom = diffBlock.controls().stream().mapToInt(Control::bottom).max().orElseThrow();
+    // The changes of the diff in that revision, which tell the cases whose condition they edit
+    DiffNode diffNode = diffBlock.diffNode();
+    List<Tree> targets = (first.context().isSrc() ? diffNode.getSrcChanges() : diffNode.getDstChanges()).stream()
+            .map(Node::getTree).toList();
+    Set<Integer> lines = new TreeSet<>();
+    for (Control control : diffBlock.controls()) {
+      if (control.context().getSrcDst().equals(first.context().getSrcDst()) && control.context().getPath().equals(first.context().getPath())) {
+        lines.addAll(controlLines(control.context(), top, bottom, graph, targets));
+      }
+    }
+    // A signature the changes edit is printed by the diff of its own, which shows the parameters it declares: printed
+    // again above the body, with ... for its changed lines, it would repeat that diff and hide what it changes
+    Set<Integer> changed = changeLines(first.context(), graph);
+    Set<Integer> signature = partLines(first.context(), first.context().getMemberSignature(), List.of());
+    if (signature.stream().anyMatch(changed::contains)) {
+      lines.removeAll(signature);
+    }
+    // The code of the other revision reading a parameter, as a removed statement, reads with the signature of the member
+    // too, which the lines of this revision print: a signature both revisions hold as it is, printed once, shows the
+    // parameters of both (see render)
+    Map<Node, Set<Integer>> counterpartLines = new LinkedHashMap<>();
+    for (Control counterpart : diffBlock.counterparts()) {
+      List<int[]> parameterParts = counterpart.context().getParameterParts();
+      if (parameterParts.isEmpty() || signature.stream().anyMatch(changed::contains)) {
+        continue;
+      }
+      counterpartLines.computeIfAbsent(counterpart.context(), context -> new TreeSet<>())
+              .addAll(partLines(counterpart.context(), parameterParts, List.of()));
+      Set<Integer> shownSignature = new TreeSet<>(signature);
+      shownSignature.removeIf(line -> top <= line && line <= bottom);
+      lines.addAll(shownSignature);
+    }
+    return new Controlled(diffBlock, first.context(), top, bottom, lines, counterpartLines);
+  }
+
+  // The diffs as one, their windows in the order of their lines with the control lines above, between and below them, a
+  // line of ... standing for the lines left out
+  private static DiffBlock render(List<Controlled> group, int length) {
+    if (group.size() == 1 && group.get(0).lines().isEmpty()) {
+      return group.get(0).block();
+    }
+    List<Controlled> windows = group.stream().sorted(Comparator.comparingInt(Controlled::top)).toList();
+    TreeSet<Integer> control = new TreeSet<>();
+    windows.forEach(window -> control.addAll(window.lines()));
+    control.removeIf(line -> windows.stream().anyMatch(window -> window.top() <= line && line <= window.bottom()));
+
+    Node context = windows.get(0).context();
+    String[] fileLines = context.getFileContent().split("\n", -1);
+    List<DiffNode.DiffLine> lines = new ArrayList<>();
+    Integer previous = null;
+    for (Controlled window : windows) {
+      for (int line : previous == null ? control.headSet(window.top()) : control.subSet(previous, false, window.top(), false)) {
+        addGap(lines, fileLines, previous, line);
+        lines.add(new DiffNode.DiffLine(' ', fileLines[line - 1]));
+        previous = line;
+      }
+      addGap(lines, fileLines, previous, window.top());
+      lines.addAll(window.block().diffNode().getDiffLines());
+      previous = window.bottom();
+    }
+    for (int line : control.tailSet(previous, false)) {
+      addGap(lines, fileLines, previous, line);
+      lines.add(new DiffNode.DiffLine(' ', fileLines[line - 1]));
+      previous = line;
+    }
+
+    DiffNode first = windows.get(0).block().diffNode();
+    List<Node> srcChanges = new ArrayList<>();
+    List<Node> dstChanges = new ArrayList<>();
+    List<ShownLines> shownLines = new ArrayList<>();
+    List<Control> controls = new ArrayList<>();
+    for (Controlled window : windows) {
+      srcChanges.addAll(window.block().diffNode().getSrcChanges());
+      dstChanges.addAll(window.block().diffNode().getDstChanges());
+      shownLines.addAll(window.block().shownLines());
+      controls.addAll(window.block().controls());
+    }
+    for (int line : control) {
+      shownLines.add(new ShownLines(context.getSrcDst(), context.getPath(), line, line));
+    }
+    // A line of the other revision reading as a printed control line, as the signature both revisions hold, is shown by it
+    Set<String> printed = new HashSet<>();
+    control.forEach(line -> printed.add(fileLines[line - 1].trim()));
+    List<Control> counterparts = new ArrayList<>();
+    for (Controlled window : windows) {
+      counterparts.addAll(window.block().counterparts());
+      for (Map.Entry<Node, Set<Integer>> counterpart : window.counterpartLines().entrySet()) {
+        String[] counterpartLines = counterpart.getKey().getFileContent().split("\n", -1);
+        for (int line : counterpart.getValue()) {
+          String text = counterpartLines[line - 1].trim();
+          if (!text.isEmpty() && printed.contains(text)) {
+            shownLines.add(new ShownLines(counterpart.getKey().getSrcDst(), counterpart.getKey().getPath(), line, line));
+          }
+        }
+      }
+    }
+    return new DiffBlock(DiffNode.of(first.getSrcPath(), first.getDstPath(), srcChanges, dstChanges, first.getLocation(), lines, length),
+            shownLines, controls, counterparts);
+  }
+
+  // The lines outside the window holding the code that decides whether and how often the code of the context runs (see
+  // Node#getControlParts), but the lines holding changes, which their own diffs show
+  private static Set<Integer> controlLines(Node context, int top, int bottom, Graph<Node, Edge> graph, List<Tree> targets) {
+    Node.Enclosing control = context.getControlParts(targets);
+    Set<Integer> lines = partLines(context, control.parts(), control.hidden());
+    lines.removeIf(line -> top <= line && line <= bottom);
+    lines.removeAll(changeLines(context, graph));
+    return lines;
+  }
+
+  // The lines of the parts, as ranges of offsets of the file of the context, without the lines within the hidden bodies
+  // but their first and last: a lambda or an anonymous class within that code reads by them, as in a usage
+  private static Set<Integer> partLines(Node context, List<int[]> parts, List<int[]> hidden) {
+    List<Integer> lineStarts = lineStarts(context.getFileContent());
+    TreeSet<Integer> lines = new TreeSet<>();
+    for (int[] part : parts) {
+      for (int line = lineOf(lineStarts, part[0]) + 1; line <= lineOf(lineStarts, Math.max(part[0], part[1])) + 1; line++) {
+        lines.add(line);
+      }
+    }
+    for (int[] body : hidden) {
+      for (int line = lineOf(lineStarts, body[0]) + 2; line < lineOf(lineStarts, body[1]) + 1; line++) {
+        lines.remove(line);
+      }
+    }
+    return lines;
+  }
+
+  // The lines the changes of the revision of the context lie on in its file, which their own diffs show
+  private static Set<Integer> changeLines(Node context, Graph<Node, Edge> graph) {
+    String content = context.getFileContent();
+    Set<Integer> lines = new HashSet<>();
+    for (Node node : graph.vertexSet()) {
+      if (node.isContext() || node.isExtension() || !node.getSrcDst().equals(context.getSrcDst())
+              || !node.getPath().equals(context.getPath())) {
+        continue;
+      }
+      TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(node.getTree(), content);
+      for (int line = range.startLine(); line <= range.endLine(); line++) {
+        lines.add(line);
+      }
+    }
+    return lines;
+  }
+
+  private static void addGap(List<DiffNode.DiffLine> lines, String[] fileLines, @Nullable Integer previous, int next) {
+    if (previous == null || next <= previous + 1) {
+      return;
+    }
+    for (int skipped = previous + 1; skipped < next; skipped++) {
+      String skippedLine = fileLines[skipped - 1];
+      if (!skippedLine.isBlank()) {
+        lines.add(new DiffNode.DiffLine(' ', skippedLine.substring(0, skippedLine.length() - skippedLine.stripLeading().length()) + "..."));
+        return;
+      }
+    }
   }
 
   private static boolean isHeader(Node context, Set<Node> changes) {
@@ -1176,6 +1851,7 @@ public class RawRepresentation {
     // changes, nor a line all of whose code is removed: each line of code there brings some of its code here
     boolean[] holdsCode = new boolean[lines.length + 1];
     boolean[] brings = new boolean[lines.length + 1];
+    Set<Tree> arrivedLeaves = Collections.newSetFromMap(new IdentityHashMap<>());
     for (Node counterpart : origins) {
       List<Tree> trees = new ArrayList<>(counterpart.getTree().getDescendants());
       trees.add(counterpart.getTree());
@@ -1194,6 +1870,7 @@ public class RawRepresentation {
             return null;
           }
           arrived = true;
+          arrivedLeaves.add(leaf);
         }
 
         TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(leaf, content);
@@ -1203,6 +1880,28 @@ public class RawRepresentation {
         }
       }
     }
+    // The code around what arrives, which stays or goes elsewhere, as the header and the end of a try the moved call
+    // leaves, is not printed against the changes either: its own diff shows it removed. The lines kept end with the
+    // trees holding arriving code that start within them, as the call closing on lines of no code of their own
+    while (top <= bottom && !brings[top]) {
+      top++;
+    }
+    if (top > bottom) {
+      return null;
+    }
+    int arrivingBottom = Integer.MIN_VALUE;
+    for (Node counterpart : origins) {
+      List<Tree> trees = new ArrayList<>(counterpart.getTree().getDescendants());
+      trees.add(counterpart.getTree());
+      for (Tree tree : trees) {
+        TreeUtilFunctions.LineRange range = TreeUtilFunctions.getLineRange(tree, content);
+        if (range.startLine() >= top && range.endLine() > arrivingBottom
+                && (tree.getChildren().isEmpty() ? arrivedLeaves.contains(tree) : tree.getDescendants().stream().anyMatch(arrivedLeaves::contains))) {
+          arrivingBottom = range.endLine();
+        }
+      }
+    }
+    bottom = Math.min(bottom, arrivingBottom);
     for (int line = top; line <= bottom; line++) {
       if (holdsCode[line] && !brings[line]) {
         return null;
@@ -1317,8 +2016,76 @@ public class RawRepresentation {
 
     closeChangedLines(src, dst, mappingStores, inPlace);
     propagateChanges(src, dst, anchors, inPlace);
+    hideUnchangedCommentLines(src, dst, inPlace);
     return mergeSides(src, dst, meetingPoints(src, dst, anchors));
   }
+
+  // A comment the changes edit reads by the paragraphs holding the lines they change (see hideUnchangedLines), and by its
+  // first and last lines, which tell it is a comment and where it ends; its other lines read as ... (see collapseHidden). A
+  // copyright year bumped in a license header printed whole is fifteen lines of a text every file holds around one line
+  // that changes, and a reviewer has to compare them line by line to find it. A comment is edited on a side when it holds
+  // a changed line there, or when it shares a line in place with one edited on the other side (text added on one side
+  // only). A comment the changes do not touch is kept as it is (see keepLeadingComments), as it explains the code it is on
+  private static void hideUnchangedCommentLines(DiffSide src, DiffSide dst, Set<List<Integer>> inPlace) {
+    List<int[]> srcComments = windowComments(src);
+    List<int[]> dstComments = windowComments(dst);
+    List<int[]> srcEdited = srcComments.stream().filter(lines -> holdsChangedLine(src, lines)).toList();
+    List<int[]> dstEdited = dstComments.stream().filter(lines -> holdsChangedLine(dst, lines)).toList();
+    for (int[] lines : srcComments) {
+      if (srcEdited.contains(lines) || inPlace.stream().anyMatch(pair -> lines[0] <= pair.get(0) && pair.get(0) <= lines[1]
+              && dstEdited.stream().anyMatch(edited -> edited[0] <= pair.get(1) && pair.get(1) <= edited[1]))) {
+        hideUnchangedLines(src, lines);
+      }
+    }
+    for (int[] lines : dstComments) {
+      if (dstEdited.contains(lines) || inPlace.stream().anyMatch(pair -> lines[0] <= pair.get(1) && pair.get(1) <= lines[1]
+              && srcEdited.stream().anyMatch(edited -> edited[0] <= pair.get(0) && pair.get(0) <= edited[1]))) {
+        hideUnchangedLines(dst, lines);
+      }
+    }
+  }
+
+  // The comments of the file spanning lines within the window of the side, by their first and last lines. A doc comment
+  // is none: it is the contract of its declaration, which an edit of it reads against whole, as a deprecation added
+  // under a description it makes stale (netty_14031 getEpollMode, still saying the default is edge-triggered)
+  private static List<int[]> windowComments(DiffSide side) {
+    List<Integer> lineStarts = lineStarts(side.context.getFileContent());
+    return side.context.getFileComments().stream()
+            .map(comment -> new int[]{lineOf(lineStarts, comment[0]) + 1, lineOf(lineStarts, comment[1]) + 1})
+            .filter(lines -> lines[0] < lines[1] && side.top <= lines[0] && lines[1] <= side.bottom).toList();
+  }
+
+  private static boolean holdsChangedLine(DiffSide side, int[] lines) {
+    return side.changed.stream().anyMatch(line -> lines[0] <= line && line <= lines[1]);
+  }
+
+  // The lines of the comment out of the paragraphs holding its changed lines, but its first and last lines. A comment
+  // reads in paragraphs, which a line holding nothing but the markers of the comment ends (as RM gives the text of the
+  // comment without them), as a description, the block of its tags or a plan a test expects: a changed line reads with
+  // the rest of its paragraph, which tells what it is part of (the parents of a changed node of a plan, the other
+  // authors of a list one more joins), while another paragraph tells nothing of it
+  private static void hideUnchangedLines(DiffSide side, int[] lines) {
+    Set<Integer> kept = new HashSet<>();
+    Set<Integer> blank = side.context.getBlankCommentLines();
+    for (int line = lines[0] + 1; line < lines[1]; line++) {
+      if (!side.changed.contains(line)) {
+        continue;
+      }
+      kept.add(line);
+      for (int above = line - 1; above > lines[0] && !blank.contains(above); above--) {
+        kept.add(above);
+      }
+      for (int below = line + 1; below < lines[1] && !blank.contains(below); below++) {
+        kept.add(below);
+      }
+    }
+    for (int line = lines[0] + 1; line < lines[1]; line++) {
+      if (!kept.contains(line)) {
+        side.hidden.add(line);
+      }
+    }
+  }
+
 
   // Moved code is changed where it holds code the other side does not hold as it is; the statement holding an edit is
   // not changed but by the edit
@@ -1631,7 +2398,7 @@ public class RawRepresentation {
       }
 
       mergeSegment(merged, src, anchor[0] - 1, dst, anchor[1] - 1, srcLine, dstLine);
-      merged.add(new DiffNode.DiffLine(' ', dst.line(anchor[1])));
+      merged.add(unchangedLine(src, anchor[0], dst, anchor[1]));
 
       srcLine = anchor[0] + 1;
       dstLine = anchor[1] + 1;
@@ -1644,25 +2411,101 @@ public class RawRepresentation {
   private static void mergeSegment(List<DiffNode.DiffLine> merged, DiffSide src, int srcTo, DiffSide dst, int dstTo,
                                    int srcFrom, int dstFrom) {
     while (srcFrom <= srcTo && dstFrom <= dstTo && pairs(src, srcFrom, dst, dstFrom)) {
-      merged.add(new DiffNode.DiffLine(' ', dst.line(dstFrom)));
+      merged.add(unchangedLine(src, srcFrom, dst, dstFrom));
       srcFrom++;
       dstFrom++;
     }
 
     List<DiffNode.DiffLine> tail = new ArrayList<>();
     while (srcTo >= srcFrom && dstTo >= dstFrom && pairs(src, srcTo, dst, dstTo)) {
-      tail.add(0, new DiffNode.DiffLine(' ', dst.line(dstTo)));
+      tail.add(0, unchangedLine(src, srcTo, dst, dstTo));
       srcTo--;
       dstTo--;
     }
 
-    for (int line = srcFrom; line <= srcTo; line++) {
-      merged.add(new DiffNode.DiffLine('-', src.line(line)));
+    // Within the rest, a line neither side changes that both hold alike is code in place between changed lines, as an
+    // unchanged callback between two edited arguments: it pairs with its counterpart, in order (a longest common
+    // subsequence), rather than reading as removed and added
+    int srcCount = Math.max(0, srcTo - srcFrom + 1);
+    int dstCount = Math.max(0, dstTo - dstFrom + 1);
+    int[][] common = new int[srcCount + 1][dstCount + 1];
+    for (int i = srcCount - 1; i >= 0; i--) {
+      for (int j = dstCount - 1; j >= 0; j--) {
+        common[i][j] = pairs(src, srcFrom + i, dst, dstFrom + j) && !src.line(srcFrom + i).isBlank()
+                ? common[i + 1][j + 1] + 1 : Math.max(common[i + 1][j], common[i][j + 1]);
+      }
     }
-    for (int line = dstFrom; line <= dstTo; line++) {
-      merged.add(new DiffNode.DiffLine('+', dst.line(line)));
+    int i = 0;
+    int j = 0;
+    List<Integer> removed = new ArrayList<>();
+    List<Integer> added = new ArrayList<>();
+    while (i < srcCount || j < dstCount) {
+      if (i < srcCount && j < dstCount && pairs(src, srcFrom + i, dst, dstFrom + j) && !src.line(srcFrom + i).isBlank()
+              && common[i][j] == common[i + 1][j + 1] + 1) {
+        flushUnpaired(merged, src, removed, dst, added);
+        merged.add(unchangedLine(src, srcFrom + i, dst, dstFrom + j));
+        i++;
+        j++;
+      } else if (j >= dstCount || i < srcCount && common[i + 1][j] >= common[i][j + 1]) {
+        removed.add(srcFrom + i);
+        i++;
+      } else {
+        added.add(dstFrom + j);
+        j++;
+      }
     }
+    flushUnpaired(merged, src, removed, dst, added);
     merged.addAll(tail);
+  }
+
+  // The lines between two paired lines: a blank line on each side alone is the same blank line in place
+  private static void flushUnpaired(List<DiffNode.DiffLine> merged, DiffSide src, List<Integer> removed, DiffSide dst,
+                                    List<Integer> added) {
+    if (removed.size() == 1 && added.size() == 1 && pairs(src, removed.get(0), dst, added.get(0))
+            && src.line(removed.get(0)).isBlank()) {
+      merged.add(unchangedLine(src, removed.get(0), dst, added.get(0)));
+    } else {
+      removed.forEach(line -> merged.add(new DiffNode.DiffLine('-', src.line(line))));
+      added.forEach(line -> merged.add(new DiffNode.DiffLine('+', dst.line(line))));
+    }
+    removed.clear();
+    added.clear();
+  }
+
+  // A line both revisions hold, left out when both sides leave it out (see DiffSide#hidden)
+  private static DiffNode.DiffLine unchangedLine(DiffSide src, int srcLine, DiffSide dst, int dstLine) {
+    return new DiffNode.DiffLine(src.hidden.contains(srcLine) && dst.hidden.contains(dstLine) ? HIDDEN : ' ', dst.line(dstLine));
+  }
+
+  // The prefix marking a line left out, until the lines left out are collapsed (see collapseHidden)
+  private static final char HIDDEN = '\0';
+
+  // The lines left out of a diff read as one line of ... at the indentation of the first of them, as the gaps of a usage
+  // and of the control lines do. The line of ... takes a line of its own, so fewer than three lines left out are printed:
+  // leaving out two lines would save one and hide code a reviewer reads in passing, as the body of a check next to a
+  // change
+  private static List<DiffNode.DiffLine> collapseHidden(List<DiffNode.DiffLine> lines) {
+    List<DiffNode.DiffLine> collapsed = new ArrayList<>();
+    for (int i = 0; i < lines.size(); ) {
+      if (lines.get(i).prefix() != HIDDEN) {
+        collapsed.add(lines.get(i++));
+        continue;
+      }
+      int end = i;
+      while (end < lines.size() && lines.get(end).prefix() == HIDDEN) {
+        end++;
+      }
+      List<DiffNode.DiffLine> run = lines.subList(i, end);
+      List<DiffNode.DiffLine> nonBlank = run.stream().filter(line -> !line.text().isBlank()).toList();
+      if (nonBlank.size() < 3) {
+        run.forEach(line -> collapsed.add(new DiffNode.DiffLine(' ', line.text())));
+      } else {
+        String first = nonBlank.get(0).text();
+        collapsed.add(new DiffNode.DiffLine(' ', first.substring(0, first.length() - first.stripLeading().length()) + "..."));
+      }
+      i = end;
+    }
+    return collapsed;
   }
 
   private static boolean pairs(DiffSide src, int srcLine, DiffSide dst, int dstLine) {
@@ -1701,6 +2544,9 @@ public class RawRepresentation {
     private final int[] lineOffsets;
     private final List<Node> changes = new ArrayList<>();
     private final Set<Integer> changed = new HashSet<>();
+    // The lines of the window left out, as they bear on no change (see contextSide); a line both revisions hold is left
+    // out only when both sides leave it out, and a changed line never is
+    private final Set<Integer> hidden = new HashSet<>();
     private final char prefix;
 
     private DiffSide(Node context, Set<Node> changeNodes) {
@@ -1770,11 +2616,13 @@ public class RawRepresentation {
       }
     }
 
-    // Whether the offset is the semicolon ending a statement within the tree. On a line both revisions hold as it is, it
-    // is no code of its own: a statement re-wrapped around code it carries over, as a creation returned before and
-    // assigned now, ends on the same `);`
+    // Whether the offset is the terminator ending a statement within the tree, the statement termination of the language
+    // as RM's constants give it (none where a line ends a statement). On a line both revisions hold as it is, it is no
+    // code of its own: a statement re-wrapped around code it carries over, as a creation returned before and assigned
+    // now, ends on the same `);`
     private boolean isTerminator(Tree tree, int offset) {
-      if (context.getFileContent().charAt(offset) != ';') {
+      String terminator = PathFileUtils.getLang(context.getPath()).STATEMENT_TERMINATION.trim();
+      if (terminator.isEmpty() || !context.getFileContent().startsWith(terminator, offset)) {
         return false;
       }
 
@@ -2001,7 +2849,7 @@ public class RawRepresentation {
     public List<DiffNode.DiffLine> taggedLines() {
       List<DiffNode.DiffLine> diffLines = new ArrayList<>();
       for (int line = top; line <= bottom; line++) {
-        diffLines.add(new DiffNode.DiffLine(changed.contains(line) ? prefix : ' ', line(line)));
+        diffLines.add(new DiffNode.DiffLine(changed.contains(line) ? prefix : hidden.contains(line) ? HIDDEN : ' ', line(line)));
       }
 
       return diffLines;
@@ -2057,14 +2905,38 @@ public class RawRepresentation {
   private record DependencyBlock(Node dependency) implements Block {
   }
 
-  private record DiffBlock(DiffNode diffNode, List<ShownLines> shownLines) implements Block {
+  // The window of a side of a diff whose code the code deciding whether it runs is printed around (see addControlLines)
+  private record Control(Node context, int top, int bottom) {
+  }
+
+  // A diff with the windows its control lines are printed around (see addControlLines), of one revision, and the windows
+  // of the other revision, whose code reads with those lines
+  private record DiffBlock(DiffNode diffNode, List<ShownLines> shownLines, List<Control> controls, List<Control> counterparts)
+          implements Block {
   }
 
   // The usages of the changes in one member, with the diffs of the changes they use
   private record UsageBlock(List<Node> usages, Set<DiffNode> used) {
   }
 
-  // The lines of a revision of a file that a diff prints
-  private record ShownLines(SrcDst srcDst, String path, int top, int bottom) {
+  // The lines of a revision of a file that a diff prints: its window but the lines it leaves out within it (see
+  // DiffSide#hidden)
+  private record ShownLines(SrcDst srcDst, String path, int top, int bottom, Set<Integer> hidden) {
+    private ShownLines(SrcDst srcDst, String path, int top, int bottom) {
+      this(srcDst, path, top, bottom, Set.of());
+    }
+
+    // Whether the lines are printed: within the window and none left out
+    private boolean shows(int from, int to) {
+      if (from < top || bottom < to) {
+        return false;
+      }
+      for (int line = from; line <= to; line++) {
+        if (hidden.contains(line)) {
+          return false;
+        }
+      }
+      return true;
+    }
   }
 }

@@ -1,10 +1,17 @@
 {
+  "AbstractFileSystem.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/AbstractFileSystem.java"
+  ],
+  "AbstractFileSystemWithCustomStat.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/AbstractFileSystemWithCustomStat.java"
+  ],
   "BuildConfigurationValueTest.java": [
     "src/test/java/com/google/devtools/build/lib/analysis/config/BuildConfigurationValueTest.java"
   ],
   "BuildOptions.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/config/BuildOptions.java"
   ],
+  "Class.java": [],
   "Cloneable.java": [],
   "Collectors.java": [],
   "CommandLineItem.java": [
@@ -17,29 +24,81 @@
   "ConfigurationTransitionApi.java": [
     "src/main/java/com/google/devtools/build/lib/starlarkbuildapi/config/ConfigurationTransitionApi.java"
   ],
+  "Contextless.java": [],
   "Converter.java": [
     "src/main/java/com/google/devtools/common/options/Converter.java"
   ],
   "CoreOptionConverters.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/config/CoreOptionConverters.java"
   ],
+  "CoreOptions.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/config/CoreOptions.java"
+  ],
   "CustomFlagConverter.java": [],
+  "EnumConverter.java": [
+    "src/main/java/com/google/devtools/common/options/EnumConverter.java"
+  ],
+  "FileSystem.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/FileSystem.java"
+  ],
+  "FileType.java": [
+    "src/main/java/com/google/devtools/build/lib/util/FileType.java"
+  ],
   "FoundationTestCase.java": [
     "src/test/java/com/google/devtools/build/lib/testutil/FoundationTestCase.java"
+  ],
+  "FragmentOptions.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/config/FragmentOptions.java"
   ],
   "FunctionTransitionUtil.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/starlark/FunctionTransitionUtil.java"
   ],
+  "HasFileType.java": [],
   "ImmutableMap.java": [],
+  "InMemoryFileSystem.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/inmemoryfs/InMemoryFileSystem.java"
+  ],
+  "Interner.java": [],
   "Label.java": [
     "src/main/java/com/google/devtools/build/lib/cmdline/Label.java"
   ],
+  "LabelParser.java": [
+    "src/main/java/com/google/devtools/build/lib/cmdline/LabelParser.java"
+  ],
   "List.java": [],
+  "Map.java": [],
   "Object.java": [
     "third_party/ijar/test/Object.java"
   ],
   "OptionDefinition.java": [
     "src/main/java/com/google/devtools/common/options/OptionDefinition.java"
+  ],
+  "OptionInfo.java": [
+    "src/main/java/com/google/devtools/build/lib/analysis/config/OptionInfo.java"
+  ],
+  "OptionsBase.java": [
+    "src/main/java/com/google/devtools/common/options/OptionsBase.java"
+  ],
+  "PackageContext.java": [],
+  "PackageIdentifier.java": [
+    "src/main/java/com/google/devtools/build/lib/cmdline/PackageIdentifier.java"
+  ],
+  "Parts.java": [],
+  "PathFragment.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/PathFragment.java"
+  ],
+  "PathStrippable.java": [
+    "src/main/java/com/google/devtools/build/lib/vfs/PathStrippable.java"
+  ],
+  "PooledInterner.java": [
+    "src/main/java/com/google/devtools/build/lib/concurrent/PooledInterner.java"
+  ],
+  "RepoContext.java": [],
+  "RepositoryMapping.java": [
+    "src/main/java/com/google/devtools/build/lib/cmdline/RepositoryMapping.java"
+  ],
+  "RepositoryName.java": [
+    "src/main/java/com/google/devtools/build/lib/cmdline/RepositoryName.java"
   ],
   "Scratch.java": [
     "src/test/java/com/google/devtools/build/lib/testutil/Scratch.java"
@@ -56,6 +115,7 @@
   ],
   "Stream.java": [],
   "String.java": [],
+  "T.java": [],
   "collect.java": [],
   "common.java": [],
   "google.java": [],

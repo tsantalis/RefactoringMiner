@@ -10,12 +10,21 @@
     "x-pack/plugin/esql/src/test/java/org/elasticsearch/xpack/esql/analysis/AnalyzerTests.java",
     "x-pack/plugin/sql/src/test/java/org/elasticsearch/xpack/sql/analysis/analyzer/AnalyzerTests.java"
   ],
+  "Attribute.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Attribute.java"
+  ],
   "Avg.java": [
     "server/src/main/java/org/elasticsearch/search/aggregations/metrics/Avg.java",
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Avg.java",
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/Avg.java"
   ],
   "Class.java": [],
+  "Collection.java": [],
+  "CollectionUtils.java": [
+    "server/src/main/java/org/elasticsearch/common/util/CollectionUtils.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/util/CollectionUtils.java"
+  ],
+  "Collections.java": [],
   "CountDistinct.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/CountDistinct.java"
   ],
@@ -28,16 +37,55 @@
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
   ],
+  "EsField.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/type/EsField.java"
+  ],
+  "EsqlTypeResolutions.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/EsqlTypeResolutions.java"
+  ],
+  "Exact.java": [],
   "Expression.java": [
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Expression.java"
+  ],
+  "FieldAttribute.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/FieldAttribute.java"
   ],
   "Function.java": [
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
     "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
   ],
+  "Integer.java": [],
+  "LeafExpression.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/LeafExpression.java"
+  ],
+  "List.java": [],
+  "Literal.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/Literal.java"
+  ],
+  "LoggerMessageFormat.java": [
+    "server/src/main/java/org/elasticsearch/common/logging/LoggerMessageFormat.java"
+  ],
   "LuceneTestCase.java": [],
+  "Max.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/metrics/Max.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Max.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/Max.java"
+  ],
   "Median.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Median.java"
+  ],
+  "MedianAbsoluteDeviation.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/metrics/MedianAbsoluteDeviation.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/MedianAbsoluteDeviation.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/MedianAbsoluteDeviation.java"
+  ],
+  "Min.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/metrics/Min.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Min.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/Min.java"
+  ],
+  "NamedExpression.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/NamedExpression.java"
   ],
   "Node.java": [
     "client/rest/src/main/java/org/elasticsearch/client/Node.java",
@@ -48,6 +96,7 @@
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/NumericAggregate.java",
     "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/NumericAggregate.java"
   ],
+  "Object.java": [],
   "OptionalArgument.java": [
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/OptionalArgument.java"
   ],
@@ -61,16 +110,30 @@
   "Resolvable.java": [
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/capabilities/Resolvable.java"
   ],
+  "Source.java": [
+    "server/src/main/java/org/elasticsearch/search/lookup/Source.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Source.java"
+  ],
   "StackTraceElement.java": [],
+  "Stream.java": [],
   "String.java": [],
+  "Sum.java": [
+    "server/src/main/java/org/elasticsearch/search/aggregations/metrics/Sum.java",
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/aggregate/Sum.java",
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/aggregate/Sum.java"
+  ],
   "SurrogateExpression.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/SurrogateExpression.java"
   ],
+  "T.java": [],
   "ToAggregator.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/planner/ToAggregator.java"
   ],
   "TypeResolutions.java": [
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/TypeResolutions.java"
+  ],
+  "TypedAttribute.java": [
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/TypedAttribute.java"
   ],
   "VerifierTests.java": [
     "x-pack/plugin/eql/src/test/java/org/elasticsearch/xpack/eql/analysis/VerifierTests.java",
@@ -82,6 +145,7 @@
   "java.java": [],
   "lang.java": [],
   "lucene.java": [],
+  "stream.java": [],
   "tests.java": [],
   "util.java": []
 }

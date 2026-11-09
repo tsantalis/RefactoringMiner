@@ -1,4 +1,5 @@
 {
+  "AbstractList.java": [],
   "AttributeMap.java": [
     "common/src/main/java/io/netty/util/AttributeMap.java"
   ],
@@ -38,6 +39,9 @@
   "CodecException.java": [
     "codec/src/main/java/io/netty/handler/codec/CodecException.java"
   ],
+  "CodecOutputList.java": [
+    "codec/src/main/java/io/netty/handler/codec/CodecOutputList.java"
+  ],
   "Comparable.java": [],
   "DecoderException.java": [
     "codec/src/main/java/io/netty/handler/codec/DecoderException.java"
@@ -51,6 +55,7 @@
   "MqttDecoder.java": [
     "codec-mqtt/src/main/java/io/netty/handler/codec/mqtt/MqttDecoder.java"
   ],
+  "RandomAccess.java": [],
   "ReferenceCounted.java": [
     "common/src/main/java/io/netty/util/ReferenceCounted.java"
   ],

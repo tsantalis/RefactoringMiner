@@ -4,8 +4,18 @@
   ],
   "ArgumentMatchers.java": [],
   "Arrays.java": [],
+  "BatchAck.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/body/BatchAck.java"
+  ],
+  "Boolean.java": [],
+  "BoundaryType.java": [
+    "common/src/main/java/org/apache/rocketmq/common/BoundaryType.java"
+  ],
   "BrokerController.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/BrokerController.java"
+  ],
+  "ChannelEventListener.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/ChannelEventListener.java"
   ],
   "ChannelHandlerContext.java": [],
   "CharSequence.java": [],
@@ -19,11 +29,19 @@
   "CommandCustomHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/CommandCustomHeader.java"
   ],
+  "ConcurrentMap.java": [],
   "ConfigManager.java": [
     "common/src/main/java/org/apache/rocketmq/common/ConfigManager.java"
   ],
+  "Constructor.java": [],
+  "ConsumeMessageDirectlyResultRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/ConsumeMessageDirectlyResultRequestHeader.java"
+  ],
   "ConsumeStats.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/admin/ConsumeStats.java"
+  ],
+  "ConsumerGroupInfo.java": [
+    "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerGroupInfo.java"
   ],
   "ConsumerManager.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerManager.java"
@@ -34,31 +52,66 @@
   "DefaultMQAdminExtTest.java": [
     "tools/src/test/java/org/apache/rocketmq/tools/admin/DefaultMQAdminExtTest.java"
   ],
+  "Double.java": [],
   "Exception.java": [],
+  "FastCodesHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/FastCodesHeader.java"
+  ],
+  "Field.java": [],
   "GetConsumeStatsRequestHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/GetConsumeStatsRequestHeader.java"
   ],
+  "GetConsumerConnectionListRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/GetConsumerConnectionListRequestHeader.java"
+  ],
+  "GetConsumerListByGroupRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/GetConsumerListByGroupRequestHeader.java"
+  ],
+  "GetConsumerRunningInfoRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/GetConsumerRunningInfoRequestHeader.java"
+  ],
+  "HashMap.java": [],
   "HashSet.java": [],
+  "Integer.java": [],
   "Iterator.java": [],
   "List.java": [],
   "Logger.java": [],
+  "LoggerFactory.java": [],
+  "Long.java": [],
   "MQBrokerException.java": [
     "client/src/main/java/org/apache/rocketmq/client/exception/MQBrokerException.java"
   ],
   "MQClientAPIImpl.java": [
     "client/src/main/java/org/apache/rocketmq/client/impl/MQClientAPIImpl.java"
   ],
+  "Map.java": [],
   "MixAll.java": [
     "common/src/main/java/org/apache/rocketmq/common/MixAll.java"
   ],
   "Mockito.java": [],
+  "Modifier.java": [],
   "NameServerUpdateCallback.java": [
     "common/src/main/java/org/apache/rocketmq/common/namesrv/NameServerUpdateCallback.java"
+  ],
+  "NettyClientConfig.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyClientConfig.java"
+  ],
+  "NettyRemotingAbstract.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRemotingAbstract.java"
+  ],
+  "NettyRemotingClient.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRemotingClient.java"
   ],
   "NettyRequestProcessor.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRequestProcessor.java"
   ],
   "Object.java": [],
+  "QueryAssignmentRequestBody.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/body/QueryAssignmentRequestBody.java"
+  ],
+  "QueryConsumeQueueRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/QueryConsumeQueueRequestHeader.java"
+  ],
   "RemotingClient.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/RemotingClient.java"
   ],
@@ -83,7 +136,11 @@
   "RpcRequestHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/RpcRequestHeader.java"
   ],
+  "Serializable.java": [],
   "Set.java": [],
+  "SetMessageRequestModeRequestBody.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/body/SetMessageRequestModeRequestBody.java"
+  ],
   "Shutdown.java": [
     "common/src/main/java/org/apache/rocketmq/common/utils/Shutdown.java"
   ],
@@ -100,8 +157,14 @@
   "TopicList.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/body/TopicList.java"
   ],
+  "TopicQueueRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/TopicQueueRequestHeader.java"
+  ],
   "TopicRequestHeader.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/rpc/TopicRequestHeader.java"
+  ],
+  "UnregisterClientRequestHeader.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/protocol/header/UnregisterClientRequestHeader.java"
   ],
   "UtilAll.java": [
     "common/src/main/java/org/apache/rocketmq/common/UtilAll.java"
@@ -109,7 +172,9 @@
   "apache.java": [],
   "channel.java": [],
   "commons.java": [],
+  "concurrent.java": [],
   "int.java": [],
+  "io.java": [],
   "java.java": [],
   "lang.java": [],
   "lang3.java": [],
@@ -117,6 +182,7 @@
   "mockito.java": [],
   "netty.java": [],
   "org.java": [],
+  "reflect.java": [],
   "rocketmq.java": [],
   "slf4j.java": [],
   "util.java": []

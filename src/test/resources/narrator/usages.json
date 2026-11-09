@@ -1992,5 +1992,210 @@
         ]
       }
     ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_115312",
+    "repository": "elastic/elasticsearch",
+    "commit": "e4bbc25e0c77a97d51650be840def70a91b9cd95",
+    "files": [
+      "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/OrdinalsGroupingOperator.java"
+    ],
+    "usages": [
+      {
+        "description": "variable arity overloads, one taking a boolean first: a bound method reference argument fits only a functional interface",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/OrdinalsGroupingOperator.java",
+        "line": 395,
+        "code": "Releasables.close(page::releaseBlocks,Releasables.wrap(prepared))",
+        "target": {
+          "file": "libs/core/src/main/java/org/elasticsearch/core/Releasables.java",
+          "className": "org.elasticsearch.core.Releasables",
+          "member": "close(Releasable[])"
+        },
+        "aspects": [
+          "overload:method reference argument against a primitive parameter (JLS 15.12.2.1)"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_111779",
+    "repository": "elastic/elasticsearch",
+    "commit": "5772e825bf229e1cd80234585741589c6cbf507a",
+    "files": [
+      "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/querydsl/query/SingleValueQuery.java"
+    ],
+    "usages": [
+      {
+        "description": "constructor reference to an overloaded constructor, chosen by the arity of the functional interface it is passed as",
+        "kind": "invocation",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/querydsl/query/SingleValueQuery.java",
+        "line": 53,
+        "code": "Builder::new",
+        "target": {
+          "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/querydsl/query/SingleValueQuery.java",
+          "className": "org.elasticsearch.xpack.esql.querydsl.query.SingleValueQuery.Builder",
+          "member": "Builder(StreamInput)"
+        },
+        "aspects": [
+          "form:constructor reference",
+          "overload:arity of the target functional type (Writeable.Reader)"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_107224",
+    "repository": "elastic/elasticsearch",
+    "commit": "9ca2afb97519e237d5463e71ccd62786028ef321",
+    "files": [
+      "server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/AbstractHighlighterBuilder.java"
+    ],
+    "usages": [
+      {
+        "description": "method reference through a type to an overloaded instance method, chosen by the arity of the JDK functional interface it is passed as, less the receiver",
+        "kind": "invocation",
+        "file": "server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/AbstractHighlighterBuilder.java",
+        "line": 662,
+        "code": "HB::encoder",
+        "target": {
+          "file": "server/src/main/java/org/elasticsearch/search/fetch/subphase/highlight/AbstractHighlighterBuilder.java",
+          "className": "org.elasticsearch.search.fetch.subphase.highlight.AbstractHighlighterBuilder",
+          "member": "encoder(String)"
+        },
+        "aspects": [
+          "form:method reference through a type variable",
+          "overload:arity of the target functional type (BiConsumer) less the receiver"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "apache_rocketmq_9214",
+    "repository": "apache/rocketmq",
+    "commit": "baaab33cf0ee82e359b1df6c86d6526913a695bc",
+    "files": [
+      "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatMessageFile.java",
+      "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/TieredMessageStore.java"
+    ],
+    "usages": [
+      {
+        "description": "field assigned through this in a constructor, the value the result of a call",
+        "kind": "write",
+        "file": "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatMessageFile.java",
+        "line": 68,
+        "code": "this.topicMetadata",
+        "target": {
+          "file": "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatMessageFile.java",
+          "className": "org.apache.rocketmq.tieredstore.file.FlatMessageFile",
+          "member": "topicMetadata"
+        },
+        "aspects": [
+          "form:this.field = call",
+          "container:constructor"
+        ]
+      },
+      {
+        "description": "local of the same name as a field assigned in a method: no field is written",
+        "kind": "write",
+        "file": "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatMessageFile.java",
+        "line": 101,
+        "code": "topicMetadata",
+        "aspects": [
+          "form:local shadowing a field"
+        ]
+      },
+      {
+        "description": "final field assigned a created instance in a constructor",
+        "kind": "write",
+        "file": "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/TieredMessageStore.java",
+        "line": 95,
+        "code": "this.fetcher",
+        "target": {
+          "file": "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/TieredMessageStore.java",
+          "className": "org.apache.rocketmq.tieredstore.TieredMessageStore",
+          "member": "fetcher"
+        },
+        "aspects": [
+          "form:this.field = new"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14480",
+    "repository": "netty/netty",
+    "commit": "69b7c08f8862f5a035db663bdaaab09261c456e7",
+    "files": [
+      "common/src/main/java/io/netty/util/internal/BoundedInputStream.java"
+    ],
+    "usages": [
+      {
+        "description": "final field assigned the checked constructor parameter",
+        "kind": "write",
+        "file": "common/src/main/java/io/netty/util/internal/BoundedInputStream.java",
+        "line": 31,
+        "code": "this.maxBytesRead",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/BoundedInputStream.java",
+          "className": "io.netty.util.internal.BoundedInputStream",
+          "member": "maxBytesRead"
+        },
+        "aspects": [
+          "form:this.field = call(parameter)"
+        ]
+      },
+      {
+        "description": "field updated by a compound assignment through its simple name",
+        "kind": "write",
+        "file": "common/src/main/java/io/netty/util/internal/BoundedInputStream.java",
+        "line": 61,
+        "code": "numRead",
+        "target": {
+          "file": "common/src/main/java/io/netty/util/internal/BoundedInputStream.java",
+          "className": "io.netty.util.internal.BoundedInputStream",
+          "member": "numRead"
+        },
+        "aspects": [
+          "form:field += value"
+        ]
+      },
+      {
+        "description": "field read in a condition is no write",
+        "kind": "write",
+        "file": "common/src/main/java/io/netty/util/internal/BoundedInputStream.java",
+        "line": 69,
+        "code": "numRead",
+        "aspects": [
+          "form:read"
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14332",
+    "repository": "netty/netty",
+    "commit": "abf3989074441f967c6c27288fc183306651e21a",
+    "files": [
+      "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java"
+    ],
+    "usages": [
+      {
+        "description": "final field of a nested class assigned by its simple name in one branch of its constructor",
+        "kind": "write",
+        "file": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java",
+        "line": 476,
+        "code": "allocationLock",
+        "target": {
+          "file": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java",
+          "className": "io.netty.buffer.AdaptivePoolingAllocator.Magazine",
+          "member": "allocationLock"
+        },
+        "aspects": [
+          "form:field = null",
+          "container:constructor of a nested class"
+        ]
+      }
+    ]
   }
 ]

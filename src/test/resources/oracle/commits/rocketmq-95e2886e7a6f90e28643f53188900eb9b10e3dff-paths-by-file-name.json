@@ -2,9 +2,19 @@
   "AdminBrokerProcessor.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/processor/AdminBrokerProcessor.java"
   ],
+  "AuthConfig.java": [
+    "auth/src/main/java/org/apache/rocketmq/auth/config/AuthConfig.java"
+  ],
+  "BrokerConfig.java": [
+    "common/src/main/java/org/apache/rocketmq/common/BrokerConfig.java"
+  ],
   "BrokerController.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/BrokerController.java"
   ],
+  "BrokerIdentity.java": [
+    "common/src/main/java/org/apache/rocketmq/common/BrokerIdentity.java"
+  ],
+  "Cloneable.java": [],
   "ConfigManager.java": [
     "common/src/main/java/org/apache/rocketmq/common/ConfigManager.java"
   ],
@@ -14,8 +24,18 @@
   "Entry.java": [],
   "Long.java": [],
   "Map.java": [],
+  "MessageStoreConfig.java": [
+    "store/src/main/java/org/apache/rocketmq/store/config/MessageStoreConfig.java",
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreConfig.java"
+  ],
+  "NettyClientConfig.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyClientConfig.java"
+  ],
   "NettyRequestProcessor.java": [
     "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRequestProcessor.java"
+  ],
+  "NettyServerConfig.java": [
+    "remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyServerConfig.java"
   ],
   "PopConsumerService.java": [
     "broker/src/main/java/org/apache/rocketmq/broker/pop/PopConsumerService.java"

@@ -7,6 +7,13 @@
   "AttributesBuilder.java": [],
   "Comparable.java": [],
   "CompletableFuture.java": [],
+  "ConcurrentMap.java": [],
+  "DefaultMessageStore.java": [
+    "store/src/main/java/org/apache/rocketmq/store/DefaultMessageStore.java"
+  ],
+  "FileSegmentFactory.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/provider/FileSegmentFactory.java"
+  ],
   "FlatAppendFile.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatAppendFile.java"
   ],
@@ -16,11 +23,22 @@
   "FlatConsumeQueueFile.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatConsumeQueueFile.java"
   ],
+  "FlatFileFactory.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatFileFactory.java"
+  ],
   "FlatFileInterface.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatFileInterface.java"
   ],
+  "FlatFileStore.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatFileStore.java"
+  ],
   "FlatMessageFile.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/file/FlatMessageFile.java"
+  ],
+  "Function.java": [],
+  "IndexService.java": [
+    "store/src/main/java/org/apache/rocketmq/store/index/IndexService.java",
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/index/IndexService.java"
   ],
   "Logger.java": [],
   "Long.java": [],
@@ -35,12 +53,29 @@
   "MessageStore.java": [
     "store/src/main/java/org/apache/rocketmq/store/MessageStore.java"
   ],
+  "MessageStoreConfig.java": [
+    "store/src/main/java/org/apache/rocketmq/store/config/MessageStoreConfig.java",
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreConfig.java"
+  ],
+  "MessageStoreExecutor.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreExecutor.java"
+  ],
   "MessageStoreFetcher.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/core/MessageStoreFetcher.java"
   ],
   "MessageStoreFetcherImpl.java": [
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/core/MessageStoreFetcherImpl.java"
   ],
+  "MessageStorePluginContext.java": [
+    "store/src/main/java/org/apache/rocketmq/store/plugin/MessageStorePluginContext.java"
+  ],
+  "MessageStoreUtil.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/util/MessageStoreUtil.java"
+  ],
+  "MetadataStore.java": [
+    "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/metadata/MetadataStore.java"
+  ],
+  "Mockito.java": [],
   "Serializable.java": [],
   "Stopwatch.java": [],
   "String.java": [],
@@ -61,8 +96,10 @@
   "base.java": [],
   "common.java": [],
   "concurrent.java": [],
+  "function.java": [],
   "google.java": [],
   "io.java": [],
+  "java.java": [],
   "junit.java": [],
   "metrics.java": [],
   "mockito.java": [],

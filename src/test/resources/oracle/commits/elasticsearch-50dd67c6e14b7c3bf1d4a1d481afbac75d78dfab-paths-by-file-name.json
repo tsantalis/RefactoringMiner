@@ -1,4 +1,7 @@
 {
+  "AbstractClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/support/AbstractClient.java"
+  ],
   "AbstractLifecycleComponent.java": [
     "server/src/main/java/org/elasticsearch/common/component/AbstractLifecycleComponent.java"
   ],
@@ -8,6 +11,9 @@
   ],
   "AbstractRunnable.java": [
     "server/src/main/java/org/elasticsearch/common/util/concurrent/AbstractRunnable.java"
+  ],
+  "AbstractScopedSettings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/AbstractScopedSettings.java"
   ],
   "AbstractSnapshotIntegTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/snapshots/AbstractSnapshotIntegTestCase.java"
@@ -21,11 +27,20 @@
   "AcknowledgedRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/AcknowledgedRequestBuilder.java"
   ],
+  "AcknowledgedTransportMasterNodeAction.java": [
+    "server/src/main/java/org/elasticsearch/action/support/master/AcknowledgedTransportMasterNodeAction.java"
+  ],
+  "ActionFilters.java": [
+    "server/src/main/java/org/elasticsearch/action/support/ActionFilters.java"
+  ],
   "ActionFuture.java": [
     "server/src/main/java/org/elasticsearch/action/ActionFuture.java"
   ],
   "ActionListener.java": [
     "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
+  "ActionListenerImplementations.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListenerImplementations.java"
   ],
   "ActionRequest.java": [
     "server/src/main/java/org/elasticsearch/action/ActionRequest.java"
@@ -54,18 +69,31 @@
   "AdminClient.java": [
     "server/src/main/java/org/elasticsearch/client/internal/AdminClient.java"
   ],
+  "ArrayList.java": [],
   "Arrays.java": [],
+  "Assert.java": [],
+  "AtomicBoolean.java": [],
   "BiConsumer.java": [],
   "BlobPath.java": [
     "server/src/main/java/org/elasticsearch/common/blobstore/BlobPath.java"
   ],
+  "BlobStoreIndexShardSnapshot.java": [
+    "server/src/main/java/org/elasticsearch/index/snapshots/blobstore/BlobStoreIndexShardSnapshot.java"
+  ],
+  "BlobStoreIndexShardSnapshots.java": [
+    "server/src/main/java/org/elasticsearch/index/snapshots/blobstore/BlobStoreIndexShardSnapshots.java"
+  ],
   "BlobStoreRepository.java": [
     "server/src/main/java/org/elasticsearch/repositories/blobstore/BlobStoreRepository.java"
   ],
+  "Boolean.java": [],
   "BroadcastOperationRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/support/broadcast/BroadcastOperationRequestBuilder.java"
   ],
   "Builder.java": [],
+  "ChannelActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/support/ChannelActionListener.java"
+  ],
   "CheckedBiConsumer.java": [
     "server/src/main/java/org/elasticsearch/common/CheckedBiConsumer.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedBiConsumer.java"
@@ -78,8 +106,14 @@
     "libs/core/src/main/java/org/elasticsearch/core/CheckedFunction.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedFunction.java"
   ],
+  "CheckedRunnable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/CheckedRunnable.java"
+  ],
   "ChunkedToXContent.java": [
     "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContent.java"
+  ],
+  "ChunkedToXContentObject.java": [
+    "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContentObject.java"
   ],
   "Class.java": [],
   "ClearVotingConfigExclusionsRequest.java": [
@@ -98,11 +132,32 @@
   "ClusterAllocationExplainRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/allocation/ClusterAllocationExplainRequestBuilder.java"
   ],
+  "ClusterApplier.java": [
+    "server/src/main/java/org/elasticsearch/cluster/service/ClusterApplier.java"
+  ],
+  "ClusterApplierService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/service/ClusterApplierService.java"
+  ],
+  "ClusterBlocks.java": [
+    "server/src/main/java/org/elasticsearch/cluster/block/ClusterBlocks.java"
+  ],
+  "ClusterConnectionManager.java": [
+    "server/src/main/java/org/elasticsearch/transport/ClusterConnectionManager.java"
+  ],
+  "ClusterFeatures.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterFeatures.java"
+  ],
+  "ClusterName.java": [
+    "server/src/main/java/org/elasticsearch/cluster/ClusterName.java"
+  ],
   "ClusterService.java": [
     "server/src/main/java/org/elasticsearch/cluster/service/ClusterService.java"
   ],
   "ClusterServiceUtils.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ClusterServiceUtils.java"
+  ],
+  "ClusterSettings.java": [
+    "server/src/main/java/org/elasticsearch/common/settings/ClusterSettings.java"
   ],
   "ClusterState.java": [
     "server/src/main/java/org/elasticsearch/cluster/ClusterState.java"
@@ -128,11 +183,13 @@
   "ClusterStateUpdateTask.java": [
     "server/src/main/java/org/elasticsearch/cluster/ClusterStateUpdateTask.java"
   ],
+  "CodepointSetGenerator.java": [],
   "Collection.java": [],
   "CollectionUtils.java": [
     "server/src/main/java/org/elasticsearch/common/util/CollectionUtils.java",
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/util/CollectionUtils.java"
   ],
+  "Collections.java": [],
   "Collector.java": [
     "x-pack/plugin/monitoring/src/main/java/org/elasticsearch/xpack/monitoring/collector/Collector.java"
   ],
@@ -141,10 +198,19 @@
   "ConcurrentSnapshotsIT.java": [
     "server/src/internalClusterTest/java/org/elasticsearch/snapshots/ConcurrentSnapshotsIT.java"
   ],
+  "ConnectionManager.java": [
+    "server/src/main/java/org/elasticsearch/transport/ConnectionManager.java"
+  ],
   "Consumer.java": [],
+  "ContextPreservingActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/support/ContextPreservingActionListener.java"
+  ],
   "CountDownLatch.java": [],
   "CreateIndexRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/admin/indices/create/CreateIndexRequestBuilder.java"
+  ],
+  "CreateSnapshotAction.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/cluster/snapshots/create/CreateSnapshotAction.java"
   ],
   "CreateSnapshotRequest.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/snapshots/create/CreateSnapshotRequest.java"
@@ -157,17 +223,38 @@
   ],
   "Custom.java": [],
   "CyclicBarrier.java": [],
+  "DataStream.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/DataStream.java"
+  ],
   "DelegatingActionListener.java": [
     "server/src/main/java/org/elasticsearch/action/DelegatingActionListener.java"
+  ],
+  "DeleteDataStreamAction.java": [
+    "server/src/main/java/org/elasticsearch/action/datastreams/DeleteDataStreamAction.java"
   ],
   "DeleteIndexClusterStateUpdateRequest.java": [
     "server/src/main/java/org/elasticsearch/action/admin/indices/delete/DeleteIndexClusterStateUpdateRequest.java"
   ],
+  "DeleteRepositoryRequestBuilder.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/cluster/repositories/delete/DeleteRepositoryRequestBuilder.java"
+  ],
   "DeleteSnapshotRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/snapshots/delete/DeleteSnapshotRequestBuilder.java"
   ],
+  "Diff.java": [
+    "server/src/main/java/org/elasticsearch/cluster/Diff.java"
+  ],
   "Diffable.java": [
     "server/src/main/java/org/elasticsearch/cluster/Diffable.java"
+  ],
+  "DiffableUtils.java": [
+    "server/src/main/java/org/elasticsearch/cluster/DiffableUtils.java"
+  ],
+  "DiscoveryNodeRole.java": [
+    "server/src/main/java/org/elasticsearch/cluster/node/DiscoveryNodeRole.java"
+  ],
+  "DiscoveryNodes.java": [
+    "server/src/main/java/org/elasticsearch/cluster/node/DiscoveryNodes.java"
   ],
   "E.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/expression/function/scalar/math/E.java",
@@ -189,11 +276,17 @@
     "server/src/main/java/org/elasticsearch/ElasticsearchException.java"
   ],
   "Entry.java": [],
+  "EsExecutors.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/EsExecutors.java"
+  ],
   "Exception.java": [],
   "Executor.java": [],
   "ExecutorService.java": [],
   "FileRestoreContext.java": [
     "server/src/main/java/org/elasticsearch/repositories/blobstore/FileRestoreContext.java"
+  ],
+  "FilterClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/FilterClient.java"
   ],
   "FinalizeSnapshotContext.java": [
     "server/src/main/java/org/elasticsearch/repositories/FinalizeSnapshotContext.java"
@@ -204,11 +297,20 @@
   "ForceMergeRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/admin/indices/forcemerge/ForceMergeRequestBuilder.java"
   ],
+  "ForkingResponseHandlerRunnable.java": [
+    "server/src/main/java/org/elasticsearch/transport/ForkingResponseHandlerRunnable.java"
+  ],
   "Function.java": [
     "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
     "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
   ],
   "Future.java": [],
+  "GetComponentTemplateAction.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/indices/template/get/GetComponentTemplateAction.java"
+  ],
+  "GetComposableIndexTemplateAction.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/indices/template/get/GetComposableIndexTemplateAction.java"
+  ],
   "GetSnapshotsRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/snapshots/get/GetSnapshotsRequestBuilder.java"
   ],
@@ -219,11 +321,15 @@
     "server/src/main/java/org/elasticsearch/action/support/HandledTransportAction.java"
   ],
   "HashMap.java": [],
+  "HashSet.java": [],
   "ImmutableOpenMap.java": [
     "server/src/main/java/org/elasticsearch/common/collect/ImmutableOpenMap.java"
   ],
   "Index.java": [
     "server/src/main/java/org/elasticsearch/index/Index.java"
+  ],
+  "IndexAbstraction.java": [
+    "server/src/main/java/org/elasticsearch/cluster/metadata/IndexAbstraction.java"
   ],
   "IndexId.java": [
     "server/src/main/java/org/elasticsearch/repositories/IndexId.java"
@@ -252,10 +358,14 @@
   "IndicesRequest.java": [
     "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
   ],
+  "InputStream.java": [],
+  "IntStream.java": [],
   "InternalTestCluster.java": [
     "test/framework/src/main/java/org/elasticsearch/test/InternalTestCluster.java"
   ],
   "Iterable.java": [],
+  "Iterator.java": [],
+  "L.java": [],
   "LifecycleComponent.java": [
     "server/src/main/java/org/elasticsearch/common/component/LifecycleComponent.java"
   ],
@@ -263,8 +373,12 @@
   "ListenableFuture.java": [
     "server/src/main/java/org/elasticsearch/common/util/concurrent/ListenableFuture.java"
   ],
+  "Logger.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/Logger.java"
+  ],
   "LuceneTestCase.java": [],
   "Map.java": [],
+  "MapDiff.java": [],
   "MasterNodeOperationRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/MasterNodeOperationRequestBuilder.java"
   ],
@@ -277,12 +391,21 @@
   "MasterNodeRequest.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/MasterNodeRequest.java"
   ],
+  "MasterService.java": [
+    "server/src/main/java/org/elasticsearch/cluster/service/MasterService.java"
+  ],
+  "Matchers.java": [
+    "server/src/main/java/org/elasticsearch/common/inject/matcher/Matchers.java"
+  ],
   "Metadata.java": [
     "server/src/main/java/org/elasticsearch/cluster/metadata/Metadata.java",
     "server/src/main/java/org/elasticsearch/script/Metadata.java"
   ],
   "MetadataDeleteIndexService.java": [
     "server/src/main/java/org/elasticsearch/cluster/metadata/MetadataDeleteIndexService.java"
+  ],
+  "MockNode.java": [
+    "test/framework/src/main/java/org/elasticsearch/node/MockNode.java"
   ],
   "MockTransportService.java": [
     "test/framework/src/main/java/org/elasticsearch/test/transport/MockTransportService.java"
@@ -294,6 +417,18 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteable.java"
   ],
   "Names.java": [],
+  "NavigableMap.java": [],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
+  "NodeConfigurationSource.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/NodeConfigurationSource.java"
+  ],
+  "Objects.java": [],
+  "OptionalInt.java": [],
+  "Path.java": [],
   "PendingClusterTasksRequest.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/tasks/PendingClusterTasksRequest.java"
   ],
@@ -302,6 +437,15 @@
   ],
   "Predicate.java": [],
   "R.java": [],
+  "Random.java": [
+    "x-pack/plugin/sql/src/main/java/org/elasticsearch/xpack/sql/expression/function/scalar/math/Random.java"
+  ],
+  "RandomPicks.java": [],
+  "RandomizedContext.java": [],
+  "RandomizingClient.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/client/RandomizingClient.java"
+  ],
+  "Reader.java": [],
   "RefCounted.java": [
     "libs/core/src/main/java/org/elasticsearch/core/RefCounted.java"
   ],
@@ -341,8 +485,20 @@
     "x-pack/plugin/inference/src/main/java/org/elasticsearch/xpack/inference/external/request/Request.java"
   ],
   "RequestHandlingBehavior.java": [],
+  "Response.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Response.java"
+  ],
+  "RestoreInProgress.java": [
+    "server/src/main/java/org/elasticsearch/cluster/RestoreInProgress.java"
+  ],
   "RestoreSnapshotRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/snapshots/restore/RestoreSnapshotRequestBuilder.java"
+  ],
+  "RoutingNodes.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/RoutingNodes.java"
+  ],
+  "RoutingTable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/routing/RoutingTable.java"
   ],
   "Runnable.java": [],
   "RuntimeException.java": [],
@@ -361,14 +517,23 @@
   ],
   "ShardSnapshotStatus.java": [],
   "ShardState.java": [],
+  "SimpleDiffable.java": [
+    "server/src/main/java/org/elasticsearch/cluster/SimpleDiffable.java"
+  ],
   "SingleResultDeduplicator.java": [
     "server/src/main/java/org/elasticsearch/action/SingleResultDeduplicator.java"
   ],
   "Snapshot.java": [
     "server/src/main/java/org/elasticsearch/snapshots/Snapshot.java"
   ],
+  "SnapshotDeletionsInProgress.java": [
+    "server/src/main/java/org/elasticsearch/cluster/SnapshotDeletionsInProgress.java"
+  ],
   "SnapshotException.java": [
     "server/src/main/java/org/elasticsearch/snapshots/SnapshotException.java"
+  ],
+  "SnapshotFiles.java": [
+    "server/src/main/java/org/elasticsearch/index/snapshots/blobstore/SnapshotFiles.java"
   ],
   "SnapshotId.java": [
     "server/src/main/java/org/elasticsearch/snapshots/SnapshotId.java"
@@ -386,13 +551,22 @@
     "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java"
   ],
   "StackTraceElement.java": [],
+  "State.java": [
+    "server/src/main/java/org/elasticsearch/common/inject/State.java"
+  ],
   "Stream.java": [],
+  "StreamInput.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/StreamInput.java"
+  ],
   "String.java": [],
   "Strings.java": [
     "libs/core/src/main/java/org/elasticsearch/core/Strings.java",
     "server/src/main/java/org/elasticsearch/common/Strings.java",
     "server/src/main/java/org/elasticsearch/common/inject/internal/Strings.java",
     "x-pack/plugin/watcher/src/main/java/org/elasticsearch/xpack/watcher/support/Strings.java"
+  ],
+  "StubbableConnectionManager.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/transport/StubbableConnectionManager.java"
   ],
   "StubbableTransport.java": [
     "test/framework/src/main/java/org/elasticsearch/test/transport/StubbableTransport.java"
@@ -410,6 +584,9 @@
   "TaskId.java": [
     "server/src/main/java/org/elasticsearch/tasks/TaskId.java"
   ],
+  "TaskManager.java": [
+    "server/src/main/java/org/elasticsearch/tasks/TaskManager.java"
+  ],
   "TestCluster.java": [
     "test/framework/src/main/java/org/elasticsearch/test/TestCluster.java"
   ],
@@ -422,6 +599,7 @@
   "ThreadedActionListener.java": [
     "server/src/main/java/org/elasticsearch/action/support/ThreadedActionListener.java"
   ],
+  "Throwable.java": [],
   "TimeUnit.java": [],
   "TimeValue.java": [
     "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
@@ -442,6 +620,9 @@
   "Traceable.java": [
     "server/src/main/java/org/elasticsearch/telemetry/tracing/Traceable.java"
   ],
+  "Tracer.java": [
+    "server/src/main/java/org/elasticsearch/telemetry/tracing/Tracer.java"
+  ],
   "Transport.java": [
     "server/src/main/java/org/elasticsearch/transport/Transport.java"
   ],
@@ -451,11 +632,23 @@
   "TransportAddVotingConfigExclusionsAction.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/configuration/TransportAddVotingConfigExclusionsAction.java"
   ],
+  "TransportChannel.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportChannel.java"
+  ],
   "TransportClearVotingConfigExclusionsAction.java": [
     "server/src/main/java/org/elasticsearch/action/admin/cluster/configuration/TransportClearVotingConfigExclusionsAction.java"
   ],
   "TransportConnectionListener.java": [
     "server/src/main/java/org/elasticsearch/transport/TransportConnectionListener.java"
+  ],
+  "TransportDeleteComponentTemplateAction.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/indices/template/delete/TransportDeleteComponentTemplateAction.java"
+  ],
+  "TransportDeleteComposableIndexTemplateAction.java": [
+    "server/src/main/java/org/elasticsearch/action/admin/indices/template/delete/TransportDeleteComposableIndexTemplateAction.java"
+  ],
+  "TransportInterceptor.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportInterceptor.java"
   ],
   "TransportMasterNodeAction.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/TransportMasterNodeAction.java"
@@ -481,6 +674,9 @@
   "TransportResponse.java": [
     "server/src/main/java/org/elasticsearch/transport/TransportResponse.java"
   ],
+  "TransportResponseHandler.java": [
+    "server/src/main/java/org/elasticsearch/transport/TransportResponseHandler.java"
+  ],
   "TransportService.java": [
     "server/src/main/java/org/elasticsearch/transport/TransportService.java"
   ],
@@ -489,6 +685,10 @@
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/Tuple.java"
   ],
   "U.java": [],
+  "UpdateIndexShardSnapshotStatusRequest.java": [
+    "server/src/main/java/org/elasticsearch/snapshots/UpdateIndexShardSnapshotStatusRequest.java"
+  ],
+  "VarHandle.java": [],
   "VersionId.java": [
     "server/src/main/java/org/elasticsearch/common/VersionId.java"
   ],
@@ -503,12 +703,24 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
   "apache.java": [],
+  "atomic.java": [],
+  "carrotsearch.java": [],
   "concurrent.java": [],
+  "currentState.java": [],
+  "file.java": [],
   "function.java": [],
+  "generators.java": [],
+  "hamcrest.java": [],
+  "invoke.java": [],
   "io.java": [],
   "java.java": [],
+  "junit.java": [],
   "lang.java": [],
+  "log4j.java": [],
+  "logging.java": [],
   "lucene.java": [],
+  "nio.java": [],
+  "randomizedtesting.java": [],
   "stream.java": [],
   "tests.java": [],
   "util.java": []

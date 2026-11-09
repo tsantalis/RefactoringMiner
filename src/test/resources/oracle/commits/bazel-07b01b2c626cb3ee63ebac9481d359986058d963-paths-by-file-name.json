@@ -36,6 +36,9 @@
   ],
   "DeferredValue.java": [],
   "ImmutableList.java": [],
+  "InMemoryGraph.java": [
+    "src/main/java/com/google/devtools/build/skyframe/InMemoryGraph.java"
+  ],
   "List.java": [],
   "ObjectCodec.java": [
     "src/main/java/com/google/devtools/build/lib/skyframe/serialization/ObjectCodec.java"
@@ -46,8 +49,14 @@
   "OptionsProvider.java": [
     "src/main/java/com/google/devtools/common/options/OptionsProvider.java"
   ],
+  "ProcessableGraph.java": [
+    "src/main/java/com/google/devtools/build/skyframe/ProcessableGraph.java"
+  ],
   "ProviderCollection.java": [
     "src/main/java/com/google/devtools/build/lib/analysis/ProviderCollection.java"
+  ],
+  "QueryableGraph.java": [
+    "src/main/java/com/google/devtools/build/skyframe/QueryableGraph.java"
   ],
   "RunBazel.py": [],
   "RunBazel.pyi": [],

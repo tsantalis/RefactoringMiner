@@ -1,6 +1,15 @@
 {
+  "AbstractRunnable.java": [
+    "server/src/main/java/org/elasticsearch/common/util/concurrent/AbstractRunnable.java"
+  ],
   "ActionListener.java": [
     "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
+  "ActionListenerImplementations.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListenerImplementations.java"
+  ],
+  "ActionRunnable.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionRunnable.java"
   ],
   "BiConsumer.java": [],
   "CancellableTask.java": [
@@ -9,6 +18,13 @@
   "CheckedBiConsumer.java": [
     "server/src/main/java/org/elasticsearch/common/CheckedBiConsumer.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedBiConsumer.java"
+  ],
+  "CheckedConsumer.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/CheckedConsumer.java",
+    "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/CheckedConsumer.java"
+  ],
+  "CheckedRunnable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/CheckedRunnable.java"
   ],
   "ChunkedToXContent.java": [
     "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContent.java"
@@ -19,6 +35,9 @@
   "Closeable.java": [],
   "ClusterComputeHandler.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ClusterComputeHandler.java"
+  ],
+  "ComputeContext.java": [
+    "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ComputeContext.java"
   ],
   "ComputeListener.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/ComputeListener.java"
@@ -36,6 +55,9 @@
   "DataNodeRequestSender.java": [
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/plugin/DataNodeRequestSender.java"
   ],
+  "DelegatingActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/DelegatingActionListener.java"
+  ],
   "DiscoveryNode.java": [
     "server/src/main/java/org/elasticsearch/cluster/node/DiscoveryNode.java"
   ],
@@ -52,6 +74,7 @@
   "ExchangeSourceHandler.java": [
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/exchange/ExchangeSourceHandler.java"
   ],
+  "Executor.java": [],
   "IndicesRequest.java": [
     "server/src/main/java/org/elasticsearch/action/IndicesRequest.java"
   ],
@@ -88,9 +111,14 @@
     "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
   ],
   "RemoteCluster.java": [],
+  "Response.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Response.java"
+  ],
   "Rewriteable.java": [
     "server/src/main/java/org/elasticsearch/index/query/Rewriteable.java"
   ],
+  "RunAfterActionListener.java": [],
+  "RunBeforeActionListener.java": [],
   "Runnable.java": [],
   "RuntimeException.java": [],
   "Set.java": [],
@@ -127,7 +155,13 @@
   "Writeable.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
+  "concurrent.java": [],
+  "e.java": [],
+  "firstCompletion.java": [],
   "function.java": [],
   "io.java": [],
+  "java.java": [],
+  "lang.java": [],
+  "response.java": [],
   "util.java": []
 }

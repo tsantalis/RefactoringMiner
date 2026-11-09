@@ -3,6 +3,15 @@
     "codec-http2/src/main/java/io/netty/handler/codec/http2/AbstractHttp2StreamFrame.java"
   ],
   "Boolean.java": [],
+  "ByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
+  ],
+  "ByteBufConvertible.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufConvertible.java"
+  ],
+  "ByteBufUtil.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufUtil.java"
+  ],
   "ByteToMessageDecoder.java": [
     "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java"
   ],
@@ -21,11 +30,38 @@
   "ChannelOutboundHandler.java": [
     "transport/src/main/java/io/netty/channel/ChannelOutboundHandler.java"
   ],
+  "CharObjectHashMap.java": [],
+  "CharSequence.java": [],
+  "Charset.java": [],
+  "CharsetUtil.java": [
+    "common/src/main/java/io/netty/util/CharsetUtil.java"
+  ],
+  "Closeable.java": [],
+  "Collection.java": [],
+  "Comparable.java": [],
   "DefaultHttp2PingFrame.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2PingFrame.java"
   ],
+  "Http2CodecUtil.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2CodecUtil.java"
+  ],
+  "Http2Connection.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Connection.java"
+  ],
+  "Http2ConnectionAdapter.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionAdapter.java"
+  ],
+  "Http2ConnectionDecoder.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionDecoder.java"
+  ],
+  "Http2ConnectionEncoder.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionEncoder.java"
+  ],
   "Http2ConnectionHandler.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionHandler.java"
+  ],
+  "Http2DataWriter.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2DataWriter.java"
   ],
   "Http2Frame.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Frame.java"
@@ -33,8 +69,14 @@
   "Http2FrameCodec.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameCodec.java"
   ],
+  "Http2FrameListener.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameListener.java"
+  ],
   "Http2FrameStream.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameStream.java"
+  ],
+  "Http2FrameWriter.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2FrameWriter.java"
   ],
   "Http2LifecycleManager.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2LifecycleManager.java"
@@ -42,13 +84,31 @@
   "Http2PingFrame.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2PingFrame.java"
   ],
+  "Http2Settings.java": [
+    "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Settings.java"
+  ],
   "Http2Stream.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2Stream.java"
   ],
   "Http2StreamFrame.java": [
     "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2StreamFrame.java"
   ],
+  "Listener.java": [],
   "Object.java": [],
+  "ObjectUtil.java": [
+    "common/src/main/java/io/netty/util/internal/ObjectUtil.java"
+  ],
+  "PropertyKey.java": [],
+  "ReferenceCounted.java": [
+    "common/src/main/java/io/netty/util/ReferenceCounted.java"
+  ],
+  "String.java": [],
+  "charset.java": [],
+  "collection.java": [],
+  "io.java": [],
   "java.java": [],
-  "lang.java": []
+  "lang.java": [],
+  "netty.java": [],
+  "nio.java": [],
+  "util.java": []
 }

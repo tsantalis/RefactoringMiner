@@ -1,4 +1,7 @@
 {
+  "AsciiString.java": [
+    "common/src/main/java/io/netty/util/AsciiString.java"
+  ],
   "ByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
   ],
@@ -27,6 +30,7 @@
     "common/src/main/java/io/netty/util/CharsetUtil.java"
   ],
   "Cloneable.java": [],
+  "Collection.java": [],
   "Comparable.java": [],
   "DecoderResultProvider.java": [
     "codec/src/main/java/io/netty/handler/codec/DecoderResultProvider.java"
@@ -90,6 +94,9 @@
   ],
   "HttpResponseStatus.java": [
     "codec-http/src/main/java/io/netty/handler/codec/http/HttpResponseStatus.java"
+  ],
+  "HttpStatusClass.java": [
+    "codec-http/src/main/java/io/netty/handler/codec/http/HttpStatusClass.java"
   ],
   "HttpVersion.java": [
     "codec-http/src/main/java/io/netty/handler/codec/http/HttpVersion.java"

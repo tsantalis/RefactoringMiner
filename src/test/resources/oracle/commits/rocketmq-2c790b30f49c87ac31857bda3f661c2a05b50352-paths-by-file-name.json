@@ -2,30 +2,40 @@
   "AbstractMappedFile.java": [
     "store/src/main/java/org/apache/rocketmq/store/logfile/AbstractMappedFile.java"
   ],
+  "AllocateMappedFileService.java": [
+    "store/src/main/java/org/apache/rocketmq/store/AllocateMappedFileService.java"
+  ],
   "AtomicIntegerFieldUpdater.java": [],
   "BatchConsumeQueue.java": [
     "store/src/main/java/org/apache/rocketmq/store/queue/BatchConsumeQueue.java"
   ],
   "ByteBuffer.java": [],
+  "Class.java": [],
   "ConsumeQueue.java": [
     "store/src/main/java/org/apache/rocketmq/store/ConsumeQueue.java"
   ],
   "ConsumeQueueInterface.java": [
     "store/src/main/java/org/apache/rocketmq/store/queue/ConsumeQueueInterface.java"
   ],
+  "CopyOnWriteArrayList.java": [],
   "DefaultMappedFile.java": [
     "store/src/main/java/org/apache/rocketmq/store/logfile/DefaultMappedFile.java"
   ],
   "DispatchRequest.java": [
     "store/src/main/java/org/apache/rocketmq/store/DispatchRequest.java"
   ],
+  "EMPTY.java": [],
   "FileChannel.java": [],
   "FileQueueLifeCycle.java": [
     "store/src/main/java/org/apache/rocketmq/store/queue/FileQueueLifeCycle.java"
   ],
   "Logger.java": [],
+  "LoggerFactory.java": [],
   "MappedFile.java": [
     "store/src/main/java/org/apache/rocketmq/store/logfile/MappedFile.java"
+  ],
+  "MappedFileQueue.java": [
+    "store/src/main/java/org/apache/rocketmq/store/MappedFileQueue.java"
   ],
   "MessageStore.java": [
     "store/src/main/java/org/apache/rocketmq/store/MessageStore.java"
@@ -34,21 +44,36 @@
     "store/src/main/java/org/apache/rocketmq/store/config/MessageStoreConfig.java",
     "tieredstore/src/main/java/org/apache/rocketmq/tieredstore/MessageStoreConfig.java"
   ],
+  "RandomAccessFile.java": [],
   "ReferenceResource.java": [
     "store/src/main/java/org/apache/rocketmq/store/ReferenceResource.java"
+  ],
+  "Runnable.java": [],
+  "ServiceThread.java": [
+    "common/src/main/java/org/apache/rocketmq/common/ServiceThread.java",
+    "remoting/src/main/java/org/apache/rocketmq/remoting/common/ServiceThread.java"
   ],
   "SparseConsumeQueue.java": [
     "store/src/main/java/org/apache/rocketmq/store/queue/SparseConsumeQueue.java"
   ],
+  "String.java": [],
+  "StringUtils.java": [],
   "Swappable.java": [
     "store/src/main/java/org/apache/rocketmq/store/Swappable.java"
+  ],
+  "UtilAll.java": [
+    "common/src/main/java/org/apache/rocketmq/common/UtilAll.java"
   ],
   "apache.java": [],
   "atomic.java": [],
   "byte.java": [],
   "channels.java": [],
+  "commons.java": [],
   "concurrent.java": [],
+  "io.java": [],
   "java.java": [],
+  "lang.java": [],
+  "lang3.java": [],
   "logging.java": [],
   "nio.java": [],
   "org.java": [],

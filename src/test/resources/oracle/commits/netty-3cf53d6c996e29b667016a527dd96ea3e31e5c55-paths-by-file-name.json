@@ -1,6 +1,28 @@
 {
+  "AbstractBootstrap.java": [
+    "transport/src/main/java/io/netty/bootstrap/AbstractBootstrap.java"
+  ],
+  "AbstractBootstrapConfig.java": [
+    "transport/src/main/java/io/netty/bootstrap/AbstractBootstrapConfig.java"
+  ],
+  "AbstractByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/AbstractByteBufAllocator.java"
+  ],
   "AbstractChannel.java": [
     "transport/src/main/java/io/netty/channel/AbstractChannel.java"
+  ],
+  "AbstractConstant.java": [
+    "common/src/main/java/io/netty/util/AbstractConstant.java"
+  ],
+  "AbstractEventExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/AbstractEventExecutor.java"
+  ],
+  "AbstractEventExecutorGroup.java": [
+    "common/src/main/java/io/netty/util/concurrent/AbstractEventExecutorGroup.java"
+  ],
+  "AbstractExecutorService.java": [],
+  "AbstractFuture.java": [
+    "common/src/main/java/io/netty/util/concurrent/AbstractFuture.java"
   ],
   "AbstractIoUringChannel.java": [
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/AbstractIoUringChannel.java"
@@ -8,13 +30,34 @@
   "AbstractIoUringStreamChannel.java": [
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/AbstractIoUringStreamChannel.java"
   ],
+  "AbstractScheduledEventExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/AbstractScheduledEventExecutor.java"
+  ],
+  "AccessController.java": [],
+  "Assertions.java": [],
+  "Assumptions.java": [],
+  "AttributeKey.java": [
+    "common/src/main/java/io/netty/util/AttributeKey.java"
+  ],
   "AttributeMap.java": [
     "common/src/main/java/io/netty/util/AttributeMap.java"
   ],
   "AutoCloseable.java": [],
   "BlockingQueue.java": [],
+  "Bootstrap.java": [
+    "transport/src/main/java/io/netty/bootstrap/Bootstrap.java"
+  ],
+  "BootstrapConfig.java": [
+    "transport/src/main/java/io/netty/bootstrap/BootstrapConfig.java"
+  ],
   "ByteBuf.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBuf.java"
+  ],
+  "ByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufAllocator.java"
+  ],
+  "ByteBufAllocatorMetricProvider.java": [
+    "buffer/src/main/java/io/netty/buffer/ByteBufAllocatorMetricProvider.java"
   ],
   "ByteBufConvertible.java": [
     "buffer/src/main/java/io/netty/buffer/ByteBufConvertible.java"
@@ -25,11 +68,42 @@
   "ChannelConfig.java": [
     "transport/src/main/java/io/netty/channel/ChannelConfig.java"
   ],
+  "ChannelFactory.java": [
+    "transport/src/main/java/io/netty/bootstrap/ChannelFactory.java",
+    "transport/src/main/java/io/netty/channel/ChannelFactory.java"
+  ],
+  "ChannelFlushPromiseNotifier.java": [
+    "transport/src/main/java/io/netty/channel/ChannelFlushPromiseNotifier.java"
+  ],
   "ChannelFuture.java": [
     "transport/src/main/java/io/netty/channel/ChannelFuture.java"
   ],
+  "ChannelFutureListener.java": [
+    "transport/src/main/java/io/netty/channel/ChannelFutureListener.java"
+  ],
+  "ChannelHandler.java": [
+    "transport/src/main/java/io/netty/channel/ChannelHandler.java"
+  ],
+  "ChannelHandlerAdapter.java": [
+    "transport/src/main/java/io/netty/channel/ChannelHandlerAdapter.java"
+  ],
+  "ChannelHandlerContext.java": [
+    "transport/src/main/java/io/netty/channel/ChannelHandlerContext.java"
+  ],
+  "ChannelInboundHandler.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInboundHandler.java"
+  ],
+  "ChannelInboundHandlerAdapter.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInboundHandlerAdapter.java"
+  ],
   "ChannelInboundInvoker.java": [
     "transport/src/main/java/io/netty/channel/ChannelInboundInvoker.java"
+  ],
+  "ChannelInitializer.java": [
+    "transport/src/main/java/io/netty/channel/ChannelInitializer.java"
+  ],
+  "ChannelOption.java": [
+    "transport/src/main/java/io/netty/channel/ChannelOption.java"
   ],
   "ChannelOutboundInvoker.java": [
     "transport/src/main/java/io/netty/channel/ChannelOutboundInvoker.java"
@@ -40,23 +114,84 @@
   "ChannelPromise.java": [
     "transport/src/main/java/io/netty/channel/ChannelPromise.java"
   ],
+  "CharSequence.java": [],
+  "Class.java": [],
+  "Cloneable.java": [],
+  "Collection.java": [],
   "Comparable.java": [],
+  "ConnectException.java": [],
+  "Constant.java": [
+    "common/src/main/java/io/netty/util/Constant.java"
+  ],
   "DefaultAttributeMap.java": [
     "common/src/main/java/io/netty/util/DefaultAttributeMap.java"
+  ],
+  "DefaultChannelPipeline.java": [
+    "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java"
+  ],
+  "DefaultChannelPromise.java": [
+    "transport/src/main/java/io/netty/channel/DefaultChannelPromise.java"
+  ],
+  "DefaultPromise.java": [
+    "common/src/main/java/io/netty/util/concurrent/DefaultPromise.java"
   ],
   "DelegatingHandle.java": [],
   "DuplexChannel.java": [
     "transport/src/main/java/io/netty/channel/socket/DuplexChannel.java"
   ],
+  "EmptyByteBuf.java": [
+    "buffer/src/main/java/io/netty/buffer/EmptyByteBuf.java"
+  ],
+  "EventExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/EventExecutor.java"
+  ],
+  "EventExecutorGroup.java": [
+    "common/src/main/java/io/netty/util/concurrent/EventExecutorGroup.java"
+  ],
+  "EventListener.java": [],
+  "EventLoop.java": [
+    "transport/src/main/java/io/netty/channel/EventLoop.java"
+  ],
+  "EventLoopGroup.java": [
+    "transport/src/main/java/io/netty/channel/EventLoopGroup.java"
+  ],
+  "Executor.java": [],
   "ExtendedHandle.java": [],
+  "FailedChannel.java": [
+    "transport/src/main/java/io/netty/bootstrap/FailedChannel.java"
+  ],
+  "FileDescriptor.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/FileDescriptor.java"
+  ],
+  "FlushCheckpoint.java": [],
   "Future.java": [
     "common/src/main/java/io/netty/util/concurrent/Future.java"
   ],
+  "GenericFutureListener.java": [
+    "common/src/main/java/io/netty/util/concurrent/GenericFutureListener.java"
+  ],
+  "GlobalEventExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/GlobalEventExecutor.java"
+  ],
+  "InetAddress.java": [],
+  "InetSocketAddress.java": [],
   "InternalLogger.java": [
     "common/src/main/java/io/netty/util/internal/logging/InternalLogger.java"
   ],
+  "IoEventLoop.java": [
+    "transport/src/main/java/io/netty/channel/IoEventLoop.java"
+  ],
+  "IoEventLoopGroup.java": [
+    "transport/src/main/java/io/netty/channel/IoEventLoopGroup.java"
+  ],
   "IoHandle.java": [
     "transport/src/main/java/io/netty/channel/IoHandle.java"
+  ],
+  "IoHandler.java": [
+    "transport/src/main/java/io/netty/channel/IoHandler.java"
+  ],
+  "IoHandlerFactory.java": [
+    "transport/src/main/java/io/netty/channel/IoHandlerFactory.java"
   ],
   "IoOps.java": [
     "transport/src/main/java/io/netty/channel/IoOps.java"
@@ -73,8 +208,17 @@
   "IoUringBufferRingTest.java": [
     "transport-native-io_uring/src/test/java/io/netty/channel/uring/IoUringBufferRingTest.java"
   ],
+  "IoUringChannelOption.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringChannelOption.java"
+  ],
   "IoUringIoHandle.java": [
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringIoHandle.java"
+  ],
+  "IoUringIoHandler.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringIoHandler.java"
+  ],
+  "IoUringIoHandlerConfig.java": [
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringIoHandlerConfig.java"
   ],
   "IoUringIoOps.java": [
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringIoOps.java"
@@ -83,11 +227,43 @@
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/IoUringRecvByteAllocatorHandle.java"
   ],
   "Iterable.java": [],
+  "LinkedBlockingQueue.java": [],
+  "LinuxSocket.java": [
+    "transport-classes-epoll/src/main/java/io/netty/channel/epoll/LinuxSocket.java",
+    "transport-classes-io_uring/src/main/java/io/netty/channel/uring/LinuxSocket.java"
+  ],
+  "MultiThreadIoEventLoopGroup.java": [
+    "transport/src/main/java/io/netty/channel/MultiThreadIoEventLoopGroup.java"
+  ],
+  "MultithreadEventExecutorGroup.java": [
+    "common/src/main/java/io/netty/util/concurrent/MultithreadEventExecutorGroup.java"
+  ],
+  "MultithreadEventLoopGroup.java": [
+    "transport/src/main/java/io/netty/channel/MultithreadEventLoopGroup.java"
+  ],
   "Native.java": [
     "transport-classes-epoll/src/main/java/io/netty/channel/epoll/Native.java",
     "transport-classes-io_uring/src/main/java/io/netty/channel/uring/Native.java",
     "transport-classes-kqueue/src/main/java/io/netty/channel/kqueue/Native.java"
   ],
+  "NetUtil.java": [
+    "common/src/main/java/io/netty/util/NetUtil.java"
+  ],
+  "NoRouteToHostException.java": [],
+  "ObjectUtil.java": [
+    "common/src/main/java/io/netty/util/internal/ObjectUtil.java"
+  ],
+  "OrderedEventExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/OrderedEventExecutor.java"
+  ],
+  "PlatformDependent.java": [
+    "common/src/main/java/io/netty/util/internal/PlatformDependent.java"
+  ],
+  "PreferredDirectByteBufAllocator.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/PreferredDirectByteBufAllocator.java"
+  ],
+  "PrivilegedAction.java": [],
+  "PrivilegedExceptionAction.java": [],
   "Promise.java": [
     "common/src/main/java/io/netty/util/concurrent/Promise.java"
   ],
@@ -97,11 +273,52 @@
   "ReferenceCounted.java": [
     "common/src/main/java/io/netty/util/ReferenceCounted.java"
   ],
+  "ReflectiveChannelFactory.java": [
+    "transport/src/main/java/io/netty/channel/ReflectiveChannelFactory.java"
+  ],
+  "Runnable.java": [],
+  "ScheduledExecutorService.java": [],
+  "ServerBootstrap.java": [
+    "transport/src/main/java/io/netty/bootstrap/ServerBootstrap.java"
+  ],
+  "ServerBootstrapConfig.java": [
+    "transport/src/main/java/io/netty/bootstrap/ServerBootstrapConfig.java"
+  ],
+  "Socket.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/Socket.java"
+  ],
+  "SocketAddress.java": [],
+  "SocketException.java": [],
+  "SocketUtils.java": [
+    "common/src/main/java/io/netty/util/internal/SocketUtils.java"
+  ],
   "String.java": [],
+  "ThreadAwareExecutor.java": [
+    "common/src/main/java/io/netty/util/concurrent/ThreadAwareExecutor.java"
+  ],
+  "Throwable.java": [],
   "UnixChannel.java": [
     "transport-native-unix-common/src/main/java/io/netty/channel/unix/UnixChannel.java"
   ],
+  "UnixChannelOption.java": [
+    "transport-native-unix-common/src/main/java/io/netty/channel/unix/UnixChannelOption.java"
+  ],
+  "Unpooled.java": [
+    "buffer/src/main/java/io/netty/buffer/Unpooled.java"
+  ],
+  "UnpooledByteBufAllocator.java": [
+    "buffer/src/main/java/io/netty/buffer/UnpooledByteBufAllocator.java"
+  ],
+  "api.java": [],
+  "bootstrap.java": [],
   "concurrent.java": [],
+  "io.java": [],
   "java.java": [],
+  "junit.java": [],
+  "jupiter.java": [],
+  "lang.java": [],
+  "net.java": [],
+  "netty.java": [],
+  "security.java": [],
   "util.java": []
 }

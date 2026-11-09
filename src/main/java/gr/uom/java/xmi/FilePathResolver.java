@@ -84,14 +84,45 @@ public class FilePathResolver {
 	private static final Pattern CPP_INCLUDE = Pattern.compile("#\\s*include\\s*([<\"][^>\"]+[>\"])");
 
 	private final RepositoryStateFiles files;
-	private final Map<String, Optional<JsonObject>> jsonCache = new HashMap<>();
-	private final Map<String, List<UMLClass>> classesByFile = new HashMap<>();
+	private final Map<String, Optional<JsonObject>> jsonCache;
+	private final Map<String, List<UMLClass>> classesByFile;
+	// The caches of the files another revision holds as they are, shared with the resolver of that revision, and the
+	// paths that revision holds otherwise (changed, added, deleted), cached here alone
+	private final Map<String, Optional<JsonObject>> ownJsonCache = new HashMap<>();
+	private final Map<String, List<UMLClass>> ownClassesByFile = new HashMap<>();
+	private final Set<String> differingPaths;
+	// The classes of the differing files that a model of this revision already holds, by path
+	private final java.util.function.Function<String, List<UMLClass>> modelClasses;
 	private final Map<String, List<UMLAbstractClass>> supertypesByClass = new HashMap<>();
 
 	private record TsConfig(String baseUrl, String pathsBase, JsonObject paths) {}
 
 	public FilePathResolver(RepositoryStateFiles files) {
 		this.files = files;
+		this.jsonCache = new HashMap<>();
+		this.classesByFile = new HashMap<>();
+		this.differingPaths = Set.of();
+		this.modelClasses = path -> List.of();
+	}
+
+	/**
+	 * A resolver of another revision of the same repository, sharing what the given resolver parses of the files both
+	 * revisions hold as they are.
+	 *
+	 * @param differingPaths the paths whose files differ between the two revisions or exist in one of them only
+	 * @param modelClasses   the classes a model of this revision holds of a differing file, which are not parsed again
+	 */
+	public FilePathResolver(RepositoryStateFiles files, FilePathResolver sameFiles, Set<String> differingPaths,
+							java.util.function.Function<String, List<UMLClass>> modelClasses) {
+		this.files = files;
+		this.jsonCache = sameFiles.jsonCache;
+		this.classesByFile = sameFiles.classesByFile;
+		this.differingPaths = differingPaths;
+		this.modelClasses = modelClasses;
+	}
+
+	private Map<String, List<UMLClass>> classesByFile(String path) {
+		return differingPaths.contains(path) ? ownClassesByFile : classesByFile;
 	}
 
 	public Set<String> resolvePaths(UMLImport umlImport) throws Exception {
@@ -911,19 +942,24 @@ public class FilePathResolver {
 		// parsed with RefactoringMiner in one batch, as the Kotlin environment is created per batch
 		Map<String, String> unparsed = new LinkedHashMap<>();
 		for (String path : paths) {
-			if (!classesByFile.containsKey(path) && PathFileUtils.isSupportedFile(path) && exists(path))
+			if (classesByFile(path).containsKey(path) || !PathFileUtils.isSupportedFile(path))
+				continue;
+			List<UMLClass> known = differingPaths.contains(path) ? modelClasses.apply(path) : List.of();
+			if (!known.isEmpty())
+				ownClassesByFile.put(path, new ArrayList<>(known));
+			else if (exists(path))
 				unparsed.put(path, files.content(path));
 		}
 		if (!unparsed.isEmpty()) {
 			UMLModel model = new UMLModelASTReader(unparsed, new LinkedHashSet<>(), false).getUmlModel();
 			for (String path : unparsed.keySet())
-				classesByFile.put(path, new ArrayList<>());
+				classesByFile(path).put(path, new ArrayList<>());
 			for (UMLClass umlClass : model.getClassList())
-				classesByFile.computeIfAbsent(umlClass.getSourceFile(), k -> new ArrayList<>()).add(umlClass);
+				classesByFile(umlClass.getSourceFile()).computeIfAbsent(umlClass.getSourceFile(), k -> new ArrayList<>()).add(umlClass);
 		}
 		Map<String, List<UMLClass>> classes = new LinkedHashMap<>();
 		for (String path : paths)
-			classes.put(path, classesByFile.getOrDefault(path, List.of()));
+			classes.put(path, classesByFile(path).getOrDefault(path, List.of()));
 		return classes;
 	}
 
@@ -951,6 +987,7 @@ public class FilePathResolver {
 	}
 
 	private JsonObject json(String path) throws Exception {
+		Map<String, Optional<JsonObject>> jsonCache = differingPaths.contains(path) ? ownJsonCache : this.jsonCache;
 		Optional<JsonObject> cached = jsonCache.get(path);
 		if (cached == null) {
 			cached = Optional.empty();

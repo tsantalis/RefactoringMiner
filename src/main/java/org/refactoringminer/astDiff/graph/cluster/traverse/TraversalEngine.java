@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -580,6 +581,19 @@ public class TraversalEngine {
     }
 
     private void addContext(Node node, TraversalPattern traversalPattern) {
+        addContext(node, traversalPattern, Collections.newSetFromMap(new IdentityHashMap<>()));
+    }
+
+    private void addMapping(Node node, TraversalPattern traversalPattern) {
+        addMapping(node, traversalPattern, Collections.newSetFromMap(new IdentityHashMap<>()));
+    }
+
+    // The contexts of a node and the nodes mapped to them, and theirs in turn; a node already walked from is not walked
+    // from again, as contexts mapped across the revisions may lead back to it
+    private void addContext(Node node, TraversalPattern traversalPattern, Set<Node> walked) {
+        if (!walked.add(node)) {
+            return;
+        }
         List<Node> contexts = Context.get(graph, node);
         Node currentNode = node;
         for (Node context : contexts) {
@@ -589,13 +603,13 @@ public class TraversalEngine {
                                 .toList();
                 return duplicateEdges.isEmpty();
             });
-            addMapping(context, traversalPattern);
+            addMapping(context, traversalPattern, walked);
 
             currentNode = context;
         }
     }
 
-    private void addMapping(Node node, TraversalPattern traversalPattern) {
+    private void addMapping(Node node, TraversalPattern traversalPattern, Set<Node> walked) {
         List<Node> sources = util.getMappingSources(node);
         for (Node source : sources) {
             traversalPattern.addEdge(source, node, new Edge(EdgeType.MAPPING), (edges) -> {
@@ -604,7 +618,7 @@ public class TraversalEngine {
                                 .toList();
                 return duplicateEdges.isEmpty();
             });
-            addContext(source, traversalPattern);
+            addContext(source, traversalPattern, walked);
         }
 
         List<Node> targets = util.getMappingTargets(node);
@@ -615,7 +629,7 @@ public class TraversalEngine {
                                 .toList();
                 return duplicateEdges.isEmpty();
             });
-            addContext(target, traversalPattern);
+            addContext(target, traversalPattern, walked);
         }
     }
 

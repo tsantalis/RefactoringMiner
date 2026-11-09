@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.graph.cluster.representation;
 
+import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.graph.Context;
@@ -8,9 +9,11 @@ import org.refactoringminer.astDiff.graph.EdgeType;
 import org.refactoringminer.astDiff.graph.Node;
 import org.refactoringminer.astDiff.graph.NodeType;
 import org.refactoringminer.astDiff.graph.RMInfo;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 import org.refactoringminer.astDiff.graph.cluster.traverse.TraversalPattern;
+import org.refactoringminer.astDiff.models.ASTDiff;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -331,6 +334,7 @@ public class MergeGroup {
                     new MergeGroup(contextAggregatedNodes.values().stream().flatMap(Set::stream).collect(Collectors.toSet()))).toList());
     groups.addAll(memberGroups(new ArrayList<>(contextNodes)));
     groups.addAll(headerGroups(new ArrayList<>(contextNodes)));
+    groups.addAll(lineGroups(new ArrayList<>(contextNodes)));
 
     List<Set<Node>> mergedGroups = new ArrayList<>();
     for (MergeGroup group : groups) {
@@ -364,6 +368,107 @@ public class MergeGroup {
     }
 
     return memberNodes.values().stream().filter(group -> group.size() > 1).map(MergeGroup::new).toList();
+  }
+
+  // Changes printed on one line read together, as a comment moved onto the line of the field it describes and the
+  // changes of the field: apart, each would print the line. The nodes are the ones the element prints, the mains and the
+  // counterparts printed with them (the new side of a comment updated in place is the counterpart of the old comment)
+  private static List<MergeGroup> lineGroups(List<Node> nodes) {
+    List<MergeGroup> groups = new ArrayList<>();
+    for (int i = 0; i < nodes.size(); i++) {
+      for (int j = i + 1; j < nodes.size(); j++) {
+        if (shareLine(nodes.get(i), nodes.get(j))) {
+          groups.add(new MergeGroup(new HashSet<>(Set.of(nodes.get(i), nodes.get(j)))));
+        }
+      }
+    }
+    return groups;
+  }
+
+  /**
+   * Whether the two changes are printed on one line: they share a line of their revision, or one of them shares a line
+   * with code of its revision whose counterpart lies on a line of the other. A field whose initializer is removed and
+   * whose comment moves onto its new line (es_110046 tokenToParam) changes only its old line, and its diff prints the new
+   * line as the partner of the old one; the comment's diff prints that new line too. Apart, the line reads twice, in two
+   * diffs that each tell half of what happened to it, and a reviewer cannot tell from either that the other exists.
+   */
+  public static boolean shareLine(Node node, Node other) {
+    if (node.getSrcDst().equals(other.getSrcDst())) {
+      if (!node.getPath().equals(other.getPath())) {
+        return false;
+      }
+      TreeUtilFunctions.LineRange range = lines(node);
+      TreeUtilFunctions.LineRange otherRange = lines(other);
+      return range.startLine() <= otherRange.endLine() && otherRange.startLine() <= range.endLine();
+    }
+    return partnerOn(node, other) || partnerOn(other, node);
+  }
+
+  private static TreeUtilFunctions.LineRange lines(Node node) {
+    return TreeUtilFunctions.getLineRange(node.getTree(), node.getFileContent());
+  }
+
+  // Whether code sharing the lines of the change has its counterpart on the lines of the other change
+  private static boolean partnerOn(Node change, Node other) {
+    Partner partner = PARTNERS.computeIfAbsent(change, MergeGroup::partnerOf);
+    if (partner.root() == null || partner.root() != TreeUtilFunctions.getFinalRoot(other.getTree())) {
+      return false;
+    }
+    TreeUtilFunctions.LineRange otherRange = lines(other);
+    return partner.counterparts().stream().map(counterpart -> TreeUtilFunctions.getLineRange(counterpart, other.getFileContent()).startLine())
+            .anyMatch(line -> otherRange.startLine() <= line && line <= otherRange.endLine());
+  }
+
+  // The counterparts in the other revision of the code sharing the lines of the change, in the tree of one file there: the code of those lines is the outermost code holding the change within them, and its leaves
+  // outside the change are mapped to the other revision
+  private static Partner partnerOf(Node change) {
+    TreeUtilFunctions.LineRange range = lines(change);
+    Tree line = change.getTree();
+    while (line.getParent() != null) {
+      TreeUtilFunctions.LineRange parentRange = TreeUtilFunctions.getLineRange(line.getParent(), change.getFileContent());
+      if (parentRange.startLine() < range.startLine() || range.endLine() < parentRange.endLine()) {
+        break;
+      }
+      line = line.getParent();
+    }
+    Tree root = null;
+    List<Tree> counterparts = new ArrayList<>();
+    if (line == change.getTree()) {
+      return new Partner(null, counterparts);
+    }
+    for (Tree leaf : line.getDescendants()) {
+      if (!leaf.getChildren().isEmpty() || leaf == change.getTree() || leaf.getParents().contains(change.getTree())) {
+        continue;
+      }
+      for (ASTDiff diff : change.getDiffs()) {
+        MappingStore mappingStore = monoMappings(diff);
+        Tree counterpart = change.isSrc() ? mappingStore.getDstForSrc(leaf) : mappingStore.getSrcForDst(leaf);
+        if (counterpart == null) {
+          continue;
+        }
+        Tree counterpartRoot = TreeUtilFunctions.getFinalRoot(counterpart);
+        if (root == null) {
+          root = counterpartRoot;
+        }
+        if (counterpartRoot == root) {
+          counterparts.add(counterpart);
+        }
+        break;
+      }
+    }
+    return new Partner(root, counterparts);
+  }
+
+  private record Partner(@Nullable Tree root, List<Tree> counterparts) {
+  }
+
+  private static final Map<Node, Partner> PARTNERS = Collections.synchronizedMap(new WeakHashMap<>());
+
+  // The one-to-one mappings of each diff, which its mapping store rebuilds on every call
+  private static final Map<ASTDiff, MappingStore> MONO_MAPPINGS = Collections.synchronizedMap(new WeakHashMap<>());
+
+  private static MappingStore monoMappings(ASTDiff diff) {
+    return MONO_MAPPINGS.computeIfAbsent(diff, key -> key.getAllMappings().getMonoMappingStore());
   }
 
   // The changes of the header of one type read together too, as the changes of a signature do

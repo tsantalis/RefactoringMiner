@@ -15,9 +15,12 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 
 /**
@@ -129,6 +132,67 @@ public class RepositoryStateFiles {
       contentCache.put(path, cached);
     }
     return cached;
+  }
+
+  /**
+   * The files of the revision before a change whose state these files are: the same tree but the files only the state
+   * has (added, or renamed to), with the files only the revision before has (deleted, or renamed from), whose contents
+   * are given. The other files are the same in both revisions.
+   *
+   * @param before the contents of the changed files in the revision before, by path
+   * @param after  the contents of the changed files in this state, by path
+   */
+  public RepositoryStateFiles revisionBefore(Map<String, String> before, Map<String, String> after) {
+    return new RevisionBefore(this, before, after);
+  }
+
+  /** The paths whose files differ between the revision before and this state, or exist in one of them only. */
+  public static Set<String> differingPaths(Map<String, String> before, Map<String, String> after) {
+    Set<String> paths = new HashSet<>();
+    before.forEach((path, content) -> {
+      if (!content.equals(after.get(path))) {
+        paths.add(path);
+      }
+    });
+    after.forEach((path, content) -> {
+      if (!content.equals(before.get(path))) {
+        paths.add(path);
+      }
+    });
+    return paths;
+  }
+
+  private static final class RevisionBefore extends RepositoryStateFiles {
+    private final RepositoryStateFiles state;
+    private final Map<String, String> before;
+    private final Set<String> afterOnly = new HashSet<>();
+
+    private RevisionBefore(RepositoryStateFiles state, Map<String, String> before, Map<String, String> after) {
+      super(() -> {
+        throw new IllegalStateException("The revision before reads its files through the state after");
+      }, null, state.stateSha, null);
+      this.state = state;
+      this.before = before;
+      after.keySet().stream().filter(path -> !before.containsKey(path)).forEach(afterOnly::add);
+    }
+
+    @Override
+    public List<String> pathsNamed(String fileName) throws Exception {
+      Set<String> paths = new TreeSet<>(state.pathsNamed(fileName));
+      paths.removeAll(afterOnly);
+      for (String path : before.keySet()) {
+        if (path.substring(path.lastIndexOf('/') + 1).equals(fileName)) {
+          paths.add(path);
+        }
+      }
+      return new ArrayList<>(paths);
+    }
+
+    @Override
+    public String content(String path) throws Exception {
+      String content = before.get(path);
+      return content != null ? content : state.content(path);
+    }
   }
 
   // Processes sharing the cache folder may read a file another one is writing, so a file appears there only complete

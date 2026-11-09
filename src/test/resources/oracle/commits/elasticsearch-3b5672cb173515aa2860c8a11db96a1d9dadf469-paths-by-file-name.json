@@ -2,7 +2,16 @@
   "AbstractRunnable.java": [
     "server/src/main/java/org/elasticsearch/common/util/concurrent/AbstractRunnable.java"
   ],
+  "ActionListener.java": [
+    "server/src/main/java/org/elasticsearch/action/ActionListener.java"
+  ],
   "ArrayList.java": [],
+  "BigArrays.java": [
+    "server/src/main/java/org/elasticsearch/common/util/BigArrays.java"
+  ],
+  "ByteSizeValue.java": [
+    "server/src/main/java/org/elasticsearch/common/unit/ByteSizeValue.java"
+  ],
   "CannedSourceOperator.java": [
     "x-pack/plugin/esql/compute/test/src/main/java/org/elasticsearch/compute/test/CannedSourceOperator.java"
   ],
@@ -15,8 +24,15 @@
   "ChunkedToXContentObject.java": [
     "server/src/main/java/org/elasticsearch/common/xcontent/ChunkedToXContentObject.java"
   ],
+  "CircuitBreaker.java": [
+    "server/src/main/java/org/elasticsearch/common/breaker/CircuitBreaker.java"
+  ],
+  "CircuitBreakerService.java": [
+    "server/src/main/java/org/elasticsearch/indices/breaker/CircuitBreakerService.java"
+  ],
   "Closeable.java": [],
   "Comparable.java": [],
+  "Consumer.java": [],
   "Describable.java": [
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/Describable.java"
   ],
@@ -45,6 +61,9 @@
   ],
   "Iterator.java": [],
   "List.java": [],
+  "LogManager.java": [
+    "libs/logging/src/main/java/org/elasticsearch/logging/LogManager.java"
+  ],
   "Logger.java": [
     "libs/logging/src/main/java/org/elasticsearch/logging/Logger.java"
   ],
@@ -54,13 +73,22 @@
   "Matchers.java": [
     "server/src/main/java/org/elasticsearch/injection/guice/matcher/Matchers.java"
   ],
+  "MockBigArrays.java": [
+    "test/framework/src/main/java/org/elasticsearch/common/util/MockBigArrays.java"
+  ],
   "Operator.java": [
     "server/src/main/java/org/elasticsearch/index/query/Operator.java",
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/ml/job/config/Operator.java",
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/Operator.java"
   ],
+  "Page.java": [
+    "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/Page.java"
+  ],
   "PageConsumerOperator.java": [
     "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/operator/PageConsumerOperator.java"
+  ],
+  "RandomBlock.java": [
+    "x-pack/plugin/esql/compute/test/src/main/java/org/elasticsearch/compute/test/RandomBlock.java"
   ],
   "Releasable.java": [
     "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
@@ -74,12 +102,15 @@
   ],
   "Status.java": [],
   "String.java": [],
+  "Supplier.java": [],
+  "System.java": [],
   "Task.java": [
     "server/src/main/java/org/elasticsearch/tasks/Task.java"
   ],
   "TestResultPageSinkOperator.java": [
     "x-pack/plugin/esql/compute/test/src/main/java/org/elasticsearch/compute/test/TestResultPageSinkOperator.java"
   ],
+  "TimeUnit.java": [],
   "TimeValue.java": [
     "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
@@ -97,10 +128,12 @@
   "concurrent.java": [],
   "function.java": [],
   "hamcrest.java": [],
+  "int.java": [],
   "io.java": [],
   "java.java": [],
   "log4j.java": [],
   "logging.java": [],
+  "long.java": [],
   "lucene.java": [],
   "tests.java": [],
   "util.java": []

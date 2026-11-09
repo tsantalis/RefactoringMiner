@@ -1,12 +1,26 @@
 {
+  "AbstractBytesReference.java": [
+    "server/src/main/java/org/elasticsearch/common/bytes/AbstractBytesReference.java"
+  ],
   "AbstractQueryBuilder.java": [
     "server/src/main/java/org/elasticsearch/index/query/AbstractQueryBuilder.java"
+  ],
+  "Accountable.java": [],
+  "BigArray.java": [
+    "server/src/main/java/org/elasticsearch/common/util/BigArray.java"
   ],
   "BigArrays.java": [
     "server/src/main/java/org/elasticsearch/common/util/BigArrays.java"
   ],
   "BooleanQuery.java": [],
   "Builder.java": [],
+  "ByteArray.java": [
+    "server/src/main/java/org/elasticsearch/common/util/ByteArray.java"
+  ],
+  "BytesArray.java": [
+    "server/src/main/java/org/elasticsearch/common/bytes/BytesArray.java"
+  ],
+  "BytesRef.java": [],
   "BytesReference.java": [
     "server/src/main/java/org/elasticsearch/common/bytes/BytesReference.java"
   ],
@@ -16,11 +30,14 @@
   "BytesStreamOutput.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/BytesStreamOutput.java"
   ],
+  "Class.java": [],
+  "Closeable.java": [],
   "CodepointSetGenerator.java": [],
   "Comparable.java": [],
   "ESTestCase.java": [
     "test/framework/src/main/java/org/elasticsearch/test/ESTestCase.java"
   ],
+  "Entry.java": [],
   "FilterStreamInput.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/FilterStreamInput.java"
   ],
@@ -40,7 +57,13 @@
   "NamedWriteableAwareStreamInput.java": [
     "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteableAwareStreamInput.java"
   ],
+  "NamedWriteableRegistry.java": [
+    "server/src/main/java/org/elasticsearch/common/io/stream/NamedWriteableRegistry.java"
+  ],
   "OutputStream.java": [],
+  "PagedBytesReference.java": [
+    "server/src/main/java/org/elasticsearch/common/bytes/PagedBytesReference.java"
+  ],
   "PlanStreamInput.java": [
     "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/util/PlanStreamInput.java",
     "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/io/stream/PlanStreamInput.java"
@@ -51,6 +74,10 @@
   ],
   "QueryBuilder.java": [
     "server/src/main/java/org/elasticsearch/index/query/QueryBuilder.java"
+  ],
+  "Reader.java": [],
+  "Releasable.java": [
+    "libs/core/src/main/java/org/elasticsearch/core/Releasable.java"
   ],
   "Rewriteable.java": [
     "server/src/main/java/org/elasticsearch/index/query/Rewriteable.java"
@@ -91,12 +118,14 @@
     "server/src/main/java/org/elasticsearch/common/io/stream/Writeable.java"
   ],
   "apache.java": [],
+  "byte.java": [],
   "carrotsearch.java": [],
   "core.java": [],
   "elasticsearch.java": [],
   "esql.java": [],
   "generators.java": [],
   "hamcrest.java": [],
+  "int.java": [],
   "io.java": [],
   "lucene.java": [],
   "org.java": [],

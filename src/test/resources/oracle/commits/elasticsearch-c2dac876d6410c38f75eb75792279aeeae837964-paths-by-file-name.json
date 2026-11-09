@@ -1,4 +1,7 @@
 {
+  "AbstractClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/support/AbstractClient.java"
+  ],
   "AcknowledgedRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/AcknowledgedRequestBuilder.java"
   ],
@@ -18,6 +21,8 @@
   "Client.java": [
     "server/src/main/java/org/elasticsearch/client/internal/Client.java"
   ],
+  "Closeable.java": [],
+  "Collection.java": [],
   "CreateIndexRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/admin/indices/create/CreateIndexRequestBuilder.java"
   ],
@@ -43,6 +48,14 @@
     "server/src/main/java/org/elasticsearch/cluster/routing/allocation/decider/EnableAllocationDecider.java"
   ],
   "Enum.java": [],
+  "FilterClient.java": [
+    "server/src/main/java/org/elasticsearch/client/internal/FilterClient.java"
+  ],
+  "Function.java": [
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/function/Function.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/expression/function/Function.java",
+    "x-pack/plugin/transform/src/main/java/org/elasticsearch/xpack/transform/transforms/Function.java"
+  ],
   "IndexMetadata.java": [
     "server/src/main/java/org/elasticsearch/cluster/metadata/IndexMetadata.java"
   ],
@@ -51,6 +64,9 @@
   ],
   "IndicesAdminClient.java": [
     "server/src/main/java/org/elasticsearch/client/internal/IndicesAdminClient.java"
+  ],
+  "InternalTestCluster.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/InternalTestCluster.java"
   ],
   "IsAcknowledgedSupplier.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/IsAcknowledgedSupplier.java"
@@ -63,19 +79,36 @@
     "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/common/notifications/Level.java",
     "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/process/normalizer/Level.java"
   ],
+  "List.java": [],
   "LuceneTestCase.java": [],
   "Map.java": [],
   "MasterNodeOperationRequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/support/master/MasterNodeOperationRequestBuilder.java"
   ],
+  "MockNode.java": [
+    "test/framework/src/main/java/org/elasticsearch/node/MockNode.java"
+  ],
+  "NavigableMap.java": [],
+  "Node.java": [
+    "client/rest/src/main/java/org/elasticsearch/client/Node.java",
+    "server/src/main/java/org/elasticsearch/node/Node.java",
+    "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/tree/Node.java",
+    "x-pack/plugin/ql/src/main/java/org/elasticsearch/xpack/ql/tree/Node.java"
+  ],
   "NodeConfigurationSource.java": [
     "test/framework/src/main/java/org/elasticsearch/test/NodeConfigurationSource.java"
   ],
   "Path.java": [],
+  "RandomPicks.java": [],
+  "RandomizedContext.java": [],
+  "RandomizingClient.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/client/RandomizingClient.java"
+  ],
   "Rebalance.java": [],
   "RequestBuilder.java": [
     "server/src/main/java/org/elasticsearch/action/RequestBuilder.java"
   ],
+  "Runnable.java": [],
   "Setting.java": [
     "server/src/main/java/org/elasticsearch/common/settings/Setting.java"
   ],
@@ -83,6 +116,11 @@
     "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
   ],
   "String.java": [],
+  "Supplier.java": [],
+  "T.java": [],
+  "TestCluster.java": [
+    "test/framework/src/main/java/org/elasticsearch/test/TestCluster.java"
+  ],
   "TimeValue.java": [
     "libs/core/src/main/java/org/elasticsearch/core/TimeValue.java",
     "x-pack/plugin/sql/sql-proto/src/main/java/org/elasticsearch/xpack/sql/proto/core/TimeValue.java"
@@ -112,12 +150,18 @@
     "libs/x-content/src/main/java/org/elasticsearch/xcontent/XContentBuilder.java"
   ],
   "apache.java": [],
+  "carrotsearch.java": [],
   "file.java": [],
+  "function.java": [],
+  "generators.java": [],
+  "io.java": [],
+  "java.java": [],
   "log4j.java": [],
   "logging.java": [],
   "lucene.java": [],
   "nio.java": [],
   "org.java": [],
+  "randomizedtesting.java": [],
   "tests.java": [],
   "util.java": []
 }

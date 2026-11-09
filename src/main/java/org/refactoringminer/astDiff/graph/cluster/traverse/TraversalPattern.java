@@ -211,7 +211,9 @@ public class TraversalPattern extends GraphWrapper {
     }
 
     // Code of the test source sets, by the layouts of their build tools (src/test, src/javaRestTest, testsuite) or the
-    // names of test classes, which a reviewer reads after the code they test
+    // names of test classes, which a reviewer reads after the code they test. The first source set segment of the path
+    // tells: a test module keeps its code in src/main (test/framework/src/main), and production code may have a package
+    // named test (src/main/java/.../analysis/test)
     public static boolean isTest(String path) {
         String[] segments = path.split("/");
         for (int i = 0; i < segments.length - 1; i++) {
@@ -219,6 +221,9 @@ public class TraversalPattern extends GraphWrapper {
             if (segment.equals("test") || segment.equals("tests") || segment.equals("testsuite") || segment.endsWith("Test")
                     || segment.equals("testFixtures")) {
                 return true;
+            }
+            if (segment.equals("main") && i > 0 && segments[i - 1].equals("src")) {
+                break;
             }
         }
 

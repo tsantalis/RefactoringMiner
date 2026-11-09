@@ -1631,5 +1631,127 @@
         "intermediates": []
       }
     ]
+  },
+  {
+    "dataset": "netty_netty_14332",
+    "repository": "netty/netty",
+    "commit": "abf3989074441f967c6c27288fc183306651e21a",
+    "files": [
+      "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java"
+    ],
+    "receivers": [
+      {
+        "description": "a method of an anonymous class created in a field initializer implements the interface method whose type variable the creation binds",
+        "kind": "override",
+        "file": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java",
+        "line": 460,
+        "code": "recycle",
+        "overridden": [
+          "io.netty.util.internal.ObjectPool.Handle#recycle(T) @ common/src/main/java/io/netty/util/internal/ObjectPool.java"
+        ],
+        "files": [],
+        "intermediates": []
+      },
+      {
+        "description": "a private method of the class overrides nothing",
+        "kind": "override",
+        "file": "buffer/src/main/java/io/netty/buffer/AdaptivePoolingAllocator.java",
+        "line": 481,
+        "code": "newBuffer",
+        "overridden": [],
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_120617",
+    "repository": "elastic/elasticsearch",
+    "commit": "151e4eded28b12e7b4ae8142599efbb8d947df55",
+    "files": [
+      "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/enrich/EnrichLookupService.java"
+    ],
+    "receivers": [
+      {
+        "description": "an override whose parameter is the class the subclass binds the type variable of the superclass method to",
+        "kind": "override",
+        "file": "x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/enrich/EnrichLookupService.java",
+        "line": 280,
+        "code": "sendChildRequest",
+        "overridden": [
+          "org.elasticsearch.xpack.esql.enrich.AbstractLookupService#sendChildRequest(CancellableTask,ActionListener<List<Page>>,DiscoveryNode,T) @ x-pack/plugin/esql/src/main/java/org/elasticsearch/xpack/esql/enrich/AbstractLookupService.java"
+        ],
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "netty_netty_14076",
+    "repository": "netty/netty",
+    "commit": "55b0e70f00aaf4d4841b56049f6fbe1e57f0e323",
+    "files": [
+      "common/src/main/java/io/netty/util/ReferenceCounted.java",
+      "buffer/src/main/java/io/netty/buffer/ReadOnlyByteBufferBuf.java",
+      "buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java",
+      "buffer/src/main/java/io/netty/buffer/AbstractDerivedByteBuf.java"
+    ],
+    "receivers": [
+      {
+        "description": "an interface method called on a nested derived buffer runs the final implementation it inherits two classes up",
+        "kind": "dispatch",
+        "file": "common/src/main/java/io/netty/util/ReferenceCounted.java",
+        "line": 68,
+        "code": "release",
+        "runtime": "io.netty.buffer.ReadOnlyByteBufferBuf.ReadOnlyDuplicatedByteBuf",
+        "runs": "io.netty.buffer.AbstractDerivedByteBuf#release() @ buffer/src/main/java/io/netty/buffer/AbstractDerivedByteBuf.java",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_123290",
+    "repository": "elastic/elasticsearch",
+    "commit": "3b5672cb173515aa2860c8a11db96a1d9dadf469",
+    "files": [
+      "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/operator/DriverTests.java"
+    ],
+    "receivers": [
+      {
+        "description": "a library interface method of a name and arity a class declares once runs that method",
+        "kind": "dispatch",
+        "file": "x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/operator/DriverTests.java",
+        "line": 0,
+        "code": "getAsLong",
+        "arity": 0,
+        "runtime": "org.elasticsearch.compute.operator.DriverTests.NowSupplier",
+        "runs": "org.elasticsearch.compute.operator.DriverTests.NowSupplier#getAsLong() @ x-pack/plugin/esql/compute/src/test/java/org/elasticsearch/compute/operator/DriverTests.java",
+        "files": [],
+        "intermediates": []
+      }
+    ]
+  },
+  {
+    "dataset": "elastic_elasticsearch_120097",
+    "repository": "elastic/elasticsearch",
+    "commit": "c2dac876d6410c38f75eb75792279aeeae837964",
+    "files": [
+      "server/src/main/java/org/elasticsearch/common/settings/Settings.java"
+    ],
+    "receivers": [
+      {
+        "description": "overloads of one arity leave the method of a name and arity unknown",
+        "kind": "dispatch",
+        "file": "server/src/main/java/org/elasticsearch/common/settings/Settings.java",
+        "line": 0,
+        "code": "put",
+        "arity": 2,
+        "runtime": "org.elasticsearch.common.settings.Settings.Builder",
+        "runs": null,
+        "files": [],
+        "intermediates": []
+      }
+    ]
   }
 ]

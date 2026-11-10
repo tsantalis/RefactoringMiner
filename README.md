@@ -26,7 +26,7 @@
 
 
 ### Open source projects using RefactoringMiner diff tool for code reviews:
-[<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="30"/>](https://github.com/JabRef/jabref)
+[<img src="https://www.jabref.org/assets/jabref.svg" alt="JabRef" width="30"/>](https://github.com/JabRef/jabref)
 
 Table of Contents
 =================

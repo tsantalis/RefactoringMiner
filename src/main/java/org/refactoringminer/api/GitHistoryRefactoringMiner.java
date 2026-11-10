@@ -203,7 +203,7 @@ public interface GitHistoryRefactoringMiner {
 	 * Generate the AST diff for the worktree. 
 	 * 
 	 * @param repository A git repository (from JGit library).
-	 * @param commitId The The base ref, e.g., HEAD.
+	 * @param baseRef The base ref, e.g., HEAD.
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 */
 	ProjectASTDiff diffAtWorktree(Repository repository, String baseRef);

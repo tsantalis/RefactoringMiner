@@ -182,7 +182,7 @@ public class FilePathResolver {
 	}
 
 	/**
-	 * TypeScript triple-slash directives ("/// <reference path='...'/>", "/// <reference types='...'/>").
+	 * TypeScript triple-slash directives ({@code /// <reference path='...'/>}, {@code /// <reference types='...'/>}).
 	 */
 	public Set<String> resolvePaths(UMLComment comment) throws Exception {
 		Set<String> paths = new LinkedHashSet<>();
@@ -871,7 +871,7 @@ public class FilePathResolver {
 	}
 
 	/**
-	 * The name of the type without type arguments and array dimensions (e.g., Map.Entry of Map.Entry<K, V>[]), or null
+	 * The name of the type without type arguments and array dimensions (e.g., Map.Entry of {@code Map.Entry<K, V>[]}), or null
 	 * for types without a main name (e.g., function types).
 	 */
 	public static String mainTypeName(UMLType type) {

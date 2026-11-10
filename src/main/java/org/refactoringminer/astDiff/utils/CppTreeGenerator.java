@@ -161,7 +161,7 @@ import com.github.gumtreediff.tree.TypeSet;
  * and the declarations and statements between the conditional directives are grouped in preproc_if, preproc_ifdef, preproc_elif and preproc_else nodes.
  * The code that CDT does not parse, i.e., inactive preprocessor branches and code with problems, and the code containing macro expansions,
  * which tree-sitter parses without expanding the macros, is parsed again with CDT without macros.
- * When it parses code again, the names that tree-sitter parses as templates (f<T>(x)) or as called functions (f(x);) are declared before the code,
+ * When it parses code again, the names that tree-sitter parses as templates ({@code f<T>(x)}) or as called functions (f(x);) are declared before the code,
  * so that CDT does not parse them as comparisons or declarations, the macros that are not valid without their definitions (T absl_nonnull x) are empty,
  * and the return type of the macros with a body (TEST(A, B) {...}) is int, whose offsets are not in the tree.
  * The ambiguities that CDT resolves with the names it knows remain, i.e., T x(y); is a declaration of a variable with an argument list,

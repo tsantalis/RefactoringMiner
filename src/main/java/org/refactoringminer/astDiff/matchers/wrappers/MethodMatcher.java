@@ -1732,7 +1732,13 @@ public class MethodMatcher extends BodyMapperMatcher{
         Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo(),LANG2);
         if (leftTree == null || rightTree == null) return;
         if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
-            if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
+            //a JavaScript parameter name paired with a TypeScript parameter
+            boolean aligned = PathFileUtils.isTypeScriptFile(leftVarDecl.getLocationInfo().getFilePath()) && PathFileUtils.isTypeScriptFile(rightVarDecl.getLocationInfo().getFilePath()) &&
+                    BodyMapperMatcher.alignParameter(leftTree, rightTree, mappingStore, optimizationData.getDeferredFlattenings(), LANG1, LANG2);
+            if (aligned) {
+                //the commas are matched below
+            }
+            else if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                 mappingStore.addMappingRecursively(leftTree, rightTree);
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
                 JavaToKotlinMigration.handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2, optimizationData.getDeferredFlattenings());

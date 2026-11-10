@@ -18,6 +18,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.matchers.statement.CompositeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
+import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -1341,6 +1342,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             System.err.println("Tree not found for " + abstractCodeMapping);
             return;
         }
+        alignLambdaParameters(srcTree, dstTree, abstractCodeMapping, mappingStore);
         //the blocks with a single statement correspond when their statements are mapped, i.e., if x: raise ValueError(...) -> if y: raise ValueError(...)
         if(srcStatementNode.getParent() != null && dstStatementNode.getParent() != null &&
                 srcStatementNode.getParent().getType().name.equals(LANG1.CLASS_BLOCK) && dstStatementNode.getParent().getType().name.equals(LANG2.CLASS_BLOCK) &&
@@ -1766,6 +1768,97 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
         }
         return false;
+    }
+
+    //a JavaScript parameter is only a name, while a TypeScript parameter is wrapped in a parameter (holding its name and its type annotation, if any),
+    //and the single parameter of an arrow function written without parentheses has no parameter list either,
+    //so the names are mapped and the wrappers are flattened, as the name is not moved, where only the parentheses and the type annotations are inserted,
+    //i.e., props => (...) -> (props: P) => (...) and (content, message) => {...} -> (content, message) => {...}
+    private void alignLambdaParameters(Tree srcTree, Tree dstTree, AbstractCodeMapping mapping, ExtendedMultiMappingStore mappingStore) {
+        if(!PathFileUtils.isTypeScriptFile(mapping.getFragment1().getLocationInfo().getFilePath()) ||
+                !PathFileUtils.isTypeScriptFile(mapping.getFragment2().getLocationInfo().getFilePath()))
+            return;
+        List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
+        List<LambdaExpressionObject> lambdas2 = mapping.getFragment2().getLambdas();
+        if(lambdas1.size() != lambdas2.size())
+            return;
+        for(int i=0; i<lambdas1.size(); i++) {
+            List<VariableDeclaration> parameters1 = lambdas1.get(i).getParameters();
+            List<VariableDeclaration> parameters2 = lambdas2.get(i).getParameters();
+            if(parameters1.size() != parameters2.size())
+                continue;
+            for(int j=0; j<parameters1.size(); j++) {
+                if(!parameters1.get(j).getVariableName().equals(parameters2.get(j).getVariableName()))
+                    continue;
+                Tree node1 = TreeUtilFunctions.findByLocationInfo(srcTree, parameters1.get(j).getLocationInfo(), LANG1);
+                Tree node2 = TreeUtilFunctions.findByLocationInfo(dstTree, parameters2.get(j).getLocationInfo(), LANG2);
+                if(node1 != null && node2 != null)
+                    alignParameter(node1, node2, mappingStore, optimizationData.getDeferredFlattenings(), LANG1, LANG2);
+            }
+        }
+    }
+
+    //maps the names of the paired parameters when only one of them is wrapped, and registers the flattening of the wrappers
+    public static boolean alignParameter(Tree node1, Tree node2, ExtendedMultiMappingStore mappingStore, DeferredFlattenings deferredFlattenings, Constants LANG1, Constants LANG2) {
+        Tree name1 = bareParameter(node1, LANG1);
+        Tree parameter2 = wrappedParameter(node2, LANG2);
+        if(name1 != null && parameter2 != null) {
+            Tree parameterList2 = parameter2.getParent();
+            boolean withoutParentheses = name1.getParent().getType().name.equals(LANG1.ARROW_FUNCTION);
+            if(withoutParentheses && !isOnlyArrowFunctionParameter(parameter2, LANG2))
+                return false;
+            mappingStore.addMapping(name1, parameter2.getChild(0));
+            deferredFlattenings.flattenTargetRemovingAllMappings(parameterList2, parameter2);
+            if(withoutParentheses)
+                deferredFlattenings.flattenTargetRemovingAllMappings(parameterList2.getParent(), parameterList2);
+            return true;
+        }
+        Tree parameter1 = wrappedParameter(node1, LANG1);
+        Tree name2 = bareParameter(node2, LANG2);
+        if(parameter1 != null && name2 != null) {
+            Tree parameterList1 = parameter1.getParent();
+            boolean withoutParentheses = name2.getParent().getType().name.equals(LANG2.ARROW_FUNCTION);
+            if(withoutParentheses && !isOnlyArrowFunctionParameter(parameter1, LANG1))
+                return false;
+            mappingStore.addMapping(parameter1.getChild(0), name2);
+            deferredFlattenings.flattenRemovingAllMappings(parameterList1, parameter1);
+            if(withoutParentheses)
+                deferredFlattenings.flattenRemovingAllMappings(parameterList1.getParent(), parameterList1);
+            return true;
+        }
+        return false;
+    }
+
+    //a parameter that is only a name, in a JavaScript parameter list or of an arrow function without parentheses, i.e., x in function(x) {...} or x => x + 1
+    private static Tree bareParameter(Tree node, Constants LANG) {
+        if(node.getType().name.equals(LANG.SIMPLE_NAME) && node.getParent() != null &&
+                (node.getParent().getType().name.equals(LANG.ARROW_FUNCTION) || node.getParent().getType().name.equals(LANG.FORMAL_PARAMETERS)))
+            return node;
+        return null;
+    }
+
+    //a TypeScript parameter starting with its name, i.e., x: number in (x: number) => x + 1, or x in (x) => x + 1
+    private static Tree wrappedParameter(Tree node, Constants LANG) {
+        Tree parameter = node.getType().name.equals(LANG.SIMPLE_NAME) ? node.getParent() : node;
+        if(parameter == null || !parameter.getType().name.equals(LANG.REQUIRED_PARAMETER) || parameter.getChildren().isEmpty() ||
+                !parameter.getChild(0).getType().name.equals(LANG.SIMPLE_NAME))
+            return null;
+        Tree parameterList = parameter.getParent();
+        if(parameterList == null || !parameterList.getType().name.equals(LANG.FORMAL_PARAMETERS))
+            return null;
+        return parameter;
+    }
+
+    //the only parameter of an arrow function, i.e., x: number in (x: number) => x + 1
+    private static boolean isOnlyArrowFunctionParameter(Tree parameter, Constants LANG) {
+        Tree parameterList = parameter.getParent();
+        if(parameterList.getParent() == null || !parameterList.getParent().getType().name.equals(LANG.ARROW_FUNCTION))
+            return false;
+        for(Tree child : parameterList.getChildren()) {
+            if(child != parameter && !child.getType().name.equals(LANG.OPENING_PARENTHESIS) && !child.getType().name.equals(LANG.CLOSING_PARENTHESIS))
+                return false;
+        }
+        return true;
     }
 
     public static void processArrowFunction(Tree srcStatementNode, Tree dstStatementNode,

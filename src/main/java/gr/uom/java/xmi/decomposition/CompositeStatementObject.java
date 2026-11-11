@@ -646,6 +646,15 @@ public class CompositeStatementObject extends AbstractStatement {
 		return list;
 	}
 
+	@Override
+	public List<JsxElement> getJsxElements() {
+		List<JsxElement> list = new ArrayList<>();
+		for(AbstractExpression expression : expressionList) {
+			list.addAll(expression.getJsxElements());
+		}
+		return list;
+	}
+
 	public List<LeafExpression> getAllStringLiterals() {
 		List<LeafExpression> list = new ArrayList<>();
 		list.addAll(getStringLiterals());

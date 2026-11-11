@@ -8,6 +8,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.JsxElementReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
@@ -110,6 +111,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if (abstractCodeMapping instanceof LeafMapping) {
                 if (optimizationData.getProcessedLeafMappings().add(abstractCodeMapping)) {
                     processLeafMapping(srcTree,dstTree,abstractCodeMapping,bodyMapper,mappingStore, isPartOfExtractedMethod);
+                    //the JSX elements paired by the model are matched as their diff pairs their attributes and children
+                    for (Replacement replacement : abstractCodeMapping.getReplacements()) {
+                        if (replacement instanceof JsxElementReplacement jsxElementReplacement)
+                            new JsxElementDiffMatcher(srcTree, dstTree, mappingStore, LANG1, LANG2).match(jsxElementReplacement.getDiff());
+                    }
                     if (containsReplacementOfType(abstractCodeMapping, ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION)) {
                         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo(), LANG1);
                         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo(), LANG2);

@@ -3530,12 +3530,45 @@ public class VariableReplacementAnalysis {
 		return null;
 	}
 
+	//the declaration of a variable in scope where the outermost lambda containing the fragment is declared, or null
+	private static VariableDeclaration declarationInScopeOfEnclosingLambda(VariableDeclarationContainer operation, AbstractCodeFragment fragment, String variableName) {
+		LambdaExpressionObject outermost = null;
+		for(LambdaExpressionObject lambda : operation.getAllLambdas()) {
+			if(lambda.getLocationInfo().subsumes(fragment.getLocationInfo()) && (outermost == null || lambda.getLocationInfo().subsumes(outermost.getLocationInfo()))) {
+				outermost = lambda;
+			}
+		}
+		if(outermost == null) {
+			return null;
+		}
+		VariableDeclaration declaration = null;
+		for(VariableDeclaration candidate : operation.getVariableDeclarationsInScope(outermost.getLocationInfo())) {
+			if(candidate.getVariableName().equals(variableName)) {
+				declaration = candidate;
+			}
+		}
+		return declaration;
+	}
+
 	private SimpleEntry<VariableDeclaration, VariableDeclarationContainer> getVariableDeclaration2(Replacement replacement) {
 		for(AbstractCodeMapping mapping : mappings) {
 			if(mapping.getReplacements().contains(replacement) || replacement.isInferred()) {
 				VariableDeclaration vd = mapping.getFragment2().searchVariableDeclaration(replacement.getAfter());
 				if(vd != null) {
 					return new SimpleEntry<>(vd, mapping.getOperation2());
+				}
+			}
+		}
+		//a parameter localized into a variable of the method referenced only in a lambda, i.e., tableWidth -> newTableWidth,
+		//where const newTableWidth = ... is declared in the method and the references are in fields.map((name, index) => {...}),
+		//so the declaration is not found from the statements of the lambda body
+		if(operation1.getParameterNameList().contains(replacement.getBefore()) && !operation2.getParameterNameList().contains(replacement.getAfter())) {
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getReplacements().contains(replacement)) {
+					VariableDeclaration vd = declarationInScopeOfEnclosingLambda(operation2, mapping.getFragment2(), replacement.getAfter());
+					if(vd != null) {
+						return new SimpleEntry<>(vd, operation2);
+					}
 				}
 			}
 		}

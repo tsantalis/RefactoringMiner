@@ -27,6 +27,8 @@ import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstBool;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNull;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNumber;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstJsxElement;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstJsxFragment;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
@@ -66,6 +68,7 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 	private List<LeafExpression> booleanLiterals = new ArrayList<>();
 	private List<LeafExpression> typeLiterals = new ArrayList<>();
 	private List<AbstractCall> creations = new ArrayList<>();
+	private List<JsxElement> jsxElements = new ArrayList<>();
 	private List<LeafExpression> infixExpressions = new ArrayList<>();
 	private List<LeafExpression> assignments = new ArrayList<>();
 	private List<String> infixOperators = new ArrayList<>();
@@ -327,6 +330,16 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		return super.visitNewExpr(node);
 	}
 
+	public Swc4jAstVisitorResponse visitJsxElement(Swc4jAstJsxElement node) {
+		jsxElements.add(new JsxElement(sourceFolder, filePath, node, container, fileContent));
+		return super.visitJsxElement(node);
+	}
+
+	public Swc4jAstVisitorResponse visitJsxFragment(Swc4jAstJsxFragment node) {
+		jsxElements.add(new JsxElement(sourceFolder, filePath, node, container, fileContent));
+		return super.visitJsxFragment(node);
+	}
+
 	public Swc4jAstVisitorResponse visitTpl(Swc4jAstTpl node) {
 		//List<ISwc4jAstExpr> expressions = node.getExprs();
 		List<Swc4jAstTplElement> quasis = node.getQuasis();
@@ -397,6 +410,11 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 
 	public List<AbstractCall> getCreations() {
 		return creations;
+	}
+
+	//all the JSX elements and fragments, including the nested ones
+	public List<JsxElement> getJsxElements() {
+		return jsxElements;
 	}
 
 	public List<LeafExpression> getInfixExpressions() {

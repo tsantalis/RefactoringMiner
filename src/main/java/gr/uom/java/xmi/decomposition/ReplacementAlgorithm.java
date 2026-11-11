@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.Comparator;
+import gr.uom.java.xmi.decomposition.replacement.JsxElementReplacement;
+import gr.uom.java.xmi.diff.JsxElementDiff;
 import static gr.uom.java.xmi.decomposition.CodeBlockBetweenComments.generateCodeBlock;
 import static gr.uom.java.xmi.decomposition.OperationInvocation.PRIMITIVE_WRAPPER_CLASS_MAP;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
@@ -1109,6 +1112,9 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 			if(declarationInlinedToObjectAttribute(statement1, statement2, replacementInfo, operationBodyMapper)) {
+				return replacementInfo.getReplacements();
+			}
+			if(jsxElementsReplaced(statement1, statement2, replacementInfo)) {
 				return replacementInfo.getReplacements();
 			}
 			return null;
@@ -5862,6 +5868,76 @@ public class ReplacementAlgorithm {
 
 	//the declared variable became an attribute with the same name and initializer in an object literal,
 	//i.e., const routeStartsAndEndsSameFloor = startNode.floor === endNode.floor -> const context = { ..., routeStartsAndEndsSameFloor: startNode.floor === endNode.floor }
+	//the statements differ only in corresponding JSX elements, i.e., resizeDrag = (<Draggable onStop={handleStop} zIndex={999}>...</Draggable>)
+	//-> resizeDrag = (<Draggable onStop={(e, data) => handleStop(...)}>...</Draggable>), where each pair of different elements is a JSX element replacement
+	//holding their diff, and the replacements already found within the elements are kept (i.e., handleStop -> the lambda)
+	private static boolean jsxElementsReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo replacementInfo) {
+		List<JsxElement> elements1 = outermostJsxElements(statement1.getJsxElements());
+		List<JsxElement> elements2 = outermostJsxElements(statement2.getJsxElements());
+		if(elements1.isEmpty() || elements1.size() != elements2.size()) {
+			return false;
+		}
+		String s1 = statement1.getString();
+		List<JsxElementDiff> diffs = new ArrayList<>();
+		for(int i=0; i<elements1.size(); i++) {
+			JsxElement element1 = elements1.get(i);
+			JsxElement element2 = elements2.get(i);
+			if(element1.getString().equals(element2.getString())) {
+				continue;
+			}
+			JsxElementDiff diff = new JsxElementDiff(element1, element2);
+			if(!diff.isCounterpart()) {
+				return false;
+			}
+			int index = s1.indexOf(element1.getString());
+			if(index < 0) {
+				return false;
+			}
+			s1 = s1.substring(0, index) + element2.getString() + s1.substring(index + element1.getString().length());
+			diffs.add(diff);
+		}
+		if(diffs.isEmpty() || !s1.equals(statement2.getString())) {
+			return false;
+		}
+		Set<Replacement> outsideElements = new LinkedHashSet<>();
+		for(Replacement replacement : replacementInfo.getReplacements()) {
+			boolean withinElements = false;
+			for(JsxElementDiff diff : diffs) {
+				if(diff.getElement1().getString().contains(replacement.getBefore()) && diff.getElement2().getString().contains(replacement.getAfter())) {
+					withinElements = true;
+					break;
+				}
+			}
+			if(!withinElements) {
+				outsideElements.add(replacement);
+			}
+		}
+		replacementInfo.removeReplacements(outsideElements);
+		for(JsxElementDiff diff : diffs) {
+			replacementInfo.addReplacement(new JsxElementReplacement(diff));
+		}
+		return true;
+	}
+
+	//the JSX elements not nested in another element of the same statement, in source order
+	private static List<JsxElement> outermostJsxElements(List<JsxElement> elements) {
+		List<JsxElement> outermost = new ArrayList<>();
+		for(JsxElement element : elements) {
+			boolean nested = false;
+			for(JsxElement other : elements) {
+				if(other != element && other.getLocationInfo().subsumes(element.getLocationInfo())) {
+					nested = true;
+					break;
+				}
+			}
+			if(!nested) {
+				outermost.add(element);
+			}
+		}
+		outermost.sort(Comparator.comparingInt(e -> e.getLocationInfo().getStartOffset()));
+		return outermost;
+	}
+
 	private static boolean declarationInlinedToObjectAttribute(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper) {
 		if(statement1.getVariableDeclarations().size() == 1 && statement1.getVariableDeclarations().get(0).getInitializer() != null) {
 			VariableDeclaration declaration1 = statement1.getVariableDeclarations().get(0);

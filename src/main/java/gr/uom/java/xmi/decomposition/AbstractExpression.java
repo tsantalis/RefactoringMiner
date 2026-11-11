@@ -42,6 +42,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<LeafExpression> booleanLiterals;
 	private List<LeafExpression> typeLiterals;
 	private List<AbstractCall> creations;
+	private List<JsxElement> jsxElements = List.of();
 	private List<LeafExpression> infixExpressions;
 	private List<LeafExpression> assignments;
 	private List<String> infixOperators;
@@ -191,6 +192,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.booleanLiterals = visitor.getBooleanLiterals();
 		this.typeLiterals = visitor.getTypeLiterals();
 		this.creations = visitor.getCreations();
+		this.jsxElements = visitor.getJsxElements();
 		this.infixExpressions = visitor.getInfixExpressions();
 		this.assignments = visitor.getAssignments();
 		this.infixOperators = visitor.getInfixOperators();
@@ -445,6 +447,11 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<AbstractCall> getCreations() {
 		return creations;
+	}
+
+	@Override
+	public List<JsxElement> getJsxElements() {
+		return jsxElements;
 	}
 
 	@Override

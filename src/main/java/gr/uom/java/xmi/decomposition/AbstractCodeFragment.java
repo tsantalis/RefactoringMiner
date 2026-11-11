@@ -76,6 +76,10 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<LeafExpression> getBooleanLiterals();
 	public abstract List<LeafExpression> getTypeLiterals();
 	public abstract List<AbstractCall> getCreations();
+	//the JSX elements and fragments of JavaScript and TypeScript, including the nested ones
+	public List<JsxElement> getJsxElements() {
+		return List.of();
+	}
 	public abstract List<LeafExpression> getInfixExpressions();
 	public abstract List<LeafExpression> getAssignments();
 	public abstract List<String> getInfixOperators();

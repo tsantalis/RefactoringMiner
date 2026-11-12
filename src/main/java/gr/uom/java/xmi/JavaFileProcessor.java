@@ -4,6 +4,7 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import static org.eclipse.jdt.core.JavaCore.VERSION_21;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -247,6 +248,13 @@ public class JavaFileProcessor {
 
 		this.getUmlModel().addModule(module);
 		distributeComments(comments, locationInfo, module.getComments(), compilationUnit);
+		//a module-info file has no package declaration and contains only the module declaration, so the comments outside it,
+		//i.e., a license header separated from the module declaration by a blank line, also belong to the module
+		if(!comments.isEmpty()) {
+			module.getComments().addAll(comments);
+			module.getComments().sort(Comparator.comparingInt(c -> c.getLocationInfo().getStartOffset()));
+			comments.clear();
+		}
 	}
 
 	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit, String javaFileContent) {

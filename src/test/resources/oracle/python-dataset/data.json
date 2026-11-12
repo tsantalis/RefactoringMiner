@@ -7246,6 +7246,13 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
+        "type": "Move Method",
+        "description": "Move Method protected _recur_split(s) from class utils.utils.__module__.map_ids_to_strs to protected _recur_split(s, dtype_as) from class utils.utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Extract Variable",
         "description": "Extract Variable s in method public strip_token(str_, token, is_token_list, compat) from class utils.utils.__module__",
         "comment": null,

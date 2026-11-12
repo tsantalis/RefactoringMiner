@@ -1,0 +1,161 @@
+"""Typed views of the GitHub webhook payloads NikolAI reads (US-2).
+
+Includes the identifiers and PR lifecycle fields needed for persistence (US-4.7), and the
+``workflow_run`` events that bring in the RefactoringMiner Action's results (US-8).
+Pydantic ignores undeclared fields, so new GitHub fields never break parsing. Reference:
+https://docs.github.com/en/webhooks/webhook-events-and-payloads
+"""
+
+# AI contribution: 50%
+
+from datetime import datetime
+from typing import Literal
+
+from pydantic import BaseModel, ConfigDict
+
+
+class _Payload(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+
+class GitHubUser(_Payload):
+    id: int
+    login: str
+    # "User", or "Bot" for apps such as Dependabot.
+    type: str = "User"
+
+
+class CommitRef(_Payload):
+    """A branch tip in a PR's payload, such as its head."""
+
+    sha: str
+
+
+class PullRequest(_Payload):
+    id: int  # GitHub's PR ID, distinct from the repository-local PR number.
+    number: int
+    title: str
+    state: Literal["open", "closed"]
+    created_at: datetime
+    updated_at: datetime
+    merged_at: datetime | None = None
+    merged: bool = False
+    body: str | None = None
+    draft: bool = False
+    user: GitHubUser
+    # How many files the PR changes; GitHub's file listing only sends the first 100.
+    changed_files: int | None = None
+    # The commit the PR's branch points at; fix tracking (US-9.4) reviews what changed up to it.
+    head: CommitRef | None = None
+
+
+class RepositoryOwner(_Payload):
+    login: str
+
+
+class IssueLabel(_Payload):
+    id: int
+    name: str
+
+
+class Issue(_Payload):
+    id: int  # GitHub's issue ID, distinct from the repository-local issue number.
+    number: int
+    title: str
+    state: Literal["open", "closed"]
+    created_at: datetime
+    updated_at: datetime
+    body: str | None = None
+    user: GitHubUser
+    # The issue's labels at the time of the event; labels are objects, names are what count.
+    labels: tuple[IssueLabel, ...] = ()
+
+
+class Repository(_Payload):
+    id: int
+    name: str
+    full_name: str  # "owner/name"
+    owner: RepositoryOwner
+
+
+class Installation(_Payload):
+    """The App installation that received the event, needed to act on that repository."""
+
+    id: int
+
+
+class PullRequestEvent(_Payload):
+    """A ``pull_request`` webhook delivery (opened, reopened, ready_for_review, closed...)."""
+
+    action: str
+    installation: Installation
+    repository: Repository
+    pull_request: PullRequest
+    sender: GitHubUser  # Who triggered the event; may differ from the PR author.
+    # On "edited": the old values of what changed ("title", "body" or "base").
+    changes: dict[str, object] | None = None
+
+
+class InstalledRepository(_Payload):
+    id: int
+    full_name: str  # "owner/name"
+
+
+class InstallationEvent(_Payload):
+    """An ``installation`` or ``installation_repositories`` delivery (US-10.1).
+
+    GitHub sends these to every App without a subscription. ``installation`` lists the
+    repositories in ``repositories``; ``installation_repositories`` uses the added and removed
+    lists. https://docs.github.com/en/webhooks/webhook-events-and-payloads#installation
+    """
+
+    action: str
+    installation: Installation
+    sender: GitHubUser  # Who installed the App or changed its repositories.
+    repositories: list[InstalledRepository] = []
+    repositories_added: list[InstalledRepository] = []
+    repositories_removed: list[InstalledRepository] = []
+
+
+class IssuesEvent(_Payload):
+    """An ``issues`` webhook delivery (opened, edited, labeled, closed...), US-12.1."""
+
+    action: str
+    installation: Installation
+    repository: Repository
+    issue: Issue
+    sender: GitHubUser  # Who opened or edited the issue; may differ from its author.
+    # On "edited": the old values of what changed ("title", "body", "milestone"...).
+    changes: dict[str, object] | None = None
+
+
+class RepositoryRef(_Payload):
+    id: int
+
+
+class BranchRef(_Payload):
+    repo: RepositoryRef
+
+
+class WorkflowRunPullRequest(_Payload):
+    number: int
+    base: BranchRef  # The repository the PR merges into.
+
+
+class WorkflowRun(_Payload):
+    id: int
+    name: str
+    event: str  # What started the run, e.g. "pull_request" or "push".
+    head_sha: str
+    conclusion: str | None = None  # "success", "failure"... None until the run completes.
+    # Empty when the PR comes from a fork; can list several PRs sharing one head branch.
+    pull_requests: tuple[WorkflowRunPullRequest, ...] = ()
+
+
+class WorkflowRunEvent(_Payload):
+    """A ``workflow_run`` webhook delivery (US-8), sent when an Actions workflow run changes."""
+
+    action: str  # "requested", "in_progress" or "completed".
+    installation: Installation
+    repository: Repository
+    workflow_run: WorkflowRun

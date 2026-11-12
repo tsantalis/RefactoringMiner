@@ -234,17 +234,17 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **October 31, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1148  |  4  |  5  | 0.997  | 0.996|
+|**Total**|1149  |  4  |  5  | 0.997  | 0.996|
 |Extract Method|39  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|140  |  0  |  1  | 1.000  | 0.993|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
-|Move Method|22  |  0  |  0  | 1.000  | 1.000|
+|Move Method|23  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 9  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method| 9  |  0  |  0  | 1.000  | 1.000|
 |Move Class|15  |  0  |  0  | 1.000  | 1.000|

@@ -258,6 +258,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processAnonymousClasses();
 		processAnonymousClassesReplacedWithLambdas();
 		checkForOperationSignatureChanges(this.removedOperations, this.addedOperations);
+		checkForNestedOperationsMovedToContainer();
 		if(removedNestedOperations.size() > 0 || addedNestedOperations.size() > 0) {
 			checkForOperationSignatureChanges(this.removedNestedOperations, this.addedNestedOperations);
 			if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
@@ -1991,6 +1992,32 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		return false;
+	}
+
+	//a nested function moved out of the function nesting it to the class (module), with the same Move Method logic as for a nested function of a moved method,
+	//before the removed nested functions are matched with the added functions as renamed
+	private void checkForNestedOperationsMovedToContainer() throws RefactoringMinerTimedOutException {
+		if(modelDiff == null) {
+			return;
+		}
+		for(UMLOperation nestedOperation : new ArrayList<>(removedNestedOperations)) {
+			for(UMLOperationBodyMapper mapper : new ArrayList<>(operationBodyMapperList)) {
+				if(mapper.getOperation1() == null || mapper.getOperation2() == null || !mapper.getOperation1().getNestedOperations().contains(nestedOperation)) {
+					continue;
+				}
+				for(UMLOperation addedOperation : new ArrayList<>(addedOperations)) {
+					MoveOperationRefactoring refactoring = modelDiff.nestedOperationMovedToContainer(nestedOperation, mapper.getOperation1(), mapper.getOperation2(), addedOperation, this);
+					if(refactoring != null) {
+						refactorings.add(refactoring);
+						refactorings.addAll(refactoring.getBodyMapper().getRefactorings());
+						removedNestedOperations.remove(nestedOperation);
+						addedOperations.remove(addedOperation);
+						break;
+					}
+				}
+				break;
+			}
+		}
 	}
 
 	//the operations of the anonymous classes replaced with lambdas, which are not matched with the lambdas, are removed nested operations of the container,

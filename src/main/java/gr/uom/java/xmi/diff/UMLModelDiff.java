@@ -3650,15 +3650,12 @@ public class UMLModelDiff {
 					boolean nestedOperationExtraction = false;
 					if(removedOperation instanceof UMLOperation umlRemovedOperation) {
 						for(UMLOperation nestedOperation : umlRemovedOperation.getNestedOperations()) {
-							if(nestedOperation.getName().equals(operation.getName())) {
-								UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(nestedOperation, operation, classDiff);
-								if(movedMethodSignature(nestedOperation, operation, mapper, false) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(nestedOperation, operation)) {
-									MoveOperationRefactoring refactoring = new MoveOperationRefactoring(mapper);
-									this.refactorings.add(refactoring);
-									refactorings.addAll(refactoring.getBodyMapper().getRefactorings());
-									nestedOperationExtraction = true;
-									break;
-								}
+							MoveOperationRefactoring refactoring = nestedOperationMovedToContainer(nestedOperation, umlRemovedOperation, addedOperation, operation, classDiff);
+							if(refactoring != null) {
+								this.refactorings.add(refactoring);
+								refactorings.addAll(refactoring.getBodyMapper().getRefactorings());
+								nestedOperationExtraction = true;
+								break;
 							}
 						}
 					}
@@ -3676,6 +3673,45 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	//a nested function moved out of the function nesting it to its container, with the same name, or renamed when the function nesting it calls the moved function
+	//instead of the nested function, i.e., async def run(): ... nested in run_sql() -> async def read_sql(url, statement, params): ... called as asyncio.run(read_sql(url, statement, params))
+	public MoveOperationRefactoring nestedOperationMovedToContainer(UMLOperation nestedOperation, VariableDeclarationContainer enclosingOperation1, VariableDeclarationContainer enclosingOperation2,
+			UMLOperation operation, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		if(nestedOperation.getName().equals(operation.getName())) {
+			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(nestedOperation, operation, classDiff);
+			if(movedMethodSignature(nestedOperation, operation, mapper, false) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(nestedOperation, operation)) {
+				return new MoveOperationRefactoring(mapper);
+			}
+		}
+		else if(callsOperation(enclosingOperation1, nestedOperation.getName()) && !callsOperation(enclosingOperation2, nestedOperation.getName())) {
+			boolean operationCalled = false;
+			for(AbstractCall invocation : enclosingOperation2.getAllOperationInvocations()) {
+				if(invocation.matchesOperation(operation, enclosingOperation2, classDiff, this)) {
+					operationCalled = true;
+					break;
+				}
+			}
+			if(operationCalled) {
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(nestedOperation, operation, classDiff);
+				int mappings = mapper.mappingsWithoutBlocks();
+				if(mappings > 0 && mappings > mapper.nonMappedElementsT1() && mappings > mapper.nonMappedElementsT2() &&
+						!refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(nestedOperation, operation)) {
+					return new MoveOperationRefactoring(mapper);
+				}
+			}
+		}
+		return null;
+	}
+
+	private static boolean callsOperation(VariableDeclarationContainer container, String name) {
+		for(AbstractCall invocation : container.getAllOperationInvocations()) {
+			if(invocation.getName().equals(name) && invocation.getExpression() == null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean topLevelOrSameOuterClass(UMLClass class1, UMLClass class2) {

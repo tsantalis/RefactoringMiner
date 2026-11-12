@@ -508,6 +508,13 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					validReplacements = false;
 					break;
 				}
+				//the expression is passed unchanged as an argument of the initializer, so it is not replaced by the variable,
+				//i.e., for outcome in outcomes -> alphabets = _construct_alphabets(outcomes)
+				if(replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION) && replacement.getBefore().equals(replacement.getAfter()) &&
+						replacement.getBefore().equals(getFragment1().getString())) {
+					validReplacements = false;
+					break;
+				}
 			}
 			if(getFragment1().getVariableDeclarations().size() == 0 && variableDeclarations.size() == 1 && variableDeclarations.get(0).getInitializer() != null && validReplacements) {
 				VariableDeclaration variableDeclaration = variableDeclarations.get(0);

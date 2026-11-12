@@ -451,6 +451,37 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(filePath, key.getStartChar(), scopeEndOffset);
 	}
 
+	//the variable is assigned in every branch of the if-elif-else chain, which ends with an else
+	private static boolean definedInAllBranches(LangIfStatement ifStatement, String variableName) {
+		LangIfStatement current = ifStatement;
+		while(true) {
+			if(!assignedInBlock(current.getBody(), variableName)) {
+				return false;
+			}
+			LangASTNode elseBody = current.getElseBody();
+			if(elseBody instanceof LangIfStatement elif) {
+				current = elif;
+			}
+			else {
+				return elseBody != null && assignedInBlock(elseBody, variableName);
+			}
+		}
+	}
+
+	private static boolean assignedInBlock(LangASTNode block, String variableName) {
+		if(block != null) {
+			for(LangASTNode child : block.getChildren()) {
+				if(child instanceof LangExpressionStatement expressionStatement &&
+						expressionStatement.getExpression() instanceof LangAssignment assignment &&
+						assignment.getLeftSide() instanceof LangSimpleName simpleName &&
+						simpleName.getIdentifier().equals(variableName)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,
 							   LangAssignment assignment, VariableDeclarationContainer container,
 							   String variableName, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
@@ -492,22 +523,15 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				LangASTNode scopeNode = parent;
 				int endOffset = scopeNode.getStartChar() + scopeNode.getLength();
 				if(scopeNode instanceof LangBlock && scopeNode.getParent() instanceof LangIfStatement ifStatement) {
-					scopeNode = scopeNode.getParent().getParent();
-					startOffset = scopeNode.getStartChar();
-					endOffset = scopeNode.getStartChar() + scopeNode.getLength();
-					boolean variableWithSameNameDefinedInElseBranch = false;
-					if(ifStatement.getElseBody() != null) {
-						List<LangASTNode> elseChildren = ifStatement.getElseBody().getChildren();
-						for(LangASTNode child : elseChildren) {
-							if(child instanceof LangExpressionStatement expressionStatement &&
-									expressionStatement.getExpression() instanceof LangAssignment elseAssignment &&
-									elseAssignment.getLeftSide() instanceof LangSimpleName simpleName &&
-									simpleName.getIdentifier().equals(variableName)) {
-								variableWithSameNameDefinedInElseBranch = true;
-							}
-						}
+					//a variable defined in a branch of an if-elif-else chain is visible after the chain, from its definition until the end of the block enclosing the chain,
+					//where an elif is an if statement nested as the else of the previous one
+					LangIfStatement outermostIfStatement = ifStatement;
+					while(outermostIfStatement.getParent() instanceof LangIfStatement previous && previous.getElseBody() == outermostIfStatement) {
+						outermostIfStatement = previous;
 					}
-					if(!activeVariableDeclarations.containsKey(variableName) && variableWithSameNameDefinedInElseBranch) {
+					scopeNode = outermostIfStatement.getParent();
+					endOffset = scopeNode.getStartChar() + scopeNode.getLength();
+					if(!activeVariableDeclarations.containsKey(variableName) && definedInAllBranches(outermostIfStatement, variableName)) {
 						declaredInIfElseStatement = true;
 					}
 				}

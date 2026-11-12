@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
@@ -1117,7 +1118,28 @@ public class ReplacementAlgorithm {
 			if(jsxElementsReplaced(statement1, statement2, replacementInfo)) {
 				return replacementInfo.getReplacements();
 			}
+			if(sameVariableAssignedWithAnotherCallOnTheSameValue()) {
+				return replacementInfo.getReplacements();
+			}
 			return null;
+		}
+
+		//the same variable is assigned with another call transforming the same value, its first argument, which is a call itself,
+		//i.e., masks = tf.tile(tf.expand_dims(tril, 0), [tf.shape(outputs)[0], 1, 1]) -> masks = tf.expand_dims(tf.expand_dims(tril, 0), 1)
+		private boolean sameVariableAssignedWithAnotherCallOnTheSameValue() {
+			if(assignmentInvocationCoveringTheEntireStatement1 instanceof OperationInvocation call1 && assignmentInvocationCoveringTheEntireStatement2 instanceof OperationInvocation call2 &&
+					statement1.getString().contains(LANG1.ASSIGNMENT) && statement2.getString().contains(LANG2.ASSIGNMENT) &&
+					statement1.getString().substring(0, statement1.getString().indexOf(LANG1.ASSIGNMENT)).equals(statement2.getString().substring(0, statement2.getString().indexOf(LANG2.ASSIGNMENT))) &&
+					!call1.getName().equals(call2.getName()) && Objects.equals(call1.getExpression(), call2.getExpression()) &&
+					call1.arguments().size() > 0 && call2.arguments().size() > 0) {
+				String value1 = call1.arguments().get(0);
+				String value2 = call2.arguments().get(0);
+				if(value1.equals(value2) && value1.contains("(")) {
+					replacementInfo.addReplacement(new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT));
+					return true;
+				}
+			}
+			return false;
 		}
 
 		private Set<Replacement> matchAssignedCallChains() throws RefactoringMinerTimedOutException {

@@ -10,7 +10,9 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
 import gr.uom.java.xmi.decomposition.Visitor;
 
@@ -69,6 +71,10 @@ public class UMLComment extends UMLAbstractDocumentation {
 	public Optional<String> getCodeStatement() {
 		if(codeStatement == null) {
 			String text = getText();
+			if(PathFileUtils.isPythonFile(getLocationInfo().getFilePath())) {
+				codeStatement = pythonCodeStatement(getLocationInfo().getFilePath(), text);
+				return codeStatement;
+			}
 			if(text.startsWith("//")) {
 				text = text.substring(2);
 			}
@@ -76,6 +82,22 @@ public class UMLComment extends UMLAbstractDocumentation {
 			codeStatement = node != null ? Optional.of(Visitor.stringify(node)) : Optional.empty();
 		}
 		return codeStatement;
+	}
+
+	//the Python statement commented out, as the model represents it, i.e., # outputs *= query_masks, or empty if the comment is not a single Python statement
+	public static Optional<String> pythonCodeStatement(String filePath, String text) {
+		String code = text.trim();
+		if(code.isEmpty()) {
+			return Optional.empty();
+		}
+		List<UMLOperation> operations = PythonFileProcessor.parseOperations(filePath, "def __commented_code__():\n    " + code.replace("\n", "\n    ") + "\n");
+		if(operations != null && operations.size() == 1 && operations.get(0).getBody() != null) {
+			List<AbstractStatement> statements = operations.get(0).getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject statement) {
+				return Optional.of(statement.getString());
+			}
+		}
+		return Optional.empty();
 	}
 
 	public boolean isMarkdown() {

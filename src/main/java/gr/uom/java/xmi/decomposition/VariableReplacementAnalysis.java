@@ -15,6 +15,7 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLOperation;
@@ -207,6 +208,40 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+		mergeRenamesOfPythonRedefinitions();
+	}
+
+	//the definitions of a Python variable are the same variable, so the renames of its definitions to the definitions of another variable are a single rename,
+	//with the references of all of them, i.e., es1 = None; if ...: es1 = tuple(...) -> ss1 = None; if ...: ss1 = tuple(...)
+	private void mergeRenamesOfPythonRedefinitions() {
+		List<RenameVariableRefactoring> renames = new ArrayList<RenameVariableRefactoring>(variableRenames);
+		Set<RenameVariableRefactoring> merged = new LinkedHashSet<RenameVariableRefactoring>();
+		for(int i=0; i<renames.size(); i++) {
+			RenameVariableRefactoring kept = renames.get(i);
+			if(merged.contains(kept)) {
+				continue;
+			}
+			for(int j=i+1; j<renames.size(); j++) {
+				RenameVariableRefactoring other = renames.get(j);
+				if(!merged.contains(other) && sameRenameOfPythonVariable(kept, other)) {
+					kept.getReferences().addAll(other.getReferences());
+					merged.add(other);
+				}
+			}
+		}
+		variableRenames.removeAll(merged);
+		refactorings.removeAll(merged);
+	}
+
+	private static boolean sameRenameOfPythonVariable(RenameVariableRefactoring rename1, RenameVariableRefactoring rename2) {
+		VariableDeclaration original1 = rename1.getOriginalVariable();
+		VariableDeclaration original2 = rename2.getOriginalVariable();
+		VariableDeclaration renamed1 = rename1.getRenamedVariable();
+		VariableDeclaration renamed2 = rename2.getRenamedVariable();
+		return rename1.getOperationBefore().equals(rename2.getOperationBefore()) && rename1.getOperationAfter().equals(rename2.getOperationAfter()) &&
+				original1.getVariableName().equals(original2.getVariableName()) && renamed1.getVariableName().equals(renamed2.getVariableName()) &&
+				(original1.equals(original2) || pythonRedefinition(original1, original2, rename1.getOperationBefore())) &&
+				(renamed1.equals(renamed2) || pythonRedefinition(renamed1, renamed2, rename1.getOperationAfter()));
 	}
 
 	private void findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations(UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
@@ -3256,6 +3291,36 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
+	//Python has no variable shadowing within a function: another assignment to a local variable of the same function is a redefinition of the same variable,
+	//modeled as another declaration with an overlapping scope, i.e., ss1 = None ... if ss1 is None: ss1 = tuple(self.sample_space())
+	private static boolean pythonRedefinition(VariableDeclaration variable, VariableDeclaration other, VariableDeclarationContainer container) {
+		if(!PathFileUtils.isPythonFile(variable.getLocationInfo().getFilePath())) {
+			return false;
+		}
+		if(variable.isParameter() || variable.isAttribute() || other.isParameter() || other.isAttribute()) {
+			return false;
+		}
+		List<VariableDeclaration> declarations = container.getAllVariableDeclarations();
+		return declarations.contains(variable) && declarations.contains(other) &&
+				pythonLocalDefinition(variable, container) && pythonLocalDefinition(other, container);
+	}
+
+	//an assignment, or the target of a for loop, i.e., for dataset, data in zip(datasets, data_list), which also assigns a local variable of the function
+	private static boolean pythonLocalDefinition(VariableDeclaration variable, VariableDeclarationContainer container) {
+		if(variable.getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT)) {
+			return true;
+		}
+		if(container.getBody() != null) {
+			for(CompositeStatementObject composite : container.getBody().getCompositeStatement().getInnerNodes()) {
+				if(composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+						composite.getVariableDeclarations().contains(variable)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean inconsistentVariableMapping(VariableDeclaration v1, VariableDeclaration v2, Set<AbstractCodeMapping> set) {
 		if(v1 != null && v2 != null) {
 			for(AbstractCodeMapping mapping : mappings) {
@@ -3300,7 +3365,7 @@ public class VariableReplacementAnalysis {
 								if(otherV1 != null) {
 									VariableScope otherV1Scope = otherV1.getScope();
 									VariableScope v1Scope = v1.getScope();
-									if(otherV1Scope.overlaps(v1Scope)) {
+									if(otherV1Scope.overlaps(v1Scope) && !pythonRedefinition(v1, otherV1, operation1)) {
 										return true;
 									}
 								}
@@ -3345,7 +3410,7 @@ public class VariableReplacementAnalysis {
 								if(otherV2 != null) {
 									VariableScope otherV2Scope = otherV2.getScope();
 									VariableScope v2Scope = v2.getScope();
-									if(otherV2Scope.overlaps(v2Scope)) {
+									if(otherV2Scope.overlaps(v2Scope) && !pythonRedefinition(v2, otherV2, operation2)) {
 										return true;
 									}
 								}

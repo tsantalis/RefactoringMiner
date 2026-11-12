@@ -3851,6 +3851,11 @@ public class StringBasedHeuristics {
 			//without declared types (Python, or JavaScript/TypeScript declarations with inferred types), the type cannot support the match
 			boolean python = LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON);
 			boolean untyped = python || (type1 instanceof InferredType && type2 instanceof InferredType);
+			//the initializers keep only literals and operators in common, i.e., paddings = tf.ones_like(outputs) * (-1e9) -> key_attention_bias = keys_padding * -1e9
+			if(untyped && variableRename && !initializerReplacement && initializer1 != null && initializer2 != null &&
+					onlyLiteralsKept(initializer1, initializer2, v1, v2, replacementInfo, container1, container2)) {
+				initializerReplacement = true;
+			}
 			if(untyped && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
 				boolean thisInitializer = initializer1 != null && initializer1.getExpression().startsWith(LANG1.THIS_DOT) &&
 						initializer2 != null && initializer2.getExpression().startsWith(LANG2.THIS_DOT);
@@ -3873,6 +3878,77 @@ public class StringBasedHeuristics {
 			}
 		}
 		return false;
+	}
+
+	private static boolean onlyLiteralsKept(AbstractExpression initializer1, AbstractExpression initializer2, VariableDeclaration v1, VariableDeclaration v2, ReplacementInfo replacementInfo,
+			VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		List<String> replaced1 = new ArrayList<>();
+		List<String> replaced2 = new ArrayList<>();
+		for(Replacement replacement : replacementInfo.getReplacements()) {
+			if(replacement.getBefore().equals(v1.getVariableName()) && replacement.getAfter().equals(v2.getVariableName())) {
+				continue;
+			}
+			//the same call with a changed receiver or arguments is kept, i.e., -first.objective(first._optima) -> -nimi.objective(nimi._optima)
+			if(replacement instanceof MethodInvocationReplacement invocationReplacement &&
+					invocationReplacement.getInvokedOperationBefore().getName().equals(invocationReplacement.getInvokedOperationAfter().getName())) {
+				return false;
+			}
+			//a variable replaced with its own initializer is the same value, i.e., inputs_shape -> inputs.get_shape() with inputs_shape = inputs.get_shape()
+			if(sameValueByDeclaration(replacement.getBefore(), replacement.getAfter(), container1, container2)) {
+				return false;
+			}
+			if(initializer1.getString().contains(replacement.getBefore()) && initializer2.getString().contains(replacement.getAfter())) {
+				replaced1.add(replacement.getBefore());
+				replaced2.add(replacement.getAfter());
+			}
+		}
+		if(replaced1.isEmpty()) {
+			return false;
+		}
+		return allNamesReplaced(initializer1, replaced1) && allNamesReplaced(initializer2, replaced2);
+	}
+
+	private static boolean sameValueByDeclaration(String before, String after, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		for(VariableDeclaration declaration : container1.getAllVariableDeclarations()) {
+			if(declaration.getVariableName().equals(before) && declaration.getInitializer() != null && declaration.getInitializer().getString().equals(after)) {
+				return true;
+			}
+		}
+		for(VariableDeclaration declaration : container2.getAllVariableDeclarations()) {
+			if(declaration.getVariableName().equals(after) && declaration.getInitializer() != null && declaration.getInitializer().getString().equals(before)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean allNamesReplaced(AbstractExpression initializer, List<String> replaced) {
+		List<String> names = new ArrayList<>();
+		for(LeafExpression variable : initializer.getVariables()) {
+			names.add(variable.getString());
+		}
+		for(AbstractCall call : initializer.getMethodInvocations()) {
+			names.add(call.actualString());
+		}
+		for(AbstractCall creation : initializer.getCreations()) {
+			names.add(creation.actualString());
+		}
+		if(names.isEmpty()) {
+			return false;
+		}
+		for(String name : names) {
+			boolean covered = false;
+			for(String r : replaced) {
+				if(r.contains(name)) {
+					covered = true;
+					break;
+				}
+			}
+			if(!covered) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	static String withoutTemplateArguments(String name) {

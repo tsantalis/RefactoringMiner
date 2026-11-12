@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstJsxElement;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstJsxEmptyExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstJsxExprContainer;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstJsxFragment;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstJsxSpreadChild;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSpreadElement;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstJsxText;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstJsxAttrOrSpread;
@@ -33,6 +36,8 @@ public class JsxElement extends AbstractCall {
 	private String tag;
 	private List<JsxAttribute> attributes = new ArrayList<>();
 	private List<JsxChild> children = new ArrayList<>();
+	//the functions passed by their name as attribute values, i.e., handleStop in onStop={handleStop}
+	private List<MethodReference> functionReferences = new ArrayList<>();
 	private volatile int hashCode = 0;
 
 	//an attribute name=value, a boolean attribute without value (value == null), or a spread attribute {...props} (spread == true, name == the spread expression),
@@ -78,6 +83,14 @@ public class JsxElement extends AbstractCall {
 			else if(attribute instanceof Swc4jAstJsxAttr attr) {
 				String value = attr.getValue().isPresent() ? TypeScriptVisitor.text(fileContent, attr.getValue().get()) : null;
 				this.attributes.add(new JsxAttribute(TypeScriptVisitor.text(fileContent, attr.getName()), value, false, new LocationInfo(sourceFolder, filePath, attr, CodeElementType.JSX_ELEMENT, fileContent)));
+				if(attr.getValue().isPresent() && attr.getValue().get() instanceof Swc4jAstJsxExprContainer valueContainer) {
+					if(valueContainer.getExpr() instanceof Swc4jAstIdent ident) {
+						this.functionReferences.add(new MethodReference(sourceFolder, filePath, ident, ident.getSym(), null, container, fileContent));
+					}
+					else if(valueContainer.getExpr() instanceof Swc4jAstMemberExpr member && member.getProp() instanceof Swc4jAstIdentName prop) {
+						this.functionReferences.add(new MethodReference(sourceFolder, filePath, member, prop.getSym(), TypeScriptVisitor.text(fileContent, member.getObj()), container, fileContent));
+					}
+				}
 			}
 		}
 		addChildren(sourceFolder, filePath, element.getChildren(), container, fileContent);
@@ -141,6 +154,10 @@ public class JsxElement extends AbstractCall {
 		return Collections.unmodifiableList(attributes);
 	}
 
+	public List<MethodReference> getFunctionReferences() {
+		return Collections.unmodifiableList(functionReferences);
+	}
+
 	public List<JsxChild> getChildren() {
 		return Collections.unmodifiableList(children);
 	}
@@ -171,6 +188,7 @@ public class JsxElement extends AbstractCall {
 		newElement.tag = this.tag;
 		newElement.attributes = this.attributes;
 		newElement.children = this.children;
+		newElement.functionReferences = this.functionReferences;
 		update(newElement, oldExpression, newExpression);
 		return newElement;
 	}

@@ -377,7 +377,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 						}
 					}
 					if(isArgument && !isInsideStringLiteral && !isWithinMethodSignature) {
-						m.appendReplacement(sb, Matcher.quoteReplacement(argument));
+						if(LANG.equals(Constants.TYPESCRIPT) && shorthandProperty(afterReplacements, start, start + parameter.length())) {
+							//the shorthand property { coords } is the property coords with the parameter coords as value, i.e., { coords: argument }
+							m.appendReplacement(sb, Matcher.quoteReplacement(parameter + ": " + argument));
+						}
+						else {
+							m.appendReplacement(sb, Matcher.quoteReplacement(argument));
+						}
 					}
 				}
 				m.appendTail(sb);
@@ -385,6 +391,36 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			}
 		}
 		return afterReplacements;
+	}
+
+	//the identifier at [start, end) is a shorthand property of an object literal, i.e., coords in { coords } or { a, coords, b }
+	private static boolean shorthandProperty(String s, int start, int end) {
+		int previous = start - 1;
+		while(previous >= 0 && s.charAt(previous) == ' ') {
+			previous--;
+		}
+		int next = end;
+		while(next < s.length() && s.charAt(next) == ' ') {
+			next++;
+		}
+		if(previous < 0 || next >= s.length() || (s.charAt(previous) != '{' && s.charAt(previous) != ',') || (s.charAt(next) != '}' && s.charAt(next) != ',')) {
+			return false;
+		}
+		//the innermost bracket enclosing the identifier is a brace
+		int depth = 0;
+		for(int i=start-1; i>=0; i--) {
+			char c = s.charAt(i);
+			if(c == ')' || c == ']' || c == '}') {
+				depth++;
+			}
+			else if(c == '(' || c == '[' || c == '{') {
+				if(depth == 0) {
+					return c == '{';
+				}
+				depth--;
+			}
+		}
+		return false;
 	}
 
 	private static boolean quoteBefore(String beforeMatch) {

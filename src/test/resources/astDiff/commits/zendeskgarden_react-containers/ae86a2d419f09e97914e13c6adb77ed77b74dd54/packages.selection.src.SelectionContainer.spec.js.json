@@ -1165,6 +1165,17 @@
   "firstEndPos" : 556,
   "secondEndPos" : 675
 }, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 556,
+  "secondPos" : 675,
+  "firstEndPos" : 688,
+  "secondEndPos" : 802
+}, {
   "firstType" : "object_pattern",
   "secondType" : "object_pattern",
   "firstLabel" : "",
@@ -4107,7 +4118,7 @@
   "firstLabel" : "props",
   "secondLabel" : "props",
   "firstParentType" : "arrow_function",
-  "secondParentType" : "required_parameter",
+  "secondParentType" : "arrow_function",
   "firstPos" : 1938,
   "secondPos" : 1931,
   "firstEndPos" : 1943,

@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.function.BooleanSupplier;
+import java.util.regex.Pattern;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,6 +37,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 
@@ -157,6 +159,122 @@ public abstract class AbstractCall extends LeafExpression {
 	public abstract double normalizedNameDistance(AbstractCall call);
 	public abstract AbstractCall update(String oldExpression, String newExpression);
 	
+	//the parameters, which receive the arguments in order, with the parameters destructured from the same object pattern receiving a single argument
+	public static List<UMLParameter> positionalParameters(List<UMLParameter> parameters) {
+		List<UMLParameter> positionalParameters = new ArrayList<UMLParameter>();
+		VariableDeclaration previous = null;
+		for(UMLParameter parameter : parameters) {
+			VariableDeclaration declaration = parameter.getVariableDeclaration();
+			if(declaration == null || previous == null || !declaration.sameObjectPattern(previous)) {
+				positionalParameters.add(parameter);
+			}
+			previous = declaration;
+		}
+		return positionalParameters;
+	}
+
+	//the argument passed to each parameter, null if none, where the parameters destructured from an object pattern receive the properties of the argument,
+	//i.e., a -> x and c -> y for f({ a: x, b: y }) calling f({a, b: c}), a -> a for f({ a }), and a -> props.a for f(props)
+	public List<String> argumentsOfParameters(List<UMLParameter> parameters) {
+		List<String> argumentsOfParameters = new ArrayList<String>();
+		int position = -1;
+		VariableDeclaration previous = null;
+		Map<String, String> objectLiteralProperties = null;
+		for(UMLParameter parameter : parameters) {
+			VariableDeclaration declaration = parameter.getVariableDeclaration();
+			boolean samePosition = declaration != null && previous != null && declaration.sameObjectPattern(previous);
+			if(!samePosition) {
+				position++;
+				objectLiteralProperties = null;
+			}
+			previous = declaration;
+			String argument = position < arguments.size() ? arguments.get(position) : null;
+			if(argument == null || declaration == null || !declaration.isDestructuredFromObjectPattern()) {
+				argumentsOfParameters.add(argument);
+				continue;
+			}
+			String property = declaration.getObjectPatternProperty();
+			if(property == null) {
+				argumentsOfParameters.add(null);
+			}
+			else if(argument.startsWith("{") && argument.endsWith("}")) {
+				if(objectLiteralProperties == null) {
+					objectLiteralProperties = objectLiteralProperties(argument);
+				}
+				argumentsOfParameters.add(objectLiteralProperties.get(property));
+			}
+			else if(IDENTIFIER_PATTERN.matcher(argument).matches()) {
+				argumentsOfParameters.add(argument + "." + property);
+			}
+			else {
+				argumentsOfParameters.add(null);
+			}
+		}
+		return argumentsOfParameters;
+	}
+
+	//the parameter names mapped to the arguments passed to them
+	public Map<String, String> parameterToArgumentMap(List<UMLParameter> parameters) {
+		Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
+		List<String> argumentsOfParameters = argumentsOfParameters(parameters);
+		for(int i=0; i<parameters.size(); i++) {
+			if(argumentsOfParameters.get(i) != null) {
+				parameterToArgumentMap.put(parameters.get(i).getName(), argumentsOfParameters.get(i));
+			}
+		}
+		return parameterToArgumentMap;
+	}
+
+	private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z_$][\\w$]*(\\.[A-Za-z_$][\\w$]*)*");
+
+	//the values of the properties of the object literal, i.e., a -> a and b -> x for { a, b: x }, without spread and computed properties
+	private static Map<String, String> objectLiteralProperties(String objectLiteral) {
+		Map<String, String> properties = new LinkedHashMap<String, String>();
+		for(String property : AdvancedAssertionMigrationMatcher.splitTopLevelArguments(objectLiteral.substring(1, objectLiteral.length() - 1))) {
+			int colon = topLevelColon(property);
+			if(colon == -1) {
+				if(IDENTIFIER_PATTERN.matcher(property).matches() && !property.contains(".")) {
+					properties.put(property, property);
+				}
+			}
+			else {
+				String key = property.substring(0, colon).trim();
+				if(key.length() > 1 && (key.startsWith("\"") && key.endsWith("\"") || key.startsWith("'") && key.endsWith("'"))) {
+					key = key.substring(1, key.length() - 1);
+				}
+				else if(!IDENTIFIER_PATTERN.matcher(key).matches() || key.contains(".")) {
+					continue;
+				}
+				properties.put(key, property.substring(colon + 1).trim());
+			}
+		}
+		return properties;
+	}
+
+	private static int topLevelColon(String property) {
+		int depth = 0;
+		for(int i=0; i<property.length(); i++) {
+			char c = property.charAt(i);
+			if(c == '(' || c == '[' || c == '{') {
+				depth++;
+			}
+			else if(c == ')' || c == ']' || c == '}') {
+				depth--;
+			}
+			else if(c == '"' || c == '\'' || c == '`') {
+				int end = property.indexOf(c, i + 1);
+				if(end == -1) {
+					return -1;
+				}
+				i = end;
+			}
+			else if(c == ':' && depth == 0) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
 			UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		if(this instanceof OperationInvocation) {

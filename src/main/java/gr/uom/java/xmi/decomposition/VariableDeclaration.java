@@ -165,6 +165,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private boolean declaredInIfElseStatement;
 	//the printed type annotation following the declared name in TypeScript, i.e., ": Promise<any>[]"
 	private String typeAnnotation;
+	//the offset of the object pattern of a parameter destructured from it, i.e., {a, b: c} in f({a, b: c}: Props), otherwise -1
+	private int objectPatternOffset = -1;
+	//the property of the object pattern destructured into the parameter, i.e., b for c in f({a, b: c}: Props), null for ...rest
+	private String objectPatternProperty;
 
 	//the initializer of a class member or of a condition declaration is a sibling of the declarator in the AST, i.e., bool m_flag = false; and if(auto x = f())
 	public static boolean initializerOutsideDeclarator(IASTDeclarator declarator) {
@@ -1319,6 +1323,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(parameterEntry) {
 			this.initializer = parameterInitializer(sourceFolder, filePath, fragment, container, activeVariableDeclarations, fileContent);
 		}
+		if(parameterEntry) {
+			setObjectPatternProperty(fragment);
+		}
 	}
 
 	//the declaration located at another AST node than its binding identifier, i.e., the index signature of its key,
@@ -1360,6 +1367,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.variableName = fragment.getId().getSym();
 		this.type = typeAnnotation;
+		if(parameterEntry) {
+			setObjectPatternProperty(fragment);
+		}
 		//this.initializer = fragment.getInit().isPresent() ? new AbstractExpression(sourceFolder, filePath, fragment.getInit().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent) : null;
 		ISwc4jAst scopeNode = getScopeNode(fragment);
 		int startOffset = fragment.getSpan().getStart();
@@ -1513,6 +1523,51 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			entry = paramProp;
 		}
 		return entry;
+	}
+
+	//the parameter destructured from the object pattern, which is the entire parameter, i.e., a and c in f({a, b: c}: Props) or f({a, b: c} = {})
+	private void setObjectPatternProperty(Swc4jAstBindingIdent identifier) {
+		ISwc4jAst entry = parameterEntry(identifier);
+		if(entry instanceof Swc4jAstTsParamProp) {
+			return;
+		}
+		ISwc4jAst objectPattern = entry.getParent();
+		if(!(objectPattern instanceof Swc4jAstObjectPat)) {
+			return;
+		}
+		ISwc4jAst parent = objectPattern.getParent();
+		if(parent instanceof Swc4jAstAssignPat assignPat && assignPat.getLeft() == objectPattern) {
+			parent = assignPat.getParent();
+		}
+		if(parent instanceof ISwc4jAstPat || parent instanceof ISwc4jAstObjectPatProp) {
+			return;
+		}
+		this.objectPatternOffset = objectPattern.getSpan().getStart();
+		if(entry instanceof Swc4jAstAssignPatProp) {
+			this.objectPatternProperty = identifier.getId().getSym();
+		}
+		else if(entry instanceof Swc4jAstKeyValuePatProp keyValuePatProp) {
+			ISwc4jAstPropName key = keyValuePatProp.getKey();
+			if(key instanceof Swc4jAstIdentName identName) {
+				this.objectPatternProperty = identName.getSym();
+			}
+			else if(key instanceof Swc4jAstStr str) {
+				this.objectPatternProperty = str.getValue();
+			}
+		}
+	}
+
+	public boolean isDestructuredFromObjectPattern() {
+		return objectPatternOffset != -1;
+	}
+
+	public boolean sameObjectPattern(VariableDeclaration other) {
+		return objectPatternOffset != -1 && objectPatternOffset == other.objectPatternOffset &&
+				locationInfo.getFilePath().equals(other.locationInfo.getFilePath());
+	}
+
+	public String getObjectPatternProperty() {
+		return objectPatternProperty;
 	}
 
 	private static ISwc4jAstExpr parameterDefaultValue(Swc4jAstBindingIdent identifier) {

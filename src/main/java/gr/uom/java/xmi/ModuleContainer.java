@@ -280,10 +280,42 @@ public class ModuleContainer implements VariableDeclarationContainer {
 		return lambdas;
 	}
 
+	//the statements of the module and the test suites describe('...', () => {...}), which are kept apart for matching them by their name
+	private List<AbstractStatement> allStatements() {
+		if(describeMap.isEmpty()) {
+			return statementList;
+		}
+		List<AbstractStatement> statements = new ArrayList<>(statementList);
+		statements.addAll(describeMap.values());
+		return statements;
+	}
+
+	//the statements of the module, including the statements of the test suites describe('...', () => {...}) and the callbacks in them
+	@Override
+	public List<String> stringRepresentation() {
+		List<String> stringRepresentation = new ArrayList<>();
+		for(AbstractStatement statement : allStatements()) {
+			addStringRepresentation(statement, stringRepresentation);
+		}
+		return stringRepresentation;
+	}
+
+	private static void addStringRepresentation(AbstractStatement statement, List<String> stringRepresentation) {
+		stringRepresentation.addAll(statement.stringRepresentation());
+		List<LambdaExpressionObject> lambdas = statement instanceof CompositeStatementObject composite ? composite.getAllLambdas() : statement.getLambdas();
+		for(LambdaExpressionObject lambda : lambdas) {
+			if(lambda.getBody() != null) {
+				for(AbstractStatement lambdaStatement : lambda.getBody().getCompositeStatement().getStatements()) {
+					addStringRepresentation(lambdaStatement, stringRepresentation);
+				}
+			}
+		}
+	}
+
 	@Override
 	public List<AbstractCall> getAllOperationInvocations() {
 		List<AbstractCall> list = new ArrayList<>();
-		for(AbstractStatement statement : statementList) {
+		for(AbstractStatement statement : allStatements()) {
 			if(statement instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)statement;
 				list.addAll(composite.getAllMethodInvocations());

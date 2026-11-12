@@ -278,6 +278,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			ModuleContainer container2 = nextClass.getContainer().get();
 			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(container1, container2, this);
 			addOperationBodyMapper(mapper);
+			//the functions extracted from the module statements, i.e., the helpers extracted from the tests in describe('...', () => {...})
+			mapper.matchTestsCallingAddedOperations(addedOperations);
+			checkForExtractedOperations(List.of(mapper));
 			checkForMovedCodeBetweenModuleAndOperations(mapper);
 			if(container1.getNamedExports().size() > 0 || container2.getNamedExports().size() > 0) {
 				UMLNamedExportListDiff diff = new UMLNamedExportListDiff(container1.getNamedExports(), container2.getNamedExports());

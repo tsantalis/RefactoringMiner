@@ -573,7 +573,9 @@ public class OperationInvocation extends AbstractCall {
     	int i=0;
     	int originalExactlyMatchingArguments = 0;
     	int parametersWithDefaultValue = 0;
-    	for(UMLParameter parameter : operation.getParametersWithoutReturnType()) {
+    	List<UMLParameter> parameters = operation.getParametersWithoutReturnType();
+    	List<UMLParameter> positionalParameters = positionalParameters(parameters);
+    	for(UMLParameter parameter : positionalParameters) {
     		// handle parameters with a default value
     		if(parameter.getVariableDeclaration().getInitializer() != null) {
     			parametersWithDefaultValue++;
@@ -596,6 +598,12 @@ public class OperationInvocation extends AbstractCall {
     	}
     	UMLType lastInferredArgumentType = inferredArgumentTypes.size() > 0 ? inferredArgumentTypes.get(inferredArgumentTypes.size()-1) : null;
 		List<UMLType> parameterTypeList = operation.getParameterTypeList();
+		if(positionalParameters.size() < parameters.size()) {
+			parameterTypeList = new ArrayList<UMLType>();
+			for(UMLParameter parameter : positionalParameters) {
+				parameterTypeList.add(parameter.getType());
+			}
+		}
 		boolean result = this.numberOfArguments == parameterTypeList.size() ||
 				(parametersWithDefaultValue > 0 && this.numberOfArguments + parametersWithDefaultValue >= parameterTypeList.size()) ||
 				(PathFileUtils.isJavaScriptFile(getLocationInfo().getFilePath()) && this.numberOfArguments + parametersWithDefaultValue == parameterTypeList.size() - 1) ||

@@ -655,7 +655,7 @@ class AdvancedAssertionMigrationMatcher {
 		return splitTopLevelArguments(expression.substring(openBrace + 1, closeBrace));
 	}
 
-	private List<String> splitTopLevelArguments(String text) {
+	static List<String> splitTopLevelArguments(String text) {
 		if(text == null || text.isEmpty()) {
 			return Collections.emptyList();
 		}

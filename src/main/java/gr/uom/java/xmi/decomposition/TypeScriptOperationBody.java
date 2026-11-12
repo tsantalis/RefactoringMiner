@@ -525,6 +525,10 @@ public class TypeScriptOperationBody extends OperationBody {
 							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
 							}
+							else if(lambda.getOwner() instanceof ModuleContainer module) {
+								//a function declared in a callback of the module, i.e., a helper in describe('...', () => {...}) of a test file
+								module.addNestedOperation(operation);
+							}
 						}
 						else if(container instanceof ModuleContainer) {
 							((ModuleContainer)container).addNestedOperation(operation);
@@ -560,6 +564,10 @@ public class TypeScriptOperationBody extends OperationBody {
 						else if(container instanceof LambdaExpressionObject lambda) {
 							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
+							}
+							else if(lambda.getOwner() instanceof ModuleContainer module) {
+								//a function declared in a callback of the module, i.e., a helper in describe('...', () => {...}) of a test file
+								module.addNestedOperation(operation);
 							}
 						}
 						else if(container instanceof ModuleContainer) {
@@ -647,6 +655,10 @@ public class TypeScriptOperationBody extends OperationBody {
 						else if(container instanceof LambdaExpressionObject lambda) {
 							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
+							}
+							else if(lambda.getOwner() instanceof ModuleContainer module) {
+								//a function declared in a callback of the module, i.e., a helper in describe('...', () => {...}) of a test file
+								module.addNestedOperation(operation);
 							}
 						}
 						else if(container instanceof ModuleContainer) {

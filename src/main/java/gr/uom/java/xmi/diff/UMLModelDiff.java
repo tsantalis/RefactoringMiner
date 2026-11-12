@@ -5842,14 +5842,7 @@ public class UMLModelDiff {
 							if(!invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getContainer1(), mapper.getClassDiff(), mapper.getContainer2().getAllOperationInvocations()) &&
 									!setterInBuildChain(removedOperation, removedOperationInvocation, mapper.getContainer1()) &&
 									!refactoringListContainsAnotherMoveRefactoringWithTheSameRemovedOperation(removedOperation)) {
-								List<String> arguments = removedOperationInvocation.arguments();
-								List<String> parameters = removedOperation.getParameterNameList();
-								Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
-								//special handling for methods with varargs parameter for which no argument is passed in the matching invocation
-								int size = Math.min(arguments.size(), parameters.size());
-								for(int i=0; i<size; i++) {
-									parameterToArgumentMap1.put(parameters.get(i), arguments.get(i));
-								}
+								Map<String, String> parameterToArgumentMap1 = removedOperationInvocation.parameterToArgumentMap(removedOperation.getParametersWithoutReturnType());
 								Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
 								String expression = removedOperationInvocation.getExpression();
 								if(expression != null && !removedOperation.getClassName().endsWith("." + expression)) {
@@ -5931,14 +5924,7 @@ public class UMLModelDiff {
 						for(AbstractCall removedCreation : removedCreations) {
 							if(!invocationMatchesWithAddedOperation(removedCreation, mapper.getContainer1(), mapper.getClassDiff(), mapper.getContainer2().getAllOperationInvocations()) &&
 									!refactoringListContainsAnotherMoveRefactoringWithTheSameRemovedOperation(removedOperation)) {
-								List<String> arguments = removedCreation.arguments();
-								List<String> parameters = removedOperation.getParameterNameList();
-								Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
-								//special handling for methods with varargs parameter for which no argument is passed in the matching invocation
-								int size = Math.min(arguments.size(), parameters.size());
-								for(int i=0; i<size; i++) {
-									parameterToArgumentMap1.put(parameters.get(i), arguments.get(i));
-								}
+								Map<String, String> parameterToArgumentMap1 = removedCreation.parameterToArgumentMap(removedOperation.getParametersWithoutReturnType());
 								Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
 								String expression = removedCreation.getExpression();
 								if(expression != null && !removedOperation.getClassName().endsWith("." + expression)) {
@@ -6500,14 +6486,7 @@ public class UMLModelDiff {
 											createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, false);
 											for(UMLOperation inlinedOperation : possiblyInlinedOperations.keySet()) {
 												AbstractCall inlinedOperationInvocation = possiblyInlinedOperations.get(inlinedOperation);
-												List<String> arguments = inlinedOperationInvocation.arguments();
-												List<String> parameters = inlinedOperation.getParameterNameList();
-												Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
-												//special handling for methods with varargs parameter for which no argument is passed in the matching invocation
-												int size = Math.min(arguments.size(), parameters.size());
-												for(int i=0; i<size; i++) {
-													parameterToArgumentMap1.put(parameters.get(i), arguments.get(i));
-												}
+												Map<String, String> parameterToArgumentMap1 = inlinedOperationInvocation.parameterToArgumentMap(inlinedOperation.getParametersWithoutReturnType());
 												Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
 												String expression = inlinedOperationInvocation.getExpression();
 												if(expression != null && !inlinedOperation.getClassName().endsWith("." + expression)) {
@@ -6643,6 +6622,11 @@ public class UMLModelDiff {
 								if(extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation) && !skipRefactoring(operationBodyMapper.getMappings())) {
 									createExtractAndMoveMethodRefactoringBasedOnClassName(addedOperation, mapper,
 											className, addedOperationInvocations, operationBodyMapper, false);
+									if(addedOperation.getNestedOperations().size() > 0 && extractedFrom(addedOperation, mapper.getContainer1())) {
+										//the nested functions of the extracted function, which are returned to the caller, i.e., const { handleStop } = useDraggable(...) extracted
+										//together with the inline function replaced with handleStop in <Draggable onStop={handleStop} />
+										checkForExtractedAndMovedOperations(List.of(mapper), new ArrayList<>(addedOperation.getNestedOperations()));
+									}
 								}
 								else if(delegateCall != null) {
 									//find added operation that delegates to
@@ -6681,6 +6665,16 @@ public class UMLModelDiff {
 		}
 	}
 
+	private boolean extractedFrom(UMLOperation extractedOperation, VariableDeclarationContainer sourceOperation) {
+		for(Refactoring r : refactorings) {
+			if(r instanceof ExtractOperationRefactoring extract && extract.getExtractedOperation().equals(extractedOperation) &&
+					extract.getSourceOperationBeforeExtraction().equals(sourceOperation)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void createExtractAndMoveMethodRefactoringBasedOnClassName(UMLOperation addedOperation,
 			UMLOperationBodyMapper mapper, String className, List<AbstractCall> addedOperationInvocations,
 			UMLOperationBodyMapper operationBodyMapper, boolean nested) throws RefactoringMinerTimedOutException {
@@ -6708,6 +6702,13 @@ public class UMLModelDiff {
 			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && addedOperationInvocations.get(0).getExpression() != null) {
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
+		}
+		else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && mapper.getClassDiff() != null &&
+				!mapper.getClassDiff().getNextClassName().equals(className) &&
+				mapper.getClassDiff().getNextClass().getLocationInfo().getFilePath().equals(mapper.getContainer2().getLocationInfo().getFilePath()) &&
+				sourceClassImportsTargetClass(mapper.getClassDiff().getNextClassName(), addedOperation.getClassName())) {
+			//a function nested in a function of the module, i.e., const handleClick = useCallback(...) in a component, calling a function imported by the module
 			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		for(CandidateAttributeRefactoring candidate : operationBodyMapper.getCandidateAttributeRenames()) {
@@ -6836,14 +6837,7 @@ public class UMLModelDiff {
 	private UMLOperationBodyMapper createMapperForExtractAndMove(UMLOperation addedOperation,
 			UMLOperationBodyMapper mapper, String className, AbstractCall addedOperationInvocation, Optional<List<AbstractCodeFragment>> leaves1Sublist, List<UMLOperation> addedOperations, boolean nested)
 			throws RefactoringMinerTimedOutException {
-		List<String> arguments = addedOperationInvocation.arguments();
-		List<String> parameters = addedOperation.getParameterNameList();
-		Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
-		//special handling for methods with varargs parameter for which no argument is passed in the matching invocation
-		int size = Math.min(arguments.size(), parameters.size());
-		for(int i=0; i<size; i++) {
-			parameterToArgumentMap2.put(parameters.get(i), arguments.get(i));
-		}
+		Map<String, String> parameterToArgumentMap2 = addedOperationInvocation.parameterToArgumentMap(addedOperation.getParametersWithoutReturnType());
 		UMLClassBaseDiff umlClassDiff = null;
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		if(className.contains(".") && isAnonymousClassName(className) && addedOperationInvocation.getLANG().equals(Constants.JAVA)) {

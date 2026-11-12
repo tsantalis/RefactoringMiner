@@ -3200,6 +3200,17 @@
   "firstEndPos" : 1200,
   "secondEndPos" : 613
 }, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "jsx_expression",
+  "secondParentType" : "jsx_expression",
+  "firstPos" : 1199,
+  "secondPos" : 1221,
+  "firstEndPos" : 1200,
+  "secondEndPos" : 1222
+}, {
   "firstType" : "spread_element",
   "secondType" : "spread_element",
   "firstLabel" : "",
@@ -3287,6 +3298,17 @@
   "secondPos" : 1221,
   "firstEndPos" : 1217,
   "secondEndPos" : 1222
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 1216,
+  "secondPos" : 1238,
+  "firstEndPos" : 1217,
+  "secondEndPos" : 1239
 }, {
   "firstType" : "pair",
   "secondType" : "pair",
@@ -3414,6 +3436,17 @@
   "firstLabel" : "}",
   "secondLabel" : "}",
   "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 1323,
+  "secondPos" : 1536,
+  "firstEndPos" : 1324,
+  "secondEndPos" : 1537
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
   "secondParentType" : "jsx_expression",
   "firstPos" : 1323,
   "secondPos" : 1538,
@@ -3441,6 +3474,17 @@
   "secondPos" : 661,
   "firstEndPos" : 1326,
   "secondEndPos" : 662
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "jsx_expression",
+  "secondParentType" : "jsx_expression",
+  "firstPos" : 1325,
+  "secondPos" : 1538,
+  "firstEndPos" : 1326,
+  "secondEndPos" : 1539
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",

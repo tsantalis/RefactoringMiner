@@ -6256,6 +6256,10 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	protected List<UMLOperationBodyMapper> checkForExtractedOperations() throws RefactoringMinerTimedOutException {
+		return checkForExtractedOperations(getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs());
+	}
+
+	protected List<UMLOperationBodyMapper> checkForExtractedOperations(List<UMLOperationBodyMapper> allMappers) throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
 		Set<UMLOperationBodyMapper> nestedFunctionMappers = new LinkedHashSet<>();
@@ -6273,7 +6277,6 @@ public abstract class UMLAbstractClassDiff {
 			allAddedOperations.addAll(addedOp.getNestedOperations());
 		}
 		allAddedOperations.addAll(outerClassAddedOperations);
-		List<UMLOperationBodyMapper> allMappers = getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs();
 		for(UMLOperationBodyMapper mapper : allMappers) {
 			ExtractOperationDetection detection = new ExtractOperationDetection(mapper, allAddedOperations, this, modelDiff);
 			List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();

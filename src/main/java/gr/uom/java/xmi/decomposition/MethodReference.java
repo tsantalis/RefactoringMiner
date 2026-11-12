@@ -13,6 +13,8 @@ import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.jetbrains.kotlin.psi.KtCallableReferenceExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
+
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -64,6 +66,14 @@ public class MethodReference extends AbstractCall {
 	public MethodReference(KtFile cu, String sourceFolder, String filePath, KtCallableReferenceExpression reference, VariableDeclarationContainer container, String fileContent) {
 		super(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getCallableReference().getReferencedName();
+		this.arguments = new ArrayList<String>();
+	}
+
+	//a function passed by its name, i.e., handleStop or this.handleStop in <Draggable onStop={handleStop} />
+	public MethodReference(String sourceFolder, String filePath, ISwc4jAst reference, String methodName, String expression, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container, fileContent);
+		this.methodName = methodName;
+		this.expression = expression;
 		this.arguments = new ArrayList<String>();
 	}
 

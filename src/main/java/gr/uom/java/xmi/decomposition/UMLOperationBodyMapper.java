@@ -2726,6 +2726,62 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	//the tests it('...', () => {...}) of the test suites describe('...', () => {...}) calling the added functions, matched by their path of names,
+	//whose unmatched statements can be extracted to the added functions; the other tests are not matched statement by statement
+	public void matchTestsCallingAddedOperations(List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
+		if(!(container1 instanceof ModuleContainer module1) || !(container2 instanceof ModuleContainer module2) || addedOperations.isEmpty()) {
+			return;
+		}
+		Set<String> addedOperationNames = new LinkedHashSet<>();
+		for(UMLOperation addedOperation : addedOperations) {
+			addedOperationNames.add(addedOperation.getName());
+		}
+		Map<String, AbstractStatement> tests1 = new LinkedHashMap<>();
+		Map<String, AbstractStatement> tests2 = new LinkedHashMap<>();
+		for(String key : module1.getDescribeMap().keySet()) {
+			collectTests(key, module1.getDescribeMap().get(key), tests1);
+		}
+		for(String key : module2.getDescribeMap().keySet()) {
+			collectTests(key, module2.getDescribeMap().get(key), tests2);
+		}
+		for(String path : tests2.keySet()) {
+			AbstractStatement test2 = tests2.get(path);
+			AbstractStatement test1 = tests1.get(path);
+			if(test1 != null && !test1.getString().equals(test2.getString()) && test1.getLambdas().size() == 1 && test2.getLambdas().size() == 1 &&
+					test1.getLambdas().get(0).getBody() != null && callsAnyOperation(test2.getLambdas().get(0), addedOperationNames)) {
+				//the test is the parent of its statements, delimiting the scope of the statements extracted for each call
+				LeafMapping testMapping = createLeafMapping(test1, test2, new LinkedHashMap<String, String>(), true, true);
+				addMapping(testMapping);
+				UMLOperationBodyMapper lambdaMapper = new UMLOperationBodyMapper(test1.getLambdas().get(0), test2.getLambdas().get(0), this);
+				this.addAllMappings(lambdaMapper.getMappings());
+				this.nonMappedLeavesT1.addAll(lambdaMapper.getNonMappedLeavesT1());
+				this.nonMappedLeavesT2.addAll(lambdaMapper.getNonMappedLeavesT2());
+				this.nonMappedInnerNodesT1.addAll(lambdaMapper.getNonMappedInnerNodesT1());
+				this.nonMappedInnerNodesT2.addAll(lambdaMapper.getNonMappedInnerNodesT2());
+			}
+		}
+	}
+
+	private static void collectTests(String path, AbstractStatement describe, Map<String, AbstractStatement> tests) {
+		Map<String, AbstractStatement> nestedDescribeMap = nestedDescribeMap(describe);
+		for(String key : nestedDescribeMap.keySet()) {
+			collectTests(path + " > " + key, nestedDescribeMap.get(key), tests);
+		}
+		Map<String, AbstractStatement> nestedItMap = nestedItMap(describe);
+		for(String key : nestedItMap.keySet()) {
+			tests.put(path + " > " + key, nestedItMap.get(key));
+		}
+	}
+
+	private static boolean callsAnyOperation(LambdaExpressionObject lambda, Set<String> operationNames) {
+		for(AbstractCall call : lambda.getAllOperationInvocations()) {
+			if(operationNames.contains(call.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private int matchNestedDescribeMaps(AbstractStatement statement1, AbstractStatement statement2) throws RefactoringMinerTimedOutException {
 		int mappings = 0;
 		Map<String, AbstractStatement> nestedDescribeMap1 = nestedDescribeMap(statement1);

@@ -8810,6 +8810,72 @@
   "firstEndPos" : 2569,
   "secondEndPos" : 2767
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 2573,
+  "secondPos" : 2771,
+  "firstEndPos" : 2651,
+  "secondEndPos" : 2860
+}, {
+  "firstType" : "assignment_expression",
+  "secondType" : "assignment_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 2573,
+  "secondPos" : 2771,
+  "firstEndPos" : 2650,
+  "secondEndPos" : 2859
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sentMessage",
+  "secondLabel" : "sentMessage",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 2573,
+  "secondPos" : 2771,
+  "firstEndPos" : 2584,
+  "secondEndPos" : 2782
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 2585,
+  "secondPos" : 2783,
+  "firstEndPos" : 2586,
+  "secondEndPos" : 2784
+}, {
+  "firstType" : "await_expression",
+  "secondType" : "await_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "as_expression",
+  "firstPos" : 2587,
+  "secondPos" : 2785,
+  "firstEndPos" : 2650,
+  "secondEndPos" : 2848
+}, {
+  "firstType" : "await",
+  "secondType" : "await",
+  "firstLabel" : "await",
+  "secondLabel" : "await",
+  "firstParentType" : "await_expression",
+  "secondParentType" : "await_expression",
+  "firstPos" : 2587,
+  "secondPos" : 2785,
+  "firstEndPos" : 2592,
+  "secondEndPos" : 2790
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -9095,6 +9161,17 @@
   "secondPos" : 2847,
   "firstEndPos" : 2650,
   "secondEndPos" : 2848
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 2650,
+  "secondPos" : 2859,
+  "firstEndPos" : 2651,
+  "secondEndPos" : 2860
 }, {
   "firstType" : "}",
   "secondType" : "}",

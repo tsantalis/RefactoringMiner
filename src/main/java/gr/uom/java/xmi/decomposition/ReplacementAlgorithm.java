@@ -1977,7 +1977,18 @@ public class ReplacementAlgorithm {
 
 		private void findExpressionReplacements() throws RefactoringMinerTimedOutException {
 			findReplacements(variablesInitializedWith(variables1, objectLiterals2, container1), objectLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_OBJECT_LITERAL, container1, container2, classDiff);
-			findReplacements(objectLiterals1, variablesInitializedWith(variables2, objectLiterals1, container2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_OBJECT_LITERAL, container1, container2, classDiff);
+			Set<String> initializedVariables2 = variablesInitializedWith(variables2, objectLiterals1, container2);
+			if(initializedVariables2.isEmpty() && operationBodyMapper.getCallSiteOperation() != null && operationBodyMapper.getParameterToArgumentMap2().isPresent() &&
+					operationBodyMapper.getParameterToArgumentMap2().get().size() > 0) {
+				//the arguments replacing the parameters of the extracted method are variables of the call site, i.e., setup(location) in setup(coords) { mock({ coords }); }
+				Set<String> arguments2 = new LinkedHashSet<>(variables2);
+				arguments2.retainAll(operationBodyMapper.getParameterToArgumentMap2().get().values());
+				//the call can be in a lambda of the call site, i.e., in the test it('...', () => {...}) of a test suite
+				AbstractCall call = operationBodyMapper.getOperationInvocation();
+				VariableDeclarationContainer callContainer = call != null && call.getContainer() instanceof LambdaExpressionObject lambda ? lambda : operationBodyMapper.getCallSiteOperation();
+				initializedVariables2 = variablesInitializedWith(arguments2, objectLiterals1, callContainer);
+			}
+			findReplacements(objectLiterals1, initializedVariables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_OBJECT_LITERAL, container1, container2, classDiff);
 			
 			findReplacements(methodInvocations1, arrayAccesses2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);
 			findReplacements(arrayAccesses1, methodInvocations2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION, container1, container2, classDiff);

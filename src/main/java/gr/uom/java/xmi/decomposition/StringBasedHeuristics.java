@@ -900,6 +900,10 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals(LANG1.THIS_DOT)) {
 				return true;
 			}
+			if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) &&
+					(differOnlyInTypeAssertion(s1, s2, fragment2) || differOnlyInTypeAssertion(s2, s1, fragment1))) {
+				return true;
+			}
 			if(!diff1.isEmpty() && StringDistance.isNumeric(diff1) && !diff2.isEmpty() && StringDistance.isNumeric(diff2) &&
 					!commonSuffix.startsWith("=")) {
 				boolean skip = false;
@@ -1219,6 +1223,21 @@ public class StringBasedHeuristics {
 			VariableDeclaration declaration2 = variableDeclarations2.get(0);
 			for(Replacement r : replacements) {
 				if(r.getBefore().equals(declaration1.getVariableName()) && r.getAfter().equals(declaration2.getVariableName())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	//the TypeScript type assertion added to an expression, i.e., return JSON.parse(s); -> return JSON.parse(s) as Strategy;
+	private static boolean differOnlyInTypeAssertion(String s1, String s2, AbstractCodeFragment fragment2) {
+		for(LeafExpression cast : fragment2.getCastExpressions()) {
+			String castString = cast.getString();
+			int index = castString.lastIndexOf(" as ");
+			if(index > 0 && s2.contains(castString)) {
+				String operand = castString.substring(0, index);
+				if(s2.replace(castString, operand).equals(s1)) {
 					return true;
 				}
 			}

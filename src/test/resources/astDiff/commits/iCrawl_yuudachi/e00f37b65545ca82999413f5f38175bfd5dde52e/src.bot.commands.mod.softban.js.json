@@ -6786,6 +6786,72 @@
   "firstEndPos" : 1892,
   "secondEndPos" : 2056
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 1896,
+  "secondPos" : 2060,
+  "firstEndPos" : 1978,
+  "secondEndPos" : 2153
+}, {
+  "firstType" : "assignment_expression",
+  "secondType" : "assignment_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 1896,
+  "secondPos" : 2060,
+  "firstEndPos" : 1977,
+  "secondEndPos" : 2152
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sentMessage",
+  "secondLabel" : "sentMessage",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 1896,
+  "secondPos" : 2060,
+  "firstEndPos" : 1907,
+  "secondEndPos" : 2071
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 1908,
+  "secondPos" : 2072,
+  "firstEndPos" : 1909,
+  "secondEndPos" : 2073
+}, {
+  "firstType" : "await_expression",
+  "secondType" : "await_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "as_expression",
+  "firstPos" : 1910,
+  "secondPos" : 2074,
+  "firstEndPos" : 1977,
+  "secondEndPos" : 2141
+}, {
+  "firstType" : "await",
+  "secondType" : "await",
+  "firstLabel" : "await",
+  "secondLabel" : "await",
+  "firstParentType" : "await_expression",
+  "secondParentType" : "await_expression",
+  "firstPos" : 1910,
+  "secondPos" : 2074,
+  "firstEndPos" : 1915,
+  "secondEndPos" : 2079
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -7071,6 +7137,17 @@
   "secondPos" : 2140,
   "firstEndPos" : 1977,
   "secondEndPos" : 2141
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 1977,
+  "secondPos" : 2152,
+  "firstEndPos" : 1978,
+  "secondEndPos" : 2153
 }, {
   "firstType" : "try_statement",
   "secondType" : "try_statement",

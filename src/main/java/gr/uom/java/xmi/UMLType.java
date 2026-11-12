@@ -62,6 +62,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConditionalType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsFnType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsImportType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexedAccessType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsInferType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
@@ -655,7 +656,16 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			return elementType;
 		}
 		else if(type instanceof Swc4jAstTsConditionalType conditionalType) {
-			//TODO create UMLType subclass
+			UMLType checkType = extractTypeObject(sourceFolder, filePath, fileContent, conditionalType.getCheckType(), 0);
+			UMLType extendsType = extractTypeObject(sourceFolder, filePath, fileContent, conditionalType.getExtendsType(), 0);
+			UMLType trueType = extractTypeObject(sourceFolder, filePath, fileContent, conditionalType.getTrueType(), 0);
+			UMLType falseType = extractTypeObject(sourceFolder, filePath, fileContent, conditionalType.getFalseType(), 0);
+			return new ConditionalType(checkType, extendsType, trueType, falseType);
+		}
+		else if(type instanceof Swc4jAstTsInferType inferType) {
+			//the type variable declared in the extends clause of a conditional type, i.e., infer T in C extends Check<infer T> ? T : never
+			UMLType leafType = extractTypeObject("infer " + inferType.getTypeParam().getName().getSym(), PathFileUtils.getLang(filePath));
+			return leafType;
 		}
 		else if(type instanceof Swc4jAstTsTypePredicate typePredicate) {
 			if(typePredicate.getTypeAnn().isPresent()) {

@@ -202,13 +202,6 @@ public class Visitor extends ASTVisitor {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getCreations().add(creation);
 		}
-		ArrayInitializer initializer = node.getInitializer();
-		if(initializer != null) {
-			List<Expression> expressions = initializer.expressions();
-			if(expressions.size() > 10) {
-				return false;
-			}
-		}
 		return super.visit(node);
 	}
 

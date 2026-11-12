@@ -80,6 +80,22 @@ public class LangAssignment extends LangExpression {
         this.typeAnnotation = typeAnnotation;
     }
 
+    //the type declared by the annotation, which a bare Final qualifier does not declare (PEP 591), so the type comes from the value,
+    //i.e., null for MAX_BYTES: Final = 10 and int for MAX_BYTES: Final[int] = 10, also with typing.Final
+    public String getDeclaredType() {
+        if(typeAnnotation == null) {
+            return null;
+        }
+        String annotation = typeAnnotation.strip();
+        java.util.regex.Matcher matcher = FINAL_QUALIFIER.matcher(annotation);
+        if(matcher.matches()) {
+            return matcher.group(1) != null ? matcher.group(1).strip() : null;
+        }
+        return annotation;
+    }
+
+    private static final java.util.regex.Pattern FINAL_QUALIFIER = java.util.regex.Pattern.compile("(?:[A-Za-z_]\\w*\\.)*Final(?:\\[(.*)\\])?", java.util.regex.Pattern.DOTALL);
+
     public List<LangASTNode> getTypeParameters() {
         return typeParameters;
     }

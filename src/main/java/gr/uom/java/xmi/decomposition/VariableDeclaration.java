@@ -566,8 +566,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				this.type = ((ObjectCreation)creationCoveringEntireFragment).getType();
 			}
 		}
-		if(assignment.getTypeAnnotation() != null) {
-			this.type = UMLType.extractTypeObject(assignment.getTypeAnnotation(), "[", "]", null, LANG);
+		if(assignment.getDeclaredType() != null) {
+			this.type = UMLType.extractTypeObject(assignment.getDeclaredType(), "[", "]", null, LANG);
 		}
 
 		this.isAttribute = false;

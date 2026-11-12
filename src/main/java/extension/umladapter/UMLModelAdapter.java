@@ -623,7 +623,7 @@ public class UMLModelAdapter {
             );
             UMLAttribute attribute = new UMLAttribute(
                     attributeName,
-                    assignment.getTypeAnnotation() != null ? UMLType.extractTypeObject(assignment.getTypeAnnotation(), "[", "]", null, PathFileUtils.getLang(filePath)) : UMLType.extractTypeObject("Object", PathFileUtils.getLang(filePath)),
+                    assignment.getDeclaredType() != null ? UMLType.extractTypeObject(assignment.getDeclaredType(), "[", "]", null, PathFileUtils.getLang(filePath)) : UMLType.extractTypeObject("Object", PathFileUtils.getLang(filePath)),
                     attributeLocationInfo,
                     typeDeclaration.getName()
             );

@@ -270,7 +270,8 @@ public class InlineOperationRefactoring extends ChangeTypeRefactoring {
 			List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
-					List<LeafExpression> expressions1 = leaf.findExpression(argument);
+					//the argument of the call, and not the same expression elsewhere in the statement, i.e., count in count = process(values, count)
+					List<LeafExpression> expressions1 = leaf.findExpression(argument).stream().filter(e -> call.getLocationInfo().subsumes(e.getLocationInfo())).toList();
 					if(expressions1.size() >= 1) {
 						int occurrence = 0;
 						for(LeafExpression expression2 : expressions2) {

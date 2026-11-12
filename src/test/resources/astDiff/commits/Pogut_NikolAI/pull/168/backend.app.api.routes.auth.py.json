@@ -7600,6 +7600,72 @@
   "firstEndPos" : 4794,
   "secondEndPos" : 7568
 }, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "assignment",
+  "firstPos" : 4811,
+  "secondPos" : 4984,
+  "firstEndPos" : 4886,
+  "secondEndPos" : 5040
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sign_in_problem_page",
+  "secondLabel" : "sign_in_problem_page",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 4811,
+  "secondPos" : 4984,
+  "firstEndPos" : 4831,
+  "secondEndPos" : 5004
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "\"Sign-in was cancelled.\"",
+  "secondLabel" : "\"Sign-in was cancelled.\"",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 4832,
+  "secondPos" : 7599,
+  "firstEndPos" : 4856,
+  "secondEndPos" : 7623
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 4858,
+  "secondPos" : 7625,
+  "firstEndPos" : 4885,
+  "secondEndPos" : 7652
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "status",
+  "secondLabel" : "status",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 4858,
+  "secondPos" : 7625,
+  "firstEndPos" : 4864,
+  "secondEndPos" : 7631
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "HTTP_400_BAD_REQUEST",
+  "secondLabel" : "HTTP_400_BAD_REQUEST",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 4865,
+  "secondPos" : 7632,
+  "firstEndPos" : 4885,
+  "secondEndPos" : 7652
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "# Anything else (redirect_uri_mismatch, application_suspended, ...) is for an operator to fix.",
@@ -7731,6 +7797,72 @@
   "secondPos" : 7851,
   "firstEndPos" : 5075,
   "secondEndPos" : 7856
+}, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "assignment",
+  "firstPos" : 5089,
+  "secondPos" : 4984,
+  "firstEndPos" : 5153,
+  "secondEndPos" : 5040
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sign_in_problem_page",
+  "secondLabel" : "sign_in_problem_page",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 5089,
+  "secondPos" : 4984,
+  "firstEndPos" : 5109,
+  "secondEndPos" : 5004
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GITHUB_FAILED",
+  "secondLabel" : "GITHUB_FAILED",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 5110,
+  "secondPos" : 7884,
+  "firstEndPos" : 5123,
+  "secondEndPos" : 7897
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 5125,
+  "secondPos" : 7899,
+  "firstEndPos" : 5152,
+  "secondEndPos" : 7926
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "status",
+  "secondLabel" : "status",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 5125,
+  "secondPos" : 7899,
+  "firstEndPos" : 5131,
+  "secondEndPos" : 7905
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "HTTP_502_BAD_GATEWAY",
+  "secondLabel" : "HTTP_502_BAD_GATEWAY",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 5132,
+  "secondPos" : 7906,
+  "firstEndPos" : 5152,
+  "secondEndPos" : 7926
 }, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",
@@ -8319,6 +8451,28 @@
   "secondType" : "call",
   "firstLabel" : "",
   "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "assignment",
+  "firstPos" : 5502,
+  "secondPos" : 4984,
+  "firstEndPos" : 5560,
+  "secondEndPos" : 5040
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sign_in_problem_page",
+  "secondLabel" : "sign_in_problem_page",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 5502,
+  "secondPos" : 4984,
+  "firstEndPos" : 5522,
+  "secondEndPos" : 5004
+}, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 5523,
@@ -8380,6 +8534,39 @@
   "secondPos" : 8339,
   "firstEndPos" : 5539,
   "secondEndPos" : 8345
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 5542,
+  "secondPos" : 8348,
+  "firstEndPos" : 5559,
+  "secondEndPos" : 8365
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "error",
+  "secondLabel" : "error",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 5542,
+  "secondPos" : 8348,
+  "firstEndPos" : 5547,
+  "secondEndPos" : 8353
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "status_code",
+  "secondLabel" : "status_code",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 5548,
+  "secondPos" : 8354,
+  "firstEndPos" : 5559,
+  "secondEndPos" : 8365
 }, {
   "firstType" : "except_clause",
   "secondType" : "except_clause",
@@ -8611,6 +8798,72 @@
   "secondPos" : 8529,
   "firstEndPos" : 5714,
   "secondEndPos" : 8534
+}, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "assignment",
+  "firstPos" : 5740,
+  "secondPos" : 4984,
+  "firstEndPos" : 5851,
+  "secondEndPos" : 5040
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sign_in_problem_page",
+  "secondLabel" : "sign_in_problem_page",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 5740,
+  "secondPos" : 4984,
+  "firstEndPos" : 5760,
+  "secondEndPos" : 5004
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "\"Sign-in failed. Try again.\"",
+  "secondLabel" : "\"Sign-in failed. Try again.\"",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 5774,
+  "secondPos" : 8587,
+  "firstEndPos" : 5802,
+  "secondEndPos" : 8615
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 5804,
+  "secondPos" : 8629,
+  "firstEndPos" : 5841,
+  "secondEndPos" : 8666
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "status",
+  "secondLabel" : "status",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 5804,
+  "secondPos" : 8629,
+  "firstEndPos" : 5810,
+  "secondEndPos" : 8635
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "HTTP_500_INTERNAL_SERVER_ERROR",
+  "secondLabel" : "HTTP_500_INTERNAL_SERVER_ERROR",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 5811,
+  "secondPos" : 8636,
+  "firstEndPos" : 5841,
+  "secondEndPos" : 8666
 }, {
   "firstType" : "decorated_definition",
   "secondType" : "decorated_definition",
@@ -9668,6 +9921,72 @@
   "firstEndPos" : 6618,
   "secondEndPos" : 10079
 }, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "assignment",
+  "firstPos" : 6545,
+  "secondPos" : 4984,
+  "firstEndPos" : 6618,
+  "secondEndPos" : 5040
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sign_in_problem_page",
+  "secondLabel" : "sign_in_problem_page",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 6545,
+  "secondPos" : 4984,
+  "firstEndPos" : 6565,
+  "secondEndPos" : 5004
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "NOT_CONFIGURED",
+  "secondLabel" : "NOT_CONFIGURED",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 6566,
+  "secondPos" : 10015,
+  "firstEndPos" : 6580,
+  "secondEndPos" : 10029
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 6582,
+  "secondPos" : 10031,
+  "firstEndPos" : 6617,
+  "secondEndPos" : 10066
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "status",
+  "secondLabel" : "status",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 6582,
+  "secondPos" : 10031,
+  "firstEndPos" : 6588,
+  "secondEndPos" : 10037
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "HTTP_503_SERVICE_UNAVAILABLE",
+  "secondLabel" : "HTTP_503_SERVICE_UNAVAILABLE",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 6589,
+  "secondPos" : 10038,
+  "firstEndPos" : 6617,
+  "secondEndPos" : 10066
+}, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
   "firstLabel" : "",
@@ -9953,6 +10272,72 @@
   "secondPos" : 10194,
   "firstEndPos" : 6794,
   "secondEndPos" : 10255
+}, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "assignment",
+  "firstPos" : 6811,
+  "secondPos" : 4984,
+  "firstEndPos" : 6875,
+  "secondEndPos" : 5040
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sign_in_problem_page",
+  "secondLabel" : "sign_in_problem_page",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 6811,
+  "secondPos" : 4984,
+  "firstEndPos" : 6831,
+  "secondEndPos" : 5004
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "STATE_EXPIRED",
+  "secondLabel" : "STATE_EXPIRED",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 6832,
+  "secondPos" : 10286,
+  "firstEndPos" : 6845,
+  "secondEndPos" : 10299
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 6847,
+  "secondPos" : 10301,
+  "firstEndPos" : 6874,
+  "secondEndPos" : 10328
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "status",
+  "secondLabel" : "status",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 6847,
+  "secondPos" : 10301,
+  "firstEndPos" : 6853,
+  "secondEndPos" : 10307
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "HTTP_400_BAD_REQUEST",
+  "secondLabel" : "HTTP_400_BAD_REQUEST",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 6854,
+  "secondPos" : 10308,
+  "firstEndPos" : 6874,
+  "secondEndPos" : 10328
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
@@ -10591,6 +10976,72 @@
   "secondPos" : 10704,
   "firstEndPos" : 7237,
   "secondEndPos" : 10715
+}, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "assignment",
+  "firstPos" : 7254,
+  "secondPos" : 4984,
+  "firstEndPos" : 7318,
+  "secondEndPos" : 5040
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "sign_in_problem_page",
+  "secondLabel" : "sign_in_problem_page",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 7254,
+  "secondPos" : 4984,
+  "firstEndPos" : 7274,
+  "secondEndPos" : 5004
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GITHUB_FAILED",
+  "secondLabel" : "GITHUB_FAILED",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 7275,
+  "secondPos" : 10746,
+  "firstEndPos" : 7288,
+  "secondEndPos" : 10759
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 7290,
+  "secondPos" : 10761,
+  "firstEndPos" : 7317,
+  "secondEndPos" : 10788
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "status",
+  "secondLabel" : "status",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 7290,
+  "secondPos" : 10761,
+  "firstEndPos" : 7296,
+  "secondEndPos" : 10767
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "HTTP_502_BAD_GATEWAY",
+  "secondLabel" : "HTTP_502_BAD_GATEWAY",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 7297,
+  "secondPos" : 10768,
+  "firstEndPos" : 7317,
+  "secondEndPos" : 10788
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

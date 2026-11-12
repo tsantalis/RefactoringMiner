@@ -278,7 +278,8 @@ public class ExtractOperationRefactoring extends ChangeTypeRefactoring {
 			List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
-					List<LeafExpression> expressions2 = leaf.findExpression(argument);
+					//the argument of the call, and not the same expression elsewhere in the statement, i.e., count in count = process(values, count)
+					List<LeafExpression> expressions2 = leaf.findExpression(argument).stream().filter(e -> call.getLocationInfo().subsumes(e.getLocationInfo())).toList();
 					if(expressions2.size() >= 1) {
 						int occurrence = 0;
 						for(LeafExpression expression1 : expressions1) {

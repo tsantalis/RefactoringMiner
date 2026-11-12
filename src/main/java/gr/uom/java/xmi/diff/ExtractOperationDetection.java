@@ -629,6 +629,26 @@ public class ExtractOperationDetection {
 		return null;
 	}
 
+	//a returned expression extracted into a variable that is returned after more statements use it, i.e., return sign_in_problem_page(message, status) ->
+	//page = sign_in_problem_page(message, status_code, sign_in_path); _clear_cookie(page, ...); return page in the extracted method,
+	//so the statements between the declaration and the return using the variable complete the returned value
+	private static int statementsUsingReturnedVariable(UMLOperationBodyMapper operationBodyMapper, AbstractCodeFragment declaration, AbstractCodeFragment returnStatement, String variableName) {
+		int count = 0;
+		for(AbstractCodeFragment leaf2 : operationBodyMapper.getNonMappedLeavesT2()) {
+			if(leaf2 != returnStatement && leaf2.countableStatement() && leaf2.getVariableDeclarations().isEmpty() &&
+					leaf2.getLocationInfo().getStartOffset() > declaration.getLocationInfo().getEndOffset() &&
+					leaf2.getLocationInfo().getEndOffset() < returnStatement.getLocationInfo().getStartOffset()) {
+				for(LeafExpression variable : leaf2.getVariables()) {
+					if(variable.getString().equals(variableName)) {
+						count++;
+						break;
+					}
+				}
+			}
+		}
+		return count;
+	}
+
 	private boolean extractMatchCondition(UMLOperationBodyMapper operationBodyMapper, List<AbstractCodeMapping> additionalExactMatches, boolean forNestedMapper) {
 		if(operationBodyMapper.getMappings().size() == 1) {
 			AbstractCodeMapping mapping = operationBodyMapper.getMappings().iterator().next();
@@ -697,6 +717,9 @@ public class ExtractOperationDetection {
 					for(AbstractCodeFragment leaf2 : operationBodyMapper.getNonMappedLeavesT2()) {
 						if(leaf2.countableStatement() && leaf2.getString().equals(LANG2.RETURN_SPACE + variableDeclaration.getVariableName() + LANG2.STATEMENT_TERMINATION)) {
 							nonMappedElementsT2--;
+							if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+								nonMappedElementsT2 -= statementsUsingReturnedVariable(operationBodyMapper, mapping.getFragment2(), leaf2, variableDeclaration.getVariableName());
+							}
 							break;
 						}
 					}

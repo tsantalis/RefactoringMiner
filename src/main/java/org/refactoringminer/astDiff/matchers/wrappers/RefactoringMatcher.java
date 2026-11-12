@@ -18,7 +18,10 @@ import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /* Created by pourya on 2024-05-22*/
@@ -148,7 +151,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     Tree dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, bodyMapper.getOperation2().getLocationInfo(), LANG2);
                     new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcOperationNode, dstOperationNode, mappingStore);
                 }
-                if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
+                if(!ambiguousArgumentMappings(refactoringList, refactoring))
                     new ArgumentMappingsMatcher(optimizationData, extractOperationRefactoring.getArgumentMappings()).match(srcTree, dstTree, mappingStore);
             } else if (refactoring instanceof InlineOperationRefactoring) {
                 InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
@@ -161,7 +164,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     Tree dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, bodyMapper.getOperation2().getLocationInfo(), LANG2);
                     new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2, optimizationData.getDeferredFlattenings()).match(srcOperationNode, dstOperationNode, mappingStore);
                 }
-                if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
+                if(!ambiguousArgumentMappings(refactoringList, refactoring))
                     new ArgumentMappingsMatcher(optimizationData, inlineOperationRefactoring.getArgumentMappings()).match(srcTree, dstTree, mappingStore);
             } else if (refactoring instanceof MoveCodeRefactoring) {
                 MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
@@ -419,6 +422,41 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
     //the refactoring elements are in other files than the matched trees, i.e., a variable renamed in a method of another file
     private boolean inOtherFiles(LocationInfoProvider before, LocationInfoProvider after) {
         return !before.getLocationInfo().getFilePath().equals(srcPath) || !after.getLocationInfo().getFilePath().equals(dstPath);
+    }
+
+    //the same method extracted (inlined) more than once from (to) the same method has an instance per call site, whose argument mappings are ambiguous
+    //when an expression is mapped to the arguments of more than one call, or the arguments of a call are mapped by more than one instance,
+    //i.e., the identical calls of the extracted method, but distinct, i.e., _problem_page(GITHUB_FAILED, ...) and _problem_page(STATE_EXPIRED, ...)
+    private static boolean ambiguousArgumentMappings(List<Refactoring> refactoringList, Refactoring refactoring) {
+        if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
+            return false;
+        Map<LocationInfo, Set<LocationInfo>> targets = new HashMap<>();
+        for(AbstractCodeMapping mapping : argumentMappings(refactoring)) {
+            targets.computeIfAbsent(mapping.getFragment1().getLocationInfo(), k -> new HashSet<>()).add(mapping.getFragment2().getLocationInfo());
+        }
+        Set<LocationInfo> ownTargets = new HashSet<>();
+        for(Set<LocationInfo> set : targets.values()) {
+            if(set.size() > 1)
+                return true;
+            ownTargets.addAll(set);
+        }
+        for(Refactoring r : refactoringList) {
+            if(r != refactoring && r.toString().equals(refactoring.toString())) {
+                for(AbstractCodeMapping mapping : argumentMappings(r)) {
+                    if(ownTargets.contains(mapping.getFragment2().getLocationInfo()))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static List<AbstractCodeMapping> argumentMappings(Refactoring refactoring) {
+        if(refactoring instanceof ExtractOperationRefactoring extract)
+            return extract.getArgumentMappings();
+        if(refactoring instanceof InlineOperationRefactoring inline)
+            return inline.getArgumentMappings();
+        return List.of();
     }
 
     static boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, Refactoring refactoring) {

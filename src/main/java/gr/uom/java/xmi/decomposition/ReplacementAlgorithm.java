@@ -7693,9 +7693,12 @@ public class ReplacementAlgorithm {
 				if(lambdas1.size() < lambdas2.size()) {
 					for(int i=0; i<lambdas1.size(); i++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
-						List<LambdaExpressionObject> filtered2 = lambdas2.stream().filter(l -> l.getBodyHashCode() == lambda1.getBodyHashCode()).collect(Collectors.toList());
+						List<LambdaExpressionObject> filtered2 = sameLambdas(lambda1, lambdas2);
 						if(filtered2.size() == 1) {
 							processLambdas(lambda1, filtered2.get(0), replacementInfo, operationBodyMapper, false);
+						}
+						else if(filtered2.size() > 1 && lambda1.getBody() == null && filtered2.get(0).getString().equals(lambda1.getString())) {
+							processLambdas(lambda1, filtered2.get(Math.min(sameTextOccurrence(lambda1, lambdas1), filtered2.size()-1)), replacementInfo, operationBodyMapper, false);
 						}
 						else {
 							for(int j=0; j<lambdas2.size(); j++) {
@@ -7715,9 +7718,12 @@ public class ReplacementAlgorithm {
 				else {
 					for(int j=0; j<lambdas2.size(); j++) {
 						LambdaExpressionObject lambda2 = lambdas2.get(j);
-						List<LambdaExpressionObject> filtered1 = lambdas1.stream().filter(l -> l.getBodyHashCode() == lambda2.getBodyHashCode()).collect(Collectors.toList());
+						List<LambdaExpressionObject> filtered1 = sameLambdas(lambda2, lambdas1);
 						if(filtered1.size() == 1) {
 							processLambdas(filtered1.get(0), lambda2, replacementInfo, operationBodyMapper, false);
+						}
+						else if(filtered1.size() > 1 && lambda2.getBody() == null && filtered1.get(0).getString().equals(lambda2.getString())) {
+							processLambdas(filtered1.get(Math.min(sameTextOccurrence(lambda2, lambdas2), filtered1.size()-1)), lambda2, replacementInfo, operationBodyMapper, false);
 						}
 						else {
 							for(int i=0; i<lambdas1.size(); i++) {
@@ -7822,6 +7828,33 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return null;
+	}
+
+	//lambdas without a block body, i.e., method references and expression lambdas, all have the same body hash code,
+	//so those with the same text are preferred, i.e., PlanNamedTypes::writeAggregateExec is paired with the identical reference
+	//and not with every other method reference of the statement
+	private static List<LambdaExpressionObject> sameLambdas(LambdaExpressionObject lambda, List<LambdaExpressionObject> others) {
+		if(lambda.getBody() == null) {
+			List<LambdaExpressionObject> sameText = others.stream().filter(l -> l.getBody() == null && l.getString().equals(lambda.getString())).collect(Collectors.toList());
+			if(sameText.size() > 0) {
+				return sameText;
+			}
+		}
+		return others.stream().filter(l -> l.getBodyHashCode() == lambda.getBodyHashCode()).collect(Collectors.toList());
+	}
+
+	//the position of the lambda among the lambdas of its statement with the same text, so that repeated identical method references are paired in order
+	private static int sameTextOccurrence(LambdaExpressionObject lambda, List<LambdaExpressionObject> lambdas) {
+		int occurrence = 0;
+		for(LambdaExpressionObject other : lambdas) {
+			if(other == lambda) {
+				break;
+			}
+			if(other.getBody() == null && other.getString().equals(lambda.getString())) {
+				occurrence++;
+			}
+		}
+		return occurrence;
 	}
 
 	protected static void processLambdas(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2,

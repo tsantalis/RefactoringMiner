@@ -2108,7 +2108,8 @@ public class VariableReplacementAnalysis {
 			boolean singleVariableDeclarationPass = singleVariableDeclarations.isEmpty() || singleVariableDeclarations.size() + nestedVariablesUnderSingleVariableDeclaration == mergedVariables.size();
 			SimpleEntry<VariableDeclaration,VariableDeclarationContainer> newVariable = getVariableDeclaration2(merge);
 			Set<AbstractCodeMapping> references = mergeMap.get(merge);
-			if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && newVariable != null && singleVariableDeclarationPass) {
+			if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && newVariable != null && singleVariableDeclarationPass &&
+					!removedAttributesReadThroughParameter(mergedVariables, newVariable.getKey())) {
 				VariableDeclarationContainer operationBefore = mergedVariableOperations.iterator().next();
 				Set<VariableDeclaration> foundVariableDeclarationsFromReferences = new LinkedHashSet<>();
 				for(AbstractCodeMapping reference : references) {
@@ -3873,6 +3874,27 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		return false;
+	}
+
+	//removed attributes read through a parameter of the new code are not merged into the parameter, their values are passed to it,
+	//i.e., TOOL_NAME and OUTPUT_KEY -> kind.tool_name and kind.output_key, with REFACTORING_RUNS = AnalysisKind(tool_name="RefactoringMiner", ...) passed as kind
+	private boolean removedAttributesReadThroughParameter(Set<VariableDeclaration> mergedVariables, VariableDeclaration newVariable) {
+		if(!newVariable.isParameter()) {
+			return false;
+		}
+		for(VariableDeclaration mergedVariable : mergedVariables) {
+			if(!mergedVariable.isAttribute()) {
+				return false;
+			}
+			if(classDiff != null) {
+				for(UMLAttribute attribute : classDiff.getNextClass().getAttributes()) {
+					if(attribute.getName().equals(mergedVariable.getVariableName())) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	private boolean existsConflictingInlineVariableRefactoring(MergeVariableRefactoring ref) {

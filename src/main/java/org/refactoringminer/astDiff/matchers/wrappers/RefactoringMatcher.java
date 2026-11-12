@@ -227,20 +227,20 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 MergeVariableRefactoring mergeVariableRefactoring = (MergeVariableRefactoring) refactoring;
                 Set<VariableDeclaration> mergedVariables = mergeVariableRefactoring.getMergedVariables();
                 VariableDeclaration newVariable = mergeVariableRefactoring.getNewVariable();
+                if (!newVariable.getLocationInfo().getFilePath().equals(dstPath)) continue;
                 Constants LANG2 = new Constants(newVariable.getLocationInfo().getFilePath());
                 Tree dstVariableDeclaration =TreeUtilFunctions.findByLocationInfo(dstTree,newVariable.getLocationInfo(),LANG2);
 
                 if (dstVariableDeclaration != null) {
-                    List<Tree> dstChildrenList = dstVariableDeclaration.getChildren();
-                    if (dstChildrenList.isEmpty()) continue; //Might need to investigate what would be the better diff in these cases
-                    Tree dstVarName = dstChildrenList.get(dstChildrenList.size() - 1);
+                    Tree dstVarName = variableName(dstVariableDeclaration, newVariable.getVariableName());
+                    if (dstVarName == null) continue; //Might need to investigate what would be the better diff in these cases
                     for (VariableDeclaration variableDeclaration : mergedVariables) {
+                        if (!variableDeclaration.getLocationInfo().getFilePath().equals(srcPath)) continue;
                         Constants LANG1 = new Constants(variableDeclaration.getLocationInfo().getFilePath());
                         Tree srcVariableDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, variableDeclaration.getLocationInfo(), LANG1);
                         if (srcVariableDeclaration != null) {
-                            List<Tree> srcChildrenList = srcVariableDeclaration.getChildren();
-                            if (srcChildrenList.size() > 0) {
-                                Tree srcVarName = srcChildrenList.get(srcChildrenList.size() - 1);
+                            Tree srcVarName = variableName(srcVariableDeclaration, variableDeclaration.getVariableName());
+                            if (srcVarName != null) {
                                 mappingStore.addMapping(srcVarName, dstVarName);
                             }
                         }
@@ -417,6 +417,17 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             }
         }
 
+    }
+
+    //the name of a declared variable, the first node labeled with it, i.e., the last child of a Java VariableDeclarationFragment,
+    //but the first child of a Python typed parameter kind: AnalysisKind, whose last child is the type
+    private static Tree variableName(Tree declaration, String name) {
+        for (Tree t : declaration.preOrder()) {
+            if (t.getLabel().equals(name)) {
+                return t;
+            }
+        }
+        return null;
     }
 
     //the refactoring elements are in other files than the matched trees, i.e., a variable renamed in a method of another file

@@ -395,6 +395,10 @@ public class LangOperationBody extends OperationBody {
 			String className = container.getClassName() + "." + container.getName();
 			UMLOperation nested = createUMLOperation(methodDecl, className, sourceFolder, filePath, fileContent, comments, activeVariableDeclarations);
 			nested.setConditionallyCreated(conditionallyCreated(parent));
+			//like the functions of a module, the functions nested in the module code or in a function of a module are not bound to an instance
+			if(container instanceof ModuleContainer || (container instanceof UMLOperation operation && operation.isStatic())) {
+				nested.setStatic(true);
+			}
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
 			}

@@ -458,7 +458,9 @@ public class ExtractOperationDetection {
 		if(mapper.getClassDiff() != null) {
 			List<String> variableReferences = mapper.getContainer2().getAllVariables();
 			for(UMLAttribute attribute : mapper.getClassDiff().getNextClass().getAttributes()) {
-				if(variableReferences.contains(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() != null) {
+				//the module-level attributes are code of the module, i.e., app = create_app() in a Python module
+				if((variableReferences.contains(attribute.getName()) || mapper.getContainer2() instanceof ModuleContainer) &&
+						attribute.getVariableDeclaration() != null && attribute.getVariableDeclaration().getInitializer() != null) {
 					List<AbstractCall> invocations = attribute.getVariableDeclaration().getInitializer().getAllOperationInvocations();
 					for(AbstractCall invocation : invocations) {
 						if(!operationInvocations.contains(invocation))

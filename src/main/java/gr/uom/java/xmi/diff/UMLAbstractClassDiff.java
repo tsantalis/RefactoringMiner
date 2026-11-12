@@ -39,6 +39,7 @@ import gr.uom.java.xmi.JavaFileProcessor;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.SourceAnnotation;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
@@ -6336,7 +6337,11 @@ public abstract class UMLAbstractClassDiff {
 								operationBodyMapper.getOperation2() != null &&
 								mapper.getOperation2().getNestedOperations().size() < operationBodyMapper.getOperation1().getNestedOperations().size() &&
 								addedOperation.getNestedOperations().size() > 0) {
-							nestedFunctionMappers.addAll(processNestedOperationsForExtractedMethod(operationBodyMapper.getOperation1(), addedOperation));
+							nestedFunctionMappers.addAll(processNestedOperationsForExtractedMethod(operationBodyMapper.getOperation1().getNestedOperations(), addedOperation));
+						}
+						//the functions of a module are its nested functions, i.e., root() nested in create_app() extracted from the module statements
+						else if(operationBodyMapper.getContainer1() instanceof ModuleContainer && addedOperation.getNestedOperations().size() > 0) {
+							nestedFunctionMappers.addAll(processNestedOperationsForExtractedMethod(new ArrayList<>(removedOperations), addedOperation));
 						}
 						extractedOperationMappers.add(operationBodyMapper);
 						mapper.addChildMapper(operationBodyMapper);
@@ -6371,9 +6376,9 @@ public abstract class UMLAbstractClassDiff {
 		return extractedOperationMappers;
 	}
 
-	private Set<UMLOperationBodyMapper> processNestedOperationsForExtractedMethod(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
+	private Set<UMLOperationBodyMapper> processNestedOperationsForExtractedMethod(List<UMLOperation> operations1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
 		Set<UMLOperationBodyMapper> nestedMappers = new LinkedHashSet<>();
-		for(UMLOperation operation : operation1.getNestedOperations()) {
+		for(UMLOperation operation : operations1) {
 			UMLOperation operationWithTheSameSignature = operation2.nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
 			if(removedOperations.contains(operation) && operationWithTheSameSignature != null && !mapperListContainsOperation(operation, operationWithTheSameSignature)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);

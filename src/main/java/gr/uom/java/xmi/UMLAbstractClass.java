@@ -197,6 +197,11 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		return comments;
 	}
 
+	//a module without code: no container, or a Python module container (always created) without statements
+	private static boolean withoutStatements(Optional<ModuleContainer> container) {
+		return container.isEmpty() || (container.get().getStatementList().isEmpty() && PathFileUtils.isPythonFile(container.get().getLocationInfo().getFilePath()));
+	}
+
 	public Optional<ModuleContainer> getContainer() {
 		return container;
 	}
@@ -1370,7 +1375,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 		}
-		boolean emptyModules = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && (this.container.isEmpty() || umlClass.container.isEmpty()) && totalAttributes + totalOperations == 0;
+		boolean emptyModules = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && (withoutStatements(this.container) || withoutStatements(umlClass.container)) && totalAttributes + totalOperations == 0;
 		boolean modulesWithNestedClasses = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && this.container.isPresent() && umlClass.container.isPresent() && this.container.get().getNestedClasses().size() > 0 && umlClass.container.get().getNestedClasses().size() > 0;
 		boolean testVsNonTest = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && this.container.isPresent() && umlClass.container.isPresent() && this.container.get().getDescribeMap().isEmpty() != umlClass.container.get().getDescribeMap().isEmpty();
 		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes && !emptyModules && !modulesWithNestedClasses && !testVsNonTest) {

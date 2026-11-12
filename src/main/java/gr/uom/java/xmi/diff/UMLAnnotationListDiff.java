@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -70,6 +71,16 @@ public class UMLAnnotationListDiff {
 				addedAnnotations.add(annotation2);
 			}
 		}
+		//the annotations whose type names differ only in the qualifier, i.e., the Python decorators @app.get("/") -> @application.get("/") after the renamed app,
+		//when each one is the only candidate of the other
+		for(UMLAnnotation annotation1 : new ArrayList<>(removedAnnotations)) {
+			List<UMLAnnotation> candidates2 = sameSimpleTypeName(annotation1, addedAnnotations);
+			if(candidates2.size() == 1 && sameSimpleTypeName(candidates2.get(0), removedAnnotations).size() == 1) {
+				matchedAnnotations.add(Pair.of(annotation1, candidates2.get(0)));
+				removedAnnotations.remove(annotation1);
+				addedAnnotations.remove(candidates2.get(0));
+			}
+		}
 		for(Pair<UMLAnnotation, UMLAnnotation> pair : matchedAnnotations) {
 			UMLAnnotationDiff annotationDiff = new UMLAnnotationDiff(pair.getLeft(), pair.getRight());
 			if(!annotationDiff.isEmpty() && !annotationDiffs.contains(annotationDiff)) {
@@ -79,6 +90,21 @@ public class UMLAnnotationListDiff {
 				commonAnnotations.add(pair);
 			}
 		}
+	}
+
+	private static List<UMLAnnotation> sameSimpleTypeName(UMLAnnotation annotation, Set<UMLAnnotation> annotations) {
+		String simpleName = simpleTypeName(annotation.getTypeName());
+		List<UMLAnnotation> list = new ArrayList<UMLAnnotation>();
+		for(UMLAnnotation other : annotations) {
+			if(!other.getTypeName().equals(annotation.getTypeName()) && simpleTypeName(other.getTypeName()).equals(simpleName)) {
+				list.add(other);
+			}
+		}
+		return list;
+	}
+
+	private static String simpleTypeName(String typeName) {
+		return typeName.contains(".") ? typeName.substring(typeName.lastIndexOf('.') + 1) : typeName;
 	}
 
 	private static boolean alreadyMatchedAnnotation1(UMLAnnotation annotation1, Set<Pair<UMLAnnotation, UMLAnnotation>> matchedAnnotations) {

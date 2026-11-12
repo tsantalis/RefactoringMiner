@@ -354,25 +354,25 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             else if (refactoring instanceof ModifyClassAnnotationRefactoring)
             {
                 ModifyClassAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyClassAnnotationRefactoring) refactoring;
-                if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+                if (sameSimpleTypeName(modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter()))
                     processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
             }
             else if (refactoring instanceof ModifyMethodAnnotationRefactoring)
             {
                 ModifyMethodAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyMethodAnnotationRefactoring) refactoring;
-                if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+                if (sameSimpleTypeName(modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter()))
                     processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
             }
             else if (refactoring instanceof ModifyAttributeAnnotationRefactoring)
             {
                 ModifyAttributeAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyAttributeAnnotationRefactoring) refactoring;
-                if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+                if (sameSimpleTypeName(modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter()))
                     processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
             }
             else if (refactoring instanceof ModifyVariableAnnotationRefactoring)
             {
                 ModifyVariableAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyVariableAnnotationRefactoring) refactoring;
-                if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+                if (sameSimpleTypeName(modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter()))
                     processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
             }
             else if (refactoring instanceof MoveAnnotationRefactoring moveAnnotationRefactoring)
@@ -483,6 +483,13 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             }
         }
         return (counter1 > 1 || counter2 > 1);
+    }
+
+    //the same annotation, or the same annotation with a changed qualifier, i.e., the Python decorators @app.get("/") -> @application.get("/")
+    private static boolean sameSimpleTypeName(UMLAnnotation annotationBefore, UMLAnnotation annotationAfter) {
+        String typeName1 = annotationBefore.getTypeName();
+        String typeName2 = annotationAfter.getTypeName();
+        return typeName1.substring(typeName1.lastIndexOf('.') + 1).equals(typeName2.substring(typeName2.lastIndexOf('.') + 1));
     }
 
     private static void processModifiedAnnotation(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore, UMLAnnotation annotationBefore, UMLAnnotation annotationAfter) {

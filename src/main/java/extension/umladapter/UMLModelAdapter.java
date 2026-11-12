@@ -164,7 +164,8 @@ public class UMLModelAdapter {
         for (LangAssignment moduleLevelAssignment: compilationUnit.getModuleLevelAssignments()){
             processClassLevelAssignmentForAttribute(moduleClass, moduleLevelAssignment, sourceFolder, filePath, fileContent);
         }
-        if (compilationUnit.getStatements().size() > 0) {
+        //the module always has a container, like a TypeScript module, even without statements, i.e., only app = create_app() after the module statements are extracted
+        {
             ModuleContainer moduleContainer = new ModuleContainer(locationInfo, moduleClass.getName());
             OperationBody opBody = new LangOperationBody(
                     compilationUnit,

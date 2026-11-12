@@ -4569,6 +4569,64 @@
     }],
     "refDiffExecutionTime": 0
 }, {
+    "id": 1160053,
+    "repository": "https://github.com/asyml/texar.git",
+    "sha1": "36f4b18340e2974cfee80e5c347bf7ae7459ab88",
+    "url": "https://github.com/asyml/texar/commit/36f4b18340e2974cfee80e5c347bf7ae7459ab88",
+    "author": "zcyang",
+    "time": "11/29/17 3:21 PM",
+    "refactorings": [{
+        "type": "Extract Variable",
+        "description": "Extract Variable flags_hparams in method public __init__(hparams) from class tsf.trainer_base.TrainerBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter unused_args in method public main(unused_args) from class tsf.tsf_trainer.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public greey_softmax(proj_layer, embedding) renamed to public greedy_softmax(proj_layer, embedding) in class models.tsf.ops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type cell : rnn.BasicGRUCell to cell : rnn.GRUCell in method public get_rnn_cell(hparams) from class models.tsf.ops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type softmax_proj : tf.layer.Dense to softmax_proj : tf.layers.Dense in method protected _build_model(input_tensors, reuse) from class models.tsf.tsf.TSF",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type cnn0 : conv1d_discriminator.CNN to cnn0 : CNN in method protected _build_model(input_tensors, reuse) from class models.tsf.tsf.TSF",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type cnn1 : conv1d_discriminator.CNN to cnn1 : CNN in method protected _build_model(input_tensors, reuse) from class models.tsf.tsf.TSF",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
     "id": 1159928,
     "repository": "https://github.com/asyml/texar.git",
     "sha1": "151bd0b30ac2a967607d9f9aa7d16a6ec7114929",

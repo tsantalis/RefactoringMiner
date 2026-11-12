@@ -62,7 +62,12 @@ public class UtilMethods {
     public static Set<ASTDiff> getProjectDiffLocally(CaseInfo info) throws Exception {
         if(info.getCommit().startsWith(PULL_REQUEST_PREFIX)) {
             int pullRequestId = Integer.parseInt(info.getCommit().substring(PULL_REQUEST_PREFIX.length()));
-            return new GitHistoryRefactoringMinerImpl().diffAtPullRequest(info.getRepo(), pullRequestId, PULL_REQUEST_TIMEOUT, new File(REPOS)).getDiffSet();
+            Set<ASTDiff> diffSet = new GitHistoryRefactoringMinerImpl().diffAtPullRequest(info.getRepo(), pullRequestId, PULL_REQUEST_TIMEOUT, new File(REPOS)).getDiffSet();
+            //the whole pull request is diffed, but only the given files are checked
+            if(info.getSrc_files() != null && !info.getSrc_files().isEmpty()) {
+                diffSet.removeIf(diff -> !info.getSrc_files().contains(diff.getSrcPath()));
+            }
+            return diffSet;
         }
         if(info.getSrc_files() != null) {
             String cloneURL = info.getRepo();

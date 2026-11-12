@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -508,6 +509,10 @@ public class UMLCommentListDiff {
 		return false;
 	}
 
+	private static boolean sameKeyPath(UMLComment left, UMLComment right) {
+		return left.getKeyPath() != null && left.getKeyPath().equals(right.getKeyPath());
+	}
+
 	private boolean mappedParent(UMLComment left, UMLComment right) {
 		if(left.getParent() != null && right.getParent() != null) {
 			if(left.getParent().getParent() == null && right.getParent().getParent() == null) {
@@ -529,12 +534,14 @@ public class UMLCommentListDiff {
 		if(commentsBefore.size() <= commentsAfter.size()) {
 			for(UMLComment comment : commentsBefore) {
 				List<Integer> matchingIndices = findAllMatchingIndices(commentsAfter, comment);
+				List<Boolean> sameKeyPath = new ArrayList<Boolean>();
 				List<Boolean> mappedParent = new ArrayList<Boolean>();
 				List<Boolean> mappedPreviousStatement = new ArrayList<Boolean>();
 				List<Boolean> endOfLineCommentsOfMappedStatements = new ArrayList<Boolean>();
 				List<Boolean> identicalNextComment = new ArrayList<Boolean>();
 				if(matchingIndices.size() > 1) {
 					for(Integer index : matchingIndices) {
+						sameKeyPath.add(sameKeyPath(comment, commentsAfter.get(index)));
 						mappedParent.add(mappedParent(comment, commentsAfter.get(index)));
 						mappedPreviousStatement.add(mappedPreviousStatement(comment, commentsAfter.get(index)));
 						endOfLineCommentsOfMappedStatements.add(endOfLineCommentsOfMappedStatements(comment, commentsAfter.get(index)));
@@ -552,6 +559,9 @@ public class UMLCommentListDiff {
 				for(Integer index : matchingIndices) {
 					i++;
 					if(!alreadyMatchedComment(comment, commentsAfter.get(index))) {
+						if(sameKeyPath.contains(true) && sameKeyPath.get(i) == false) {
+							continue;
+						}
 						if(mappedParent.contains(true) && mappedParent.get(i) == false) {
 							continue;
 						}
@@ -576,12 +586,14 @@ public class UMLCommentListDiff {
 		else {
 			for(UMLComment comment : commentsAfter) {
 				List<Integer> matchingIndices = findAllMatchingIndices(commentsBefore, comment);
+				List<Boolean> sameKeyPath = new ArrayList<Boolean>();
 				List<Boolean> mappedParent = new ArrayList<Boolean>();
 				List<Boolean> mappedPreviousStatement = new ArrayList<Boolean>();
 				List<Boolean> endOfLineCommentsOfMappedStatements = new ArrayList<Boolean>();
 				List<Boolean> identicalNextComment = new ArrayList<Boolean>();
 				if(matchingIndices.size() > 1) {
 					for(Integer index : matchingIndices) {
+						sameKeyPath.add(sameKeyPath(commentsBefore.get(index), comment));
 						mappedParent.add(mappedParent(commentsBefore.get(index), comment));
 						mappedPreviousStatement.add(mappedPreviousStatement(commentsBefore.get(index), comment));
 						endOfLineCommentsOfMappedStatements.add(endOfLineCommentsOfMappedStatements(commentsBefore.get(index), comment));
@@ -599,6 +611,9 @@ public class UMLCommentListDiff {
 				for(Integer index : matchingIndices) {
 					i++;
 					if(!alreadyMatchedComment(commentsBefore.get(index), comment)) {
+						if(sameKeyPath.contains(true) && sameKeyPath.get(i) == false) {
+							continue;
+						}
 						if(mappedParent.contains(true) && mappedParent.get(i) == false) {
 							continue;
 						}
@@ -626,6 +641,7 @@ public class UMLCommentListDiff {
 				for(Pair<UMLComment, UMLComment> pair : commonComments) {
 					if(pair.getLeft().getText().equals(deletedComment.getText()) &&
 							pair.getRight().getText().equals(deletedComment.getText()) &&
+							Objects.equals(pair.getRight().getKeyPath(), deletedComment.getKeyPath()) &&
 							!deletedComment.isCommentedCode() && !deletedComment.nestedInCatchBlock() &&
 							!isDeletedCommentWithPreviousDeletedStatement(deletedComment) && !isCommentNestedInNonMappedStatement(deletedComment, true)) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(deletedComment, pair.getRight());
@@ -643,6 +659,7 @@ public class UMLCommentListDiff {
 				for(Pair<UMLComment, UMLComment> pair : commonComments) {
 					if(pair.getLeft().getText().equals(addedComment.getText()) &&
 							pair.getRight().getText().equals(addedComment.getText()) &&
+							Objects.equals(pair.getLeft().getKeyPath(), addedComment.getKeyPath()) &&
 							!addedComment.isCommentedCode() && !addedComment.nestedInCatchBlock() &&
 							!isAddedCommentWithPreviousAddedStatement(addedComment) && !isCommentNestedInNonMappedStatement(addedComment, false)) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(pair.getLeft(), addedComment);

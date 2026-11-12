@@ -19,6 +19,7 @@ public class UMLComment extends UMLAbstractDocumentation {
 	//represents non-attached Javadocs found within method bodies
 	private Optional<UMLJavadoc> javaDoc;
 	private CompositeStatementObject parent;
+	private String keyPath;
 	private boolean markdown;
 	private List<LocationInfo> previousLineLocations = new ArrayList<>();
 	private static final Pattern EMPTY_LINES = Pattern.compile("(^\\s*$\\r?\\n)+", Pattern.MULTILINE);
@@ -46,6 +47,15 @@ public class UMLComment extends UMLAbstractDocumentation {
 
 	public void setParent(CompositeStatementObject parent) {
 		this.parent = parent;
+	}
+
+	//the keys of the nested type literal members enclosing the comment within an interface or type literal member (TypeScript)
+	public String getKeyPath() {
+		return keyPath;
+	}
+
+	public void setKeyPath(String keyPath) {
+		this.keyPath = keyPath;
 	}
 
 	public List<LocationInfo> getPreviousLocations() {

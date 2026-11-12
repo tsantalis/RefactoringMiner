@@ -62,6 +62,7 @@ import gr.uom.java.xmi.diff.SplitVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
+import gr.uom.java.xmi.diff.UMLAttributeDiff;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
 import gr.uom.java.xmi.diff.UMLDocumentationDiffProvider;
 import gr.uom.java.xmi.diff.UMLImportListDiff;
@@ -2702,6 +2703,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private static void collectMatchedComments(UMLAbstractClassDiff classDiff, Set<UMLComment> matchedComments) {
 		addCommonComments(classDiff.getCommentListDiff(), matchedComments);
+		//the comments of the matched attributes are matched within the attributes, i.e., the members of an interface
+		for(UMLAttributeDiff attributeDiff : classDiff.getAttributeDiffList()) {
+			addCommonComments(attributeDiff.getCommentListDiff(), matchedComments);
+		}
+		for(Pair<UMLAttribute, UMLAttribute> pair : classDiff.getCommonAtrributes()) {
+			addCommonComments(new UMLCommentListDiff(pair.getLeft().getComments(), pair.getRight().getComments()), matchedComments);
+		}
 		for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 			collectMatchedComments(mapper, matchedComments);
 		}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -1509,6 +1510,7 @@ public class TypeScriptOperationBody extends OperationBody {
 
 	private void processTypeElements(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,
 			List<ISwc4jAstTsTypeElement> members) {
+		Map<UMLAttribute, Swc4jAstTsPropertySignature> propertySignatures = new IdentityHashMap<>();
 		for(ISwc4jAstTsTypeElement member : members) {
 			if(member instanceof Swc4jAstTsPropertySignature signature) {
 				ISwc4jAstExpr key = signature.getKey();
@@ -1520,6 +1522,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					attribute.setVariableDeclaration(vd);
 					attribute.setVisibility(Visibility.PRIVATE);
 					umlClass.addAttribute(attribute);
+					propertySignatures.put(attribute, signature);
 				}
 				else if(key instanceof Swc4jAstStr string) {
 					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, signature.getTypeAnn().get(), string, container, activeVariableDeclarations, fileContent);
@@ -1529,6 +1532,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					attribute.setVariableDeclaration(vd);
 					attribute.setVisibility(Visibility.PRIVATE);
 					umlClass.addAttribute(attribute);
+					propertySignatures.put(attribute, signature);
 				}
 			}
 			else if(member instanceof Swc4jAstTsMethodSignature methodSignature) {
@@ -1586,9 +1590,57 @@ public class TypeScriptOperationBody extends OperationBody {
 				
 			}
 			else if(member instanceof Swc4jAstTsConstructSignatureDecl constructSignatureDecl) {
-				
+
 			}
 		}
+		//like the class members, the members of an interface or type literal take their comments from it
+		for(UMLAttribute attribute : umlClass.getAttributes()) {
+			processComments(umlClass.getComments(), attribute);
+			if(propertySignatures.containsKey(attribute) && !attribute.getComments().isEmpty()) {
+				assignKeyPaths(propertySignatures.get(attribute), attribute.getName(), attribute.getComments(), attribute.getLocationInfo().getSourceFolder(), attribute.getLocationInfo().getFilePath(), fileContent);
+			}
+		}
+		for(UMLOperation operation : umlClass.getOperations()) {
+			processComments(umlClass.getComments(), operation);
+		}
+	}
+
+	//the members of the type literals nested in a member are not code elements, i.e., schemas: { TeamMember: { /** Role */ role: ... } },
+	//so a comment records the keys of the members enclosing it, which tell apart the comments with the same text in different nested members
+	private static void assignKeyPaths(ISwc4jAst node, String keyPath, List<UMLComment> comments, String sourceFolder, String filePath, String fileContent) {
+		for(ISwc4jAst child : node.getChildNodes()) {
+			String childKeyPath = keyPath;
+			if(child instanceof Swc4jAstTsPropertySignature signature) {
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, signature, CodeElementType.FIELD_DECLARATION, fileContent);
+				List<UMLComment> nestedComments = new ArrayList<UMLComment>();
+				for(UMLComment comment : comments) {
+					if(location.subsumes(comment.getLocationInfo())) {
+						nestedComments.add(comment);
+					}
+				}
+				if(nestedComments.isEmpty()) {
+					continue;
+				}
+				childKeyPath = keyPath + "." + keyName(signature.getKey());
+				for(UMLComment comment : nestedComments) {
+					comment.setKeyPath(childKeyPath);
+				}
+			}
+			assignKeyPaths(child, childKeyPath, comments, sourceFolder, filePath, fileContent);
+		}
+	}
+
+	private static String keyName(ISwc4jAstExpr key) {
+		if(key instanceof Swc4jAstIdent ident) {
+			return ident.getSym();
+		}
+		else if(key instanceof Swc4jAstStr str) {
+			return str.getValue();
+		}
+		else if(key instanceof Swc4jAstNumber number) {
+			return number.asString();
+		}
+		return key.toString();
 	}
 
 	private void processClassMembers(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,

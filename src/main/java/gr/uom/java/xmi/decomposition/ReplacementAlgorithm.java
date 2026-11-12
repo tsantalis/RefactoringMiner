@@ -5565,11 +5565,33 @@ public class ReplacementAlgorithm {
 			return CONTINUE_MATCHING;
 		}
 
+		//the returned attribute is replaced with a getter on the same receiver, i.e., return self.ops.base -> return self.ops.get_base(numerical)
+		private boolean attributeReturnReplacedWithGetter() {
+			if(variableReturnQualified1 && invocationCoveringTheEntireStatement2 != null && invocationCoveringTheEntireStatement2.getExpression() != null) {
+				String attribute = statement1.getVariables().get(0).getString();
+				int index = attribute.lastIndexOf(".");
+				String qualifier = attribute.substring(0, index);
+				String name = attribute.substring(index + 1);
+				return qualifier.equals(invocationCoveringTheEntireStatement2.getExpression()) &&
+						invocationCoveringTheEntireStatement2.getName().toLowerCase().contains(name.toLowerCase());
+			}
+			if(variableReturnQualified2 && invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement1.getExpression() != null) {
+				String attribute = statement2.getVariables().get(0).getString();
+				int index = attribute.lastIndexOf(".");
+				String qualifier = attribute.substring(0, index);
+				String name = attribute.substring(index + 1);
+				return qualifier.equals(invocationCoveringTheEntireStatement1.getExpression()) &&
+						invocationCoveringTheEntireStatement1.getName().toLowerCase().contains(name.toLowerCase());
+			}
+			return false;
+		}
+
 		private Set<Replacement> matchReturnStatements() throws RefactoringMinerTimedOutException {
+			boolean attributeGetter = false;
 			if(parentMapper == null && ((!numberLiteralReturn1 && !numberLiteralReturn2) || singleReturnStatement) && statement1.getString().startsWith(LANG1.RETURN_SPACE) && statement2.getString().startsWith(LANG2.RETURN_SPACE) && lastStatement &&
-					variableReturnQualified1 == variableReturnQualified2 && container1 instanceof UMLOperation && container2 instanceof UMLOperation &&
-					(!variableReturnAsLastStatement1 || declaresSingleVariable(replacementInfo.getStatements1(), statement1)) &&
-					((possibleExtract = declaresSingleVariable(replacementInfo.getStatements2(), statement2)) || !variableReturnAsLastStatement2) &&
+					(variableReturnQualified1 == variableReturnQualified2 || (attributeGetter = attributeReturnReplacedWithGetter())) && container1 instanceof UMLOperation && container2 instanceof UMLOperation &&
+					(!variableReturnAsLastStatement1 || attributeGetter || declaresSingleVariable(replacementInfo.getStatements1(), statement1)) &&
+					(attributeGetter || (possibleExtract = declaresSingleVariable(replacementInfo.getStatements2(), statement2)) || !variableReturnAsLastStatement2) &&
 					compatibleSignatureForFinalReturnStatement(operationBodyMapper) &&
 					(statement1.getLambdas().size() == statement2.getLambdas().size() || possibleExtract)) {
 				boolean callToAddedOperation = false;
@@ -6206,10 +6228,37 @@ public class ReplacementAlgorithm {
 			nameIntersection.retainAll(parameterNameList2);
 			return (parameterTypeCompatible && parameterNameCompatible) || (typeIntersection.size() >= 2 && nameIntersection.size() >= 2);
 		}
+		//the parameters differ only by parameters with default values, so the existing calls remain valid, i.e., def get_base(self) -> def get_base(self, numerical=False)
+		if(operationBodyMapper.getOperation1().getName().equals(operationBodyMapper.getOperation2().getName()) && operationBodyMapper.getOperation1().compatibleReturnParameter(operationBodyMapper.getOperation2()) &&
+				onlyParametersWithDefaultValuesDiffer(operationBodyMapper.getOperation1(), operationBodyMapper.getOperation2())) {
+			return true;
+		}
 		if(operationBodyMapper.getOperation1().getName().contains(operationBodyMapper.getOperation2().getName()) || operationBodyMapper.getOperation2().getName().contains(operationBodyMapper.getOperation1().getName())) {
 			return parameterTypeList1.equals(parameterTypeList2) && operationBodyMapper.getOperation1().compatibleReturnParameter(operationBodyMapper.getOperation2());
 		}
 		return false;
+	}
+
+	private static boolean onlyParametersWithDefaultValuesDiffer(UMLOperation operation1, UMLOperation operation2) {
+		List<UMLParameter> parameters1 = operation1.getParametersWithoutReturnType();
+		List<UMLParameter> parameters2 = operation2.getParametersWithoutReturnType();
+		if(parameters1.size() == parameters2.size()) {
+			return false;
+		}
+		List<UMLParameter> fewer = parameters1.size() < parameters2.size() ? parameters1 : parameters2;
+		List<UMLParameter> more = parameters1.size() < parameters2.size() ? parameters2 : parameters1;
+		for(int i=0; i<more.size(); i++) {
+			UMLParameter parameter = more.get(i);
+			if(i < fewer.size()) {
+				if(!parameter.getName().equals(fewer.get(i).getName())) {
+					return false;
+				}
+			}
+			else if(parameter.getVariableDeclaration() == null || parameter.getVariableDeclaration().getInitializer() == null) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static boolean wrapInMethodCall(String s1, String s2, Map<String, List<AbstractCall>> methodInvocationMap1, ReplacementInfo info) {

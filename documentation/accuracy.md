@@ -238,7 +238,7 @@ As of **November 12, 2026** the precision and recall of RefactoringMiner on this
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1158  |  3  |  3  | 0.997  | 0.997|
+|**Total**|1159  |  3  |  2  | 0.997  | 0.998|
 |Extract Method|39  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -271,7 +271,7 @@ As of **November 12, 2026** the precision and recall of RefactoringMiner on this
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|19  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|252  |  0  |  1  | 1.000  | 0.996|
+|Add Parameter|253  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter|81  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|18  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 3  |  0  |  0  | 1.000  | 1.000|

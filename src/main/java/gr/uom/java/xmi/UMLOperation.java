@@ -458,6 +458,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	//a function decorated as a pytest fixture, which pytest calls for the tests and fixtures having a parameter with its name
+	public boolean isPytestFixture() {
+		if(LANG.equals(Constants.PYTHON)) {
+			for(UMLAnnotation annotation : annotations) {
+				if(isPytestFixture(annotation)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	//the pytest fixture decorators, i.e., @pytest.fixture, @pytest_asyncio.fixture, or @fixture imported from pytest, which set up (and after their yield tear down) the state of the tests using them
 	private static boolean isPytestFixture(UMLAnnotation annotation) {
 		String typeName = annotation.getTypeName();

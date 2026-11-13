@@ -77,6 +77,13 @@ public class MethodReference extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 	}
 
+	//a pytest fixture requested by a parameter with its name, i.e., _migrated_template in def database_url(_migrated_template: str)
+	public MethodReference(VariableDeclaration fixtureParameter) {
+		super(fixtureParameter.getLocationInfo());
+		this.methodName = fixtureParameter.getVariableName();
+		this.arguments = new ArrayList<String>();
+	}
+
 	public String getMethodName() {
 		return methodName;
 	}

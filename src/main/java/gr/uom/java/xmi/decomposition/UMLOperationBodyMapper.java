@@ -3251,6 +3251,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return mapping.getFragment1().equalFragment(mapping.getFragment2(), getArgumentizedString(mapping.getFragment1()));
 	}
 	
+	//a call replaced with a call of an added operation, i.e., apply_migrations(connection) -> _drop_database(admin_url, name),
+	//but not a variable inlined to an expression calling added operations, i.e., return match -> return (matchByCanonicalName(...) ?? ...)
+	private boolean callReplacedWithCallOfAddedOperation(AbstractCodeMapping mapping, VariableDeclarationContainer caller) {
+		for(Replacement replacement : mapping.getReplacements()) {
+			if(replacement instanceof MethodInvocationReplacement methodInvocationReplacement) {
+				AbstractCall call = methodInvocationReplacement.getInvokedOperationAfter();
+				for(UMLOperation operation : classDiff.getAddedOperations()) {
+					if(call.matchesOperation(operation, caller, classDiff, modelDiff)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean returnWithVariableReplacement(AbstractCodeMapping mapping) {
 		if(mapping.getReplacements().size() == 1) {
 			Replacement r = mapping.getReplacements().iterator().next();
@@ -3448,6 +3464,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									addedInnerNodes1.add(statement);
 								}
 							}
+						}
+					}
+				}
+				//the statements the caller of the original operation mapped to a call of an added operation, which the extracted operation called through it holds,
+				//i.e., await apply_migrations(connection) -> await _drop_database(admin_url, name) in database_url, extracted to _build_template called by the fixture _migrated_template
+				if(nested && operationBodyMapper.getParentMapper() != null && classDiff != null) {
+					for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
+						AbstractCodeFragment fragment = mapping.getFragment1();
+						if(fragment instanceof CompositeStatementObject || leaves1.contains(fragment) || mapping.getReplacements().isEmpty()) {
+							continue;
+						}
+						if(callReplacedWithCallOfAddedOperation(mapping, operationBodyMapper.getParentMapper().getContainer2())) {
+							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.getParentMapper().anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 						}
 					}
 				}

@@ -36,6 +36,7 @@ import gr.uom.java.xmi.decomposition.ReplacementUtil;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
@@ -339,6 +340,9 @@ public class ExtractOperationDetection {
 				}
 			}
 		}
+		if(operationBodyMapper != null) {
+			removeUnrelatedCallsCopiedToOtherAddedOperation(operationBodyMapper, addedOperation);
+		}
 		boolean skip = operationBodyMapper != null && operationBodyMapper.hasAnonymousClassDiffNestedUnderLambda() && mapper.hasAnonymousClassDiffNestedUnderLambda() &&
 				operationBodyMapper.getAnonymousClassDiffs().iterator().next().getOriginalClass().equals(mapper.getAnonymousClassDiffs().iterator().next().getOriginalClass());
 		if(operationBodyMapper != null && (!containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper) || parentMapperContainsOperationInvocation(mapper, operationBodyMapper, addedOperationInvocation)) && !skip) {
@@ -379,6 +383,45 @@ public class ExtractOperationDetection {
 				}
 			}
 		}
+	}
+
+	//a statement matched only by replacing its whole call with an unrelated call of the same name, while another added operation holds an identical copy of it,
+	//i.e., await connection.execute("WITH team AS (INSERT ...") -> await admin.execute(sql.SQL("DROP DATABASE {}")...) in _drop_database,
+	//while _build_template holds await connection.execute("WITH team AS (INSERT ...") unchanged
+	private void removeUnrelatedCallsCopiedToOtherAddedOperation(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation) {
+		for(AbstractCodeMapping mapping : new ArrayList<>(operationBodyMapper.getMappings())) {
+			if(!(mapping instanceof LeafMapping) || mapping.getReplacements().size() != 1) {
+				continue;
+			}
+			//the statements differ only in the replaced calls, i.e., await call1 -> await call2
+			if(!(mapping.getReplacements().iterator().next() instanceof MethodInvocationReplacement replacement) ||
+					!replacement.getType().equals(ReplacementType.METHOD_INVOCATION)) {
+				continue;
+			}
+			AbstractCall call1 = replacement.getInvokedOperationBefore();
+			AbstractCall call2 = replacement.getInvokedOperationAfter();
+			if(call1.arguments().isEmpty() || !call1.argumentIntersection(call2).isEmpty()) {
+				continue;
+			}
+			if(identicalStatementInOtherAddedOperation(mapping.getFragment1(), addedOperation)) {
+				operationBodyMapper.removeMapping(mapping);
+				operationBodyMapper.getNonMappedLeavesT1().add(mapping.getFragment1());
+				operationBodyMapper.getNonMappedLeavesT2().add(mapping.getFragment2());
+			}
+		}
+	}
+
+	private boolean identicalStatementInOtherAddedOperation(AbstractCodeFragment fragment1, UMLOperation addedOperation) {
+		for(UMLOperation operation : addedOperations) {
+			if(operation != addedOperation && operation.getBody() != null) {
+				for(AbstractCodeFragment leaf : operation.getBody().getCompositeStatement().getLeaves()) {
+					if(leaf.getString().equals(fragment1.getString())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private void processNestedMapper(UMLOperationBodyMapper mapper, UMLOperationBodyMapper operationBodyMapper,
@@ -486,7 +529,29 @@ public class ExtractOperationDetection {
 			addStatementInvocations(operationInvocations, statement);
 		}
 		addFunctionReferencesInJsxElements(operationInvocations, mapper);
+		addPytestFixtureParameters(operationInvocations, mapper);
 		return operationInvocations;
+	}
+
+	//the pytest fixtures requested by the new parameters of a test or fixture, which pytest calls before it,
+	//i.e., database_url(empty_database_url) -> database_url(_migrated_template), where the fixture _migrated_template calls the function extracted from database_url
+	private static void addPytestFixtureParameters(List<AbstractCall> operationInvocations, UMLOperationBodyMapper mapper) {
+		if(mapper.getClassDiff() == null || !(mapper.getContainer2() instanceof UMLOperation operation2) || !operation2.getLANG().equals(Constants.PYTHON)) {
+			return;
+		}
+		List<String> parameterNames1 = mapper.getContainer1().getParameterNameList();
+		for(VariableDeclaration parameter : operation2.getParameterDeclarationList()) {
+			String name = parameter.getVariableName();
+			if(parameterNames1.contains(name)) {
+				continue;
+			}
+			for(UMLOperation fixture : mapper.getClassDiff().getNextClass().getOperations()) {
+				if(fixture.getName().equals(name) && fixture.isPytestFixture()) {
+					operationInvocations.add(new MethodReference(parameter));
+					break;
+				}
+			}
+		}
 	}
 
 	//the functions passed by their name to JSX elements outside the exactly mapped statements, i.e., handleStop in <Draggable onStop={handleStop} />,

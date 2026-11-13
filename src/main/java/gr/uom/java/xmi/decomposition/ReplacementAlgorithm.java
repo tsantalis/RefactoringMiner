@@ -1760,6 +1760,38 @@ public class ReplacementAlgorithm {
 			findReplacements(creations1, creations2, replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		}
 
+		//the creations within a call extracted to a variable of the second statement are replaced with the call as a whole, not with the variable,
+		//i.e., sql.Identifier(name) in admin.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(name))) -> admin.execute(query),
+		//where query = sql.SQL("CREATE DATABASE {}").format(sql.Identifier(name))
+		private Set<String> creationsNotNestedInExtractedCall(Set<String> creations) {
+			Set<String> extractedCalls = new LinkedHashSet<>();
+			for(AbstractCodeFragment fragment2 : replacementInfo.getStatements2()) {
+				for(VariableDeclaration declaration : fragment2.getVariableDeclarations()) {
+					if(declaration.getInitializer() != null && variables2.contains(declaration.getVariableName()) &&
+							methodInvocations1.contains(declaration.getInitializer().getString())) {
+						extractedCalls.add(declaration.getInitializer().getString());
+					}
+				}
+			}
+			if(extractedCalls.isEmpty()) {
+				return creations;
+			}
+			Set<String> filtered = new LinkedHashSet<>();
+			for(String creation : creations) {
+				boolean nested = false;
+				for(String call : extractedCalls) {
+					if(!call.equals(creation) && call.contains(creation)) {
+						nested = true;
+						break;
+					}
+				}
+				if(!nested) {
+					filtered.add(creation);
+				}
+			}
+			return filtered;
+		}
+
 		private Set<Replacement> findVariableAndCallReplacements() throws RefactoringMinerTimedOutException {
 			for(String s : variables1) {
 				if(statement1.getString().startsWith(s + LANG1.ASSIGNMENT)) {
@@ -1768,7 +1800,7 @@ public class ReplacementAlgorithm {
 			}
 			findReplacements(creations1, convertLambdasToStringSet(lambdas2), replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
 			findReplacements(variablesToBeConsidered1, withScopeFunctionsOnReceiver(statement2, creations2, creationMap2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
-			findReplacements(withScopeFunctionsOnReceiver(statement1, creations1, creationMap1), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
+			findReplacements(creationsNotNestedInExtractedCall(withScopeFunctionsOnReceiver(statement1, creations1, creationMap1)), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 			findReplacements(variables1, convertLambdasToStringSet(lambdas2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
 			findReplacements(convertLambdasToStringSet(lambdas1), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
 			if(statement1.getString().startsWith(LANG1.THROW_SPACE) && statement2.getString().startsWith(LANG2.THROW_SPACE) && creationCoveringTheEntireStatement2 != null && creations2.isEmpty()) {

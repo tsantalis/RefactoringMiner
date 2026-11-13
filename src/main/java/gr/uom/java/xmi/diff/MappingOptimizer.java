@@ -49,7 +49,17 @@ public class MappingOptimizer {
 		this.LANG2 = mapper.LANG2;
 	}
 
-	public void optimizeDuplicateMappingsForMoveCode(List<UMLOperationBodyMapper> moveCodeMappers, Collection<Refactoring> refactorings) {
+	public void optimizeDuplicateMappingsForMoveCode(List<UMLOperationBodyMapper> moveCodeAndSourceMappers, Collection<Refactoring> refactorings) {
+		//the mappers of the methods extracted from the source methods compete for the moved statements too,
+		//i.e., await apply_migrations(connection) moved from database_url to empty_database_url, but extracted unchanged to _build_template
+		List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>(moveCodeAndSourceMappers);
+		for(UMLOperationBodyMapper mapper : moveCodeAndSourceMappers) {
+			for(UMLOperationBodyMapper childMapper : mapper.getChildMappers()) {
+				if(!moveCodeMappers.contains(childMapper)) {
+					moveCodeMappers.add(childMapper);
+				}
+			}
+		}
 		if(moveCodeMappers.size() > 1) {
 			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();

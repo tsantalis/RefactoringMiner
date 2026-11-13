@@ -435,7 +435,13 @@ public class MappingOptimizer {
 				else {
 					nonMappedNodes.add(0);
 				}
-				replacementTypeCount.add(mapper.getReplacementTypesExcludingParameterToArgumentMaps(mapping).size());
+				Set<ReplacementType> replacementTypes = mapper.getReplacementTypesExcludingParameterToArgumentMaps(mapping);
+				//the argument of the call replaced with the returned expression changes the statement, even when the argument is passed as a parameter,
+				//i.e., (dataset, self._decoder) = self._process_dataset(dataset) -> return dataset
+				if(mapping.containsReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION)) {
+					replacementTypes.add(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+				}
+				replacementTypeCount.add(replacementTypes.size());
 				boolean replacementFound = false;
 				for(Replacement r : mapping.getReplacements()) {
 					if((r.getBefore().equals(mapping.getFragment1().getString()) || (r.getBefore() + LANG1.STATEMENT_TERMINATION).equals(mapping.getFragment1().getString())) &&

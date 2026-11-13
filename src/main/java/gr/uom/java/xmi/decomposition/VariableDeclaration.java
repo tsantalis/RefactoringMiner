@@ -330,6 +330,19 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return null;
 	}
 
+	//an attribute assigned in a method without a declaration in the model, i.e., self._dataset = ... in a Python method other than __init__
+	public VariableDeclaration(LeafExpression attributeAccess, String attributeName, UMLType type, VariableDeclarationContainer container) {
+		this.variableName = attributeName;
+		this.locationInfo = attributeAccess.getLocationInfo();
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.type = type;
+		this.isAttribute = true;
+		this.annotations = new ArrayList<>();
+		this.modifiers = new ArrayList<>();
+		LocationInfo containerLocation = container.getLocationInfo();
+		this.scope = new VariableScope((LangCompilationUnit)null, containerLocation.getFilePath(), containerLocation.getStartOffset(), containerLocation.getEndOffset());
+	}
+
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,
 							   LangSingleVariableDeclaration param, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.variableName = param.getLangSimpleName().getIdentifier();

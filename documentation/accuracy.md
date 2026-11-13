@@ -234,11 +234,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **November 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 13, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1159  |  3  |  2  | 0.997  | 0.998|
+|**Total**|1160  |  3  |  2  | 0.997  | 0.998|
 |Extract Method|39  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -257,12 +257,12 @@ As of **November 12, 2026** the precision and recall of RefactoringMiner on this
 |Extract Class| 3  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|15  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|69  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|21  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|20  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|121  |  0  |  1  | 1.000  | 0.992|
 |Rename Parameter|136  |  1  |  0  | 0.993  | 1.000|
 |Rename Attribute|28  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 3  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute| 1  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|17  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|10  |  0  |  0  | 1.000  | 1.000|
@@ -390,11 +390,11 @@ As of **November 1, 2026** the precision and recall of RefactoringMiner on this 
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/javascript-dataset/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **November 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 13, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|171  |  3  |  0  | 0.983  | 1.000|
+|**Total**|171  |  2  |  0  | 0.988  | 1.000|
 |Extract Method|24  |  0  |  0  | 1.000  | 1.000|
 |Rename Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|10  |  0  |  0  | 1.000  | 1.000|
@@ -405,7 +405,7 @@ As of **November 12, 2026** the precision and recall of RefactoringMiner on this
 |Extract And Move Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|22  |  1  |  0  | 0.957  | 1.000|
 |Inline Variable|10  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|33  |  2  |  0  | 0.943  | 1.000|
+|Rename Variable|33  |  1  |  0  | 0.971  | 1.000|
 |Rename Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute| 4  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable| 3  |  0  |  0  | 1.000  | 1.000|

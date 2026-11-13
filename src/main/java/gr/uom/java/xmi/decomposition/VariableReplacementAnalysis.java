@@ -2264,6 +2264,7 @@ public class VariableReplacementAnalysis {
 			Set<SimpleEntry<VariableDeclaration, VariableDeclarationContainer>> v1s = getVariableDeclaration1(replacement);
 			SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v2 = getVariableDeclaration2(replacement);
 			Set<AbstractCodeMapping> variableReferences = finalConsistentRenames.get(replacement);
+			boolean replacedWithAttributeInScope = v2 == null && variableReplacedWithAttributeInScope(replacement, v1s);
 			if(!v1s.isEmpty() && v2 != null) {
 				for(SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v1 : v1s) {
 					VariableDeclaration variableDeclaration1 = v1.getKey();
@@ -2289,8 +2290,8 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
-			else if((!operation1.getAllVariables().contains(replacement.getAfter()) || cyclicRename(finalConsistentRenames.keySet(), replacement)) &&
-					(!operation2.getAllVariables().contains(replacement.getBefore()) || cyclicRename(finalConsistentRenames.keySet(), replacement)) &&
+			else if((!operation1.getAllVariables().contains(replacement.getAfter()) || cyclicRename(finalConsistentRenames.keySet(), replacement) || replacedWithAttributeInScope) &&
+					(!operation2.getAllVariables().contains(replacement.getBefore()) || cyclicRename(finalConsistentRenames.keySet(), replacement) || replacedWithAttributeInScope) &&
 					!fieldAssignmentWithPreviouslyExistingParameter(replacementOccurrenceMap.get(replacement)) &&
 					!fieldAssignmentToPreviouslyExistingAttribute(replacementOccurrenceMap.get(replacement)) &&
 					!(operation1.getName().equals("toString") && operation2.getName().equals("toString")) &&
@@ -2303,6 +2304,7 @@ public class VariableReplacementAnalysis {
 					candidate.setOriginalVariableDeclaration(v1.getKey());
 				if(v2 != null)
 					candidate.setRenamedVariableDeclaration(v2.getKey());
+				candidate.setVariableAssignedToAttribute(replacedWithAttributeInScope);
 				ExtractVariableRefactoring conflictingExtractVariableRefactoring = existsConflictingExtractVariableRefactoring(candidate);
 				if(conflictingExtractVariableRefactoring == null) {
 					boolean skip = false;
@@ -2326,6 +2328,41 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+	}
+
+	//the variable is replaced with an attribute in the scope of its replaced declarations, but still used before them, i.e., dataset = dataset.prefetch(...) -> self._dataset = self._dataset.prefetch(...)
+	private boolean variableReplacedWithAttributeInScope(Replacement replacement, Set<SimpleEntry<VariableDeclaration, VariableDeclarationContainer>> v1s) {
+		if(v1s.isEmpty() || !mapper.LANG1.equals(Constants.PYTHON) || !mapper.LANG2.equals(Constants.PYTHON) || !replacement.getAfter().startsWith(mapper.LANG2.THIS_DOT) ||
+				replacement.getAfter().substring(mapper.LANG2.THIS_DOT.length()).contains(".")) {
+			return false;
+		}
+		//the variable is assigned to the attribute before, i.e., self._dataset = dataset
+		boolean variableAssignedToAttribute = false;
+		if(operation1.getBody() != null) {
+			String assignment = replacement.getAfter() + mapper.LANG1.ASSIGNMENT + replacement.getBefore() + mapper.LANG1.STATEMENT_TERMINATION;
+			for(AbstractCodeFragment fragment1 : operation1.getBody().getCompositeStatement().getLeaves()) {
+				if(fragment1.getString().equals(assignment)) {
+					variableAssignedToAttribute = true;
+					break;
+				}
+			}
+		}
+		if(!variableAssignedToAttribute) {
+			return false;
+		}
+		for(AbstractCodeMapping mapping : mappings) {
+			for(SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v1 : v1s) {
+				//a reference replacing the variable may still read its previous value, i.e., (self._dataset, self._decoder) = self._process_dataset(dataset)
+				if(v1.getKey().getScope().subsumes(mapping.getFragment1().getLocationInfo()) && !mapping.getReplacements().contains(replacement)) {
+					for(LeafExpression variable : mapping.getFragment2().getVariables()) {
+						if(variable.getString().equals(replacement.getBefore())) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	private boolean conflictWithChildMapperRefactoring(CandidateAttributeRefactoring candidate) {

@@ -5410,6 +5410,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute enc to enc in method protected _build(inputs, kwargs) from class modules.encoders.transformer_encoders.TransformerEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -5596,6 +5603,13 @@
     }, {
         "type": "Inline Variable",
         "description": "Inline Variable dataset in method protected _make_data() from class data.data.mono_text_data.MonoTextData",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute dataset to _dataset in method protected _make_data() from class data.data.mono_text_data.MonoTextData",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

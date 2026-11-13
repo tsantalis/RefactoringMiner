@@ -17,6 +17,8 @@ public class CandidateAttributeRefactoring implements ReferenceBasedRefactoring 
 	private VariableDeclaration renamedVariableDeclaration;
 	private UMLAttribute originalAttribute;
 	private UMLAttribute renamedAttribute;
+	//the variable assigned to an attribute is replaced with the attribute, i.e., self._dataset = dataset removed, dataset -> self._dataset
+	private boolean variableAssignedToAttribute;
 
 	public CandidateAttributeRefactoring(
 			String originalVariableName,
@@ -143,4 +145,11 @@ public class CandidateAttributeRefactoring implements ReferenceBasedRefactoring 
 		return true;
 	}
 
+	public boolean isVariableAssignedToAttribute() {
+		return variableAssignedToAttribute;
+	}
+
+	public void setVariableAssignedToAttribute(boolean variableAssignedToAttribute) {
+		this.variableAssignedToAttribute = variableAssignedToAttribute;
+	}
 }

@@ -3420,6 +3420,12 @@ public class StringBasedHeuristics {
 						!mapper.getContainer1().isConstructor() && !mapper.getContainer2().isConstructor() && !mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) &&
 						zeroCallsToExtractedMethodsOrParentMapperWithNonIdenticalSignature(mapper))
 					rightHandSideReplacement = true;
+				//an assignment and the declaration of another variable with another right-hand side, i.e., roundedStart = me.firstTick; and var dataMin = me.dataMin;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+						statement1.getVariableDeclarations().size() != statement2.getVariableDeclarations().size() &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))

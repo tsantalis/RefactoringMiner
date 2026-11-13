@@ -1430,6 +1430,22 @@ public abstract class UMLAbstractClassDiff {
 		return nextClass;
 	}
 
+	//a Python attribute without a declaration in the model, first assigned in the method replacing the variable, i.e., self._dataset in _make_data()
+	private static VariableDeclaration attributeAssignedInMethod(String attributeAccess, String attributeName, CandidateAttributeRefactoring candidate) {
+		VariableDeclarationContainer container2 = candidate.getOperationAfter();
+		if(container2.getBody() == null) {
+			return null;
+		}
+		for(AbstractCodeFragment leaf2 : container2.getBody().getCompositeStatement().getLeaves()) {
+			for(LeafExpression variable : leaf2.getVariables()) {
+				if(variable.getString().equals(attributeAccess)) {
+					return new VariableDeclaration(variable, attributeName, candidate.getOriginalVariableDeclaration().getType(), container2);
+				}
+			}
+		}
+		return null;
+	}
+
 	public Set<CandidateAttributeRefactoring> getCandidateAttributeRenames() {
 		return candidateAttributeRenames;
 	}
@@ -1707,8 +1723,21 @@ public abstract class UMLAbstractClassDiff {
 						}
 					}
 					else {
-						//field is declared in a superclass or outer class
-						candidateAttributeRenames.add(candidate);
+						String renamedVariableName = candidate.getRenamedVariableName();
+						VariableDeclaration assignedAttribute = candidate.isVariableAssignedToAttribute() && renamedVariableName.startsWith(LANG2.THIS_DOT) ?
+								attributeAssignedInMethod(renamedVariableName, after, candidate) : null;
+						if(assignedAttribute != null) {
+							RenameVariableRefactoring ref = new RenameVariableRefactoring(
+									candidate.getOriginalVariableDeclaration(), assignedAttribute,
+									candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
+							if(!refactorings.contains(ref)) {
+								refactorings.add(ref);
+							}
+						}
+						else {
+							//field is declared in a superclass or outer class
+							candidateAttributeRenames.add(candidate);
+						}
 					}
 				}
 				else if(candidate.getRenamedVariableDeclaration() != null) {

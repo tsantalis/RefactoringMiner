@@ -199,6 +199,9 @@ public class ReplacementUtil {
 					else if(!compatible && qualified && character.equals(".") && characterBeforeMatch2.equals(LANG2.NOT) && !characterBeforeMatch1.equals(LANG1.NOT)) {
 						compatible = compatibleCharacterBeforeMatch(characterBeforeMatch1, start2 == 1 ? "" : String.valueOf(completeString2.charAt(start2 - 2)), LANG1, LANG2);
 					}
+					if(!compatible && isStringLiteral(subString1) && isStringLiteral(subString2)) {
+						compatible = elementShiftedInList(temp, start1, completeString2, start2);
+					}
 					if(compatible) {
 						m1.appendReplacement(sb, Matcher.quoteReplacement(subString2 + character));
 						replacementOccurred = true;
@@ -234,6 +237,21 @@ public class ReplacementUtil {
 			}
 		}
 		return temp;
+	}
+
+	private static boolean isStringLiteral(String s) {
+		return s.length() > 1 && (s.charAt(0) == '"' || s.charAt(0) == '\'') && s.charAt(s.length() - 1) == s.charAt(0);
+	}
+
+	//a string literal following a ", " separator moved to the start of a list, or vice versa, in statements printed with spaces after the commas,
+	//i.e., ['prefix', 'prefix *', 'prefix Yukikaze'] -> ['*', 'Yukikaze'], like Java f(a,x) -> f(x)
+	private static boolean elementShiftedInList(String completeString1, int start1, String completeString2, int start2) {
+		boolean afterSeparator1 = start1 > 1 && completeString1.charAt(start1 - 1) == ' ' && completeString1.charAt(start1 - 2) == ',';
+		boolean afterSeparator2 = start2 > 1 && completeString2.charAt(start2 - 1) == ' ' && completeString2.charAt(start2 - 2) == ',';
+		if(afterSeparator1 == afterSeparator2)
+			return false;
+		char characterBefore = afterSeparator1 ? (start2 == 0 ? ' ' : completeString2.charAt(start2 - 1)) : (start1 == 0 ? ' ' : completeString1.charAt(start1 - 1));
+		return characterBefore == '(' || characterBefore == '[';
 	}
 
 	private static boolean compatibleCharacterBeforeMatch(String characterBefore1, String characterBefore2, Constants LANG1, Constants LANG2) {

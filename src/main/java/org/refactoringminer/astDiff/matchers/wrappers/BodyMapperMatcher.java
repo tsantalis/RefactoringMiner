@@ -1553,12 +1553,56 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
             removeArgumentToParameterMappings(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         }
+        matchReplacedStringLiterals(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         optimizeVariableDeclarations(abstractCodeMapping);
         if (!isPartOfExtractedMethod && srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.RETURN_STATEMENT)) {
             optimizationData.getSubtreeMappings().addMapping(srcStatementNode,dstStatementNode);
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+        }
+    }
+
+    //the string literals the model replaced within mapped arrays are mapped with each other, instead of the literals the tree matcher pairs by position,
+    //i.e., examples: ['prefix', 'prefix *', 'prefix Yukikaze'] -> examples: ['*', 'Yukikaze'] maps 'prefix *' to '*', and 'prefix' is deleted
+    private void matchReplacedStringLiterals(Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping mapping, ExtendedMultiMappingStore mappingStore) {
+        for (Replacement replacement : mapping.getReplacements()) {
+            if (!replacement.getType().equals(ReplacementType.STRING_LITERAL))
+                continue;
+            List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
+            List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
+            if (expressions1.size() != 1 || expressions2.size() != 1)
+                continue;
+            Tree tree1 = TreeUtilFunctions.findByLocationInfo(srcStatementNode, expressions1.get(0).getLocationInfo(), LANG1);
+            Tree tree2 = TreeUtilFunctions.findByLocationInfo(dstStatementNode, expressions2.get(0).getLocationInfo(), LANG2);
+            if (tree1 == null || tree2 == null || !tree1.getType().name.equals(LANG1.STRING_LITERAL) || !tree2.getType().name.equals(LANG2.STRING_LITERAL) ||
+                    !tree1.isIsoStructuralTo(tree2))
+                continue;
+            //only the elements of the mapped arrays, not the value of match: 'rest' and of id: 'reason',
+            //nor the operands of a concatenation, i.e., "---- " + "---- [%s UTC]%n" -> Strings.repeat("-", n) + " [%s UTC]%n" (helios da39bfeb)
+            Tree parent1 = tree1.getParent();
+            Tree parent2 = tree2.getParent();
+            if (parent1 == null || parent2 == null || !parent1.getType().name.equals(LANG1.ARRAY) || !parent2.getType().name.equals(LANG2.ARRAY))
+                continue;
+            Set<Tree> parentDsts = mappingStore.getDsts(parent1);
+            if (parentDsts == null || !parentDsts.contains(parent2))
+                continue;
+            Set<Tree> dsts = mappingStore.getDsts(tree1);
+            if (dsts != null && dsts.contains(tree2))
+                continue;
+            for (Tree t1 : tree1.preOrder()) {
+                Set<Tree> mapped = mappingStore.getDsts(t1);
+                if (mapped != null)
+                    for (Tree t2 : new ArrayList<>(mapped))
+                        mappingStore.removeMapping(t1, t2);
+            }
+            for (Tree t2 : tree2.preOrder()) {
+                Set<Tree> mapped = mappingStore.getSrcs(t2);
+                if (mapped != null)
+                    for (Tree t1 : new ArrayList<>(mapped))
+                        mappingStore.removeMapping(t1, t2);
+            }
+            mappingStore.addMappingRecursively(tree1, tree2);
         }
     }
 

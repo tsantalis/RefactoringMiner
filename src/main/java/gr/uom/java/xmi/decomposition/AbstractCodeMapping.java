@@ -1675,7 +1675,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	private boolean identical(UMLAbstractClassDiff classDiff) {
-		if((getReplacements().size() == 1 || getNonOverlappingReplacements().size() == 1) && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
+		//a single JSX element replacement hides any number of differences, i.e., <View><ActivityIndicator/></View> -> <View style={cardStyle}>...</View>
+		boolean jsxElementReplacement = getReplacements().stream().anyMatch(r -> r.getType().equals(ReplacementType.JSX_ELEMENT));
+		if((getReplacements().size() == 1 || getNonOverlappingReplacements().size() == 1) && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size() && !jsxElementReplacement) {
 			return true;
 		}
 		if(fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size() && fragment2.getTernaryOperatorExpressions().size() > 0) {

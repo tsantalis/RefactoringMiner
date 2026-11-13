@@ -4465,6 +4465,22 @@ public class StringBasedHeuristics {
 		return conditional;
 	}
 
+	//the ! in a string literal or a JSX text is not a negation, i.e., <Text>See you tomorrow!</Text>
+	private static boolean containsNotOperator(String s, AbstractCodeFragment statement, Constants LANG) {
+		String code = s;
+		for(LeafExpression literal : statement.getStringLiterals()) {
+			code = code.replace(literal.getString(), "");
+		}
+		for(JsxElement element : statement.getJsxElements()) {
+			for(JsxElement.JsxChild child : element.getChildren()) {
+				if(!child.isElement() && !child.string().startsWith("{")) {
+					code = code.replace(child.string(), "");
+				}
+			}
+		}
+		return code.contains(LANG.NOT) || code.contains("!");
+	}
+
 	protected static boolean commonConditional(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper, boolean isomorphic) {
 		Constants LANG1 = mapper.LANG1;
 		Constants LANG2 = mapper.LANG2;
@@ -4549,7 +4565,7 @@ public class StringBasedHeuristics {
 			String AND2 = LANG2.AND.strip();
 			String OR2 = LANG2.OR.strip();
 			boolean containLogicalOperator = s1.contains(OR1) || s1.contains(AND1) || s2.contains(OR2) || s2.contains(AND2);
-			boolean containsNotOperator = (s1.contains(LANG1.NOT) || s1.contains("!")) != (s2.contains(LANG2.NOT) || s2.contains("!"));
+			boolean containsNotOperator = containsNotOperator(s1, statement1, LANG1) != containsNotOperator(s2, statement2, LANG2);
 			if(call1 == null)
 				call1 = statement1.invocationCoveringEntireFragment();
 			if(call2 == null)

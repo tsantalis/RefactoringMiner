@@ -3042,12 +3042,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.commentListDiff = new UMLCommentListDiff(anonymousClassOperation.getComments(), lambda2.getComments(), this);
 	}
 
+	private static boolean declaredInBody(AbstractCodeFragment statement, VariableDeclarationContainer container) {
+		List<VariableDeclaration> declarations = statement.getVariableDeclarations();
+		if(declarations.isEmpty() || container.getBody() == null) {
+			return false;
+		}
+		for(VariableDeclaration declaration : declarations) {
+			if(container.getBody().getVariableDeclaration(declaration.getVariableName()) == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public void addChildMapper(UMLOperationBodyMapper mapper) throws RefactoringMinerTimedOutException {
 		this.childMappers.add(mapper);
 		mapCallSite(mapper);
 		//check for variable extracted in parentMapper, but referenced in childMapper
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeFragment statement : getNonMappedLeavesT2()) {
+			//a variable declared in the body of the child method hides the variable of this method with the same name,
+			//i.e., const cardStyle = ... in both renderStatusCard and its caller NextClassModal
+			if(declaredInBody(statement, mapper.getContainer2())) {
+				continue;
+			}
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				int refactoringCount = mapping.getRefactorings().size();
 				mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, true, mappings);
@@ -9421,6 +9439,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return matchingReplacements;
 	}
 
+	//both mappings replace a JSX element of the shared statement, and a single JSX element replacement hides any number of differences,
+	//so the number of replacements does not tell which one is closer, i.e., the loading-state <View><ActivityIndicator/></View> and the main card <View>...</View>
+	//competing for the main card, so both are kept and the closer one wins
+	private static boolean bothReplaceJsxElements(Set<Replacement> replacements1, Set<Replacement> replacements2) {
+		return replacements1.stream().anyMatch(r -> r.getType().equals(ReplacementType.JSX_ELEMENT)) &&
+				replacements2.stream().anyMatch(r -> r.getType().equals(ReplacementType.JSX_ELEMENT));
+	}
+
 	//the same replacement, or one replacing more or less of the same code with the same code, i.e., result.append(' ') -> append(' ') and result -> append(' '),
 	//but not the replacement of other code with the same code, i.e., not -> want and id.copy() -> want
 	private static boolean refinedReplacement(Replacement r1, Replacement r2) {
@@ -9500,7 +9526,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					boolean ownedByLambdaWithMultipleCallsToExtractedMethod = leaf.ownedByLambda() && callsToExtractedMethod > 1;
 					//the alternative creates the same type with a C++ function template the best mapping creates another type with, i.e., std::make_unique<TieredCache>(x)
 					boolean sameTemplateArguments = LeafMapping.templateArgumentAgreement(replacements) > 0 && LeafMapping.templateArgumentAgreement(first.getReplacements()) < 0;
-					if(matchingMappings == mappingSet.size() || matchWithLessReplacements || differentVariableDeclarationNumber || ownedByLambdaWithMultipleCallsToExtractedMethod || sameTemplateArguments) {
+					boolean bothReplaceJsxElements = bothReplaceJsxElements(replacements, first.getReplacements());
+					if(matchingMappings == mappingSet.size() || matchWithLessReplacements || differentVariableDeclarationNumber || ownedByLambdaWithMultipleCallsToExtractedMethod || sameTemplateArguments || bothReplaceJsxElements) {
 						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 						mapping.addReplacements(replacements);
 						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
@@ -9612,7 +9639,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean variableDeclarationNameMismatch = mapping.sameVariableDeclarationName() && !mappingSet.first().sameVariableDeclarationName();
 						//the alternative creates the same type with a C++ function template, like in checkForOtherPossibleMatchesForFragment2
 						boolean sameTemplateArguments = LeafMapping.templateArgumentAgreement(replacements) > 0 && LeafMapping.templateArgumentAgreement(first.getReplacements()) < 0;
-						if(allowAdd || nested || matchWithLessReplacements || variableDeclarationNameMismatch || sameTemplateArguments || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
+						boolean bothReplaceJsxElements = bothReplaceJsxElements(replacements, first.getReplacements());
+						if(allowAdd || nested || matchWithLessReplacements || variableDeclarationNameMismatch || sameTemplateArguments || bothReplaceJsxElements || mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
 							mappingSet.add(mapping);
 						}
 					}
@@ -13880,8 +13908,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-				while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+			//a body with braces on one side only, i.e., if(cond) { return null; } -> if(cond) return null;
+			if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) || parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 					parent1 = parent1.getParent(); 
 				}
 				while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 

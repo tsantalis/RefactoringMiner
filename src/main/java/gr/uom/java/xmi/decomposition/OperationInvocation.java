@@ -430,7 +430,9 @@ public class OperationInvocation extends AbstractCall {
     			Set<VariableDeclaration> variableDeclarations = variableDeclarationMap.get(arg);
     			for(VariableDeclaration variableDeclaration : variableDeclarations) {
     				if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-    					inferredArgumentTypes.add(variableDeclaration.getType() != null ? variableDeclaration.getType() : null);
+    					//a variable destructured from an object pattern carries the type of the whole pattern, not its own,
+    					//i.e., status in function NextClassModal({ nextClass, status }: NextClassModalProps)
+    					inferredArgumentTypes.add(variableDeclaration.getType() != null && !variableDeclaration.isDestructuredFromObjectPattern() ? variableDeclaration.getType() : null);
     					break;
     				}
     			}

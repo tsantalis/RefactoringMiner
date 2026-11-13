@@ -1348,7 +1348,9 @@ public class VariableReplacementAnalysis {
 						MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
 						AbstractCall beforeCall = r.getInvokedOperationBefore();
 						AbstractCall afterCall = r.getInvokedOperationAfter();
-						if(beforeCall.identicalName(afterCall) && beforeCall.arguments().size() == afterCall.arguments().size()) {
+						//the arguments are paired by position also in a renamed call, i.e., .replace(/\s+/g, ' ') -> .replaceAll(WHITESPACE_PATTERN, ' ') in a call chain,
+						//and the added attribute must be initialized with the replaced argument
+						if(beforeCall.arguments().size() == afterCall.arguments().size()) {
 							for(int i=0; i<beforeCall.arguments().size(); i++) {
 								String arg1 = beforeCall.arguments().get(i);
 								String arg2 = afterCall.arguments().get(i);

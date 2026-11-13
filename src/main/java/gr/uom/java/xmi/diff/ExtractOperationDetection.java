@@ -856,7 +856,8 @@ public class ExtractOperationDetection {
 	private boolean parameterTypesMatch(Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters) {
 		for(UMLParameter key : originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.keySet()) {
 			UMLParameter value = originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.get(key);
-			if(!key.getType().equals(value.getType()) && !key.getType().equalsWithSubType(value.getType()) && !key.getType().equalClassType(value.getType()) &&
+			//a parameter destructured from an object pattern carries the type of the whole pattern, not its own
+			if(!key.getVariableDeclaration().isDestructuredFromObjectPattern() && !key.getType().equals(value.getType()) && !key.getType().equalsWithSubType(value.getType()) && !key.getType().equalClassType(value.getType()) &&
 					!OperationInvocation.compatibleTypes(value, key.getType(), classDiff, modelDiff)) {
 				return false;
 			}

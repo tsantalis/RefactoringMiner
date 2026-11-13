@@ -1740,9 +1740,9 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	//the declared return type, or any type when it is inferred, i.e., override fun toString() = "..." in Kotlin
-	private boolean returnsType(String classType) {
+	public boolean returnsType(String classType) {
 		UMLParameter returnParameter = getReturnParameter();
-		return returnParameter == null || returnParameter.getType().getClassType().equals(classType);
+		return returnParameter == null || (returnParameter.getType() != null && returnParameter.getType().getClassType().equals(classType));
 	}
 
 	private boolean isEquals() {

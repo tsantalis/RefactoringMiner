@@ -3416,7 +3416,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
 						if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
-							if((mapping.getFragment1().getString().equals(LANG1.RETURN_TRUE) || mapping.getFragment1().getString().equals(LANG1.RETURN_FALSE)) && addedOperation.getReturnParameter().getType().toString().equals("boolean")) {
+							if((mapping.getFragment1().getString().equals(LANG1.RETURN_TRUE) || mapping.getFragment1().getString().equals(LANG1.RETURN_FALSE)) && addedOperation.returnsType("boolean")) {
 								AbstractCodeFragment fragment = mapping.getFragment1();
 								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 							}

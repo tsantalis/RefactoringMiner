@@ -514,6 +514,15 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		return list;
 	}
 
+	public List<UMLOperation> operationsWithTheSameQualifiedSignature(UMLOperation operation) {
+		List<UMLOperation> list = new ArrayList<>();
+		for(UMLOperation originalOperation : operations) {
+			if(originalOperation.equalsQualified(operation))
+				list.add(originalOperation);
+		}
+		return list;
+	}
+
 	public boolean containsOperationWithName(String name) {
 		for(UMLOperation originalOperation : operations) {
 			if(originalOperation.getName().equals(name))

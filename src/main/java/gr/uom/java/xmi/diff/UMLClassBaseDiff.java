@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -2043,8 +2044,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
+		//the operations with identical signatures in both classes, i.e., a TypeScript overload signature and its implementation, are paired in order
+		Set<UMLOperation> nextOperationsWithMapper = Collections.newSetFromMap(new IdentityHashMap<>());
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
+			boolean pairInOrder = originalClass.operationsWithTheSameQualifiedSignature(originalOperation).size() > 1 && nextClass.operationsWithTheSameQualifiedSignature(originalOperation).size() > 1;
 			for(UMLOperation nextOperation : nextClass.getOperations()) {
+				if(pairInOrder && nextOperationsWithMapper.contains(nextOperation)) {
+					continue;
+				}
 				if(originalOperation.equalsQualified(nextOperation) && !differentParameterNames(originalOperation, nextOperation)) {
 					if(getModelDiff() != null) {
 						List<UMLOperationBodyMapper> mappers = getModelDiff().findMappersWithMatchingSignature2(nextOperation);
@@ -2073,6 +2080,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							}
 						}
 						this.addOperationBodyMapper(operationBodyMapper);
+						if(pairInOrder) {
+							nextOperationsWithMapper.add(nextOperation);
+							break;
+						}
 					}
 				}
 			}

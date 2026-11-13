@@ -70,6 +70,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsOptionalType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParenthesizedType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsThisType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsQualifiedName;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTupleElement;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTupleType;
@@ -763,6 +764,11 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			ListCompositeType listCompositeType = new ListCompositeType(memberTypeList, Kind.LITERAL);
 			listCompositeType.setKeys(keys);
 			return listCompositeType;
+		}
+		else if(type instanceof Swc4jAstTsThisType) {
+			//the polymorphic this type, i.e., restore(data): this
+			UMLType leafType = extractTypeObject("this", PathFileUtils.getLang(filePath));
+			return leafType;
 		}
 		else if(type instanceof Swc4jAstTsLitType literalType) {
 			UMLType leafType = extractTypeObject("'" + literalType.getLit().toString() + "'", PathFileUtils.getLang(filePath));

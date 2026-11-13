@@ -630,18 +630,28 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree ambient1 = module1.getParent();
             Tree ambient2 = module2.getParent();
             if(ambient1 != null && ambient2 != null && ambient1.getType().name.equals(LANG1.AMBIENT_DECLARATION) && ambient2.getType().name.equals(LANG2.AMBIENT_DECLARATION)) {
-                mappingStore.addMapping(ambient1, ambient2);
-                Pair<Tree, Tree> declares = Helpers.findPairOfType(ambient1, ambient2, LANG1.DECLARE_KEYWORD, LANG2.DECLARE_KEYWORD);
-                if(declares != null) {
-                    mappingStore.addMapping(declares.first, declares.second);
-                }
+                processAmbientDeclaration(ambient1, ambient2, mappingStore, LANG1, LANG2);
             }
         }
         else if(block1.getType().name.equals(LANG1.AMBIENT_DECLARATION) && block2.getType().name.equals(LANG2.AMBIENT_DECLARATION)) {
-            mappingStore.addMapping(block1, block2);
-            Pair<Tree, Tree> declares = Helpers.findPairOfType(block1, block2, LANG1.DECLARE_KEYWORD, LANG2.DECLARE_KEYWORD);
-            if(declares != null) {
-                mappingStore.addMapping(declares.first, declares.second);
+            processAmbientDeclaration(block1, block2, mappingStore, LANG1, LANG2);
+        }
+    }
+
+    //declare namespace X {...}, or export declare namespace X {...}
+    private static void processAmbientDeclaration(Tree ambient1, Tree ambient2, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
+        mappingStore.addMapping(ambient1, ambient2);
+        Pair<Tree, Tree> declares = Helpers.findPairOfType(ambient1, ambient2, LANG1.DECLARE_KEYWORD, LANG2.DECLARE_KEYWORD);
+        if(declares != null) {
+            mappingStore.addMapping(declares.first, declares.second);
+        }
+        Tree export1 = ambient1.getParent();
+        Tree export2 = ambient2.getParent();
+        if(export1 != null && export2 != null && export1.getType().name.equals(LANG1.EXPORT_STATEMENT) && export2.getType().name.equals(LANG2.EXPORT_STATEMENT)) {
+            mappingStore.addMapping(export1, export2);
+            Pair<Tree, Tree> exports = Helpers.findPairOfType(export1, export2, LANG1.EXPORT_KEYWORD, LANG2.EXPORT_KEYWORD);
+            if(exports != null) {
+                mappingStore.addMapping(exports.first, exports.second);
             }
         }
     }

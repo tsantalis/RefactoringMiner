@@ -62,6 +62,7 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -76,6 +77,8 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private VariableDeclarationContainer owner;
 	private Optional<StatementObject> switchExpressionCase = Optional.empty();
 	private String asString;
+	//the functions declared in the body of a TypeScript lambda, which are modeled as nested operations instead of statements
+	private List<UMLOperation> nestedOperations = new ArrayList<UMLOperation>();
 	private final Constants LANG;
 	
 	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
@@ -500,7 +503,32 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 				sb.append(statement);
 			}
 		}
+		appendNestedOperations(sb, nestedOperations);
 		return sb.toString();
+	}
+
+	//names only, like the parameters of the lambda, so that added type annotations do not make two lambdas differ
+	private static void appendNestedOperations(StringBuilder sb, List<UMLOperation> operations) {
+		for(UMLOperation operation : operations) {
+			sb.append(operation.getName()).append("(").append(String.join(", ", operation.getParameterNameList())).append(")");
+			if(operation.getBody() != null) {
+				for(String statement : operation.getBody().stringRepresentation()) {
+					sb.append(statement);
+				}
+			}
+			else if(operation.getDefaultExpression() != null) {
+				sb.append(operation.getDefaultExpression().getString());
+			}
+			appendNestedOperations(sb, operation.getNestedOperations());
+		}
+	}
+
+	public void addNestedOperation(UMLOperation operation) {
+		nestedOperations.add(operation);
+	}
+
+	public List<UMLOperation> getNestedOperations() {
+		return nestedOperations;
 	}
 
 	public String getString() {

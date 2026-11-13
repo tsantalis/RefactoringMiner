@@ -246,6 +246,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					((UMLOperation)container).addNestedOperation(nested);
 				}
 				else if(container instanceof LambdaExpressionObject lambda) {
+					lambda.addNestedOperation(nested);
 					if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 						((UMLOperation)lambda.getOwner()).addNestedOperation(nested);
 					}
@@ -266,6 +267,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					((UMLOperation)container).addNestedOperation(nested);
 				}
 				else if(container instanceof LambdaExpressionObject lambda) {
+					lambda.addNestedOperation(nested);
 					if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 						((UMLOperation)lambda.getOwner()).addNestedOperation(nested);
 					}
@@ -523,6 +525,7 @@ public class TypeScriptOperationBody extends OperationBody {
 							((UMLOperation)container).addNestedOperation(operation);
 						}
 						else if(container instanceof LambdaExpressionObject lambda) {
+							lambda.addNestedOperation(operation);
 							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
 							}
@@ -563,6 +566,7 @@ public class TypeScriptOperationBody extends OperationBody {
 							((UMLOperation)container).addNestedOperation(operation);
 						}
 						else if(container instanceof LambdaExpressionObject lambda) {
+							lambda.addNestedOperation(operation);
 							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
 							}
@@ -654,6 +658,7 @@ public class TypeScriptOperationBody extends OperationBody {
 							((UMLOperation)container).addNestedOperation(operation);
 						}
 						else if(container instanceof LambdaExpressionObject lambda) {
+							lambda.addNestedOperation(operation);
 							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
 							}
@@ -698,6 +703,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				((UMLOperation)container).addNestedOperation(nested);
 			}
 			else if(container instanceof LambdaExpressionObject lambda) {
+				lambda.addNestedOperation(nested);
 				if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 					((UMLOperation)lambda.getOwner()).addNestedOperation(nested);
 				}
@@ -915,6 +921,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					((UMLOperation)container).addNestedOperation(nested);
 				}
 				else if(container instanceof LambdaExpressionObject lambda) {
+					lambda.addNestedOperation(nested);
 					if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 						((UMLOperation)lambda.getOwner()).addNestedOperation(nested);
 					}

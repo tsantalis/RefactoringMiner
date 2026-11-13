@@ -12759,15 +12759,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public String toString() {
-		String s1 = container1.toString();
-		if(container1 instanceof LambdaExpressionObject) {
-			s1 = s1.substring(0, s1.indexOf(" -> "));
+		return lambdaSignature(container1, LANG1) + " -> " + lambdaSignature(container2, LANG2);
+	}
+
+	//the parameters of a lambda container, i.e., the part of its string before the arrow of its language, or "()" for a lambda printed without arrow
+	private static String lambdaSignature(VariableDeclarationContainer container, Constants LANG) {
+		String s = container.toString();
+		if(container instanceof LambdaExpressionObject) {
+			int arrow = s.indexOf(LANG.LAMBDA_ARROW);
+			return arrow >= 0 ? s.substring(0, arrow) : "()";
 		}
-		String s2 = container2.toString();
-		if(container2 instanceof LambdaExpressionObject) {
-			s2 = s2.substring(0, s2.indexOf(" -> "));
-		}
-		return s1 + " -> " + s2;
+		return s;
 	}
 
 	@Override

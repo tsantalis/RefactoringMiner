@@ -905,7 +905,7 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			if(!diff1.isEmpty() && StringDistance.isNumeric(diff1) && !diff2.isEmpty() && StringDistance.isNumeric(diff2) &&
-					!commonSuffix.startsWith("=")) {
+					!commonSuffix.startsWith("=") && !commonSuffix.startsWith(LANG1.ASSIGNMENT)) {
 				boolean skip = false;
 				List<LeafExpression> variables1 = fragment1.getVariables();
 				List<LeafExpression> variables2 = fragment2.getVariables();
@@ -3546,7 +3546,7 @@ public class StringBasedHeuristics {
 					return true;
 				}
 				for(AbstractCodeFragment fragment : replacementInfo.getStatements2()) {
-					if(fragment.getString().startsWith(variableName1 + "=")) {
+					if(fragment.getString().startsWith(variableName1 + LANG2.ASSIGNMENT)) {
 						return true;
 					}
 				}

@@ -87,7 +87,7 @@ import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLModelDiff {
-	private static final Pattern RETURN_NUMBER_LITERAL = Pattern.compile("return \\d+;\n");
+	private static final Pattern RETURN_NUMBER_LITERAL = Pattern.compile("return \\d+;?\n");
 	private final int MAXIMUM_NUMBER_OF_COMPARED_METHODS;
 	private UMLModel parentModel;
 	private UMLModel childModel;

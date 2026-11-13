@@ -3075,37 +3075,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								mapper.getOperationInvocation() != null && mapper.getOperationInvocation().arguments().contains(newExtractVariableRefactoring.getVariableDeclaration().getVariableName())) {
 							newExtractVariableRefactoring.updateOperationAfter(mapper.getParentMapper().getContainer2());
 						}
-						if(!this.refactorings.contains(newRefactoring)) {
-							this.refactorings.add(newRefactoring);
-						}
-						else {
-							for(Refactoring refactoring : this.refactorings) {
-								if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
-									ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
-									Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
-									Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
-									ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
-									oldExtractVariableRefactoring.addReferences(newReferences);
-									oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-									for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
-										oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
-									}
-									break;
-								}
-								if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
-									InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
-									Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
-									Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
-									InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
-									oldInlineVariableRefactoring.addReferences(newReferences);
-									oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-									for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
-										oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
-									}
-									break;
-								}
-							}
-						}
+						addRefactoring(newRefactoring);
 					}
 				}
 			}
@@ -3120,37 +3090,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
 							newExtractVariableRefactoring.updateOperationAfter(mapper.getParentMapper().getContainer2());
 						}
-						if(!this.refactorings.contains(newRefactoring)) {
-							this.refactorings.add(newRefactoring);
-						}
-						else {
-							for(Refactoring refactoring : this.refactorings) {
-								if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
-									ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
-									Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
-									Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
-									ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
-									oldExtractVariableRefactoring.addReferences(newReferences);
-									oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-									for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
-										oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
-									}
-									break;
-								}
-								if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
-									InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
-									Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
-									Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
-									InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
-									oldInlineVariableRefactoring.addReferences(newReferences);
-									oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-									for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
-										oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
-									}
-									break;
-								}
-							}
-						}
+						addRefactoring(newRefactoring);
 					}
 				}
 			}
@@ -4984,25 +4924,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(refactoringCount < mapping.getRefactorings().size()) {
 				this.anonymousClassDiffs.addAll(mapping.getAnonymousClassDiffs());
 				for(Refactoring newRefactoring : mapping.getRefactorings()) {
-					if(!this.refactorings.contains(newRefactoring)) {
-						this.refactorings.add(newRefactoring);
-					}
-					else {
-						for(Refactoring refactoring : this.refactorings) {
-							if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
-								InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
-								Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
-								Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
-								InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
-								oldInlineVariableRefactoring.addReferences(newReferences);
-								oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-								for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
-									oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
-								}
-								break;
-							}
-						}
-					}
+					addRefactoring(newRefactoring);
 				}
 			}
 		}
@@ -5016,25 +4938,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(refactoringCount < mapping.getRefactorings().size()) {
 				this.anonymousClassDiffs.addAll(mapping.getAnonymousClassDiffs());
 				for(Refactoring newRefactoring : mapping.getRefactorings()) {
-					if(!this.refactorings.contains(newRefactoring)) {
-						this.refactorings.add(newRefactoring);
-					}
-					else {
-						for(Refactoring refactoring : this.refactorings) {
-							if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
-								ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
-								Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
-								Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
-								ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
-								oldExtractVariableRefactoring.addReferences(newReferences);
-								oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-								for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
-									oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
-								}
-								break;
-							}
-						}
-					}
+					addRefactoring(newRefactoring);
 				}
 			}
 		}
@@ -11691,38 +11595,59 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void addRefactorings(AbstractCodeMapping mapping) {
 		for(Refactoring newRefactoring : mapping.getRefactorings()) {
-			if(!this.refactorings.contains(newRefactoring)) {
-				this.refactorings.add(newRefactoring);
+			addRefactoring(newRefactoring);
+		}
+	}
+
+	private void addRefactoring(Refactoring newRefactoring) {
+		Refactoring refactoring = sameVariableRefactoring(newRefactoring);
+		if(refactoring == null) {
+			this.refactorings.add(newRefactoring);
+		}
+		else if(refactoring instanceof ExtractVariableRefactoring oldExtractVariableRefactoring) {
+			ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
+			oldExtractVariableRefactoring.addReferences(newExtractVariableRefactoring.getReferences());
+			oldExtractVariableRefactoring.addUnmatchedStatementReferences(newExtractVariableRefactoring.getUnmatchedStatementReferences());
+			for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
+				oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
 			}
-			else {
-				for(Refactoring refactoring : this.refactorings) {
-					if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
-						ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
-						Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
-						Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
-						ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
-						oldExtractVariableRefactoring.addReferences(newReferences);
-						oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-						for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
-							oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
-						}
-						break;
-					}
-					if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
-						InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
-						Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
-						Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
-						InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
-						oldInlineVariableRefactoring.addReferences(newReferences);
-						oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-						for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
-							oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
-						}
-						break;
-					}
+		}
+		else if(refactoring instanceof InlineVariableRefactoring oldInlineVariableRefactoring) {
+			InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
+			oldInlineVariableRefactoring.addReferences(newInlineVariableRefactoring.getReferences());
+			oldInlineVariableRefactoring.addUnmatchedStatementReferences(newInlineVariableRefactoring.getUnmatchedStatementReferences());
+			for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
+				oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+			}
+		}
+	}
+
+	//an equal refactoring, or in Python, the extraction or inlining of another definition of the same variable,
+	//i.e., dim = ... in both branches of an if-else statement
+	private Refactoring sameVariableRefactoring(Refactoring newRefactoring) {
+		if(this.refactorings.contains(newRefactoring)) {
+			for(Refactoring refactoring : this.refactorings) {
+				if(refactoring.equals(newRefactoring)) {
+					return refactoring;
 				}
 			}
 		}
+		if(!PathFileUtils.isPythonFile(container2.getLocationInfo().getFilePath())) {
+			return null;
+		}
+		for(Refactoring refactoring : this.refactorings) {
+			if(refactoring instanceof ExtractVariableRefactoring oldExtract && newRefactoring instanceof ExtractVariableRefactoring newExtract &&
+					oldExtract.getOperationBefore().equals(newExtract.getOperationBefore()) && oldExtract.getOperationAfter().equals(newExtract.getOperationAfter()) &&
+					VariableReplacementAnalysis.samePythonVariable(oldExtract.getVariableDeclaration(), newExtract.getVariableDeclaration(), newExtract.getOperationAfter())) {
+				return refactoring;
+			}
+			if(refactoring instanceof InlineVariableRefactoring oldInline && newRefactoring instanceof InlineVariableRefactoring newInline &&
+					oldInline.getOperationBefore().equals(newInline.getOperationBefore()) && oldInline.getOperationAfter().equals(newInline.getOperationAfter()) &&
+					VariableReplacementAnalysis.samePythonVariable(oldInline.getVariableDeclaration(), newInline.getVariableDeclaration(), newInline.getOperationBefore())) {
+				return refactoring;
+			}
+		}
+		return null;
 	}
 
 	public void removeAllMappings(Set<AbstractCodeMapping> mappings) {

@@ -1438,6 +1438,10 @@ public class OperationInvocation extends AbstractCall {
 			else if(expr instanceof Swc4jAstIdent ident) {
 				this.methodName = ident.getSym();
 			}
+			else if(expr instanceof Swc4jAstCallExpr) {
+				//f()!() is used to call a function that returns another function
+				this.methodName = "";
+			}
 		}
 		else if(callee instanceof Swc4jAstImport astImport) {
 			Swc4jAstImportPhase phase = astImport.getPhase();

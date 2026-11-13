@@ -1424,6 +1424,24 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
+	//JavaScript str.match(regex) and regex.exec(str) return the same result for a regex without the g flag, so the receiver and the argument swap,
+	//and the regex may be extracted, i.e., location.match(/\b([A-Z]{1,5})\d{1,4}[A-Z]?\b/) -> ROOM_CODE_COMPACT_PATTERN.exec(location)
+	public boolean regexMatchSwappedWithExec(AbstractCall call) {
+		if(!LANG.equals(Constants.TYPESCRIPT) || getExpression() == null || call.getExpression() == null || arguments().size() != 1 || call.arguments().size() != 1) {
+			return false;
+		}
+		boolean matchToExec = getName().equals("match") && call.getName().equals("exec");
+		boolean execToMatch = getName().equals("exec") && call.getName().equals("match");
+		if(!matchToExec && !execToMatch) {
+			return false;
+		}
+		String string1 = matchToExec ? getExpression() : arguments().get(0);
+		String regex1 = matchToExec ? arguments().get(0) : getExpression();
+		String string2 = matchToExec ? call.arguments().get(0) : call.getExpression();
+		String regex2 = matchToExec ? call.getExpression() : call.arguments().get(0);
+		return string1.equals(string2) && (regex1.equals(regex2) || regex1.startsWith("/") || regex2.startsWith("/"));
+	}
+
 	public boolean identicalWithExpressionArgumentSwap(AbstractCall call) {
 		if(getExpression() != null && call.getExpression() != null && (identicalName(call) || oneNameContainsTheOtherLowerCase(call))) {
 			int argumentIndex1 = arguments().indexOf(call.getExpression());

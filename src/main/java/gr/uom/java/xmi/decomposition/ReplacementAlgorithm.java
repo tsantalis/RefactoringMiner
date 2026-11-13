@@ -3538,6 +3538,30 @@ public class ReplacementAlgorithm {
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();
 			}
+			//JavaScript str.match(regex) replaced with regex.exec(str), with the crossing replacements of the receiver and the argument replaced by the swap,
+			//and the regex literal replaced with its extracted constant, if any
+			if(assignmentInvocationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 != null &&
+					assignmentInvocationCoveringTheEntireStatement1.regexMatchSwappedWithExec(assignmentInvocationCoveringTheEntireStatement2)) {
+				AbstractCall call1 = assignmentInvocationCoveringTheEntireStatement1;
+				AbstractCall call2 = assignmentInvocationCoveringTheEntireStatement2;
+				String temp = statement1.getString().replace(call1.actualString(), call2.actualString());
+				if(temp.equals(statement2.getString())) {
+					Set<Replacement> crossing = new LinkedHashSet<>();
+					for(Replacement r : replacementInfo.getReplacements()) {
+						if(call1.actualString().contains(r.getBefore()) && call2.actualString().contains(r.getAfter())) {
+							crossing.add(r);
+						}
+					}
+					replacementInfo.removeReplacements(crossing);
+					String regex1 = call1.getName().equals("match") ? call1.arguments().get(0) : call1.getExpression();
+					String regex2 = call2.getName().equals("exec") ? call2.getExpression() : call2.arguments().get(0);
+					if(!regex1.equals(regex2)) {
+						replacementInfo.addReplacement(new Replacement(regex1, regex2, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL));
+					}
+					replacementInfo.addReplacement(new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION_EXPRESSION_ARGUMENT_SWAPPED));
+					return replacementInfo.getReplacements();
+				}
+			}
 			//Kotlin extension call is identical with the static call having the receiver as first argument, i.e., source.buffer() -> Okio.buffer(source)
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 					invocationCoveringTheEntireStatement1.identicalWithExpressionMovedToStaticCallArgument(invocationCoveringTheEntireStatement2, statement1.getMethodInvocations(), statement2.getMethodInvocations())) {

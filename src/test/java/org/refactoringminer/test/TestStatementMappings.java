@@ -2390,6 +2390,7 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@Disabled("Moved to TypeScriptDiffTest (astDiff/commits/typescript.json)")
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/gabrielshufelt/soen390-commit-and-pray.git, 5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8, soen390-commit-and-pray-5f98a8aa11aca7828b6083f7c5ea81ccb3c757d8.txt",

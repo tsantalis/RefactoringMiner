@@ -13,6 +13,11 @@ import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
 import gr.uom.java.xmi.decomposition.ReplacementUtil;
 import gr.uom.java.xmi.diff.CodeRange;
+import org.refactoringminer.util.JSONIndentUtils;
+
+import static org.refactoringminer.util.JSONIndentUtils.DOUBLE_TAB;
+import static org.refactoringminer.util.JSONIndentUtils.NEW_LINE;
+import static org.refactoringminer.util.JSONIndentUtils.SINGLE_TAB;
 
 public interface Refactoring extends Serializable, CodeRangeProvider {
 
@@ -119,16 +124,16 @@ public interface Refactoring extends Serializable, CodeRangeProvider {
 	default public String toJSON(String commitURL) {
 		StringBuilder sb = new StringBuilder();
 		JsonStringEncoder encoder = JsonStringEncoder.getInstance();
-		sb.append("{").append("\n");
-		sb.append("\t").append("\"").append("type").append("\"").append(": ").append("\"").append(getName()).append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("description").append("\"").append(": ").append("\"");
+		sb.append("{").append(NEW_LINE);
+		sb.append(SINGLE_TAB).append("\"").append("type").append("\"").append(": ").append("\"").append(getName()).append("\"").append(",").append(NEW_LINE);
+		sb.append(SINGLE_TAB).append("\"").append("description").append("\"").append(": ").append("\"");
 		encoder.quoteAsString(toString().replace('\t', ' '), sb);
-		sb.append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("markup").append("\"").append(": ").append("\"");
+		sb.append("\"").append(",").append(NEW_LINE);
+		sb.append(SINGLE_TAB).append("\"").append("markup").append("\"").append(": ").append("\"");
 		encoder.quoteAsString(toMarkupStringWithGitHubLinks(commitURL).replace('\t', ' '), sb);
-		sb.append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("leftSideLocations").append("\"").append(": ").append(leftSide()).append(",").append("\n");
-		sb.append("\t").append("\"").append("rightSideLocations").append("\"").append(": ").append(rightSide()).append("\n");
+		sb.append("\"").append(",").append(NEW_LINE);
+		appendLocationsArray(sb, "leftSideLocations", leftSide(), false);
+		appendLocationsArray(sb, "rightSideLocations", rightSide(), true);
 		sb.append("}");
 		return sb.toString();
 	}
@@ -136,14 +141,36 @@ public interface Refactoring extends Serializable, CodeRangeProvider {
 	default public String toJSON() {
 		StringBuilder sb = new StringBuilder();
 		JsonStringEncoder encoder = JsonStringEncoder.getInstance();
-		sb.append("{").append("\n");
-		sb.append("\t").append("\"").append("type").append("\"").append(": ").append("\"").append(getName()).append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("description").append("\"").append(": ").append("\"");
+		sb.append("{").append(NEW_LINE);
+		sb.append(SINGLE_TAB).append("\"").append("type").append("\"").append(": ").append("\"").append(getName()).append("\"").append(",").append(NEW_LINE);
+		sb.append(SINGLE_TAB).append("\"").append("description").append("\"").append(": ").append("\"");
 		encoder.quoteAsString(toString().replace('\t', ' '), sb);
-		sb.append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("leftSideLocations").append("\"").append(": ").append(leftSide()).append(",").append("\n");
-		sb.append("\t").append("\"").append("rightSideLocations").append("\"").append(": ").append(rightSide()).append("\n");
+		sb.append("\"").append(",").append(NEW_LINE);
+		appendLocationsArray(sb, "leftSideLocations", leftSide(), false);
+		appendLocationsArray(sb, "rightSideLocations", rightSide(), true);
 		sb.append("}");
 		return sb.toString();
+	}
+
+	private void appendLocationsArray(StringBuilder sb, String propertyName, List<CodeRange> locations, boolean last) {
+		sb.append(SINGLE_TAB).append("\"").append(propertyName).append("\"").append(": ");
+		if (locations.isEmpty()) {
+			sb.append("[]");
+		} else {
+			sb.append("[").append(NEW_LINE);
+			for (int i = 0; i < locations.size(); i++) {
+				sb.append(JSONIndentUtils.indentLines(locations.get(i).toString(), DOUBLE_TAB));
+				if (i < locations.size() - 1) {
+					sb.append(",");
+				}
+				sb.append(NEW_LINE);
+			}
+			sb.append(SINGLE_TAB).append("]");
+		}
+		if (last) {
+			sb.append(NEW_LINE);
+		} else {
+			sb.append(",").append(NEW_LINE);
+		}
 	}
 }

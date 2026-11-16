@@ -2669,7 +2669,8 @@ public class CppTreeGenerator {
 		nodes.add(node);
 		if(declarator instanceof IASTFieldDeclarator field && field.getBitFieldSize() != null) {
 			Node size = expression(field.getBitFieldSize());
-			int colon = findLast(":", node.end, size.start);
+			//an unnamed bit field (unsigned :0;) has no declarator node
+			int colon = findLast(":", node == null ? start(declarator) : node.end, size.start);
 			nodes.add(node("bitfield_clause", colon, size.end, size));
 		}
 		IASTInitializer initializer = declarator.getInitializer();

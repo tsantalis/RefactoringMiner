@@ -59,7 +59,9 @@ public class TernaryOperatorExpression extends LeafExpression {
 	public TernaryOperatorExpression(String sourceFolder, String filePath, IASTConditionalExpression expression, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		super(sourceFolder, filePath, expression, CodeElementType.TERNARY_OPERATOR, container, fileContent);
 		this.condition = new AbstractExpression(sourceFolder, filePath, expression.getLogicalConditionExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION, container, activeVariableDeclarations, fileContent);
-		this.thenExpression = new AbstractExpression(sourceFolder, filePath, expression.getPositiveResultExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container, activeVariableDeclarations, fileContent);
+		//GNU a ?: b has no positive result expression and means a ? a : b
+		this.thenExpression = expression.getPositiveResultExpression() == null ? condition :
+			new AbstractExpression(sourceFolder, filePath, expression.getPositiveResultExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container, activeVariableDeclarations, fileContent);
 		this.elseExpression = new AbstractExpression(sourceFolder, filePath, expression.getNegativeResultExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container, activeVariableDeclarations, fileContent);
 	}
 

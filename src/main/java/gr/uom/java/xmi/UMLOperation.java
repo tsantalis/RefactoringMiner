@@ -39,6 +39,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isAbstract;
 	//a function declared in the if or else block of a conditional, i.e., if typing.TYPE_CHECKING: def f(): ... else: def f(): ...
 	private UMLClass.ConditionallyCreated conditionallyCreated = UMLClass.ConditionallyCreated.NO;
+	//the preprocessor branches enclosing a C/C++ function defined in more than one branch of the same conditional group, i.e., #ifdef CONFIG_X[0] > #if A[1]
+	private String preprocessorBranch;
 	private List<UMLParameter> parameters;
 	private String className;
 	private boolean isConstructor;
@@ -264,6 +266,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setConditionallyCreated(UMLClass.ConditionallyCreated conditionallyCreated) {
 		this.conditionallyCreated = conditionallyCreated;
+	}
+
+	public String getPreprocessorBranch() {
+		return preprocessorBranch;
+	}
+
+	public void setPreprocessorBranch(String preprocessorBranch) {
+		this.preprocessorBranch = preprocessorBranch;
 	}
 
 	public void setAbstract(boolean isAbstract) {
@@ -1403,6 +1413,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				this.conditionallyCreated.equals(operation.conditionallyCreated) &&
+				Objects.equals(this.preprocessorBranch, operation.preprocessorBranch) &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
 				equalTypeParameters(operation);
 		}
@@ -1474,6 +1485,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		result = prime * result + (isForwardDeclaration() ? 1231 : 1237);
 		result = prime * result + (thisEmptyBody ? 1231 : 1237);
 		result = prime * result + conditionallyCreated.ordinal();
+		result = prime * result + ((preprocessorBranch == null) ? 0 : preprocessorBranch.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((getParameterTypeList() == null) ? 0 : getParameterTypeList().hashCode());
 		result = prime * result + ((visibility == null) ? 0 : visibility.hashCode());

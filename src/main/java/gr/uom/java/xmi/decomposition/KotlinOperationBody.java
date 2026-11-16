@@ -297,7 +297,8 @@ public class KotlinOperationBody extends OperationBody {
 			processWhenStatement(ktFile, sourceFolder, filePath, parent, fileContent, whenStatement);
 		}
 		else if(statement instanceof KtLabeledExpression labeledStatement) {
-			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, labeledStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(labeledStatement.getLabelName()), fileContent);
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, labeledStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT, fileContent);
+			child.setLabel(labeledStatement.getLabelName());
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			if(labeledStatement.getBaseExpression() != null) {

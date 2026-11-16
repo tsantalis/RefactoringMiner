@@ -28,6 +28,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class CompositeStatementObject extends AbstractStatement {
+	private String label;
 
 	private List<AbstractStatement> statementList;
 	private List<AbstractExpression> expressionList;
@@ -233,12 +234,30 @@ public class CompositeStatementObject extends AbstractStatement {
 		return false;
 	}
 
+	//the label of a labeled statement, i.e., out in out: x = y;
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	//the name of the kind of the statement, or the label of a labeled statement
+	public String getCodeElementName() {
+		return label != null ? label : locationInfo.getCodeElementType().getName();
+	}
+
+	private static String codeElementName(AbstractStatement statement) {
+		return statement instanceof CompositeStatementObject composite ? composite.getCodeElementName() : statement.getLocationInfo().getCodeElementType().getName();
+	}
+
 	public String toString() {
 		if(locationInfo.getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && LANG.equals(Constants.PYTHON)) {
 			return pythonCatchClauseString();
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append(locationInfo.getCodeElementType().getName());
+		sb.append(getCodeElementName());
 		if(expressionList.size() > 0) {
 			sb.append("(");
 			for(int i=0; i<expressionList.size()-1; i++) {
@@ -321,7 +340,7 @@ public class CompositeStatementObject extends AbstractStatement {
 				name = expression.getString();
 			}
 		}
-		StringBuilder sb = new StringBuilder(locationInfo.getCodeElementType().getName());
+		StringBuilder sb = new StringBuilder(getCodeElementName());
 		if(!types.isEmpty()) {
 			sb.append("(").append(String.join(" | ", types));
 			if(name != null) {
@@ -337,7 +356,7 @@ public class CompositeStatementObject extends AbstractStatement {
 			return pythonCatchClauseString();
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append(locationInfo.getCodeElementType().getName());
+		sb.append(getCodeElementName());
 		if(expressionList.size() > 0) {
 			sb.append("(");
 			for(int i=0; i<expressionList.size()-1; i++) {
@@ -1008,7 +1027,7 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	public String getSignature() {
-		String statementType = getLocationInfo().getCodeElementType().getName() != null ? getLocationInfo().getCodeElementType().getName() : toString();
+		String statementType = getCodeElementName() != null ? getCodeElementName() : toString();
 		CompositeStatementObject parent = getParent();
 		if (parent == null) {
 			if(owner.isPresent() && owner.get() instanceof LambdaExpressionObject) {
@@ -1017,7 +1036,7 @@ public class CompositeStatementObject extends AbstractStatement {
 			}
 			return statementType;
 		}
-		List<AbstractStatement> sameTypeSibling = parent.getStatements().stream().filter(st -> statementType.equals(st.getLocationInfo().getCodeElementType().getName())).collect(Collectors.toList());
+		List<AbstractStatement> sameTypeSibling = parent.getStatements().stream().filter(st -> statementType.equals(codeElementName(st))).collect(Collectors.toList());
 		int typeIndex = 1;
 		for (AbstractStatement abstractStatement : sameTypeSibling) {
 			if (abstractStatement.getIndex() == getIndex()) {

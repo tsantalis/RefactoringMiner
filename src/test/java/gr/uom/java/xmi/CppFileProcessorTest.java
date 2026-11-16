@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -21,7 +23,9 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 
@@ -205,7 +209,7 @@ class CppFileProcessorTest {
 	}
 
 	@Test
-	void prefersActiveCppOperationOverInactiveSiblingPreprocessorBranch() {
+	void keepsCppOperationVariantsOfSiblingPreprocessorBranches() {
 		String filePath = "src/platform.cpp";
 		String fileContent = String.join("\n",
 				"#if defined(UNDEFINED_FEATURE)",
@@ -225,18 +229,18 @@ class CppFileProcessorTest {
 		UMLModel model = processCppModel(filePath, fileContent);
 		UMLClass moduleClass = findClass(model.getClassList(), "platform");
 
-		// Same-signature definitions in mutually exclusive branches collapse to the active one,
-		// while inactive declarations without an active counterpart are preserved.
-		assertEquals(List.of("mode", "inactiveOnly"), moduleClass.getOperations().stream()
+		// Same-signature definitions in mutually exclusive branches are all kept, each identified by its branch,
+		// and inactive declarations without a counterpart are preserved too.
+		assertEquals(List.of("mode", "mode", "inactiveOnly"), moduleClass.getOperations().stream()
 				.map(UMLOperation::getName)
 				.toList());
-		UMLOperation mode = findOperation(moduleClass.getOperations(), "mode");
-		assertTrue(mode.getBody().getCompositeStatement().getLeaves().stream()
-				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+		List<UMLOperation> modes = siblingVariants(moduleClass.getOperations(), "mode", 2);
+		assertTrue(bodyContains(modes.get(1), "return 2"));
+		assertNull(findOperation(moduleClass.getOperations(), "inactiveOnly").getPreprocessorBranch());
 	}
 
 	@Test
-	void prefersActiveCppOperationWhenActiveBranchComesFirst() {
+	void identifiesCppOperationVariantsByTheirBranch() {
 		String filePath = "src/active-first.cpp";
 		String fileContent = String.join("\n",
 				"#if 1",
@@ -249,13 +253,14 @@ class CppFileProcessorTest {
 				.filter(operation -> operation.getName().equals("mode"))
 				.toList();
 
-		assertEquals(1, modes.size());
-		assertTrue(modes.get(0).getBody().getCompositeStatement().getLeaves().stream()
-				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+		assertEquals(2, modes.size());
+		assertEquals("#if 1[0]", modes.get(0).getPreprocessorBranch());
+		assertEquals("#if 1[1]", modes.get(1).getPreprocessorBranch());
+		assertTrue(bodyContains(modes.get(0), "return 2"));
 	}
 
 	@Test
-	void prefersActiveCppOperationWhenSiblingBranchParameterNamesDiffer() {
+	void keepsCppOperationVariantsWhenSiblingBranchParameterNamesDiffer() {
 		String filePath = "src/buffer.cpp";
 		String fileContent = String.join("\n",
 				"#if defined(UNDEFINED_FEATURE)",
@@ -272,12 +277,9 @@ class CppFileProcessorTest {
 		UMLClass moduleClass = findClass(model.getClassList(), "buffer");
 
 		// Parameter names differ across sibling branches and appear as substrings of other declarator
-		// tokens, but the modeled identity depends only on the parameter type.
-		assertEquals(List.of("total"), moduleClass.getOperations().stream()
-				.map(UMLOperation::getName)
-				.toList());
-		assertTrue(findOperation(moduleClass.getOperations(), "total").getBody().getCompositeStatement().getLeaves().stream()
-				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+		// tokens, but the modeled identity depends only on the parameter type, so both are variants of one function.
+		List<UMLOperation> totals = siblingVariants(moduleClass.getOperations(), "total", 2);
+		assertTrue(bodyContains(totals.get(1), "return 2"));
 	}
 
 	@Test
@@ -300,11 +302,15 @@ class CppFileProcessorTest {
 
 		List<UMLOperation> operations = findClass(processCppModel(filePath, fileContent).getClassList(), "cv-parameters").getOperations();
 
-		assertEquals(1, operations.stream().filter(operation -> operation.getName().equals("value")).count());
-		assertEquals(1, operations.stream().filter(operation -> operation.getName().equals("wrapped")).count());
-		assertEquals(1, operations.stream().filter(operation -> operation.getName().equals("state")).count());
-		assertEquals(1, operations.stream().filter(operation -> operation.getName().equals("pointer")).count());
-		assertEquals(2, operations.stream().filter(operation -> operation.getName().equals("pointee")).count());
+		// Top-level cv-qualifiers do not change the identity, so these are variants of the same function in sibling branches.
+		siblingVariants(operations, "value", 2);
+		siblingVariants(operations, "wrapped", 2);
+		siblingVariants(operations, "state", 2);
+		siblingVariants(operations, "pointer", 2);
+		// A pointee qualifier changes the identity, so these are different functions with no branch identity.
+		List<UMLOperation> pointees = operations.stream().filter(operation -> operation.getName().equals("pointee")).toList();
+		assertEquals(2, pointees.size());
+		assertTrue(pointees.stream().allMatch(operation -> operation.getPreprocessorBranch() == null));
 	}
 
 	@Test
@@ -375,11 +381,10 @@ class CppFileProcessorTest {
 		List<String> operationNames = backends.get(0).getOperations().stream()
 				.map(UMLOperation::getName)
 				.toList();
-		assertEquals(3, operationNames.size());
-		assertEquals(1, operationNames.stream().filter("common"::equals).count());
+		assertEquals(4, operationNames.size());
 		assertTrue(operationNames.containsAll(List.of("common", "windowsOnly", "posixOnly")));
-		assertTrue(findOperation(backends.get(0).getOperations(), "common").getBody().getCompositeStatement().getLeaves().stream()
-				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+		List<UMLOperation> commons = siblingVariants(backends.get(0).getOperations(), "common", 2);
+		assertEquals(1, commons.stream().filter(operation -> bodyContains(operation, "return 2")).count());
 	}
 
 	@Test
@@ -403,11 +408,10 @@ class CppFileProcessorTest {
 				.map(UMLOperation::getName)
 				.toList();
 
-		assertEquals(3, operationNames.size());
-		assertEquals(1, operationNames.stream().filter("common"::equals).count());
+		assertEquals(4, operationNames.size());
 		assertTrue(operationNames.containsAll(List.of("common", "inactiveOnly", "activeOnly")));
-		assertTrue(findOperation(moduleClass.getOperations(), "common").getBody().getCompositeStatement().getLeaves().stream()
-				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+		List<UMLOperation> commons = siblingVariants(moduleClass.getOperations(), "common", 2);
+		assertEquals(1, commons.stream().filter(operation -> bodyContains(operation, "return 2")).count());
 	}
 
 	@Test
@@ -428,9 +432,13 @@ class CppFileProcessorTest {
 		assertTrue(diff.getAddedClasses().isEmpty());
 		assertTrue(diff.getRemovedClasses().isEmpty());
 		assertNotNull(diff.getUMLClassDiff("platform"));
-		assertEquals(1, diff.getUMLClassDiff("platform").getOperationBodyMapperList().stream()
+		// Each variant is mapped to the variant of the same branch.
+		List<UMLOperationBodyMapper> modeMappers = diff.getUMLClassDiff("platform").getOperationBodyMapperList().stream()
 				.filter(mapper -> mapper.getOperation1().getName().equals("mode"))
-				.count());
+				.toList();
+		assertEquals(2, modeMappers.size());
+		assertTrue(modeMappers.stream().allMatch(mapper -> mapper.getOperation1().getPreprocessorBranch() != null &&
+				mapper.getOperation1().getPreprocessorBranch().equals(mapper.getOperation2().getPreprocessorBranch())));
 	}
 
 	@Test
@@ -454,7 +462,7 @@ class CppFileProcessorTest {
 	}
 
 	@Test
-	void filtersCppSiblingCollisionsWithinEachClass() {
+	void keepsCppSiblingVariantsWithinEachClass() {
 		String filePath = "src/containers.cpp";
 		String fileContent = String.join("\n",
 				"class ActiveContainer {",
@@ -474,10 +482,10 @@ class CppFileProcessorTest {
 		UMLClass activeContainer = findClass(model.getClassList(), "ActiveContainer");
 		UMLClass inactiveOnlyContainer = findClass(model.getClassList(), "InactiveOnlyContainer");
 
-		assertEquals(1, activeContainer.getOperations().stream().filter(operation -> operation.getName().equals("value")).count());
-		assertTrue(findOperation(activeContainer.getOperations(), "value").getBody().getCompositeStatement().getLeaves().stream()
-				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+		siblingVariants(activeContainer.getOperations(), "value", 2);
+		// The same signature in another class is not a sibling variant.
 		assertEquals(1, inactiveOnlyContainer.getOperations().stream().filter(operation -> operation.getName().equals("value")).count());
+		assertNull(findOperation(inactiveOnlyContainer.getOperations(), "value").getPreprocessorBranch());
 	}
 
 	@Test
@@ -561,7 +569,7 @@ class CppFileProcessorTest {
 	}
 
 	@Test
-	void prefersActiveCppFunctionTemplateAcrossParameterRenames() {
+	void recognizesCppFunctionTemplateVariantsAcrossParameterRenames() {
 		String filePath = "src/template-renames.cpp";
 		String fileContent = String.join("\n",
 				"#if 0",
@@ -576,9 +584,9 @@ class CppFileProcessorTest {
 				.filter(operation -> operation.getName().equals("configure"))
 				.toList();
 
-		assertEquals(1, configureOperations.size());
-		assertTrue(configureOperations.get(0).getBody().getCompositeStatement().getLeaves().stream()
-				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+		// Renamed template parameters do not change the identity, so both are variants of one function template.
+		assertEquals(2, configureOperations.size());
+		assertEquals(2, configureOperations.stream().map(UMLOperation::getPreprocessorBranch).filter(Objects::nonNull).distinct().count());
 	}
 
 	@Test
@@ -750,7 +758,7 @@ class CppFileProcessorTest {
 	}
 
 	@Test
-	void prefersActiveCppOperationWhenOnlyDefaultArgumentDiffers() {
+	void recognizesCppOperationVariantsWhenOnlyDefaultArgumentDiffers() {
 		String filePath = "src/defaults.cpp";
 		String fileContent = String.join("\n",
 				"#if 0",
@@ -763,8 +771,10 @@ class CppFileProcessorTest {
 				.filter(operation -> operation.getName().equals("configure"))
 				.toList();
 
-		assertEquals(1, configureOperations.size());
-		assertTrue(configureOperations.get(0).getActualSignature().contains("= 2"));
+		// Default arguments do not change the identity, so both declarations are variants of one function.
+		assertEquals(2, configureOperations.size());
+		assertEquals(2, configureOperations.stream().map(UMLOperation::getPreprocessorBranch).filter(Objects::nonNull).distinct().count());
+		assertTrue(configureOperations.get(1).getActualSignature().contains("= 2"));
 	}
 
 	@Test
@@ -1348,6 +1358,137 @@ class CppFileProcessorTest {
 				.filter(operation -> operation.getName().equals(name))
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected operation: " + name));
+	}
+
+	@Test
+	void keepsCppFunctionVariantsOfNestedConditionalGroups() {
+		// Issue #1218: linux kernel/fork.c defines alloc_thread_stack_node in three branches of nested conditional groups
+		String filePath = "kernel/fork.c";
+		String fileContent = String.join("\n",
+				"#ifdef CONFIG_VMAP_STACK",
+				"static int alloc_thread_stack_node(int node)",
+				"{",
+				"\treturn 1;",
+				"}",
+				"#else /* !CONFIG_VMAP_STACK */",
+				"#if THREAD_SIZE >= PAGE_SIZE",
+				"static int alloc_thread_stack_node(int node)",
+				"{",
+				"\treturn 2;",
+				"}",
+				"#else /* !(THREAD_SIZE >= PAGE_SIZE) */",
+				"static int alloc_thread_stack_node(int node)",
+				"{",
+				"\treturn 3;",
+				"}",
+				"#endif",
+				"#endif /* CONFIG_VMAP_STACK */") + "\n";
+
+		List<UMLOperation> variants = siblingVariants(findClass(processCppModel(filePath, fileContent).getClassList(), "fork").getOperations(), "alloc_thread_stack_node", 3);
+		assertEquals(List.of(2, 8, 13), variants.stream().map(operation -> operation.getLocationInfo().getStartLine()).toList());
+		assertEquals("#ifdef CONFIG_VMAP_STACK[0]", variants.get(0).getPreprocessorBranch());
+		assertEquals("#ifdef CONFIG_VMAP_STACK[1] > #if THREAD_SIZE >= PAGE_SIZE[0]", variants.get(1).getPreprocessorBranch());
+		assertEquals("#ifdef CONFIG_VMAP_STACK[1] > #if THREAD_SIZE >= PAGE_SIZE[1]", variants.get(2).getPreprocessorBranch());
+	}
+
+	@Test
+	void mapsCppFunctionVariantsToTheVariantOfTheSameBranch() throws Exception {
+		String filePath = "kernel/fork.c";
+		String before = String.join("\n",
+				"#ifdef CONFIG_VMAP_STACK",
+				"static int alloc_thread_stack_node(int node)",
+				"{",
+				"\treturn allocate(node);",
+				"}",
+				"#else",
+				"static int alloc_thread_stack_node(int node)",
+				"{",
+				"\treturn 0;",
+				"}",
+				"#endif") + "\n";
+		String after = String.join("\n",
+				"#ifdef CONFIG_VMAP_STACK",
+				"static int alloc_thread_stack_node(int node)",
+				"{",
+				"\treturn allocate(node + 1);",
+				"}",
+				"#else",
+				"static int alloc_thread_stack_node(int node)",
+				"{",
+				"\treturn 0;",
+				"}",
+				"#endif") + "\n";
+
+		UMLModelDiff diff = processCppModel(filePath, before).diff(processCppModel(filePath, after));
+
+		assertTrue(diff.getRefactorings().isEmpty());
+		UMLClassBaseDiff classDiff = diff.getUMLClassDiff("fork");
+		assertTrue(classDiff.getRemovedOperations().isEmpty());
+		assertTrue(classDiff.getAddedOperations().isEmpty());
+		List<UMLOperationBodyMapper> mappers = classDiff.getOperationBodyMapperList();
+		assertEquals(2, mappers.size());
+		for(UMLOperationBodyMapper mapper : mappers) {
+			assertEquals(mapper.getOperation1().getPreprocessorBranch(), mapper.getOperation2().getPreprocessorBranch());
+			assertEquals(mapper.getOperation1().getLocationInfo().getStartLine(), mapper.getOperation2().getLocationInfo().getStartLine());
+		}
+	}
+
+	@Test
+	void endsCppProblemFunctionDefinitionWithItsBodyAcrossConditionalDirectives() {
+		// linux kernel/fork.c: CDT splits the definition of an unknown macro at the #ifdef in its body
+		String filePath = "kernel/fork.c";
+		String fileContent = String.join("\n",
+				"SYSCALL_DEFINE0(fork)",
+				"{",
+				"#ifdef CONFIG_MMU",
+				"\treturn kernel_clone(&args);",
+				"#else",
+				"\treturn -EINVAL;",
+				"#endif",
+				"}") + "\n";
+
+		List<UMLProblemDeclaration> problems = findClass(processCppModel(filePath, fileContent).getClassList(), "fork").getProblemDeclarations();
+
+		assertEquals(1, problems.size());
+		assertEquals(0, problems.get(0).getLocationInfo().getStartOffset());
+		assertEquals(fileContent.lastIndexOf('}') + 1, problems.get(0).getLocationInfo().getEndOffset());
+	}
+
+	@Test
+	void endsCppProblemInitializerWithItsSemicolonAcrossConditionalDirectives() {
+		// linux mm/mmap.c: CDT splits a declaration with an initializer list at the #ifdef in it
+		String filePath = "mm/mmap.c";
+		String fileContent = String.join("\n",
+				"static const struct ctl_table mmap_table[] = {",
+				"\t{",
+				"\t\t.procname = \"max_map_count\",",
+				"\t},",
+				"#ifdef CONFIG_HAVE_ARCH_MMAP_RND_BITS",
+				"\t{",
+				"\t\t.procname = \"mmap_rnd_bits\",",
+				"\t},",
+				"#endif",
+				"};") + "\n";
+
+		List<UMLProblemDeclaration> problems = findClass(processCppModel(filePath, fileContent).getClassList(), "mmap").getProblemDeclarations();
+
+		assertTrue(problems.size() <= 1);
+		for(UMLProblemDeclaration problem : problems) {
+			assertEquals(0, problem.getLocationInfo().getStartOffset());
+			assertEquals(fileContent.lastIndexOf(';') + 1, problem.getLocationInfo().getEndOffset());
+		}
+	}
+
+	//the variants of a function defined in sibling branches of conditional groups, each with its own branch identity
+	private static List<UMLOperation> siblingVariants(List<UMLOperation> operations, String name, int count) {
+		List<UMLOperation> variants = operations.stream().filter(operation -> operation.getName().equals(name)).toList();
+		assertEquals(count, variants.size());
+		assertEquals(count, variants.stream().map(UMLOperation::getPreprocessorBranch).filter(Objects::nonNull).distinct().count());
+		return variants;
+	}
+
+	private static boolean bodyContains(UMLOperation operation, String text) {
+		return operation.getBody().getCompositeStatement().getLeaves().stream().anyMatch(leaf -> leaf.getString().contains(text));
 	}
 
 	private static UMLClass findClass(List<UMLClass> classes, String name) {

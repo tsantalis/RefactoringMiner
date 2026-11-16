@@ -814,10 +814,10 @@ public class LocationInfo {
 		KEY_EXPRESSION,
 		TUPLE_LITERAL;
 		
-		private String name;
+		private final String name;
 		
 		private CodeElementType() {
-			
+			this.name = null;
 		}
 		
 		private CodeElementType(String name) {
@@ -828,9 +828,5 @@ public class LocationInfo {
 			return name;
 		}
 		
-		public CodeElementType setName(String name) {
-			this.name = name;
-			return this;
-		}
 	}
 }

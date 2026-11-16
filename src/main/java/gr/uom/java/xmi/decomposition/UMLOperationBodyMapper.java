@@ -7503,7 +7503,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean sameCodeElementType(CompositeStatementObject comp1, CompositeStatementObject comp2) {
-		if(comp1.getLocationInfo().getCodeElementType().getName().equals(comp2.getLocationInfo().getCodeElementType().getName())) {
+		if(comp1.getCodeElementName().equals(comp2.getCodeElementName())) {
 			CompositeStatementObject parent1 = comp1.getParent();
 			CompositeStatementObject parent2 = comp2.getParent();
 			if(parent1 == null && parent2 != null) {
@@ -7513,7 +7513,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return false;
 			}
 			else if(parent1 != null && parent2 != null) {
-				if(!parent1.getLocationInfo().getCodeElementType().getName().equals(parent2.getLocationInfo().getCodeElementType().getName())) {
+				if(!parent1.getCodeElementName().equals(parent2.getCodeElementName())) {
 					return false;
 				}
 			}
@@ -7529,7 +7529,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(identical) {
 			return true;
 		}
-		else if(comp1.getLocationInfo().getCodeElementType().getName().equals(comp2.getLocationInfo().getCodeElementType().getName())) {
+		else if(comp1.getCodeElementName().equals(comp2.getCodeElementName())) {
 			CompositeStatementObject parent1 = comp1.getParent();
 			CompositeStatementObject parent2 = comp2.getParent();
 			if(parent1 == null && parent2 != null) {
@@ -7548,7 +7548,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(parent1.getParent() != null && parent2.getParent() == null) {
 					return false;
 				}
-				if(!parent1.getLocationInfo().getCodeElementType().getName().equals(parent2.getLocationInfo().getCodeElementType().getName())) {
+				if(!parent1.getCodeElementName().equals(parent2.getCodeElementName())) {
 					return false;
 				}
 			}

@@ -46,6 +46,8 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTTemplateSpecialization
 public class CppPreprocessor {
 	private final CppFileProcessor fileProcessor;
 	private List<int[]> conditionalBranches = new ArrayList<>();
+	//the opening directive of each conditional group, i.e., #ifdef CONFIG_X
+	private Map<Integer, String> conditionalGroupDirectives = new HashMap<>();
 	private final Map<UMLOperation, IASTNode> operationOrigins = new IdentityHashMap<>();
 	private final Map<UMLOperation, String> operationTemplateIdentities = new IdentityHashMap<>();
 	private final Map<UMLOperation, List<String>> operationCanonicalParameterTypes = new IdentityHashMap<>();
@@ -90,6 +92,14 @@ public class CppPreprocessor {
 				}
 			}
 		}
+		//the ranges of the declarations that CDT parsed as problems ending inside their braces, whose rest follows as separate declarations
+		List<int[]> truncatedDeclarations = new ArrayList<>();
+		for(IASTDeclaration declaration : allDeclarations) {
+			int end = fileProcessor.truncatedProblemDeclarationEnd(declaration);
+			if(end > 0) {
+				truncatedDeclarations.add(new int[] {declaration.getFileLocation().getNodeOffset(), end});
+			}
+		}
 		Map<IASTDeclaration, List<IASTDeclaration>> alternatives = new IdentityHashMap<>();
 		Set<IASTDeclaration> mergedInactiveContainers = Collections.newSetFromMap(new IdentityHashMap<>());
 		collectInactiveContainerAlternatives(allDeclarations.toArray(new IASTDeclaration[0]), alternatives, mergedInactiveContainers);
@@ -99,12 +109,26 @@ public class CppPreprocessor {
 				if(CppFileProcessor.generatedByStub(declaration)) {
 					continue;
 				}
-				if(fileProcessor.shouldProcessDeclaration(declaration) && !mergedInactiveContainers.contains(declaration)) {
+				if(fileProcessor.shouldProcessDeclaration(declaration) && !mergedInactiveContainers.contains(declaration) && !insideTruncatedDeclaration(declaration, truncatedDeclarations)) {
 					currentVisibility = fileProcessor.processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility,
 							declaration, templateParameters, alternatives.getOrDefault(declaration, Collections.emptyList()));
 				}
 			}
 		}
+	}
+
+	private static boolean insideTruncatedDeclaration(IASTDeclaration declaration, List<int[]> truncatedDeclarations) {
+		IASTFileLocation location = declaration.getFileLocation();
+		if(location == null) {
+			return false;
+		}
+		int offset = location.getNodeOffset();
+		for(int[] range : truncatedDeclarations) {
+			if(offset > range[0] && offset < range[1]) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void collectInactiveContainerAlternatives(IASTDeclaration[] declarations,
@@ -291,12 +315,20 @@ public class CppPreprocessor {
 	}
 
 	private Map<Integer, Integer> enclosingConditionalBranches(IASTNode node) {
-		Map<Integer, Integer> branches = new HashMap<>();
 		IASTFileLocation location = node.getFileLocation();
 		if(location == null || !CppFileProcessor.isPartOfFile(node)) {
-			return branches;
+			return new HashMap<>();
 		}
-		int offset = location.getNodeOffset();
+		return enclosingConditionalBranches(location.getNodeOffset());
+	}
+
+	//whether the two offsets are in the same branches of conditional groups, i.e., an opening brace and its closing brace before the #else or #endif of their branch
+	boolean inSameConditionalBranches(int offset1, int offset2) {
+		return enclosingConditionalBranches(offset1).equals(enclosingConditionalBranches(offset2));
+	}
+
+	private Map<Integer, Integer> enclosingConditionalBranches(int offset) {
+		Map<Integer, Integer> branches = new HashMap<>();
 		for(int[] branch : conditionalBranches) {
 			if(offset >= branch[2] && offset < branch[3]) {
 				branches.put(branch[0], branch[1]);
@@ -320,6 +352,7 @@ public class CppPreprocessor {
 	//Each entry is {conditional group id, branch index within the group, branch start offset, branch end offset}.
 	void buildConditionalBranches(IASTPreprocessorStatement[] statements) {
 		List<int[]> branches = new ArrayList<>();
+		Map<Integer, String> groupDirectives = new HashMap<>();
 		Deque<int[]> openBranches = new ArrayDeque<>();
 		int nextGroupId = 0;
 		for(IASTPreprocessorStatement statement : statements) {
@@ -332,6 +365,7 @@ public class CppPreprocessor {
 			if(statement instanceof IASTPreprocessorIfStatement ||
 					statement instanceof IASTPreprocessorIfdefStatement ||
 					statement instanceof IASTPreprocessorIfndefStatement) {
+				groupDirectives.put(nextGroupId, directiveText(statement));
 				openBranches.push(new int[] {nextGroupId++, 0, end});
 			}
 			else if(statement instanceof IASTPreprocessorElifStatement ||
@@ -350,6 +384,29 @@ public class CppPreprocessor {
 			}
 		}
 		this.conditionalBranches = branches;
+		this.conditionalGroupDirectives = groupDirectives;
+	}
+
+	//the directive without its comments and with single spaces, i.e., #if THREAD_SIZE >= PAGE_SIZE
+	private static String directiveText(IASTPreprocessorStatement statement) {
+		String raw = statement.getRawSignature();
+		raw = raw.replaceAll("(?s)/\\*.*?\\*/", " ").replaceAll("//.*", " ");
+		return raw.replaceAll("\\s+", " ").trim();
+	}
+
+	//the branches enclosing the node, from the outermost conditional group to the innermost, i.e., #ifdef CONFIG_X[1] > #if A[0]
+	private String preprocessorBranch(IASTNode node) {
+		Map<Integer, Integer> branches = enclosingConditionalBranches(node);
+		List<Integer> groups = new ArrayList<>(branches.keySet());
+		Collections.sort(groups);
+		StringBuilder sb = new StringBuilder();
+		for(Integer group : groups) {
+			if(sb.length() > 0) {
+				sb.append(" > ");
+			}
+			sb.append(conditionalGroupDirectives.getOrDefault(group, "#if")).append("[").append(branches.get(group)).append("]");
+		}
+		return sb.toString();
 	}
 
 	void addOperation(UMLAbstractClass parentContainer, UMLOperation operation, IASTNode origin,
@@ -357,20 +414,19 @@ public class CppPreprocessor {
 		operationTemplateIdentities.put(operation, templateParameterIdentity(templateParameters, false));
 		operationCanonicalParameterTypes.put(operation, canonicalParameterTypes(operation, templateParameters, origin));
 		operationQualifierIdentities.put(operation, operationQualifierIdentity(origin));
-		if(retainModelElement(operation, origin, parentContainer.getOperations(), operationOrigins,
-				this::sameOperationIdentity, inactiveSibling -> {
-					parentContainer.removeOperation(inactiveSibling);
-					operationTemplateIdentities.remove(inactiveSibling);
-					operationCanonicalParameterTypes.remove(inactiveSibling);
-					operationQualifierIdentities.remove(inactiveSibling);
-				})) {
-			parentContainer.addOperation(operation);
+		//a function defined in sibling branches of a conditional group is kept in every branch, i.e., #ifdef CONFIG_X int f() {...} #else int f() {...} #endif,
+		//because only one of them is active for the configuration of the parse, and each variant is identified by its enclosing branches
+		for(UMLOperation existing : parentContainer.getOperations()) {
+			IASTNode existingOrigin = operationOrigins.get(existing);
+			if(existingOrigin != null && sameOperationIdentity(existing, operation) && areSiblingBranches(existingOrigin, origin)) {
+				if(existing.getPreprocessorBranch() == null) {
+					existing.setPreprocessorBranch(preprocessorBranch(existingOrigin));
+				}
+				operation.setPreprocessorBranch(preprocessorBranch(origin));
+			}
 		}
-		else {
-			operationTemplateIdentities.remove(operation);
-			operationCanonicalParameterTypes.remove(operation);
-			operationQualifierIdentities.remove(operation);
-		}
+		operationOrigins.put(operation, origin);
+		parentContainer.addOperation(operation);
 	}
 
 	private boolean sameOperationIdentity(UMLOperation first, UMLOperation second) {

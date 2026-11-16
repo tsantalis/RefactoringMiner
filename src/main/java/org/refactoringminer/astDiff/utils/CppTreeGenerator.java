@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.IntUnaryOperator;
 import java.util.TreeMap;
 
 import gr.uom.java.xmi.CppFileProcessor;
@@ -848,6 +849,13 @@ public class CppTreeGenerator {
 	}
 
 	//error
+
+	//a problem at code already in the node of the previous statement, which CDT reports again, i.e., the ) of for_each_possible_cpu(cpu) followed by the statement it repeats,
+	//like the model that has no statement for it; a problem after the code of the node is kept, i.e., the macro and initializer of
+	//static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {...}; whose declaration node ends at descriptor[]
+	private boolean problemInPrevious(IASTStatement statement, Node previous) {
+		return statement instanceof IASTProblemHolder && previous != null && start(statement) >= previous.start && end(statement) <= previous.end;
+	}
 
 	private Node error(int start, int end) {
 		return node("ERROR", start, end, new ArrayList<>());
@@ -1727,6 +1735,16 @@ public class CppTreeGenerator {
 
 	//the statement parsed again, or the nodes parsed again in an error node
 	private Node single(List<Node> nodes, IASTStatement statement) {
+		//the error of a problem at code already in the node before it, i.e., the ) of for_each_possible_cpu(cpu) that CDT reports again in the code parsed again
+		List<Node> withoutRepeatedErrors = new ArrayList<>();
+		for(Node node : nodes) {
+			Node previous = withoutRepeatedErrors.isEmpty() ? null : withoutRepeatedErrors.get(withoutRepeatedErrors.size() - 1);
+			if(node != null && previous != null && node.type.equals("ERROR") && node.start >= previous.start && node.end <= previous.end) {
+				continue;
+			}
+			withoutRepeatedErrors.add(node);
+		}
+		nodes = withoutRepeatedErrors;
 		//a declaration that CDT split after the call of the macro of its type
 		if(nodes.size() > 1 || failed(nodes)) {
 			Node macroTypeDeclaration = macroTypeDeclaration(start(statement), end(statement), Context.BLOCK);
@@ -1843,6 +1861,19 @@ public class CppTreeGenerator {
 		for(int i = 0; i < tokens.size(); i++) {
 			int[] token = tokens.get(i);
 			String text = tokenText(token);
+			//a type argument of a call of a macro, i.e., struct task_struct in container_of(rhp, struct task_struct, rcu), which is masked as a name,
+			//so that the call is parsed, and converted to a type
+			int typeEnd = callTypeArgumentEnd(tokens, i);
+			if(typeEnd > 0) {
+				int argumentStart = token[0];
+				int argumentEnd = tokens.get(typeEnd)[1];
+				for(int k = argumentStart; k < argumentEnd; k++) {
+					code.setCharAt(k - start, '_');
+				}
+				masked.put(argumentStart, argumentEnd);
+				i = typeEnd;
+				continue;
+			}
 			if(!isIdentifierStart(text.charAt(0)) || KEYWORDS.contains(text)) {
 				continue;
 			}
@@ -1881,6 +1912,58 @@ public class CppTreeGenerator {
 			}
 		}
 		return code.toString();
+	}
+
+	//the index of the last token of an elaborated type that is an argument of a call, i.e., struct task_struct * in f(p, struct task_struct *, m), or -1;
+	//the argument is between ( or , and , or ) on one line, and the name before the parentheses is a call, and not the name of a declaration, i.e., int f(struct S *);
+	private int callTypeArgumentEnd(List<int[]> tokens, int i) {
+		String text = tokenText(tokens.get(i));
+		if(!(text.equals("struct") || text.equals("union") || text.equals("enum")) || i < 2 || i + 2 >= tokens.size()) {
+			return -1;
+		}
+		String previous = tokenText(tokens.get(i - 1));
+		String name = tokenText(tokens.get(i + 1));
+		if(!(previous.equals("(") || previous.equals(",")) || !isIdentifierStart(name.charAt(0)) || KEYWORDS.contains(name)) {
+			return -1;
+		}
+		int last = i + 1;
+		while(last + 1 < tokens.size() && tokenText(tokens.get(last + 1)).equals("*")) {
+			last++;
+		}
+		if(last + 1 >= tokens.size() || !(tokenText(tokens.get(last + 1)).equals(",") || tokenText(tokens.get(last + 1)).equals(")"))
+				|| content.substring(tokens.get(i)[0], tokens.get(last)[1]).contains("\n")) {
+			return -1;
+		}
+		//the opening parenthesis of the arguments
+		int depth = 0;
+		int open = i - 1;
+		for(; open >= 0; open--) {
+			String token = tokenText(tokens.get(open));
+			if(token.equals(")")) {
+				depth++;
+			}
+			else if(token.equals("(")) {
+				if(depth == 0) {
+					break;
+				}
+				depth--;
+			}
+		}
+		if(open < 1) {
+			return -1;
+		}
+		String callee = tokenText(tokens.get(open - 1));
+		if(!isIdentifierStart(callee.charAt(0)) || KEYWORDS.contains(callee)) {
+			return -1;
+		}
+		//the type or name before the name of a declaration, i.e., int in int f(struct S *);
+		if(open >= 2) {
+			String beforeCallee = tokenText(tokens.get(open - 2));
+			if(isIdentifierStart(beforeCallee.charAt(0)) && !beforeCallee.equals("return") || beforeCallee.equals("*") || beforeCallee.equals("&") || beforeCallee.equals(">")) {
+				return -1;
+			}
+		}
+		return last;
 	}
 
 	private boolean isString(int[] token) {
@@ -2750,6 +2833,12 @@ public class CppTreeGenerator {
 			nodes.add(index, node);
 		}
 		return nodes;
+	}
+
+	//the offset of the brace closing the one at the offset, skipping comments, strings and preprocessor lines like the tree does, for the model to end a declaration where the tree does
+	public static IntUnaryOperator braceMatcher(String content) {
+		CppTreeGenerator generator = new CppTreeGenerator(content);
+		return open -> generator.matching(open, generator.length);
 	}
 
 	private int matching(int open, int limit) {
@@ -3623,6 +3712,9 @@ public class CppTreeGenerator {
 		}
 		for(int i = 0; i < active.size(); i++) {
 			IASTStatement statement = active.get(i);
+			if(!children.isEmpty() && problemInPrevious(statement, children.get(children.size() - 1))) {
+				continue;
+			}
 			//a declaration whose type is the call of a macro, which CDT split after the call, i.e., typedef GTEST_REMOVE_REFERENCE_AND_CONST_(Container) RawContainer;
 			if(statement instanceof IASTDeclarationStatement && !content.substring(start(statement), end(statement)).stripTrailing().endsWith(";")) {
 				int k = i + 1;
@@ -3785,6 +3877,14 @@ public class CppTreeGenerator {
 		}
 		if(expression instanceof IASTIdExpression id) {
 			IASTName name = id.getName();
+			//a type argument of a call, which was masked as a name, i.e., struct task_struct in container_of(rhp, struct task_struct, rcu)
+			Integer maskedEnd = source.maskedArguments.get(start(id));
+			if(maskedEnd != null && maskedEnd == end(id)) {
+				List<Node> types = templateArguments(start(id), maskedEnd);
+				if(types.size() == 1) {
+					return types.get(0);
+				}
+			}
 			if(text(name).equals("NULL")) {
 				return wrap("null", leaf("NULL", start(name), end(name)));
 			}

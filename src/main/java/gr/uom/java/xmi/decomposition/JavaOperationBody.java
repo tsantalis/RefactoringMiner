@@ -250,7 +250,8 @@ public class JavaOperationBody extends OperationBody {
 		else if(statement instanceof LabeledStatement) {
 			LabeledStatement labeledStatement = (LabeledStatement)statement;
 			SimpleName label = labeledStatement.getLabel();
-			CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, labeledStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(label.getIdentifier()), javaFileContent);
+			CompositeStatementObject child = new CompositeStatementObject(cu, sourceFolder, filePath, labeledStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT, javaFileContent);
+			child.setLabel(label.getIdentifier());
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			processStatement(cu, sourceFolder, filePath, child, labeledStatement.getBody(), javaFileContent);

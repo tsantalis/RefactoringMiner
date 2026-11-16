@@ -1448,6 +1448,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				this.conditionallyCreated.equals(operation.conditionallyCreated) &&
+				Objects.equals(this.preprocessorBranch, operation.preprocessorBranch) &&
 				equalTypeParameters(operation)) {
 			UMLParameter thisReturnParameter = this.getReturnParameter();
 			UMLParameter otherReturnParameter = operation.getReturnParameter();

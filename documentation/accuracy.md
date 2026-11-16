@@ -10,11 +10,11 @@
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **November 1, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 17, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12716  | 13  | 211  | 0.999  | 0.984|
+|**Total**|12719  | 13  | 211  | 0.999  | 0.984|
 |Extract Method|1021  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|260  |  0  |  8  | 1.000  | 0.970|
@@ -110,7 +110,7 @@ As of **November 1, 2026** the precision and recall of RefactoringMiner on this 
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 6  |  0  |  0  | 1.000  | 1.000|
-|Move Code|23  |  0  |  0  | 1.000  | 1.000|
+|Move Code|26  |  0  |  0  | 1.000  | 1.000|
 |Assert Throws|14  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
@@ -144,11 +144,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **November 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 17, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3590  | 26  | 52  | 0.993  | 0.986|
+|**Total**|3591  | 26  | 52  | 0.993  | 0.986|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|79  |  0  |  3  | 1.000  | 0.963|
@@ -189,7 +189,7 @@ As of **November 12, 2026** the precision and recall of RefactoringMiner on this
 |Invert Condition|23  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 8  |  0  |  0  | 1.000  | 1.000|
-|Move Code|11  |  0  |  0  | 1.000  | 1.000|
+|Move Code|12  |  0  |  0  | 1.000  | 1.000|
 |Move Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 
 ## Python Benchmark

@@ -168,6 +168,11 @@
           "type": "REPLACE_LOOP_WITH_PIPELINE",
           "description": "Replace Loop With Pipeline\tfor(destination: destinations.values()) with destinations.values().forEach(HttpDestination::close); in method protected doStop() : void from class org.eclipse.jetty.client.HttpClient",
           "validation": true
+        },
+        {
+          "type": "MOVE_CODE",
+          "description": "Move Code\tfrom public close() : void to protected close(failure Throwable) : void in class org.eclipse.jetty.http2.client.http.HttpConnectionOverHTTP2",
+          "validation": true
         }
       ]
     },

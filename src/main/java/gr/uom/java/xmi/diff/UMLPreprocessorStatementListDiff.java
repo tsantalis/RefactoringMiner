@@ -179,18 +179,31 @@ public class UMLPreprocessorStatementListDiff {
 				equalIndices.add(i);
 			}
 		}
+		//an #else, #elif or #endif corresponds only to the one of the counterpart of its #if
+		if(statement.getPrevious().isPresent()) {
+			UMLPreprocessorStatement counterpart = paired.get(statement.getPrevious().get());
+			for(int index : equalIndices) {
+				if(counterpart != null && candidates.get(index).getPrevious().isPresent() && candidates.get(index).getPrevious().get() == counterpart) {
+					return index;
+				}
+			}
+			return -1;
+		}
 		if(equalIndices.size() <= 1) {
 			return equalIndices.isEmpty() ? -1 : equalIndices.get(0);
 		}
-		if(statement.getPrevious().isPresent()) {
-			UMLPreprocessorStatement counterpart = paired.get(statement.getPrevious().get());
-			if(counterpart != null) {
-				for(int index : equalIndices) {
-					if(candidates.get(index).getPrevious().isPresent() && candidates.get(index).getPrevious().get() == counterpart) {
-						return index;
-					}
-				}
+		//the equal directives in the same function body, or at file scope, i.e., #ifdef X around declarations is not paired with #ifdef X in a function body
+		List<Integer> sameScopeIndices = new ArrayList<>();
+		for(int index : equalIndices) {
+			if(candidates.get(index).getEnclosingFunction().equals(statement.getEnclosingFunction())) {
+				sameScopeIndices.add(index);
 			}
+		}
+		if(sameScopeIndices.size() == 1) {
+			return sameScopeIndices.get(0);
+		}
+		else if(sameScopeIndices.size() > 1) {
+			equalIndices = sameScopeIndices;
 		}
 		if(statement.getBlockText().isPresent()) {
 			String blockText = statement.getBlockText().get();

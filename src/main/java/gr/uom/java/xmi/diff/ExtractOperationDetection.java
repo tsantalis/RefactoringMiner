@@ -141,9 +141,27 @@ public class ExtractOperationDetection {
 		return false;
 	}
 
+	//a variant of a C/C++ function in a sibling preprocessor branch, whose other variants are matched, is called by the callers of the function before too,
+	//i.e., alloc_thread_stack_node() of #ifdef CONFIG_X[1] called by dup_task_struct(), so it is extracted only from a variant of the function
+	private boolean variantOfMappedFunctionCalledBefore(UMLOperation addedOperation) {
+		if(addedOperation.getPreprocessorBranch() == null || mapper.getContainer1().getName().equals(addedOperation.getName())) {
+			return false;
+		}
+		for(UMLOperationBodyMapper other : classDiff.getOperationBodyMapperList()) {
+			if(other.getOperation2() != null && other.getOperation2() != addedOperation && other.getOperation2().getName().equals(addedOperation.getName()) &&
+					other.getOperation2().getParameterTypeList().equals(addedOperation.getParameterTypeList())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public List<ExtractOperationRefactoring> check(UMLOperation addedOperation) throws RefactoringMinerTimedOutException {
 		List<ExtractOperationRefactoring> refactorings = new ArrayList<ExtractOperationRefactoring>();
 		if(modelDiff != null && modelDiff.refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(addedOperation)) {
+			return refactorings;
+		}
+		if(variantOfMappedFunctionCalledBefore(addedOperation)) {
 			return refactorings;
 		}
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||

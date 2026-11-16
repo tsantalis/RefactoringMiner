@@ -164,6 +164,9 @@ public class CppFileProcessor {
 	//the start offsets of the macros expanded to nothing in the file by their end offsets, i.e., DUCKDB_API in DUCKDB_API virtual ~A() = default;
 	private TreeMap<Integer, IASTPreprocessorMacroExpansion> emptyMacroExpansions = new TreeMap<>();
 	private IntUnaryOperator braceMatcher;
+	//the function definitions parsed again with the code of the preprocessor branches that are not taken, by their start offsets in the translation unit of the file
+	private Map<Integer, IASTFunctionDefinition> conditionalBodies = Map.of();
+	private IASTTranslationUnit conditionalBodySource;
 
 	public CppFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
@@ -175,13 +178,16 @@ public class CppFileProcessor {
 		this.preprocessor = new CppPreprocessor(this);
 		try {
 			if(PathFileUtils.isCppFile(filePath) || PathFileUtils.isCFile(filePath)) {
-				IASTTranslationUnit treeAst = parse(filePath, fileContent, astDiff);
+				ParsedFile parsed = parseWithPreamble(filePath, fileContent, astDiff);
+				IASTTranslationUnit treeAst = parsed.translationUnit();
 				if (astDiff) {
 					//a single parse for the model and the AST diff tree, unless the model needs the declarations wrapped in macro calls
 					TreeContext treeContext = CppTreeGenerator.generate(fileContent, treeAst);
 					this.umlModel.getTreeContextMap().put(filePath, treeContext);
 				}
 				IASTTranslationUnit ast = withoutDeclarationMacros(treeAst, filePath, fileContent, astDiff);
+				this.conditionalBodySource = ast;
+				this.conditionalBodies = CppConditionalBodies.parse(ast, filePath, fileContent, astDiff, parsed.preamble());
 				this.emptyMacroExpansions = emptyMacroExpansions(ast);
 				String sourceFolder = extractCppSourceFolder();
 				List<UMLComment> comments = extractInternalComments(ast.getComments(), sourceFolder, filePath, fileContent);
@@ -387,6 +393,8 @@ public class CppFileProcessor {
 
 	private void processPreprocessorStatements(String sourceFolder, UMLClass moduleClass, IASTPreprocessorStatement[] allPreprocessorStatements) {
 		Map<IASTPreprocessorStatement, Integer> conditionalBlockEnds = conditionalBlockEnds(allPreprocessorStatements);
+		//the opening directives of the conditional groups that are still open, the innermost first
+		Deque<UMLPreprocessorStatement> openGroups = new ArrayDeque<>();
 		for(IASTPreprocessorStatement statement : allPreprocessorStatements) {
 			if(!isPartOfFile(statement)) {
 				continue;
@@ -418,30 +426,36 @@ public class CppFileProcessor {
 				//convert char[] to string
 				value = new String(ifStatement.getCondition());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IF,value);
+				openGroups.push(preprocessorStatement);
 			}
 			else if(statement instanceof IASTPreprocessorIfdefStatement ifdefStatement) {
 				//convert char[] to string
 				value = new String(ifdefStatement.getCondition());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IFDEF,value);
+				openGroups.push(preprocessorStatement);
 			}
 			else if(statement instanceof IASTPreprocessorIfndefStatement ifndefStatement) {
 				//convert char[] to string
 				value = new String(ifndefStatement.getCondition());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IFNDEF,value);
+				openGroups.push(preprocessorStatement);
 			}
 			else if(statement instanceof IASTPreprocessorElifStatement elifStatement) {
 				//convert char[] to string
 				value = new String(elifStatement.getCondition());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ELIF,value);
-				attachRootIf(preprocessorStatement, moduleClass);
+				if(!openGroups.isEmpty())
+					preprocessorStatement.setPreviousStatement(openGroups.peek());
 			}
 			else if(statement instanceof IASTPreprocessorElseStatement elseStatement) {
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ELSE);
-				attachRootIf(preprocessorStatement, moduleClass);
+				if(!openGroups.isEmpty())
+					preprocessorStatement.setPreviousStatement(openGroups.peek());
 			}
 			else if(statement instanceof IASTPreprocessorEndifStatement endifStatement) {
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ENDIF);
-				attachRootIf(preprocessorStatement, moduleClass);
+				if(!openGroups.isEmpty())
+					preprocessorStatement.setPreviousStatement(openGroups.pop());
 			}
 			else if(statement instanceof IASTPreprocessorPragmaStatement pragmaStatement) {
 				//convert char[] to string
@@ -574,6 +588,7 @@ public class CppFileProcessor {
 	//so that they are compared with the directives of the same class only
 	private static void distributePreprocessorStatements(UMLClass moduleClass, List<UMLClass> classesOfFile) {
 		for(UMLPreprocessorStatement statement : new ArrayList<>(moduleClass.getPreprocessorStatements())) {
+			setEnclosingFunction(statement, moduleClass, classesOfFile);
 			UMLClass innermost = null;
 			for(UMLClass umlClass : classesOfFile) {
 				if(umlClass != moduleClass && umlClass.getLocationInfo().subsumes(statement.getLocationInfo()) &&
@@ -589,13 +604,14 @@ public class CppFileProcessor {
 		}
 	}
 
-	private void attachRootIf(UMLPreprocessorStatement preprocessorStatement, UMLClass moduleClass) {
-		if(moduleClass.getPreprocessorStatements().size() > 0) {
-			for(int i = moduleClass.getPreprocessorStatements().size()-1; i>0; i--) {
-				UMLPreprocessorStatement statement = moduleClass.getPreprocessorStatements().get(i);
-				if(statement.getType().equals(Directive.IF) || statement.getType().equals(Directive.IFDEF) || statement.getType().equals(Directive.IFNDEF)) {
-					preprocessorStatement.setPreviousStatement(statement);
-					break;
+	private static void setEnclosingFunction(UMLPreprocessorStatement statement, UMLClass moduleClass, List<UMLClass> classesOfFile) {
+		List<UMLClass> classes = new ArrayList<>(classesOfFile);
+		classes.add(moduleClass);
+		for(UMLClass umlClass : classes) {
+			for(UMLOperation operation : umlClass.getOperations()) {
+				if(operation.getLocationInfo().subsumes(statement.getLocationInfo())) {
+					statement.setEnclosingFunction(operation.getName());
+					return;
 				}
 			}
 		}
@@ -678,6 +694,13 @@ public class CppFileProcessor {
 	}
 
 	public static IASTTranslationUnit parse(String filePath, String fileContent, boolean astDiff) throws CoreException {
+		return parseWithPreamble(filePath, fileContent, astDiff).translationUnit();
+	}
+
+	//the translation unit and the declarations included before the file, which are reused when parts of the file are parsed again
+	record ParsedFile(IASTTranslationUnit translationUnit, String preamble) {}
+
+	static ParsedFile parseWithPreamble(String filePath, String fileContent, boolean astDiff) throws CoreException {
 		IASTTranslationUnit translationUnit = parse(filePath, fileContent, astDiff, "");
 		//CDT parses the declarations starting with the macros defined in the headers it does not have, i.e., DUCKDB_API virtual void f();,
 		//as problems or as declarations of variables whose type is the macro, so the file is parsed again with these macros defined as empty
@@ -731,12 +754,14 @@ public class CppFileProcessor {
 		//i.e., f(a)(b); as the declaration of a with type f, so the file is parsed again with these names declared as functions in the included file
 		String functions = misparsedCalls(translationUnit, fileContent);
 		if(!functions.isEmpty()) {
-			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, preamble.isEmpty() ? functions : preamble + "\n" + functions);
+			String extendedPreamble = preamble.isEmpty() ? functions : preamble + "\n" + functions;
+			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, extendedPreamble);
 			if(problems(reparsed) <= problems(translationUnit)) {
 				translationUnit = reparsed;
+				preamble = extendedPreamble;
 			}
 		}
-		return translationUnit;
+		return new ParsedFile(translationUnit, preamble);
 	}
 
 	//the start of a declaration of a variable whose type is a class template, i.e., ns::T<A> x = e;
@@ -1099,7 +1124,7 @@ public class CppFileProcessor {
 		return last == ';' || last == '}';
 	}
 
-	private static IASTTranslationUnit parse(String filePath, String fileContent, boolean astDiff, String templates) throws CoreException {
+	static IASTTranslationUnit parse(String filePath, String fileContent, boolean astDiff, String templates) throws CoreException {
 		FileContent content = FileContent.create(filePath, fileContent.toCharArray());
 		Map<String, String> predefinedMacros = new HashMap<>();
 		String[] includeFiles = templates.isEmpty() ? new String[] {STUBS_FILE} : new String[] {STUBS_FILE, TEMPLATES_FILE};
@@ -2098,11 +2123,16 @@ public class CppFileProcessor {
 
 		String actualSignature = functionDefinition.getRawSignature().contains("{") ? functionDefinition.getRawSignature().substring(0, functionDefinition.getRawSignature().indexOf("{") + 1) : functionDefinition.getRawSignature();
 		operation.setActualSignature(actualSignature);
-		IASTStatement body = functionDefinition.getBody();
+		//the body with the statements of the branches that are not taken, i.e., of a function definition in #ifdef CONFIG_X without CONFIG_X
+		IASTFunctionDefinition bodyDefinition = functionDefinition;
+		if(functionDefinition.getTranslationUnit() == conditionalBodySource && functionDefinition.getFileLocation() != null) {
+			bodyDefinition = conditionalBodies.getOrDefault(functionDefinition.getFileLocation().getNodeOffset(), functionDefinition);
+		}
+		IASTStatement body = bodyDefinition.getBody();
 		if(body instanceof IASTCompoundStatement compoundStatement) {
 			CppOperationBody operationBody = new CppOperationBody(sourceFolder, filePath, compoundStatement, operation, parentContainer.getAttributes(), fileContent);
 			operation.setBody(operationBody);
-			if(functionDefinition instanceof ICPPASTFunctionWithTryBlock withTryBlock) {
+			if(bodyDefinition instanceof ICPPASTFunctionWithTryBlock withTryBlock) {
 				ICPPASTCatchHandler[] catchHandlers = withTryBlock.getCatchHandlers();
 				for(ICPPASTCatchHandler catchHandler : catchHandlers) {
 					operationBody.addCatchHandlerToFunction(sourceFolder, filePath, catchHandler, fileContent);

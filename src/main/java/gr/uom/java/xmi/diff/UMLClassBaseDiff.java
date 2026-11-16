@@ -37,6 +37,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.Visibility;
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
@@ -865,6 +866,37 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(!called.getContainer1().getParameterTypeList().equals(called.getContainer2().getParameterTypeList())) {
 				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(caller, called, this);
 				if(moveCodeMapper.mappingsWithoutBlocks() > 1 || moveCodeMapper.exactMatches() > 0) {
+					MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
+					if(!moveCodeMappers.contains(moveCodeMapper))
+						moveCodeMappers.add(moveCodeMapper);
+					if(!moveCodeMappers.contains(caller))
+						moveCodeMappers.add(caller);
+					refactorings.add(ref);
+				}
+			}
+		}
+		//the statements moved from a caller to a called operation with the same parameters, i.e., tsk->stack = NULL; moved from release_task_stack() to free_thread_stack(),
+		//which are removed from the caller and added to the called operation
+		List<UMLOperationBodyMapper> mappers = new ArrayList<>(operationBodyMapperList);
+		for(UMLOperationBodyMapper caller : mappers) {
+			if(caller.nonMappedElementsT1() == 0) {
+				continue;
+			}
+			for(UMLOperationBodyMapper called : mappers) {
+				if(called == caller || called.nonMappedElementsT2() == 0 || called.getOperation1() == null || called.getOperation2() == null ||
+						!called.getContainer1().getParameterTypeList().equals(called.getContainer2().getParameterTypeList()) ||
+						calledBy.contains(Pair.of(called, caller)) ||
+						!containCallToOperation(called.getContainer1(), caller.getContainer1()) || !containCallToOperation(called.getContainer2(), caller.getContainer2())) {
+					continue;
+				}
+				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(caller, called, this);
+				int movedStatements = 0;
+				for(AbstractCodeMapping mapping : moveCodeMapper.getExactMatchesWithoutLoggingStatements()) {
+					if(movedStatement(mapping, caller, called)) {
+						movedStatements++;
+					}
+				}
+				if(movedStatements > 0) {
 					MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
 					if(!moveCodeMappers.contains(moveCodeMapper))
 						moveCodeMappers.add(moveCodeMapper);
@@ -2129,6 +2161,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		for(UMLOperation removedOperation : removedOperations) {
 			for(UMLOperation addedOperation : addedOperations) {
+				if(closerPreprocessorVariantExists(removedOperation, addedOperation, removedOperations, addedOperations)) {
+					continue;
+				}
 				if(removedOperation.equalsIgnoringVisibility(addedOperation) && !differentParameterNames(removedOperation, addedOperation)) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 					this.addOperationBodyMapper(operationBodyMapper);
@@ -2203,6 +2238,86 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		removedOperations.removeAll(removedOperationsToBeRemoved);
 		addedOperations.removeAll(addedOperationsToBeRemoved);
+	}
+
+	//a statement removed from the caller and added to the called operation, which is not trivial, i.e., return; return null; break; continue; int i; or throw e;
+	private static final java.util.regex.Pattern RETURN_WITHOUT_VALUE_OR_LITERAL = java.util.regex.Pattern.compile("return\\s*(null|nullptr|NULL|None|true|false|-?[0-9.]+[a-zA-Z]*|\"[^\"]*\"|'[^']*')?\\s*;?");
+
+	private static boolean movedStatement(AbstractCodeMapping mapping, UMLOperationBodyMapper caller, UMLOperationBodyMapper called) {
+		AbstractCodeFragment fragment1 = mapping.getFragment1();
+		AbstractCodeFragment fragment2 = mapping.getFragment2();
+		boolean removed = caller.getNonMappedLeavesT1().contains(fragment1) || caller.getNonMappedInnerNodesT1().contains(fragment1);
+		boolean added = called.getNonMappedLeavesT2().contains(fragment2) || called.getNonMappedInnerNodesT2().contains(fragment2);
+		if(!removed || !added) {
+			return false;
+		}
+		CodeElementType type = fragment1.getLocationInfo().getCodeElementType();
+		if(type == CodeElementType.BLOCK || type == CodeElementType.BREAK_STATEMENT || type == CodeElementType.CONTINUE_STATEMENT || type == CodeElementType.THROW_STATEMENT) {
+			return false;
+		}
+		if(type == CodeElementType.RETURN_STATEMENT && RETURN_WITHOUT_VALUE_OR_LITERAL.matcher(fragment1.getString().strip()).matches()) {
+			return false;
+		}
+		List<VariableDeclaration> declarations = fragment1.getVariableDeclarations();
+		if(declarations.size() > 0 && declarations.stream().allMatch(declaration -> declaration.getInitializer() == null)) {
+			return false;
+		}
+		return true;
+	}
+
+	//the variants of a C/C++ function in sibling preprocessor branches have the same signature, so a removed variant is paired only with the added variant
+	//in the closest branches, i.e., free_thread_stack() of #if A[0] with the one of #if A[0] > #ifdef B[0], not with the ones of #ifdef B[1] or #if A[1]
+	private static boolean closerPreprocessorVariantExists(UMLOperation removedOperation, UMLOperation addedOperation, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
+		if(removedOperation.getPreprocessorBranch() == null && addedOperation.getPreprocessorBranch() == null) {
+			return false;
+		}
+		if(!sameSignatureIgnoringBranch(removedOperation, addedOperation)) {
+			return false;
+		}
+		int closeness = commonBranches(removedOperation, addedOperation);
+		for(UMLOperation otherAddedOperation : addedOperations) {
+			if(otherAddedOperation == addedOperation) {
+				//the variants in branches equally close are paired in their order
+				break;
+			}
+			if(sameSignatureIgnoringBranch(removedOperation, otherAddedOperation) && commonBranches(removedOperation, otherAddedOperation) >= closeness) {
+				return true;
+			}
+		}
+		for(UMLOperation otherAddedOperation : addedOperations.subList(addedOperations.indexOf(addedOperation) + 1, addedOperations.size())) {
+			if(sameSignatureIgnoringBranch(removedOperation, otherAddedOperation) && commonBranches(removedOperation, otherAddedOperation) > closeness) {
+				return true;
+			}
+		}
+		for(UMLOperation otherRemovedOperation : removedOperations) {
+			if(otherRemovedOperation == removedOperation) {
+				break;
+			}
+			if(sameSignatureIgnoringBranch(otherRemovedOperation, addedOperation) && commonBranches(otherRemovedOperation, addedOperation) >= closeness) {
+				return true;
+			}
+		}
+		for(UMLOperation otherRemovedOperation : removedOperations.subList(removedOperations.indexOf(removedOperation) + 1, removedOperations.size())) {
+			if(sameSignatureIgnoringBranch(otherRemovedOperation, addedOperation) && commonBranches(otherRemovedOperation, addedOperation) > closeness) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean sameSignatureIgnoringBranch(UMLOperation operation1, UMLOperation operation2) {
+		return operation1.getName().equals(operation2.getName()) && operation1.getParameterTypeList().equals(operation2.getParameterTypeList());
+	}
+
+	//the number of enclosing preprocessor branches the operations have in common, from the outermost one
+	private static int commonBranches(UMLOperation operation1, UMLOperation operation2) {
+		String[] branches1 = operation1.getPreprocessorBranch() == null ? new String[0] : operation1.getPreprocessorBranch().split(" > ");
+		String[] branches2 = operation2.getPreprocessorBranch() == null ? new String[0] : operation2.getPreprocessorBranch().split(" > ");
+		int common = 0;
+		while(common < branches1.length && common < branches2.length && branches1[common].equals(branches2[common])) {
+			common++;
+		}
+		return common;
 	}
 
 	private boolean removedOrAddedOperationWithIdenticalBody(UMLOperation originalOperation, UMLOperation nextOperation, List<UMLOperation> removedOperationsToBeRemoved, List<UMLOperation> addedOperationsToBeRemoved) throws RefactoringMinerTimedOutException {

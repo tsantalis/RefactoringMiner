@@ -126598,6 +126598,50 @@
   "firstEndPos" : 41547,
   "secondEndPos" : 42201
 }, {
+  "firstType" : "return_statement",
+  "secondType" : "return_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 41552,
+  "secondPos" : 42206,
+  "firstEndPos" : 41563,
+  "secondEndPos" : 42217
+}, {
+  "firstType" : "return",
+  "secondType" : "return",
+  "firstLabel" : "return",
+  "secondLabel" : "return",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 41552,
+  "secondPos" : 42206,
+  "firstEndPos" : 41558,
+  "secondEndPos" : 42212
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "out",
+  "secondLabel" : "out",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 41559,
+  "secondPos" : 42213,
+  "firstEndPos" : 41562,
+  "secondEndPos" : 42216
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 41562,
+  "secondPos" : 42216,
+  "firstEndPos" : 41563,
+  "secondEndPos" : 42217
+}, {
   "firstType" : "}",
   "secondType" : "}",
   "firstLabel" : "}",

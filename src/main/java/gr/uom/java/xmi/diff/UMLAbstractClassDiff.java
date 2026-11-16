@@ -5724,7 +5724,10 @@ public abstract class UMLAbstractClassDiff {
 		boolean secondBestMapperHasIdenticalParameterTypes = secondBestMapperOperation1 != null && secondBestMapperOperation2 != null &&
 				secondBestMapperOperation1.getParameterTypeList().equals(secondBestMapperOperation2.getParameterTypeList()) &&
 				secondBestMapperOperation1.getParameterTypeList().size() > 0 && secondBestMapperOperation1.getName().equals(secondBestMapperOperation2.getName());
-		if(secondBestMapperHasIdenticalParameterTypes) {
+		//unless the best mapper has identical parameter types too, i.e., the variants of a C function in sibling preprocessor branches
+		boolean bestMapperHasIdenticalParameterTypes = bestMapperOperation1.getParameterTypeList().equals(bestMapperOperation2.getParameterTypeList()) &&
+				bestMapperOperation1.getParameterTypeList().size() > 0 && bestMapperOperation1.getName().equals(bestMapperOperation2.getName());
+		if(secondBestMapperHasIdenticalParameterTypes && !bestMapperHasIdenticalParameterTypes) {
 			return mapperList.get(1);
 		}
 		if(equalSignatureWithCommonParameterTypes(bestMapperOperation1, bestMapperOperation2) &&
@@ -6087,6 +6090,11 @@ public abstract class UMLAbstractClassDiff {
 		if(addedOperation.compatibleSignature(removedOperation)) {
 			return true;
 		}
+		//the only operations with their name in both classes, i.e., memcg_charge_kernel_stack(struct task_struct *tsk) -> memcg_charge_kernel_stack(struct vm_struct *vm)
+		if(removedOperation.getName().equals(addedOperation.getName()) && !removedOperation.isConstructor() &&
+				uniqueName(removedOperation, originalClass.getOperations()) && uniqueName(addedOperation, nextClass.getOperations())) {
+			return true;
+		}
 		if(absoluteDifferenceInPosition == 0 || operationsBeforeOrAfterMatch(removedOperation, addedOperation)) {
 			if(!gettersWithDifferentReturnType(removedOperation, addedOperation)) {
 				if(addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || addedOperation.normalizedNameDistance(removedOperation) <= MAX_OPERATION_NAME_DISTANCE) {
@@ -6101,6 +6109,15 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		return false;
+	}
+
+	private static boolean uniqueName(UMLOperation operation, List<UMLOperation> operations) {
+		for(UMLOperation other : operations) {
+			if(other != operation && other.getName().equals(operation.getName())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean gettersWithDifferentReturnType(UMLOperation removedOperation, UMLOperation addedOperation) {

@@ -4726,6 +4726,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public processFinishedCompilerWork(result AsyncCompilerResult) : ListenableFutureTask<?> to package createAdHocTransaction(plannedStmtBatch AdHocPlannedStmtBatch, c Connection) : void in class org.voltdb.ClientInterface",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -74540,6 +74547,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public onCreate(savedInstanceState Bundle) : void to private initPreferences() : void in class org.wordpress.android.ui.prefs.SiteSettingsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1235
 }, {
@@ -96920,6 +96934,13 @@
     }, {
         "type": "Invert Condition",
         "description": "Invert Condition if(validJoinRequest) to if(!validJoinRequest) in method package shouldMerge(joinMessage JoinMessage) : boolean from class com.hazelcast.cluster.impl.AbstractJoiner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from private doRemoveAddress(deadAddress Address, destroyConnection boolean) : void to private assignNewMaster() : void in class com.hazelcast.cluster.impl.ClusterServiceImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

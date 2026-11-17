@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.dom.ast.IASTExpression;
 import org.eclipse.cdt.core.dom.ast.IASTFieldReference;
@@ -104,14 +103,14 @@ import extension.ast.visitor.LangVisitor;
 
 public class OperationInvocation extends AbstractCall {
 	private String methodName;
-	private List<String> subExpressions = new ArrayList<String>();
+	//C/C++ and TypeScript calls never have sub-expressions, the list is created when they are collected (Issue #1220)
+	private List<String> subExpressions = Collections.emptyList();
 	private volatile int hashCode = 0;
 	private boolean directMethodPassing = false;
 	public static Map<String, String> PRIMITIVE_WRAPPER_CLASS_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_WIDENING_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_NARROWING_MAP;
     private static List<String> PRIMITIVE_TYPE_LIST;
-    private final Pattern LAMBDA_ARROW = Pattern.compile(LANG.LAMBDA_ARROW);
 
     static {
     	PRIMITIVE_TYPE_LIST = new ArrayList<>(Arrays.asList("byte", "short", "int", "long", "float", "double", "char", "boolean"));
@@ -156,7 +155,7 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Type> typeArgs = invocation.typeArguments();
 		for(Type typeArg : typeArgs) {
-			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+			addTypeArgument(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
 		}
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
@@ -164,7 +163,7 @@ public class OperationInvocation extends AbstractCall {
 		}
 		if(invocation.getExpression() != null) {
 			this.expression = stringify(invocation.getExpression());
-			processExpression(invocation.getExpression(), this.subExpressions);
+			processExpression(invocation.getExpression(), newSubExpressions());
 		}
 	}
 
@@ -196,8 +195,13 @@ public class OperationInvocation extends AbstractCall {
 			}
 		}
 		if (methodInvocation.getExpression() != null) {
-			processExpression(methodInvocation.getExpression(), this.subExpressions);
+			processExpression(methodInvocation.getExpression(), newSubExpressions());
 		}
+	}
+
+	private List<String> newSubExpressions() {
+		this.subExpressions = new ArrayList<>();
+		return this.subExpressions;
 	}
 
 	private void processExpression(LangASTNode node, List<String> subExpressions) {
@@ -290,10 +294,10 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Type> typeArgs = invocation.typeArguments();
 		for(Type typeArg : typeArgs) {
-			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+			addTypeArgument(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
 		}
 		this.expression = "super";
-		this.subExpressions.add("super");
+		newSubExpressions().add("super");
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
 			this.arguments.add(stringify(argument));
@@ -307,7 +311,7 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Type> typeArgs = invocation.typeArguments();
 		for(Type typeArg : typeArgs) {
-			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+			addTypeArgument(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
 		}
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
@@ -315,7 +319,7 @@ public class OperationInvocation extends AbstractCall {
 		}
 		if(invocation.getExpression() != null) {
 			this.expression = stringify(invocation.getExpression());
-			processExpression(invocation.getExpression(), this.subExpressions);
+			processExpression(invocation.getExpression(), newSubExpressions());
 		}
 	}
 
@@ -1251,8 +1255,8 @@ public class OperationInvocation extends AbstractCall {
 
 	public boolean identicalPipeline(OperationInvocation other) {
 		if(this.expression != null && other.expression != null) {
-			Matcher m1 = LAMBDA_ARROW.matcher(this.expression);
-			Matcher m2 = LAMBDA_ARROW.matcher(other.expression);
+			Matcher m1 = LANG.LAMBDA_ARROW_PATTERN.matcher(this.expression);
+			Matcher m2 = LANG.LAMBDA_ARROW_PATTERN.matcher(other.expression);
 			List<String> lambdaCalls1 = extractLambdaCalls(m1, this.expression);
 			List<String> lambdaCalls2 = extractLambdaCalls(m2, other.expression);
 			if(lambdaCalls1.equals(lambdaCalls2) && lambdaCalls1.size() > 0) {
@@ -1324,7 +1328,7 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<KtTypeProjection> typeArgs = invocation.getTypeArguments();
 		for(KtTypeProjection typeArg : typeArgs) {
-			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, typeArg, 0));
+			addTypeArgument(UMLType.extractTypeObject(cu, sourceFolder, filePath, fileContent, typeArg, 0));
 		}
 		List<KtValueArgument> args = invocation.getValueArguments();
 		for(KtValueArgument argument : args) {
@@ -1337,7 +1341,7 @@ public class OperationInvocation extends AbstractCall {
 			if(receiver != null) {
 				// TODO replace with stringify
 				this.expression = receiver.getText();
-				processExpression(receiver, this.subExpressions);
+				processExpression(receiver, newSubExpressions());
 			}
 		}
 		else if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression && safeQualifiedExpression.getSelectorExpression() == invocation) {
@@ -1345,7 +1349,7 @@ public class OperationInvocation extends AbstractCall {
 			if(receiver != null) {
 				// TODO replace with stringify
 				this.expression = receiver.getText();
-				processExpression(receiver, this.subExpressions);
+				processExpression(receiver, newSubExpressions());
 			}
 		}
 	}
@@ -1359,7 +1363,7 @@ public class OperationInvocation extends AbstractCall {
 		if(receiver != null) {
 			// TODO replace with stringify
 			this.expression = receiver.getText();
-			processExpression(receiver, this.subExpressions);
+			processExpression(receiver, newSubExpressions());
 		}
 	}
 
@@ -1481,7 +1485,7 @@ public class OperationInvocation extends AbstractCall {
 			List<ISwc4jAstTsType> typeArguments = typeArgs.get().getParams();
 			for(ISwc4jAstTsType typeArgument : typeArguments) {
 				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeArgument, 0);
-				this.typeArguments.add(type);
+				addTypeArgument(type);
 			}
 		}
 	}

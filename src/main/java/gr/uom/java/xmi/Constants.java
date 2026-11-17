@@ -1,5 +1,7 @@
 package gr.uom.java.xmi;
 
+import java.util.regex.Pattern;
+
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
 			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this;\n", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false"),
@@ -31,6 +33,7 @@ public enum Constants {
 	public final String BREAK_STATEMENT;
 	public final String CONTINUE_STATEMENT;
 	public final String LAMBDA_ARROW;
+	public final Pattern LAMBDA_ARROW_PATTERN;
 	public final String METHOD_REFERENCE;
 	public final String STRING_CONCATENATION;
 	public final String THROW_SPACE;
@@ -99,6 +102,7 @@ public enum Constants {
 		this.BREAK_STATEMENT = BREAK_STATEMENT;
 		this.CONTINUE_STATEMENT = CONTINUE_STATEMENT;
 		this.LAMBDA_ARROW = LAMBDA_ARROW;
+		this.LAMBDA_ARROW_PATTERN = Pattern.compile(LAMBDA_ARROW);
 		this.METHOD_REFERENCE = METHOD_REFERENCE;
 		this.STRING_CONCATENATION = STRING_CONCATENATION;
 		this.THROW_SPACE = THROW_SPACE;

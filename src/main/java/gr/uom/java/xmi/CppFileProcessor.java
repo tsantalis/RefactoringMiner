@@ -2194,6 +2194,10 @@ public class CppFileProcessor {
 				}
 			}
 		}
+		if(operation.getBody() instanceof CppOperationBody operationBody) {
+			//the variables in scope are needed only while building the body, the trailing return type and the constructor initializers
+			operationBody.releaseActiveVariableDeclarations();
+		}
 		return operation;
 	}
 

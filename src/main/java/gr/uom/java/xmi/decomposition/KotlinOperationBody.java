@@ -351,7 +351,7 @@ public class KotlinOperationBody extends OperationBody {
 			VariableDeclaration vd = variableDeclaration instanceof KtProperty ?
 					new VariableDeclaration(ktFile, sourceFolder, filePath, (KtProperty)variableDeclaration, container, activeVariableDeclarations, fileContent, parent.getLocationInfo()) :
 					new VariableDeclaration(ktFile, sourceFolder, filePath, (KtDestructuringDeclarationEntry)variableDeclaration, container, activeVariableDeclarations, fileContent, parent.getLocationInfo());
-			child.getVariableDeclarations().add(vd);
+			child.addVariableDeclaration(vd);
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
 		}
@@ -367,7 +367,7 @@ public class KotlinOperationBody extends OperationBody {
 			parent.addStatement(child);
 			for(KtDestructuringDeclarationEntry entry : destructuringDeclaration.getEntries()) {
 				VariableDeclaration vd = new VariableDeclaration(ktFile, sourceFolder, filePath, entry, container, activeVariableDeclarations, fileContent, parent.getLocationInfo());
-				child.getVariableDeclarations().add(vd);
+				child.addVariableDeclaration(vd);
 			}
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());

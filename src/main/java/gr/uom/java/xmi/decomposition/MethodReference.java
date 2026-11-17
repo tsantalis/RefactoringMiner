@@ -32,7 +32,7 @@ public class MethodReference extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Type> typeArgs = reference.typeArguments();
 		for(Type typeArg : typeArgs) {
-			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+			addTypeArgument(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
 		}
 	}
 	
@@ -42,7 +42,7 @@ public class MethodReference extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Type> typeArgs = reference.typeArguments();
 		for(Type typeArg : typeArgs) {
-			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+			addTypeArgument(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
 		}
 		if(reference.getQualifier() != null) {
 			this.expression = reference.getQualifier().getFullyQualifiedName() + ".super";
@@ -59,7 +59,7 @@ public class MethodReference extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Type> typeArgs = reference.typeArguments();
 		for(Type typeArg : typeArgs) {
-			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+			addTypeArgument(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
 		}
 	}
 

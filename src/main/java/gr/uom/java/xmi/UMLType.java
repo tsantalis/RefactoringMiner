@@ -6,6 +6,7 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -95,8 +96,9 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 	private int arrayDimension;
 	private boolean parameterized;
 	private boolean nullable;
-	private List<UMLType> typeArguments = new ArrayList<UMLType>();
-	protected List<UMLAnnotation> annotations = new ArrayList<UMLAnnotation>();
+	//most types have no type arguments or annotations, the lists are created on the first element (Issue #1220)
+	private List<UMLType> typeArguments = Collections.emptyList();
+	protected List<UMLAnnotation> annotations = Collections.emptyList();
 
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
@@ -104,6 +106,20 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 
 	public int getArrayDimension() {
 		return this.arrayDimension;
+	}
+
+	public void addTypeArgument(UMLType typeArgument) {
+		if(typeArguments.isEmpty()) {
+			typeArguments = new ArrayList<>();
+		}
+		typeArguments.add(typeArgument);
+	}
+
+	protected void addAnnotation(UMLAnnotation annotation) {
+		if(annotations.isEmpty()) {
+			annotations = new ArrayList<>();
+		}
+		annotations.add(annotation);
 	}
 
 	public List<UMLType> getTypeArguments() {
@@ -319,7 +335,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		}
 		UMLType typeObject = new LeafType(qualifiedName, LANG);
 		typeObject.arrayDimension = arrayDimension;
-		typeObject.typeArguments = typeArgumentDecomposition;
+		typeObject.typeArguments = typeArgumentDecomposition.isEmpty() ? Collections.emptyList() : typeArgumentDecomposition;
 		typeObject.parameterized = parameterized;
 		typeObject.locationInfo = location;
 		return (LeafType)typeObject;
@@ -411,7 +427,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			AnnotatableType annotatableType = (AnnotatableType)type;
 			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {
-				leafType.annotations.add(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
+				leafType.addAnnotation(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
 			}
 			return leafType;
 		}
@@ -422,7 +438,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			AnnotatableType annotatableType = (AnnotatableType)qualified;
 			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {
-				rightType.annotations.add(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
+				rightType.addAnnotation(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
 			}
 			return new CompositeType(leftType, rightType);
 		}
@@ -433,7 +449,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			AnnotatableType annotatableType = (AnnotatableType)nameQualified;
 			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {
-				rightType.annotations.add(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
+				rightType.addAnnotation(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
 			}
 			return new CompositeType(leftType, rightType);
 		}
@@ -450,7 +466,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			AnnotatableType annotatableType = (AnnotatableType)wildcard;
 			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {
-				myWildcardType.annotations.add(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
+				myWildcardType.addAnnotation(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
 			}
 			return myWildcardType;
 		}
@@ -461,7 +477,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 				Dimension dimension = (Dimension)dim;
 				List<Annotation> annotations = dimension.annotations();
 				for(Annotation annotation : annotations) {
-					arrayType.annotations.add(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
+					arrayType.addAnnotation(new UMLAnnotation(cu, sourceFolder, filePath, annotation, javaFileContent));
 				}
 			}
 			arrayType.arrayDimension = array.getDimensions();
@@ -473,7 +489,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			container.parameterized = true;
 			List<Type> typeArguments = parameterized.typeArguments();
 			for(Type argument : typeArguments) {
-				container.typeArguments.add(extractTypeObject(cu, sourceFolder, filePath, argument, javaFileContent));
+				container.addTypeArgument(extractTypeObject(cu, sourceFolder, filePath, argument, javaFileContent));
 			}
 			return container;
 		}
@@ -551,7 +567,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 				UMLType rightType = extractTypeObject(userType.getReferencedName(), PathFileUtils.getLang(filePath));
 				for (KtTypeProjection typeProjection : userType.getTypeArguments()) {
 					UMLType projection = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection);
-					rightType.typeArguments.add(projection);
+					rightType.addTypeArgument(projection);
 					rightType.parameterized = true;
 				}
 				return new CompositeType(left, (LeafType) rightType);
@@ -559,7 +575,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 				UMLType leafType = extractTypeObject(userType.getReferencedName(), PathFileUtils.getLang(filePath));
 				for (KtTypeProjection typeProjection : userType.getTypeArguments()) {
 					UMLType projection = extractTypeObject(ktFile, sourceFolder, filePath, fileContent, typeProjection);
-					leafType.typeArguments.add(projection);
+					leafType.addTypeArgument(projection);
 					leafType.parameterized = true;
 				}
 				return leafType;
@@ -625,7 +641,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		if(modifierList != null) {
 			for (PsiElement modifier : modifierList.getChildren()) {
 				if (modifier instanceof KtAnnotationEntry annotationEntry) {
-					umlType.annotations.add(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
+					umlType.addAnnotation(new UMLAnnotation(ktFile, sourceFolder, filePath, annotationEntry, fileContent));
 				}
 			}
 		}
@@ -712,7 +728,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 				if(typeArguments.size() > 0)
 					leafType.parameterized = true;
 				for(UMLType typeArg : typeArguments) {
-					leafType.typeArguments.add(typeArg);
+					leafType.addTypeArgument(typeArg);
 				}
 				return leafType;
 			}
@@ -730,7 +746,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 				if(typeArguments.size() > 0)
 					compositeType.parameterized = true;
 				for(UMLType typeArg : typeArguments) {
-					compositeType.typeArguments.add(typeArg);
+					compositeType.addTypeArgument(typeArg);
 				}
 				return compositeType;
 			}

@@ -56,7 +56,8 @@ public abstract class AbstractCall extends LeafExpression {
 	protected int numberOfArguments;
 	protected String expression;
 	protected List<String> arguments;
-	protected List<UMLType> typeArguments = new ArrayList<UMLType>();
+	//most calls have no type arguments, the list is created on the first one (Issue #1220)
+	protected List<UMLType> typeArguments = Collections.emptyList();
 	protected StatementCoverageType coverage = StatementCoverageType.NONE;
 	private static final List<String> logNames = List.of("trace", "debug", "info", "warn", "error", "fatal", "log");
 	private static final List<String> logGuardNames = List.of("isDebugEnabled", "isEnabled", "isErrorEnabled", "isFatalEnabled", "isInfoEnabled", "isTraceEnabled", "isWarnEnabled");
@@ -127,6 +128,13 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public String getExpression() {
 		return expression;
+	}
+
+	protected void addTypeArgument(UMLType typeArgument) {
+		if(typeArguments.isEmpty()) {
+			typeArguments = new ArrayList<>();
+		}
+		typeArguments.add(typeArgument);
 	}
 
 	public List<String> arguments() {

@@ -739,7 +739,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						List<ISwc4jAstTsType> typeParams = instantiation.getParams();
 						for(ISwc4jAstTsType typeParam : typeParams) {
 							UMLType umlTypeParam = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeParam, 0);
-							type.getTypeArguments().add(umlTypeParam);
+							type.addTypeArgument(umlTypeParam);
 						}
 					}
 					umlClass.addImplementedInterface(type);

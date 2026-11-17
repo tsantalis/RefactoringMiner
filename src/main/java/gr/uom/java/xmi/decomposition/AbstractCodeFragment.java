@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	private int depth;
 	private int index;
 	protected LocationInfo locationInfo;
+	/**
+	 * Most statements and expressions have no literals, lambdas, casts, etc.
+	 * Sharing one immutable empty list for all of them avoids millions of empty ArrayLists in large models (Issue #1220).
+	 */
+	protected static <T> List<T> compact(List<T> list) {
+		return list.isEmpty() ? Collections.emptyList() : list;
+	}
+
 	protected final Constants LANG;
 
 	public AbstractCodeFragment(LocationInfo location) {

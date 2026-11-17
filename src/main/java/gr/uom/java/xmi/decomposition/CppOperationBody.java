@@ -98,7 +98,7 @@ public class CppOperationBody extends OperationBody {
 				break;
 			}
 		}
-		//this.activeVariableDeclarations = null;
+		//kept for the catch handlers, trailing return type and constructor initializers, see releaseActiveVariableDeclarations()
 	}
 
 	public CppOperationBody(String sourceFolder, String filePath, IASTCompoundStatement methodBody, VariableDeclarationContainer container, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
@@ -128,6 +128,11 @@ public class CppOperationBody extends OperationBody {
 				break;
 			}
 		}
+		this.activeVariableDeclarations = null;
+	}
+
+	public void releaseActiveVariableDeclarations() {
+		this.activeVariableDeclarations = null;
 	}
 
 	public List<IASTSimpleDeclaration> getNestedSimpleDeclarations() {

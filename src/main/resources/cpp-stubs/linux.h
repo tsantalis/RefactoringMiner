@@ -51,6 +51,9 @@
 #define __must_hold(x)
 #define __cond_acquires(...)
 #define __cond_releases(...)
+// The macros giving a string literal concatenated with other literals, which cannot be parsed as calls, i.e., "ipw2100-" __stringify(1) ".fw", are defined like the kernel does.
+#define __stringify_1(x...) #x
+#define __stringify(x...) __stringify_1(x)
 // The macros with a type argument, which cannot be parsed as calls, i.e., container_of(ptr, struct task_struct, rcu), are defined like the kernel does, as casts of the pointer.
 #define container_of(ptr, type, member) ((type *)(ptr))
 #define container_of_const(ptr, type, member) ((type *)(ptr))

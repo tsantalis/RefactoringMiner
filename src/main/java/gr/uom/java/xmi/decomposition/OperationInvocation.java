@@ -1524,6 +1524,11 @@ public class OperationInvocation extends AbstractCall {
 			IASTExpression baseArray = arraySubscriptExpr.getArrayExpression();
 			this.methodName = CppVisitor.singleLine(baseArray.getRawSignature());
 		}
+		else {
+			//the other called expressions are named by their code, i.e., the string literal of the asm operand "r" (x),
+			//or the macro call IPW2100_FW_NAME("-i") expanded to string literals (Issue #1219)
+			this.methodName = CppVisitor.singleLine(nameExpr.getRawSignature());
+		}
 	}
 
 	public OperationInvocation(String fullCall, LocationInfo location, VariableDeclarationContainer container, String methodName, String expression, String[] arguments) {

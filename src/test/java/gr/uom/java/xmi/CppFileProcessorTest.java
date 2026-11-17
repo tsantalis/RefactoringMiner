@@ -1361,6 +1361,52 @@ class CppFileProcessorTest {
 	}
 
 	@Test
+	void namesCallsOfStringLiterals() {
+		// Issue #1219: linux asm operands and macros expanding to string literals are calls of a string literal in CDT
+		String filePath = "include/asm-x86/processor.c";
+		String fileContent = String.join("\n",
+				"#define IPW2100_FW_PREFIX \"ipw2100-\" __stringify(1) \".\" __stringify(3)",
+				"#define IPW2100_FW_NAME(x) IPW2100_FW_PREFIX \"\" x \".fw\"",
+				"static inline void prefetch(const void *x)",
+				"{",
+				"\talternative_input(\"prefetcht0 (%1)\", \"prefetchnta (%1)\", X86_FEATURE_XMM, \"r\" (x));",
+				"}",
+				"static int load_firmware(int mode)",
+				"{",
+				"\tchar *fw_name;",
+				"\tfw_name = IPW2100_FW_NAME(\"-i\");",
+				"\treturn 0;",
+				"}") + "\n";
+
+		UMLClass moduleClass = findClass(processCppModel(filePath, fileContent).getClassList(), "processor");
+		List<String> prefetchCalls = findOperation(moduleClass.getOperations(), "prefetch").getAllOperationInvocations().stream().map(AbstractCall::getName).toList();
+		assertTrue(prefetchCalls.contains("\"r\""), prefetchCalls.toString());
+		List<String> loadFirmwareCalls = findOperation(moduleClass.getOperations(), "load_firmware").getAllOperationInvocations().stream().map(AbstractCall::getName).toList();
+		assertTrue(loadFirmwareCalls.contains("IPW2100_FW_NAME(\"-i\")"), loadFirmwareCalls.toString());
+	}
+
+	@Test
+	void parsesStringifiedMacroArgumentsAsStringLiterals() {
+		// Issue #1219: with the linux stub, __stringify gives a string literal, so the firmware name is one assignment without calls
+		String filePath = "drivers/net/wireless/ipw2100.c";
+		String fileContent = String.join("\n",
+				"#include <linux/kernel.h>",
+				"#define IPW2100_FW_PREFIX \"ipw2100-\" __stringify(1) \".\" __stringify(3)",
+				"#define IPW2100_FW_NAME(x) IPW2100_FW_PREFIX \"\" x \".fw\"",
+				"static int load_firmware(int mode)",
+				"{",
+				"\tchar *fw_name;",
+				"\tfw_name = IPW2100_FW_NAME(\"-i\");",
+				"\treturn 0;",
+				"}") + "\n";
+
+		UMLOperation loadFirmware = findOperation(findClass(processCppModel(filePath, fileContent).getClassList(), "ipw2100").getOperations(), "load_firmware");
+		assertEquals(List.of("char *fw_name;", "fw_name = IPW2100_FW_NAME(\"-i\");", "return 0;"),
+				loadFirmware.getBody().getCompositeStatement().getLeaves().stream().map(leaf -> leaf.getString().trim()).toList());
+		assertTrue(loadFirmware.getAllOperationInvocations().isEmpty());
+	}
+
+	@Test
 	void keepsCppFunctionVariantsOfNestedConditionalGroups() {
 		// Issue #1218: linux kernel/fork.c defines alloc_thread_stack_node in three branches of nested conditional groups
 		String filePath = "kernel/fork.c";

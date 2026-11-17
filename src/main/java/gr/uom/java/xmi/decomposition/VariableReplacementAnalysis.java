@@ -214,6 +214,9 @@ public class VariableReplacementAnalysis {
 	//the definitions of a Python variable are the same variable, so the renames of its definitions to the definitions of another variable are a single rename,
 	//with the references of all of them, i.e., es1 = None; if ...: es1 = tuple(...) -> ss1 = None; if ...: ss1 = tuple(...)
 	private void mergeRenamesOfPythonRedefinitions() {
+		if(!LANG2.equals(Constants.PYTHON)) {
+			return;
+		}
 		List<RenameVariableRefactoring> renames = new ArrayList<RenameVariableRefactoring>(variableRenames);
 		Set<RenameVariableRefactoring> merged = new LinkedHashSet<RenameVariableRefactoring>();
 		for(int i=0; i<renames.size(); i++) {
@@ -224,7 +227,7 @@ public class VariableReplacementAnalysis {
 			for(int j=i+1; j<renames.size(); j++) {
 				RenameVariableRefactoring other = renames.get(j);
 				if(!merged.contains(other) && sameRenameOfPythonVariable(kept, other)) {
-					kept.getReferences().addAll(other.getReferences());
+					kept.addReferences(other.getReferences());
 					merged.add(other);
 				}
 			}
@@ -244,6 +247,9 @@ public class VariableReplacementAnalysis {
 
 	//the same rename, already detected for another definition of the same Python variable, i.e., filename = kwargs.pop(...); if filename is None: filename = ... -> parameter filename
 	private RenameVariableRefactoring renameOfAnotherPythonDefinition(RenameVariableRefactoring newRename) {
+		if(!LANG2.equals(Constants.PYTHON)) {
+			return null;
+		}
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof RenameVariableRefactoring rename && rename.getRefactoringType().equals(newRename.getRefactoringType()) &&
 					sameRenameOfPythonVariable(rename, newRename)) {
@@ -255,6 +261,9 @@ public class VariableReplacementAnalysis {
 
 	//the same type change, already detected for another definition of the same Python variable, i.e., encoder = ForwardRNNEncoder(...) assigned twice in a function
 	private ChangeVariableTypeRefactoring typeChangeOfAnotherPythonDefinition(ChangeVariableTypeRefactoring newTypeChange) {
+		if(!LANG2.equals(Constants.PYTHON)) {
+			return null;
+		}
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof ChangeVariableTypeRefactoring typeChange &&
 					typeChange.getOperationBefore().equals(newTypeChange.getOperationBefore()) && typeChange.getOperationAfter().equals(newTypeChange.getOperationAfter()) &&
@@ -270,9 +279,6 @@ public class VariableReplacementAnalysis {
 
 	//the same declaration, or another definition of the same Python variable
 	static boolean samePythonVariable(VariableDeclaration variable1, VariableDeclaration variable2, VariableDeclarationContainer container) {
-		if(!PathFileUtils.isPythonFile(container.getLocationInfo().getFilePath())) {
-			return false;
-		}
 		return variable1.getVariableName().equals(variable2.getVariableName()) &&
 				(variable1.equals(variable2) || pythonRedefinition(variable1, variable2, container));
 	}
@@ -2463,7 +2469,7 @@ public class VariableReplacementAnalysis {
 			RenameVariableRefactoring refactoring = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
 			RenameVariableRefactoring sameVariableRefactoring = renameOfAnotherPythonDefinition(refactoring);
 			if(sameVariableRefactoring != null) {
-				sameVariableRefactoring.getReferences().addAll(variableReferences);
+				sameVariableRefactoring.addReferences(variableReferences);
 			}
 			else {
 				refactorings.add(refactoring);
@@ -2490,7 +2496,7 @@ public class VariableReplacementAnalysis {
 						ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
 						ChangeVariableTypeRefactoring sameVariableRefactoring = typeChangeOfAnotherPythonDefinition(refactoring);
 						if(sameVariableRefactoring != null) {
-							sameVariableRefactoring.getReferences().addAll(variableReferences);
+							sameVariableRefactoring.addReferences(variableReferences);
 							refactoring = sameVariableRefactoring;
 						}
 						else {

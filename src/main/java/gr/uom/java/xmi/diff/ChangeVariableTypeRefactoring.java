@@ -83,6 +83,10 @@ public class ChangeVariableTypeRefactoring extends ChangeTypeRefactoring impleme
 		return variableReferences;
 	}
 
+	public void addReferences(Set<AbstractCodeMapping> references) {
+		variableReferences.addAll(references);
+	}
+
 	public boolean isInsideExtractedOrInlinedMethod() {
 		return insideExtractedOrInlinedMethod;
 	}

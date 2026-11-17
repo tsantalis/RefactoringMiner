@@ -90,6 +90,10 @@ public class RenameVariableRefactoring extends ChangeTypeRefactoring implements 
 		return variableReferences;
 	}
 
+	public void addReferences(Set<AbstractCodeMapping> references) {
+		variableReferences.addAll(references);
+	}
+
 	public boolean isInsideExtractedOrInlinedMethod() {
 		return insideExtractedOrInlinedMethod;
 	}

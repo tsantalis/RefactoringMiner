@@ -270,6 +270,9 @@ public class VariableReplacementAnalysis {
 
 	//the same declaration, or another definition of the same Python variable
 	static boolean samePythonVariable(VariableDeclaration variable1, VariableDeclaration variable2, VariableDeclarationContainer container) {
+		if(!PathFileUtils.isPythonFile(container.getLocationInfo().getFilePath())) {
+			return false;
+		}
 		return variable1.getVariableName().equals(variable2.getVariableName()) &&
 				(variable1.equals(variable2) || pythonRedefinition(variable1, variable2, container));
 	}

@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
@@ -316,6 +317,21 @@ public interface VariableDeclarationContainer extends CommentProvider, Annotatio
 		if(expression != null) {
 			if(expression.getLambdas().size() > 0 && expression.getLambdas().get(0).getBody() != null) {
 				return expression.getLambdas().get(0).getBody().stringRepresentation();
+			}
+		}
+		return Collections.emptyList();
+	}
+
+	default List<AbstractCodeFragment> getLeaves() {
+		OperationBody operationBody = getBody();
+		if(operationBody != null) {
+			return operationBody.getCompositeStatement().getLeaves();
+		}
+		AbstractExpression expression = getDefaultExpression();
+		if(expression != null) {
+			List<LambdaExpressionObject> lambdas = expression.getLambdas();
+			if(lambdas.size() > 0 && lambdas.get(0).getBody() != null) {
+				return lambdas.get(0).getBody().getCompositeStatement().getLeaves();
 			}
 		}
 		return Collections.emptyList();

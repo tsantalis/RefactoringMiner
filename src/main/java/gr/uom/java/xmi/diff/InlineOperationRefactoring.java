@@ -201,16 +201,7 @@ public class InlineOperationRefactoring extends ChangeTypeRefactoring {
 				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(LANG1.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(LANG2.THIS_DOT + replacement.getBefore())) {
 					List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
 					if(expressions2.size() > 0) {
-						List<AbstractCodeFragment> leaves = new ArrayList<>();
-						if(targetOperationBeforeInline.getBody() != null) {
-							leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
-						}
-						else if(targetOperationBeforeInline.getDefaultExpression() != null) {
-							List<LambdaExpressionObject> lambdas = targetOperationBeforeInline.getDefaultExpression().getLambdas();
-							if(lambdas.size() > 0 && lambdas.get(0).getBody() != null) {
-								leaves = lambdas.get(0).getBody().getCompositeStatement().getLeaves();
-							}
-						}
+						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getLeaves();
 						for(AbstractCodeFragment leaf : leaves) {
 							for(AbstractCall call : inlinedOperationInvocations) {
 								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
@@ -267,7 +258,7 @@ public class InlineOperationRefactoring extends ChangeTypeRefactoring {
 			expressions2 = mapping.getFragment2().findExpression(actualArgument);
 		}
 		if(expressions2.size() > 0) {
-			List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
+			List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getLeaves();
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 					//the argument of the call, and not the same expression elsewhere in the statement, i.e., count in count = process(values, count)

@@ -209,16 +209,7 @@ public class ExtractOperationRefactoring extends ChangeTypeRefactoring {
 				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(LANG1.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(LANG2.THIS_DOT + replacement.getBefore())) {
 					List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
 					if(expressions1.size() > 0) {
-						List<AbstractCodeFragment> leaves = new ArrayList<>();
-						if(sourceOperationAfterExtraction.getBody() != null) {
-							leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
-						}
-						else if(sourceOperationAfterExtraction.getDefaultExpression() != null) {
-							List<LambdaExpressionObject> lambdas = sourceOperationAfterExtraction.getDefaultExpression().getLambdas();
-							if(lambdas.size() > 0 && lambdas.get(0).getBody() != null) {
-								leaves = lambdas.get(0).getBody().getCompositeStatement().getLeaves();
-							}
-						}
+						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getLeaves();
 						for(AbstractCodeFragment leaf : leaves) {
 							for(AbstractCall call : extractedOperationInvocations) {
 								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
@@ -274,8 +265,8 @@ public class ExtractOperationRefactoring extends ChangeTypeRefactoring {
 			String actualArgument = argument.substring(argument.indexOf(LANG2.LAMBDA_ARROW) + LANG2.LAMBDA_ARROW.length());
 			expressions1 = mapping.getFragment1().findExpression(actualArgument);
 		}
-		if(expressions1.size() > 0 && sourceOperationAfterExtraction.getBody() != null) {
-			List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
+		if(expressions1.size() > 0) {
+			List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getLeaves();
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 					//the argument of the call, and not the same expression elsewhere in the statement, i.e., count in count = process(values, count)

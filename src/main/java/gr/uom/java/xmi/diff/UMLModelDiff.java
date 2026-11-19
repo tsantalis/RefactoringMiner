@@ -4834,7 +4834,7 @@ public class UMLModelDiff {
 				MoveAttributeRefactoring move = (MoveAttributeRefactoring)r;
 				UMLAbstractClass parentClass = findClassInParentModel(move.getOriginalAttribute().getClassName());
 				UMLAbstractClass childClass = findClassInChildModel(move.getMovedAttribute().getClassName());
-				if(!removedClasses.contains(parentClass) && addedClasses.contains(childClass)) {
+				if(parentClass != null && childClass != null && !removedClasses.contains(parentClass) && addedClasses.contains(childClass)) {
 					Pair<UMLAbstractClass, UMLAbstractClass> pair = Pair.of(parentClass, childClass);
 					if(extractedClassPairsBasedOnMovedAttributes.containsKey(pair)) {
 						extractedClassPairsBasedOnMovedAttributes.get(pair).add(move);
@@ -4851,7 +4851,7 @@ public class UMLModelDiff {
 				bodyMapper = extract.getBodyMapper();
 				UMLAbstractClass parentClass = findClassInParentModel(extract.getSourceOperationBeforeExtraction().getClassName());
 				UMLAbstractClass childClass = findClassInChildModel(extract.getExtractedOperation().getClassName());
-				if(!removedClasses.contains(parentClass) && addedClasses.contains(childClass)) {
+				if(parentClass != null && childClass != null && !removedClasses.contains(parentClass) && addedClasses.contains(childClass)) {
 					Pair<UMLAbstractClass, UMLAbstractClass> pair = Pair.of(parentClass, childClass);
 					if(extractedClassPairsBasedOnMovedMethods.containsKey(pair)) {
 						extractedClassPairsBasedOnMovedMethods.get(pair).add(extract);

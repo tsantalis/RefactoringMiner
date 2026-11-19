@@ -144,7 +144,7 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 				variables.add(name);
 			}
 		}
-		else if(node.getParent() instanceof Swc4jAstAssignExpr assignExpr && node.getObj() instanceof Swc4jAstThisExpr && assignExpr.getParent() instanceof Swc4jAstExprStmt exprStatement &&
+		else if(node.getParent() instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getLeft() == node && node.getObj() instanceof Swc4jAstThisExpr && assignExpr.getParent() instanceof Swc4jAstExprStmt exprStatement &&
 				exprStatement.getParent() instanceof Swc4jAstBlockStmt block && block.getParent() instanceof Swc4jAstConstructor) {
 			VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, assignExpr, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			variableDeclarations.add(vd);

@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
@@ -42,6 +44,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReplacementAnalysis;
@@ -313,46 +316,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							&& nestedOperation2.getReturnParameter().getType() != null) {
 						if(reactFunctionComponentNames.contains(nestedOperation2.getReturnParameter().getType().getClassType())) {
 							checkForOperationSignatureChanges(new ArrayList<>(nestedClass1.getOperations()), new ArrayList<>(nestedOperation2.getNestedOperations()));
+							Set<UMLOperation> movedLifecycleMethods = mapLifecycleMethodsToEffects(nestedClass1, nestedOperation2);
 							for(UMLOperation nestedOperation1 : nestedClass1.getOperations()) {
 								if(!containsMapperForOperation1(nestedOperation1)) {
-									//the body of a lifecycle method moved to the callbacks of the effects of the React Function Component,
-									//i.e., componentDidMount() { this.fetchGeniusSong(); } -> useEffect(() => { fetchGeniusSong(); }, []);
-									//a lifecycle method can be split into several effects, so each statement goes to the effect with the most mappings,
-									//with at least as many exact mappings as the others, i.e., window.addEventListener('resize', this.resizeHandler, false); and this.resize();
-									//moved together to useEffect(() => { window.addEventListener('resize', onResize, false); resize(); ... }, [resize, onResize]);
-									if(REACT_LIFECYCLE_METHODS.contains(nestedOperation1.getName())) {
-										List<UMLOperationBodyMapper> effectMappers = new ArrayList<>();
-										for(LambdaExpressionObject effectCallback : effectCallbacks(nestedOperation2)) {
-											UMLOperationBodyMapper effectMapper = new UMLOperationBodyMapper(nestedOperation1, effectCallback, this);
-											int mappings = effectMapper.mappingsWithoutBlocks();
-											int exactMatches = effectMapper.exactMatches();
-											if(mappings > 0 && exactMatches > 0 && exactMatches >= mappings - exactMatches) {
-												effectMappers.add(effectMapper);
-											}
-										}
-										effectMappers.sort((m1, m2) -> Integer.compare(m2.mappingsWithoutBlocks(), m1.mappingsWithoutBlocks()));
-										Set<AbstractCodeFragment> movedStatements = new LinkedHashSet<>();
-										boolean movedToEffect = false;
-										for(UMLOperationBodyMapper effectMapper : effectMappers) {
-											boolean alreadyMoved = false;
-											for(AbstractCodeMapping mapping : effectMapper.getMappings()) {
-												if(movedStatements.contains(mapping.getFragment1())) {
-													alreadyMoved = true;
-													break;
-												}
-											}
-											if(!alreadyMoved) {
-												for(AbstractCodeMapping mapping : effectMapper.getMappings()) {
-													movedStatements.add(mapping.getFragment1());
-												}
-												MoveCodeRefactoring ref = new MoveCodeRefactoring(nestedOperation1, nestedOperation2, effectMapper, Type.REACT_COMPONENT_MIGRATION);
-												refactorings.add(ref);
-												movedToEffect = true;
-											}
-										}
-										if(movedToEffect) {
-											continue;
-										}
+									//the body of a lifecycle method moved to the callbacks of the effects of the React Function Component
+									if(movedLifecycleMethods.contains(nestedOperation1)) {
+										continue;
 									}
 									//check for moved code within the body of React Function Component
 									UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(nestedOperation1, nestedOperation2, this);
@@ -1705,9 +1674,115 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			"componentWillReceiveProps", "UNSAFE_componentWillReceiveProps", "componentWillMount", "UNSAFE_componentWillMount",
 			"componentWillUpdate", "UNSAFE_componentWillUpdate");
 
+	//the statements of the lifecycle methods of a React class component moved to the callbacks of the effects of the function component replacing it,
+	//i.e., componentDidMount() { this.fetchGeniusSong(); } -> useEffect(() => { fetchGeniusSong(); }, []);
+	//a lifecycle method can be split into several effects, so each statement goes to the effect with the most mappings,
+	//with at least one exact mapping and at least as many exact mappings as the others, i.e., window.addEventListener('resize', this.resizeHandler, false);
+	//and this.resize(); moved together to useEffect(() => { window.addEventListener('resize', onResize, false); resize(); ... }, [resize, onResize]);
+	//componentWillUnmount moves to the cleanup function returned by an effect that received the statements of another lifecycle method,
+	//i.e., window.removeEventListener('resize', this.resizeHandler, false); -> return () => { window.removeEventListener('resize', onResize, false); };
+	private Set<UMLOperation> mapLifecycleMethodsToEffects(UMLClass classComponent, UMLOperation functionComponent) throws RefactoringMinerTimedOutException {
+		Set<UMLOperation> movedLifecycleMethods = new LinkedHashSet<>();
+		Map<LambdaExpressionObject, LambdaExpressionObject> cleanupEffects = new LinkedHashMap<>();
+		List<LambdaExpressionObject> effectCallbacks = effectCallbacks(functionComponent, cleanupEffects);
+		if(effectCallbacks.isEmpty()) {
+			return movedLifecycleMethods;
+		}
+		List<UMLOperationBodyMapper> candidates = new ArrayList<>();
+		List<UMLOperationBodyMapper> cleanupCandidates = new ArrayList<>();
+		for(UMLOperation lifecycleMethod : classComponent.getOperations()) {
+			if(REACT_LIFECYCLE_METHODS.contains(lifecycleMethod.getName()) && !containsMapperForOperation1(lifecycleMethod)) {
+				Map<String, String> classToFunctionComponent = classToFunctionComponentReplacements(lifecycleMethod, functionComponent);
+				boolean unmount = lifecycleMethod.getName().equals("componentWillUnmount");
+				for(LambdaExpressionObject callback : unmount ? cleanupEffects.keySet() : effectCallbacks) {
+					UMLOperationBodyMapper effectMapper = new UMLOperationBodyMapper(lifecycleMethod, callback, this, classToFunctionComponent);
+					if(effectMapper.mappingsWithoutBlocks() > 0) {
+						(unmount ? cleanupCandidates : candidates).add(effectMapper);
+					}
+				}
+			}
+		}
+		candidates.sort((m1, m2) -> Integer.compare(m2.mappingsWithoutBlocks(), m1.mappingsWithoutBlocks()));
+		cleanupCandidates.sort((m1, m2) -> Integer.compare(m2.mappingsWithoutBlocks(), m1.mappingsWithoutBlocks()));
+		Set<AbstractCodeFragment> movedStatements1 = new LinkedHashSet<>();
+		Set<AbstractCodeFragment> movedStatements2 = new LinkedHashSet<>();
+		List<UMLOperationBodyMapper> accepted = new ArrayList<>();
+		for(UMLOperationBodyMapper candidate : candidates) {
+			int mappings = candidate.mappingsWithoutBlocks();
+			int exactMatches = candidate.exactMatches();
+			if(exactMatches > 0 && exactMatches >= mappings - exactMatches && !overlaps(candidate, movedStatements1, movedStatements2)) {
+				accepted.add(candidate);
+				addMovedStatements(candidate, movedStatements1, movedStatements2);
+			}
+		}
+		Set<VariableDeclarationContainer> effectsWithMovedCode = new LinkedHashSet<>();
+		for(UMLOperationBodyMapper mapper : accepted) {
+			effectsWithMovedCode.add(mapper.getContainer2());
+		}
+		for(UMLOperationBodyMapper candidate : cleanupCandidates) {
+			if(effectsWithMovedCode.contains(cleanupEffects.get(candidate.getContainer2())) && !overlaps(candidate, movedStatements1, movedStatements2)) {
+				accepted.add(candidate);
+				addMovedStatements(candidate, movedStatements1, movedStatements2);
+			}
+		}
+		for(UMLOperationBodyMapper effectMapper : accepted) {
+			MoveCodeRefactoring ref = new MoveCodeRefactoring(effectMapper.getContainer1(), functionComponent, effectMapper, Type.REACT_COMPONENT_MIGRATION);
+			refactorings.add(ref);
+			movedLifecycleMethods.add((UMLOperation)effectMapper.getContainer1());
+		}
+		return movedLifecycleMethods;
+	}
+
+	//the blocks are mapped with each effect, i.e., the body of the lifecycle method with the body of the callback
+	private static boolean overlaps(UMLOperationBodyMapper mapper, Set<AbstractCodeFragment> movedStatements1, Set<AbstractCodeFragment> movedStatements2) {
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			if(!mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+					(movedStatements1.contains(mapping.getFragment1()) || movedStatements2.contains(mapping.getFragment2()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static void addMovedStatements(UMLOperationBodyMapper mapper, Set<AbstractCodeFragment> movedStatements1, Set<AbstractCodeFragment> movedStatements2) {
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			movedStatements1.add(mapping.getFragment1());
+			movedStatements2.add(mapping.getFragment2());
+		}
+	}
+
+	private static final Pattern SINGLE_PROPERTY_OBJECT = Pattern.compile("\\{\\s*(\\w+)\\s*:\\s*(.+?)\\s*\\}");
+
+	//the state, props and members of a class component become the state variables, props and functions of a function component,
+	//i.e., this.state.showCopied -> showCopied, nextProps.copied -> copied, this.resize() -> resize(),
+	//and this.setState({ showCopied: true }) -> setShowCopied(true) when the function component calls the setter of a useState
+	private static Map<String, String> classToFunctionComponentReplacements(UMLOperation lifecycleMethod, UMLOperation functionComponent) {
+		Map<String, String> replacements = new LinkedHashMap<>();
+		Set<String> functionComponentCalls = new LinkedHashSet<>();
+		for(AbstractCall call : functionComponent.getAllOperationInvocations()) {
+			functionComponentCalls.add(call.getName());
+		}
+		for(AbstractCall call : lifecycleMethod.getAllOperationInvocations()) {
+			if(call.getName().equals("setState") && call.arguments().size() == 1) {
+				Matcher matcher = SINGLE_PROPERTY_OBJECT.matcher(call.arguments().get(0));
+				if(matcher.matches()) {
+					String state = matcher.group(1);
+					String setter = "set" + Character.toUpperCase(state.charAt(0)) + state.substring(1);
+					if(functionComponentCalls.contains(setter)) {
+						replacements.put(call.getString(), setter + "(" + matcher.group(2) + ")");
+					}
+				}
+			}
+		}
+		for(String prefix : List.of("this.state.", "this.props.", "nextProps.", "prevProps.", "prevState.", "this.")) {
+			replacements.put(prefix, "");
+		}
+		return replacements;
+	}
+
 	//the callbacks of useEffect(() => {...}, [dependencies]) and useLayoutEffect in the body of a React Function Component,
-	//with the cleanup functions they return, i.e., return () => { window.removeEventListener('resize', onResize, false); };
-	private static List<LambdaExpressionObject> effectCallbacks(UMLOperation component) {
+	//and the cleanup functions they return with the callback returning them, i.e., return () => { window.removeEventListener('resize', onResize, false); };
+	private static List<LambdaExpressionObject> effectCallbacks(UMLOperation component, Map<LambdaExpressionObject, LambdaExpressionObject> cleanupEffects) {
 		List<LambdaExpressionObject> callbacks = new ArrayList<>();
 		if(component.getBody() == null) {
 			return callbacks;
@@ -1722,7 +1797,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if(effectStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
 								for(LambdaExpressionObject cleanup : effectStatement.getLambdas()) {
 									if(cleanup.getBody() != null) {
-										callbacks.add(cleanup);
+										cleanupEffects.put(cleanup, lambda);
 									}
 								}
 							}

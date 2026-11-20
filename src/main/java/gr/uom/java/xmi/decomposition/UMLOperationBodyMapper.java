@@ -282,6 +282,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		this(removedOperation, addedOperation, classDiff, Map.of());
+	}
+
+	//the statements of removedOperation are compared after replacing the keys of parameterToArgumentMap1 with their values,
+	//i.e., this.state.showCopied with showCopied when a React class component becomes a function component
+	public UMLOperationBodyMapper(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, UMLAbstractClassDiff classDiff,
+			Map<String, String> parameterToArgumentMap1) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		this.container1 = removedOperation;
@@ -303,6 +310,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<AbstractCodeFragment> leaves2 = new ArrayList<>(body2.getCompositeStatement().getLeaves());
 			List<CompositeStatementObject> innerNodes1 = new ArrayList<>(body1.getCompositeStatement().getInnerNodes());
 			List<CompositeStatementObject> innerNodes2 = new ArrayList<>(body2.getCompositeStatement().getInnerNodes());
+			if(!parameterToArgumentMap1.isEmpty()) {
+				argumentization.argumentize(leaves1, parameterToArgumentMap1);
+				argumentization.argumentize(innerNodes1, parameterToArgumentMap1);
+			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false, false);
 			updateNonMappedLeavesT1(leaves1);

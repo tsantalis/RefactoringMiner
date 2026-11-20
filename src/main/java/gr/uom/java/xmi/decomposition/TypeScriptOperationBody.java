@@ -1351,7 +1351,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				}
 			}
 			else if(parent instanceof Swc4jAstClassMethod function) {
-				String methodName = function.getKey().toString();
+				String methodName = TypeScriptFileProcessor.memberName(function.getKey(), fileContent);
 				if(name.isEmpty()) {
 					name = methodName;
 				}
@@ -1686,7 +1686,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					ISwc4jAstPropName key = classProperty.getKey();
 					Optional<Swc4jAstTsTypeAnn> typeAnn = classProperty.getTypeAnn();
 					Swc4jAstTsTypeAnn typeAnnotation = typeAnn.isPresent() ? typeAnn.get() : null;
-					UMLOperation operation = new UMLOperation(key.toString(), location, container.getClassName() + append);
+					UMLOperation operation = new UMLOperation(TypeScriptFileProcessor.memberName(key, fileContent), location, container.getClassName() + append);
 					operation.setVisibility(Visibility.PUBLIC);
 					processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments);
 					int startSignatureOffset = classProperty.getSpan().getStart();

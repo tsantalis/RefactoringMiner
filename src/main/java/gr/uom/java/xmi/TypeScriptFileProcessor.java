@@ -14,13 +14,16 @@ import org.refactoringminer.astDiff.utils.TypeScriptTreeGenerator;
 
 import com.caoccao.javet.swc4j.Swc4j;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstParam;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateMethod;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstParamOrTsParamProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
@@ -57,6 +60,23 @@ public class TypeScriptFileProcessor {
 
 	public TypeScriptFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
+	}
+
+	//the name of a class member, i.e., [Symbol.iterator] for a computed key, which has no toString of its own
+	public static String memberName(ISwc4jAstPropName key, String fileContent) {
+		if(key instanceof Swc4jAstComputedPropName computed) {
+			return computedMemberName(computed.getExpr(), fileContent);
+		}
+		return key.toString();
+	}
+
+	//the name of an interface method, whose computed key is an expression, i.e., [Symbol.iterator] in [Symbol.iterator](): Iterator<T>
+	public static String memberName(ISwc4jAstExpr key, boolean computed, String fileContent) {
+		return computed ? computedMemberName(key, fileContent) : key.toString();
+	}
+
+	private static String computedMemberName(ISwc4jAstExpr expr, String fileContent) {
+		return "[" + fileContent.substring(expr.getSpan().getStart(), expr.getSpan().getEnd()) + "]";
 	}
 
 	/**
@@ -194,7 +214,7 @@ public class TypeScriptFileProcessor {
 
 	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstClassMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
-		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
+		UMLOperation operation = new UMLOperation(memberName(functionDecl.getKey(), fileContent), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
 		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments);
@@ -308,7 +328,7 @@ public class TypeScriptFileProcessor {
 	public static UMLOperation processFunctionSignature(String sourceFolder, String filePath, Swc4jAstTsMethodSignature methodSignature,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, methodSignature, CodeElementType.METHOD_DECLARATION, fileContent);
-		UMLOperation operation = new UMLOperation(methodSignature.getKey().toString(), location, className);
+		UMLOperation operation = new UMLOperation(memberName(methodSignature.getKey(), methodSignature.isComputed(), fileContent), location, className);
 		operation.setVisibility(Visibility.PUBLIC);
 		Optional<Swc4jAstTsTypeAnn> returnType = methodSignature.getTypeAnn();
 		if(returnType.isPresent()) {

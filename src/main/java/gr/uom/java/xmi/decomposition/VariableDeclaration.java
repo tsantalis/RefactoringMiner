@@ -137,6 +137,7 @@ import gr.uom.java.xmi.KotlinFileProcessor;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.LocationInfoProvider;
+import gr.uom.java.xmi.TypeScriptFileProcessor;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLJavadoc;
@@ -1295,7 +1296,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		else {
 			this.type = new InferredType();
 		}
-		this.variableName = key.toString();
+		this.variableName = TypeScriptFileProcessor.memberName(key, fileContent);
 		this.initializer = classProperty.getValue().isPresent() ? new AbstractExpression(sourceFolder, filePath, classProperty.getValue().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations) : null;
 		ISwc4jAst scopeNode = getScopeNode(classProperty);
 		int startOffset = scopeNode.getSpan().getStart();

@@ -264,12 +264,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processAnonymousClassesReplacedWithLambdas();
 		checkForOperationSignatureChanges(this.removedOperations, this.addedOperations);
 		checkForNestedOperationsMovedToContainer();
-		if(removedNestedOperations.size() > 0 || addedNestedOperations.size() > 0) {
-			checkForOperationSignatureChanges(this.removedNestedOperations, this.addedNestedOperations);
-			if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
-				checkForOperationSignatureChanges(this.removedNestedOperations, this.addedOperations);
-			}
-		}
+		checkForNestedOperationSignatureChanges();
 		checkForTestsParameterizedThroughHelper(this.removedOperations);
 		processAttributes();
 		checkForAttributeChanges();

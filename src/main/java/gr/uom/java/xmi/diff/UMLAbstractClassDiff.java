@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -581,6 +582,45 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+	}
+
+	//matching two nested operations adds their unmatched nested operations to removedNestedOperations and addedNestedOperations (processNestedOperations),
+	//so the signature changes are checked on copies of the lists, and the nested operations found meanwhile are checked in the next round,
+	//i.e., function restore() nested in function mockGlobal() nested in the arrow function createSchemaFetch
+	protected void checkForNestedOperationSignatureChanges() throws RefactoringMinerTimedOutException {
+		if(removedNestedOperations.isEmpty() && addedNestedOperations.isEmpty()) {
+			return;
+		}
+		List<List<UMLOperation>> foundNestedOperations = checkForNestedOperationSignatureChanges(new ArrayList<>(removedNestedOperations), new ArrayList<>(addedNestedOperations));
+		if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
+			checkForNestedOperationSignatureChanges(new ArrayList<>(removedNestedOperations), addedOperations);
+		}
+		while(foundNestedOperations.get(0).size() > 0 && foundNestedOperations.get(1).size() > 0) {
+			foundNestedOperations = checkForNestedOperationSignatureChanges(foundNestedOperations.get(0), foundNestedOperations.get(1));
+		}
+	}
+
+	//removedOperations is a copy of (some of) removedNestedOperations, addedOperations a copy of (some of) addedNestedOperations or the addedOperations of the class,
+	//returns the removed and added nested operations found while matching
+	private List<List<UMLOperation>> checkForNestedOperationSignatureChanges(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
+		Set<UMLOperation> removedBefore = identitySet(removedOperations);
+		Set<UMLOperation> addedBefore = identitySet(addedOperations);
+		int removedNestedSize = removedNestedOperations.size();
+		int addedNestedSize = addedNestedOperations.size();
+		checkForOperationSignatureChanges(removedOperations, addedOperations);
+		List<UMLOperation> foundRemoved = new ArrayList<>(removedNestedOperations.subList(removedNestedSize, removedNestedOperations.size()));
+		List<UMLOperation> foundAdded = new ArrayList<>(addedNestedOperations.subList(addedNestedSize, addedNestedOperations.size()));
+		Set<UMLOperation> removedAfter = identitySet(removedOperations);
+		Set<UMLOperation> addedAfter = identitySet(addedOperations);
+		removedNestedOperations.removeIf(operation -> removedBefore.contains(operation) && !removedAfter.contains(operation));
+		addedNestedOperations.removeIf(operation -> addedBefore.contains(operation) && !addedAfter.contains(operation));
+		return List.of(foundRemoved, foundAdded);
+	}
+
+	private static Set<UMLOperation> identitySet(List<UMLOperation> operations) {
+		Set<UMLOperation> set = Collections.newSetFromMap(new IdentityHashMap<>());
+		set.addAll(operations);
+		return set;
 	}
 
 	private void processNestedOperations(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {

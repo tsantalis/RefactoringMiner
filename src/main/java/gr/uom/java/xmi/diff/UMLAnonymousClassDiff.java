@@ -35,12 +35,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		checkForOperationSignatureChanges();
 		//non-conservative, can find renames
 		checkForOperationSignatureChanges(this.removedOperations, this.addedOperations);
-		if(removedNestedOperations.size() > 0 || addedNestedOperations.size() > 0) {
-			checkForOperationSignatureChanges(this.removedNestedOperations, this.addedNestedOperations);
-			if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
-				checkForOperationSignatureChanges(this.removedNestedOperations, this.addedOperations);
-			}
-		}
+		checkForNestedOperationSignatureChanges();
 		processAttributes();
 		checkForAttributeChanges();
 		checkForInlinedOperations();

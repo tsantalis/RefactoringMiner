@@ -9884,6 +9884,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter average_across_batch in method public sequence_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, stop_gradient_to_label, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter average_across_timesteps in method public sequence_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, stop_gradient_to_label, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter stop_gradient_to_label in method public sequence_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, stop_gradient_to_label, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter sum_over_batch in method public sequence_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, stop_gradient_to_label, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter sum_over_timesteps in method public sequence_softmax_cross_entropy(labels, logits, sequence_length, average_across_batch, average_across_timesteps, sum_over_batch, sum_over_timesteps, time_major, stop_gradient_to_label, name) from class losses.mle_losses.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

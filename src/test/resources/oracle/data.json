@@ -81366,6 +81366,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Add Method Modifier",
+        "description": "Add Method Modifier static in method private configureBindAddress(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Method Modifier",
+        "description": "Add Method Modifier static in method private configureServerSocket(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, property String, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type protocol : ProtocolConfiguration to introspector : Introspector in method private configureBindAddress(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type protocol : ProtocolConfiguration to introspector : Introspector in method private configureServerSocket(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, property String, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter protocol : ProtocolConfiguration to introspector : Introspector in method private configureBindAddress(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter protocol : ProtocolConfiguration to introspector : Introspector in method private configureServerSocket(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, property String, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3908
 }, {

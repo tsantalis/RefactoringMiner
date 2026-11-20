@@ -35,6 +35,7 @@ import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.Constants;
+import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.JavaFileProcessor;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
@@ -5004,8 +5005,22 @@ public abstract class UMLAbstractClassDiff {
 					removedOperation.testMethodCheck(addedOperation)) {
 				mapperSet.add(operationBodyMapper);
 			}
-			else if(absoluteDifferenceInPosition == 0 && !removedOperation.isConstructor() && !addedOperation.isConstructor() &&
-					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
+			else if(!removedOperation.isConstructor() && !addedOperation.isConstructor() &&
+					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0 &&
+					(absoluteDifferenceInPosition == 0 ||
+					//the only operation with this name before and after, whose parameters changed and whose body grew around most of its identical statements
+					(uniqueOperationName(removedOperation, addedOperation) && mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
+							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+							compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)))) {
+				mapperSet.add(operationBodyMapper);
+			}
+			//the only operation with this name before and after, with the same declared return type, whose parameters changed and which delegated to another removed operation,
+			//whose logic replaced the delegation, i.e., getCurrentResult(saveAsLastResult) { return this.maskResult(this.getCurrentFullResult(saveAsLastResult)); } -> getCurrentResult() {...}
+			else if(mappings == 0 && !removedOperation.isConstructor() && !addedOperation.isConstructor() &&
+					removedOperation.getName().equals(addedOperation.getName()) && uniqueOperationName(removedOperation, addedOperation) &&
+					delegatesToAnotherRemovedOperation(removedOperation) &&
+					sameDeclaredReturnType(removedOperation, addedOperation) &&
+					!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation()) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappings > 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() &&
@@ -5265,6 +5280,19 @@ public abstract class UMLAbstractClassDiff {
 				mapperSet.add(operationBodyMapper);
 			}
 		}
+	}
+
+	private boolean uniqueOperationName(UMLOperation removedOperation, UMLOperation addedOperation) {
+		return originalClass.getOperations().stream().filter(o -> o.getName().equals(removedOperation.getName())).count() == 1 &&
+				nextClass.getOperations().stream().filter(o -> o.getName().equals(addedOperation.getName())).count() == 1;
+	}
+
+	private static boolean sameDeclaredReturnType(UMLOperation removedOperation, UMLOperation addedOperation) {
+		UMLParameter returnParameter1 = removedOperation.getReturnParameter();
+		UMLParameter returnParameter2 = addedOperation.getReturnParameter();
+		return returnParameter1 != null && returnParameter2 != null &&
+				returnParameter1.getType() != null && !(returnParameter1.getType() instanceof InferredType) &&
+				removedOperation.equalReturnParameter(addedOperation);
 	}
 
 	private boolean relativePositionCheck(int differenceInPosition, int absoluteDifferenceInPosition) {

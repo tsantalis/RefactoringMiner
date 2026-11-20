@@ -3430,6 +3430,13 @@ public class StringBasedHeuristics {
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
+				//a field and a local variable assigned the opposite boolean literal, i.e., this.waitForOwnResult = false; and synchronouslyEmitted = true;
+				//two local variables can be renamed with the opposite meaning, i.e., boolean useDt = false; and boolean anchorPresent = true;
+				else if(replacement.getType().equals(ReplacementType.BOOLEAN_LITERAL) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()) &&
+						variableName1.strip().startsWith(LANG1.THIS_DOT) != variableName2.strip().startsWith(LANG2.THIS_DOT))
+					rightHandSideReplacement = true;
 				//an assignment of a boolean literal and the declaration of another variable, i.e., major = true; and var options = me.options;
 				//two assignments or two declarations can migrate a flag to an enum, i.e., params.use_mmap = false; and params.load_mode = LLAMA_LOAD_MODE_NONE;
 				else if(replacement.getType().equals(ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE) &&

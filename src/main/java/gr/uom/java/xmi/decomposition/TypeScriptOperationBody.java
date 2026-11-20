@@ -731,17 +731,8 @@ public class TypeScriptOperationBody extends OperationBody {
 			processTypeElements(sourceFolder, filePath, fileContent, umlClass, typeElements);
 			List<Swc4jAstTsExprWithTypeArgs> interfaces = interfaceDecl.getExtends();
 			for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
-				ISwc4jAstExpr expr = inter.getExpr();
-				if(expr instanceof Swc4jAstIdent ident) {
-					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
-					if(inter.getTypeArgs().isPresent()) {
-						Swc4jAstTsTypeParamInstantiation instantiation = inter.getTypeArgs().get();
-						List<ISwc4jAstTsType> typeParams = instantiation.getParams();
-						for(ISwc4jAstTsType typeParam : typeParams) {
-							UMLType umlTypeParam = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeParam, 0);
-							type.addTypeArgument(umlTypeParam);
-						}
-					}
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, inter);
+				if(type != null) {
 					umlClass.addImplementedInterface(type);
 				}
 			}
@@ -1490,9 +1481,8 @@ public class TypeScriptOperationBody extends OperationBody {
 		}
 		List<Swc4jAstTsExprWithTypeArgs> interfaces = clazz.getImplements();
 		for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
-			ISwc4jAstExpr expr = inter.getExpr();
-			if(expr instanceof Swc4jAstIdent ident) {
-				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, inter);
+			if(type != null) {
 				umlClass.addImplementedInterface(type);
 			}
 		}

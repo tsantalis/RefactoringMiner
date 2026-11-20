@@ -60,6 +60,7 @@ import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsArrayType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConditionalType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsExprWithTypeArgs;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsFnType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsImportType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexedAccessType;
@@ -651,6 +652,21 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		UMLType umlType = UMLType.extractTypeObject(type.getSym(), PathFileUtils.getLang(filePath));
 		umlType.locationInfo = new LocationInfo(sourceFolder, filePath, type, CodeElementType.TYPE, fileContent);
 		umlType.arrayDimension += extraDimensions;
+		return umlType;
+	}
+
+	//the type in an implements or interface extends clause, i.e., Subscribable<T> in class X implements Subscribable<T>, located on the whole type with its type arguments
+	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, Swc4jAstTsExprWithTypeArgs type) {
+		if(!(type.getExpr() instanceof Swc4jAstIdent ident)) {
+			return null;
+		}
+		UMLType umlType = UMLType.extractTypeObject(ident.getSym(), PathFileUtils.getLang(filePath));
+		if(type.getTypeArgs().isPresent()) {
+			for(ISwc4jAstTsType typeArg : type.getTypeArgs().get().getParams()) {
+				umlType.addTypeArgument(extractTypeObject(sourceFolder, filePath, fileContent, typeArg, 0));
+			}
+		}
+		umlType.locationInfo = new LocationInfo(sourceFolder, filePath, type, CodeElementType.TYPE, fileContent);
 		return umlType;
 	}
 

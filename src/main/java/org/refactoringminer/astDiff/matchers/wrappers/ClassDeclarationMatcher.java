@@ -1479,12 +1479,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
                     int index1 = parent1.getChildPosition(srcSubTree);
                     int index2 = parent2.getChildPosition(dstSubTree);
-                    if(parent1.getChildren().size() > index1+1 && parent1.getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
-                            parent2.getChildren().size() > index2+1 && parent2.getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
-                        Tree t1 = parent1.getChild(index1+1);
-                        Tree t2 = parent2.getChild(index2+1);
-                        mappingStore.addMapping(t1,t2);
-                    }
+                    matchFollowingCommas(parent1, parent2, srcSubTree, dstSubTree, mappingStore);
                     //the identical access specifier and virtual keyword before the base type, i.e., public in public Base and public virtual Base
                     for(String keyword : new String[] {LANG1.ACCESS_SPECIFIER, LANG1.VIRTUAL_KEYWORD}) {
                         Tree t1 = precedingInBaseSpecifier(parent1, index1, keyword);
@@ -1511,9 +1506,19 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             if (implement != null) {
                 mappingStore.addMapping(implement.first,implement.second);
             }
+            matchFollowingCommas(parent1, parent2, srcSubTree, dstSubTree, mappingStore);
             if(parent1.getParent().getType().name.equals(LANG1.CLASS_HERITAGE) && parent2.getParent().getType().name.equals(LANG2.CLASS_HERITAGE)) {
                 mappingStore.addMapping(parent1.getParent(), parent2.getParent());
             }
+        }
+    }
+    //the comma after a common type in a list of types, i.e., the comma after A in implements A, B
+    private void matchFollowingCommas(Tree parent1, Tree parent2, Tree child1, Tree child2, ExtendedMultiMappingStore mappingStore) {
+        int index1 = parent1.getChildPosition(child1);
+        int index2 = parent2.getChildPosition(child2);
+        if(index1 >= 0 && index2 >= 0 && parent1.getChildren().size() > index1+1 && parent1.getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                parent2.getChildren().size() > index2+1 && parent2.getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+            mappingStore.addMapping(parent1.getChild(index1+1), parent2.getChild(index2+1));
         }
     }
     //the node of the type before the base type in the same base specifier of the base class clause, i.e., public in public virtual Base

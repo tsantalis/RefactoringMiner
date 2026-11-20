@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -580,6 +581,45 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+	}
+
+	//matching two nested operations adds their unmatched nested operations to removedNestedOperations and addedNestedOperations (processNestedOperations),
+	//so the signature changes are checked on copies of the lists, and the nested operations found meanwhile are checked in the next round,
+	//i.e., function restore() nested in function mockGlobal() nested in the arrow function createSchemaFetch
+	protected void checkForNestedOperationSignatureChanges() throws RefactoringMinerTimedOutException {
+		if(removedNestedOperations.isEmpty() && addedNestedOperations.isEmpty()) {
+			return;
+		}
+		List<List<UMLOperation>> foundNestedOperations = checkForNestedOperationSignatureChanges(new ArrayList<>(removedNestedOperations), new ArrayList<>(addedNestedOperations));
+		if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
+			checkForNestedOperationSignatureChanges(new ArrayList<>(removedNestedOperations), addedOperations);
+		}
+		while(foundNestedOperations.get(0).size() > 0 && foundNestedOperations.get(1).size() > 0) {
+			foundNestedOperations = checkForNestedOperationSignatureChanges(foundNestedOperations.get(0), foundNestedOperations.get(1));
+		}
+	}
+
+	//removedOperations is a copy of (some of) removedNestedOperations, addedOperations a copy of (some of) addedNestedOperations or the addedOperations of the class,
+	//returns the removed and added nested operations found while matching
+	private List<List<UMLOperation>> checkForNestedOperationSignatureChanges(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
+		Set<UMLOperation> removedBefore = identitySet(removedOperations);
+		Set<UMLOperation> addedBefore = identitySet(addedOperations);
+		int removedNestedSize = removedNestedOperations.size();
+		int addedNestedSize = addedNestedOperations.size();
+		checkForOperationSignatureChanges(removedOperations, addedOperations);
+		List<UMLOperation> foundRemoved = new ArrayList<>(removedNestedOperations.subList(removedNestedSize, removedNestedOperations.size()));
+		List<UMLOperation> foundAdded = new ArrayList<>(addedNestedOperations.subList(addedNestedSize, addedNestedOperations.size()));
+		Set<UMLOperation> removedAfter = identitySet(removedOperations);
+		Set<UMLOperation> addedAfter = identitySet(addedOperations);
+		removedNestedOperations.removeIf(operation -> removedBefore.contains(operation) && !removedAfter.contains(operation));
+		addedNestedOperations.removeIf(operation -> addedBefore.contains(operation) && !addedAfter.contains(operation));
+		return List.of(foundRemoved, foundAdded);
+	}
+
+	private static Set<UMLOperation> identitySet(List<UMLOperation> operations) {
+		Set<UMLOperation> set = Collections.newSetFromMap(new IdentityHashMap<>());
+		set.addAll(operations);
+		return set;
 	}
 
 	private void processNestedOperations(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
@@ -3221,21 +3261,15 @@ public abstract class UMLAbstractClassDiff {
 		int initialNumberOfAddedOperations = addedOperations.size();
 		if(removedOperations.size() <= addedOperations.size()) {
 			Set<VariableDeclarationContainer> removedOperationsToBeRemoved = new LinkedHashSet<>();
-			for(Iterator<UMLOperation> removedOperationIterator = new ArrayList<>(removedOperations).iterator(); removedOperationIterator.hasNext();) {
+			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 				UMLOperation removedOperation = removedOperationIterator.next();
-				if(!removedOperations.contains(removedOperation)) {
-					continue;
-				}
 				if(isCommentedOut(removedOperation)) {
 					continue;
 				}
 				double removedOperationBuilderStatementRatio = removedOperation.builderStatementRatio();
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
-				for(Iterator<UMLOperation> addedOperationIterator = new ArrayList<>(addedOperations).iterator(); addedOperationIterator.hasNext();) {
+				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
-					if(!addedOperations.contains(addedOperation)) {
-						continue;
-					}
 					if((removedOperation.hasTestAnnotation() && addedOperation.getAnnotations().isEmpty()) ||
 							(addedOperation.hasTestAnnotation() && removedOperation.getAnnotations().isEmpty())) {
 						// exclude case of JUnit 3 to JUnit 4 migration
@@ -3419,7 +3453,7 @@ public abstract class UMLAbstractClassDiff {
 							checkForParameterizedTest(removedOperations, addedOperations, firstMapper.getOperation2(), mapperSet,
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
-										removedOperations.remove(mapper.getOperation1());
+										removedOperationIterator.remove();
 									},
 									() -> addedOperations.remove(firstMapper.getOperation2()));
 						}
@@ -3427,7 +3461,7 @@ public abstract class UMLAbstractClassDiff {
 							checkForParameterizedTest(removedOperations, addedOperations, unreadableValuesMapper.getOperation2(), new TreeSet<>(List.of(unreadableValuesMapper)),
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
-										removedOperations.remove(mapper.getOperation1());
+										removedOperationIterator.remove();
 									},
 									() -> addedOperations.remove(unreadableValuesMapper.getOperation2()));
 						}
@@ -3445,7 +3479,7 @@ public abstract class UMLAbstractClassDiff {
 								removedOperation = bestMapper.getOperation1();
 								UMLOperation addedOperation = bestMapper.getOperation2();
 								addedOperations.remove(addedOperation);
-								removedOperations.remove(removedOperation);
+								removedOperationIterator.remove();
 								if(!removedOperation.getName().equals(addedOperation.getName()) &&
 										!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
 									Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
@@ -3507,7 +3541,7 @@ public abstract class UMLAbstractClassDiff {
 							}
 						}
 						if(candidateMethodMerges.size() > 0 || candidateMethodSplits.size() > 0) {
-							removedOperations.remove(removedOperation);
+							removedOperationIterator.remove();
 						}
 						addedOperations.removeAll(addedOperationsToBeRemoved);
 					}
@@ -3517,18 +3551,12 @@ public abstract class UMLAbstractClassDiff {
 		}
 		else {
 			Set<VariableDeclarationContainer> addedOperationsToBeRemoved = new LinkedHashSet<>();
-			for(Iterator<UMLOperation> addedOperationIterator = new ArrayList<>(addedOperations).iterator(); addedOperationIterator.hasNext();) {
+			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 				UMLOperation addedOperation = addedOperationIterator.next();
-				if(!addedOperations.contains(addedOperation)) {
-					continue;
-				}
 				double addedOperationBuilderStatementRatio = addedOperation.builderStatementRatio();
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
-				for(Iterator<UMLOperation> removedOperationIterator = new ArrayList<>(removedOperations).iterator(); removedOperationIterator.hasNext();) {
+				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
-					if(!removedOperations.contains(removedOperation)) {
-						continue;
-					}
 					if((removedOperation.hasTestAnnotation() && addedOperation.getAnnotations().isEmpty()) ||
 							(addedOperation.hasTestAnnotation() && removedOperation.getAnnotations().isEmpty())) {
 						// exclude case of JUnit 3 to JUnit 4 migration
@@ -3619,7 +3647,6 @@ public abstract class UMLAbstractClassDiff {
 						}
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
-						final UMLOperation currentAddedOperation = addedOperation;
 						List<List<String>> parameterValues = getParameterValues(addedOperation);
 						UMLOperationBodyMapper unreadableValuesMapper = parameterValues.isEmpty() ? parameterizedWithUnreadableValues(mapperSet) : null;
 						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation() && !firstMapper.getOperation1().isHelperWithParameters() &&
@@ -3630,7 +3657,7 @@ public abstract class UMLAbstractClassDiff {
 										UMLOperation removedOperation = mapper.getOperation1();
 										removedOperations.remove(removedOperation);
 									},
-									() -> addedOperations.remove(currentAddedOperation));
+									() -> addedOperationIterator.remove());
 						}
 						else if(unreadableValuesMapper != null) {
 							checkForParameterizedTest(removedOperations, addedOperations, addedOperation, new TreeSet<>(List.of(unreadableValuesMapper)),
@@ -3639,7 +3666,7 @@ public abstract class UMLAbstractClassDiff {
 										UMLOperation removedOperation = mapper.getOperation1();
 										removedOperations.remove(removedOperation);
 									},
-									() -> addedOperations.remove(currentAddedOperation));
+									() -> addedOperationIterator.remove());
 						}
 						else {
 							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
@@ -3649,11 +3676,8 @@ public abstract class UMLAbstractClassDiff {
 								for(MethodInvocationReplacement replacement : getConsistentMethodInvocationRenamesInModel().keySet()) {
 									UMLOperationBodyMapper mapper = getConsistentMethodInvocationRenamesInModel().get(replacement);
 									if(replacement.getInvokedOperationBefore().matchesOperation(bestMapper.getContainer1(), mapper.getContainer1(), mapper.getClassDiff(), modelDiff)) {
-										for(Iterator<UMLOperation> addedOperationIterator2 = new ArrayList<>(addedOperations).iterator(); addedOperationIterator2.hasNext();) {
+										for(Iterator<UMLOperation> addedOperationIterator2 = addedOperations.iterator(); addedOperationIterator2.hasNext();) {
 											UMLOperation addedOperation2 = addedOperationIterator2.next();
-											if(!addedOperations.contains(addedOperation2)) {
-												continue;
-											}
 											if(replacement.getInvokedOperationAfter().matchesOperation(addedOperation2, mapper.getContainer2(), mapper.getClassDiff(), modelDiff)) {
 												int maxDifferenceInPosition;
 												if(bestMapper.getContainer1().hasTestAnnotation() && addedOperation2.hasTestAnnotation()) {
@@ -3683,7 +3707,7 @@ public abstract class UMLAbstractClassDiff {
 									addedOperationsToBeRemoved.add(addedOperation);
 								}
 								else {
-									addedOperations.remove(addedOperation);
+									addedOperationIterator.remove();
 								}
 								removedOperations.remove(removedOperation);
 								if(!removedOperation.getName().equals(addedOperation.getName()) &&
@@ -3721,7 +3745,7 @@ public abstract class UMLAbstractClassDiff {
 							}
 						}
 						if(candidateMethodMerges.size() > 0 || candidateMethodSplits.size() > 0) {
-							addedOperations.remove(addedOperation);
+							addedOperationIterator.remove();
 						}
 						removedOperations.removeAll(removedOperationsToBeRemoved);
 					}
@@ -3730,26 +3754,20 @@ public abstract class UMLAbstractClassDiff {
 			addedOperations.removeAll(addedOperationsToBeRemoved);
 		}
 		//infer signature changes for delegate methods calling methods in the operationDiffList
-		for(Iterator<UMLOperation> removedOperationIterator = new ArrayList<>(removedOperations).iterator(); removedOperationIterator.hasNext();) {
+		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 			UMLOperation removedOperation = removedOperationIterator.next();
-			if(!removedOperations.contains(removedOperation)) {
-				continue;
-			}
 			AbstractCall removedOperationInvocation = removedOperation.isDelegate();
 			if(removedOperationInvocation != null) {
-				for(Iterator<UMLOperation> addedOperationIterator = new ArrayList<>(addedOperations).iterator(); addedOperationIterator.hasNext();) {
+				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
-					if(!addedOperations.contains(addedOperation)) {
-						continue;
-					}
 					AbstractCall addedOperationInvocation = addedOperation.isDelegate();
 					if(addedOperationInvocation != null) {
 						for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 							if(removedOperationInvocation.matchesOperation(mapper.getContainer1(), removedOperation, this, modelDiff) &&
 									addedOperationInvocation.matchesOperation(mapper.getContainer2(), addedOperation, this, modelDiff) &&
 									removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList())) {
-								addedOperations.remove(addedOperation);
-								removedOperations.remove(removedOperation);
+								addedOperationIterator.remove();
+								removedOperationIterator.remove();
 
 								UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, this);
 								refactorings.addAll(operationSignatureDiff.getRefactorings());

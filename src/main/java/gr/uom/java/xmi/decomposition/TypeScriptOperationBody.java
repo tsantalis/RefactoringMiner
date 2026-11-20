@@ -110,6 +110,7 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsEnumDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsModuleDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstUsingDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstWhileStmt;
@@ -350,7 +351,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			parent.addStatement(child);
 			ISwc4jAstForHead forHead = forInStatement.getLeft();
 			if(forHead instanceof Swc4jAstVarDecl varDecl) {
-				processForHead(sourceFolder, filePath, fileContent, child, varDecl, typeDeclarations);
+				processForHead(sourceFolder, filePath, fileContent, child, varDecl.getDecls(), typeDeclarations);
 			}
 			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, forInStatement.getRight(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			child.addExpression(abstractExpression);
@@ -365,7 +366,11 @@ public class TypeScriptOperationBody extends OperationBody {
 			parent.addStatement(child);
 			ISwc4jAstForHead forHead = forOfStatement.getLeft();
 			if(forHead instanceof Swc4jAstVarDecl varDecl) {
-				processForHead(sourceFolder, filePath, fileContent, child, varDecl, typeDeclarations);
+				processForHead(sourceFolder, filePath, fileContent, child, varDecl.getDecls(), typeDeclarations);
+			}
+			//for (using x of resources) and for (await using x of resources)
+			else if(forHead instanceof Swc4jAstUsingDecl usingDecl) {
+				processForHead(sourceFolder, filePath, fileContent, child, usingDecl.getDecls(), typeDeclarations);
 			}
 			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, forOfStatement.getRight(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			child.addExpression(abstractExpression);
@@ -381,7 +386,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			Optional<ISwc4jAstVarDeclOrExpr> initializer = forStatement.getInit();
 			if(initializer.isPresent()) {
 				if(initializer.get() instanceof Swc4jAstVarDecl varDecl) {
-					processForHead(sourceFolder, filePath, fileContent, child, varDecl, typeDeclarations);
+					processForHead(sourceFolder, filePath, fileContent, child, varDecl.getDecls(), typeDeclarations);
 				}
 				else if(initializer.get() instanceof ISwc4jAstExpr expr) {
 					AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.FOR_STATEMENT_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations);
@@ -678,6 +683,14 @@ public class TypeScriptOperationBody extends OperationBody {
 				}
 			}
 			StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+			addModuleAttribute(container, child);
+		}
+		//using x = ...; and await using x = ...; dispose the value at the end of the scope
+		else if(statement instanceof Swc4jAstUsingDecl usingDecl) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, usingDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
@@ -1771,8 +1784,8 @@ public class TypeScriptOperationBody extends OperationBody {
 	}
 
 	private void processForHead(String sourceFolder, String filePath, String fileContent,
-			CompositeStatementObject child, Swc4jAstVarDecl varDecl, List<UMLClass> typeDeclarations) {
-		for(Swc4jAstVarDeclarator variableDeclaration : varDecl.getDecls()) {
+			CompositeStatementObject child, List<Swc4jAstVarDeclarator> declarators, List<UMLClass> typeDeclarations) {
+		for(Swc4jAstVarDeclarator variableDeclaration : declarators) {
 			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(variableDeclaration.getName());
 			if(identifiers.size() == 1) {
 				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, variableDeclaration, container, activeVariableDeclarations, fileContent, typeDeclarations);

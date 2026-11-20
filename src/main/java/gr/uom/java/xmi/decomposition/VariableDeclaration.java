@@ -114,6 +114,7 @@ import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsEnumDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstUsingDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParamProp;
@@ -989,7 +990,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	private static CodeElementType extractVariableDeclarationType(Swc4jAstVarDeclarator variableDeclaration) {
 		//TODO handle field declaration and parameter declaration cases
-		if(variableDeclaration.getParent() instanceof Swc4jAstVarDecl parent) {
+		ISwc4jAst parent = variableDeclaration.getParent();
+		if(parent instanceof Swc4jAstVarDecl || parent instanceof Swc4jAstUsingDecl) {
 			if(parent instanceof ISwc4jAstForHead) {
 				return CodeElementType.VARIABLE_DECLARATION_EXPRESSION;
 			}
@@ -1478,7 +1480,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private ISwc4jAst getScopeNode(ISwc4jAst node) {
 		ISwc4jAst parent = node.getParent();
 		while(parent != null) {
-			if(parent instanceof Swc4jAstVarDecl) {
+			if(parent instanceof Swc4jAstVarDecl || parent instanceof Swc4jAstUsingDecl) {
 				return parent.getParent();
 			}
 			else if(parent instanceof Swc4jAstFunction) {

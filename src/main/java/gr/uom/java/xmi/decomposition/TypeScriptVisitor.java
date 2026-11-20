@@ -153,7 +153,10 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 	}
 
 	public Swc4jAstVisitorResponse visitThisExpr(Swc4jAstThisExpr node) {
-		if(node.getParent() instanceof Swc4jAstMemberExpr) {
+		//the callee of a call is not a variable, i.e., this.getLastError in this.getLastError(), like in Java
+		boolean callee = node.getParent() instanceof Swc4jAstMemberExpr memberExpr &&
+				memberExpr.getParent() instanceof Swc4jAstCallExpr call && call.getCallee() == memberExpr;
+		if(node.getParent() instanceof Swc4jAstMemberExpr && !callee) {
 			LeafExpression varDeclarator = new LeafExpression(sourceFolder, filePath, node.getParent(), CodeElementType.SIMPLE_NAME, container, fileContent);
 			variables.add(varDeclarator);
 		}

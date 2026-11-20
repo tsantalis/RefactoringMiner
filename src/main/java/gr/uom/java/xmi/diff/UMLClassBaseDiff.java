@@ -317,7 +317,20 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								if(!containsMapperForOperation1(nestedOperation1)) {
 									//check for moved code within the body of React Function Component
 									UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(nestedOperation1, nestedOperation2, this);
-									if(moveCodeMapper.mappingsWithoutBlocks() > 0 && moveCodeMapper.allMappingsAreExactMatches()) {
+									//the statements of the function component already matched with a method of the class, i.e., the handleStop callback, are not moved code
+									int invalidMappings = 0;
+									for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+										if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+											continue;
+										}
+										for(UMLOperationBodyMapper otherMapper : operationBodyMapperList) {
+											if(otherMapper.alreadyMatched2(mapping.getFragment2())) {
+												invalidMappings++;
+												break;
+											}
+										}
+									}
+									if(moveCodeMapper.mappingsWithoutBlocks() > 0 && moveCodeMapper.allMappingsAreExactMatches() && moveCodeMapper.mappingsWithoutBlocks() > invalidMappings) {
 										MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.REACT_COMPONENT_MIGRATION);
 										refactorings.add(ref);
 									}

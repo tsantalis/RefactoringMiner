@@ -315,6 +315,45 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							checkForOperationSignatureChanges(new ArrayList<>(nestedClass1.getOperations()), new ArrayList<>(nestedOperation2.getNestedOperations()));
 							for(UMLOperation nestedOperation1 : nestedClass1.getOperations()) {
 								if(!containsMapperForOperation1(nestedOperation1)) {
+									//the body of a lifecycle method moved to the callbacks of the effects of the React Function Component,
+									//i.e., componentDidMount() { this.fetchGeniusSong(); } -> useEffect(() => { fetchGeniusSong(); }, []);
+									//a lifecycle method can be split into several effects, so each statement goes to the effect with the most mappings,
+									//with at least as many exact mappings as the others, i.e., window.addEventListener('resize', this.resizeHandler, false); and this.resize();
+									//moved together to useEffect(() => { window.addEventListener('resize', onResize, false); resize(); ... }, [resize, onResize]);
+									if(REACT_LIFECYCLE_METHODS.contains(nestedOperation1.getName())) {
+										List<UMLOperationBodyMapper> effectMappers = new ArrayList<>();
+										for(LambdaExpressionObject effectCallback : effectCallbacks(nestedOperation2)) {
+											UMLOperationBodyMapper effectMapper = new UMLOperationBodyMapper(nestedOperation1, effectCallback, this);
+											int mappings = effectMapper.mappingsWithoutBlocks();
+											int exactMatches = effectMapper.exactMatches();
+											if(mappings > 0 && exactMatches > 0 && exactMatches >= mappings - exactMatches) {
+												effectMappers.add(effectMapper);
+											}
+										}
+										effectMappers.sort((m1, m2) -> Integer.compare(m2.mappingsWithoutBlocks(), m1.mappingsWithoutBlocks()));
+										Set<AbstractCodeFragment> movedStatements = new LinkedHashSet<>();
+										boolean movedToEffect = false;
+										for(UMLOperationBodyMapper effectMapper : effectMappers) {
+											boolean alreadyMoved = false;
+											for(AbstractCodeMapping mapping : effectMapper.getMappings()) {
+												if(movedStatements.contains(mapping.getFragment1())) {
+													alreadyMoved = true;
+													break;
+												}
+											}
+											if(!alreadyMoved) {
+												for(AbstractCodeMapping mapping : effectMapper.getMappings()) {
+													movedStatements.add(mapping.getFragment1());
+												}
+												MoveCodeRefactoring ref = new MoveCodeRefactoring(nestedOperation1, nestedOperation2, effectMapper, Type.REACT_COMPONENT_MIGRATION);
+												refactorings.add(ref);
+												movedToEffect = true;
+											}
+										}
+										if(movedToEffect) {
+											continue;
+										}
+									}
 									//check for moved code within the body of React Function Component
 									UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(nestedOperation1, nestedOperation2, this);
 									//the statements of the function component already matched with a method of the class, i.e., the handleStop callback, are not moved code
@@ -1660,6 +1699,39 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				return removedAttribute;
 		}
 		return null;
+	}
+
+	private static final Set<String> REACT_LIFECYCLE_METHODS = Set.of("componentDidMount", "componentDidUpdate", "componentWillUnmount",
+			"componentWillReceiveProps", "UNSAFE_componentWillReceiveProps", "componentWillMount", "UNSAFE_componentWillMount",
+			"componentWillUpdate", "UNSAFE_componentWillUpdate");
+
+	//the callbacks of useEffect(() => {...}, [dependencies]) and useLayoutEffect in the body of a React Function Component,
+	//with the cleanup functions they return, i.e., return () => { window.removeEventListener('resize', onResize, false); };
+	private static List<LambdaExpressionObject> effectCallbacks(UMLOperation component) {
+		List<LambdaExpressionObject> callbacks = new ArrayList<>();
+		if(component.getBody() == null) {
+			return callbacks;
+		}
+		for(AbstractCodeFragment statement : component.getBody().getCompositeStatement().getLeaves()) {
+			AbstractCall call = statement.invocationCoveringEntireFragment();
+			if(call != null && (call.getName().equals("useEffect") || call.getName().equals("useLayoutEffect")) && call.arguments().size() > 0) {
+				for(LambdaExpressionObject lambda : statement.getLambdas()) {
+					if(lambda.getBody() != null && call.arguments().get(0).equals(lambda.getString())) {
+						callbacks.add(lambda);
+						for(AbstractCodeFragment effectStatement : lambda.getBody().getCompositeStatement().getLeaves()) {
+							if(effectStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+								for(LambdaExpressionObject cleanup : effectStatement.getLambdas()) {
+									if(cleanup.getBody() != null) {
+										callbacks.add(cleanup);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return callbacks;
 	}
 
 	private void processInheritance() {

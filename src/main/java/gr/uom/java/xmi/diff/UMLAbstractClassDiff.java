@@ -1367,6 +1367,25 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+		//the extraction to a function added in the module of the class, i.e., handleIncrementalResult(result, lastDiff) called in QueryInfo.markResult
+		if(modelDiff != null && LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+			String moduleName = nextClass.getPackageName() + ".__module__";
+			UMLAbstractClass module2 = modelDiff.findClassInChildModel(moduleName);
+			UMLAbstractClass module1 = modelDiff.findClassInParentModel(originalClass.getPackageName() + ".__module__");
+			if(module2 != null && !module2.equals(nextClass)) {
+				for(AbstractCall addedOperationInvocation : addedOperationInvocations) {
+					if(addedOperationInvocation.getExpression() == null && !intersection.contains(addedOperationInvocation) && !matchedOperationInvocations.contains(addedOperationInvocation)) {
+						for(UMLOperation operation : module2.getOperations()) {
+							boolean existsInParentModule = module1 != null && module1.getOperations().stream().anyMatch(o -> o.getName().equals(operation.getName()));
+							if(!existsInParentModule && operation.getBody() != null && addedOperationInvocation.matchesOperation(operation, addedOperation, this, modelDiff)) {
+								matchingAddedOperations.add(operation);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && matchingAddedOperations.size() > 0) {
 			return true;
 		}

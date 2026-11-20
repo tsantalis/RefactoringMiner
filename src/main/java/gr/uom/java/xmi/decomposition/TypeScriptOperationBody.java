@@ -599,6 +599,7 @@ public class TypeScriptOperationBody extends OperationBody {
 							parent.addStatement(child);
 							addStatementInVariableScopes(child);
 							addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+							addModuleAttribute(container, child);
 						}
 						return;
 					}
@@ -615,6 +616,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						parent.addStatement(child);
 						addStatementInVariableScopes(child);
 						addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+						addModuleAttribute(container, child);
 						return;
 					}
 					else if(declarator.getInit().get() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr &&
@@ -679,20 +681,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
-			if(container instanceof ModuleContainer && child.getVariableDeclarations().size() > 0) {
-				VariableDeclaration vd = child.getVariableDeclarations().get(0);
-				vd.setAttribute(true);
-				UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), vd.getLocationInfo(), container.getName());
-				attribute.setVariableDeclaration(vd);
-				attribute.setVisibility(Visibility.PRIVATE);
-				for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
-					if(attribute.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
-						attribute.addAnonymousClass(anonymousClass);
-						anonymousClass.addParentContainer(attribute);
-					}
-				}
-				((ModuleContainer)container).addNestedAttribute(attribute);
-			}
+			addModuleAttribute(container, child);
 		}
 		else if(statement instanceof Swc4jAstFnDecl functionDecl) {
 			String className = container.getClassName();
@@ -1288,6 +1277,25 @@ public class TypeScriptOperationBody extends OperationBody {
 			container = lambda.getOwner();
 		}
 		return container.getComments();
+	}
+
+	//a variable declared in the module is an attribute of the module, also when its object literal initializer is an object class,
+	//i.e., const uninitialized: ApolloQueryResult<any> = { loading: true, ... };
+	private static void addModuleAttribute(VariableDeclarationContainer container, StatementObject child) {
+		if(container instanceof ModuleContainer && child.getVariableDeclarations().size() > 0) {
+			VariableDeclaration vd = child.getVariableDeclarations().get(0);
+			vd.setAttribute(true);
+			UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), vd.getLocationInfo(), container.getName());
+			attribute.setVariableDeclaration(vd);
+			attribute.setVisibility(Visibility.PRIVATE);
+			for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+				if(attribute.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
+					attribute.addAnonymousClass(anonymousClass);
+					anonymousClass.addParentContainer(attribute);
+				}
+			}
+			((ModuleContainer)container).addNestedAttribute(attribute);
+		}
 	}
 
 	private static void addToContainer(VariableDeclarationContainer container, UMLClass umlClass) {

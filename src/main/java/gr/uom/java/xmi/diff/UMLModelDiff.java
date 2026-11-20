@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -2810,6 +2811,24 @@ public class UMLModelDiff {
 		return addedAttributes;
 	}
 
+	//the object literal initializing the attribute is an object class, which is reported as Replace Anonymous With Class,
+	//i.e., classExtractor: createClassExtractor({...}) -> const javaClassConfig: ClassExtractionConfig = {...}
+	private boolean initializerModeledAsObject(UMLAttribute attribute) {
+		VariableDeclaration variableDeclaration = attribute.getVariableDeclaration();
+		if(childModel == null || variableDeclaration == null || variableDeclaration.getInitializer() == null) {
+			return false;
+		}
+		LocationInfo initializer = variableDeclaration.getInitializer().getLocationInfo();
+		for(UMLClass umlClass : childModel.getClassList()) {
+			LocationInfo location = umlClass.getLocationInfo();
+			if(umlClass.isObject() && location.getFilePath().equals(initializer.getFilePath()) &&
+					location.getStartOffset() == initializer.getStartOffset() && location.getEndOffset() == initializer.getEndOffset()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public List<UMLAttribute> getAddedAttributesInCommonClasses() {
 		List<UMLAttribute> addedAttributes = new ArrayList<UMLAttribute>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
@@ -4702,7 +4721,7 @@ public class UMLModelDiff {
 					List<AbstractCall> calls = attributeDiff.getInitializerMapper().get().getContainer2().getAllOperationInvocations();
 					for(AbstractCall call : calls) {
 						for(UMLAttribute addedAttribute : classDiff.getAddedAttributes()) {
-							if(call.getName().equals(addedAttribute.getName())) {
+							if(call.getName().equals(addedAttribute.getName()) && !initializerModeledAsObject(addedAttribute)) {
 								UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(attributeDiff.getRemovedAttribute(), addedAttribute, classDiff, this);
 								if(mapper.getMappings().size() > 0) {
 									ExtractOperationRefactoring extractOperationRefactoring =
@@ -4712,7 +4731,7 @@ public class UMLModelDiff {
 							}
 						}
 						for(UMLAttribute addedAttribute : attributesInAddedClasses) {
-							if(call.getName().equals(addedAttribute.getName())) {
+							if(call.getName().equals(addedAttribute.getName()) && !initializerModeledAsObject(addedAttribute)) {
 								UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(attributeDiff.getRemovedAttribute(), addedAttribute, classDiff, this);
 								if(mapper.getMappings().size() > 0) {
 									ExtractOperationRefactoring extractOperationRefactoring =

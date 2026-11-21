@@ -8193,7 +8193,7 @@ public class ReplacementAlgorithm {
 		return codePath;
 	}
 
-	private static boolean nestedInAnotherAnonymousClass(AbstractCodeFragment statement, AnonymousClassDeclarationObject anonymousClassDeclaration) {
+	static boolean nestedInAnotherAnonymousClass(AbstractCodeFragment statement, AnonymousClassDeclarationObject anonymousClassDeclaration) {
 		for(AnonymousClassDeclarationObject other : statement.getAnonymousClassDeclarations()) {
 			if(other != anonymousClassDeclaration && other.getLocationInfo().subsumes(anonymousClassDeclaration.getLocationInfo())) {
 				return true;
@@ -8305,117 +8305,6 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return replacementAdded;
-	}
-
-	private static final double DATA_OBJECT_SIMILARITY = 0.5;
-	private static final java.util.regex.Pattern DATA_OBJECT_TOKEN = java.util.regex.Pattern.compile("[A-Za-z_$][\\w$]*|\\d+|'[^'\\n]*'|\"[^\"\\n]*\"|`[^`]*`");
-
-	//the data objects of a mapped statement pair of a test callback, whose diffs are skipped while the statements are matched (skipsDataObjectDiffs),
-	//are diffed once the statements are mapped: the objects not nested in other objects (i.e., the rows of it.each([...]) tables) are aligned in order
-	//by the similarity of their tokens, and the changed ones are diffed, so that their properties are matched by their keys
-	static void diffDataObjectsOfMappedStatements(AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
-		if(statement1.getString().equals(statement2.getString())) {
-			return;
-		}
-		List<AnonymousClassDeclarationObject> objects1 = new ArrayList<>();
-		List<AnonymousClassDeclarationObject> objects2 = new ArrayList<>();
-		List<UMLAnonymousClass> classes1 = new ArrayList<>();
-		List<UMLAnonymousClass> classes2 = new ArrayList<>();
-		for(AnonymousClassDeclarationObject declaration : statement1.getAnonymousClassDeclarations()) {
-			UMLAnonymousClass anonymousClass = operationBodyMapper.findAnonymousClass1(declaration);
-			if(anonymousClass != null && anonymousClass.getOperations().isEmpty() && !nestedInAnotherAnonymousClass(statement1, declaration) && !insideLambda(statement1, declaration)) {
-				objects1.add(declaration);
-				classes1.add(anonymousClass);
-			}
-		}
-		if(objects1.isEmpty()) {
-			return;
-		}
-		for(AnonymousClassDeclarationObject declaration : statement2.getAnonymousClassDeclarations()) {
-			UMLAnonymousClass anonymousClass = operationBodyMapper.findAnonymousClass2(declaration);
-			if(anonymousClass != null && anonymousClass.getOperations().isEmpty() && !nestedInAnotherAnonymousClass(statement2, declaration) && !insideLambda(statement2, declaration)) {
-				objects2.add(declaration);
-				classes2.add(anonymousClass);
-			}
-		}
-		if(objects2.isEmpty()) {
-			return;
-		}
-		int n = objects1.size(), m = objects2.size();
-		List<Map<String, Integer>> tokens1 = new ArrayList<>();
-		List<Map<String, Integer>> tokens2 = new ArrayList<>();
-		for(AnonymousClassDeclarationObject object : objects1) {
-			tokens1.add(dataObjectTokens(object.toString()));
-		}
-		for(AnonymousClassDeclarationObject object : objects2) {
-			tokens2.add(dataObjectTokens(object.toString()));
-		}
-		double[][] similarity = new double[n][m];
-		for(int i=0; i<n; i++) {
-			for(int j=0; j<m; j++) {
-				similarity[i][j] = dice(tokens1.get(i), tokens2.get(j));
-			}
-		}
-		//the order-preserving alignment maximizing the total similarity of the aligned objects
-		double[][] score = new double[n+1][m+1];
-		for(int i=n-1; i>=0; i--) {
-			for(int j=m-1; j>=0; j--) {
-				double best = Math.max(score[i+1][j], score[i][j+1]);
-				if(similarity[i][j] >= DATA_OBJECT_SIMILARITY) {
-					best = Math.max(best, similarity[i][j] + score[i+1][j+1]);
-				}
-				score[i][j] = best;
-			}
-		}
-		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
-		UMLModelDiff modelDiff = operationBodyMapper.getModelDiff();
-		int i = 0, j = 0;
-		while(i < n && j < m) {
-			if(similarity[i][j] >= DATA_OBJECT_SIMILARITY && score[i][j] == similarity[i][j] + score[i+1][j+1]) {
-				if(!objects1.get(i).toString().equals(objects2.get(j).toString())) {
-					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(classes1.get(i), classes2.get(j), classDiff, modelDiff);
-					anonymousClassDiff.process();
-					operationBodyMapper.addPendingAnonymousClassDiff(anonymousClassDiff, statement1, statement2);
-				}
-				i++;
-				j++;
-			}
-			else if(score[i][j] == score[i+1][j]) {
-				i++;
-			}
-			else {
-				j++;
-			}
-		}
-	}
-
-	//the objects in the callbacks of the statement, i.e., of it(...), are matched by the mappers of the callbacks
-	private static boolean insideLambda(AbstractCodeFragment statement, AnonymousClassDeclarationObject declaration) {
-		for(LambdaExpressionObject lambda : statement.getLambdas()) {
-			if(lambda.getLocationInfo().subsumes(declaration.getLocationInfo())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static Map<String, Integer> dataObjectTokens(String code) {
-		Map<String, Integer> tokens = new java.util.HashMap<>();
-		java.util.regex.Matcher matcher = DATA_OBJECT_TOKEN.matcher(code);
-		while(matcher.find()) {
-			tokens.merge(matcher.group(), 1, Integer::sum);
-		}
-		return tokens;
-	}
-
-	private static double dice(Map<String, Integer> tokens1, Map<String, Integer> tokens2) {
-		int size1 = 0, size2 = 0, common = 0;
-		for(int count : tokens1.values()) size1 += count;
-		for(int count : tokens2.values()) size2 += count;
-		for(Map.Entry<String, Integer> entry : tokens1.entrySet()) {
-			common += Math.min(entry.getValue(), tokens2.getOrDefault(entry.getKey(), 0));
-		}
-		return size1 + size2 == 0 ? 0 : 2.0 * common / (size1 + size2);
 	}
 
 	//objects without operations, i.e., TypeScript object literals and Python dictionaries holding data

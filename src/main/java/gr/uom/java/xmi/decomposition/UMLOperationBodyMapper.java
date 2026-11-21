@@ -2891,11 +2891,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		else if(unpaired1.size() == 1 && unpaired2.size() == 1) {
+		matchRenamedTests(unpaired1, unpaired2, paired1, paired2, testSuites);
+		if(!testSuites && unpaired1.size() - paired1.size() == 1 && unpaired2.size() - paired2.size() == 1) {
 			//the only renamed test
-			matchTest(unpaired1.get(0), unpaired2.get(0), false);
-			paired1.add(unpaired1.get(0));
-			paired2.add(unpaired2.get(0));
+			AbstractStatement test1 = unpaired1.stream().filter(t -> !paired1.contains(t)).findFirst().get();
+			AbstractStatement test2 = unpaired2.stream().filter(t -> !paired2.contains(t)).findFirst().get();
+			matchTest(test1, test2, false);
+			paired1.add(test1);
+			paired2.add(test2);
 		}
 		for(AbstractStatement test1 : unpaired1) {
 			if(!paired1.contains(test1)) {
@@ -2907,6 +2910,65 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				nonMappedLeavesT2.add(test2);
 			}
 		}
+	}
+
+	private static final double RENAMED_TEST_SIMILARITY = 0.5;
+	private static final Pattern TEST_TOKEN = Pattern.compile("[A-Za-z_$][\\w$]*|\\d+|'[^'\\n]*'|\"[^\"\\n]*\"|`[^`]*`");
+
+	//the renamed tests are matched by the similarity of their callbacks, the most similar first,
+	//i.e., it('skips dart:async', ...) -> it('absorbs dart:async with empty-files sentinel', ...)
+	private void matchRenamedTests(List<AbstractStatement> unpaired1, List<AbstractStatement> unpaired2,
+			Set<AbstractStatement> paired1, Set<AbstractStatement> paired2, boolean testSuites) throws RefactoringMinerTimedOutException {
+		List<AbstractStatement> tests1 = unpaired1.stream().filter(t -> !paired1.contains(t)).toList();
+		List<AbstractStatement> tests2 = unpaired2.stream().filter(t -> !paired2.contains(t)).toList();
+		if(tests1.isEmpty() || tests2.isEmpty()) {
+			return;
+		}
+		List<Map<String, Integer>> tokens2 = new ArrayList<>();
+		for(AbstractStatement test2 : tests2) {
+			tokens2.add(tokens(test2));
+		}
+		List<double[]> candidates = new ArrayList<>();
+		for(int i = 0; i < tests1.size(); i++) {
+			Map<String, Integer> tokens1 = tokens(tests1.get(i));
+			for(int j = 0; j < tests2.size(); j++) {
+				double similarity = dice(tokens1, tokens2.get(j));
+				if(similarity >= RENAMED_TEST_SIMILARITY) {
+					candidates.add(new double[] {similarity, i, j});
+				}
+			}
+		}
+		candidates.sort((c1, c2) -> Double.compare(c2[0], c1[0]));
+		for(double[] candidate : candidates) {
+			AbstractStatement test1 = tests1.get((int)candidate[1]);
+			AbstractStatement test2 = tests2.get((int)candidate[2]);
+			if(!paired1.contains(test1) && !paired2.contains(test2)) {
+				matchTest(test1, test2, testSuites);
+				paired1.add(test1);
+				paired2.add(test2);
+			}
+		}
+	}
+
+	//the tokens of the callback of a test (identifiers, numbers, string literals), with their occurrences
+	private static Map<String, Integer> tokens(AbstractStatement test) {
+		Map<String, Integer> tokens = new java.util.HashMap<>();
+		String code = test.getLambdas().size() > 0 ? test.getLambdas().get(0).toString() : test.getString();
+		java.util.regex.Matcher matcher = TEST_TOKEN.matcher(code);
+		while(matcher.find()) {
+			tokens.merge(matcher.group(), 1, Integer::sum);
+		}
+		return tokens;
+	}
+
+	private static double dice(Map<String, Integer> tokens1, Map<String, Integer> tokens2) {
+		int size1 = 0, size2 = 0, common = 0;
+		for(int count : tokens1.values()) size1 += count;
+		for(int count : tokens2.values()) size2 += count;
+		for(Map.Entry<String, Integer> entry : tokens1.entrySet()) {
+			common += Math.min(entry.getValue(), tokens2.getOrDefault(entry.getKey(), 0));
+		}
+		return size1 + size2 == 0 ? 0 : 2.0 * common / (size1 + size2);
 	}
 
 	private void matchTest(AbstractStatement test1, AbstractStatement test2, boolean testSuite) throws RefactoringMinerTimedOutException {

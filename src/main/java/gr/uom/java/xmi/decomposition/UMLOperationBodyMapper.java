@@ -2824,7 +2824,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	//testCallback: the lambdas are the callbacks of a test it('...', () => {...}), i.e., the bodies of the test, matched as the bodies of operations
 	UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper, boolean testCallback) throws RefactoringMinerTimedOutException {
 		this.parentMapper = parentMapper;
-		this.testCallbackMapper = testCallback;
+		//the callbacks within the callback of a test (i.e., withMcpContext(async (response, context) => {...})) are parts of the body of the test
+		this.testCallbackMapper = testCallback || parentMapper.isTestCallbackMapper();
 		this.skipDataObjectDiffs = parentMapper.skipDataObjectDiffs;
 		this.argumentization = new Argumentization(parentMapper.argumentization);
 		this.classDiff = parentMapper.classDiff;
@@ -2893,8 +2894,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.lambdaBodyMapper = true;
 			processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), Collections.emptyList());
 		}
-		if(testCallback) {
-			new TestSuiteMatcher(this).diffDataObjectsOfMappedStatements();
+		if(testCallbackMapper) {
+			TestSuiteMatcher testSuiteMatcher = new TestSuiteMatcher(this);
+			testSuiteMatcher.diffDataObjectsOfMappedStatements();
+			//the functions and types declared in the callbacks of tests, i.e., in it.each([...])('...', async (fetchPolicy) => {...})
+			testSuiteMatcher.matchNestedOperations(lambda1, lambda2);
 		}
 		checkUnmatchedStatementsBeingCommented(lambda1.getComments(), lambda2.getComments());
 		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments(), this);

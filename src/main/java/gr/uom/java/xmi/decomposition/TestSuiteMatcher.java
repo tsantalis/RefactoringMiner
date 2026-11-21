@@ -270,13 +270,14 @@ class TestSuiteMatcher {
 			UMLOperationBodyMapper callbackMapper;
 			if(testSuite) {
 				callbackMapper = new UMLOperationBodyMapper(test1, test2, mapper);
+				new TestSuiteMatcher(callbackMapper).matchNestedOperations(test1.getLambdas().get(0), test2.getLambdas().get(0));
 			}
 			else {
+				//the functions and types declared in the callback are matched by the mapper of the callback
 				callbackMapper = new UMLOperationBodyMapper(test1.getLambdas().get(0), test2.getLambdas().get(0), mapper, true);
 				//the comments of the tests are matched by the comment diff of the module
 				callbackMapper.clearCommentListDiff();
 			}
-			new TestSuiteMatcher(callbackMapper).matchNestedOperations(test1.getLambdas().get(0), test2.getLambdas().get(0));
 			mapping.addLambdaMappers(List.of(callbackMapper));
 		}
 		if(!testSuite) {
@@ -290,7 +291,7 @@ class TestSuiteMatcher {
 
 	//the functions declared in the callbacks are matched by their names, when each name is declared once in each callback,
 	//while the functions that are operations of the module (i.e., the arrow functions declared in the callbacks) are matched by the class diff
-	private void matchNestedOperations(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2) throws RefactoringMinerTimedOutException {
+	void matchNestedOperations(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2) throws RefactoringMinerTimedOutException {
 		matchNestedClasses(lambda1, lambda2);
 		UMLAbstractClassDiff classDiff = mapper.getClassDiff();
 		if(classDiff == null || lambda1.getNestedOperations().isEmpty() || lambda2.getNestedOperations().isEmpty()) {

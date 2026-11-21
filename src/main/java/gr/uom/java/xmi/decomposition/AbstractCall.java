@@ -453,6 +453,12 @@ public abstract class AbstractCall extends LeafExpression {
 							return true;
 						}
 					}
+					//a call with changed arguments nested within the expressions of calls with the same name, i.e., expect(await tabThrough(user, 9)).toEqual(...) ->
+					//expect(await tabThrough(user, 10)).toEqual(...), but not $(picker).pickadate("picker").stop() -> $(pickatizedDateInput).pickadate("picker").start()
+					if(identicalName(call) && before.identicalName(after) && before.identicalExpression(after) && !before.equalArguments(after) &&
+							!expression1.equals(replacement.getBefore()) && expression1.contains(replacement.getBefore()) && expression2.contains(replacement.getAfter())) {
+						expression1AfterReplacements = ReplacementUtil.performReplacement(expression1AfterReplacements, expression2, replacement.getBefore(), replacement.getAfter(), LANG1, LANG2);
+					}
 				}
 				else if(replacement instanceof VariableReplacementWithMethodInvocation) {
 					VariableReplacementWithMethodInvocation methodInvocationReplacement = (VariableReplacementWithMethodInvocation)replacement;

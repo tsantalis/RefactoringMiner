@@ -2122,281 +2122,6 @@
   "firstEndPos" : 1073,
   "secondEndPos" : 2384
 }, {
-  "firstType" : "{",
-  "secondType" : "{",
-  "firstLabel" : "{",
-  "secondLabel" : "{",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 749,
-  "secondPos" : 1946,
-  "firstEndPos" : 750,
-  "secondEndPos" : 1947
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 755,
-  "secondPos" : 1952,
-  "firstEndPos" : 912,
-  "secondEndPos" : 2166
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 755,
-  "secondPos" : 1952,
-  "firstEndPos" : 911,
-  "secondEndPos" : 2165
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "it",
-  "secondLabel" : "it",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 755,
-  "secondPos" : 1952,
-  "firstEndPos" : 757,
-  "secondEndPos" : 1954
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 757,
-  "secondPos" : 1954,
-  "firstEndPos" : 911,
-  "secondEndPos" : 2165
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 757,
-  "secondPos" : 1954,
-  "firstEndPos" : 758,
-  "secondEndPos" : 1955
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 758,
-  "secondPos" : 1955,
-  "firstEndPos" : 776,
-  "secondEndPos" : 2001
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 758,
-  "secondPos" : 1955,
-  "firstEndPos" : 759,
-  "secondEndPos" : 1956
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "skips dart:async",
-  "secondLabel" : "absorbs dart:async with empty-files sentinel",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 759,
-  "secondPos" : 1956,
-  "firstEndPos" : 775,
-  "secondEndPos" : 2000
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 775,
-  "secondPos" : 2000,
-  "firstEndPos" : 776,
-  "secondEndPos" : 2001
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 776,
-  "secondPos" : 2001,
-  "firstEndPos" : 777,
-  "secondEndPos" : 2002
-}, {
-  "firstType" : "arrow_function",
-  "secondType" : "arrow_function",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 778,
-  "secondPos" : 2003,
-  "firstEndPos" : 910,
-  "secondEndPos" : 2164
-}, {
-  "firstType" : "formal_parameters",
-  "secondType" : "formal_parameters",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 778,
-  "secondPos" : 2003,
-  "firstEndPos" : 780,
-  "secondEndPos" : 2005
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "formal_parameters",
-  "secondParentType" : "formal_parameters",
-  "firstPos" : 778,
-  "secondPos" : 2003,
-  "firstEndPos" : 779,
-  "secondEndPos" : 2004
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "formal_parameters",
-  "secondParentType" : "formal_parameters",
-  "firstPos" : 779,
-  "secondPos" : 2004,
-  "firstEndPos" : 780,
-  "secondEndPos" : 2005
-}, {
-  "firstType" : "=>",
-  "secondType" : "=>",
-  "firstLabel" : "=>",
-  "secondLabel" : "=>",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 781,
-  "secondPos" : 2006,
-  "firstEndPos" : 783,
-  "secondEndPos" : 2008
-}, {
-  "firstType" : "statement_block",
-  "secondType" : "statement_block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 784,
-  "secondPos" : 2009,
-  "firstEndPos" : 910,
-  "secondEndPos" : 2164
-}, {
-  "firstType" : "{",
-  "secondType" : "{",
-  "firstLabel" : "{",
-  "secondLabel" : "{",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 784,
-  "secondPos" : 2009,
-  "firstEndPos" : 785,
-  "secondEndPos" : 2010
-}, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 792,
-  "secondPos" : 2017,
-  "firstEndPos" : 871,
-  "secondEndPos" : 2098
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 792,
-  "secondPos" : 2017,
-  "firstEndPos" : 797,
-  "secondEndPos" : 2022
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 798,
-  "secondPos" : 2023,
-  "firstEndPos" : 870,
-  "secondEndPos" : 2097
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 798,
-  "secondPos" : 2023,
-  "firstEndPos" : 804,
-  "secondEndPos" : 2029
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 805,
-  "secondPos" : 2030,
-  "firstEndPos" : 806,
-  "secondEndPos" : 2031
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 807,
-  "secondPos" : 2032,
-  "firstEndPos" : 870,
-  "secondEndPos" : 2097
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "resolveDartImport",
-  "secondLabel" : "dartPackageStrategy",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 807,
-  "secondPos" : 2032,
-  "firstEndPos" : 824,
-  "secondEndPos" : 2051
-}, {
   "firstType" : "arguments",
   "secondType" : "arguments",
   "firstLabel" : "",
@@ -2628,479 +2353,6 @@
   "firstEndPos" : 870,
   "secondEndPos" : 2097
 }, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 870,
-  "secondPos" : 2097,
-  "firstEndPos" : 871,
-  "secondEndPos" : 2098
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 878,
-  "secondPos" : 2105,
-  "firstEndPos" : 904,
-  "secondEndPos" : 2158
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 878,
-  "secondPos" : 2105,
-  "firstEndPos" : 903,
-  "secondEndPos" : 2157
-}, {
-  "firstType" : "member_expression",
-  "secondType" : "member_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 878,
-  "secondPos" : 2105,
-  "firstEndPos" : 901,
-  "secondEndPos" : 2127
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 878,
-  "secondPos" : 2105,
-  "firstEndPos" : 892,
-  "secondEndPos" : 2119
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "expect",
-  "secondLabel" : "expect",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 878,
-  "secondPos" : 2105,
-  "firstEndPos" : 884,
-  "secondEndPos" : 2111
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 884,
-  "secondPos" : 2111,
-  "firstEndPos" : 892,
-  "secondEndPos" : 2119
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 884,
-  "secondPos" : 2111,
-  "firstEndPos" : 885,
-  "secondEndPos" : 2112
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 885,
-  "secondPos" : 2112,
-  "firstEndPos" : 891,
-  "secondEndPos" : 2118
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 891,
-  "secondPos" : 2118,
-  "firstEndPos" : 892,
-  "secondEndPos" : 2119
-}, {
-  "firstType" : ".",
-  "secondType" : ".",
-  "firstLabel" : ".",
-  "secondLabel" : ".",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 892,
-  "secondPos" : 2119,
-  "firstEndPos" : 893,
-  "secondEndPos" : 2120
-}, {
-  "firstType" : "property_identifier",
-  "secondType" : "property_identifier",
-  "firstLabel" : "toBeNull",
-  "secondLabel" : "toEqual",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 893,
-  "secondPos" : 2120,
-  "firstEndPos" : 901,
-  "secondEndPos" : 2127
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 901,
-  "secondPos" : 2127,
-  "firstEndPos" : 903,
-  "secondEndPos" : 2157
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 901,
-  "secondPos" : 2127,
-  "firstEndPos" : 902,
-  "secondEndPos" : 2128
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 902,
-  "secondPos" : 2156,
-  "firstEndPos" : 903,
-  "secondEndPos" : 2157
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 903,
-  "secondPos" : 2157,
-  "firstEndPos" : 904,
-  "secondEndPos" : 2158
-}, {
-  "firstType" : "}",
-  "secondType" : "}",
-  "firstLabel" : "}",
-  "secondLabel" : "}",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 909,
-  "secondPos" : 2163,
-  "firstEndPos" : 910,
-  "secondEndPos" : 2164
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 910,
-  "secondPos" : 2164,
-  "firstEndPos" : 911,
-  "secondEndPos" : 2165
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 911,
-  "secondPos" : 2165,
-  "firstEndPos" : 912,
-  "secondEndPos" : 2166
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 918,
-  "secondPos" : 2172,
-  "firstEndPos" : 1069,
-  "secondEndPos" : 2380
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 918,
-  "secondPos" : 2172,
-  "firstEndPos" : 1068,
-  "secondEndPos" : 2379
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "it",
-  "secondLabel" : "it",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 918,
-  "secondPos" : 2172,
-  "firstEndPos" : 920,
-  "secondEndPos" : 2174
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 920,
-  "secondPos" : 2174,
-  "firstEndPos" : 1068,
-  "secondEndPos" : 2379
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 920,
-  "secondPos" : 2174,
-  "firstEndPos" : 921,
-  "secondEndPos" : 2175
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 921,
-  "secondPos" : 2175,
-  "firstEndPos" : 936,
-  "secondEndPos" : 2218
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 921,
-  "secondPos" : 2175,
-  "firstEndPos" : 922,
-  "secondEndPos" : 2176
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "skips dart:io",
-  "secondLabel" : "absorbs dart:io with empty-files sentinel",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 922,
-  "secondPos" : 2176,
-  "firstEndPos" : 935,
-  "secondEndPos" : 2217
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 935,
-  "secondPos" : 2217,
-  "firstEndPos" : 936,
-  "secondEndPos" : 2218
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 936,
-  "secondPos" : 2218,
-  "firstEndPos" : 937,
-  "secondEndPos" : 2219
-}, {
-  "firstType" : "arrow_function",
-  "secondType" : "arrow_function",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 938,
-  "secondPos" : 2220,
-  "firstEndPos" : 1067,
-  "secondEndPos" : 2378
-}, {
-  "firstType" : "formal_parameters",
-  "secondType" : "formal_parameters",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 938,
-  "secondPos" : 2220,
-  "firstEndPos" : 940,
-  "secondEndPos" : 2222
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "formal_parameters",
-  "secondParentType" : "formal_parameters",
-  "firstPos" : 938,
-  "secondPos" : 2220,
-  "firstEndPos" : 939,
-  "secondEndPos" : 2221
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "formal_parameters",
-  "secondParentType" : "formal_parameters",
-  "firstPos" : 939,
-  "secondPos" : 2221,
-  "firstEndPos" : 940,
-  "secondEndPos" : 2222
-}, {
-  "firstType" : "=>",
-  "secondType" : "=>",
-  "firstLabel" : "=>",
-  "secondLabel" : "=>",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 941,
-  "secondPos" : 2223,
-  "firstEndPos" : 943,
-  "secondEndPos" : 2225
-}, {
-  "firstType" : "statement_block",
-  "secondType" : "statement_block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 944,
-  "secondPos" : 2226,
-  "firstEndPos" : 1067,
-  "secondEndPos" : 2378
-}, {
-  "firstType" : "{",
-  "secondType" : "{",
-  "firstLabel" : "{",
-  "secondLabel" : "{",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 944,
-  "secondPos" : 2226,
-  "firstEndPos" : 945,
-  "secondEndPos" : 2227
-}, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 952,
-  "secondPos" : 2234,
-  "firstEndPos" : 1028,
-  "secondEndPos" : 2312
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 952,
-  "secondPos" : 2234,
-  "firstEndPos" : 957,
-  "secondEndPos" : 2239
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 958,
-  "secondPos" : 2240,
-  "firstEndPos" : 1027,
-  "secondEndPos" : 2311
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 958,
-  "secondPos" : 2240,
-  "firstEndPos" : 964,
-  "secondEndPos" : 2246
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 965,
-  "secondPos" : 2247,
-  "firstEndPos" : 966,
-  "secondEndPos" : 2248
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 967,
-  "secondPos" : 2249,
-  "firstEndPos" : 1027,
-  "secondEndPos" : 2311
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "resolveDartImport",
-  "secondLabel" : "dartPackageStrategy",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 967,
-  "secondPos" : 2249,
-  "firstEndPos" : 984,
-  "secondEndPos" : 2268
-}, {
   "firstType" : "arguments",
   "secondType" : "arguments",
   "firstLabel" : "",
@@ -3331,226 +2583,6 @@
   "secondPos" : 2310,
   "firstEndPos" : 1027,
   "secondEndPos" : 2311
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1027,
-  "secondPos" : 2311,
-  "firstEndPos" : 1028,
-  "secondEndPos" : 2312
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1035,
-  "secondPos" : 2319,
-  "firstEndPos" : 1061,
-  "secondEndPos" : 2372
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 1035,
-  "secondPos" : 2319,
-  "firstEndPos" : 1060,
-  "secondEndPos" : 2371
-}, {
-  "firstType" : "member_expression",
-  "secondType" : "member_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1035,
-  "secondPos" : 2319,
-  "firstEndPos" : 1058,
-  "secondEndPos" : 2341
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 1035,
-  "secondPos" : 2319,
-  "firstEndPos" : 1049,
-  "secondEndPos" : 2333
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "expect",
-  "secondLabel" : "expect",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1035,
-  "secondPos" : 2319,
-  "firstEndPos" : 1041,
-  "secondEndPos" : 2325
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1041,
-  "secondPos" : 2325,
-  "firstEndPos" : 1049,
-  "secondEndPos" : 2333
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1041,
-  "secondPos" : 2325,
-  "firstEndPos" : 1042,
-  "secondEndPos" : 2326
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1042,
-  "secondPos" : 2326,
-  "firstEndPos" : 1048,
-  "secondEndPos" : 2332
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1048,
-  "secondPos" : 2332,
-  "firstEndPos" : 1049,
-  "secondEndPos" : 2333
-}, {
-  "firstType" : ".",
-  "secondType" : ".",
-  "firstLabel" : ".",
-  "secondLabel" : ".",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 1049,
-  "secondPos" : 2333,
-  "firstEndPos" : 1050,
-  "secondEndPos" : 2334
-}, {
-  "firstType" : "property_identifier",
-  "secondType" : "property_identifier",
-  "firstLabel" : "toBeNull",
-  "secondLabel" : "toEqual",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 1050,
-  "secondPos" : 2334,
-  "firstEndPos" : 1058,
-  "secondEndPos" : 2341
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1058,
-  "secondPos" : 2341,
-  "firstEndPos" : 1060,
-  "secondEndPos" : 2371
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1058,
-  "secondPos" : 2341,
-  "firstEndPos" : 1059,
-  "secondEndPos" : 2342
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1059,
-  "secondPos" : 2370,
-  "firstEndPos" : 1060,
-  "secondEndPos" : 2371
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 1060,
-  "secondPos" : 2371,
-  "firstEndPos" : 1061,
-  "secondEndPos" : 2372
-}, {
-  "firstType" : "}",
-  "secondType" : "}",
-  "firstLabel" : "}",
-  "secondLabel" : "}",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1066,
-  "secondPos" : 2377,
-  "firstEndPos" : 1067,
-  "secondEndPos" : 2378
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1067,
-  "secondPos" : 2378,
-  "firstEndPos" : 1068,
-  "secondEndPos" : 2379
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 1068,
-  "secondPos" : 2379,
-  "firstEndPos" : 1069,
-  "secondEndPos" : 2380
-}, {
-  "firstType" : "}",
-  "secondType" : "}",
-  "firstLabel" : "}",
-  "secondLabel" : "}",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1072,
-  "secondPos" : 2383,
-  "firstEndPos" : 1073,
-  "secondEndPos" : 2384
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -4872,468 +3904,6 @@
   "firstEndPos" : 1430,
   "secondEndPos" : 2743
 }, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1436,
-  "secondPos" : 2749,
-  "firstEndPos" : 1668,
-  "secondEndPos" : 3027
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 1436,
-  "secondPos" : 2749,
-  "firstEndPos" : 1667,
-  "secondEndPos" : 3026
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "it",
-  "secondLabel" : "it",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1436,
-  "secondPos" : 2749,
-  "firstEndPos" : 1438,
-  "secondEndPos" : 2751
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1438,
-  "secondPos" : 2751,
-  "firstEndPos" : 1667,
-  "secondEndPos" : 3026
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1438,
-  "secondPos" : 2751,
-  "firstEndPos" : 1439,
-  "secondEndPos" : 2752
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1439,
-  "secondPos" : 2752,
-  "firstEndPos" : 1482,
-  "secondEndPos" : 2812
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1439,
-  "secondPos" : 2752,
-  "firstEndPos" : 1440,
-  "secondEndPos" : 2753
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "returns null for external package imports",
-  "secondLabel" : "absorbs external package imports with empty-files sentinel",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1440,
-  "secondPos" : 2753,
-  "firstEndPos" : 1481,
-  "secondEndPos" : 2811
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1481,
-  "secondPos" : 2811,
-  "firstEndPos" : 1482,
-  "secondEndPos" : 2812
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1482,
-  "secondPos" : 2812,
-  "firstEndPos" : 1483,
-  "secondEndPos" : 2813
-}, {
-  "firstType" : "arrow_function",
-  "secondType" : "arrow_function",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1484,
-  "secondPos" : 2814,
-  "firstEndPos" : 1666,
-  "secondEndPos" : 3025
-}, {
-  "firstType" : "formal_parameters",
-  "secondType" : "formal_parameters",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 1484,
-  "secondPos" : 2814,
-  "firstEndPos" : 1486,
-  "secondEndPos" : 2816
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "formal_parameters",
-  "secondParentType" : "formal_parameters",
-  "firstPos" : 1484,
-  "secondPos" : 2814,
-  "firstEndPos" : 1485,
-  "secondEndPos" : 2815
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "formal_parameters",
-  "secondParentType" : "formal_parameters",
-  "firstPos" : 1485,
-  "secondPos" : 2815,
-  "firstEndPos" : 1486,
-  "secondEndPos" : 2816
-}, {
-  "firstType" : "=>",
-  "secondType" : "=>",
-  "firstLabel" : "=>",
-  "secondLabel" : "=>",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 1487,
-  "secondPos" : 2817,
-  "firstEndPos" : 1489,
-  "secondEndPos" : 2819
-}, {
-  "firstType" : "statement_block",
-  "secondType" : "statement_block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 1490,
-  "secondPos" : 2820,
-  "firstEndPos" : 1666,
-  "secondEndPos" : 3025
-}, {
-  "firstType" : "{",
-  "secondType" : "{",
-  "firstLabel" : "{",
-  "secondLabel" : "{",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1490,
-  "secondPos" : 2820,
-  "firstEndPos" : 1491,
-  "secondEndPos" : 2821
-}, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1498,
-  "secondPos" : 2828,
-  "firstEndPos" : 1537,
-  "secondEndPos" : 2867
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1498,
-  "secondPos" : 2828,
-  "firstEndPos" : 1503,
-  "secondEndPos" : 2833
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1504,
-  "secondPos" : 2834,
-  "firstEndPos" : 1536,
-  "secondEndPos" : 2866
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "ctx",
-  "secondLabel" : "ctx",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1504,
-  "secondPos" : 2834,
-  "firstEndPos" : 1507,
-  "secondEndPos" : 2837
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1508,
-  "secondPos" : 2838,
-  "firstEndPos" : 1509,
-  "secondEndPos" : 2839
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1510,
-  "secondPos" : 2840,
-  "firstEndPos" : 1536,
-  "secondEndPos" : 2866
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "makeCtx",
-  "secondLabel" : "makeCtx",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1510,
-  "secondPos" : 2840,
-  "firstEndPos" : 1517,
-  "secondEndPos" : 2847
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1517,
-  "secondPos" : 2847,
-  "firstEndPos" : 1536,
-  "secondEndPos" : 2866
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1517,
-  "secondPos" : 2847,
-  "firstEndPos" : 1518,
-  "secondEndPos" : 2848
-}, {
-  "firstType" : "array",
-  "secondType" : "array",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1518,
-  "secondPos" : 2848,
-  "firstEndPos" : 1535,
-  "secondEndPos" : 2865
-}, {
-  "firstType" : "[",
-  "secondType" : "[",
-  "firstLabel" : "[",
-  "secondLabel" : "[",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 1518,
-  "secondPos" : 2848,
-  "firstEndPos" : 1519,
-  "secondEndPos" : 2849
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 1519,
-  "secondPos" : 2849,
-  "firstEndPos" : 1534,
-  "secondEndPos" : 2864
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1519,
-  "secondPos" : 2849,
-  "firstEndPos" : 1520,
-  "secondEndPos" : 2850
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "lib/main.dart",
-  "secondLabel" : "lib/main.dart",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1520,
-  "secondPos" : 2850,
-  "firstEndPos" : 1533,
-  "secondEndPos" : 2863
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1533,
-  "secondPos" : 2863,
-  "firstEndPos" : 1534,
-  "secondEndPos" : 2864
-}, {
-  "firstType" : "]",
-  "secondType" : "]",
-  "firstLabel" : "]",
-  "secondLabel" : "]",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 1534,
-  "secondPos" : 2864,
-  "firstEndPos" : 1535,
-  "secondEndPos" : 2865
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1535,
-  "secondPos" : 2865,
-  "firstEndPos" : 1536,
-  "secondEndPos" : 2866
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1536,
-  "secondPos" : 2866,
-  "firstEndPos" : 1537,
-  "secondEndPos" : 2867
-}, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1544,
-  "secondPos" : 2874,
-  "firstEndPos" : 1627,
-  "secondEndPos" : 2959
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1544,
-  "secondPos" : 2874,
-  "firstEndPos" : 1549,
-  "secondEndPos" : 2879
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1550,
-  "secondPos" : 2880,
-  "firstEndPos" : 1626,
-  "secondEndPos" : 2958
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1550,
-  "secondPos" : 2880,
-  "firstEndPos" : 1556,
-  "secondEndPos" : 2886
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1557,
-  "secondPos" : 2887,
-  "firstEndPos" : 1558,
-  "secondEndPos" : 2888
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1559,
-  "secondPos" : 2889,
-  "firstEndPos" : 1626,
-  "secondEndPos" : 2958
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "resolveDartImport",
-  "secondLabel" : "dartPackageStrategy",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1559,
-  "secondPos" : 2889,
-  "firstEndPos" : 1576,
-  "secondEndPos" : 2908
-}, {
   "firstType" : "arguments",
   "secondType" : "arguments",
   "firstLabel" : "",
@@ -5487,17 +4057,6 @@
   "secondPos" : 2957,
   "firstEndPos" : 1626,
   "secondEndPos" : 2958
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1626,
-  "secondPos" : 2958,
-  "firstEndPos" : 1627,
-  "secondEndPos" : 2959
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -5663,303 +4222,6 @@
   "secondPos" : 3549,
   "firstEndPos" : 1660,
   "secondEndPos" : 3550
-}, {
-  "firstType" : "}",
-  "secondType" : "}",
-  "firstLabel" : "}",
-  "secondLabel" : "}",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1665,
-  "secondPos" : 3024,
-  "firstEndPos" : 1666,
-  "secondEndPos" : 3025
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1666,
-  "secondPos" : 3025,
-  "firstEndPos" : 1667,
-  "secondEndPos" : 3026
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 1667,
-  "secondPos" : 3026,
-  "firstEndPos" : 1668,
-  "secondEndPos" : 3027
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1674,
-  "secondPos" : 3033,
-  "firstEndPos" : 1869,
-  "secondEndPos" : 3274
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 1674,
-  "secondPos" : 3033,
-  "firstEndPos" : 1868,
-  "secondEndPos" : 3273
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "it",
-  "secondLabel" : "it",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1674,
-  "secondPos" : 3033,
-  "firstEndPos" : 1676,
-  "secondEndPos" : 3035
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1676,
-  "secondPos" : 3035,
-  "firstEndPos" : 1868,
-  "secondEndPos" : 3273
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1676,
-  "secondPos" : 3035,
-  "firstEndPos" : 1677,
-  "secondEndPos" : 3036
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1677,
-  "secondPos" : 3036,
-  "firstEndPos" : 1731,
-  "secondEndPos" : 3107
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1677,
-  "secondPos" : 3036,
-  "firstEndPos" : 1678,
-  "secondEndPos" : 3037
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "returns null for malformed package import (no slash)",
-  "secondLabel" : "absorbs malformed package import (no slash) with empty-files sentinel",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1678,
-  "secondPos" : 3037,
-  "firstEndPos" : 1730,
-  "secondEndPos" : 3106
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 1730,
-  "secondPos" : 3106,
-  "firstEndPos" : 1731,
-  "secondEndPos" : 3107
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1731,
-  "secondPos" : 3107,
-  "firstEndPos" : 1732,
-  "secondEndPos" : 3108
-}, {
-  "firstType" : "arrow_function",
-  "secondType" : "arrow_function",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1733,
-  "secondPos" : 3109,
-  "firstEndPos" : 1867,
-  "secondEndPos" : 3272
-}, {
-  "firstType" : "formal_parameters",
-  "secondType" : "formal_parameters",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 1733,
-  "secondPos" : 3109,
-  "firstEndPos" : 1735,
-  "secondEndPos" : 3111
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "formal_parameters",
-  "secondParentType" : "formal_parameters",
-  "firstPos" : 1733,
-  "secondPos" : 3109,
-  "firstEndPos" : 1734,
-  "secondEndPos" : 3110
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "formal_parameters",
-  "secondParentType" : "formal_parameters",
-  "firstPos" : 1734,
-  "secondPos" : 3110,
-  "firstEndPos" : 1735,
-  "secondEndPos" : 3111
-}, {
-  "firstType" : "=>",
-  "secondType" : "=>",
-  "firstLabel" : "=>",
-  "secondLabel" : "=>",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 1736,
-  "secondPos" : 3112,
-  "firstEndPos" : 1738,
-  "secondEndPos" : 3114
-}, {
-  "firstType" : "statement_block",
-  "secondType" : "statement_block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 1739,
-  "secondPos" : 3115,
-  "firstEndPos" : 1867,
-  "secondEndPos" : 3272
-}, {
-  "firstType" : "{",
-  "secondType" : "{",
-  "firstLabel" : "{",
-  "secondLabel" : "{",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1739,
-  "secondPos" : 3115,
-  "firstEndPos" : 1740,
-  "secondEndPos" : 3116
-}, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1747,
-  "secondPos" : 3123,
-  "firstEndPos" : 1828,
-  "secondEndPos" : 3206
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1747,
-  "secondPos" : 3123,
-  "firstEndPos" : 1752,
-  "secondEndPos" : 3128
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1753,
-  "secondPos" : 3129,
-  "firstEndPos" : 1827,
-  "secondEndPos" : 3205
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1753,
-  "secondPos" : 3129,
-  "firstEndPos" : 1759,
-  "secondEndPos" : 3135
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1760,
-  "secondPos" : 3136,
-  "firstEndPos" : 1761,
-  "secondEndPos" : 3137
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 1762,
-  "secondPos" : 3138,
-  "firstEndPos" : 1827,
-  "secondEndPos" : 3205
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "resolveDartImport",
-  "secondLabel" : "dartPackageStrategy",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 1762,
-  "secondPos" : 3138,
-  "firstEndPos" : 1779,
-  "secondEndPos" : 3157
 }, {
   "firstType" : "arguments",
   "secondType" : "arguments",
@@ -6192,17 +4454,6 @@
   "firstEndPos" : 1827,
   "secondEndPos" : 3205
 }, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 1827,
-  "secondPos" : 3205,
-  "firstEndPos" : 1828,
-  "secondEndPos" : 3206
-}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -6210,9 +4461,9 @@
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 1835,
-  "secondPos" : 3213,
+  "secondPos" : 4814,
   "firstEndPos" : 1861,
-  "secondEndPos" : 3266
+  "secondEndPos" : 4840
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6221,9 +4472,9 @@
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 1835,
-  "secondPos" : 3213,
+  "secondPos" : 4814,
   "firstEndPos" : 1860,
-  "secondEndPos" : 3265
+  "secondEndPos" : 4839
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -6232,9 +4483,9 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 1835,
-  "secondPos" : 3213,
+  "secondPos" : 4814,
   "firstEndPos" : 1858,
-  "secondEndPos" : 3235
+  "secondEndPos" : 4837
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6243,9 +4494,9 @@
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
   "firstPos" : 1835,
-  "secondPos" : 3213,
+  "secondPos" : 4814,
   "firstEndPos" : 1849,
-  "secondEndPos" : 3227
+  "secondEndPos" : 4828
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -6254,9 +4505,9 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 1835,
-  "secondPos" : 3213,
+  "secondPos" : 4814,
   "firstEndPos" : 1841,
-  "secondEndPos" : 3219
+  "secondEndPos" : 4820
 }, {
   "firstType" : "arguments",
   "secondType" : "arguments",
@@ -6265,9 +4516,9 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 1841,
-  "secondPos" : 3219,
+  "secondPos" : 4820,
   "firstEndPos" : 1849,
-  "secondEndPos" : 3227
+  "secondEndPos" : 4828
 }, {
   "firstType" : "(",
   "secondType" : "(",
@@ -6276,20 +4527,53 @@
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
   "firstPos" : 1841,
-  "secondPos" : 3219,
+  "secondPos" : 4820,
   "firstEndPos" : 1842,
-  "secondEndPos" : 3220
+  "secondEndPos" : 4821
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "result",
+  "secondLabel" : "result",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 1842,
+  "secondPos" : 4821,
+  "firstEndPos" : 1848,
+  "secondEndPos" : 4827
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 1848,
+  "secondPos" : 4827,
+  "firstEndPos" : 1849,
+  "secondEndPos" : 4828
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1849,
+  "secondPos" : 4828,
+  "firstEndPos" : 1850,
+  "secondEndPos" : 4829
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
   "firstLabel" : "toBeNull",
-  "secondLabel" : "toEqual",
+  "secondLabel" : "toBeNull",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
   "firstPos" : 1850,
-  "secondPos" : 3228,
+  "secondPos" : 4829,
   "firstEndPos" : 1858,
-  "secondEndPos" : 3235
+  "secondEndPos" : 4837
 }, {
   "firstType" : "arguments",
   "secondType" : "arguments",
@@ -6298,9 +4582,20 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 1858,
-  "secondPos" : 3235,
+  "secondPos" : 4837,
   "firstEndPos" : 1860,
-  "secondEndPos" : 3265
+  "secondEndPos" : 4839
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 1858,
+  "secondPos" : 4837,
+  "firstEndPos" : 1859,
+  "secondEndPos" : 4838
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -6309,9 +4604,9 @@
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
   "firstPos" : 1859,
-  "secondPos" : 3264,
+  "secondPos" : 4838,
   "firstEndPos" : 1860,
-  "secondEndPos" : 3265
+  "secondEndPos" : 4839
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -6320,42 +4615,9 @@
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 1860,
-  "secondPos" : 3265,
+  "secondPos" : 4839,
   "firstEndPos" : 1861,
-  "secondEndPos" : 3266
-}, {
-  "firstType" : "}",
-  "secondType" : "}",
-  "firstLabel" : "}",
-  "secondLabel" : "}",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1866,
-  "secondPos" : 3271,
-  "firstEndPos" : 1867,
-  "secondEndPos" : 3272
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 1867,
-  "secondPos" : 3272,
-  "firstEndPos" : 1868,
-  "secondEndPos" : 3273
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 1868,
-  "secondPos" : 3273,
-  "firstEndPos" : 1869,
-  "secondEndPos" : 3274
+  "secondEndPos" : 4840
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -6770,10 +5032,10 @@
   "secondLabel" : "",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
-  "firstPos" : 2057,
-  "secondPos" : 3443,
-  "firstEndPos" : 2134,
-  "secondEndPos" : 3517
+  "firstPos" : 1987,
+  "secondPos" : 3412,
+  "firstEndPos" : 2050,
+  "secondEndPos" : 3436
 }, {
   "firstType" : "const",
   "secondType" : "const",
@@ -6781,10 +5043,10 @@
   "secondLabel" : "const",
   "firstParentType" : "lexical_declaration",
   "secondParentType" : "lexical_declaration",
-  "firstPos" : 2057,
-  "secondPos" : 3443,
-  "firstEndPos" : 2062,
-  "secondEndPos" : 3448
+  "firstPos" : 1987,
+  "secondPos" : 3412,
+  "firstEndPos" : 1992,
+  "secondEndPos" : 3417
 }, {
   "firstType" : "variable_declarator",
   "secondType" : "variable_declarator",
@@ -6792,21 +5054,21 @@
   "secondLabel" : "",
   "firstParentType" : "lexical_declaration",
   "secondParentType" : "lexical_declaration",
-  "firstPos" : 2063,
-  "secondPos" : 3449,
-  "firstEndPos" : 2133,
-  "secondEndPos" : 3516
+  "firstPos" : 1993,
+  "secondPos" : 3418,
+  "firstEndPos" : 2049,
+  "secondEndPos" : 3435
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
+  "firstLabel" : "ctx",
+  "secondLabel" : "ctx",
   "firstParentType" : "variable_declarator",
   "secondParentType" : "variable_declarator",
-  "firstPos" : 2063,
-  "secondPos" : 3449,
-  "firstEndPos" : 2069,
-  "secondEndPos" : 3455
+  "firstPos" : 1993,
+  "secondPos" : 3418,
+  "firstEndPos" : 1996,
+  "secondEndPos" : 3421
 }, {
   "firstType" : "=",
   "secondType" : "=",
@@ -6814,10 +5076,10 @@
   "secondLabel" : "=",
   "firstParentType" : "variable_declarator",
   "secondParentType" : "variable_declarator",
-  "firstPos" : 2070,
-  "secondPos" : 3456,
-  "firstEndPos" : 2071,
-  "secondEndPos" : 3457
+  "firstPos" : 1997,
+  "secondPos" : 3422,
+  "firstEndPos" : 1998,
+  "secondEndPos" : 3423
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6825,21 +5087,21 @@
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
   "secondParentType" : "variable_declarator",
-  "firstPos" : 2072,
-  "secondPos" : 3458,
-  "firstEndPos" : 2133,
-  "secondEndPos" : 3516
+  "firstPos" : 1999,
+  "secondPos" : 3424,
+  "firstEndPos" : 2049,
+  "secondEndPos" : 3435
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
-  "firstLabel" : "resolveDartImport",
-  "secondLabel" : "dartPackageStrategy",
+  "firstLabel" : "makeCtx",
+  "secondLabel" : "makeCtx",
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
-  "firstPos" : 2072,
-  "secondPos" : 3458,
-  "firstEndPos" : 2089,
-  "secondEndPos" : 3477
+  "firstPos" : 1999,
+  "secondPos" : 3424,
+  "firstEndPos" : 2006,
+  "secondEndPos" : 3431
 }, {
   "firstType" : "arguments",
   "secondType" : "arguments",
@@ -6847,10 +5109,10 @@
   "secondLabel" : "",
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
-  "firstPos" : 2089,
-  "secondPos" : 3477,
-  "firstEndPos" : 2133,
-  "secondEndPos" : 3516
+  "firstPos" : 2006,
+  "secondPos" : 3431,
+  "firstEndPos" : 2049,
+  "secondEndPos" : 3435
 }, {
   "firstType" : "(",
   "secondType" : "(",
@@ -6858,131 +5120,43 @@
   "secondLabel" : "(",
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
-  "firstPos" : 2089,
-  "secondPos" : 3477,
-  "firstEndPos" : 2090,
-  "secondEndPos" : 3478
+  "firstPos" : 2006,
+  "secondPos" : 3431,
+  "firstEndPos" : 2007,
+  "secondEndPos" : 3432
 }, {
-  "firstType" : "string",
-  "secondType" : "string",
+  "firstType" : "array",
+  "secondType" : "array",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
-  "firstPos" : 2090,
-  "secondPos" : 3478,
-  "firstEndPos" : 2110,
-  "secondEndPos" : 3493
+  "firstPos" : 2007,
+  "secondPos" : 3432,
+  "firstEndPos" : 2048,
+  "secondEndPos" : 3434
 }, {
-  "firstType" : "\"",
-  "secondType" : "\"",
-  "firstLabel" : "\"",
-  "secondLabel" : "\"",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2090,
-  "secondPos" : 3478,
-  "firstEndPos" : 2091,
-  "secondEndPos" : 3479
+  "firstType" : "[",
+  "secondType" : "[",
+  "firstLabel" : "[",
+  "secondLabel" : "[",
+  "firstParentType" : "array",
+  "secondParentType" : "array",
+  "firstPos" : 2007,
+  "secondPos" : 3432,
+  "firstEndPos" : 2008,
+  "secondEndPos" : 3433
 }, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "'models/user.dart'",
-  "secondLabel" : "'models.dart'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2091,
-  "secondPos" : 3479,
-  "firstEndPos" : 2109,
-  "secondEndPos" : 3492
-}, {
-  "firstType" : "\"",
-  "secondType" : "\"",
-  "firstLabel" : "\"",
-  "secondLabel" : "\"",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2109,
-  "secondPos" : 3492,
-  "firstEndPos" : 2110,
-  "secondEndPos" : 3493
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2110,
-  "secondPos" : 3493,
-  "firstEndPos" : 2111,
-  "secondEndPos" : 3494
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2112,
-  "secondPos" : 3495,
-  "firstEndPos" : 2127,
-  "secondEndPos" : 3510
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2112,
-  "secondPos" : 3495,
-  "firstEndPos" : 2113,
-  "secondEndPos" : 3496
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "lib/main.dart",
-  "secondLabel" : "lib/main.dart",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2113,
-  "secondPos" : 3496,
-  "firstEndPos" : 2126,
-  "secondEndPos" : 3509
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2126,
-  "secondPos" : 3509,
-  "firstEndPos" : 2127,
-  "secondEndPos" : 3510
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2127,
-  "secondPos" : 3510,
-  "firstEndPos" : 2128,
-  "secondEndPos" : 3511
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "ctx",
-  "secondLabel" : "ctx",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2129,
-  "secondPos" : 3512,
-  "firstEndPos" : 2132,
-  "secondEndPos" : 3515
+  "firstType" : "]",
+  "secondType" : "]",
+  "firstLabel" : "]",
+  "secondLabel" : "]",
+  "firstParentType" : "array",
+  "secondParentType" : "array",
+  "firstPos" : 2047,
+  "secondPos" : 3433,
+  "firstEndPos" : 2048,
+  "secondEndPos" : 3434
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -6990,10 +5164,10 @@
   "secondLabel" : ")",
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
-  "firstPos" : 2132,
-  "secondPos" : 3515,
-  "firstEndPos" : 2133,
-  "secondEndPos" : 3516
+  "firstPos" : 2048,
+  "secondPos" : 3434,
+  "firstEndPos" : 2049,
+  "secondEndPos" : 3435
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -7001,197 +5175,10 @@
   "secondLabel" : ";",
   "firstParentType" : "lexical_declaration",
   "secondParentType" : "lexical_declaration",
-  "firstPos" : 2133,
-  "secondPos" : 3516,
-  "firstEndPos" : 2134,
-  "secondEndPos" : 3517
-}, {
-  "firstType" : "expression_statement",
-  "secondType" : "expression_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 2291,
-  "secondPos" : 3988,
-  "firstEndPos" : 2354,
-  "secondEndPos" : 4041
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 2291,
-  "secondPos" : 2966,
-  "firstEndPos" : 2342,
-  "secondEndPos" : 2980
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "expect",
-  "secondLabel" : "expect",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2291,
-  "secondPos" : 2966,
-  "firstEndPos" : 2297,
-  "secondEndPos" : 2972
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2297,
-  "secondPos" : 4010,
-  "firstEndPos" : 2342,
-  "secondEndPos" : 4040
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2297,
-  "secondPos" : 2972,
-  "firstEndPos" : 2298,
-  "secondEndPos" : 2973
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "binary_expression",
-  "secondParentType" : "arguments",
-  "firstPos" : 2298,
-  "secondPos" : 3995,
-  "firstEndPos" : 2304,
-  "secondEndPos" : 4001
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "arguments",
-  "firstPos" : 2317,
-  "secondPos" : 3220,
-  "firstEndPos" : 2323,
-  "secondEndPos" : 3226
-}, {
-  "firstType" : "property_identifier",
-  "secondType" : "property_identifier",
-  "firstLabel" : "kind",
-  "secondLabel" : "kind",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "pair",
-  "firstPos" : 2325,
-  "secondPos" : 4013,
-  "firstEndPos" : 2329,
-  "secondEndPos" : 4017
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "binary_expression",
-  "secondParentType" : "pair",
-  "firstPos" : 2334,
-  "secondPos" : 4019,
-  "firstEndPos" : 2341,
-  "secondEndPos" : 4026
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2334,
-  "secondPos" : 4019,
-  "firstEndPos" : 2335,
-  "secondEndPos" : 4020
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "files",
-  "secondLabel" : "files",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2335,
-  "secondPos" : 4020,
-  "firstEndPos" : 2340,
-  "secondEndPos" : 4025
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2340,
-  "secondPos" : 4025,
-  "firstEndPos" : 2341,
-  "secondEndPos" : 4026
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2341,
-  "secondPos" : 3226,
-  "firstEndPos" : 2342,
-  "secondEndPos" : 3227
-}, {
-  "firstType" : ".",
-  "secondType" : ".",
-  "firstLabel" : ".",
-  "secondLabel" : ".",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 2342,
-  "secondPos" : 3227,
-  "firstEndPos" : 2343,
-  "secondEndPos" : 3228
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2347,
-  "secondPos" : 3235,
-  "firstEndPos" : 2348,
-  "secondEndPos" : 3236
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2352,
-  "secondPos" : 3017,
-  "firstEndPos" : 2353,
-  "secondEndPos" : 3018
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "expression_statement",
-  "secondParentType" : "expression_statement",
-  "firstPos" : 2353,
-  "secondPos" : 3018,
-  "firstEndPos" : 2354,
-  "secondEndPos" : 3019
+  "firstPos" : 2049,
+  "secondPos" : 3435,
+  "firstEndPos" : 2050,
+  "secondEndPos" : 3436
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -7633,391 +5620,6 @@
   "firstEndPos" : 2446,
   "secondEndPos" : 3642
 }, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 2453,
-  "secondPos" : 3412,
-  "firstEndPos" : 2477,
-  "secondEndPos" : 3436
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2453,
-  "secondPos" : 3412,
-  "firstEndPos" : 2458,
-  "secondEndPos" : 3417
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2459,
-  "secondPos" : 3418,
-  "firstEndPos" : 2476,
-  "secondEndPos" : 3435
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "ctx",
-  "secondLabel" : "ctx",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2459,
-  "secondPos" : 3418,
-  "firstEndPos" : 2462,
-  "secondEndPos" : 3421
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2463,
-  "secondPos" : 3422,
-  "firstEndPos" : 2464,
-  "secondEndPos" : 3423
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2465,
-  "secondPos" : 3424,
-  "firstEndPos" : 2476,
-  "secondEndPos" : 3435
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "makeCtx",
-  "secondLabel" : "makeCtx",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2465,
-  "secondPos" : 3424,
-  "firstEndPos" : 2472,
-  "secondEndPos" : 3431
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2472,
-  "secondPos" : 3431,
-  "firstEndPos" : 2476,
-  "secondEndPos" : 3435
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2472,
-  "secondPos" : 3431,
-  "firstEndPos" : 2473,
-  "secondEndPos" : 3432
-}, {
-  "firstType" : "array",
-  "secondType" : "array",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2473,
-  "secondPos" : 3432,
-  "firstEndPos" : 2475,
-  "secondEndPos" : 3434
-}, {
-  "firstType" : "[",
-  "secondType" : "[",
-  "firstLabel" : "[",
-  "secondLabel" : "[",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 2473,
-  "secondPos" : 3432,
-  "firstEndPos" : 2474,
-  "secondEndPos" : 3433
-}, {
-  "firstType" : "]",
-  "secondType" : "]",
-  "firstLabel" : "]",
-  "secondLabel" : "]",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 2474,
-  "secondPos" : 3433,
-  "firstEndPos" : 2475,
-  "secondEndPos" : 3434
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2475,
-  "secondPos" : 3434,
-  "firstEndPos" : 2476,
-  "secondEndPos" : 3435
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2476,
-  "secondPos" : 3435,
-  "firstEndPos" : 2477,
-  "secondEndPos" : 3436
-}, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 2484,
-  "secondPos" : 3649,
-  "firstEndPos" : 2554,
-  "secondEndPos" : 3729
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2484,
-  "secondPos" : 3649,
-  "firstEndPos" : 2489,
-  "secondEndPos" : 3654
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2490,
-  "secondPos" : 3655,
-  "firstEndPos" : 2553,
-  "secondEndPos" : 3728
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2490,
-  "secondPos" : 3655,
-  "firstEndPos" : 2496,
-  "secondEndPos" : 3661
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2497,
-  "secondPos" : 3662,
-  "firstEndPos" : 2498,
-  "secondEndPos" : 3663
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2499,
-  "secondPos" : 3664,
-  "firstEndPos" : 2553,
-  "secondEndPos" : 3728
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "resolveDartImport",
-  "secondLabel" : "dartPackageStrategy",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2499,
-  "secondPos" : 3664,
-  "firstEndPos" : 2516,
-  "secondEndPos" : 3683
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2516,
-  "secondPos" : 3683,
-  "firstEndPos" : 2553,
-  "secondEndPos" : 3728
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2516,
-  "secondPos" : 3683,
-  "firstEndPos" : 2517,
-  "secondEndPos" : 3684
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2517,
-  "secondPos" : 3684,
-  "firstEndPos" : 2530,
-  "secondEndPos" : 3697
-}, {
-  "firstType" : "\"",
-  "secondType" : "\"",
-  "firstLabel" : "\"",
-  "secondLabel" : "\"",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2517,
-  "secondPos" : 3684,
-  "firstEndPos" : 2518,
-  "secondEndPos" : 3685
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "'dart:core'",
-  "secondLabel" : "'dart:core'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2518,
-  "secondPos" : 3685,
-  "firstEndPos" : 2529,
-  "secondEndPos" : 3696
-}, {
-  "firstType" : "\"",
-  "secondType" : "\"",
-  "firstLabel" : "\"",
-  "secondLabel" : "\"",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2529,
-  "secondPos" : 3696,
-  "firstEndPos" : 2530,
-  "secondEndPos" : 3697
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2530,
-  "secondPos" : 3697,
-  "firstEndPos" : 2531,
-  "secondEndPos" : 3698
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2532,
-  "secondPos" : 3699,
-  "firstEndPos" : 2547,
-  "secondEndPos" : 3714
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2532,
-  "secondPos" : 3699,
-  "firstEndPos" : 2533,
-  "secondEndPos" : 3700
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "lib/main.dart",
-  "secondLabel" : "lib/main.dart",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2533,
-  "secondPos" : 3700,
-  "firstEndPos" : 2546,
-  "secondEndPos" : 3713
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2546,
-  "secondPos" : 3713,
-  "firstEndPos" : 2547,
-  "secondEndPos" : 3714
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2547,
-  "secondPos" : 3714,
-  "firstEndPos" : 2548,
-  "secondEndPos" : 3715
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2552,
-  "secondPos" : 3727,
-  "firstEndPos" : 2553,
-  "secondEndPos" : 3728
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2553,
-  "secondPos" : 3728,
-  "firstEndPos" : 2554,
-  "secondEndPos" : 3729
-}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -8414,325 +6016,6 @@
   "firstEndPos" : 2685,
   "secondEndPos" : 3894
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2704,
-  "secondPos" : 4712,
-  "firstEndPos" : 2715,
-  "secondEndPos" : 4723
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "makeCtx",
-  "secondLabel" : "makeCtx",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2704,
-  "secondPos" : 4712,
-  "firstEndPos" : 2711,
-  "secondEndPos" : 4719
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2711,
-  "secondPos" : 4719,
-  "firstEndPos" : 2715,
-  "secondEndPos" : 4723
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2711,
-  "secondPos" : 4719,
-  "firstEndPos" : 2712,
-  "secondEndPos" : 4720
-}, {
-  "firstType" : "array",
-  "secondType" : "array",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2712,
-  "secondPos" : 4720,
-  "firstEndPos" : 2714,
-  "secondEndPos" : 4722
-}, {
-  "firstType" : "[",
-  "secondType" : "[",
-  "firstLabel" : "[",
-  "secondLabel" : "[",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 2712,
-  "secondPos" : 4720,
-  "firstEndPos" : 2713,
-  "secondEndPos" : 4721
-}, {
-  "firstType" : "]",
-  "secondType" : "]",
-  "firstLabel" : "]",
-  "secondLabel" : "]",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 2713,
-  "secondPos" : 4721,
-  "firstEndPos" : 2714,
-  "secondEndPos" : 4722
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2714,
-  "secondPos" : 4722,
-  "firstEndPos" : 2715,
-  "secondEndPos" : 4723
-}, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 2723,
-  "secondPos" : 3901,
-  "firstEndPos" : 2793,
-  "secondEndPos" : 3981
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2723,
-  "secondPos" : 3901,
-  "firstEndPos" : 2728,
-  "secondEndPos" : 3906
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2729,
-  "secondPos" : 3907,
-  "firstEndPos" : 2792,
-  "secondEndPos" : 3980
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "result",
-  "secondLabel" : "result",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2729,
-  "secondPos" : 3907,
-  "firstEndPos" : 2735,
-  "secondEndPos" : 3913
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2736,
-  "secondPos" : 3914,
-  "firstEndPos" : 2737,
-  "secondEndPos" : 3915
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2738,
-  "secondPos" : 3916,
-  "firstEndPos" : 2792,
-  "secondEndPos" : 3980
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "resolveDartImport",
-  "secondLabel" : "dartPackageStrategy",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2738,
-  "secondPos" : 3916,
-  "firstEndPos" : 2755,
-  "secondEndPos" : 3935
-}, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2755,
-  "secondPos" : 3935,
-  "firstEndPos" : 2792,
-  "secondEndPos" : 3980
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2755,
-  "secondPos" : 3935,
-  "firstEndPos" : 2756,
-  "secondEndPos" : 3936
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2756,
-  "secondPos" : 3936,
-  "firstEndPos" : 2769,
-  "secondEndPos" : 3949
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2756,
-  "secondPos" : 3936,
-  "firstEndPos" : 2757,
-  "secondEndPos" : 3937
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\"dart:core\"",
-  "secondLabel" : "\"dart:core\"",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2757,
-  "secondPos" : 3937,
-  "firstEndPos" : 2768,
-  "secondEndPos" : 3948
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2768,
-  "secondPos" : 3948,
-  "firstEndPos" : 2769,
-  "secondEndPos" : 3949
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2769,
-  "secondPos" : 3949,
-  "firstEndPos" : 2770,
-  "secondEndPos" : 3950
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2771,
-  "secondPos" : 3951,
-  "firstEndPos" : 2786,
-  "secondEndPos" : 3966
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2771,
-  "secondPos" : 3951,
-  "firstEndPos" : 2772,
-  "secondEndPos" : 3952
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "lib/main.dart",
-  "secondLabel" : "lib/main.dart",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2772,
-  "secondPos" : 3952,
-  "firstEndPos" : 2785,
-  "secondEndPos" : 3965
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 2785,
-  "secondPos" : 3965,
-  "firstEndPos" : 2786,
-  "secondEndPos" : 3966
-}, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2786,
-  "secondPos" : 3966,
-  "firstEndPos" : 2787,
-  "secondEndPos" : 3967
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 2791,
-  "secondPos" : 3979,
-  "firstEndPos" : 2792,
-  "secondEndPos" : 3980
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2792,
-  "secondPos" : 3980,
-  "firstEndPos" : 2793,
-  "secondEndPos" : 3981
-}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -8740,9 +6023,9 @@
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 2800,
-  "secondPos" : 4814,
+  "secondPos" : 3988,
   "firstEndPos" : 2826,
-  "secondEndPos" : 4840
+  "secondEndPos" : 4041
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -8751,9 +6034,9 @@
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 2800,
-  "secondPos" : 4814,
+  "secondPos" : 3988,
   "firstEndPos" : 2825,
-  "secondEndPos" : 4839
+  "secondEndPos" : 4040
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -8762,9 +6045,9 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 2800,
-  "secondPos" : 4814,
+  "secondPos" : 3988,
   "firstEndPos" : 2823,
-  "secondEndPos" : 4837
+  "secondEndPos" : 4010
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -8773,9 +6056,9 @@
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
   "firstPos" : 2800,
-  "secondPos" : 4814,
+  "secondPos" : 3988,
   "firstEndPos" : 2814,
-  "secondEndPos" : 4828
+  "secondEndPos" : 4002
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -8784,9 +6067,9 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 2800,
-  "secondPos" : 4814,
+  "secondPos" : 3988,
   "firstEndPos" : 2806,
-  "secondEndPos" : 4820
+  "secondEndPos" : 3994
 }, {
   "firstType" : "arguments",
   "secondType" : "arguments",
@@ -8795,9 +6078,9 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 2806,
-  "secondPos" : 4820,
+  "secondPos" : 3994,
   "firstEndPos" : 2814,
-  "secondEndPos" : 4828
+  "secondEndPos" : 4002
 }, {
   "firstType" : "(",
   "secondType" : "(",
@@ -8806,9 +6089,9 @@
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
   "firstPos" : 2806,
-  "secondPos" : 4820,
+  "secondPos" : 3994,
   "firstEndPos" : 2807,
-  "secondEndPos" : 4821
+  "secondEndPos" : 3995
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -8817,9 +6100,9 @@
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
   "firstPos" : 2807,
-  "secondPos" : 4821,
+  "secondPos" : 3995,
   "firstEndPos" : 2813,
-  "secondEndPos" : 4827
+  "secondEndPos" : 4001
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -8828,9 +6111,9 @@
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
   "firstPos" : 2813,
-  "secondPos" : 4827,
+  "secondPos" : 4001,
   "firstEndPos" : 2814,
-  "secondEndPos" : 4828
+  "secondEndPos" : 4002
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -8839,20 +6122,20 @@
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
   "firstPos" : 2814,
-  "secondPos" : 4828,
+  "secondPos" : 4002,
   "firstEndPos" : 2815,
-  "secondEndPos" : 4829
+  "secondEndPos" : 4003
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
   "firstLabel" : "toBeNull",
-  "secondLabel" : "toBeNull",
+  "secondLabel" : "toEqual",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
   "firstPos" : 2815,
-  "secondPos" : 4829,
+  "secondPos" : 4003,
   "firstEndPos" : 2823,
-  "secondEndPos" : 4837
+  "secondEndPos" : 4010
 }, {
   "firstType" : "arguments",
   "secondType" : "arguments",
@@ -8861,9 +6144,9 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 2823,
-  "secondPos" : 4837,
+  "secondPos" : 4010,
   "firstEndPos" : 2825,
-  "secondEndPos" : 4839
+  "secondEndPos" : 4040
 }, {
   "firstType" : "(",
   "secondType" : "(",
@@ -8872,9 +6155,9 @@
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
   "firstPos" : 2823,
-  "secondPos" : 4837,
+  "secondPos" : 4010,
   "firstEndPos" : 2824,
-  "secondEndPos" : 4838
+  "secondEndPos" : 4011
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -8883,9 +6166,9 @@
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
   "firstPos" : 2824,
-  "secondPos" : 4838,
+  "secondPos" : 4039,
   "firstEndPos" : 2825,
-  "secondEndPos" : 4839
+  "secondEndPos" : 4040
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -8894,9 +6177,9 @@
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 2825,
-  "secondPos" : 4839,
+  "secondPos" : 4040,
   "firstEndPos" : 2826,
-  "secondEndPos" : 4840
+  "secondEndPos" : 4041
 }, {
   "firstType" : "}",
   "secondType" : "}",

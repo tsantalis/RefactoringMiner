@@ -8221,6 +8221,21 @@ public class ReplacementAlgorithm {
 		if(operationBodyMapper.anonymousClassMatchedByParentMapper(anonymousClassDeclaration1, anonymousClassDeclaration2)) {
 			return replacementAdded;
 		}
+		if(operationBodyMapper.skipsDataObjectDiffs()) {
+			UMLAnonymousClass anonymousClass1 = operationBodyMapper.findAnonymousClass1(anonymousClassDeclaration1);
+			UMLAnonymousClass anonymousClass2 = operationBodyMapper.findAnonymousClass2(anonymousClassDeclaration2);
+			if(dataObjects(anonymousClass1, anonymousClass2)) {
+				//the data objects of tests are not diffed but matched within their statements, so the objects matched through their names
+				//are replaced without comparing the statements around them, i.e., each of the expected calls { name: 'lineTo', args: [...] }
+				if(matchedThroughNames(statement1, statement2, anonymousClassDeclaration1, anonymousClassDeclaration2, anonymousClass1, anonymousClass2, container1, container2) &&
+						!anonymousClassDeclaration1.toString().replaceAll("\\s+", "").equals(anonymousClassDeclaration2.toString().replaceAll("\\s+", ""))) {
+					Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
+					replacementInfo.addReplacement(replacement);
+					replacementAdded = true;
+				}
+				return replacementAdded;
+			}
+		}
 		if(replacementInfo.getRawDistance() == 0 || statementWithoutAnonymous1.equals(statementWithoutAnonymous2) || anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString()) ||
 				identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements(), LANG1, LANG2) ||
 				extractedToVariable(statementWithoutAnonymous1, statementWithoutAnonymous2, statement1, statement2, replacementInfo) ||
@@ -8282,13 +8297,19 @@ public class ReplacementAlgorithm {
 			//with the same names at the same position are diffs, if the statement pair is mapped without them
 			UMLAnonymousClass anonymousClass1 = operationBodyMapper.findAnonymousClass1(anonymousClassDeclaration1);
 			UMLAnonymousClass anonymousClass2 = operationBodyMapper.findAnonymousClass2(anonymousClassDeclaration2);
-			if(matchedThroughNames(statement1, statement2, anonymousClassDeclaration1, anonymousClassDeclaration2, anonymousClass1, anonymousClass2, container1, container2)) {
+			if(!operationBodyMapper.skipsDataObjectDiffs() &&
+					matchedThroughNames(statement1, statement2, anonymousClassDeclaration1, anonymousClassDeclaration2, anonymousClass1, anonymousClass2, container1, container2)) {
 				UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 				anonymousClassDiff.process();
 				addPendingAnonymousClassDiff(statement1, statement2, anonymousClassDiff, operationBodyMapper, parentMapper);
 			}
 		}
 		return replacementAdded;
+	}
+
+	//objects without operations, i.e., TypeScript object literals and Python dictionaries holding data
+	private static boolean dataObjects(UMLAnonymousClass anonymousClass1, UMLAnonymousClass anonymousClass2) {
+		return anonymousClass1 != null && anonymousClass2 != null && anonymousClass1.getOperations().isEmpty() && anonymousClass2.getOperations().isEmpty();
 	}
 
 	private static boolean matchedThroughNames(AbstractCodeFragment statement1, AbstractCodeFragment statement2,

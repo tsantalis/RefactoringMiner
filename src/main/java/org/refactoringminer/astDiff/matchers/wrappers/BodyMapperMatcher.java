@@ -62,6 +62,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore,isPartOfExtractedMethod);
     }
     private void processBodyMapper(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
+        //the functions declared in the callbacks of test suites and tests, matched by the model
+        for (UMLOperationBodyMapper nestedOperationMapper : bodyMapper.getNestedOperationMappers()) {
+            new MethodMatcher(optimizationData, nestedOperationMapper, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+        }
         if (bodyMapper.getAnonymousClassDiffs() != null) {
             for (UMLAnonymousClassDiff anonymousClassDiff : bodyMapper.getAnonymousClassDiffs()) {
                 new ClassAttrMatcher(optimizationData, anonymousClassDiff, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
@@ -1361,6 +1365,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 processArrowFunction(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
                 return;
             }
+            else if(matchedThroughLambdaMappers(abstractCodeMapping, srcStatementNode, dstStatementNode)) {
+                //the callbacks of test suites and tests are matched by their mappers, and the rest of the statement (call, arguments, lambda, parameters) by its leaves
+                mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
+                    processBodyMapper(srcTree, dstTree, lambdaMapper, mappingStore, isPartOfExtractedMethod);
+                }
+                matchLeavesOutsideLambdas(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
+                matchParentStatements(srcStatementNode, dstStatementNode, abstractCodeMapping, bodyMapper, mappingStore);
+                return;
+            }
             else if(containsLambdaMapperWithNonMappedLeaves(abstractCodeMapping, srcStatementNode, dstStatementNode)) {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
                 Pair<Tree,Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode,LANG1.SEMICOLON,LANG2.SEMICOLON);
@@ -1816,6 +1830,97 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    //the matched test suites describe('...', () => {...}) and tests it('...', () => {...}) whose callbacks are matched by their mappers in the model
+    private static boolean matchedThroughLambdaMappers(AbstractCodeMapping abstractCodeMapping, Tree srcStatementNode, Tree dstStatementNode) {
+        if(!srcStatementNode.isIsoStructuralTo(dstStatementNode)) {
+            for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
+                if(lambdaMapper.isTestCallbackMapper())
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    //the leaves of a statement matched through its lambda mappers that are outside the lambda bodies, i.e., the lambdas, their parameters
+    //and the arguments of the call other than the callbacks, while the leaves within the lambda bodies are left to the lambda mappers
+    private void matchLeavesOutsideLambdas(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
+        List<LocationInfo> lambdas1 = new ArrayList<>();
+        List<LocationInfo> lambdas2 = new ArrayList<>();
+        for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
+            if(lambdaMapper.getOperationSignatureDiff().isPresent()) {
+                LocationInfo body1 = bodyLocation(lambdaMapper.getOperationSignatureDiff().get().getRemovedOperation());
+                LocationInfo body2 = bodyLocation(lambdaMapper.getOperationSignatureDiff().get().getAddedOperation());
+                if(body1 != null)
+                    lambdas1.add(body1);
+                if(body2 != null)
+                    lambdas2.add(body2);
+            }
+        }
+        //the code outside the lambda bodies is usually unchanged (i.e., the call of a test suite describe('...', () => {...})),
+        //so its nodes are paired in order, without matching the whole statement including the lambda bodies
+        List<Tree> outside1 = new ArrayList<>();
+        List<Tree> outside2 = new ArrayList<>();
+        nodesOutside(srcStatementNode, lambdas1, outside1);
+        nodesOutside(dstStatementNode, lambdas2, outside2);
+        if (identicalNodes(outside1, outside2)) {
+            for (int i = 0; i < outside1.size(); i++) {
+                if (unmapped(mappingStore.getDsts(outside1.get(i))) && unmapped(mappingStore.getSrcs(outside2.get(i))))
+                    mappingStore.addMapping(outside1.get(i), outside2.get(i));
+            }
+            return;
+        }
+        ExtendedMultiMappingStore leafMappings = new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2);
+        new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode, dstStatementNode, leafMappings);
+        for (Mapping mapping : leafMappings) {
+            if (unmapped(mappingStore.getDsts(mapping.first)) && unmapped(mappingStore.getSrcs(mapping.second)) &&
+                    !within(mapping.first, lambdas1) && !within(mapping.second, lambdas2))
+                mappingStore.addMapping(mapping.first, mapping.second);
+        }
+    }
+
+    //the nodes of a statement in pre-order, without the nodes strictly within the lambda bodies
+    private static void nodesOutside(Tree node, List<LocationInfo> lambdaBodies, List<Tree> nodes) {
+        if (within(node, lambdaBodies))
+            return;
+        nodes.add(node);
+        for (Tree child : node.getChildren())
+            nodesOutside(child, lambdaBodies, nodes);
+    }
+
+    private static boolean identicalNodes(List<Tree> nodes1, List<Tree> nodes2) {
+        if (nodes1.size() != nodes2.size())
+            return false;
+        for (int i = 0; i < nodes1.size(); i++) {
+            if (!nodes1.get(i).getType().name.equals(nodes2.get(i).getType().name) || !nodes1.get(i).getLabel().equals(nodes2.get(i).getLabel()))
+                return false;
+        }
+        return true;
+    }
+
+    //the body (block or expression) of a lambda, or of the operation of an anonymous class matched with a lambda
+    private static LocationInfo bodyLocation(gr.uom.java.xmi.VariableDeclarationContainer container) {
+        if(container instanceof LambdaExpressionObject lambda) {
+            if(lambda.getBody() != null)
+                return lambda.getBody().getCompositeStatement().getLocationInfo();
+            if(lambda.getExpression() != null)
+                return lambda.getExpression().getLocationInfo();
+        }
+        else if(container instanceof gr.uom.java.xmi.UMLOperation operation && operation.getBody() != null) {
+            return operation.getBody().getCompositeStatement().getLocationInfo();
+        }
+        return null;
+    }
+
+    //strictly within a lambda body, as the nodes spanning the whole body are the lambda itself, i.e., lambda_literal and annotated_lambda in Kotlin
+    private static boolean within(Tree node, List<LocationInfo> locations) {
+        for (LocationInfo location : locations) {
+            if (node.getPos() >= location.getStartOffset() && node.getEndPos() <= location.getEndOffset() &&
+                    (node.getPos() != location.getStartOffset() || node.getEndPos() != location.getEndOffset()))
+                return true;
         }
         return false;
     }

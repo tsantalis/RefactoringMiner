@@ -252,6 +252,23 @@ public class ModuleContainer implements VariableDeclarationContainer {
 		return anonymousClassList;
 	}
 
+	//the anonymous classes of a module (i.e., the object literals of a test file) are many, so they are looked up by their location
+	private Map<LocationInfo, UMLAnonymousClass> anonymousClassIndex;
+	private int indexedAnonymousClasses = -1;
+
+	@Override
+	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
+		List<UMLAnonymousClass> anonymousClasses = getAnonymousClassList();
+		if(anonymousClassIndex == null || indexedAnonymousClasses != anonymousClasses.size()) {
+			anonymousClassIndex = new LinkedHashMap<>();
+			for(UMLAnonymousClass anonymousClass : anonymousClasses) {
+				anonymousClassIndex.putIfAbsent(anonymousClass.getLocationInfo(), anonymousClass);
+			}
+			indexedAnonymousClasses = anonymousClasses.size();
+		}
+		return anonymousClassIndex.get(anonymousClassDeclaration.getLocationInfo());
+	}
+
 	public List<UMLAnonymousClass> getAnonymousClassListIncludingNested() {
 		List<UMLAnonymousClass> list = new ArrayList<UMLAnonymousClass>(anonymousClassList);
 		for(UMLOperation nested : nestedOperations) {

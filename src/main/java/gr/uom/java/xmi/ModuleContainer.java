@@ -31,6 +31,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	//all comments of the module, including the ones distributed to the code elements of the module
 	private List<UMLComment> allComments = new ArrayList<>();
 	private List<UMLClass> nestedClasses = new ArrayList<>();
+	private List<UMLClass> nestedClassesDeclaredInCallbacks = new ArrayList<>();
 	private List<UMLOperation> nestedOperations = new ArrayList<>();
 	private List<UMLAttribute> nestedAttributes = new ArrayList<>();
 	private List<UMLImport> nestedImports = new ArrayList<>();
@@ -155,6 +156,26 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	public void addNestedClass(UMLClass nestedClass) {
 		this.nestedClasses.add(nestedClass);
+	}
+
+	//the types declared in the callbacks of the module statements, i.e., in describe('...', () => {...}), kept only when their names are unique in the file,
+	//as the types with the same name declared in different callbacks (or functions) cannot be told apart by the diff of the classes
+	public void addNestedClassDeclaredInCallback(UMLClass nestedClass) {
+		this.nestedClassesDeclaredInCallbacks.add(nestedClass);
+	}
+
+	public boolean hasNestedClassesDeclaredInCallbacks() {
+		return !nestedClassesDeclaredInCallbacks.isEmpty();
+	}
+
+	//typeDeclarations: the number of the type declarations of the file with each name, at any depth
+	public void addUniqueNestedClassesDeclaredInCallbacks(Map<String, Integer> typeDeclarations) {
+		for(UMLClass nestedClass : nestedClassesDeclaredInCallbacks) {
+			if(typeDeclarations.getOrDefault(nestedClass.getNonQualifiedName(), 0) == 1) {
+				nestedClasses.add(nestedClass);
+			}
+		}
+		nestedClassesDeclaredInCallbacks.clear();
 	}
 
 	public List<UMLClass> getNestedClasses() {

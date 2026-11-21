@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,13 @@ import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstParam;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateMethod;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstParamOrTsParamProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
@@ -150,6 +154,11 @@ public class TypeScriptFileProcessor {
 						fileContent
 						);
 				moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
+				if(moduleContainer.hasNestedClassesDeclaredInCallbacks()) {
+					Map<String, Integer> typeDeclarations = new HashMap<>();
+					countTypeDeclarations(module, typeDeclarations);
+					moduleContainer.addUniqueNestedClassesDeclaredInCallbacks(typeDeclarations);
+				}
 				moduleClass.setContainer(moduleContainer);
 				moduleClass.setVisibility(Visibility.PUBLIC);
 				moduleClass.operations.addAll(moduleContainer.getNestedOperations());
@@ -385,5 +394,18 @@ public class TypeScriptFileProcessor {
 		String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
 		operation.setActualSignature(text);
 		return operation;
+	}
+
+	//the number of the interfaces and type aliases declared in the file with each name, at any depth
+	private static void countTypeDeclarations(ISwc4jAst node, Map<String, Integer> typeDeclarations) {
+		if(node instanceof Swc4jAstTsInterfaceDecl interfaceDecl) {
+			typeDeclarations.merge(interfaceDecl.getId().getSym(), 1, Integer::sum);
+		}
+		else if(node instanceof Swc4jAstTsTypeAliasDecl typeAliasDecl) {
+			typeDeclarations.merge(typeAliasDecl.getId().getSym(), 1, Integer::sum);
+		}
+		for(ISwc4jAst child : node.getChildNodes()) {
+			countTypeDeclarations(child, typeDeclarations);
+		}
 	}
 }

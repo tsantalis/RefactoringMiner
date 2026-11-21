@@ -1319,6 +1319,17 @@ public class TypeScriptOperationBody extends OperationBody {
 			if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
 				((UMLOperation)lambda.getOwner()).addNestedClass(umlClass);
 			}
+			else if(!umlClass.isObject()) {
+				//the types declared in the callbacks of the module statements, i.e., in describe('...', () => {...}), at any depth of nested callbacks
+				//(not the object literals, whose differences are not computed in the callbacks of the tests)
+				VariableDeclarationContainer owner = lambda.getOwner();
+				while(owner instanceof LambdaExpressionObject ownerLambda) {
+					owner = ownerLambda.getOwner();
+				}
+				if(owner instanceof ModuleContainer module) {
+					module.addNestedClassDeclaredInCallback(umlClass);
+				}
+			}
 		}
 		else if(container instanceof ModuleContainer) {
 			((ModuleContainer)container).addNestedClass(umlClass);

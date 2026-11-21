@@ -1208,7 +1208,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     }
 
     //the anonymous classes without operations matched through their attributes within the fragments of the mapping
-    private List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs(AbstractCodeMapping mapping, boolean initializer) {
+    //bodyMapper: the mapper holding the mapping, i.e., the mapper of a lambda or of a test suite, whose anonymous class diffs are matched within the mapping
+    private List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs(AbstractCodeMapping mapping, UMLOperationBodyMapper bodyMapper, boolean initializer) {
         List<UMLAnonymousClassDiff> diffs = new ArrayList<>();
         if (initializer && (!mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER) ||
                 !mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER)))
@@ -1231,7 +1232,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode,dstStatementNode,statementMappings);
         for (Mapping mapping : statementMappings) {
             if (!withinAnonymousClass(mapping, matchedAnonymousClassDiffs) ||
-                    (unmapped(mappingStore.getDsts(mapping.first)) && unmapped(mappingStore.getSrcs(mapping.second))))
+                    (unmapped(mappingStore.getDsts(mapping.first)) && unmapped(mappingStore.getSrcs(mapping.second)) &&
+                    withinSameAnonymousClassDiff(mapping, matchedAnonymousClassDiffs)))
                 mappingStore.addMapping(mapping.first, mapping.second);
         }
     }
@@ -1332,6 +1334,19 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
             return innermost;
         }
+    }
+
+    //the unmapped leaves within an anonymous class matched by the model are completed only with the leaves within the anonymous class it is matched with,
+    //i.e., the properties of the rows of it.each([...]) tables are not paired with the properties of other rows
+    private static boolean withinSameAnonymousClassDiff(Mapping mapping, List<UMLAnonymousClassDiff> anonymousClassDiffs) {
+        for (UMLAnonymousClassDiff anonymousClassDiff : anonymousClassDiffs) {
+            LocationInfo location1 = anonymousClassDiff.getOriginalClass().getLocationInfo();
+            LocationInfo location2 = anonymousClassDiff.getNextClass().getLocationInfo();
+            if (mapping.first.getPos() >= location1.getStartOffset() && mapping.first.getEndPos() <= location1.getEndOffset() &&
+                    mapping.second.getPos() >= location2.getStartOffset() && mapping.second.getEndPos() <= location2.getEndOffset())
+                return true;
+        }
+        return false;
     }
 
     private static boolean withinAnonymousClass(Mapping mapping, List<UMLAnonymousClassDiff> anonymousClassDiffs) {
@@ -1549,7 +1564,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if (_abstractExpWithNonCompositeOwner || _leafExp) {
             //the initializers with anonymous classes without operations matched through their attributes are not matched again as leaves in the last step,
             //which overrides the mappings of their attributes, i.e., the object literal of StyleSheet.create({...})
-            List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs = matchedAnonymousClassDiffs(abstractCodeMapping, true);
+            List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs = matchedAnonymousClassDiffs(abstractCodeMapping, bodyMapper, true);
             //the initializers of the attributes of an anonymous class are within the statement mapped in the parent mapper, so they only complete its unmapped leaves,
             //i.e., body: JSON.stringify({ origin: ... }) -> body: JSON.stringify(this.buildRequestBody(origin, destination)) keeps origin mapped in the extracted method
             if (declaredInAnonymousClass(bodyMapper))
@@ -1559,7 +1574,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             else
                 matchLeavesAroundAnonymousClasses(srcTree, dstTree, srcStatementNode, dstStatementNode, matchedAnonymousClassDiffs, mappingStore);
         } else {
-            List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs = matchedAnonymousClassDiffs(abstractCodeMapping, false);
+            List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs = matchedAnonymousClassDiffs(abstractCodeMapping, bodyMapper, false);
             if (!matchedAnonymousClassDiffs.isEmpty())
                 matchLeavesAroundAnonymousClasses(srcTree, dstTree, srcStatementNode, dstStatementNode, matchedAnonymousClassDiffs, mappingStore);
             else if (!matchCallReplacedWithReturnedExpression(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore))

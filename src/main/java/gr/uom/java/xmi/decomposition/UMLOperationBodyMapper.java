@@ -2808,7 +2808,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		LeafMapping mapping = createLeafMapping(suite1, suite2, new LinkedHashMap<String, String>(), true, true);
 		addMapping(mapping);
 		if(changedTestCallback(suite1, suite2)) {
-			mapping.addLambdaMappers(List.of(new UMLOperationBodyMapper(suite1, suite2, this)));
+			UMLOperationBodyMapper suiteMapper = new UMLOperationBodyMapper(suite1, suite2, this);
+			suiteMapper.matchNestedOperations(suite1.getLambdas().get(0), suite2.getLambdas().get(0));
+			mapping.addLambdaMappers(List.of(suiteMapper));
 		}
 	}
 
@@ -2857,6 +2859,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		leaves1.removeIf(tests1::contains);
 		leaves2.removeIf(tests2::contains);
 		processCompositeStatements(leaves1, leaves2, composite1.getInnerNodes(), composite2.getInnerNodes());
+		diffDataObjectsOfMappedStatements();
+	}
+
+	//the data objects of the mapped statements of a test callback, whose diffs are skipped while matching the statements
+	private void diffDataObjectsOfMappedStatements() throws RefactoringMinerTimedOutException {
+		for(AbstractCodeMapping mapping : new ArrayList<>(mappings)) {
+			if(mapping instanceof LeafMapping && !mapping.getFragment1().getAnonymousClassDeclarations().isEmpty() && !mapping.getFragment2().getAnonymousClassDeclarations().isEmpty()) {
+				ReplacementAlgorithm.diffDataObjectsOfMappedStatements(mapping.getFragment1(), mapping.getFragment2(), this);
+			}
+		}
 	}
 
 	private void matchTestsByName(Map<String, AbstractStatement> tests1, Map<String, AbstractStatement> tests2, boolean testSuites) throws RefactoringMinerTimedOutException {
@@ -2980,10 +2992,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				callbackMapper = new UMLOperationBodyMapper(test1, test2, this);
 			}
 			else {
-				callbackMapper = new UMLOperationBodyMapper(test1.getLambdas().get(0), test2.getLambdas().get(0), this);
+				callbackMapper = new UMLOperationBodyMapper(test1.getLambdas().get(0), test2.getLambdas().get(0), this, true);
 				//the comments of the tests are matched by the comment diff of the module
 				callbackMapper.commentListDiff = new UMLCommentListDiff();
-				callbackMapper.testCallbackMapper = true;
 			}
 			callbackMapper.matchNestedOperations(test1.getLambdas().get(0), test2.getLambdas().get(0));
 			mapping.addLambdaMappers(List.of(callbackMapper));
@@ -3055,7 +3066,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	protected UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
+		this(lambda1, lambda2, parentMapper, false);
+	}
+
+	//testCallback: the lambdas are the callbacks of a test it('...', () => {...}), i.e., the bodies of the test, matched as the bodies of operations
+	private UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper, boolean testCallback) throws RefactoringMinerTimedOutException {
 		this.parentMapper = parentMapper;
+		this.testCallbackMapper = testCallback;
 		this.skipDataObjectDiffs = parentMapper.skipDataObjectDiffs;
 		this.argumentization = new Argumentization(parentMapper.argumentization);
 		this.classDiff = parentMapper.classDiff;
@@ -3123,6 +3140,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(lambda2.getExpression());
 			this.lambdaBodyMapper = true;
 			processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), Collections.emptyList());
+		}
+		if(testCallback) {
+			diffDataObjectsOfMappedStatements();
 		}
 		checkUnmatchedStatementsBeingCommented(lambda1.getComments(), lambda2.getComments());
 		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments(), this);

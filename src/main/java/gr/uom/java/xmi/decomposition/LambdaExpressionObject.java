@@ -79,6 +79,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private String asString;
 	//the functions declared in the body of a TypeScript lambda, which are modeled as nested operations instead of statements
 	private List<UMLOperation> nestedOperations = new ArrayList<UMLOperation>();
+	private List<UMLClass> nestedClasses = List.of();
 	private final Constants LANG;
 	
 	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
@@ -529,6 +530,18 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 
 	public List<UMLOperation> getNestedOperations() {
 		return nestedOperations;
+	}
+
+	//the types declared in the lambda, when they are not classes of the module (see ModuleContainer.addNestedClassesDeclaredInCallbacks)
+	public void addNestedClass(UMLClass nestedClass) {
+		if(nestedClasses.isEmpty()) {
+			nestedClasses = new ArrayList<UMLClass>();
+		}
+		nestedClasses.add(nestedClass);
+	}
+
+	public List<UMLClass> getNestedClasses() {
+		return nestedClasses;
 	}
 
 	public String getString() {

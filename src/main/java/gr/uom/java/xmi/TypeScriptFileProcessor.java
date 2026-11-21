@@ -157,7 +157,7 @@ public class TypeScriptFileProcessor {
 				if(moduleContainer.hasNestedClassesDeclaredInCallbacks()) {
 					Map<String, Integer> typeDeclarations = new HashMap<>();
 					countTypeDeclarations(module, typeDeclarations);
-					moduleContainer.addUniqueNestedClassesDeclaredInCallbacks(typeDeclarations);
+					moduleContainer.addNestedClassesDeclaredInCallbacks(typeDeclarations);
 				}
 				moduleClass.setContainer(moduleContainer);
 				moduleClass.setVisibility(Visibility.PUBLIC);

@@ -145,6 +145,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean testCallbackMapper;
 	//the mappers of the functions declared in the callbacks of matched test suites and tests, i.e., function Parent() {...} in it('...', () => {...})
 	private List<UMLOperationBodyMapper> nestedOperationMappers = List.of();
+	private List<gr.uom.java.xmi.diff.UMLClassDiff> nestedClassDiffs = List.of();
 	private boolean identicalLambdaBodyMapper;
 	private boolean moveCode;
 	private Map<String, String> renamedParameters;
@@ -211,6 +212,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public List<UMLOperationBodyMapper> getNestedOperationMappers() {
 		return nestedOperationMappers;
+	}
+
+	//the diffs of the types declared in the callbacks of test suites and tests, matched by their names
+	public List<gr.uom.java.xmi.diff.UMLClassDiff> getNestedClassDiffs() {
+		return nestedClassDiffs;
 	}
 
 	public boolean isLambdaBodyMapper() {
@@ -2852,6 +2858,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		tests2.addAll(itMap2.values());
 		matchTestsByName(describeMap1, describeMap2, true);
 		matchTestsByName(itMap1, itMap2, false);
+		matchTestsMovedBetweenSuites(describeMap1.values(), describeMap2.values(), itMap1.values(), itMap2.values());
 		CompositeStatementObject composite1 = lambda1.getBody().getCompositeStatement();
 		CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
 		List<AbstractCodeFragment> leaves1 = new ArrayList<>(composite1.getLeaves());
@@ -2922,6 +2929,65 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				nonMappedLeavesT2.add(test2);
 			}
 		}
+	}
+
+	//the tests moved into a test suite added in the suite, or out of a test suite removed from it, i.e., it('should build ticks using date objects', ...) ->
+	//describe('when given inputs of different types', () => { it('should accept labels as date objects', ...) }), matched by their names, and the renamed ones by their callbacks
+	private void matchTestsMovedBetweenSuites(Collection<AbstractStatement> suites1, Collection<AbstractStatement> suites2,
+			Collection<AbstractStatement> tests1, Collection<AbstractStatement> tests2) throws RefactoringMinerTimedOutException {
+		List<AbstractStatement> unpairedSuites1 = suites1.stream().filter(nonMappedLeavesT1::contains).toList();
+		List<AbstractStatement> unpairedSuites2 = suites2.stream().filter(nonMappedLeavesT2::contains).toList();
+		if(unpairedSuites1.isEmpty() && unpairedSuites2.isEmpty()) {
+			return;
+		}
+		List<AbstractStatement> candidates1 = new ArrayList<>(tests1.stream().filter(nonMappedLeavesT1::contains).toList());
+		for(AbstractStatement suite : unpairedSuites1) {
+			collectTests(suite, candidates1);
+		}
+		List<AbstractStatement> candidates2 = new ArrayList<>(tests2.stream().filter(nonMappedLeavesT2::contains).toList());
+		for(AbstractStatement suite : unpairedSuites2) {
+			collectTests(suite, candidates2);
+		}
+		if(candidates1.isEmpty() || candidates2.isEmpty()) {
+			return;
+		}
+		Set<AbstractStatement> paired1 = Collections.newSetFromMap(new IdentityHashMap<>());
+		Set<AbstractStatement> paired2 = Collections.newSetFromMap(new IdentityHashMap<>());
+		Map<String, List<AbstractStatement>> byName1 = testsByName(candidates1);
+		Map<String, List<AbstractStatement>> byName2 = testsByName(candidates2);
+		for(String name : byName1.keySet()) {
+			if(byName1.get(name).size() == 1 && byName2.containsKey(name) && byName2.get(name).size() == 1) {
+				AbstractStatement test1 = byName1.get(name).get(0);
+				AbstractStatement test2 = byName2.get(name).get(0);
+				matchTest(test1, test2, false);
+				paired1.add(test1);
+				paired2.add(test2);
+			}
+		}
+		matchRenamedTests(candidates1, candidates2, paired1, paired2, false);
+		nonMappedLeavesT1.removeIf(paired1::contains);
+		nonMappedLeavesT2.removeIf(paired2::contains);
+	}
+
+	//the tests it('...', () => {...}) of a test suite, at any depth of nested test suites
+	private static void collectTests(AbstractStatement suite, List<AbstractStatement> tests) {
+		for(AbstractStatement nestedSuite : nestedDescribeMap(suite).values()) {
+			collectTests(nestedSuite, tests);
+		}
+		tests.addAll(nestedItMap(suite).values());
+	}
+
+	//the name of a test, i.e., the first argument of it('...', () => {...}), as in the maps of the tests of the suites
+	private static String testName(AbstractStatement test) {
+		return test.invocationCoveringEntireFragment().arguments().get(0);
+	}
+
+	private static Map<String, List<AbstractStatement>> testsByName(List<AbstractStatement> tests) {
+		Map<String, List<AbstractStatement>> map = new LinkedHashMap<>();
+		for(AbstractStatement test : tests) {
+			map.computeIfAbsent(testName(test), k -> new ArrayList<>()).add(test);
+		}
+		return map;
 	}
 
 	private static final double RENAMED_TEST_SIMILARITY = 0.5;
@@ -3011,6 +3077,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	//the functions declared in the callbacks are matched by their names, when each name is declared once in each callback,
 	//while the functions that are operations of the module (i.e., the arrow functions declared in the callbacks) are matched by the class diff
 	private void matchNestedOperations(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2) throws RefactoringMinerTimedOutException {
+		matchNestedClasses(lambda1, lambda2);
 		if(classDiff == null || lambda1.getNestedOperations().isEmpty() || lambda2.getNestedOperations().isEmpty()) {
 			return;
 		}
@@ -3030,6 +3097,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		nestedOperationMappers = mappers;
+	}
+
+	//the types declared in the callbacks (and not classes of the module) are matched by their names, when each name is declared once in each callback
+	private void matchNestedClasses(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2) throws RefactoringMinerTimedOutException {
+		if(lambda1.getNestedClasses().isEmpty() || lambda2.getNestedClasses().isEmpty()) {
+			return;
+		}
+		Map<String, List<UMLClass>> classes1 = new LinkedHashMap<>();
+		for(UMLClass nestedClass : lambda1.getNestedClasses()) {
+			classes1.computeIfAbsent(nestedClass.getNonQualifiedName(), k -> new ArrayList<>()).add(nestedClass);
+		}
+		Map<String, List<UMLClass>> classes2 = new LinkedHashMap<>();
+		for(UMLClass nestedClass : lambda2.getNestedClasses()) {
+			classes2.computeIfAbsent(nestedClass.getNonQualifiedName(), k -> new ArrayList<>()).add(nestedClass);
+		}
+		List<gr.uom.java.xmi.diff.UMLClassDiff> diffs = new ArrayList<>();
+		for(String name : classes1.keySet()) {
+			if(classes1.get(name).size() == 1 && classes2.containsKey(name) && classes2.get(name).size() == 1) {
+				gr.uom.java.xmi.diff.UMLClassDiff nestedClassDiff = new gr.uom.java.xmi.diff.UMLClassDiff(classes1.get(name).get(0), classes2.get(name).get(0), modelDiff);
+				nestedClassDiff.process();
+				diffs.add(nestedClassDiff);
+			}
+		}
+		nestedClassDiffs = diffs;
 	}
 
 	private static Map<String, List<UMLOperation>> operationsByName(List<UMLOperation> operations) {

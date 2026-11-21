@@ -66,6 +66,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         for (UMLOperationBodyMapper nestedOperationMapper : bodyMapper.getNestedOperationMappers()) {
             new MethodMatcher(optimizationData, nestedOperationMapper, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         }
+        //the types declared in the callbacks of test suites and tests, matched by the model
+        for (UMLClassDiff nestedClassDiff : bodyMapper.getNestedClassDiffs()) {
+            new ClassDiffMatcher(optimizationData, nestedClassDiff, true, Collections.emptyList(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+        }
         if (bodyMapper.getAnonymousClassDiffs() != null) {
             for (UMLAnonymousClassDiff anonymousClassDiff : bodyMapper.getAnonymousClassDiffs()) {
                 new ClassAttrMatcher(optimizationData, anonymousClassDiff, LANG1, LANG2).match(srcTree,dstTree,mappingStore);

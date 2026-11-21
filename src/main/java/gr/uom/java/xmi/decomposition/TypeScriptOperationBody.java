@@ -1327,7 +1327,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					owner = ownerLambda.getOwner();
 				}
 				if(owner instanceof ModuleContainer module) {
-					module.addNestedClassDeclaredInCallback(umlClass);
+					module.addNestedClassDeclaredInCallback(umlClass, lambda);
 				}
 			}
 		}

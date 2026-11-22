@@ -3100,6 +3100,10 @@ public class CppTreeGenerator {
 		int end = end(enumeration);
 		int keywordStart = find("enum", start, end);
 		List<Node> children = new ArrayList<>();
+		//a specifier recovered by CDT without its keyword, i.e., typedef in typedef enum { false, true } bool; of C code, whose enumerators are keywords in C++
+		if(keywordStart < 0) {
+			return node("enum_specifier", start, end, children);
+		}
 		IASTName name = enumeration.getName();
 		int after = keywordStart + 4;
 		if(name != null && hasLocation(name) && end(name) > start(name)) {

@@ -938,6 +938,10 @@ public class CppFileProcessor {
 	private static final String ABSEIL_STUB = stub("/cpp-stubs/absl.h");
 	private static final String PROTOCOL_BUFFERS_STUB = stub("/cpp-stubs/protobuf.h");
 	private static final String LINUX_KERNEL_STUB = stub("/cpp-stubs/linux.h");
+	private static final String THREAD_SAFETY_STUB = stub("/cpp-stubs/threadsafety.h");
+	//the thread safety annotations of Clang without a library prefix, i.e., EXCLUSIVE_LOCKS_REQUIRED(cs_main) but not ABSL_EXCLUSIVE_LOCKS_REQUIRED(mu)
+	private static final Pattern THREAD_SAFETY_ANNOTATION = Pattern.compile("\\b(EXCLUSIVE_LOCKS_REQUIRED|SHARED_LOCKS_REQUIRED|LOCKS_EXCLUDED|GUARDED_BY|PT_GUARDED_BY|LOCK_RETURNED"
+			+ "|ACQUIRED_AFTER|ACQUIRED_BEFORE|EXCLUSIVE_LOCK_FUNCTION|SHARED_LOCK_FUNCTION|EXCLUSIVE_TRYLOCK_FUNCTION|SHARED_TRYLOCK_FUNCTION|UNLOCK_FUNCTION|ASSERT_EXCLUSIVE_LOCK)\\s*\\(");
 
 	//the stub without the lines of its documentation, since CDT gives the comments of the included files with their offsets in these files
 	private static String stub(String resource) {
@@ -967,6 +971,9 @@ public class CppFileProcessor {
 		//the code of the Linux kernel, which includes its own headers
 		if(fileContent.contains("#include <linux/") || fileContent.contains("#include <asm/")) {
 			stubs.append("\n").append(LINUX_KERNEL_STUB);
+		}
+		if(THREAD_SAFETY_ANNOTATION.matcher(fileContent).find()) {
+			stubs.append("\n").append(THREAD_SAFETY_STUB);
 		}
 		return stubs.toString();
 	}

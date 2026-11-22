@@ -1768,13 +1768,7 @@ public class MethodMatcher extends BodyMapperMatcher{
     }
 
     private void matchMembers(Tree member1, Tree member2, ExtendedMultiMappingStore mappingStore) {
-        if(TreeUtilFunctions.isIsomorphicTo(member1, member2)) {
-            mappingStore.addMappingRecursively(member1, member2);
-        }
-        else {
-            new LeafMatcher(LANG1, LANG2).match(member1, member2, mappingStore);
-            mappingStore.addMapping(member1, member2);
-        }
+        matchMemberParts(member1, member2, mappingStore);
         //the separator following the member, i.e., ; or ,
         Tree next1 = nextSibling(member1);
         Tree next2 = nextSibling(member2);
@@ -1782,6 +1776,36 @@ public class MethodMatcher extends BodyMapperMatcher{
                 !next1.getType().name.equals(LANG1.CLOSING_CURLY_BRACE)) {
             mappingStore.addMapping(next1, next2);
         }
+    }
+
+    //the parts of the paired members, identical ones as a whole, the ones with the same shape by their positions, and a changed one with its identical copy
+    //in the other, i.e., ReactNode in actions?: ReactNode -> actions?: ReactNode | null, or else as a replacement, i.e., PullInsights["refactorings"] -> PullRefactorings
+    private void matchMemberParts(Tree tree1, Tree tree2, ExtendedMultiMappingStore mappingStore) {
+        if(TreeUtilFunctions.isIsomorphicTo(tree1, tree2)) {
+            mappingStore.addMappingRecursively(tree1, tree2);
+            return;
+        }
+        if(tree1.getType().name.equals(tree2.getType().name) && tree1.getChildren().size() == tree2.getChildren().size() && !tree1.isLeaf()) {
+            mappingStore.addMapping(tree1, tree2);
+            for(int i=0; i<tree1.getChildren().size(); i++) {
+                matchMemberParts(tree1.getChild(i), tree2.getChild(i), mappingStore);
+            }
+            return;
+        }
+        for(Tree descendant : tree2.getDescendants()) {
+            if(TreeUtilFunctions.isIsomorphicTo(tree1, descendant)) {
+                mappingStore.addMappingRecursively(tree1, descendant);
+                return;
+            }
+        }
+        for(Tree descendant : tree1.getDescendants()) {
+            if(TreeUtilFunctions.isIsomorphicTo(descendant, tree2)) {
+                mappingStore.addMappingRecursively(descendant, tree2);
+                return;
+            }
+        }
+        new LeafMatcher(LANG1, LANG2).match(tree1, tree2, mappingStore);
+        mappingStore.addMapping(tree1, tree2);
     }
 
     private static Tree nextSibling(Tree tree) {

@@ -333,11 +333,11 @@ public class CppFileProcessor {
 					contentEnd--;
 				}
 				//the last content is a directive line ending after its line break, unless it is the #endif of a nested conditional, i.e., #include <a.h>
-				int lineStart = fileContent.lastIndexOf('\n', Math.max(0, contentEnd - 1)) + 1;
+				int lineStart = logicalLineStart(fileContent.lastIndexOf('\n', Math.max(0, contentEnd - 1)) + 1);
 				if(fileContent.substring(lineStart, contentEnd).trim().startsWith("#")) {
 					int hash = fileContent.indexOf('#', lineStart);
 					if(!fileContent.substring(hash + 1, directiveNameEnd(hash)).trim().equals("endif")) {
-						contentEnd = afterLineBreak(lineStart);
+						contentEnd = directiveLineEnd(lineStart);
 					}
 				}
 				ends.put(conditional.get(0), directiveNameEnd(endifStart));
@@ -383,6 +383,21 @@ public class CppFileProcessor {
 			end++;
 		}
 		return end;
+	}
+
+	//the start of the line continuing on the line starting at the offset, i.e., the line of #define setup_thread_stack(p, org) \ for its last line task_thread_info(p)->task = (p);
+	private int logicalLineStart(int lineStart) {
+		while(lineStart > 0) {
+			int previousLineEnd = lineStart - 1;
+			if(previousLineEnd > 0 && fileContent.charAt(previousLineEnd - 1) == '\r') {
+				previousLineEnd--;
+			}
+			if(previousLineEnd == 0 || fileContent.charAt(previousLineEnd - 1) != '\\') {
+				break;
+			}
+			lineStart = fileContent.lastIndexOf('\n', previousLineEnd - 1) + 1;
+		}
+		return lineStart;
 	}
 
 	//the offset after the line break of the line starting at the offset

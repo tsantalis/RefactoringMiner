@@ -1924,6 +1924,28 @@
   "firstEndPos" : 2195,
   "secondEndPos" : 2188
 }, {
+  "firstType" : "preproc_else",
+  "secondType" : "preproc_else",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 2196,
+  "secondPos" : 2189,
+  "firstEndPos" : 2323,
+  "secondEndPos" : 2316
+}, {
+  "firstType" : "#else",
+  "secondType" : "#else",
+  "firstLabel" : "#else",
+  "secondLabel" : "#else",
+  "firstParentType" : "preproc_else",
+  "secondParentType" : "preproc_else",
+  "firstPos" : 2196,
+  "secondPos" : 2189,
+  "firstEndPos" : 2201,
+  "secondEndPos" : 2194
+}, {
   "firstType" : "preproc_function_def",
   "secondType" : "preproc_function_def",
   "firstLabel" : "",

@@ -2074,11 +2074,19 @@ public class CppTreeGenerator {
 				previous = statement;
 			}
 		}
-		if(previous == null || !previous.type.equals("if_statement") || nodes.isEmpty()) {
+		if(previous == null || nodes.isEmpty()) {
+			return false;
+		}
+		return appendToIfChain(previous, nodes);
+	}
+
+	//the nodes added to the last if statement of the else clauses of the if statement, whose else clauses and if statements end with the nodes
+	private static boolean appendToIfChain(Node first, List<Node> nodes) {
+		if(!first.type.equals("if_statement")) {
 			return false;
 		}
 		List<Node> chain = new ArrayList<>();
-		Node ifStatement = previous;
+		Node ifStatement = first;
 		while(true) {
 			chain.add(ifStatement);
 			Node last = ifStatement.last();
@@ -3978,9 +3986,29 @@ public class CppTreeGenerator {
 		if(elseClause != null && hasLocation(elseClause)) {
 			Node elseNode = statement(elseClause);
 			int elseStart = findLast("else", then.end, elseNode.start);
-			children.add(node("else_clause", elseStart, elseNode.end, elseNode));
+			Node elseClauseNode = node("else_clause", elseStart, elseNode.end, elseNode);
+			//the branches that are not taken between the statement and the else clause, i.e., if (b) y; in if (a) x; #ifdef NAS if (b) y; #endif else z;,
+			//which the model parses with the code around them in a block, so that the else clause continues the last if statement of the branches
+			List<Node> branches = ifStatement.getParent() instanceof IASTCompoundStatement ? inactiveBeforeElse(then.end, elseStart) : List.of();
+			if(!branches.isEmpty() && appendToIfChain(branches.get(branches.size() - 1), List.of(elseClauseNode))) {
+				List<Node> nodes = new ArrayList<>();
+				nodes.add(node("if_statement", start(ifStatement), then.end, children));
+				nodes.addAll(branches);
+				return inline(nodes);
+			}
+			children.add(elseClauseNode);
 		}
 		return node("if_statement", ifStatement, children);
+	}
+
+	private List<Node> inactiveBeforeElse(int start, int end) {
+		List<Node> nodes = new ArrayList<>();
+		for(int[] region : inactiveRegions(source.translationUnit)) {
+			if(region[0] >= start && region[1] <= end) {
+				nodes.addAll(reparse(region[0], region[1], Context.BLOCK));
+			}
+		}
+		return nodes;
 	}
 
 	//the code of a branch that is not taken between the condition of an if statement and its statement, which is a statement followed by else clauses,

@@ -1151,8 +1151,16 @@ public class CppFileProcessor {
 	//an unknown macro between if or while and the condition, i.e., UNLIKELY in if UNLIKELY (x) or in if UNLIKELY /* comment */ (x)
 	private static final Pattern CONDITION_MACRO = Pattern.compile("(?:if|while)(?:\\s|/\\*.*?\\*/)+([A-Za-z_][A-Za-z0-9_]*)(?:\\s|/\\*.*?\\*/)*\\(", Pattern.DOTALL);
 
+	//a class head with two names, one of them a macro, i.e., class Builder FLATBUFFERS_FINAL_CLASS { or class DUCKDB_API Catalog : public Base {
+	private static final Pattern CLASS_HEAD_MACRO = Pattern.compile("(?:class|struct|union)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*[{:]");
+
+	//a name written in capitals, digits and underscores, with at least one capital, i.e., FLATBUFFERS_FINAL_CLASS
+	private static boolean isMacroName(String name) {
+		return name.chars().anyMatch(Character::isUpperCase) && name.chars().allMatch(c -> Character.isUpperCase(c) || Character.isDigit(c) || c == '_') && name.length() > 1;
+	}
+
 	//the definitions of the unknown macros at the start of declarations, which are followed by a declaration specifier that cannot follow a type,
-	//and of the unknown macros between if or while and the condition, which CDT parses as problems
+	//of the unknown macros in the heads of classes, and of the unknown macros between if or while and the condition, which CDT parses as problems
 	private static String unknownDeclarationMacros(IASTTranslationUnit translationUnit, String fileContent) {
 		Set<String> expanded = new HashSet<>();
 		for(IASTPreprocessorMacroExpansion expansion : translationUnit.getMacroExpansions()) {
@@ -1191,7 +1199,17 @@ public class CppFileProcessor {
 					int end = location.getNodeOffset() + location.getNodeLength();
 					Matcher trailing = TRAILING_MACRO.matcher(fileContent);
 					trailing.region(end, fileContent.length());
-					if(matcher.lookingAt()) {
+					Matcher classHead = CLASS_HEAD_MACRO.matcher(fileContent);
+					classHead.region(location.getNodeOffset(), fileContent.length());
+					//a macro before or after the name of a class that CDT did not parse, i.e., FLATBUFFERS_FINAL_CLASS in class Builder FLATBUFFERS_FINAL_CLASS {
+					//or DUCKDB_API in class DUCKDB_API Catalog {, which is the name written in capitals
+					if(declaration instanceof IASTProblemDeclaration && classHead.lookingAt() && (isMacroName(classHead.group(1)) != isMacroName(classHead.group(2)))) {
+						String name = isMacroName(classHead.group(1)) ? classHead.group(1) : classHead.group(2);
+						if(!expanded.contains(name) && !KEYWORDS.contains(name)) {
+							definitions.add("#define " + name);
+						}
+					}
+					else if(matcher.lookingAt()) {
 						String name = matcher.group(1);
 						if(!expanded.contains(name) && !KEYWORDS.contains(name)) {
 							definitions.add("#define " + name);

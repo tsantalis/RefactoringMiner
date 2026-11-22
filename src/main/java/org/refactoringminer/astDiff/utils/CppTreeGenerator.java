@@ -2195,6 +2195,26 @@ public class CppTreeGenerator {
 		}
 	}
 
+	//the range of the call to a function-like macro defined in the file and expanded to nothing right before the semicolon of the empty statement,
+	//i.e., mm_free_pgd(mm); with #define mm_free_pgd(mm) in the #else branch of #ifdef CONFIG_MMU, which is a call statement like in the model
+	private int[] emptyMacroCall(IASTNullStatement statement) {
+		int semicolon = start(statement);
+		for(IASTPreprocessorMacroExpansion expansion : source.translationUnit.getMacroExpansions()) {
+			IASTFileLocation location = expansion.getFileLocation();
+			if(location == null || !expansion.isPartOfTranslationUnitFile()) {
+				continue;
+			}
+			int start = source.offset(location.getNodeOffset());
+			int end = source.offset(location.getNodeOffset() + location.getNodeLength());
+			if(end <= semicolon && content.substring(end, semicolon).isBlank() &&
+					expansion.getMacroDefinition() instanceof IASTPreprocessorFunctionStyleMacroDefinition definition &&
+					definition.isPartOfTranslationUnitFile() && definition.getExpansion().isBlank()) {
+				return new int[] {start, end};
+			}
+		}
+		return null;
+	}
+
 	//the call of a macro between the offsets as a call with its arguments parsed again, i.e., ABSL_DEPRECATED("...")
 	private Node macroCall(int start, int end) {
 		int nameEnd = start + tokenAt(start).length();
@@ -3624,7 +3644,12 @@ public class CppTreeGenerator {
 			IASTInitializerClause argument = returnStatement.getReturnArgument();
 			return node("return_statement", statement, argument == null ? null : initializerClause(argument));
 		}
-		if(statement instanceof IASTNullStatement) {
+		if(statement instanceof IASTNullStatement nullStatement) {
+			int[] expansion = emptyMacroCall(nullStatement);
+			Node call = expansion != null ? macroCall(expansion[0], expansion[1]) : null;
+			if(call != null) {
+				return node("expression_statement", expansion[0], end(statement), call);
+			}
 			return node("expression_statement", statement);
 		}
 		if(statement instanceof ICPPASTRangeBasedForStatement rangeFor) {

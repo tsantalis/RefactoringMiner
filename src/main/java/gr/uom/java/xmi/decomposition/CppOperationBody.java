@@ -12,6 +12,7 @@ import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
 import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -278,6 +279,9 @@ public class CppOperationBody extends OperationBody {
 				processStatement(sourceFolder, filePath, child, labelStatement.getNestedStatement(), fileContent);
 			}
 		}
+		else if(statement instanceof IASTNullStatement nullStatement && emptyMacroCall(nullStatement, fileContent) instanceof IASTStatement call) {
+			processStatement(sourceFolder, filePath, parent, call, fileContent);
+		}
 		else if(statement instanceof IASTNullStatement nullStatement) {
 			StatementObject child = new StatementObject(sourceFolder, filePath, nullStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
@@ -471,7 +475,28 @@ public class CppOperationBody extends OperationBody {
 		removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
 	}
 
-	private static final String MACRO_CALL_PREFIX = "void __rm_macro_call__(){";
+	private static final String[] MACRO_CALL_PREFIX_TOKENS = {"void", "__rm_macro_call__", "(){"};
+
+	//the tokens written before the limit in the code, each within a line and followed by a space, so that the line numbers of the code are kept,
+	//i.e., the first line of the file may be shorter than the tokens
+	private static boolean writeTokens(char[] code, List<String> tokens, int limit) {
+		int position = 0;
+		for(String token : tokens) {
+			int end = position + token.length();
+			for(int k = position; k <= end && k < limit; k++) {
+				if(code[k] == '\n' || code[k] == '\r') {
+					position = k + 1;
+					end = position + token.length();
+				}
+			}
+			if(end >= limit) {
+				return false;
+			}
+			token.getChars(0, token.length(), code, position);
+			position = end + 1;
+		}
+		return true;
+	}
 
 	//the statements of the block, where the statements of an expansion of a function-like macro defined in the file, which are not a single expression statement,
 	//and the semicolon after the call are the call, i.e., GET_ACTION_STRING(zoomLevel, "zoom_level"); expanded to declarations, calls and an if statement,
@@ -501,7 +526,7 @@ public class CppOperationBody extends OperationBody {
 				end = statements[next].getFileLocation().getNodeOffset() + statements[next].getFileLocation().getNodeLength();
 				next++;
 			}
-			IASTStatement call = macroCall(fileContent, start, end);
+			IASTStatement call = macroCall(fileContent, start, end, null);
 			if(call != null) {
 				result.add(call);
 				i = next - 1;
@@ -528,9 +553,34 @@ public class CppOperationBody extends OperationBody {
 		return null;
 	}
 
+	//the call to a function-like macro defined in the file and expanded to nothing, which leaves only its semicolon as an empty statement,
+	//i.e., mm_free_pgd(mm); with #define mm_free_pgd(mm) in the #else branch of #ifdef CONFIG_MMU, like the statement of the AST diff tree
+	private static IASTStatement emptyMacroCall(IASTNullStatement statement, String fileContent) {
+		IASTFileLocation location = statement.getFileLocation();
+		IASTTranslationUnit translationUnit = statement.getTranslationUnit();
+		if(location == null || translationUnit == null) {
+			return null;
+		}
+		int semicolon = location.getNodeOffset();
+		for(IASTPreprocessorMacroExpansion expansion : translationUnit.getMacroExpansions()) {
+			IASTFileLocation expansionLocation = expansion.getFileLocation();
+			if(expansionLocation == null || !expansion.isPartOfTranslationUnitFile()) {
+				continue;
+			}
+			int end = expansionLocation.getNodeOffset() + expansionLocation.getNodeLength();
+			if(end <= semicolon && fileContent.substring(end, semicolon).isBlank() &&
+					expansion.getMacroDefinition() instanceof IASTPreprocessorFunctionStyleMacroDefinition definition &&
+					definition.isPartOfTranslationUnitFile() && definition.getExpansion().isBlank()) {
+				//the macro name is declared as a function, otherwise mm_free_pgd(mm); is parsed as the declaration of mm with type mm_free_pgd
+				return macroCall(fileContent, expansionLocation.getNodeOffset(), semicolon + location.getNodeLength(), expansion.getMacroReference().toString());
+			}
+		}
+		return null;
+	}
+
 	//the call statement between the offsets parsed without the macro, in a copy of the file with only the call, so that its offsets are the offsets in the file
-	private static IASTStatement macroCall(String fileContent, int start, int end) {
-		if(start < MACRO_CALL_PREFIX.length() || end >= fileContent.length()) {
+	private static IASTStatement macroCall(String fileContent, int start, int end, String functionName) {
+		if(end >= fileContent.length()) {
 			return null;
 		}
 		char[] code = new char[fileContent.length()];
@@ -538,14 +588,21 @@ public class CppOperationBody extends OperationBody {
 			char c = fileContent.charAt(k);
 			code[k] = c == '\n' || c == '\r' ? c : ' ';
 		}
-		MACRO_CALL_PREFIX.getChars(0, MACRO_CALL_PREFIX.length(), code, 0);
+		List<String> prefix = new ArrayList<>();
+		if(functionName != null) {
+			prefix.addAll(List.of("void", functionName, "(...);"));
+		}
+		prefix.addAll(List.of(MACRO_CALL_PREFIX_TOKENS));
+		if(!writeTokens(code, prefix, start)) {
+			return null;
+		}
 		fileContent.getChars(start, end, code, start);
 		code[end] = '}';
 		try {
 			IASTTranslationUnit translationUnit = CppLanguage.getDefault().getASTTranslationUnit(FileContent.create("__rm_macro_call__.cpp", code), new ScannerInfo(),
 					IncludeFileContentProvider.getEmptyFilesProvider(), EmptyCIndex.INSTANCE, GPPLanguage.OPTION_IS_SOURCE_UNIT, new DefaultLogService());
 			IASTDeclaration[] declarations = translationUnit.getDeclarations();
-			if(declarations.length == 1 && declarations[0] instanceof IASTFunctionDefinition function && function.getBody() instanceof IASTCompoundStatement body &&
+			if(declarations.length == (functionName != null ? 2 : 1) && declarations[declarations.length - 1] instanceof IASTFunctionDefinition function && function.getBody() instanceof IASTCompoundStatement body &&
 					body.getStatements().length == 1 && body.getStatements()[0] instanceof IASTExpressionStatement call && call.getFileLocation() != null &&
 					call.getFileLocation().getNodeOffset() == start && call.getFileLocation().getNodeOffset() + call.getFileLocation().getNodeLength() == end) {
 				return call;

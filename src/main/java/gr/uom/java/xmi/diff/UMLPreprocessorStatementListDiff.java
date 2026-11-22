@@ -344,6 +344,29 @@ public class UMLPreprocessorStatementListDiff {
 		}
 	}
 
+	//the removed definitions with the name before paired in order with the added definitions with the name after, i.e., the variants of a macro in sibling branches
+	public void pairRenamedDefinitions(String nameBefore, String nameAfter) {
+		List<UMLPreprocessorStatement> removed = new ArrayList<>();
+		List<UMLPreprocessorStatement> added = new ArrayList<>();
+		for(UMLPreprocessorStatement statement : removedStatements) {
+			if(statement.isDefinition() && statement.getName().equals(Optional.of(nameBefore))) {
+				removed.add(statement);
+			}
+		}
+		for(UMLPreprocessorStatement statement : addedStatements) {
+			if(statement.isDefinition() && statement.getName().equals(Optional.of(nameAfter))) {
+				added.add(statement);
+			}
+		}
+		for(int i=0; i<Math.min(removed.size(), added.size()); i++) {
+			UMLPreprocessorStatement removedStatement = removed.get(i);
+			UMLPreprocessorStatement addedStatement = added.get(i);
+			changedStatements.add(Pair.of(removedStatement, addedStatement));
+			removedStatements.removeIf(statement -> statement == removedStatement);
+			addedStatements.removeIf(statement -> statement == addedStatement);
+		}
+	}
+
 	public List<UMLPreprocessorStatement> getRemovedStatements() {
 		return removedStatements;
 	}

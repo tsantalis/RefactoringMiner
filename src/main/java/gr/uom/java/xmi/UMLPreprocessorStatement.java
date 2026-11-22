@@ -110,6 +110,10 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 		return enclosingFunction;
 	}
 
+	public boolean isDefinition() {
+		return type == Directive.DEFINE;
+	}
+
 	public boolean isOpeningConditional() {
 		return type == Directive.IF || type == Directive.IFDEF || type == Directive.IFNDEF;
 	}

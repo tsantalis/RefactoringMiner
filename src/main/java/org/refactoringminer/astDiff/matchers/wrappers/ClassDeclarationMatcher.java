@@ -148,6 +148,18 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }
+                //a local type with variables, which has no statement in the model, i.e., union {...} uu; in a function body
+                Tree srcParent = srcTypeDeclaration.getParent();
+                Tree dstParent = dstTypeDeclaration.getParent();
+                if (srcParent.getParent() != null && srcParent.getParent().getType().name.equals(LANG1.COMPOUND_STATEMENT) &&
+                        dstParent.getParent() != null && dstParent.getParent().getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
+                    mappingStore.addMapping(srcParent, dstParent);
+                    Tree semicolon1 = srcParent.getChildren().get(srcParent.getChildren().size()-1);
+                    Tree semicolon2 = dstParent.getChildren().get(dstParent.getChildren().size()-1);
+                    if (semicolon1.getType().name.equals(LANG1.SEMICOLON) && semicolon2.getType().name.equals(LANG2.SEMICOLON)) {
+                        mappingStore.addMapping(semicolon1, semicolon2);
+                    }
+                }
             }
             if (srcTypeDeclaration.getParent().getType().name.equals(LANG1.TYPE_DEFINITION)
                     && dstTypeDeclaration.getParent().getType().name.equals(LANG2.TYPE_DEFINITION)) {

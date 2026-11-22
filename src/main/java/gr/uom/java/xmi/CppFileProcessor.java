@@ -373,6 +373,10 @@ public class CppFileProcessor {
 		IASTFileLocation location = directive.getFileLocation();
 		int start = Math.max(0, location.getNodeOffset() - 1);
 		IASTNode enclosing = selector.findEnclosingNode(start, location.getNodeOffset() + location.getNodeLength() + 1 - start);
+		//the braces of extern "C" in their own conditional branches, i.e., #ifdef __cplusplus extern "C" { #endif, do not enclose the code, like in the tree
+		while(enclosing instanceof ICPPASTLinkageSpecification linkage && CppTreeGenerator.conditionalLinkageBraces(linkage.getRawSignature())) {
+			enclosing = linkage.getParent();
+		}
 		//a directive at the start or at the end of the file
 		return enclosing != null ? enclosing : directive.getTranslationUnit();
 	}

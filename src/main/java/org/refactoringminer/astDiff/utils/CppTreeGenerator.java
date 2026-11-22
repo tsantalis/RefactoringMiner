@@ -2506,12 +2506,67 @@ public class CppTreeGenerator {
 		return node;
 	}
 
+	//whether the braces of the linkage specification are each in their own conditional branch, i.e., #ifdef __cplusplus extern "C" { #endif ... #ifdef __cplusplus } #endif
+	//of a header shared by C and C++, so the braces wrap the declarations only for C++: the opening brace is followed by #endif and the closing brace follows an #if,
+	//which the model also uses, so that the conditional groups of the model are the groups of the tree
+	public static boolean conditionalLinkageBraces(String linkage) {
+		int open = linkage.indexOf('{');
+		int close = linkage.lastIndexOf('}');
+		if(open < 0 || close <= open) {
+			return false;
+		}
+		int next = open + 1;
+		while(next < close && Character.isWhitespace(linkage.charAt(next))) {
+			next++;
+		}
+		if(!linkage.startsWith("#", next) || !directiveName(linkage, next).equals("endif")) {
+			return false;
+		}
+		int previous = close;
+		while(previous > open && Character.isWhitespace(linkage.charAt(previous - 1))) {
+			previous--;
+		}
+		int lineStart = linkage.lastIndexOf('\n', previous - 1) + 1;
+		int hash = lineStart;
+		while(hash < previous && (linkage.charAt(hash) == ' ' || linkage.charAt(hash) == '\t')) {
+			hash++;
+		}
+		return linkage.startsWith("#", hash) && directiveName(linkage, hash).startsWith("if");
+	}
+
+	//the name of the directive starting at the offset, i.e., endif in # endif
+	private static String directiveName(String text, int hash) {
+		int start = hash + 1;
+		while(start < text.length() && (text.charAt(start) == ' ' || text.charAt(start) == '\t')) {
+			start++;
+		}
+		int end = start;
+		while(end < text.length() && Character.isLetter(text.charAt(end))) {
+			end++;
+		}
+		return text.substring(start, end);
+	}
+
 	private Node linkageSpecification(ICPPASTLinkageSpecification linkage) {
 		int literal = find("\"", start(linkage), end(linkage));
 		int literalStart = skip(start(linkage) + "extern".length(), end(linkage));
 		Node string = stringLiteral(literalStart, tokenEnd(literalStart, end(linkage)));
 		int open = find("{", string.end, end(linkage));
 		IASTDeclaration[] declarations = linkage.getDeclarations(false);
+		int close = end(linkage) - 1;
+		//braces opened and closed in their own conditional branches, i.e., #ifdef __cplusplus extern "C" { #endif ... #ifdef __cplusplus } #endif of a header shared by C and C++,
+		//which wrap the declarations only for C++, so the declarations stay in the enclosing code and each brace is in its own conditional
+		if(open >= 0 && close > open && (declarations.length == 0 || open < start(declarations[0])) &&
+				conditionalLinkageBraces(content.substring(start(linkage), end(linkage)))) {
+			Node opening = node("linkage_specification", start(linkage), open + 1, List.of(string));
+			List<Node> nodes = new ArrayList<>();
+			nodes.add(opening);
+			IASTDeclaration[] active = activeDeclarations(declarations);
+			nodes.addAll(declarations(active, Context.TOP));
+			nodes.addAll(inactive(source.translationUnit, open + 1, close, Context.TOP, active));
+			nodes.add(leaf("}", close, close + 1));
+			return inline(nodes);
+		}
 		if(open >= 0 && (declarations.length == 0 || open < start(declarations[0]))) {
 			return node("linkage_specification", linkage, string, declarationList(open, end(linkage), declarations, linkage.getTranslationUnit()));
 		}

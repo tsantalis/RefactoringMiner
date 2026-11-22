@@ -468,8 +468,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     parent2 = dstStatement.getParent();
                     processParentLinkageSpecification(parent1, parent2, mappingStore);
                 }
-                else
+                else {
                     mappingStore.addMapping(srcStatement, dstStatement);
+                    matchConditionalLinkageBraces(srcStatement, dstStatement, mappingStore);
+                }
             }
             for (org.apache.commons.lang3.tuple.Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> statementPair : classDiff.getPreprocessorStatementListDiff().get().getChangedStatements()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
@@ -719,6 +721,29 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         UMLCommentListDiff diff = new UMLCommentListDiff(statementPair.getLeft().getComments(), statementPair.getRight().getComments());
         new CommentMatcher(optimizationData, diff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+    }
+
+    //the opening of extern "C" in its own conditional branch, i.e., extern "C" { in #ifdef __cplusplus extern "C" { #endif, which is not a declaration of the model,
+    //when the branch is mapped without its block
+    private void matchConditionalLinkageBraces(Tree srcStatement, Tree dstStatement, ExtendedMultiMappingStore mappingStore) {
+        if(srcStatement == null || dstStatement == null) {
+            return;
+        }
+        Tree linkage1 = null;
+        for(Tree child : srcStatement.getChildren()) {
+            if(child.getType().name.equals(LANG1.LINKAGE_SPECIFICATION)) {
+                linkage1 = child;
+            }
+        }
+        Tree linkage2 = null;
+        for(Tree child : dstStatement.getChildren()) {
+            if(child.getType().name.equals(LANG2.LINKAGE_SPECIFICATION)) {
+                linkage2 = child;
+            }
+        }
+        if(linkage1 != null && linkage2 != null && linkage1.isIsomorphicTo(linkage2) && !mappingStore.isSrcMapped(linkage1) && !mappingStore.isDstMapped(linkage2)) {
+            mappingStore.addMappingRecursively(linkage1, linkage2);
+        }
     }
 
     private void processParentLinkageSpecification(Tree parent1, Tree parent2, ExtendedMultiMappingStore mappingStore) {

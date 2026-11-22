@@ -463,7 +463,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 boolean ifDef = srcStatement != null && dstStatement != null && srcStatement.getType().name.equals(LANG1.PREPROC_IFDEF) && dstStatement.getType().name.equals(LANG2.PREPROC_IFDEF) &&
                         (classDiff.getPreprocessorStatementListDiff().get().getAddedStatements().size() > 0 || classDiff.getPreprocessorStatementListDiff().get().getRemovedStatements().size() > 0);
                 if(srcStatement != null && dstStatement != null && !ifDef) {
-                    mappingStore.addMappingRecursively(srcStatement, dstStatement);
+                    mapConditionalGroup(srcStatement, dstStatement, mappingStore);
                     parent1 = srcStatement.getParent();
                     parent2 = dstStatement.getParent();
                     processParentLinkageSpecification(parent1, parent2, mappingStore);
@@ -721,6 +721,25 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         UMLCommentListDiff diff = new UMLCommentListDiff(statementPair.getLeft().getComments(), statementPair.getRight().getComments());
         new CommentMatcher(optimizationData, diff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+    }
+
+    //the conditional group with its code, whose children are mapped by their positions, except the directives that changed, which are mapped by their own pairs,
+    //i.e., #include "limits.h" moved before #include "data_types.h" in an include guard
+    private void mapConditionalGroup(Tree srcStatement, Tree dstStatement, ExtendedMultiMappingStore mappingStore) {
+        if(!srcStatement.getType().name.equals(LANG1.PREPROC_IFDEF) || !dstStatement.getType().name.equals(LANG2.PREPROC_IFDEF) || srcStatement.isIsomorphicTo(dstStatement)
+                || srcStatement.getChildren().size() != dstStatement.getChildren().size()) {
+            mappingStore.addMappingRecursively(srcStatement, dstStatement);
+            return;
+        }
+        mappingStore.addMapping(srcStatement, dstStatement);
+        for(int i = 0; i < srcStatement.getChildren().size(); i++) {
+            Tree child1 = srcStatement.getChild(i);
+            Tree child2 = dstStatement.getChild(i);
+            if(child1.getType().name.startsWith("preproc_") && !child1.isIsomorphicTo(child2)) {
+                continue;
+            }
+            mappingStore.addMappingRecursively(child1, child2);
+        }
     }
 
     //the opening of extern "C" in its own conditional branch, i.e., extern "C" { in #ifdef __cplusplus extern "C" { #endif, which is not a declaration of the model,

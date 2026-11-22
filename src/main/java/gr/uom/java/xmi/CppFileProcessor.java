@@ -44,6 +44,7 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
 import org.eclipse.cdt.core.dom.ast.IASTProblem;
 import org.eclipse.cdt.core.dom.ast.IASTProblemDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTProblemStatement;
 import org.eclipse.cdt.core.dom.ast.IBinding;
 import org.eclipse.cdt.core.dom.ast.IProblemBinding;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLinkageSpecification;
@@ -1069,7 +1070,11 @@ public class CppFileProcessor {
 		return end <= fileContent.length() && fileContent.substring(location.getNodeOffset(), end).equals(name.toString()) && nextNonWhitespace(fileContent, end) == '(';
 	}
 
-	//the definitions of the unknown macros at the start of declarations, which are followed by a declaration specifier that cannot follow a type
+	//an unknown macro between if or while and the condition, i.e., UNLIKELY in if UNLIKELY (x) or in if UNLIKELY /* comment */ (x)
+	private static final Pattern CONDITION_MACRO = Pattern.compile("(?:if|while)(?:\\s|/\\*.*?\\*/)+([A-Za-z_][A-Za-z0-9_]*)(?:\\s|/\\*.*?\\*/)*\\(", Pattern.DOTALL);
+
+	//the definitions of the unknown macros at the start of declarations, which are followed by a declaration specifier that cannot follow a type,
+	//and of the unknown macros between if or while and the condition, which CDT parses as problems
 	private static String unknownDeclarationMacros(IASTTranslationUnit translationUnit, String fileContent) {
 		Set<String> expanded = new HashSet<>();
 		for(IASTPreprocessorMacroExpansion expansion : translationUnit.getMacroExpansions()) {
@@ -1079,6 +1084,23 @@ public class CppFileProcessor {
 		translationUnit.accept(new ASTVisitor() {
 			{
 				shouldVisitDeclarations = true;
+				shouldVisitStatements = true;
+			}
+
+			@Override
+			public int visit(IASTStatement statement) {
+				IASTFileLocation location = statement.getFileLocation();
+				if(statement instanceof IASTProblemStatement && location != null && isPartOfFile(statement)) {
+					Matcher matcher = CONDITION_MACRO.matcher(fileContent);
+					matcher.region(location.getNodeOffset(), fileContent.length());
+					if(matcher.lookingAt()) {
+						String name = matcher.group(1);
+						if(!expanded.contains(name) && !KEYWORDS.contains(name)) {
+							definitions.add("#define " + name);
+						}
+					}
+				}
+				return PROCESS_CONTINUE;
 			}
 
 			@Override

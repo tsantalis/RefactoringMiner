@@ -333,6 +333,7 @@ public class CppTreeGenerator {
 	}
 
 	private static final String INSERTED_TYPE = "int ";
+	private static final String INSERTED_IF = "if(0);";
 	//the function whose arguments are parsed again, which is declared so that CDT does not parse its call as a declaration
 	private static final String CALL = "__rm_call__";
 	private static final String INSERTED_CLASS = "__rm_type__";
@@ -932,6 +933,12 @@ public class CppTreeGenerator {
 			inserted.put(brace, INSERTED_CLASS);
 		}
 		inserted.putAll(extraInsertions);
+		//the branch continuing an if statement of the code before it, i.e., else if (x) return 1; in #ifdef NAS ... #endif after if (y) return 0;,
+		//is parsed after an if statement that is not in the code, and is the else clause of that if statement
+		int elseStart = context == Context.BLOCK ? elseContinuation(start, end) : -1;
+		if(elseStart >= 0) {
+			inserted.put(elseStart, INSERTED_IF);
+		}
 		Map<Integer, Integer> masked = new HashMap<>();
 		StringBuilder builder = new StringBuilder(rewrite(start, end, inserted, masked));
 		for(int offset : inserted.descendingKeySet()) {
@@ -992,7 +999,13 @@ public class CppTreeGenerator {
 			else if(declarations.length == 1 && declarations[0] instanceof IASTFunctionDefinition function && function.getBody() instanceof IASTCompoundStatement body) {
 				IASTStatement[] statements = body.getStatements();
 				for(IASTStatement statement : statements) {
-					nodes.add(statement(statement));
+					Node node = statement(statement);
+					if(elseStart >= 0 && nodes.isEmpty() && node != null && node.type.equals("if_statement") && node.start == elseStart
+							&& node.last() != null && node.last().type.equals("else_clause")) {
+						//the else and the if statement of the else clause are in the branch, since the if statement they continue is not
+						node = inline(new ArrayList<>(node.last().children));
+					}
+					nodes.add(node);
 				}
 				nodes.addAll(inactive(translationUnit, start, end, Context.BLOCK, statements));
 			}
@@ -1013,6 +1026,15 @@ public class CppTreeGenerator {
 		nodes.removeIf(n -> n == null || n.start < start || n.end > end || n.type.equals("ERROR") && n.start == n.end);
 		absorbMacros(nodes, start);
 		return nodes;
+	}
+
+	//the offset of the else starting the code between the offsets, or -1
+	private int elseContinuation(int start, int end) {
+		int offset = skip(start, end);
+		if(content.startsWith("else", offset) && (offset + 4 >= end || !isIdentifierPart(content.charAt(offset + 4)))) {
+			return offset;
+		}
+		return -1;
 	}
 
 	private static IASTTranslationUnit parseFragment(String code) throws CoreException {

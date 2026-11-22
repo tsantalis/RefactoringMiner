@@ -27,7 +27,7 @@ Both tools are mature and actively maintained, and each is clearly better at som
 - **It never fails and its markup is lossless.** With `--src-encoding=UTF-8` on extraction, all 779 corpus files (the 10 non-UTF-8 files included) round-trip byte for byte. It has no notion of a parse error: it always produces markup. (Caveat: 1.2.0's *default* extraction rewrites non-ASCII characters; see section 6.)
 - **It marks up every preprocessor branch.** Function variants in sibling `#if`/`#else` branches all get full markup with bodies. CDT parses one configuration. RefactoringMiner recovers the other branches with an extra re-parse (`CppConditionalBodies`, issue #1218).
 - **Its heuristics often guess right without headers.** It reads `std::make_unique<Foo>(x)`, `std::vector<Item> v = ...` and `ns::convert<int>(value);` correctly without any declarations. Raw CDT gets the first two wrong. RefactoringMiner's CDT pipeline fixes them, at a cost of about 5× the raw parse time, but `ns::convert<int>(value);` stays a declaration.
-- **It handles several odd macro positions that CDT turns into problem nodes.** Examples are `if UNLIKELY (x)`, `"%09" PRId64`, `class EXPORT_MACRO Name {`, and `Q_OBJECT`. RefactoringMiner's pipeline now handles the first two, as well as bitcoin's `EXCLUSIVE_LOCKS_REQUIRED(...)` (✅ fixed on 2026-11-22; see sections 6 and 11).
+- **It handles several odd macro positions that CDT turns into problem nodes.** Examples are `if UNLIKELY (x)`, `"%09" PRId64`, `class EXPORT_MACRO Name {`, and `Q_OBJECT`. RefactoringMiner's pipeline now handles the first three, as well as bitcoin's `EXCLUSIVE_LOCKS_REQUIRED(...)` and the declaration in `ASSIGN_OR_RETURN(auto x, e)` (✅ fixed on 2026-11-22; see sections 5, 6 and 11).
 - **It covers more modern C++ syntax.** It handles `operator<=>`, designated initializers in declarations, and `using enum`, all of which are CDT problem nodes. Both parsers have other C++20 gaps.
 
 **Where CDT is better:**
@@ -210,12 +210,12 @@ TEST(CatalogTest, Drops) { EXPECT_EQ(Drop("a"), 1); }
 
 | Construct | srcML | Raw CDT | RM pipeline |
 |---|---|---|---|
-| `class DUCKDB_API Catalog {` | ✅ `<macro>` in class head | ❌ whole class is a problem | ❌ problem* |
-| `Q_OBJECT` | ✅ `<macro>` | ❌ (same problem) | ❌* |
+| `class DUCKDB_API Catalog {` | ✅ `<macro>` in class head | ❌ whole class is a problem | ✅ class (macro before or after the class name defined as empty, **fixed in 796d59f41, 2026-11-22**; was ❌ problem*) |
+| `Q_OBJECT` | ✅ `<macro>` | ❌ (same problem) | ❌ problem* (the members after it are kept) |
 | `DUCKDB_API virtual void Drop(...)` | ✅ (macro absorbed into the type) | ❌ | ✅ (unknown-declaration-macro re-parse) |
 | `int stats_ ABSL_GUARDED_BY(mu_);` | ❌ function `ABSL_GUARDED_BY` with parameter `mu_` | ❌ | ✅ attribute (absl stub) |
 | `TF_RET_CHECK(c) << "msg";` | ✅ call `<<` literal | ✅ | ✅ |
-| `ASSIGN_OR_RETURN(auto plan, Plan(ctx));` | ✅ call with arguments `auto plan`, `Plan(ctx)` | ❌ problem | ❌ problem in the model; the AST diff tree re-parses it as the macro name plus an argument list whose first argument is a declaration |
+| `ASSIGN_OR_RETURN(auto plan, Plan(ctx));` | ✅ call with arguments `auto plan`, `Plan(ctx)` | ❌ problem | ✅ one call statement in the model with the declaration `plan` of its first argument, like the AST diff tree, which re-parses it as the macro name plus an argument list whose first argument is a declaration (**fixed in 4968cb41d, 2026-11-22**; was ❌ problem in the model, without the declaration) |
 | `FOR_EACH_CHILD(child, plan) { ... }` | ✅ `<macro>` + block | ❌ call + problem `)` + block | ❌ same |
 | `TEST(Suite, Name) { ... }` | ❌ `<macro>` followed by a detached block (no function) | ❌ problem | ✅ function `Suite_Name_Test::TestBody` with `@Test` (gtest stub, when the file includes gtest) |
 | `void f() EXCLUSIVE_LOCKS_REQUIRED(cs_main) {...}`, `[&]() EXCLUSIVE_LOCKS_REQUIRED(cs) {...}` | ✅ function / lambda | ❌ problem | ✅ thread safety stub (**fixed in 1d5ab0ca6, 2026-11-22**; was ❌ problem) |
@@ -224,7 +224,7 @@ TEST(CatalogTest, Drops) { EXPECT_EQ(Drop("a"), 1); }
 
 The last three rows are corpus constructs (bitcoin, llama.cpp, Hyprland; see section 6), not lines of the snippet above.
 
-\* No corpus file contains a class-head export macro or `Q_OBJECT`, so this RM gap doesn't occur in our data. It would be fixable with the same mechanism as the member-level macros.
+\* No corpus file contains a class-head export macro before the class name or `Q_OBJECT`. The corpus does contain the same gap with the macro after the class name: flatbuffers' `class Builder FLATBUFFERS_FINAL_CLASS {` and `class Verifier FLATBUFFERS_FINAL_CLASS {` in `flexbuffers.h`, which hid 133 member functions per version. Both shapes are ✅ fixed in 796d59f41 (2026-11-22). `Q_OBJECT` remains open.
 
 srcML's only configuration hook for macros is `srcml_archive_register_macro(token, type)`. It assigns one of six token categories (`src:macro`, `src:name`, `src:type`, `src:specifier`, `src:label`, `src:case`). In 1.2.0 it is not in the public header and not exposed on the command line. We called it through the exported symbol and saw **no change** in the markup; we did not root-cause whether that was our usage or a defect. Even when it works, it is a token category, not an expansion, so it can't make `TEST(...)` a function or `ASSIGN_OR_RETURN(auto x, e)` a declaration. CDT expands real definitions, which is what the stubs exploit.
 
@@ -373,8 +373,9 @@ All numbers are for the 769-file corpus, **RM pipeline against srcML**, aligned 
 | Raw CDT | 2,186,714 | **7.0%** |
 | RM pipeline (model parse) | 498,130 | **1.6%** |
 | RM pipeline after the fixes of 2026-11-22 (1d5ab0ca6, 2726d05d2, cbde48111) | ✅ 412,075 of 32,178,144 | **1.3%** |
+| RM pipeline after the class-head macro fix (796d59f41, 2026-11-22) | ✅ 344,154 of 32,178,144 | **1.1%** |
 
-The last row was measured on the 795 C/C++ files cached on 2026-11-22: the corpus files plus those of test commits added since, with no file excluded for its encoding. On those files, the pipeline just before the fixes (7e7670b11) left 502,140 problem characters (1.56%), and the fixes cut them to 412,075 (1.28%). No file got more problem text. On the 779 files that already existed at `220530700`, the fixes cut problem text from 487,422 to 397,357 characters. The reduction comes from the bitcoin thread safety annotations (−55.1k), `if UNLIKELY (x)` in Hyprland (−22.8k), and the `PRI*` macros in llama.cpp (−12.2k), counted over both cached commits of each file.
+The last row was measured on the 795 C/C++ files cached on 2026-11-22: the corpus files plus those of test commits added since, with no file excluded for its encoding. On those files, the pipeline just before the fixes (7e7670b11) left 502,140 problem characters (1.56%), and the fixes cut them to 412,075 (1.28%). No file got more problem text. On the 779 files that already existed at `220530700`, the fixes cut problem text from 487,422 to 397,357 characters. The reduction comes from the bitcoin thread safety annotations (−55.1k), `if UNLIKELY (x)` in Hyprland (−22.8k), and the `PRI*` macros in llama.cpp (−12.2k), counted over both cached commits of each file. The class-head macro fix then removed the problem text of the two flatbuffers `flexbuffers.h` versions (−67.9k), leaving 344,154 characters (1.07%). The fixes of 4968cb41d and 4fa252151 change no problem text: they model the declaration in `ASSIGN_OR_RETURN(<declaration>, …)` and turn misread calls from declarations into calls.
 
 srcML has no equivalent measure, because it never reports failures.
 
@@ -405,12 +406,12 @@ Some srcML misparses **cascade**. In `collective_pipeliner.cc`, the `argument_li
 | Count | Cause | Who is right |
 |---|---|---|
 | 590 | Bodies in inactive `#if` branches. CDT keeps only the declaration; the RM pipeline re-parses these bodies separately (`CppConditionalBodies`), so the model has them | srcML natively, RM via re-parse |
-| 391 | Inside CDT problem nodes, e.g., bitcoin functions with `EXCLUSIVE_LOCKS_REQUIRED(...)` (no stub), flatbuffers `flexbuffers.h` members | srcML. ✅ The bitcoin part is **fixed in 1d5ab0ca6 (2026-11-22)**: the thread safety stub recovers 26 function definitions (12 in each `validation.cpp`, 1 in each `chainstate.cpp`), plus the lambdas annotated the same way. The flatbuffers part remains |
+| 391 | Inside CDT problem nodes, e.g., bitcoin functions with `EXCLUSIVE_LOCKS_REQUIRED(...)` (no stub), flatbuffers `flexbuffers.h` members | srcML. ✅ The bitcoin part is **fixed in 1d5ab0ca6 (2026-11-22)**: the thread safety stub recovers 26 function definitions (12 in each `validation.cpp`, 1 in each `chainstate.cpp`), plus the lambdas annotated the same way. ✅ The flatbuffers part is **fixed in 796d59f41 (2026-11-22)**: its cause was the class-head macro in `class Builder FLATBUFFERS_FINAL_CLASS {`, and 266 function definitions are recovered (133 in each `flexbuffers.h`) |
 | 272 | Same function, different span | Not a real disagreement |
 | 9 | srcML errors: `/*index=*/{}` inside a call misread as a nested function | CDT |
 | 2 | Other (ARM NEON function after a `#if` chain) | Unclear |
 
-Summary: srcML misses about **572 ordinary function definitions (1.6%)** plus every test-macro body. The RM pipeline misses about **391 (1.2%)** in active code where srcML succeeds, 26 fewer after 1d5ab0ca6 (2026-11-22).
+Summary: srcML misses about **572 ordinary function definitions (1.6%)** plus every test-macro body. The RM pipeline misses about **391 (1.2%)** in active code where srcML succeeds: 26 fewer after 1d5ab0ca6 and 266 fewer after 796d59f41 (2026-11-22).
 
 ### Statement kinds (statements inside bodies found by both, matched by span)
 
@@ -418,10 +419,10 @@ Summary: srcML misses about **572 ordinary function definitions (1.6%)** plus ev
 
 | Count | CDT says | srcML says | Analysis |
 |---|---|---|---|
-| 2,313 | declaration | expression | Mostly **srcML misparses**: in a 400-case sample, 380 are `auto &x = e;` / `auto *p = e;` / `auto &&x = e;` and 14 are structured bindings `auto [a, b] = ...` (srcML wrong). The other 6 are CDT errors: `Printer::Print(ToString());` (4) and `AssertLockHeld(cs_main);` (2), which CDT reads as declarations |
+| 2,313 | declaration | expression | Mostly **srcML misparses**: in a 400-case sample, 380 are `auto &x = e;` / `auto *p = e;` / `auto &&x = e;` and 14 are structured bindings `auto [a, b] = ...` (srcML wrong). The other 6 are CDT errors: `Printer::Print(ToString());` (4) and `AssertLockHeld(cs_main);` (2), which CDT reads as declarations (✅ **fixed in 4fa252151, 2026-11-22**: the misparsed-call repair now declares qualified calls in their namespaces and the unknown classes of the enclosing member functions, so both are call statements) |
 | 1,061 | expression | `throw` | Taxonomy only (srcML has a `throw` statement) |
 | 541 | `goto` | expression | Taxonomy: the protobuf stub expands `DO_(x)` to `if (!(x)) goto failure` |
-| 519 | problem | `if` / expression / declaration / `return` | **srcML right**: `if UNLIKELY (x)` (✅ **fixed in cbde48111, 2026-11-22**), `"%09" PRId64` string concatenation (✅ **fixed in 2726d05d2, 2026-11-22**), `ASSIGN_OR_RETURN(const T* x, ...)`, `new` as an identifier in Linux `.c` files (RM's C++-mode choice) |
+| 519 | problem | `if` / expression / declaration / `return` | **srcML right**: `if UNLIKELY (x)` (✅ **fixed in cbde48111, 2026-11-22**), `"%09" PRId64` string concatenation (✅ **fixed in 2726d05d2, 2026-11-22**), `ASSIGN_OR_RETURN(const T* x, ...)` (✅ **fixed in 4968cb41d, 2026-11-22**: still one call statement, like the AST diff tree, but with the declaration of `x`), `new` as an identifier in Linux `.c` files (RM's C++-mode choice) |
 | 54 | various | `<macro>` / expression | Mixed |
 
 With **raw CDT**, a further 2,057 statements are expressions in CDT but declarations in srcML. Those are the template-type misparses of S2 (`std::vector<T> x = e;`), where srcML is right. The RM pipeline reduces them to **16**.
@@ -512,7 +513,7 @@ The last row is a switching cost, not a technical merit, and it is listed separa
 
 ## 10. Threats to validity
 
-- **Corpus:** 14 sources, dominated by fallout2-ce, TensorFlow/XLA, Hyprland and duckdb. Qt-style or Windows-heavy code (export macros in class heads, `Q_OBJECT`) is absent, and there srcML's macro heuristics would score better than shown.
+- **Corpus:** 14 sources, dominated by fallout2-ce, TensorFlow/XLA, Hyprland and duckdb. Qt-style or Windows-heavy code (export macros in class heads, `Q_OBJECT`) is absent, and there srcML's macro heuristics would score better than shown. The only class-head macros in the corpus are flatbuffers' `FLATBUFFERS_FINAL_CLASS`, which RefactoringMiner handles since 796d59f41.
 - **C files** were parsed as C++ by both tools. This matches RefactoringMiner today, but it understates CDT's C parser (S7) and may slightly understate srcML's C mode.
 - **Span-based alignment** classifies boundary differences as one-sided items. We bucketed them explicitly ("same start or end") instead of counting them as errors, but some residual buckets ("other") were classified from samples rather than exhaustively.
 - **Sampling:** the 400-case sample of declaration/expression disagreements comes from the order of the alignment output, not a random draw. The 2,440 count of the `auto &` pattern is an independent regex count over the files.
@@ -531,7 +532,8 @@ For a tool whose output is a **fine-grained AST diff and refactoring detection**
 
 srcML is excellent at what it was designed for: lightweight, robust, language-uniform markup that keeps the source text losslessly and supports querying and transforming source text at scale, including incomplete code and all preprocessor branches. Those strengths point to ideas RefactoringMiner can **borrow** without changing parsers:
 
-- **Statement-level macro heuristics** for CDT problem shapes srcML handles: `if MACRO (cond)` (✅ **done in cbde48111, 2026-11-22**), string-literal macro concatenation (`"%" PRId64`, ✅ **done in 2726d05d2, 2026-11-22**), class-head export macros, `Q_OBJECT`-style member macros, and `ASSIGN_OR_RETURN(<declaration>, expr)` in the model, not only in the tree.
+- **Statement-level macro heuristics** for CDT problem shapes srcML handles: `if MACRO (cond)` (✅ **done in cbde48111, 2026-11-22**), string-literal macro concatenation (`"%" PRId64`, ✅ **done in 2726d05d2, 2026-11-22**), class-head export macros (✅ **done in 796d59f41, 2026-11-22**), `Q_OBJECT`-style member macros, and `ASSIGN_OR_RETURN(<declaration>, expr)` in the model, not only in the tree (✅ **done in 4968cb41d, 2026-11-22**).
+- **Misread calls** that CDT takes for declarations (`Printer::Print(ToString());`, `AssertLockHeld(cs_main);`), ✅ **done in 4fa252151, 2026-11-22**.
 - **The C parser for `.c` files** (`GCCLanguage`) instead of the C++ parser (K&R definitions, `new` as an identifier).
 - **Stubs for common attribute macros** that still cause CDT problems, e.g., bitcoin's `EXCLUSIVE_LOCKS_REQUIRED` (✅ **done in 1d5ab0ca6, 2026-11-22**).
 - **Lessons from srcML's misparses** about inputs that need care in any heuristic: templates in comparisons, `auto &`, and macros swallowing headers.

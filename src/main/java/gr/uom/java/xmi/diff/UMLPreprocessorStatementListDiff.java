@@ -108,6 +108,7 @@ public class UMLPreprocessorStatementListDiff {
 		removeByIdentity(newStatementsCopy, newToBeRemoved);
 		oldToBeRemoved.clear();
 		newToBeRemoved.clear();
+		pairConditionalsWithChangedCondition(oldStatementsCopy, newStatementsCopy);
 		//check if some of the remaining statements have equal values
 		for(UMLPreprocessorStatement oldStatement : oldStatementsCopy) {
 			if(oldStatement.getValue().isPresent()) {
@@ -152,6 +153,68 @@ public class UMLPreprocessorStatementListDiff {
 		removeByIdentity(newStatementsCopy, newToBeRemoved);
 		this.removedStatements = oldStatementsCopy;
 		this.addedStatements = newStatementsCopy;
+	}
+
+	private static final double CONDITIONAL_BLOCK_SIMILARITY = 0.5;
+
+	//the remaining opening conditional directives of the same type and scope, whose blocks are similar, have a changed condition,
+	//and their #elif, #else and #endif correspond, i.e., #ifndef CONFIG_ARCH_THREAD_INFO_ALLOCATOR ... #endif -> #ifndef CONFIG_ARCH_THREAD_STACK_ALLOCATOR ... #endif
+	private void pairConditionalsWithChangedCondition(List<UMLPreprocessorStatement> oldStatements, List<UMLPreprocessorStatement> newStatements) {
+		Map<UMLPreprocessorStatement, UMLPreprocessorStatement> pairedOpenings = new IdentityHashMap<>();
+		for(UMLPreprocessorStatement oldStatement : oldStatements) {
+			if(!oldStatement.isOpeningConditional() || oldStatement.getBlockText().isEmpty()) {
+				continue;
+			}
+			UMLPreprocessorStatement best = null;
+			double bestSimilarity = CONDITIONAL_BLOCK_SIMILARITY;
+			for(UMLPreprocessorStatement newStatement : newStatements) {
+				if(newStatement.getType() == oldStatement.getType() && newStatement.getBlockText().isPresent() && !pairedOpenings.containsValue(newStatement) &&
+						newStatement.getEnclosingFunction().equals(oldStatement.getEnclosingFunction())) {
+					double similarity = tokenSimilarity(oldStatement.getBlockText().get(), newStatement.getBlockText().get());
+					if(similarity >= bestSimilarity) {
+						bestSimilarity = similarity;
+						best = newStatement;
+					}
+				}
+			}
+			if(best != null) {
+				pairedOpenings.put(oldStatement, best);
+			}
+		}
+		if(pairedOpenings.isEmpty()) {
+			return;
+		}
+		List<UMLPreprocessorStatement> oldToBeRemoved = new ArrayList<>();
+		List<UMLPreprocessorStatement> newToBeRemoved = new ArrayList<>();
+		for(Map.Entry<UMLPreprocessorStatement, UMLPreprocessorStatement> entry : pairedOpenings.entrySet()) {
+			changedStatements.add(Pair.of(entry.getKey(), entry.getValue()));
+			oldToBeRemoved.add(entry.getKey());
+			newToBeRemoved.add(entry.getValue());
+		}
+		//the #elif, #else and #endif following the paired opening directives, in order of type
+		for(UMLPreprocessorStatement oldStatement : oldStatements) {
+			if(oldStatement.getPrevious().isEmpty() || !pairedOpenings.containsKey(oldStatement.getPrevious().get())) {
+				continue;
+			}
+			UMLPreprocessorStatement counterpart = pairedOpenings.get(oldStatement.getPrevious().get());
+			for(UMLPreprocessorStatement newStatement : newStatements) {
+				if(newStatement.getType() == oldStatement.getType() && newStatement.getPrevious().isPresent() && newStatement.getPrevious().get() == counterpart &&
+						newToBeRemoved.stream().noneMatch(statement -> statement == newStatement)) {
+					Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> pair = Pair.of(oldStatement, newStatement);
+					if(oldStatement.getValue().equals(newStatement.getValue())) {
+						commonStatements.add(pair);
+					}
+					else {
+						changedStatements.add(pair);
+					}
+					oldToBeRemoved.add(oldStatement);
+					newToBeRemoved.add(newStatement);
+					break;
+				}
+			}
+		}
+		removeByIdentity(oldStatements, oldToBeRemoved);
+		removeByIdentity(newStatements, newToBeRemoved);
 	}
 
 	//the statements themselves, as the directives with the same condition are equal

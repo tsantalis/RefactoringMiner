@@ -474,7 +474,15 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             for (org.apache.commons.lang3.tuple.Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> statementPair : classDiff.getPreprocessorStatementListDiff().get().getChangedStatements()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
-                if(!mappingStore.isSrcMapped(srcStatement) && !mappingStore.isDstMapped(dstStatement))
+                //a conditional with a changed condition, whose node contains its block, i.e., #ifndef CONFIG_ARCH_THREAD_INFO_ALLOCATOR ... #endif,
+                //maps its directive and condition, and its block is matched by its own declarations
+                if(srcStatement != null && dstStatement != null && statementPair.getLeft().isConditional() && statementPair.getRight().isConditional() &&
+                        srcStatement.getChildren().size() > 1 && dstStatement.getChildren().size() > 1) {
+                    mappingStore.addMapping(srcStatement, dstStatement);
+                    mappingStore.addMapping(srcStatement.getChild(0), dstStatement.getChild(0));
+                    mappingStore.addMappingRecursively(srcStatement.getChild(1), dstStatement.getChild(1));
+                }
+                else if(!mappingStore.isSrcMapped(srcStatement) && !mappingStore.isDstMapped(dstStatement))
                     mappingStore.addMappingRecursively(srcStatement, dstStatement);
             }
         }

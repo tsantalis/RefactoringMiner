@@ -5125,6 +5125,39 @@
   "firstEndPos" : 3655,
   "secondEndPos" : 3654
 }, {
+  "firstType" : "preproc_ifdef",
+  "secondType" : "preproc_ifdef",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "translation_unit",
+  "secondParentType" : "translation_unit",
+  "firstPos" : 3657,
+  "secondPos" : 3656,
+  "firstEndPos" : 4920,
+  "secondEndPos" : 4921
+}, {
+  "firstType" : "#ifndef",
+  "secondType" : "#ifndef",
+  "firstLabel" : "#ifndef",
+  "secondLabel" : "#ifndef",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 3657,
+  "secondPos" : 3656,
+  "firstEndPos" : 3664,
+  "secondEndPos" : 3663
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "CONFIG_ARCH_THREAD_INFO_ALLOCATOR",
+  "secondLabel" : "CONFIG_ARCH_THREAD_STACK_ALLOCATOR",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 3665,
+  "secondPos" : 3664,
+  "firstEndPos" : 3698,
+  "secondEndPos" : 3698
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*\n * Allocate pages if THREAD_SIZE is >= PAGE_SIZE, otherwise use a\n * kmemcache based allocator.\n */",
@@ -8182,6 +8215,17 @@
   "secondPos" : 4907,
   "firstEndPos" : 4913,
   "secondEndPos" : 4914
+}, {
+  "firstType" : "#endif",
+  "secondType" : "#endif",
+  "firstLabel" : "#endif",
+  "secondLabel" : "#endif",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 4914,
+  "secondPos" : 4915,
+  "firstEndPos" : 4920,
+  "secondEndPos" : 4921
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

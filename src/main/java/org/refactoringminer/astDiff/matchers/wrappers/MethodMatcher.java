@@ -953,9 +953,11 @@ public class MethodMatcher extends BodyMapperMatcher{
             }
         }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.POINTER_DECLARATOR,LANG2.POINTER_DECLARATOR);
-        if (matched != null) {
+        //the nested pointer declarators of a return type with several pointers, i.e., struct queue_info ***find(int priority)
+        while (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
             processTreesContainingFunctionDeclarators(matched.first,matched.second, mappingStore);
+            matched = Helpers.findPairOfType(matched.first,matched.second,LANG1.POINTER_DECLARATOR,LANG2.POINTER_DECLARATOR);
         }
         if(srcOperationNode.getType().name.equals(LANG1.REFERENCE_DECLARATOR) && dstOperationNode.getType().name.equals(LANG2.FUNCTION_DECLARATOR)) {
             mappingStore.addMapping(srcOperationNode, dstOperationNode);

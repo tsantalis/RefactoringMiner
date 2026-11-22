@@ -334,6 +334,7 @@ public class CppTreeGenerator {
 
 	private static final String INSERTED_TYPE = "int ";
 	private static final String INSERTED_IF = "if(0);";
+	private static final String INSERTED_IF_CONDITION = "if(0)";
 	//the function whose arguments are parsed again, which is declared so that CDT does not parse its call as a declaration
 	private static final String CALL = "__rm_call__";
 	private static final String INSERTED_CLASS = "__rm_type__";
@@ -3909,7 +3910,16 @@ public class CppTreeGenerator {
 		Node then = statement(ifStatement.getThenClause());
 		IASTNode condition = ifStatement instanceof ICPPASTIfStatement cpp && cpp.getConditionDeclaration() != null ? cpp.getConditionDeclaration() : ifStatement.getConditionExpression();
 		IASTStatement initializer = ifStatement instanceof ICPPASTIfStatement cpp ? cpp.getInitializerStatement() : null;
-		children.add(conditionClause(start(ifStatement), condition, initializer, then == null ? end(ifStatement) : then.start));
+		Node conditionClause = conditionClause(start(ifStatement), condition, initializer, then == null ? end(ifStatement) : then.start);
+		children.add(conditionClause);
+		if(then != null) {
+			//the branches that are not taken before the statement, i.e., return a; in if (x) #ifdef NAS return a; #else return b; #endif
+			for(int[] region : inactiveRegions(source.translationUnit)) {
+				if(region[0] >= conditionClause.end && region[1] <= then.start) {
+					children.addAll(inactiveThen(region[0], region[1]));
+				}
+			}
+		}
 		children.add(then);
 		IASTStatement elseClause = ifStatement.getElseClause();
 		if(elseClause != null && hasLocation(elseClause)) {
@@ -3920,9 +3930,36 @@ public class CppTreeGenerator {
 		return node("if_statement", ifStatement, children);
 	}
 
+	//the code of a branch that is not taken between the condition of an if statement and its statement, which is a statement followed by else clauses,
+	//i.e., f(a); else if (y) g(a); in if (x) #ifdef NAS f(a); else if (y) g(a); #else f(b); else if (y) g(b); #endif, parsed after an if statement that is not in the code
+	private List<Node> inactiveThen(int start, int end) {
+		int statementStart = skip(start, end);
+		if(statementStart >= end) {
+			return List.of();
+		}
+		List<Node> nodes = reparse(start, end, Context.BLOCK, Set.of(), Map.of(statementStart, INSERTED_IF_CONDITION));
+		if(nodes.size() == 1 && nodes.get(0).type.equals("if_statement") && nodes.get(0).start == statementStart) {
+			List<Node> branch = new ArrayList<>();
+			for(Node child : nodes.get(0).children) {
+				if(child.type.equals("else_clause")) {
+					branch.addAll(child.children);
+				}
+				else if(child.end > statementStart) {
+					branch.add(child);
+				}
+			}
+			return List.of(inline(branch));
+		}
+		return nodes;
+	}
+
 	private Node conditionClause(int searchStart, IASTNode condition, IASTStatement initializer, int limit) {
 		int open = find("(", searchStart, limit);
-		int close = findLast(")", open, limit);
+		//the parenthesis after the condition, and not the last one before the statement, which can be in a branch that is not taken before the statement
+		int close = condition != null && hasLocation(condition) ? find(")", end(condition), limit) : -1;
+		if(close < 0) {
+			close = findLast(")", open, limit);
+		}
 		List<Node> children = new ArrayList<>();
 		if(initializer != null && hasLocation(initializer)) {
 			Node init = statement(initializer);

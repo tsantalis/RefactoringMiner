@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.List;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
@@ -80,7 +81,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 			int index = nextClass.getOperations().indexOf(operation);
 			UMLOperation operation2 = null;
 			if(index != -1) {
-				operation2 = nextClass.getOperations().get(index);
+				operation2 = equalOperationWithSameParameterNames(operation, nextClass.getOperations(), index);
 				if(testAnnotationMismatch(operation, operation2)) {
 					this.reportRemovedOperation(operation);
 				}
@@ -92,7 +93,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 			int index = originalClass.getOperations().indexOf(operation);
 			UMLOperation operation1 = null;
 			if(index != -1) {
-				operation1 = originalClass.getOperations().get(index);
+				operation1 = equalOperationWithSameParameterNames(operation, originalClass.getOperations(), index);
 				if(testAnnotationMismatch(operation1, operation)) {
 					this.reportAddedOperation(operation);
 				}
@@ -100,6 +101,22 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 			if(index == -1 || differentParameterNames(operation1, operation))
 				this.reportAddedOperation(operation);
 		}
+	}
+
+	//the operation equal to the given operation with the same parameter names among the equal operations starting at the index, or the first equal operation,
+	//i.e., the second declaration of decode_null(attribute *patr, char *name, char *rn, char *val) in a C header declaring it also as decode_null(attribute*, char*, char*, char*)
+	private UMLOperation equalOperationWithSameParameterNames(UMLOperation operation, List<UMLOperation> operations, int index) {
+		UMLOperation first = operations.get(index);
+		if(!differentParameterNames(operation, first)) {
+			return first;
+		}
+		for(int i=index+1; i<operations.size(); i++) {
+			UMLOperation candidate = operations.get(i);
+			if(candidate.equals(operation) && !differentParameterNames(operation, candidate)) {
+				return candidate;
+			}
+		}
+		return first;
 	}
 
 	public boolean matches(String className) {

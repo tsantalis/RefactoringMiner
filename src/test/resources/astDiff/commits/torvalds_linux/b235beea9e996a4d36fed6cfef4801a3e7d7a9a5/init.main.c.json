@@ -2705,6 +2705,28 @@
   "firstEndPos" : 2477,
   "secondEndPos" : 2477
 }, {
+  "firstType" : "extern",
+  "secondType" : "extern",
+  "firstLabel" : "extern",
+  "secondLabel" : "extern",
+  "firstParentType" : "storage_class_specifier",
+  "secondParentType" : "storage_class_specifier",
+  "firstPos" : 2450,
+  "secondPos" : 2450,
+  "firstEndPos" : 2456,
+  "secondEndPos" : 2456
+}, {
+  "firstType" : "storage_class_specifier",
+  "secondType" : "storage_class_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 2450,
+  "secondPos" : 2450,
+  "firstEndPos" : 2456,
+  "secondEndPos" : 2456
+}, {
   "firstType" : "primitive_type",
   "secondType" : "primitive_type",
   "firstLabel" : "void",
@@ -2815,6 +2837,28 @@
   "firstEndPos" : 2506,
   "secondEndPos" : 2506
 }, {
+  "firstType" : "extern",
+  "secondType" : "extern",
+  "firstLabel" : "extern",
+  "secondLabel" : "extern",
+  "firstParentType" : "storage_class_specifier",
+  "secondParentType" : "storage_class_specifier",
+  "firstPos" : 2478,
+  "secondPos" : 2478,
+  "firstEndPos" : 2484,
+  "secondEndPos" : 2484
+}, {
+  "firstType" : "storage_class_specifier",
+  "secondType" : "storage_class_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 2478,
+  "secondPos" : 2478,
+  "firstEndPos" : 2484,
+  "secondEndPos" : 2484
+}, {
   "firstType" : "primitive_type",
   "secondType" : "primitive_type",
   "firstLabel" : "void",
@@ -2924,6 +2968,28 @@
   "secondPos" : 2507,
   "firstEndPos" : 2541,
   "secondEndPos" : 2541
+}, {
+  "firstType" : "extern",
+  "secondType" : "extern",
+  "firstLabel" : "extern",
+  "secondLabel" : "extern",
+  "firstParentType" : "storage_class_specifier",
+  "secondParentType" : "storage_class_specifier",
+  "firstPos" : 2507,
+  "secondPos" : 2507,
+  "firstEndPos" : 2513,
+  "secondEndPos" : 2513
+}, {
+  "firstType" : "storage_class_specifier",
+  "secondType" : "storage_class_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 2507,
+  "secondPos" : 2507,
+  "firstEndPos" : 2513,
+  "secondEndPos" : 2513
 }, {
   "firstType" : "primitive_type",
   "secondType" : "primitive_type",
@@ -3353,6 +3419,28 @@
   "secondPos" : 3125,
   "firstEndPos" : 3153,
   "secondEndPos" : 3153
+}, {
+  "firstType" : "extern",
+  "secondType" : "extern",
+  "firstLabel" : "extern",
+  "secondLabel" : "extern",
+  "firstParentType" : "storage_class_specifier",
+  "secondParentType" : "storage_class_specifier",
+  "firstPos" : 3125,
+  "secondPos" : 3125,
+  "firstEndPos" : 3131,
+  "secondEndPos" : 3131
+}, {
+  "firstType" : "storage_class_specifier",
+  "secondType" : "storage_class_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 3125,
+  "secondPos" : 3125,
+  "firstEndPos" : 3131,
+  "secondEndPos" : 3131
 }, {
   "firstType" : "primitive_type",
   "secondType" : "primitive_type",
@@ -25585,12 +25673,23 @@
   "firstEndPos" : 12292,
   "secondEndPos" : 12293
 }, {
+  "firstType" : "function_definition",
+  "secondType" : "function_definition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "translation_unit",
+  "secondParentType" : "translation_unit",
+  "firstPos" : 12294,
+  "secondPos" : 12295,
+  "firstEndPos" : 16626,
+  "secondEndPos" : 16628
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "asmlinkage",
   "secondLabel" : "asmlinkage",
-  "firstParentType" : "translation_unit",
-  "secondParentType" : "translation_unit",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
   "firstPos" : 12294,
   "secondPos" : 12295,
   "firstEndPos" : 12304,
@@ -25600,12 +25699,133 @@
   "secondType" : "identifier",
   "firstLabel" : "__visible",
   "secondLabel" : "__visible",
-  "firstParentType" : "translation_unit",
-  "secondParentType" : "translation_unit",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
   "firstPos" : 12305,
   "secondPos" : 12306,
   "firstEndPos" : 12314,
   "secondEndPos" : 12315
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 12315,
+  "secondPos" : 12316,
+  "firstEndPos" : 12319,
+  "secondEndPos" : 12320
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "__init",
+  "secondLabel" : "__init",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 12320,
+  "secondPos" : 12321,
+  "firstEndPos" : 12326,
+  "secondEndPos" : 12327
+}, {
+  "firstType" : "function_declarator",
+  "secondType" : "function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 12327,
+  "secondPos" : 12328,
+  "firstEndPos" : 12345,
+  "secondEndPos" : 12346
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "start_kernel",
+  "secondLabel" : "start_kernel",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 12327,
+  "secondPos" : 12328,
+  "firstEndPos" : 12339,
+  "secondEndPos" : 12340
+}, {
+  "firstType" : "parameter_list",
+  "secondType" : "parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 12339,
+  "secondPos" : 12340,
+  "firstEndPos" : 12345,
+  "secondEndPos" : 12346
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 12339,
+  "secondPos" : 12340,
+  "firstEndPos" : 12340,
+  "secondEndPos" : 12341
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 12340,
+  "secondPos" : 12341,
+  "firstEndPos" : 12344,
+  "secondEndPos" : 12345
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 12340,
+  "secondPos" : 12341,
+  "firstEndPos" : 12344,
+  "secondEndPos" : 12345
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 12344,
+  "secondPos" : 12345,
+  "firstEndPos" : 12345,
+  "secondEndPos" : 12346
+}, {
+  "firstType" : "compound_statement",
+  "secondType" : "compound_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 12346,
+  "secondPos" : 12347,
+  "firstEndPos" : 16626,
+  "secondEndPos" : 16628
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 12346,
+  "secondPos" : 12347,
+  "firstEndPos" : 12347,
+  "secondEndPos" : 12348
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -26003,6 +26223,17 @@
   "firstEndPos" : 12485,
   "secondEndPos" : 12486
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/*\n\t * Set up the the initial canary ASAP:\n\t */",
+  "secondLabel" : "/*\n\t * Set up the the initial canary ASAP:\n\t */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 12488,
+  "secondPos" : 12489,
+  "firstEndPos" : 12535,
+  "secondEndPos" : 12536
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -26299,6 +26530,17 @@
   "secondPos" : 12642,
   "firstEndPos" : 12642,
   "secondEndPos" : 12643
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/*\n * Interrupts are still disabled. Do necessary setups, then\n * enable them\n */",
+  "secondLabel" : "/*\n * Interrupts are still disabled. Do necessary setups, then\n * enable them\n */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 12644,
+  "secondPos" : 12645,
+  "firstEndPos" : 12725,
+  "secondEndPos" : 12726
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -27212,6 +27454,17 @@
   "secondPos" : 12982,
   "firstEndPos" : 12982,
   "secondEndPos" : 12983
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/* arch-specific boot-cpu hooks */",
+  "secondLabel" : "/* arch-specific boot-cpu hooks */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 12983,
+  "secondPos" : 12984,
+  "firstEndPos" : 13017,
+  "secondEndPos" : 13018
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -28544,6 +28797,17 @@
   "firstEndPos" : 13475,
   "secondEndPos" : 13476
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/*\n\t * These use large bootmem allocations and must precede\n\t * kmem_cache_init()\n\t */",
+  "secondLabel" : "/*\n\t * These use large bootmem allocations and must precede\n\t * kmem_cache_init()\n\t */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 13478,
+  "secondPos" : 13479,
+  "firstEndPos" : 13564,
+  "secondEndPos" : 13565
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -29017,6 +29281,17 @@
   "firstEndPos" : 13674,
   "secondEndPos" : 13675
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/*\n\t * Set up the scheduler prior starting any interrupts (such as the\n\t * timer interrupt). Full topology setup happens at smp_init()\n\t * time - but meanwhile we still have a functioning scheduler.\n\t */",
+  "secondLabel" : "/*\n\t * Set up the scheduler prior starting any interrupts (such as the\n\t * timer interrupt). Full topology setup happens at smp_init()\n\t * time - but meanwhile we still have a functioning scheduler.\n\t */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 13677,
+  "secondPos" : 13678,
+  "firstEndPos" : 13880,
+  "secondEndPos" : 13881
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -29093,6 +29368,17 @@
   "secondPos" : 13895,
   "firstEndPos" : 13895,
   "secondEndPos" : 13896
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/*\n\t * Disable preemption - early bootup scheduling is extremely\n\t * fragile until we cpu_idle() for the first time.\n\t */",
+  "secondLabel" : "/*\n\t * Disable preemption - early bootup scheduling is extremely\n\t * fragile until we cpu_idle() for the first time.\n\t */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 13897,
+  "secondPos" : 13898,
+  "firstEndPos" : 14018,
+  "secondEndPos" : 14019
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -29655,6 +29941,17 @@
   "firstEndPos" : 14178,
   "secondEndPos" : 14179
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/* trace_printk() and trace points may be used after this */",
+  "secondLabel" : "/* trace_printk() and trace points may be used after this */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 14181,
+  "secondPos" : 14182,
+  "firstEndPos" : 14241,
+  "secondEndPos" : 14242
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -29885,6 +30182,17 @@
   "secondPos" : 14303,
   "firstEndPos" : 14303,
   "secondEndPos" : 14304
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/* init some links before init_ISA_irqs() */",
+  "secondLabel" : "/* init some links before init_ISA_irqs() */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 14305,
+  "secondPos" : 14306,
+  "firstEndPos" : 14349,
+  "secondEndPos" : 14350
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -31404,6 +31712,17 @@
   "firstEndPos" : 14746,
   "secondEndPos" : 14747
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/*\n\t * HACK ALERT! This is early. We're enabling the console before\n\t * we've done PCI setups etc, and console_init() must be aware of\n\t * this. But we do want output early, in case something goes wrong.\n\t */",
+  "secondLabel" : "/*\n\t * HACK ALERT! This is early. We're enabling the console before\n\t * we've done PCI setups etc, and console_init() must be aware of\n\t * this. But we do want output early, in case something goes wrong.\n\t */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 14749,
+  "secondPos" : 14750,
+  "firstEndPos" : 14957,
+  "secondEndPos" : 14958
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -31788,6 +32107,17 @@
   "secondPos" : 15086,
   "firstEndPos" : 15086,
   "secondEndPos" : 15087
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/*\n\t * Need to run this when irqs are enabled, because it wants\n\t * to self-test [hard/soft]-irqs on/off lock inversion bugs\n\t * too:\n\t */",
+  "secondLabel" : "/*\n\t * Need to run this when irqs are enabled, because it wants\n\t * to self-test [hard/soft]-irqs on/off lock inversion bugs\n\t * too:\n\t */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 15089,
+  "secondPos" : 15090,
+  "firstEndPos" : 15227,
+  "secondEndPos" : 15228
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -34039,6 +34369,83 @@
   "secondLabel" : "",
   "firstParentType" : "compound_statement",
   "secondParentType" : "compound_statement",
+  "firstPos" : 16030,
+  "secondPos" : 16031,
+  "firstEndPos" : 16055,
+  "secondEndPos" : 16057
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 16030,
+  "secondPos" : 16031,
+  "firstEndPos" : 16054,
+  "secondEndPos" : 16056
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "thread_info_cache_init",
+  "secondLabel" : "thread_stack_cache_init",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16030,
+  "secondPos" : 16031,
+  "firstEndPos" : 16052,
+  "secondEndPos" : 16054
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16052,
+  "secondPos" : 16054,
+  "firstEndPos" : 16054,
+  "secondEndPos" : 16056
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 16052,
+  "secondPos" : 16054,
+  "firstEndPos" : 16053,
+  "secondEndPos" : 16055
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 16053,
+  "secondPos" : 16055,
+  "firstEndPos" : 16054,
+  "secondEndPos" : 16056
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 16054,
+  "secondPos" : 16056,
+  "firstEndPos" : 16055,
+  "secondEndPos" : 16057
+}, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 16057,
   "secondPos" : 16059,
   "firstEndPos" : 16069,
@@ -34725,6 +35132,17 @@
   "secondPos" : 16207,
   "firstEndPos" : 16206,
   "secondEndPos" : 16208
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/* rootfs populating might need page-writeback */",
+  "secondLabel" : "/* rootfs populating might need page-writeback */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 16208,
+  "secondPos" : 16210,
+  "firstEndPos" : 16257,
+  "secondEndPos" : 16259
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -35881,6 +36299,17 @@
   "firstEndPos" : 16559,
   "secondEndPos" : 16561
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "/* Do the rest non-__init'ed, we're now alive */",
+  "secondLabel" : "/* Do the rest non-__init'ed, we're now alive */",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 16562,
+  "secondPos" : 16564,
+  "firstEndPos" : 16610,
+  "secondEndPos" : 16612
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -35957,6 +36386,17 @@
   "secondPos" : 16625,
   "firstEndPos" : 16624,
   "secondEndPos" : 16626
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 16625,
+  "secondPos" : 16627,
+  "firstEndPos" : 16626,
+  "secondEndPos" : 16628
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

@@ -2174,6 +2174,13 @@ public class CppTreeGenerator {
 
 	//the macros expanded to nothing between the offset and a declaration become its first children
 	private void absorbEmptyMacros(Node node, int previousEnd) {
+		//the declaration parsed again is in an inline node, i.e., asmlinkage __visible void __init start_kernel(void) {...}
+		if(node.type.equals(INLINE) && !node.children.isEmpty()) {
+			Node first = node.children.get(0);
+			absorbEmptyMacros(first, previousEnd);
+			node.start = Math.min(node.start, first.start);
+			return;
+		}
 		if(node.type.equals("declaration") || node.type.equals("function_definition") || node.type.equals("field_declaration")) {
 			boolean absorbed = true;
 			while(absorbed) {

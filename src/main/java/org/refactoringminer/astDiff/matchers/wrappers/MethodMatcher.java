@@ -1260,6 +1260,17 @@ public class MethodMatcher extends BodyMapperMatcher{
         return match;
     }
 
+    //the storage class specifiers of the declaration of a function, i.e., extern in extern void init_IRQ(void);, whose operation is located at its declarator
+    private void matchStorageClassSpecifiers(Tree declaration1, Tree declaration2, ExtendedMultiMappingStore mappingStore) {
+        List<Tree> specifiers1 = TreeUtilFunctions.findChildrenByType(declaration1, LANG1.STORAGE_CLASS_SPECIFIER);
+        List<Tree> specifiers2 = TreeUtilFunctions.findChildrenByType(declaration2, LANG2.STORAGE_CLASS_SPECIFIER);
+        if(specifiers1.size() == specifiers2.size()) {
+            for(int i=0; i<specifiers1.size(); i++) {
+                mappingStore.addMappingRecursively(specifiers1.get(i), specifiers2.get(i));
+            }
+        }
+    }
+
     private void processFunctionDeclarators(Tree functionDeclarator1, Tree functionDeclarator2, ExtendedMultiMappingStore mappingStore) {
         mappingStore.addMapping(functionDeclarator1,functionDeclarator2);
         com.github.gumtreediff.utils.Pair<Tree,Tree> identifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.FIELD_IDENTIFIER,LANG2.FIELD_IDENTIFIER);
@@ -1407,6 +1418,7 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
         if(parent1.getType().name.equals(LANG1.DECLARATION) && parent2.getType().name.equals(LANG2.DECLARATION)) {
             mappingStore.addMapping(parent1,parent2);
+            matchStorageClassSpecifiers(parent1, parent2, mappingStore);
             Tree lastChild1 = parent1.getChild(parent1.getChildren().size()-1);
             Tree lastChild2 = parent2.getChild(parent2.getChildren().size()-1);
             if(lastChild1.getType().name.equals(LANG1.SEMICOLON) && lastChild2.getType().name.equals(LANG2.SEMICOLON)) {
@@ -1440,6 +1452,7 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
         else if(parent1.getType().name.equals(LANG1.FIELD_DECLARATION) && parent2.getType().name.equals(LANG2.FIELD_DECLARATION)) {
             mappingStore.addMapping(parent1,parent2);
+            matchStorageClassSpecifiers(parent1, parent2, mappingStore);
             Tree lastChild1 = parent1.getChild(parent1.getChildren().size()-1);
             Tree lastChild2 = parent2.getChild(parent2.getChildren().size()-1);
             if(lastChild1.getType().name.equals(LANG1.SEMICOLON) && lastChild2.getType().name.equals(LANG2.SEMICOLON)) {

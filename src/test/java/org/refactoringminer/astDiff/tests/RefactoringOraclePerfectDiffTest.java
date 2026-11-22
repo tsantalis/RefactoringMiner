@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcDiff;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.refactoringminer.astDiff.utils.ExportUtils.*;
@@ -36,6 +37,9 @@ public class RefactoringOraclePerfectDiffTest extends ConsideringCommentsVisitor
         String[] files = mappingsDirFile.list();
         List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));
         boolean partial = info.getSrc_files() != null && !info.getSrc_files().isEmpty();
+        //a case listing its files checks only their expected files, the other expected files of the commit are kept for reference
+        if (partial)
+            expectedFilesList.retainAll(info.getSrc_files().stream().map(s -> getFileNameFromSrcDiff(s)).toList());
 
 
         Set<ASTDiff> astDiffs = getProjectDiffLocally(info);

@@ -165,25 +165,7 @@
   "commit" : "c3fceda86c5e0f499d0b5fa54ea7dc4c4391ae2c",
   "src_files" : [
     "src/core/ObservableQuery.ts",
-    "src/core/QueryInfo.ts",
-    "src/__tests__/client.ts",
-    "src/__tests__/dataMasking.ts",
-    "src/__tests__/fetchMore.ts",
-    "src/__tests__/local-state/export.ts",
-    "src/__tests__/local-state/resolvers.ts",
-    "src/__tests__/mutationResults.ts",
-    "src/__tests__/refetchQueries.ts",
-    "src/core/__tests__/ApolloClient/general.test.ts",
-    "src/core/__tests__/ObservableQuery.ts",
-    "src/core/__tests__/fetchPolicies.ts",
-    "src/react/hooks/__tests__/useBackgroundQuery.test.tsx",
-    "src/react/hooks/__tests__/useFragment.test.tsx",
-    "src/react/hooks/__tests__/useLazyQuery.test.tsx",
-    "src/react/hooks/__tests__/useLoadableQuery.test.tsx",
-    "src/react/hooks/__tests__/useMutation.test.tsx",
-    "src/react/hooks/__tests__/useQuery.test.tsx",
-    "src/react/hooks/__tests__/useSuspenseQuery.test.tsx",
-    "src/react/ssr/__tests__/prerenderStatic.test.tsx"
+    "src/core/QueryInfo.ts"
   ]
 }, {
   "repo" : "https://github.com/apollographql/apollo-client.git",

@@ -5822,9 +5822,61 @@ public abstract class UMLAbstractClassDiff {
 				nonMappedElementsT1CallingRemovedOperation >= nonMappedElementsT1WithoutThoseCallingRemovedOperation);
 	}
 
+	//the test renamed in place, right after the counterpart of the test before it, when the best mapper pairs it with another test
+	//and the test in place has as many identical statements and leaves less of the added test unmatched,
+	//i.e., TotalMissStat -> TotalMissIncrementsMissStat after PropagationOnLookupMiss -> PromotesToHotterTierOnColdHit,
+	//not HashesOnceAndSharesTargetKeyAcrossTiers added further down, which reuses more of the old setup but leaves more of its own code unmatched
+	private UMLOperationBodyMapper renamedTestInPlace(UMLOperationBodyMapper bestMapper, List<UMLOperationBodyMapper> mapperList) {
+		if(!(bestMapper.getContainer1() instanceof UMLOperation removedTest) || !(bestMapper.getContainer2() instanceof UMLOperation bestAddedTest) ||
+				!removedTest.hasTestAnnotation() || !bestAddedTest.hasTestAnnotation()) {
+			return null;
+		}
+		UMLOperation testBefore1 = adjacentTest(removedTest, originalClass.getOperations(), -1);
+		if(testBefore1 == null) {
+			return null;
+		}
+		UMLOperation testBefore2 = null;
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getContainer1() == testBefore1 && mapper.getContainer2() instanceof UMLOperation operation2) {
+				testBefore2 = operation2;
+				break;
+			}
+		}
+		UMLOperation inPlace = testBefore2 != null ? adjacentTest(testBefore2, nextClass.getOperations(), 1) : null;
+		if(inPlace == null || inPlace == bestAddedTest) {
+			return null;
+		}
+		for(int i=1; i<mapperList.size(); i++) {
+			UMLOperationBodyMapper mapper = mapperList.get(i);
+			if(mapper.getContainer1() == removedTest && mapper.getContainer2() == inPlace && mapper.mappingsWithoutBlocks() > 0 &&
+					mapper.exactMatches() >= bestMapper.exactMatches() && mapper.nonMappedElementsT2() < bestMapper.nonMappedElementsT2()) {
+				return mapper;
+			}
+		}
+		return null;
+	}
+
+	//the test before (-1) or after (1) the test among the tests of the operations, or null
+	private static UMLOperation adjacentTest(UMLOperation test, List<UMLOperation> operations, int direction) {
+		int index = operations.indexOf(test);
+		if(index < 0) {
+			return null;
+		}
+		for(int i = index + direction; i >= 0 && i < operations.size(); i += direction) {
+			if(operations.get(i).hasTestAnnotation()) {
+				return operations.get(i);
+			}
+		}
+		return null;
+	}
+
 	private UMLOperationBodyMapper findBestMapper(TreeSet<UMLOperationBodyMapper> mapperSet) {
 		List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>(mapperSet);
 		UMLOperationBodyMapper bestMapper = mapperSet.first();
+		UMLOperationBodyMapper renamedInPlace = renamedTestInPlace(bestMapper, mapperList);
+		if(renamedInPlace != null) {
+			return renamedInPlace;
+		}
 		VariableDeclarationContainer bestMapperOperation1 = bestMapper.getContainer1();
 		VariableDeclarationContainer bestMapperOperation2 = bestMapper.getContainer2();
 		int bestCommonParameterTypes = bestMapperOperation1.commonParameterTypes(bestMapperOperation2).size();

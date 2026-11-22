@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -21,10 +22,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.IntUnaryOperator;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTName;
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 import org.eclipse.cdt.core.dom.ast.IASTAttribute;
 import org.eclipse.cdt.core.dom.ast.IASTAttributeList;
@@ -725,18 +728,35 @@ public class CppFileProcessor {
 
 	static ParsedFile parseWithPreamble(String filePath, String fileContent, boolean astDiff) throws CoreException {
 		IASTTranslationUnit translationUnit = parse(filePath, fileContent, astDiff, "");
+		//C code uses as names the keywords of C++, i.e., new in attribute *new or class in int class of openpbs before its migration to C++,
+		//which CDT parses as problems, so the file is parsed again with these keywords defined as names in the included file
+		String keywords = keywordNames(filePath) ? keywordNames(translationUnit, fileContent, Set.of()) : "";
+		if(!keywords.isEmpty()) {
+			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, keywords);
+			if(problems(reparsed) < problems(translationUnit)) {
+				translationUnit = reparsed;
+			}
+			else {
+				keywords = "";
+			}
+		}
 		//CDT parses the declarations starting with the macros defined in the headers it does not have, i.e., DUCKDB_API virtual void f();,
 		//as problems or as declarations of variables whose type is the macro, so the file is parsed again with these macros defined as empty
 		//in an included file, which does not change the offsets of the file
 		String macros = unknownDeclarationMacros(translationUnit, fileContent);
 		if(!macros.isEmpty()) {
-			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, macros);
+			String extendedPreamble = keywords.isEmpty() ? macros : keywords + "\n" + macros;
+			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, extendedPreamble);
 			if(problems(reparsed) <= problems(translationUnit)) {
 				translationUnit = reparsed;
+				macros = extendedPreamble;
 			}
 			else {
-				macros = "";
+				macros = keywords;
 			}
+		}
+		else {
+			macros = keywords;
 		}
 		//CDT parses the calls of the function templates it does not know as comparisons, i.e., std::make_unique<T>(x) as (std::make_unique < T) > (x),
 		//so the file is parsed again with the declarations of these function templates in the included file
@@ -1300,7 +1320,7 @@ public class CppFileProcessor {
 		if(!astDiff) {
 			options |= GPPLanguage.OPTION_NO_IMAGE_LOCATIONS;
 		}
-		return CppLanguage.getDefault().getASTTranslationUnit(
+		IASTTranslationUnit translationUnit = CppLanguage.getDefault().getASTTranslationUnit(
 				content,
 				scanInfo,
 				includeProvider,
@@ -1308,6 +1328,188 @@ public class CppFileProcessor {
 				options,
 				new DefaultLogService()
 				);
+		if(templates.contains(KEYWORD_NAME_SUFFIX)) {
+			restoreKeywordNames(translationUnit);
+		}
+		return translationUnit;
+	}
+
+	//the keywords of C++ that are not keywords of C, and can be the names of the variables, the parameters, the fields, the functions and the types of C code
+	private static final Set<String> CPP_ONLY_KEYWORDS = Set.of("bool", "catch", "class", "delete", "explicit", "false", "friend", "mutable", "namespace", "new",
+			"operator", "private", "protected", "public", "template", "this", "throw", "true", "try", "typename", "using", "virtual");
+	//the suffix of the names that the keywords used as names are defined as, i.e., #define new new__rm_keyword_name
+	private static final String KEYWORD_NAME_SUFFIX = "__rm_keyword_name";
+	private static final Field CPP_NAME_CHARS = nameField();
+
+	private static Field nameField() {
+		try {
+			Field field = CPPASTName.class.getDeclaredField("name");
+			field.setAccessible(true);
+			return field;
+		}
+		catch(ReflectiveOperationException | RuntimeException e) {
+			return null;
+		}
+	}
+
+	//the definitions of the keywords of C++ that the file uses only as names, i.e., new in attribute *new, which are all in problems of CDT,
+	//while a keyword used as a keyword outside the problems, i.e., new in p = new A();, is kept
+	public static String keywordNames(IASTTranslationUnit translationUnit, String fileContent, Set<String> keywords) {
+		Set<String> inProblems = new TreeSet<>();
+		keywordOccurrences(translationUnit, fileContent, inProblems, new HashSet<>());
+		inProblems.removeAll(keywords);
+		StringBuilder definitions = new StringBuilder();
+		for(String keyword : inProblems) {
+			if(definitions.length() > 0) {
+				definitions.append("\n");
+			}
+			definitions.append("#define ").append(keyword).append(" ").append(keyword).append(KEYWORD_NAME_SUFFIX);
+		}
+		return definitions.toString();
+	}
+
+	//the files of C code or of headers, which can be C code, while the other files are C++ code, i.e., a.cpp or a.hpp
+	public static boolean keywordNames(String filePath) {
+		return filePath.endsWith(".c") || filePath.endsWith(".h");
+	}
+
+	//the keywords of C++ that the parsed code of the file uses as keywords, i.e., new in p = new A();, which are not names in the code of the file
+	public static Set<String> keywords(IASTTranslationUnit translationUnit, String fileContent) {
+		Set<String> outsideProblems = new HashSet<>();
+		keywordOccurrences(translationUnit, fileContent, new HashSet<>(), outsideProblems);
+		return outsideProblems;
+	}
+
+	private static void keywordOccurrences(IASTTranslationUnit translationUnit, String fileContent, Set<String> inProblems, Set<String> outsideProblems) {
+		List<int[]> problems = new ArrayList<>();
+		translationUnit.accept(new ASTVisitor() {
+			{
+				shouldVisitProblems = true;
+			}
+
+			@Override
+			public int visit(IASTProblem problem) {
+				IASTFileLocation location = problem.getFileLocation();
+				if(location != null && isPartOfFile(problem)) {
+					problems.add(new int[] {location.getNodeOffset(), location.getNodeOffset() + location.getNodeLength()});
+				}
+				return PROCESS_CONTINUE;
+			}
+		});
+		IASTNodeSelector selector = translationUnit.getNodeSelector(null);
+		int length = fileContent.length();
+		int k = 0;
+		boolean lineStart = true;
+		while(k < length) {
+			char c = fileContent.charAt(k);
+			if(c == '\n') {
+				lineStart = true;
+				k++;
+			}
+			else if(Character.isWhitespace(c)) {
+				k++;
+			}
+			else if(c == '#' && lineStart) {
+				//the directives, with their continuation lines
+				while(k < length && fileContent.charAt(k) != '\n') {
+					k += fileContent.charAt(k) == '\\' ? 2 : 1;
+				}
+			}
+			else if(c == '/' && k + 1 < length && fileContent.charAt(k + 1) == '/') {
+				int end = fileContent.indexOf('\n', k);
+				k = end < 0 ? length : end;
+			}
+			else if(c == '/' && k + 1 < length && fileContent.charAt(k + 1) == '*') {
+				int end = fileContent.indexOf("*/", k + 2);
+				k = end < 0 ? length : end + 2;
+				lineStart = false;
+			}
+			else if(c == '"' || c == '\'') {
+				for(k++; k < length && fileContent.charAt(k) != c && fileContent.charAt(k) != '\n'; k++) {
+					if(fileContent.charAt(k) == '\\') {
+						k++;
+					}
+				}
+				k++;
+				lineStart = false;
+			}
+			else if(Character.isJavaIdentifierStart(c)) {
+				int start = k;
+				while(k < length && Character.isJavaIdentifierPart(fileContent.charAt(k))) {
+					k++;
+				}
+				String word = fileContent.substring(start, k);
+				if(CPP_ONLY_KEYWORDS.contains(word)) {
+					if(inProblem(problems, start)) {
+						inProblems.add(word);
+					}
+					//a keyword in the parsed code, while the code of the branches that are not taken is not parsed, and is only contained in the blocks, the classes,
+					//the namespaces and the file, i.e., new in new->x = 0; in #ifdef NAS ... #endif of a function body
+					else if(parsedKeyword(selector.findEnclosingNode(start, word.length()), start)) {
+						outsideProblems.add(word);
+					}
+				}
+				lineStart = false;
+			}
+			else {
+				k++;
+				lineStart = false;
+			}
+		}
+		inProblems.removeAll(outsideProblems);
+	}
+
+	//the expansion of a keyword of C++ defined as a name, i.e., new in attribute *new of C code
+	public static boolean isKeywordName(IASTPreprocessorMacroExpansion expansion) {
+		IASTPreprocessorMacroDefinition definition = expansion.getMacroDefinition();
+		return definition != null && definition.getExpansion().endsWith(KEYWORD_NAME_SUFFIX) && CPP_ONLY_KEYWORDS.contains(definition.getName().toString());
+	}
+
+	private static boolean parsedKeyword(IASTNode node, int offset) {
+		if(node == null) {
+			return false;
+		}
+		boolean container = node instanceof IASTTranslationUnit || node instanceof IASTCompoundStatement || node instanceof ICPPASTNamespaceDefinition
+				|| node instanceof ICPPASTLinkageSpecification || node instanceof IASTCompositeTypeSpecifier;
+		return !container || node.getFileLocation() == null || node.getFileLocation().getNodeOffset() == offset;
+	}
+
+	private static boolean inProblem(List<int[]> problems, int offset) {
+		for(int[] problem : problems) {
+			if(offset >= problem[0] && offset < problem[1]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//the names expanded from the definitions of the keywords used as names get back the keywords, i.e., new__rm_keyword_name is new,
+	//since the model takes the names from CDT, while the AST diff tree takes them from the file
+	private static void restoreKeywordNames(IASTTranslationUnit translationUnit) {
+		if(CPP_NAME_CHARS == null) {
+			return;
+		}
+		translationUnit.accept(new ASTVisitor() {
+			{
+				shouldVisitNames = true;
+			}
+
+			@Override
+			public int visit(IASTName name) {
+				if(name instanceof CPPASTName cppName) {
+					char[] chars = cppName.toCharArray();
+					String text = new String(chars);
+					if(text.endsWith(KEYWORD_NAME_SUFFIX) && CPP_ONLY_KEYWORDS.contains(text.substring(0, text.length() - KEYWORD_NAME_SUFFIX.length()))) {
+						try {
+							CPP_NAME_CHARS.set(cppName, text.substring(0, text.length() - KEYWORD_NAME_SUFFIX.length()).toCharArray());
+						}
+						catch(IllegalAccessException e) {
+						}
+					}
+				}
+				return PROCESS_CONTINUE;
+			}
+		});
 	}
 
 	//the declarations of the unknown functions called with template arguments, which CDT parsed as comparisons, i.e., name < T > (arguments)
@@ -1543,7 +1745,7 @@ public class CppFileProcessor {
 	}
 
 	//the number of syntax problems in the file
-	private static int problems(IASTTranslationUnit translationUnit) {
+	public static int problems(IASTTranslationUnit translationUnit) {
 		int[] problems = {0};
 		translationUnit.accept(new ASTVisitor() {
 			{

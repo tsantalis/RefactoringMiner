@@ -19,6 +19,7 @@ import gr.uom.java.xmi.CppFileProcessor;
 import gr.uom.java.xmi.decomposition.CppVisitor;
 import gr.uom.java.xmi.CppLanguage;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTArrayModifier;
 import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression;
@@ -197,6 +198,9 @@ public class CppTreeGenerator {
 			return context;
 		}
 		CppTreeGenerator generator = new CppTreeGenerator(content);
+		if(CppFileProcessor.keywordNames(translationUnit.getFilePath())) {
+			generator.keywords = CppFileProcessor.keywords(translationUnit, content);
+		}
 		Node root = generator.translationUnit(translationUnit);
 		generator.addDirectives(root);
 		generator.groupConditionals(root);
@@ -296,7 +300,8 @@ public class CppTreeGenerator {
 			List<int[]> list = new ArrayList<>();
 			for(IASTPreprocessorMacroExpansion expansion : translationUnit.getMacroExpansions()) {
 				IASTFileLocation location = expansion.getFileLocation();
-				if(location != null && expansion.isPartOfTranslationUnitFile()) {
+				//a keyword of C++ used as a name in C code, i.e., new in attribute *new, is a name of the file, not a macro
+				if(location != null && expansion.isPartOfTranslationUnitFile() && !CppFileProcessor.isKeywordName(expansion)) {
 					list.add(new int[] {offset(location.getNodeOffset()), offset(location.getNodeOffset() + location.getNodeLength())});
 				}
 			}
@@ -889,6 +894,9 @@ public class CppTreeGenerator {
 		return false;
 	}
 
+	//the keywords of C++ that the parsed code of a file of C code or of a header uses as keywords, while the others can be names in the code parsed again,
+	//and null for a file of C++ code
+	private Set<String> keywords;
 	//the name of the class whose members are parsed again, so that its constructors are parsed
 	private String className = "__rm_class__";
 	//whether the next statement is converted without parsing it again
@@ -938,8 +946,19 @@ public class CppTreeGenerator {
 		String code = prefix + builder + suffix;
 		IASTTranslationUnit translationUnit;
 		try {
-			translationUnit = CppLanguage.getDefault().getASTTranslationUnit(FileContent.create("__rm_reparsed__.cpp", code.toCharArray()), new ScannerInfo(),
-					IncludeFileContentProvider.getEmptyFilesProvider(), EmptyCIndex.INSTANCE, GPPLanguage.OPTION_IS_SOURCE_UNIT, new DefaultLogService());
+			translationUnit = parseFragment(code);
+			//C code using keywords of C++ as names, i.e., typedef enum { false, true } bool; in #ifndef __cplusplus, is parsed again with these keywords defined as names
+			String keywords = this.keywords != null ? CppFileProcessor.keywordNames(translationUnit, code, this.keywords) : "";
+			if(!keywords.isEmpty()) {
+				IASTTranslationUnit reparsed = parseFragment(keywords + "\n" + code);
+				if(CppFileProcessor.problems(reparsed) < CppFileProcessor.problems(translationUnit)) {
+					translationUnit = reparsed;
+					prefix = keywords + "\n" + prefix;
+					for(int[] insertion : insertions) {
+						insertion[0] += keywords.length() + 1;
+					}
+				}
+			}
 		}
 		catch(Exception e) {
 			nodes.add(error(start, end));
@@ -994,6 +1013,11 @@ public class CppTreeGenerator {
 		nodes.removeIf(n -> n == null || n.start < start || n.end > end || n.type.equals("ERROR") && n.start == n.end);
 		absorbMacros(nodes, start);
 		return nodes;
+	}
+
+	private static IASTTranslationUnit parseFragment(String code) throws CoreException {
+		return CppLanguage.getDefault().getASTTranslationUnit(FileContent.create("__rm_reparsed__.cpp", code.toCharArray()), new ScannerInfo(),
+				IncludeFileContentProvider.getEmptyFilesProvider(), EmptyCIndex.INSTANCE, GPPLanguage.OPTION_IS_SOURCE_UNIT, new DefaultLogService());
 	}
 
 	//the starts of the declarations between the offsets that are a name with parameters followed by a body, i.e., TEST(A, B) {...}

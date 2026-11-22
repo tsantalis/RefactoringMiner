@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -260,11 +261,14 @@ public class UMLParameterListDiff {
 
 	private List<SimpleEntry<VariableDeclaration, VariableDeclaration>> updateAddedRemovedParameters(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		List<SimpleEntry<VariableDeclaration, VariableDeclaration>> matchedParameters = new ArrayList<SimpleEntry<VariableDeclaration, VariableDeclaration>>();
+		//a parameter is paired once, so that equal parameters, i.e., unnamed C parameters of the same type, are paired in order
+		Set<VariableDeclaration> paired = new HashSet<>();
 		for(VariableDeclaration parameter1 : removedOperation.getParameterDeclarationList()) {
 			boolean found = false;
 			for(VariableDeclaration parameter2 : addedOperation.getParameterDeclarationList()) {
-				if(parameter1.equalType(parameter2) && parameter1.getVariableName().equals(parameter2.getVariableName())) {
+				if(!paired.contains(parameter2) && parameter1.equalType(parameter2) && parameter1.getVariableName().equals(parameter2.getVariableName())) {
 					matchedParameters.add(new SimpleEntry<VariableDeclaration, VariableDeclaration>(parameter1, parameter2));
+					paired.add(parameter2);
 					found = true;
 					break;
 				}
@@ -273,11 +277,13 @@ public class UMLParameterListDiff {
 				this.removedParameters.add(parameter1);
 			}
 		}
+		paired.clear();
 		for(VariableDeclaration parameter1 : addedOperation.getParameterDeclarationList()) {
 			boolean found = false;
 			for(VariableDeclaration parameter2 : removedOperation.getParameterDeclarationList()) {
-				if(parameter1.equalType(parameter2) && parameter1.getVariableName().equals(parameter2.getVariableName())) {
+				if(!paired.contains(parameter2) && parameter1.equalType(parameter2) && parameter1.getVariableName().equals(parameter2.getVariableName())) {
 					matchedParameters.add(new SimpleEntry<VariableDeclaration, VariableDeclaration>(parameter2, parameter1));
+					paired.add(parameter2);
 					found = true;
 					break;
 				}

@@ -7,12 +7,18 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
+import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
+import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroDefinition;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
@@ -926,7 +932,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 	}
 
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator, int extraDimensions) {
-		StringBuilder type = new StringBuilder(cleanTypeText(CppVisitor.singleLine(declSpecifier.getRawSignature())));
+		StringBuilder type = new StringBuilder(cleanTypeText(withoutSpecifierMacros(CppVisitor.singleLine(declSpecifier.getRawSignature()), declSpecifier)));
 		if(type.isEmpty() && declarator instanceof CASTDeclarator cDeclarator) {
 			type = new StringBuilder(cleanTypeText(cDeclarator.getName().toString()));
 		}
@@ -969,6 +975,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 	//the C++ type is located without the specifiers and qualifiers around it, like its AST node, i.e., int in static const int
 	static LocationInfo cppTypeLocation(String sourceFolder, String filePath, IASTNode declSpecifier, CodeElementType codeElementType, String fileContent) {
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declSpecifier, codeElementType, fileContent);
+		Set<String> specifierMacros = specifierMacros(declSpecifier);
 		int start = locationInfo.getStartOffset();
 		int end = locationInfo.getEndOffset();
 		while(true) {
@@ -980,7 +987,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			while(next < end && Character.isWhitespace(fileContent.charAt(next))) {
 				next++;
 			}
-			if(wordEnd == start || next == wordEnd || next >= end || !CPP_TYPE_SURROUNDING_KEYWORDS.contains(fileContent.substring(start, wordEnd)))
+			if(wordEnd == start || next == wordEnd || next >= end || !isSurroundingKeyword(fileContent.substring(start, wordEnd), specifierMacros))
 				break;
 			start = next;
 		}
@@ -993,13 +1000,48 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			while(previous > start && Character.isWhitespace(fileContent.charAt(previous - 1))) {
 				previous--;
 			}
-			if(wordStart == end || previous == wordStart || previous <= start || !CPP_TYPE_SURROUNDING_KEYWORDS.contains(fileContent.substring(wordStart, end)))
+			if(wordStart == end || previous == wordStart || previous <= start || !isSurroundingKeyword(fileContent.substring(wordStart, end), specifierMacros))
 				break;
 			end = previous;
 		}
 		if(start == locationInfo.getStartOffset() && end == locationInfo.getEndOffset())
 			return locationInfo;
 		return new LocationInfo(sourceFolder, filePath, start, end - start, end, codeElementType, fileContent);
+	}
+
+	private static boolean isSurroundingKeyword(String word, Set<String> specifierMacros) {
+		return CPP_TYPE_SURROUNDING_KEYWORDS.contains(word) || specifierMacros.contains(word);
+	}
+
+	//the macros in the specifiers of a declaration that expand to specifiers or to nothing, which are not part of the type,
+	//i.e., __always_inline defined as inline in static __always_inline long f(...)
+	private static Set<String> specifierMacros(IASTNode declSpecifier) {
+		Set<String> macros = new HashSet<>();
+		for(IASTNodeLocation location : declSpecifier.getNodeLocations()) {
+			if(location instanceof IASTMacroExpansionLocation expansionLocation) {
+				IASTPreprocessorMacroDefinition definition = expansionLocation.getExpansion().getMacroDefinition();
+				if(definition != null && !(definition instanceof IASTPreprocessorFunctionStyleMacroDefinition) && definition.getExpansion() != null) {
+					boolean specifiers = true;
+					for(String word : definition.getExpansion().trim().split("\\s+")) {
+						if(!word.isEmpty() && !CPP_TYPE_SURROUNDING_KEYWORDS.contains(word)) {
+							specifiers = false;
+							break;
+						}
+					}
+					if(specifiers) {
+						macros.add(definition.getName().toString());
+					}
+				}
+			}
+		}
+		return macros;
+	}
+
+	private static String withoutSpecifierMacros(String rawType, IASTNode declSpecifier) {
+		for(String macro : specifierMacros(declSpecifier)) {
+			rawType = rawType.replaceAll("\\b" + Pattern.quote(macro) + "\\b", "");
+		}
+		return rawType;
 	}
 
 	public static String cleanTypeText(String rawType) {

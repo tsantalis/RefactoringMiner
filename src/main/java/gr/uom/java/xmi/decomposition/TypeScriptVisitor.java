@@ -212,7 +212,8 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 				}
 			}
 		}
-		else if(node.getParent() instanceof Swc4jAstKeyValueProp prop && prop.getValue().equals(node)) {
+		//the value of a key-value property or a shorthand property, i.e., { mockGlobal: mockGlobal } or { mockGlobal }
+		else if((node.getParent() instanceof Swc4jAstKeyValueProp prop && prop.getValue().equals(node)) || node.getParent() instanceof Swc4jAstObjectLit) {
 			String name = node.getSym();
 			if(container instanceof ModuleContainer module) {
 				for(UMLOperation op : module.getNestedOperations()) {

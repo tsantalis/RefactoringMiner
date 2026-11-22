@@ -591,12 +591,40 @@ public abstract class UMLAbstractClassDiff {
 		if(removedNestedOperations.isEmpty() && addedNestedOperations.isEmpty()) {
 			return;
 		}
+		checkForNestedOperationsMovedUpLevel();
 		List<List<UMLOperation>> foundNestedOperations = checkForNestedOperationSignatureChanges(new ArrayList<>(removedNestedOperations), new ArrayList<>(addedNestedOperations));
 		if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
 			checkForNestedOperationSignatureChanges(new ArrayList<>(removedNestedOperations), addedOperations);
 		}
 		while(foundNestedOperations.get(0).size() > 0 && foundNestedOperations.get(1).size() > 0) {
 			foundNestedOperations = checkForNestedOperationSignatureChanges(foundNestedOperations.get(0), foundNestedOperations.get(1));
+		}
+	}
+
+	//an added nested operation with the same signature as a nested operation of a removed nested operation of the same parent operation moved up a level,
+	//i.e., function restore() nested in function mockGlobal() nested in the arrow function createSchemaFetch is nested in createSchemaFetch after mockGlobal() is removed,
+	//so it is matched before the removed nested operation is matched with the added one as renamed
+	private void checkForNestedOperationsMovedUpLevel() throws RefactoringMinerTimedOutException {
+		for(UMLOperation removedNestedOperation : new ArrayList<>(removedNestedOperations)) {
+			if(removedNestedOperation.getNestedOperations().isEmpty()) {
+				continue;
+			}
+			for(UMLOperationBodyMapper mapper : new ArrayList<>(operationBodyMapperList)) {
+				if(mapper.getOperation1() == null || mapper.getOperation2() == null || !mapper.getOperation1().getNestedOperations().contains(removedNestedOperation)) {
+					continue;
+				}
+				for(UMLOperation addedNestedOperation : new ArrayList<>(addedNestedOperations)) {
+					if(mapper.getOperation2().getNestedOperations().contains(addedNestedOperation)) {
+						UMLOperation operationWithTheSameSignature = removedNestedOperation.nestedOperationWithTheSameSignatureIgnoringChangedTypes(addedNestedOperation);
+						if(operationWithTheSameSignature != null && !mapperListContainsOperation(operationWithTheSameSignature, addedNestedOperation)) {
+							UMLOperationBodyMapper nestedMapper = new UMLOperationBodyMapper(operationWithTheSameSignature, addedNestedOperation, this);
+							this.addOperationBodyMapper(nestedMapper);
+							addedNestedOperations.remove(addedNestedOperation);
+						}
+					}
+				}
+				break;
+			}
 		}
 	}
 

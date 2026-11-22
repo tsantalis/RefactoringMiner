@@ -327,7 +327,15 @@ public class InlineOperationRefactoring extends ChangeTypeRefactoring {
 		return this.getRefactoringType().getDisplayName();
 	}
 
+	//a nested operation inlined to the operation declaring it is not moved, although its class name is the name of the declaring operation,
+	//i.e., function mockGlobal() nested in the arrow function createSchemaFetch
+	public boolean isInlinedToDeclaringOperation() {
+		return getTargetOperationBeforeInline() instanceof UMLOperation operation && operation.getNestedOperations().contains(getInlinedOperation());
+	}
+
 	public RefactoringType getRefactoringType() {
+		if (isInlinedToDeclaringOperation())
+			return RefactoringType.INLINE_OPERATION;
 		if (!getTargetOperationBeforeInline().getClassName().equals(getInlinedOperation().getClassName()))
 			return RefactoringType.MOVE_AND_INLINE_OPERATION;
 		if (bodyMapper.getClassDiff() != null) {

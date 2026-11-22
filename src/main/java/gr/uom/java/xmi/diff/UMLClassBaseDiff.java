@@ -1962,8 +1962,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> inlinedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
+		//the removed nested operations can be inlined to their parent operations, like the added nested operations are extracted,
+		//i.e., function mockGlobal() nested in the arrow function createSchemaFetch, passed by its name { mockGlobal }
+		List<UMLOperation> allRemovedOperations = new ArrayList<>(removedOperations);
+		allRemovedOperations.addAll(removedNestedOperations);
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			InlineOperationDetection detection = new InlineOperationDetection(mapper, removedOperations, this, modelDiff);
+			InlineOperationDetection detection = new InlineOperationDetection(mapper, allRemovedOperations, this, modelDiff);
 			List<UMLOperation> sortedRemovedOperations = detection.getRemovedOperationsSortedByCalls();
 			for(UMLOperation removedOperation : sortedRemovedOperations) {
 				List<InlineOperationRefactoring> refs = detection.check(removedOperation);
@@ -2005,6 +2009,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			processMapperRefactorings(operationBodyMapper, refactorings);
 		}
 		removedOperations.removeAll(operationsToBeRemoved);
+		removedNestedOperations.removeAll(operationsToBeRemoved);
 	}
 
 	private List<UMLOperationBodyMapper> checkForExtractedOperationsWithCallsInOtherMappers() throws RefactoringMinerTimedOutException {

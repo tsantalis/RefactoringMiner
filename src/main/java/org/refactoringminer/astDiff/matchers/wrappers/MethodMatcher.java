@@ -448,6 +448,8 @@ public class MethodMatcher extends BodyMapperMatcher{
                 }
                 if(srcOperationNode.getParent().getType().name.equals(LANG1.FIELD_DECLARATION) && dstOperationNode.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {
                     mappingStore.addMapping(srcOperationNode.getParent(), dstOperationNode.getParent());
+                    //the storage class specifiers of a function returning a pointer, i.e., extern in extern void *log_get_tls_data(void);
+                    matchStorageClassSpecifiers(srcOperationNode.getParent(), dstOperationNode.getParent(), mappingStore);
                     com.github.gumtreediff.utils.Pair<Tree,Tree> type_qualifiers = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.TYPE_QUALIFIER,LANG2.TYPE_QUALIFIER);
                     if (type_qualifiers != null) {
                         mappingStore.addMappingRecursively(type_qualifiers.first,type_qualifiers.second);
@@ -474,6 +476,8 @@ public class MethodMatcher extends BodyMapperMatcher{
                 }
                 else if(srcOperationNode.getParent().getType().name.equals(LANG1.DECLARATION) && dstOperationNode.getParent().getType().name.equals(LANG2.DECLARATION)) {
                     mappingStore.addMapping(srcOperationNode.getParent(), dstOperationNode.getParent());
+                    //the storage class specifiers of a function returning a pointer, i.e., extern in extern void *log_get_tls_data(void);
+                    matchStorageClassSpecifiers(srcOperationNode.getParent(), dstOperationNode.getParent(), mappingStore);
                     com.github.gumtreediff.utils.Pair<Tree,Tree> type_qualifiers = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.TYPE_QUALIFIER,LANG2.TYPE_QUALIFIER);
                     if (type_qualifiers != null) {
                         mappingStore.addMappingRecursively(type_qualifiers.first,type_qualifiers.second);

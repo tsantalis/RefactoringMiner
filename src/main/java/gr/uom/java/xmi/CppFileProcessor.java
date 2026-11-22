@@ -740,6 +740,17 @@ public class CppFileProcessor {
 				keywords = "";
 			}
 		}
+		//CDT parses the string literals concatenated with the string macros defined in the headers it does not have, i.e., PARSE_A " and " PARSE_B,
+		//as several statements with problems, so the file is parsed again with these macros defined as empty strings in the included file
+		String strings = stringMacros(translationUnit, fileContent);
+		if(!strings.isEmpty()) {
+			String extendedPreamble = keywords.isEmpty() ? strings : keywords + "\n" + strings;
+			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, extendedPreamble);
+			if(problems(reparsed) < problems(translationUnit)) {
+				translationUnit = reparsed;
+				keywords = extendedPreamble;
+			}
+		}
 		//CDT parses the declarations starting with the macros defined in the headers it does not have, i.e., DUCKDB_API virtual void f();,
 		//as problems or as declarations of variables whose type is the macro, so the file is parsed again with these macros defined as empty
 		//in an included file, which does not change the offsets of the file
@@ -1364,6 +1375,99 @@ public class CppFileProcessor {
 				definitions.append("\n");
 			}
 			definitions.append("#define ").append(keyword).append(" ").append(keyword).append(KEYWORD_NAME_SUFFIX);
+		}
+		return definitions.toString();
+	}
+
+	//the keywords that can precede a string literal, i.e., return "x"; or extern "C"
+	private static final Set<String> KEYWORDS_BEFORE_STRINGS = Set.of("return", "case", "extern", "operator", "else", "do", "goto", "throw", "co_return", "co_yield", "sizeof");
+	//the prefixes of the string literals, i.e., L"x" or u8R"(x)"
+	private static final Pattern STRING_PREFIX = Pattern.compile("(L|u8|u|U)?R?");
+
+	//the definitions as empty strings of the names that the file concatenates with string literals and that are not macros CDT knows,
+	//i.e., #define PARSE_A "" for PARSE_A " and " PARSE_B, which are string macros defined in headers CDT does not have
+	private static String stringMacros(IASTTranslationUnit translationUnit, String fileContent) {
+		Set<String> known = new HashSet<>();
+		for(IASTPreprocessorMacroDefinition definition : translationUnit.getMacroDefinitions()) {
+			known.add(definition.getName().toString());
+		}
+		for(IASTPreprocessorMacroDefinition definition : translationUnit.getBuiltinMacroDefinitions()) {
+			known.add(definition.getName().toString());
+		}
+		Set<String> names = new TreeSet<>();
+		int length = fileContent.length();
+		int k = 0;
+		boolean lineStart = true;
+		//the identifier before the current token and whether the token before the current one is a string literal
+		String previousName = null;
+		boolean previousString = false;
+		while(k < length) {
+			char c = fileContent.charAt(k);
+			if(c == '\n') {
+				lineStart = true;
+				k++;
+			}
+			else if(Character.isWhitespace(c)) {
+				k++;
+			}
+			else if(c == '#' && lineStart) {
+				//the directives, with their continuation lines
+				while(k < length && fileContent.charAt(k) != '\n') {
+					k += fileContent.charAt(k) == '\\' ? 2 : 1;
+				}
+				previousName = null;
+				previousString = false;
+			}
+			else if(c == '/' && k + 1 < length && fileContent.charAt(k + 1) == '/') {
+				int end = fileContent.indexOf('\n', k);
+				k = end < 0 ? length : end;
+			}
+			else if(c == '/' && k + 1 < length && fileContent.charAt(k + 1) == '*') {
+				int end = fileContent.indexOf("*/", k + 2);
+				k = end < 0 ? length : end + 2;
+				lineStart = false;
+			}
+			else if(c == '"' || c == '\'') {
+				if(c == '"' && previousName != null) {
+					names.add(previousName);
+				}
+				for(k++; k < length && fileContent.charAt(k) != c && fileContent.charAt(k) != '\n'; k++) {
+					if(fileContent.charAt(k) == '\\') {
+						k++;
+					}
+				}
+				k++;
+				lineStart = false;
+				previousName = null;
+				previousString = c == '"';
+			}
+			else if(Character.isJavaIdentifierStart(c)) {
+				int start = k;
+				while(k < length && Character.isJavaIdentifierPart(fileContent.charAt(k))) {
+					k++;
+				}
+				String word = fileContent.substring(start, k);
+				boolean candidate = !KEYWORDS_BEFORE_STRINGS.contains(word) && !STRING_PREFIX.matcher(word).matches() && !known.contains(word);
+				if(previousString && candidate) {
+					names.add(word);
+				}
+				previousName = candidate ? word : null;
+				previousString = false;
+				lineStart = false;
+			}
+			else {
+				k++;
+				lineStart = false;
+				previousName = null;
+				previousString = false;
+			}
+		}
+		StringBuilder definitions = new StringBuilder();
+		for(String name : names) {
+			if(definitions.length() > 0) {
+				definitions.append("\n");
+			}
+			definitions.append("#define ").append(name).append(" \"\"");
 		}
 		return definitions.toString();
 	}

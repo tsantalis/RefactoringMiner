@@ -49,6 +49,8 @@ import org.eclipse.cdt.core.dom.ast.IBinding;
 import org.eclipse.cdt.core.dom.ast.IProblemBinding;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLinkageSpecification;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNameSpecifier;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPClassType;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.ICPPInternalBinding;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNamespaceDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTQualifiedName;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateId;
@@ -769,7 +771,7 @@ public class CppFileProcessor {
 		}
 		//CDT parses the statements calling the result of the call of a function it does not know as declarations of variables whose type is the function,
 		//i.e., f(a)(b); as the declaration of a with type f, so the file is parsed again with these names declared as functions in the included file
-		String functions = misparsedCalls(translationUnit, fileContent);
+		String functions = misparsedCalls(translationUnit, fileContent, preamble);
 		if(!functions.isEmpty()) {
 			String extendedPreamble = preamble.isEmpty() ? functions : preamble + "\n" + functions;
 			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, extendedPreamble);
@@ -1029,10 +1031,16 @@ public class CppFileProcessor {
 	}
 
 	//the declarations of the unknown names that CDT parsed as the types of declaration statements with a parenthesized declarator followed by parameters,
-	//i.e., int f(...); for f(a)(b);, when the names are not used as types in other declarations of the file
-	private static String misparsedCalls(IASTTranslationUnit translationUnit, String fileContent) {
-		Set<String> names = new LinkedHashSet<>();
+	//i.e., int f(...); for f(a)(b);, when the names are not used as types in other declarations of the file,
+	//in the namespaces of their qualifiers, i.e., namespace Printer { int Print(...); } for Printer::Print(ToString());,
+	//and the declarations of the unknown classes of the member functions containing them, whose scope CDT cannot look the names up in,
+	//i.e., struct CVerifyDB {}; for AssertLockHeld(cs_main); in CVerifyDB::VerifyDB, or struct A { struct B {}; }; for a call in A::B::f
+	private static String misparsedCalls(IASTTranslationUnit translationUnit, String fileContent, String preamble) {
+		//the declaration of each misparsed call and the class of the member function containing it, by the name of the call
+		Map<String, Set<String>> declarations = new LinkedHashMap<>();
+		Map<String, Set<OwnerPath>> owners = new HashMap<>();
 		Set<String> types = new HashSet<>();
+		Map<String, Boolean> usedAsTypes = new HashMap<>();
 		translationUnit.accept(new ASTVisitor() {
 			{
 				shouldVisitDeclSpecifiers = true;
@@ -1041,18 +1049,87 @@ public class CppFileProcessor {
 			@Override
 			public int visit(IASTDeclSpecifier declSpecifier) {
 				if(declSpecifier instanceof IASTNamedTypeSpecifier named && isPartOfFile(named)) {
-					if(misparsedCall(named, fileContent)) {
-						names.add(named.getName().toString());
+					String name = named.getName().getLastName().toString();
+					String declaration = misparsedCall(named, fileContent) ? functionDeclaration(named.getName(), fileContent, usedAsTypes) : null;
+					if(declaration != null) {
+						declarations.computeIfAbsent(name, key -> new LinkedHashSet<>()).add(declaration);
+						OwnerPath owner = ownerPath(named, fileContent, usedAsTypes, true);
+						if(owner != null) {
+							owners.computeIfAbsent(name, key -> new LinkedHashSet<>()).add(owner);
+						}
 					}
 					else {
-						types.add(named.getName().getLastName().toString());
+						types.add(name);
 					}
 				}
 				return PROCESS_CONTINUE;
 			}
 		});
-		names.removeAll(types);
-		return names.stream().map(name -> "int " + name + "(...);").collect(Collectors.joining("\n"));
+		declarations.keySet().removeAll(types);
+		Set<String> code = new LinkedHashSet<>();
+		Set<OwnerPath> paths = new LinkedHashSet<>();
+		for(String name : declarations.keySet()) {
+			code.addAll(declarations.get(name));
+			paths.addAll(owners.getOrDefault(name, Set.of()));
+		}
+		String classes = ownerClassDeclarations(paths, preamble);
+		if(!classes.isEmpty()) {
+			code.add(classes);
+		}
+		return String.join("\n", code);
+	}
+
+	//the declaration of the function named after the type of a misparsed call, in the namespaces of its qualifiers, i.e., namespace tsl { int BlockUntilReady(...); },
+	//or nothing when a qualifier is not a namespace, i.e., the class LayoutUtil used as a type in the file
+	private static String functionDeclaration(IASTName name, String fileContent, Map<String, Boolean> types) {
+		if(!(name instanceof ICPPASTQualifiedName qualifiedName)) {
+			return "int " + name + "(...);";
+		}
+		if(qualifiedName.isFullyQualified()) {
+			return null;
+		}
+		List<String> namespaces = new ArrayList<>();
+		for(ICPPASTNameSpecifier specifier : qualifiedName.getQualifier()) {
+			if(!(specifier instanceof IASTName qualifier) || qualifier instanceof ICPPASTTemplateId || !isNamespace(qualifier, fileContent, types)) {
+				return null;
+			}
+			namespaces.add(qualifier.toString());
+		}
+		return inNamespaces(namespaces, "int " + qualifiedName.getLastName() + "(...);");
+	}
+
+	//the namespaces and the classes enclosing the unknown class of a member function, i.e., [xla] and [CommonPjRtBuffer, ScopedHold] for xla::CommonPjRtBuffer::ScopedHold::f
+	private record OwnerPath(List<String> namespaces, List<String> classes) {}
+
+	//the declarations of the classes of the paths, with the nested classes in the declarations of their enclosing classes, without the classes the preamble defines
+	private static String ownerClassDeclarations(Set<OwnerPath> paths, String preamble) {
+		Map<List<String>, Map<String, Object>> classesByNamespaces = new LinkedHashMap<>();
+		for(OwnerPath path : paths) {
+			if(preamble.contains("struct " + path.classes().get(0) + " {")) {
+				continue;
+			}
+			Map<String, Object> level = classesByNamespaces.computeIfAbsent(path.namespaces(), key -> new LinkedHashMap<>());
+			for(String name : path.classes()) {
+				@SuppressWarnings("unchecked")
+				Map<String, Object> next = (Map<String, Object>)level.computeIfAbsent(name, key -> new LinkedHashMap<String, Object>());
+				level = next;
+			}
+		}
+		List<String> code = new ArrayList<>();
+		for(var entry : classesByNamespaces.entrySet()) {
+			code.add(inNamespaces(entry.getKey(), structs(entry.getValue())));
+		}
+		return String.join("\n", code);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static String structs(Map<String, Object> classes) {
+		StringBuilder code = new StringBuilder();
+		for(var entry : classes.entrySet()) {
+			Map<String, Object> nested = (Map<String, Object>)entry.getValue();
+			code.append("struct ").append(entry.getKey()).append(" {").append(nested.isEmpty() ? "" : " " + structs(nested) + " ").append("};");
+		}
+		return code.toString();
 	}
 
 	private static boolean misparsedCall(IASTNamedTypeSpecifier named, String fileContent) {
@@ -1063,7 +1140,7 @@ public class CppFileProcessor {
 		IASTDeclarator declarator = declaration.getDeclarators()[0];
 		IASTName name = named.getName();
 		IASTFileLocation location = name.getFileLocation();
-		if(declarator.getNestedDeclarator() == null || declarator.getPointerOperators().length > 0 || name instanceof ICPPASTQualifiedName
+		if(declarator.getNestedDeclarator() == null || declarator.getPointerOperators().length > 0 || name.getLastName() instanceof ICPPASTTemplateId
 				|| name instanceof ICPPASTTemplateId || location == null || !(name.resolveBinding() instanceof IProblemBinding)) {
 			return false;
 		}
@@ -1285,6 +1362,13 @@ public class CppFileProcessor {
 
 	//the definition of the unknown class of the member function that contains the node, i.e., A in void A::f() {...}, in the namespaces of the member function
 	private static String ownerClassDeclaration(IASTNode node, String fileContent, Map<String, Boolean> types) {
+		OwnerPath path = ownerPath(node, fileContent, types, false);
+		return path != null ? inNamespaces(path.namespaces(), "struct " + path.classes().get(0) + " {};") : null;
+	}
+
+	//the path of the unknown class of the member function containing the node, i.e., A in A::f in namespace n, where the qualifiers before the class are namespaces,
+	//or with nested, unknown classes too, i.e., B in A::B::f
+	private static OwnerPath ownerPath(IASTNode node, String fileContent, Map<String, Boolean> types, boolean nested) {
 		IASTNode parent = node.getParent();
 		while(parent != null && !(parent instanceof IASTFunctionDefinition)) {
 			parent = parent.getParent();
@@ -1294,8 +1378,10 @@ public class CppFileProcessor {
 			return null;
 		}
 		ICPPASTNameSpecifier[] qualifiers = qualifiedName.getQualifier();
+		//with nested, a class that is only declared, i.e., struct Matcher; of the preamble, whose scope CDT cannot look the names up in either
 		if(qualifiers.length == 0 || !(qualifiers[qualifiers.length - 1] instanceof IASTName owner) || owner instanceof ICPPASTTemplateId
-				|| !(owner.resolveBinding() instanceof IProblemBinding)) {
+				|| !(owner.resolveBinding() instanceof IProblemBinding || nested && owner.resolveBinding() instanceof ICPPInternalBinding binding
+				&& owner.resolveBinding() instanceof ICPPClassType && binding.getDefinition() == null)) {
 			return null;
 		}
 		List<String> namespaces = new ArrayList<>();
@@ -1307,16 +1393,23 @@ public class CppFileProcessor {
 				return null;
 			}
 		}
+		List<String> classes = new ArrayList<>();
 		for(int i = 0; i < qualifiers.length - 1; i++) {
 			if(!(qualifiers[i] instanceof IASTName qualifier) || qualifier instanceof ICPPASTTemplateId) {
 				return null;
 			}
-			if(!isNamespace(qualifier, fileContent, types)) {
+			if(classes.isEmpty() && isNamespace(qualifier, fileContent, types)) {
+				namespaces.add(qualifier.toString());
+			}
+			else if(nested && qualifier.resolveBinding() instanceof IProblemBinding) {
+				classes.add(qualifier.toString());
+			}
+			else {
 				return null;
 			}
-			namespaces.add(qualifier.toString());
 		}
-		return inNamespaces(namespaces, "struct " + owner + " {};");
+		classes.add(owner.toString());
+		return new OwnerPath(namespaces, classes);
 	}
 
 	private static String inNamespaces(List<String> namespaces, String declaration) {

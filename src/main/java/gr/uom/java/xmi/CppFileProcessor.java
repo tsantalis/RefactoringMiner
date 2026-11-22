@@ -1481,6 +1481,12 @@ public class CppFileProcessor {
 	public static Set<String> keywords(IASTTranslationUnit translationUnit, String fileContent) {
 		Set<String> outsideProblems = new HashSet<>();
 		keywordOccurrences(translationUnit, fileContent, new HashSet<>(), outsideProblems);
+		//the keywords defined as names for the file, i.e., new in attribute *new, which are names in the parsed code
+		for(IASTPreprocessorMacroDefinition definition : translationUnit.getMacroDefinitions()) {
+			if(definition.getExpansion().endsWith(KEYWORD_NAME_SUFFIX)) {
+				outsideProblems.remove(definition.getName().toString());
+			}
+		}
 		return outsideProblems;
 	}
 

@@ -22923,6 +22923,83 @@
   "firstEndPos" : 26071,
   "secondEndPos" : 26071
 }, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 26073,
+  "secondPos" : 26073,
+  "firstEndPos" : 26087,
+  "secondEndPos" : 26087
+}, {
+  "firstType" : "sized_type_specifier",
+  "secondType" : "sized_type_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 26073,
+  "secondPos" : 26073,
+  "firstEndPos" : 26081,
+  "secondEndPos" : 26081
+}, {
+  "firstType" : "unsigned",
+  "secondType" : "unsigned",
+  "firstLabel" : "unsigned",
+  "secondLabel" : "unsigned",
+  "firstParentType" : "sized_type_specifier",
+  "secondParentType" : "sized_type_specifier",
+  "firstPos" : 26073,
+  "secondPos" : 26073,
+  "firstEndPos" : 26081,
+  "secondEndPos" : 26081
+}, {
+  "firstType" : "bitfield_clause",
+  "secondType" : "bitfield_clause",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 26084,
+  "secondPos" : 26084,
+  "firstEndPos" : 26086,
+  "secondEndPos" : 26086
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "bitfield_clause",
+  "secondParentType" : "bitfield_clause",
+  "firstPos" : 26084,
+  "secondPos" : 26084,
+  "firstEndPos" : 26085,
+  "secondEndPos" : 26085
+}, {
+  "firstType" : "number_literal",
+  "secondType" : "number_literal",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "bitfield_clause",
+  "secondParentType" : "bitfield_clause",
+  "firstPos" : 26085,
+  "secondPos" : 26085,
+  "firstEndPos" : 26086,
+  "secondEndPos" : 26086
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 26086,
+  "secondPos" : 26086,
+  "firstEndPos" : 26087,
+  "secondEndPos" : 26087
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/* Unserialized, strictly 'current' */",

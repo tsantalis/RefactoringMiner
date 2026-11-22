@@ -1974,7 +1974,9 @@ public class CppFileProcessor {
 		String fieldName = declarator.getName().toString();
 		if(fieldName.isEmpty() && declarator.getNestedDeclarator() != null)
 			fieldName = declarator.getNestedDeclarator().getRawSignature();
-		if(!fieldName.isEmpty()) {
+		//an unnamed bit-field is an attribute without name, i.e., unsigned :0; forcing the alignment to the next boundary
+		boolean unnamedBitField = fieldName.isEmpty() && declarator instanceof IASTFieldDeclarator fieldDeclarator && fieldDeclarator.getBitFieldSize() != null;
+		if(!fieldName.isEmpty() || unnamedBitField) {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 			boolean allUpperCase = type != null ? type.toString().equals(type.toString().toUpperCase()) : false;
 			//avoid creating an attribute when type seems like a preprocessor function call, e.g., ABSL_EXCLUSIVE_LOCKS_REQUIRED

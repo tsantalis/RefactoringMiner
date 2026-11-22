@@ -1359,7 +1359,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
+		processUnnamedAttributes();
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
+			if(attribute.getName().isEmpty()) {
+				continue;
+			}
     		UMLAttribute attributeWithTheSameName = nextClass.attributeWithTheSameNameIgnoringChangedType(attribute);
 			if(attributeWithTheSameName == null) {
     			this.removedAttributes.add(attribute);
@@ -1381,6 +1385,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
     	}
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
+			if(attribute.getName().isEmpty()) {
+				continue;
+			}
     		UMLAttribute attributeWithTheSameName = originalClass.attributeWithTheSameNameIgnoringChangedType(attribute);
 			if(attributeWithTheSameName == null) {
     			this.addedAttributes.add(attribute);
@@ -1401,6 +1408,32 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     			}
 			}
     	}
+	}
+
+	//the attributes without name, i.e., the unnamed bit-fields unsigned :0; of C/C++, are paired in order,
+	//and the others are neither removed nor added, since they cannot be renamed or moved
+	private void processUnnamedAttributes() throws RefactoringMinerTimedOutException {
+		List<UMLAttribute> unnamed1 = new ArrayList<>();
+		for(UMLAttribute attribute : originalClass.getAttributes()) {
+			if(attribute.getName().isEmpty()) {
+				unnamed1.add(attribute);
+			}
+		}
+		List<UMLAttribute> unnamed2 = new ArrayList<>();
+		for(UMLAttribute attribute : nextClass.getAttributes()) {
+			if(attribute.getName().isEmpty()) {
+				unnamed2.add(attribute);
+			}
+		}
+		for(int i=0; i<Math.min(unnamed1.size(), unnamed2.size()); i++) {
+			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(unnamed1.get(i), unnamed2.get(i), this, modelDiff);
+			if(!attributeDiff.isEmpty()) {
+				attributeDiffList.add(attributeDiff);
+			}
+			else {
+				addCommonAttributes(unnamed1.get(i), unnamed2.get(i));
+			}
+		}
 	}
 
 	protected void processOperations() throws RefactoringMinerTimedOutException {

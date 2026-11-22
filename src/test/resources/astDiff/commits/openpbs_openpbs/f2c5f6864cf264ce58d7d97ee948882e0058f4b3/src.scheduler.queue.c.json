@@ -582,6 +582,50 @@
   "firstEndPos" : 2039,
   "secondEndPos" : 2039
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 2042,
+  "secondPos" : 2042,
+  "firstEndPos" : 2077,
+  "secondEndPos" : 2102
+}, {
+  "firstType" : "assignment_expression",
+  "secondType" : "assignment_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 2042,
+  "secondPos" : 2042,
+  "firstEndPos" : 2076,
+  "secondEndPos" : 2101
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "ret_obj",
+  "secondLabel" : "ret_obj",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 2042,
+  "secondPos" : 2042,
+  "firstEndPos" : 2049,
+  "secondEndPos" : 2049
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 2050,
+  "secondPos" : 2050,
+  "firstEndPos" : 2051,
+  "secondEndPos" : 2051
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -702,6 +746,17 @@
   "secondPos" : 2099,
   "firstEndPos" : 2076,
   "secondEndPos" : 2100
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 2076,
+  "secondPos" : 2101,
+  "firstEndPos" : 2077,
+  "secondEndPos" : 2102
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
@@ -3541,6 +3596,50 @@
   "firstEndPos" : 3190,
   "secondEndPos" : 3215
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 3194,
+  "secondPos" : 3219,
+  "firstEndPos" : 3264,
+  "secondEndPos" : 3311
+}, {
+  "firstType" : "assignment_expression",
+  "secondType" : "assignment_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 3194,
+  "secondPos" : 3219,
+  "firstEndPos" : 3263,
+  "secondEndPos" : 3310
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "realloc_ptr",
+  "secondLabel" : "realloc_ptr",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 3194,
+  "secondPos" : 3219,
+  "firstEndPos" : 3205,
+  "secondEndPos" : 3230
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 3206,
+  "secondPos" : 3231,
+  "firstEndPos" : 3207,
+  "secondEndPos" : 3232
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -3771,6 +3870,17 @@
   "secondPos" : 3308,
   "firstEndPos" : 3263,
   "secondEndPos" : 3309
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 3263,
+  "secondPos" : 3310,
+  "firstEndPos" : 3264,
+  "secondEndPos" : 3311
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",

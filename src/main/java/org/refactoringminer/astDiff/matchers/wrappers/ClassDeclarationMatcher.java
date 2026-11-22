@@ -750,6 +750,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             if(child1.getType().name.startsWith("preproc_") && !child1.isIsomorphicTo(child2)) {
                 continue;
             }
+            //the functions with changes, whose code is mapped by the mappers of their operations, and not by its positions
+            if(child1.getType().name.equals(LANG1.METHOD_DECLARATION) && child2.getType().name.equals(LANG2.METHOD_DECLARATION) && !child1.isIsomorphicTo(child2)) {
+                continue;
+            }
             mappingStore.addMappingRecursively(child1, child2);
         }
     }

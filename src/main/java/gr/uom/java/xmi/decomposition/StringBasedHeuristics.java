@@ -904,6 +904,10 @@ public class StringBasedHeuristics {
 					(differOnlyInTypeAssertion(s1, s2, fragment2) || differOnlyInTypeAssertion(s2, s1, fragment1))) {
 				return true;
 			}
+			if(LANG1.equals(Constants.CPP) && LANG2.equals(Constants.CPP) &&
+					(differOnlyInNamedCast(s1, s2, fragment2) || differOnlyInNamedCast(s2, s1, fragment1))) {
+				return true;
+			}
 			if(!diff1.isEmpty() && StringDistance.isNumeric(diff1) && !diff2.isEmpty() && StringDistance.isNumeric(diff2) &&
 					!commonSuffix.startsWith("=") && !commonSuffix.startsWith(LANG1.ASSIGNMENT)) {
 				boolean skip = false;
@@ -1244,6 +1248,25 @@ public class StringBasedHeuristics {
 		}
 		return false;
 	}
+
+	//the C++ named cast added to an expression, i.e., struct limit_info *lip = p; -> struct limit_info *lip = static_cast<limit_info *>(p);
+	private static boolean differOnlyInNamedCast(String s1, String s2, AbstractCodeFragment fragment2) {
+		for(LeafExpression cast : fragment2.getCastExpressions()) {
+			String castString = cast.getString();
+			if(NAMED_CAST.matcher(castString).lookingAt() && castString.endsWith(")") && s2.contains(castString)) {
+				int open = castString.indexOf("(", castString.indexOf(">"));
+				if(open > 0) {
+					String operand = castString.substring(open + 1, castString.length() - 1);
+					if(s2.replace(castString, operand).equals(s1)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private static final Pattern NAMED_CAST = Pattern.compile("(static|dynamic|const|reinterpret)_cast\\s*<");
 
 	private static boolean cast(String diff1, String diff2) {
 		return (diff1.isEmpty() && diff2.startsWith("(") && diff2.endsWith(")")) || diff2.equals("(" + diff1 + ")");

@@ -189,6 +189,7 @@ public class CppFileProcessor {
 				IASTTranslationUnit ast = withoutDeclarationMacros(treeAst, filePath, fileContent, astDiff);
 				this.conditionalBodySource = ast;
 				this.conditionalBodies = CppConditionalBodies.parse(ast, filePath, fileContent, astDiff, parsed.preamble());
+				CppMacroArguments.parse(ast, filePath, fileContent, astDiff, parsed.preamble());
 				this.emptyMacroExpansions = emptyMacroExpansions(ast);
 				String sourceFolder = extractCppSourceFolder();
 				List<UMLComment> comments = extractInternalComments(ast.getComments(), sourceFolder, filePath, fileContent);

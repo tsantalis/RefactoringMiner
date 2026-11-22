@@ -57,6 +57,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTUsingDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTWhileStatement;
 import org.eclipse.cdt.core.dom.ast.gnu.IGNUASTGotoStatement;
 
+import gr.uom.java.xmi.CppMacroArguments;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -312,6 +313,16 @@ public class CppOperationBody extends OperationBody {
 			StatementObject child = new StatementObject(sourceFolder, filePath, problemStatement, parent.getDepth()+1, CodeElementType.PROBLEM_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
+			//the declaration in the first argument of the call of a macro, i.e., auto x in ASSIGN_OR_RETURN(auto x, f(a));, declaring x for the next statements
+			IASTDeclarationStatement declaration = CppMacroArguments.declaration(problemStatement);
+			if(declaration != null) {
+				CppVisitor visitor = new CppVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
+				declaration.accept(visitor);
+				for(VariableDeclaration variableDeclaration : visitor.getVariableDeclarations()) {
+					child.addVariableDeclaration(variableDeclaration);
+				}
+				addAllInActiveVariableDeclarations(visitor.getVariableDeclarations());
+			}
 		}
 		else if(statement instanceof IASTReturnStatement returnStatement) {
 			StatementObject child = new StatementObject(sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);

@@ -21,6 +21,12 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
+import org.eclipse.cdt.core.dom.ast.IASTPointer;
+import org.eclipse.cdt.core.dom.ast.ASTSignatureUtil;
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTNamedTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTElaboratedTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTReferenceOperator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator;
 import org.eclipse.jdt.core.dom.AnnotatableType;
@@ -932,13 +938,16 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 	}
 
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator, int extraDimensions) {
-		StringBuilder type = new StringBuilder(cleanTypeText(withoutSpecifierMacros(CppVisitor.singleLine(declSpecifier.getRawSignature()), declSpecifier)));
+		//a type written as an argument of a function-like macro, whose text is the call of the macro, i.e., unsigned long in SYSCALL_DEFINE1(unshare, unsigned long, unshare_flags)
+		boolean expanded = inMacroCall(declSpecifier);
+		StringBuilder type = new StringBuilder(expanded ? cleanTypeText(expandedText(declSpecifier)) :
+			cleanTypeText(withoutSpecifierMacros(CppVisitor.singleLine(declSpecifier.getRawSignature()), declSpecifier)));
 		if(type.isEmpty() && declarator instanceof CASTDeclarator cDeclarator) {
 			type = new StringBuilder(cleanTypeText(cDeclarator.getName().toString()));
 		}
 		if(declarator != null) {
 			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
-				type.append(pointerOperator.getRawSignature());
+				type.append(expanded ? pointerOperatorText(pointerOperator) : pointerOperator.getRawSignature());
 			}
 		}
 		String typeText = type.toString().trim();
@@ -949,6 +958,80 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		UMLType umlType = UMLType.extractTypeObject(typeText, "<", ">", locationInfo, PathFileUtils.getLang(filePath));
 		umlType.arrayDimension += extraDimensions;
 		return umlType;
+	}
+
+	//whether the node comes only from the expansion of a function-like macro called in the file, i.e., long in SYSCALL_DEFINE1(...) expanded to long sys_unshare(...)
+	private static boolean inMacroCall(IASTNode node) {
+		IASTNodeLocation[] locations = node.getNodeLocations();
+		if(locations.length == 0) {
+			return false;
+		}
+		for(IASTNodeLocation location : locations) {
+			if(!(location instanceof IASTMacroExpansionLocation expansion) || !(expansion.getExpansion().getMacroDefinition() instanceof IASTPreprocessorFunctionStyleMacroDefinition)) {
+				return false;
+			}
+		}
+		return node.getRawSignature().contains("(");
+	}
+
+	//the text of a type specifier built from its AST, for a type written as a macro argument, whose tokens CDT does not give, i.e., unsigned long or struct clone_args
+	private static String expandedText(IASTDeclSpecifier declSpecifier) {
+		StringBuilder text = new StringBuilder();
+		if(declSpecifier.isConst()) {
+			text.append("const ");
+		}
+		if(declSpecifier.isVolatile()) {
+			text.append("volatile ");
+		}
+		if(declSpecifier instanceof IASTSimpleDeclSpecifier simple) {
+			if(simple.isSigned()) {
+				text.append("signed ");
+			}
+			if(simple.isUnsigned()) {
+				text.append("unsigned ");
+			}
+			if(simple.isShort()) {
+				text.append("short ");
+			}
+			if(simple.isLong()) {
+				text.append("long ");
+			}
+			if(simple.isLongLong()) {
+				text.append("long long ");
+			}
+			String keyword = switch(simple.getType()) {
+				case IASTSimpleDeclSpecifier.t_void -> "void";
+				case IASTSimpleDeclSpecifier.t_char -> "char";
+				case IASTSimpleDeclSpecifier.t_int -> "int";
+				case IASTSimpleDeclSpecifier.t_float -> "float";
+				case IASTSimpleDeclSpecifier.t_double -> "double";
+				case IASTSimpleDeclSpecifier.t_bool -> "bool";
+				case IASTSimpleDeclSpecifier.t_auto -> "auto";
+				default -> text.isEmpty() || text.toString().matches("(const |volatile )*") ? ASTSignatureUtil.getSignature(declSpecifier) : "";
+			};
+			text.append(keyword);
+		}
+		else if(declSpecifier instanceof IASTNamedTypeSpecifier named) {
+			text.append(named.getName().toString());
+		}
+		else if(declSpecifier instanceof IASTElaboratedTypeSpecifier elaborated) {
+			text.append(elaborated.getKind() == IASTElaboratedTypeSpecifier.k_struct ? "struct " : elaborated.getKind() == IASTElaboratedTypeSpecifier.k_union ? "union " :
+				elaborated.getKind() == IASTElaboratedTypeSpecifier.k_enum ? "enum " : "class ").append(elaborated.getName().toString());
+		}
+		else {
+			return ASTSignatureUtil.getSignature(declSpecifier);
+		}
+		return text.toString().strip();
+	}
+
+	private static String pointerOperatorText(IASTPointerOperator pointerOperator) {
+		if(pointerOperator instanceof ICPPASTReferenceOperator reference) {
+			return reference.isRValueReference() ? "&&" : "&";
+		}
+		if(pointerOperator instanceof IASTPointer pointer) {
+			return "*" + (pointer.isConst() ? " const" : "") + (pointer.isVolatile() ? " volatile" : "");
+		}
+		return pointerOperator.getRawSignature();
 	}
 
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, ICPPASTBaseSpecifier declSpecifier, IASTDeclarator declarator, int extraDimensions) {

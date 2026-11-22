@@ -272,6 +272,24 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return preprocessorBranch;
 	}
 
+	//whether the operations are in different branches of the same conditional group, so that one cannot call the other,
+	//i.e., free_thread_stack() of #ifdef CONFIG_VMAP_STACK[0] and thread_stack_delayed_free() of #ifdef CONFIG_VMAP_STACK[1]
+	public boolean inSiblingPreprocessorBranch(VariableDeclarationContainer other) {
+		if(preprocessorBranch == null || !(other instanceof UMLOperation operation) || operation.preprocessorBranch == null) {
+			return false;
+		}
+		String[] branches1 = preprocessorBranch.split(" > ");
+		String[] branches2 = operation.preprocessorBranch.split(" > ");
+		for(int i=0; i<Math.min(branches1.length, branches2.length); i++) {
+			if(!branches1[i].equals(branches2[i])) {
+				String group1 = branches1[i].substring(0, branches1[i].lastIndexOf('['));
+				String group2 = branches2[i].substring(0, branches2[i].lastIndexOf('['));
+				return group1.equals(group2);
+			}
+		}
+		return false;
+	}
+
 	public void setPreprocessorBranch(String preprocessorBranch) {
 		this.preprocessorBranch = preprocessorBranch;
 	}

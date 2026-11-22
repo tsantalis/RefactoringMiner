@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import org.eclipse.cdt.core.dom.ast.IASTName;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.ArrayList;
@@ -74,6 +75,13 @@ public class MethodReference extends AbstractCall {
 		super(sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container, fileContent);
 		this.methodName = methodName;
 		this.expression = expression;
+		this.arguments = new ArrayList<String>();
+	}
+
+	//a C/C++ function passed by its name, i.e., thread_stack_free_rcu in call_rcu(rh, thread_stack_free_rcu)
+	public MethodReference(String sourceFolder, String filePath, IASTName functionName, String fileContent) {
+		super(functionName.toString(), new LocationInfo(sourceFolder, filePath, functionName, CodeElementType.METHOD_REFERENCE, fileContent));
+		this.methodName = functionName.toString();
 		this.arguments = new ArrayList<String>();
 	}
 

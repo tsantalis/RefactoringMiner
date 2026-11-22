@@ -372,6 +372,9 @@ public class OperationInvocation extends AbstractCall {
 
     public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
     		UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
+    	if(operation instanceof UMLOperation umlOperation && umlOperation.inSiblingPreprocessorBranch(callerOperation)) {
+    		return false;
+    	}
     	boolean constructorCall = false;
     	String operationName = operation.getName();
     	if(operationName.contains(".")) {

@@ -265,19 +265,34 @@ public interface VariableDeclarationContainer extends LocationInfoProvider, Comm
 		return false;
 	}
 
+	//the single statement calls the operation, after the declarations of the variables it passes to the call,
+	//i.e., struct rcu_head *rh = tsk->stack; call_rcu(rh, thread_stack_free_rcu); passing thread_stack_free_rcu by its name
 	default AbstractCall delegatesTo(VariableDeclarationContainer operation, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		if(getBody() != null) {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
-			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
-				StatementObject statement = (StatementObject)statements.get(0);
+			if(statements.size() >= 1 && statements.get(statements.size()-1) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(statements.size()-1);
 				for(AbstractCall operationInvocation : statement.getMethodInvocations()) {
-					if(operationInvocation.matchesOperation(operation, this, classDiff, modelDiff)) {
+					if(operationInvocation.matchesOperation(operation, this, classDiff, modelDiff) && declaresOnlyArgumentsOf(statements.subList(0, statements.size()-1), statement)) {
 						return operationInvocation;
 					}
 				}
 			}
 		}
 		return null;
+	}
+
+	private static boolean declaresOnlyArgumentsOf(List<AbstractStatement> statements, StatementObject call) {
+		for(AbstractStatement statement : statements) {
+			if(!(statement instanceof StatementObject) || statement.getVariableDeclarations().size() != 1) {
+				return false;
+			}
+			String variableName = statement.getVariableDeclarations().get(0).getVariableName();
+			if(call.getVariables().stream().noneMatch(variable -> variable.getString().equals(variableName))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	default int getBodyHashCode() {

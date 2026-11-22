@@ -290,7 +290,8 @@ public abstract class AbstractCall extends LeafExpression {
 		}
 		else if(this instanceof MethodReference) {
 			MethodReference methodReference = (MethodReference)this;
-			return methodReference.getName().equals(operation.getName());
+			return methodReference.getName().equals(operation.getName()) &&
+					!(operation instanceof UMLOperation umlOperation && umlOperation.inSiblingPreprocessorBranch(callerOperation));
 		}
 		return false;
 	}

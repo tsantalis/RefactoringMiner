@@ -9,6 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression;
+import org.eclipse.cdt.core.dom.ast.IASTInitializerClause;
+import org.eclipse.cdt.core.dom.ast.IFunction;
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression;
 import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression;
@@ -163,7 +165,23 @@ public class CppVisitor extends ASTVisitor {
 			LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, name, CodeElementType.SIMPLE_NAME, container, fileContent);
 			variables.add(leafExpression);
 		}
+		if(functionPassedAsArgument(name)) {
+			methodInvocations.add(new MethodReference(sourceFolder, filePath, name, fileContent));
+		}
 		return super.visit(name);
+	}
+
+	//a function passed by its name to a call, i.e., thread_stack_free_rcu in call_rcu(rh, thread_stack_free_rcu), which is not a variable in scope
+	private boolean functionPassedAsArgument(IASTName name) {
+		if(name.getParent() instanceof IASTIdExpression id && id.getParent() instanceof IASTFunctionCallExpression call && call.getFunctionNameExpression() != id &&
+				!activeVariableDeclarations.containsKey(name.toString())) {
+			for(IASTInitializerClause argument : call.getArguments()) {
+				if(argument == id) {
+					return name.resolveBinding() instanceof IFunction;
+				}
+			}
+		}
+		return false;
 	}
 
 	private Map<String, OperationInvocation> extractAllMethodCalls(int startOffset, String input, Pattern pattern) {

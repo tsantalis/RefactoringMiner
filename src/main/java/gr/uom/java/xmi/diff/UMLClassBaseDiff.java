@@ -30,6 +30,8 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.UMLPreprocessorStatement;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
@@ -269,6 +271,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processAttributes();
 		checkForAttributeChanges();
 		checkForInlinedOperations();
+		checkForOperationsSplitByConfiguration();
 		List<UMLOperationBodyMapper> extractedbodyMappers = checkForExtractedOperations();
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForInlinedOperationsToExtractedOperations(extractedbodyMappers);
@@ -1408,6 +1411,92 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     			}
 			}
     	}
+	}
+
+	//a C/C++ function defined in a branch of a conditional group, whose counterpart in a sibling branch is matched with a function of the same name
+	//containing the same conditional group in its body, is extracted from the statements of the corresponding branch of that body,
+	//i.e., alloc_thread_stack_node() { #ifdef CONFIG_VMAP_STACK ... #else ... #endif } split into one alloc_thread_stack_node() per branch of #ifdef CONFIG_VMAP_STACK
+	private void checkForOperationsSplitByConfiguration() throws RefactoringMinerTimedOutException {
+		for(UMLOperation addedOperation : new ArrayList<>(addedOperations)) {
+			String preprocessorBranch = addedOperation.getPreprocessorBranch();
+			if(preprocessorBranch == null) {
+				continue;
+			}
+			String innermost = preprocessorBranch.contains(" > ") ? preprocessorBranch.substring(preprocessorBranch.lastIndexOf(" > ") + " > ".length()) : preprocessorBranch;
+			String group = normalizedDirective(innermost.substring(0, innermost.lastIndexOf('[')));
+			int branch = Integer.parseInt(innermost.substring(innermost.lastIndexOf('[') + 1, innermost.length() - 1));
+			for(UMLOperationBodyMapper mapper : new ArrayList<>(operationBodyMapperList)) {
+				UMLOperation operation1 = mapper.getOperation1();
+				UMLOperation operation2 = mapper.getOperation2();
+				if(operation1 == null || operation2 == null || !operation1.getName().equals(addedOperation.getName()) || !operation2.inSiblingPreprocessorBranch(addedOperation) ||
+						mapper.getNonMappedLeavesT1().isEmpty() && mapper.getNonMappedInnerNodesT1().isEmpty()) {
+					continue;
+				}
+				int[] range = conditionalBranchRange(operation1, group, branch);
+				AbstractCall invocation = range != null ? callTo(addedOperation) : null;
+				if(invocation == null) {
+					continue;
+				}
+				Map<String, String> parameterToArgumentMap = new LinkedHashMap<>();
+				for(String parameterName : addedOperation.getParameterNameList()) {
+					parameterToArgumentMap.put(parameterName, parameterName);
+				}
+				UMLOperationBodyMapper splitMapper = new UMLOperationBodyMapper(mapper, addedOperation, new LinkedHashMap<>(), parameterToArgumentMap, this, invocation, false, Optional.empty(), Optional.empty());
+				if(splitMapper.getMappings().isEmpty() || splitMapper.getExactMatches().isEmpty() || !splitMapper.getMappings().stream().allMatch(mapping ->
+						mapping.getFragment1().getLocationInfo().getStartOffset() >= range[0] && mapping.getFragment1().getLocationInfo().getEndOffset() <= range[1])) {
+					continue;
+				}
+				ExtractOperationRefactoring refactoring = new ExtractOperationRefactoring(splitMapper, operation2, List.of(invocation));
+				refactorings.add(refactoring);
+				mapper.addChildMapper(splitMapper);
+				processMapperRefactorings(splitMapper, refactorings);
+				addedOperations.remove(addedOperation);
+				break;
+			}
+		}
+	}
+
+	//the directive of a conditional group without the spaces and its #, i.e., ifdef CONFIG_VMAP_STACK for #  ifdef CONFIG_VMAP_STACK
+	private static String normalizedDirective(String directive) {
+		return directive.replace("#", " ").trim().replaceAll("\\s+", " ");
+	}
+
+	//the [start, end) of the branch of the conditional group with the directive in the body of the operation
+	private int[] conditionalBranchRange(UMLOperation operation, String group, int branch) {
+		if(!(originalClass instanceof UMLClass umlClass)) {
+			return null;
+		}
+		LocationInfo location = operation.getLocationInfo();
+		for(UMLPreprocessorStatement statement : umlClass.getPreprocessorStatements()) {
+			LocationInfo statementLocation = statement.getLocationInfo();
+			if(statement.isOpeningConditional() && statementLocation.getStartOffset() > location.getStartOffset() && statementLocation.getEndOffset() <= location.getEndOffset() &&
+					normalizedDirective(statement.toString()).equals(group)) {
+				List<Integer> starts = new ArrayList<>();
+				starts.add(statementLocation.getStartOffset());
+				for(UMLPreprocessorStatement alternative : umlClass.getPreprocessorStatements()) {
+					if(alternative.getPrevious().isPresent() && alternative.getPrevious().get() == statement && alternative.isConditional()) {
+						starts.add(alternative.getLocationInfo().getStartOffset());
+					}
+				}
+				Collections.sort(starts);
+				if(branch < starts.size()) {
+					return new int[] {starts.get(branch), branch + 1 < starts.size() ? starts.get(branch + 1) : statementLocation.getEndOffset()};
+				}
+			}
+		}
+		return null;
+	}
+
+	//a call to the operation in the next class, from a compatible preprocessor branch
+	private AbstractCall callTo(UMLOperation operation) {
+		for(UMLOperation caller : nextClass.getOperations()) {
+			for(AbstractCall call : caller.getAllOperationInvocations()) {
+				if(call.getName().equals(operation.getName()) && call.matchesOperation(operation, caller, this, modelDiff)) {
+					return call;
+				}
+			}
+		}
+		return null;
 	}
 
 	//the attributes without name, i.e., the unnamed bit-fields unsigned :0; of C/C++, are paired in order,

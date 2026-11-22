@@ -279,13 +279,16 @@ public class CppOperationBody extends OperationBody {
 				processStatement(sourceFolder, filePath, child, labelStatement.getNestedStatement(), fileContent);
 			}
 		}
-		else if(statement instanceof IASTNullStatement nullStatement && emptyMacroCall(nullStatement, fileContent) instanceof IASTStatement call) {
-			processStatement(sourceFolder, filePath, parent, call, fileContent);
-		}
 		else if(statement instanceof IASTNullStatement nullStatement) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, nullStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);
-			parent.addStatement(child);
-			addStatementInVariableScopes(child);
+			IASTStatement call = emptyMacroCall(nullStatement, fileContent);
+			if(call != null) {
+				processStatement(sourceFolder, filePath, parent, call, fileContent);
+			}
+			else {
+				StatementObject child = new StatementObject(sourceFolder, filePath, nullStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);
+				parent.addStatement(child);
+				addStatementInVariableScopes(child);
+			}
 		}
 		else if(statement instanceof IASTProblemStatement problemStatement) {
 			//CDT splits a statement into problems at an argument it cannot parse, i.e., ASSIGN_OR_RETURN(auto x, f({{a, b}}, c));

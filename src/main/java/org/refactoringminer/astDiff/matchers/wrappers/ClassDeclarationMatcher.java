@@ -148,6 +148,17 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }
+                //the initialized variables of the type, which the model does not have apart from the type, i.e., str2vns[] = {...} in struct {...} str2vns[] = {...};
+                matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.INIT_DECLARATOR,LANG2.INIT_DECLARATOR);
+                if(matched != null && !mappingStore.isSrcMapped(matched.first) && !mappingStore.isDstMapped(matched.second)) {
+                    if(TreeUtilFunctions.isIsomorphicTo(matched.first, matched.second)) {
+                        mappingStore.addMappingRecursively(matched.first, matched.second);
+                    }
+                    else {
+                        new LeafMatcher(LANG1, LANG2).match(matched.first, matched.second, mappingStore);
+                        mappingStore.addMapping(matched.first, matched.second);
+                    }
+                }
                 //a local type with variables, which has no statement in the model, i.e., union {...} uu; in a function body
                 Tree srcParent = srcTypeDeclaration.getParent();
                 Tree dstParent = dstTypeDeclaration.getParent();

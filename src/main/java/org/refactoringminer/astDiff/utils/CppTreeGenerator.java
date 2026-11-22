@@ -2038,6 +2038,15 @@ public class CppTreeGenerator {
 	//the nodes of the inactive preprocessor branches between the offsets, outside the nodes of the active code
 	private List<Node> inactive(IASTTranslationUnit translationUnit, int start, int end, Context context, IASTNode[] activeNodes) {
 		List<Node> nodes = new ArrayList<>();
+		for(int[] region : inactiveRegions(translationUnit, start, end, activeNodes)) {
+			nodes.addAll(reparse(region[0], region[1], context));
+		}
+		return nodes;
+	}
+
+	//the outermost inactive regions between the offsets that do not overlap the active nodes
+	private List<int[]> inactiveRegions(IASTTranslationUnit translationUnit, int start, int end, IASTNode[] activeNodes) {
+		List<int[]> regions = new ArrayList<>();
 		for(int[] region : inactiveRegions(translationUnit)) {
 			if(region[0] >= start && region[1] <= end) {
 				boolean overlaps = false;
@@ -2048,11 +2057,50 @@ public class CppTreeGenerator {
 					}
 				}
 				if(!overlaps) {
-					nodes.addAll(reparse(region[0], region[1], context));
+					regions.add(region);
 				}
 			}
 		}
-		return nodes;
+		return regions;
+	}
+
+	//the else clauses of a branch that is not taken, which continue the if statement right before the branch, i.e., else if (c) z; in
+	//if (a) x; else if (b) y; #ifdef NAS else if (c) z; #endif, are in the last if statement of its else clauses, like in the model,
+	//which parses the code of the branch with the code before it, and the if statements and the else clauses containing it end with the branch
+	private static boolean continueIfStatement(List<Node> statements, int regionStart, List<Node> nodes) {
+		Node previous = null;
+		for(Node statement : statements) {
+			if(statement != null && statement.end <= regionStart && (previous == null || statement.end > previous.end)) {
+				previous = statement;
+			}
+		}
+		if(previous == null || !previous.type.equals("if_statement") || nodes.isEmpty()) {
+			return false;
+		}
+		List<Node> chain = new ArrayList<>();
+		Node ifStatement = previous;
+		while(true) {
+			chain.add(ifStatement);
+			Node last = ifStatement.last();
+			if(last == null || !last.type.equals("else_clause")) {
+				break;
+			}
+			chain.add(last);
+			if(last.last() == null || !last.last().type.equals("if_statement")) {
+				//an if statement ending with an else clause, which an else cannot continue
+				return false;
+			}
+			ifStatement = last.last();
+		}
+		int end = -1;
+		for(Node node : nodes) {
+			ifStatement.add(node);
+			end = Math.max(end, node.end);
+		}
+		for(Node node : chain) {
+			node.end = Math.max(node.end, end);
+		}
+		return true;
 	}
 
 	//the start and end offsets of the code in the outermost inactive preprocessor branches
@@ -3892,7 +3940,12 @@ public class CppTreeGenerator {
 				children.add(statement(statement));
 			}
 		}
-		children.addAll(inactive(source.translationUnit, start(compound) + 1, end(compound) - 1, Context.BLOCK, active.toArray(new IASTNode[0])));
+		for(int[] region : inactiveRegions(source.translationUnit, start(compound) + 1, end(compound) - 1, active.toArray(new IASTNode[0]))) {
+			List<Node> nodes = reparse(region[0], region[1], Context.BLOCK);
+			if(elseContinuation(region[0], region[1]) < 0 || !continueIfStatement(children, region[0], nodes)) {
+				children.addAll(nodes);
+			}
+		}
 		//the body without its closing brace, which CDT gives as empty at the opening brace, i.e., TEST(A, B) { in an inactive branch
 		if(end(compound) == start(compound) && content.startsWith("{", start(compound))) {
 			return node("compound_statement", start(compound), start(compound) + 1, children);

@@ -59,9 +59,10 @@ public class MissingIdenticalNeighbours implements TreeMatcher {
 		return changed;
 	}
 
-	private static final Set<String> LITERALS = Set.of("string_literal", "char_literal", "raw_string_literal", "concatenated_string");
+	//the literals, and the directives that are not grouped with their branches, i.e., #ifdef NAS in an if statement whose #endif is after the if statement
+	private static final Set<String> LITERALS = Set.of("string_literal", "char_literal", "raw_string_literal", "concatenated_string", "preproc_call");
 
-	//a leaf or a literal
+	//a leaf, a literal or a directive
 	private static boolean isToken(Tree tree) {
 		return tree.isLeaf() || LITERALS.contains(tree.getType().name);
 	}

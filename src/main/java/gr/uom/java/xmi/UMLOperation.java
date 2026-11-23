@@ -79,6 +79,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean testImportsKnown;
 	private boolean importsJUnit3;
 	private boolean importsAnnotationTestFramework;
+	private boolean classExtendsAnotherClass;
 	private Optional<UMLType> receiver;
 	private Optional<AbstractExpression> trailingReturnType;
 
@@ -434,16 +435,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		this.importsTestCase = importsTestCase;
 	}
 
-	public void setTestFrameworkImports(boolean importsJUnit3, boolean importsAnnotationTestFramework) {
+	public void setTestFrameworkImports(boolean importsJUnit3, boolean importsAnnotationTestFramework, boolean classExtendsAnotherClass) {
 		this.testImportsKnown = true;
+		this.classExtendsAnotherClass = classExtendsAnotherClass;
 		this.importsJUnit3 = importsJUnit3;
 		this.importsAnnotationTestFramework = importsAnnotationTestFramework;
 	}
 
 	//a Java test fixture: a set-up or tear-down annotation of JUnit 4, JUnit 5 or TestNG in a file importing one of them
 	//(not the @Before of JFinal or of an AspectJ advice), or a JUnit 3 setUp()/tearDown() without parameters, in a file not
-	//using annotation-based test frameworks, or in a TestCase (JUnit 3 finds them by name; a setUp() of a JUnit 4 class
-	//without @Before is a helper)
+	//using annotation-based test frameworks, in a TestCase (JUnit 3 finds them by name), or in a class extending another one
+	//(an override of the base class's fixture, without @Override); a setUp() of a JUnit 4 class without a superclass is a helper
 	@Override
 	public boolean isSetUpMethod() {
 		if(!LANG.equals(Constants.JAVA)) {
@@ -468,7 +470,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	private boolean isJUnit3Fixture(String fixtureName) {
 		return name.equals(fixtureName) && getParametersWithoutReturnType().isEmpty() && !hasTestAnnotation() &&
-				(importsTestCase || importsJUnit3 || !testImportsKnown || !importsAnnotationTestFramework);
+				(importsTestCase || importsJUnit3 || !testImportsKnown || !importsAnnotationTestFramework || classExtendsAnotherClass);
 	}
 
 	public AbstractExpression getDefaultExpression() {

@@ -161,7 +161,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 				importsAnnotationTestFramework = true;
 			}
 		}
-		operation.setTestFrameworkImports(importsJUnit3, importsAnnotationTestFramework);
+		operation.setTestFrameworkImports(importsJUnit3, importsAnnotationTestFramework, getSuperclass() != null);
 		List<String> signature = operation.getSignatureIdentifiers();
 		if(operationIdentifierSignatureMap.containsKey(signature)) {
 			operationIdentifierSignatureMap.put(signature, operationIdentifierSignatureMap.get(signature) + 1);

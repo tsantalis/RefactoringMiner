@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.refactoringminer.astDiff.utils.TypeScriptTreeGenerator;
 
@@ -111,9 +112,30 @@ public class TypeScriptFileProcessor {
 		return Swc4jMediaType.Jsx;
 	}
 
+	// Mirrors GitHub Linguist (lib/linguist/vendor.yml and lib/linguist/generated.rb)
+	private static final Pattern MINIFIED_FILE_PATTERN = Pattern.compile("[-.]min\\.js$");
+
+	public static boolean isMinified(String filePath, String fileContent) {
+		if (filePath == null || fileContent == null || fileContent.isEmpty()) {
+			return false;
+		}
+		// Linguist vendor.yml: (\.|-)min\.(js|css)$
+		if (MINIFIED_FILE_PATTERN.matcher(filePath).find()) {
+			return true;
+		}
+		// Linguist generated.rb (minified_files?): average line length > 110 characters
+		int lines = 1;
+		for (int i = 0; i < fileContent.length(); i++) {
+			if (fileContent.charAt(i) == '\n') {
+				lines++;
+			}
+		}
+		return (fileContent.length() / lines) > 110;
+	}
+
 	public void processTypeScriptFile(String filePath, String fileContent, boolean astDiff, Swc4j swc4j) {
 		//skip minified JavaScript files
-		if(filePath.endsWith(".min.js")) {
+		if(isMinified(filePath, fileContent)) {
 			return;
 		}
 		try {

@@ -75,6 +75,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLClass> nestedClasses;
 	private final Constants LANG;
 	private boolean importsTestCase;
+	//the test frameworks imported by the operation's file: JUnit 3 (junit.framework), JUnit 4 or 5, TestNG (org.junit, org.testng)
+	private boolean testImportsKnown;
+	private boolean importsJUnit3;
+	private boolean importsAnnotationTestFramework;
 	private Optional<UMLType> receiver;
 	private Optional<AbstractExpression> trailingReturnType;
 
@@ -430,6 +434,43 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		this.importsTestCase = importsTestCase;
 	}
 
+	public void setTestFrameworkImports(boolean importsJUnit3, boolean importsAnnotationTestFramework) {
+		this.testImportsKnown = true;
+		this.importsJUnit3 = importsJUnit3;
+		this.importsAnnotationTestFramework = importsAnnotationTestFramework;
+	}
+
+	//a Java test fixture: a set-up or tear-down annotation of JUnit 4, JUnit 5 or TestNG in a file importing one of them
+	//(not the @Before of JFinal or of an AspectJ advice), or a JUnit 3 setUp()/tearDown() without parameters, in a file not
+	//using annotation-based test frameworks, or in a TestCase (JUnit 3 finds them by name; a setUp() of a JUnit 4 class
+	//without @Before is a helper)
+	@Override
+	public boolean isSetUpMethod() {
+		if(!LANG.equals(Constants.JAVA)) {
+			return VariableDeclarationContainer.super.isSetUpMethod();
+		}
+		if(hasSetUpAnnotation()) {
+			return !testImportsKnown || importsAnnotationTestFramework || importsJUnit3;
+		}
+		return isJUnit3Fixture("setUp");
+	}
+
+	@Override
+	public boolean isTearDownMethod() {
+		if(!LANG.equals(Constants.JAVA)) {
+			return VariableDeclarationContainer.super.isTearDownMethod();
+		}
+		if(hasTearDownAnnotation()) {
+			return !testImportsKnown || importsAnnotationTestFramework || importsJUnit3;
+		}
+		return isJUnit3Fixture("tearDown");
+	}
+
+	private boolean isJUnit3Fixture(String fixtureName) {
+		return name.equals(fixtureName) && getParametersWithoutReturnType().isEmpty() && !hasTestAnnotation() &&
+				(importsTestCase || importsJUnit3 || !testImportsKnown || !importsAnnotationTestFramework);
+	}
+
 	public AbstractExpression getDefaultExpression() {
 		return defaultExpression;
 	}
@@ -476,7 +517,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			//JUnit 4
 			if(annotation.getTypeName().equals("Before") || annotation.getTypeName().equals("BeforeClass") ||
 					//JUnit 5
-					annotation.getTypeName().equals("BeforeEach") || annotation.getTypeName().equals("BeforeAll")) {
+					annotation.getTypeName().equals("BeforeEach") || annotation.getTypeName().equals("BeforeAll") ||
+					//TestNG
+					annotation.getTypeName().equals("BeforeMethod") || annotation.getTypeName().equals("BeforeTest") ||
+					annotation.getTypeName().equals("BeforeSuite") || annotation.getTypeName().equals("BeforeGroups")) {
 				return true;
 			}
 			if(LANG.equals(Constants.PYTHON) && isPytestFixture(annotation)) {
@@ -509,7 +553,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			//JUnit 4
 			if(annotation.getTypeName().equals("After") || annotation.getTypeName().equals("AfterClass") ||
 					//JUnit 5
-					annotation.getTypeName().equals("AfterEach") || annotation.getTypeName().equals("AfterAll")) {
+					annotation.getTypeName().equals("AfterEach") || annotation.getTypeName().equals("AfterAll") ||
+					//TestNG
+					annotation.getTypeName().equals("AfterMethod") || annotation.getTypeName().equals("AfterTest") ||
+					annotation.getTypeName().equals("AfterSuite") || annotation.getTypeName().equals("AfterGroups")) {
 				return true;
 			}
 			if(LANG.equals(Constants.PYTHON) && isPytestFixture(annotation)) {

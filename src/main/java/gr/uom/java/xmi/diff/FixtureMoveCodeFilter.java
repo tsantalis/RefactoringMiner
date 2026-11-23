@@ -1,0 +1,252 @@
+package gr.uom.java.xmi.diff;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
+
+import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.OperationBody;
+
+/**
+ * Validates the Move Code refactorings whose target is a test fixture (Extract Fixture, and Move Code to an existing
+ * set-up or tear-down method) against the code before and after the commit. The move code mappers pair the unmatched
+ * statements of two operations by similarity; a pair is evidence of a move only when
+ * <ul>
+ * <li>the statement left the source: the source operation after the commit has fewer copies of it (else it was copied),</li>
+ * <li>the statement is new in the target: the target fixture before the commit had fewer copies of it,</li>
+ * <li>it is not a counterpart: the two statements do not differ only by literals (true/false, another file name), nor by
+ * an operation and its opposite (open/close, start/stop),</li>
+ * <li>it is not an edit in place: neither the source kept an edited version of it, nor the target lost a version of it
+ * that is closer than the source statement (the same edit made in sibling classes is not a move between them).</li>
+ * </ul>
+ * A refactoring without a valid pair is dropped. Code moved out of a fixture into a new fixture is a Split Fixture (or a
+ * fixture renamed or migrated), not an Extract Fixture, and is dropped as well.
+ */
+public class FixtureMoveCodeFilter {
+	private static final Pattern TOKEN = Pattern.compile("\"(?:[^\"\\\\]|\\\\.)*\"|'(?:[^'\\\\]|\\\\.)*'|\\d[\\w.]*|\\w+|\\S");
+	private static final Pattern LITERAL = Pattern.compile("^(\"|'|\\d|true$|false$|null$)");
+	private static final Pattern WORD = Pattern.compile("[A-Z]?[a-z]+|[A-Z]+(?![a-z])");
+	private static final String[][] OPPOSITES = {{"open", "close"}, {"start", "stop"}, {"create", "delete"}, {"create", "drop"},
+			{"create", "destroy"}, {"create", "revoke"}, {"add", "remove"}, {"add", "delete"}, {"insert", "delete"},
+			{"connect", "disconnect"}, {"begin", "end"}, {"lock", "unlock"}, {"register", "unregister"}, {"enable", "disable"},
+			{"true", "false"}, {"push", "pop"}, {"acquire", "release"}, {"init", "destroy"}, {"setup", "teardown"},
+			{"start", "shutdown"}, {"subscribe", "unsubscribe"}, {"mount", "unmount"}, {"load", "unload"}, {"set", "reset"},
+			{"before", "after"}, {"up", "down"}};
+	private final UMLModel parentModel;
+	private final UMLModel childModel;
+	private final Map<String, UMLClass> parentClasses = new HashMap<>();
+	private final Map<String, UMLClass> childClasses = new HashMap<>();
+
+	public FixtureMoveCodeFilter(UMLModel parentModel, UMLModel childModel) {
+		this.parentModel = parentModel;
+		this.childModel = childModel;
+		if(parentModel != null)
+			for(UMLClass c : parentModel.getClassList())
+				parentClasses.put(c.getName(), c);
+		if(childModel != null)
+			for(UMLClass c : childModel.getClassList())
+				childClasses.put(c.getName(), c);
+	}
+
+	public static boolean targetsFixture(Refactoring r) {
+		if(r instanceof MoveCodeRefactoring move) {
+			VariableDeclarationContainer target = move.getTargetContainer();
+			return target.isSetUpMethod() || target.isTearDownMethod();
+		}
+		return false;
+	}
+
+	public Set<Refactoring> filter(Set<Refactoring> refactorings) {
+		Set<Refactoring> kept = new LinkedHashSet<>();
+		for(Refactoring r : refactorings) {
+			if(!targetsFixture(r) || valid((MoveCodeRefactoring)r)) {
+				kept.add(r);
+			}
+		}
+		return kept;
+	}
+
+	private boolean valid(MoveCodeRefactoring move) {
+		VariableDeclarationContainer source = move.getSourceContainer();
+		VariableDeclarationContainer target = move.getTargetContainer();
+		if(move.getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) && (source.isSetUpMethod() || source.isTearDownMethod())) {
+			return false; //Split Fixture, or a fixture renamed or migrated
+		}
+		List<String> sourceBefore = statements(source);
+		VariableDeclarationContainer sourceNext = counterpart(source, childClasses);
+		VariableDeclarationContainer targetPrevious = counterpart(target, parentClasses);
+		//a method re-annotated as a fixture: its statements stay, in the fixture
+		boolean reannotated = sourceNext != null && sourceNext.getClassName().equals(target.getClassName()) && sourceNext.getName().equals(target.getName());
+		List<String> sourceAfter = reannotated ? null : statements(sourceNext);
+		List<String> targetAfter = statements(target);
+		List<String> targetBefore = reannotated ? null : statements(targetPrevious);
+		List<String> sourceAdded = difference(sourceAfter, sourceBefore);
+		List<String> targetRemoved = difference(targetBefore, targetAfter);
+		for(AbstractCodeMapping mapping : move.getMappings()) {
+			if(!evidence(mapping.getFragment1()) || !evidence(mapping.getFragment2())) {
+				continue;
+			}
+			String s1 = normalize(mapping.getFragment1().getString());
+			String s2 = normalize(mapping.getFragment2().getString());
+			if(sourceAfter != null && count(sourceAfter, s1) >= count(sourceBefore, s1)) {
+				continue; //still in the source: copied
+			}
+			if(targetBefore != null && count(targetAfter, s2) <= count(targetBefore, s2)) {
+				continue; //already in the target
+			}
+			if(!s1.equals(s2) && counterpart(s1, s2)) {
+				continue;
+			}
+			double similarity = similarity(s1, s2);
+			if(!s1.equals(s2) && (closer(sourceAdded, s1, similarity) || closer(targetRemoved, s2, similarity))) {
+				continue; //edited in place, in the source or in the target
+			}
+			return true;
+		}
+		return false;
+	}
+
+	//a statement, not a block or a bare expression
+	private static boolean evidence(AbstractCodeFragment fragment) {
+		String s = fragment.getString().strip();
+		if(fragment instanceof CompositeStatementObject composite) {
+			return composite.getExpressions().size() > 0 && s.length() > 3;
+		}
+		return s.length() > 1;
+	}
+
+	//the operation of the same class (by name) and the same name and parameter types, on the other side of the commit
+	private static VariableDeclarationContainer counterpart(VariableDeclarationContainer container, Map<String, UMLClass> classes) {
+		UMLClass umlClass = classes.get(container.getClassName());
+		if(umlClass == null) {
+			return null;
+		}
+		VariableDeclarationContainer sameName = null;
+		for(UMLOperation operation : umlClass.getOperations()) {
+			if(operation.getName().equals(container.getName())) {
+				if(operation.getParameterTypeList().equals(container.getParameterTypeList())) {
+					return operation;
+				}
+				sameName = operation;
+			}
+		}
+		return sameName;
+	}
+
+	private static List<String> statements(VariableDeclarationContainer container) {
+		if(container == null) {
+			return null;
+		}
+		OperationBody body = container.getBody();
+		List<String> list = new ArrayList<>();
+		if(body != null) {
+			for(AbstractCodeFragment leaf : body.getCompositeStatement().getLeaves())
+				list.add(normalize(leaf.getString()));
+			for(CompositeStatementObject node : body.getCompositeStatement().getInnerNodes())
+				list.add(normalize(node.getString()));
+		}
+		return list;
+	}
+
+	private static String normalize(String s) {
+		s = s.strip();
+		if(s.endsWith(";"))
+			s = s.substring(0, s.length() - 1);
+		return s.replace("this.", "").replaceAll("\\s+", "");
+	}
+
+	private static int count(List<String> list, String s) {
+		int n = 0;
+		for(String x : list)
+			if(x.equals(s))
+				n++;
+		return n;
+	}
+
+	private static List<String> difference(List<String> a, List<String> b) {
+		List<String> result = new ArrayList<>();
+		if(a == null)
+			return result;
+		List<String> rest = b == null ? new ArrayList<>() : new ArrayList<>(b);
+		for(String x : a)
+			if(!rest.remove(x))
+				result.add(x);
+		return result;
+	}
+
+	private static double similarity(String a, String b) {
+		int max = Math.max(a.length(), b.length());
+		return max == 0 ? 1.0 : 1.0 - (double)StringDistance.editDistance(a, b) / max;
+	}
+
+	//a statement of the list at least as close to s as the paired statement, and similar enough to be its edited version
+	private static boolean closer(List<String> list, String s, double pairSimilarity) {
+		for(String x : list) {
+			double sim = similarity(x, s);
+			if(sim >= 0.6 && sim >= pairSimilarity)
+				return true;
+		}
+		return false;
+	}
+
+	private static List<String> tokens(String s) {
+		List<String> list = new ArrayList<>();
+		Matcher m = TOKEN.matcher(s);
+		while(m.find())
+			list.add(m.group());
+		return list;
+	}
+
+	private static Set<String> words(String token) {
+		Set<String> set = new LinkedHashSet<>();
+		Matcher m = WORD.matcher(token);
+		while(m.find())
+			set.add(m.group().toLowerCase());
+		set.add(token.toLowerCase());
+		return set;
+	}
+
+	//the tokens that differ are only literals, or one of them is the opposite of the other
+	static boolean counterpart(String a, String b) {
+		List<String> ta = tokens(a), tb = tokens(b);
+		int prefix = 0;
+		while(prefix < ta.size() && prefix < tb.size() && ta.get(prefix).equals(tb.get(prefix)))
+			prefix++;
+		int suffix = 0;
+		while(suffix < ta.size() - prefix && suffix < tb.size() - prefix &&
+				ta.get(ta.size() - 1 - suffix).equals(tb.get(tb.size() - 1 - suffix)))
+			suffix++;
+		List<String> da = ta.subList(prefix, ta.size() - suffix), db = tb.subList(prefix, tb.size() - suffix);
+		if(da.isEmpty() || db.isEmpty())
+			return false;
+		boolean literals = true;
+		for(String t : da)
+			literals &= LITERAL.matcher(t).find();
+		for(String t : db)
+			literals &= LITERAL.matcher(t).find();
+		if(literals)
+			return true;
+		for(String x : da)
+			for(String y : db)
+				for(String u : words(x))
+					for(String v : words(y))
+						for(String[] pair : OPPOSITES)
+							if((u.equals(pair[0]) && v.equals(pair[1])) || (u.equals(pair[1]) && v.equals(pair[0])))
+								return true;
+		return false;
+	}
+}

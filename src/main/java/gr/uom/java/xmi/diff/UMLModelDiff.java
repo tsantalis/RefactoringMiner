@@ -4747,6 +4747,7 @@ public class UMLModelDiff {
 		}
 		checkForMovedCodeBetweenTestFixtures();
 		checkForMovedCodeWithoutCalls();
+		checkForCodeOfMovedTestsInFixtures();
 		List<MoveAttributeRefactoring> moveAttributeRefactorings = new ArrayList<MoveAttributeRefactoring>();
 		moveAttributeRefactorings.addAll(checkForAttributeMovesBetweenCommonClasses(renameMap, refactorings));
 		moveAttributeRefactorings.addAll(checkForAttributeMovesIncludingAddedClasses(renameMap, refactorings));
@@ -5161,6 +5162,8 @@ public class UMLModelDiff {
 		refactorings.addAll(inferredMoveOperationRefactorings);
 		removeFalseMappingsOfExtractedAndInlinedCode();
 		commentsMovedBetweenElements = CommentsMovedBetweenElements.match(this, refactorings);
+		//the Move Code refactorings into test fixtures that the code before and after the commit does not support
+		refactorings = new FixtureMoveCodeFilter(parentModel, childModel).filter(refactorings);
 		return filterOutDuplicateRefactorings(refactorings);
 	}
 
@@ -8477,6 +8480,51 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	//tests moved to another class (i.e., a test class split) whose statements moved into a fixture of that class:
+	//an added fixture (Extract Fixture), or an existing one (Move Code)
+	private void checkForCodeOfMovedTestsInFixtures() throws RefactoringMinerTimedOutException {
+		List<Refactoring> moveCodeRefactorings = new ArrayList<>();
+		for(Refactoring r : new ArrayList<>(refactorings)) {
+			if(r instanceof MoveOperationRefactoring move && move.getBodyMapper() != null) {
+				UMLOperationBodyMapper movedMapper = move.getBodyMapper();
+				if(movedMapper.nonMappedElementsT1() == 0 || movedMapper.getClassDiff() == null) {
+					continue;
+				}
+				String targetClassName = move.getMovedOperation().getClassName();
+				List<UMLOperation> addedFixtures = new ArrayList<>();
+				List<UMLOperationBodyMapper> existingFixtures = new ArrayList<>();
+				UMLClass addedClass = getAddedClass(targetClassName);
+				UMLClassBaseDiff targetClassDiff = getUMLClassDiff(targetClassName);
+				if(addedClass != null) {
+					addedFixtures.addAll(addedClass.getOperations());
+				}
+				else if(targetClassDiff != null) {
+					addedFixtures.addAll(targetClassDiff.getAddedOperations());
+					for(UMLOperationBodyMapper mapper : targetClassDiff.getOperationBodyMapperList()) {
+						if((mapper.involvesSetUpMethods() || mapper.involvesTearDownMethods()) && mapper.nonMappedElementsT2() > 0) {
+							existingFixtures.add(mapper);
+						}
+					}
+				}
+				for(UMLOperation fixture : addedFixtures) {
+					if(fixture.isSetUpMethod() || fixture.isTearDownMethod()) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(movedMapper, fixture, movedMapper.getClassDiff());
+						if(moveCodeMapper.getMappings().size() > 0) {
+							moveCodeRefactorings.add(new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_TO_ADDED));
+						}
+					}
+				}
+				for(UMLOperationBodyMapper fixtureMapper : existingFixtures) {
+					UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(movedMapper, fixtureMapper, movedMapper.getClassDiff());
+					if(moveCodeMapper.getMappings().size() > 0) {
+						moveCodeRefactorings.add(new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_FILES));
+					}
+				}
+			}
+		}
+		refactorings.addAll(moveCodeRefactorings);
 	}
 
 	private void checkForMovedCodeBetweenTestFixtures() throws RefactoringMinerTimedOutException {

@@ -104,4 +104,26 @@ public class TypeScriptFlattenerTest {
 		assertIdempotent("a.ts", "export default class extends Base {}\nexport { a as b, type C } from './m';\nimport x, * as ns from 'y';");
 		assertIdempotent("a.tsx", "export const App = () => <><A x={() => { return 1; }} />text {value}</>;");
 	}
+
+	@Test
+	public void testCalleeUnwrapping() throws Exception {
+		gr.uom.java.xmi.UMLModel model = new gr.uom.java.xmi.UMLModel(java.util.Set.of());
+		TypeScriptFileProcessor processor = new TypeScriptFileProcessor(model);
+		String code = "const res1 = ParseErrorEnum`placeholders`(templates);\n" +
+				"const res2 = (plugins?.some)(p => p === name);\n" +
+				"const res3 = (0, fn)(args);\n" +
+				"const res4 = (fn as any)(args);\n" +
+				"const res5 = fn!(args);\n" +
+				"const res6 = (fn)(args);\n";
+		processor.processTypeScriptFile("test.ts", code, false, SWC4J);
+		gr.uom.java.xmi.UMLClass moduleClass = model.getClassList().get(0);
+		java.util.List<AbstractCall> calls = moduleClass.getContainer().get().getAllOperationInvocations();
+		assertEquals(6, calls.size());
+		assertEquals("ParseErrorEnum", calls.get(0).getName());
+		assertEquals("some", calls.get(1).getName());
+		assertEquals("fn", calls.get(2).getName());
+		assertEquals("fn", calls.get(3).getName());
+		assertEquals("fn", calls.get(4).getName());
+		assertEquals("fn", calls.get(5).getName());
+	}
 }

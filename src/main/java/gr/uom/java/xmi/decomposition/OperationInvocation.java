@@ -76,19 +76,27 @@ import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstSuper;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstImportPhase;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCondExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstOptChainExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSeqExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSuperPropExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTaggedTpl;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsNonNullExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsTypeAssertion;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstOptChainBase;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstSuperProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
+import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstOptCall;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImport;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 
@@ -1404,8 +1412,46 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstCallExpr invocation, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
 		ISwc4jAstCallee callee = invocation.getCallee();
-		if(callee instanceof Swc4jAstCallExpr callExpr) {
-			callee = callExpr.getCallee();
+		while(true) {
+			if(callee instanceof Swc4jAstCallExpr callExpr) {
+				callee = callExpr.getCallee();
+			}
+			else if(callee instanceof Swc4jAstParenExpr parenExpr) {
+				callee = parenExpr.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr) {
+				callee = nonNullExpr.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTsAsExpr asExpr) {
+				callee = asExpr.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTsTypeAssertion assertion) {
+				callee = assertion.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTaggedTpl taggedTpl) {
+				callee = taggedTpl.getTag();
+			}
+			else if(callee instanceof Swc4jAstCondExpr condExpr) {
+				callee = condExpr.getCons();
+			}
+			else if(callee instanceof Swc4jAstOptChainExpr optChain) {
+				ISwc4jAstOptChainBase base = optChain.getBase();
+				if(base instanceof Swc4jAstMemberExpr memberExpr) {
+					callee = memberExpr;
+				}
+				else if(base instanceof Swc4jAstOptCall optCall) {
+					callee = optCall.getCallee();
+				}
+				else {
+					break;
+				}
+			}
+			else if(callee instanceof Swc4jAstSeqExpr seqExpr && !seqExpr.getExprs().isEmpty()) {
+				callee = seqExpr.getExprs().get(seqExpr.getExprs().size() - 1);
+			}
+			else {
+				break;
+			}
 		}
 		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
 			ISwc4jAstMemberProp prop = memberExpr.getProp();
@@ -1418,36 +1464,12 @@ public class OperationInvocation extends AbstractCall {
 			ISwc4jAstExpr receiver = memberExpr.getObj();
 			this.expression = TypeScriptVisitor.text(fileContent, receiver);
 		}
-		else if(callee instanceof Swc4jAstParenExpr parenExpr) {
-			ISwc4jAstExpr expr = parenExpr.getExpr();
-			if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
-				//self-invoking asynchronous arrow function (also known as an Immediately Invoked Function Expression, or IIFE)
-			}
+		else if(callee instanceof Swc4jAstArrowExpr arrowExpr) {
+			//self-invoking asynchronous arrow function (also known as an Immediately Invoked Function Expression, or IIFE)
 			this.methodName = "";
 		}
 		else if(callee instanceof Swc4jAstIdent ident) {
 			this.methodName = ident.getSym();
-		}
-		else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr) {
-			ISwc4jAstExpr expr = nonNullExpr.getExpr();
-			if(expr instanceof Swc4jAstMemberExpr memberExpr) {
-				ISwc4jAstMemberProp prop = memberExpr.getProp();
-				if(prop instanceof Swc4jAstPrivateName privateName)
-					this.methodName = privateName.getName();
-				else if(prop instanceof Swc4jAstIdentName ident)
-					this.methodName = ident.getSym();
-				else if(prop instanceof Swc4jAstComputedPropName propName)
-					this.methodName = TypeScriptVisitor.text(fileContent, propName.getExpr());
-				ISwc4jAstExpr receiver = memberExpr.getObj();
-				this.expression = TypeScriptVisitor.text(fileContent, receiver);
-			}
-			else if(expr instanceof Swc4jAstIdent ident) {
-				this.methodName = ident.getSym();
-			}
-			else if(expr instanceof Swc4jAstCallExpr) {
-				//f()!() is used to call a function that returns another function
-				this.methodName = "";
-			}
 		}
 		else if(callee instanceof Swc4jAstImport astImport) {
 			Swc4jAstImportPhase phase = astImport.getPhase();

@@ -214,13 +214,19 @@ public class FixtureMoveCodeFilter {
 	//the operation on the other side of the commit: renamed or moved (as RefactoringMiner found), or of the same (possibly
 	//renamed or moved) class with the same name and parameter types
 	private VariableDeclarationContainer counterpart(VariableDeclarationContainer container, Map<String, UMLClass> classes) {
+		//renames and moves are followed only forward, for the source: whether a target fixture is new is a matter of the
+		//fixture's own name (a fixture renamed while taking code is a renamed fixture, not a fixture that existed)
 		boolean toNext = classes == childClasses;
-		VariableDeclarationContainer moved = (toNext ? nextOperation : previousOperation).get(container);
-		if(moved != null) {
-			return moved;
+		if(toNext) {
+			VariableDeclarationContainer moved = nextOperation.get(container);
+			if(moved != null) {
+				return moved;
+			}
 		}
 		String className = container.getClassName();
-		className = (toNext ? nextClassName : previousClassName).getOrDefault(className, className);
+		if(toNext) {
+			className = nextClassName.getOrDefault(className, className);
+		}
 		UMLClass umlClass = classes.get(className);
 		if(umlClass == null) {
 			return null;

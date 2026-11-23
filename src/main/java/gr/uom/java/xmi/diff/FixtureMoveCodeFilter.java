@@ -51,6 +51,11 @@ public class FixtureMoveCodeFilter {
 	private final UMLModel childModel;
 	private final Map<String, UMLClass> parentClasses = new HashMap<>();
 	private final Map<String, UMLClass> childClasses = new HashMap<>();
+	//classes and operations renamed or moved by the commit, both ways, to find an operation on the other side
+	private final Map<String, String> nextClassName = new HashMap<>();
+	private final Map<String, String> previousClassName = new HashMap<>();
+	private final Map<VariableDeclarationContainer, VariableDeclarationContainer> nextOperation = new HashMap<>();
+	private final Map<VariableDeclarationContainer, VariableDeclarationContainer> previousOperation = new HashMap<>();
 
 	public FixtureMoveCodeFilter(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
@@ -71,7 +76,35 @@ public class FixtureMoveCodeFilter {
 		return false;
 	}
 
+	private void indexRenamesAndMoves(Set<Refactoring> refactorings) {
+		for(Refactoring r : refactorings) {
+			String before = null, after = null;
+			if(r instanceof RenameClassRefactoring rename) {
+				before = rename.getOriginalClassName(); after = rename.getRenamedClassName();
+			}
+			else if(r instanceof MoveClassRefactoring move) {
+				before = move.getOriginalClassName(); after = move.getMovedClassName();
+			}
+			else if(r instanceof MoveAndRenameClassRefactoring move) {
+				before = move.getOriginalClassName(); after = move.getRenamedClassName();
+			}
+			else if(r instanceof MoveOperationRefactoring move) {
+				nextOperation.put(move.getOriginalOperation(), move.getMovedOperation());
+				previousOperation.put(move.getMovedOperation(), move.getOriginalOperation());
+			}
+			else if(r instanceof RenameOperationRefactoring rename) {
+				nextOperation.put(rename.getOriginalOperation(), rename.getRenamedOperation());
+				previousOperation.put(rename.getRenamedOperation(), rename.getOriginalOperation());
+			}
+			if(before != null && after != null) {
+				nextClassName.put(before, after);
+				previousClassName.put(after, before);
+			}
+		}
+	}
+
 	public Set<Refactoring> filter(Set<Refactoring> refactorings) {
+		indexRenamesAndMoves(refactorings);
 		Set<Refactoring> kept = new LinkedHashSet<>();
 		for(Refactoring r : refactorings) {
 			if(!targetsFixture(r)) {
@@ -178,9 +211,17 @@ public class FixtureMoveCodeFilter {
 		return s.length() > 1;
 	}
 
-	//the operation of the same class (by name) and the same name and parameter types, on the other side of the commit
-	private static VariableDeclarationContainer counterpart(VariableDeclarationContainer container, Map<String, UMLClass> classes) {
-		UMLClass umlClass = classes.get(container.getClassName());
+	//the operation on the other side of the commit: renamed or moved (as RefactoringMiner found), or of the same (possibly
+	//renamed or moved) class with the same name and parameter types
+	private VariableDeclarationContainer counterpart(VariableDeclarationContainer container, Map<String, UMLClass> classes) {
+		boolean toNext = classes == childClasses;
+		VariableDeclarationContainer moved = (toNext ? nextOperation : previousOperation).get(container);
+		if(moved != null) {
+			return moved;
+		}
+		String className = container.getClassName();
+		className = (toNext ? nextClassName : previousClassName).getOrDefault(className, className);
+		UMLClass umlClass = classes.get(className);
 		if(umlClass == null) {
 			return null;
 		}

@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+import static org.eclipse.jdt.core.JavaCore.VERSION_16;
 import static org.eclipse.jdt.core.JavaCore.VERSION_21;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
@@ -57,6 +59,8 @@ import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.ProvidesDirective;
 import org.eclipse.jdt.core.dom.RecordDeclaration;
 import org.eclipse.jdt.core.dom.RequiresDirective;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.TagElement;
@@ -126,6 +130,15 @@ public class JavaFileProcessor {
 					}
 				}
 			}
+			//below Java 16, a member record with an empty body is a valid method returning the type record, so it is parsed without problems
+			if ((maxRecommendedVersionFromProblems == null || Double.parseDouble(maxRecommendedVersionFromProblems) < 16) &&
+					javaFileContent.contains("record") && declaresMethodReturningRecord(compilationUnit)) {
+				CompilationUnit records = getCompilationUnit(VERSION_16, parser, charArray, filePath);
+				if (records.getProblems().length <= compilationUnit.getProblems().length) {
+					compilationUnit = records;
+					maxRecommendedVersionFromProblems = VERSION_16;
+				}
+			}
 			processCompilationUnit(filePath, compilationUnit, javaFileContent);
 			if(astDiff) {
 				IScanner scanner = ToolFactory.createScanner(true, false, false, (maxRecommendedVersionFromProblems == null) ? DEFAULT_JAVA_CORE_VERSION : maxRecommendedVersionFromProblems );
@@ -180,6 +193,25 @@ public class JavaFileProcessor {
 			parser.setUnitName(filePath);
 		}
 		return (CompilationUnit) parser.createAST(null);
+	}
+
+	private static boolean declaresMethodReturningRecord(CompilationUnit compilationUnit) {
+		boolean[] found = new boolean[1];
+		compilationUnit.accept(new ASTVisitor() {
+			@Override
+			public boolean preVisit2(ASTNode node) {
+				return !found[0];
+			}
+			@Override
+			public boolean visit(MethodDeclaration node) {
+				if (node.getReturnType2() instanceof SimpleType simpleType && simpleType.getName().isSimpleName() &&
+						((SimpleName)simpleType.getName()).getIdentifier().equals("record")) {
+					found[0] = true;
+				}
+				return !found[0];
+			}
+		});
+		return found[0];
 	}
 
 	public static String getMaxRecommendedVersionFromProblems(CompilationUnit compilationUnit) {

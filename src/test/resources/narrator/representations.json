@@ -1081,7 +1081,7 @@
     "description": "the source provider keeps one provider per thread; the test forces doc partitioning to exercise it",
     "notes": [
       "The test brings trivial declarations it calls as dependencies: Settings.builder() and Settings.Builder#build(), the QueryPragmas constructor and getSettings().",
-      "The removed record PerThreadSourceProvider does not serve the removed code of getSource creating it and reading its components (only the removed field does), so the old design reads as two unrelated deletions: RM parses the record as a method returning a type `record` (see the todo).",
+      "The removed record PerThreadSourceProvider serves the removed code of getSource creating it (the old revision parses at Java 16 since Issue #1215, so the record is a class, not a method returning a type `record`).",
       "The pragmas the test now forces (doc partitioning, task concurrency) decide how many threads call the changed getSource, which is what the per-thread provider is about; nothing relates them to getSource, as they configure the engine running the query rather than give a value the changed code reads (out of reach of the TODO on data and control flow in HunkNetwork)."
     ],
     "expectations": [
@@ -1119,8 +1119,7 @@
         "description": "the removed record serves the removed code creating it",
         "kind": "serves",
         "from": "private record PerThreadSourceProvider(SourceProvider source, Thread creatingThread) {",
-        "to": "var sourceProvider = map.computeIfAbsent(",
-        "todo": "RM (to report): ReinitializingSourceProvider.java of the old revision is parsed at RM's default Java 14 level, where the nested `private record PerThreadSourceProvider(SourceProvider source, Thread creatingThread) {}` (L40-42) reads as a method named PerThreadSourceProvider returning a type `record`: its tree is a MethodDeclaration (with a SimpleType 'record') and its UML an operation, so no removed class exists for the creation `new PerThreadSourceProvider(...)` (L34) to rely on"
+        "to": "var sourceProvider = map.computeIfAbsent("
       }
     ]
   },

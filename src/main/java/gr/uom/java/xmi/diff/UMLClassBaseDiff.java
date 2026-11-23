@@ -45,6 +45,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -896,6 +897,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		checkForFieldInitializersMovedToFixtures();
 		//move from deprecated method to new one
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			if(mapper.nonMappedElementsT1() > 0 && mapper.getContainer2().hasDeprecatedAnnotation() && !mapper.getContainer1().hasDeprecatedAnnotation()) {
@@ -1025,6 +1027,64 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		MappingOptimizer optimizer = new MappingOptimizer(this);
 		optimizer.optimizeDuplicateMappingsForMoveCode(moveCodeMappers, refactorings);
+	}
+
+	//a field initializer moved into a fixture, i.e., private Monitor monitor = new Monitor(...); becoming monitor = new Monitor(...);
+	//in a set-up method: the field lost its initializer (or was removed) and a fixture gained an assignment to it
+	private void checkForFieldInitializersMovedToFixtures() throws RefactoringMinerTimedOutException {
+		Map<String, UMLAttribute> initializedBefore = new LinkedHashMap<>();
+		for(UMLAttributeDiff attributeDiff : attributeDiffList) {
+			if(attributeDiff.getRemovedAttribute().getVariableDeclaration().getInitializer() != null &&
+					attributeDiff.getAddedAttribute().getVariableDeclaration().getInitializer() == null) {
+				initializedBefore.put(attributeDiff.getRemovedAttribute().getName(), attributeDiff.getRemovedAttribute());
+			}
+		}
+		for(UMLAttribute removedAttribute : removedAttributes) {
+			if(removedAttribute.getVariableDeclaration().getInitializer() != null) {
+				initializedBefore.putIfAbsent(removedAttribute.getName(), removedAttribute);
+			}
+		}
+		if(initializedBefore.isEmpty()) {
+			return;
+		}
+		Map<VariableDeclarationContainer, List<AbstractCodeFragment>> fixtureStatements = new LinkedHashMap<>();
+		Set<VariableDeclarationContainer> addedFixtures = new LinkedHashSet<>();
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.involvesSetUpMethods() || mapper.involvesTearDownMethods()) {
+				fixtureStatements.put(mapper.getContainer2(), new ArrayList<>(mapper.getNonMappedLeavesT2()));
+			}
+		}
+		for(UMLOperation addedOperation : addedOperations) {
+			if((addedOperation.isSetUpMethod() || addedOperation.isTearDownMethod()) && addedOperation.getBody() != null) {
+				fixtureStatements.put(addedOperation, new ArrayList<>(addedOperation.getBody().getCompositeStatement().getLeaves()));
+				addedFixtures.add(addedOperation);
+			}
+		}
+		for(Map.Entry<VariableDeclarationContainer, List<AbstractCodeFragment>> entry : fixtureStatements.entrySet()) {
+			VariableDeclarationContainer fixture = entry.getKey();
+			for(AbstractCodeFragment statement : entry.getValue()) {
+				String s = statement.getString().strip();
+				int equals = s.indexOf('=');
+				if(equals <= 0 || s.startsWith("==", equals)) {
+					continue;
+				}
+				String assigned = s.substring(0, equals).strip();
+				if(assigned.startsWith("this.")) {
+					assigned = assigned.substring("this.".length());
+				}
+				UMLAttribute attribute = initializedBefore.get(assigned);
+				if(attribute == null) {
+					continue;
+				}
+				AbstractExpression initializer = attribute.getVariableDeclaration().getInitializer();
+				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(initializer, statement, attribute, fixture, this, modelDiff);
+				if(moveCodeMapper.getMappings().isEmpty()) {
+					moveCodeMapper.addMapping(new LeafMapping(initializer, statement, attribute, fixture));
+				}
+				refactorings.add(new MoveCodeRefactoring(attribute, fixture, moveCodeMapper,
+						addedFixtures.contains(fixture) ? Type.MOVE_TO_ADDED : Type.MOVE_BETWEEN_EXISTING));
+			}
+		}
 	}
 
 	private boolean mappingFoundInExtractedMethod(Set<AbstractCodeMapping> mappings) {

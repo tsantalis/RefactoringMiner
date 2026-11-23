@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
@@ -107,6 +108,9 @@ public class FixtureMoveCodeFilter {
 	private boolean valid(MoveCodeRefactoring move) {
 		VariableDeclarationContainer source = move.getSourceContainer();
 		VariableDeclarationContainer target = move.getTargetContainer();
+		if(source instanceof UMLAttribute) {
+			return true; //a field initializer that became an assignment in the fixture, paired by the field's name
+		}
 		boolean sourceIsFixture = source.isSetUpMethod() || source.isTearDownMethod();
 		if(sourceIsFixture && !existedAsFixture(target)) {
 			return false; //code of a fixture in a new fixture: Split Fixture, or a fixture renamed, migrated or re-scoped
@@ -128,24 +132,36 @@ public class FixtureMoveCodeFilter {
 			String s1 = normalize(mapping.getFragment1().getString());
 			String s2 = normalize(mapping.getFragment2().getString());
 			if(sourceAfter != null && count(sourceAfter, s1) >= count(sourceBefore, s1)) {
+				debug(move, s1, s2, "still in the source");
 				continue; //still in the source: copied
 			}
 			if(targetBefore != null && count(targetAfter, s2) <= count(targetBefore, s2)) {
+				debug(move, s1, s2, "already in the target");
 				continue; //already in the target
 			}
 			if(!s1.equals(s2) && counterpart(s1, s2)) {
+				debug(move, s1, s2, "counterpart");
 				continue;
 			}
 			double similarity = similarity(s1, s2);
 			if(!s1.equals(s2) && similarity < 0.75) {
+				debug(move, s1, s2, "similarity " + similarity);
 				continue; //too different to be the same statement, edited on the way
 			}
 			if(!s1.equals(s2) && (closer(sourceAdded, s1, similarity) || closer(targetRemoved, s2, similarity))) {
+				debug(move, s1, s2, "edited in place");
 				continue; //edited in place, in the source or in the target
 			}
 			return true;
 		}
 		return false;
+	}
+
+	private static final boolean DEBUG = System.getProperty("fixtureFilterDebug") != null;
+
+	private static void debug(MoveCodeRefactoring move, String s1, String s2, String reason) {
+		if(DEBUG)
+			System.err.println("[fixture filter] " + move.getSourceContainer().getName() + " -> " + move.getTargetContainer().getName() + ": " + reason + ": " + s1 + " -> " + s2);
 	}
 
 	private boolean existedAsFixture(VariableDeclarationContainer target) {

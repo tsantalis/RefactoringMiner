@@ -1901,6 +1901,12 @@ public class MethodMatcher extends BodyMapperMatcher{
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
                 JavaToKotlinMigration.handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2, optimizationData.getDeferredFlattenings());
             }
+            else if(leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree.getType().name.equals(LANG2.PARAMETER_DECLARATION) ||
+                    leftTree.getType().name.equals(LANG1.PARAMETER_DECLARATION) && rightTree.getType().name.equals(LANG2.SIMPLE_NAME)) {
+                //a parameter of a K&R function definition declared by its name alone, which makes it an int, i.e., n in f(n) { ... } -> f(int n),
+                //whose name is matched with the name in the declaration of the other parameter
+                new LeafMatcher(LANG1, LANG2).match(leftTree,rightTree,mappingStore);
+            }
             else {
                 new LeafMatcher(LANG1, LANG2).match(leftTree,rightTree,mappingStore);
                 Tree name1 = parameterName(leftTree, LANG1);

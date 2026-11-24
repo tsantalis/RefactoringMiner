@@ -1525,6 +1525,56 @@ class CppFileProcessorTest {
 		}
 	}
 
+	@Test
+	void parsesKnRFunctionDefinitionsWithTheirParameterDeclarations() {
+		// gwsw/less command.c and madler/zlib deflate.c before their conversions to C89: the C++ parser cannot parse the declaration lists
+		String filePath = "command.c";
+		String fileContent = String.join("\n",
+				"static int old_style(a, b, n)",
+				"\tint a;",
+				"\tchar *b; /* buffer */",
+				"{",
+				"\tint c = a + n;",
+				"\treturn b[c];",
+				"}",
+				"#ifdef FASTEST",
+				"static int fastest(s)",
+				"\tdeflate_state *s;",
+				"{",
+				"\treturn s->level;",
+				"}",
+				"#endif",
+				"static int implicit(c)",
+				"{",
+				"\treturn c;",
+				"}",
+				"#define voidpf",
+				"void zcfree(voidpf opaque, voidpf ptr) {",
+				"\treturn;",
+				"}") + "\n";
+
+		UMLClass module = findClass(processCppModel(filePath, fileContent).getClassList(), "command");
+		UMLOperation oldStyle = module.getOperations().stream().filter(operation -> operation.getName().equals("old_style")).findFirst().orElseThrow();
+		assertEquals(List.of("a", "b", "n"), oldStyle.getParameterNameList());
+		assertEquals(List.of("int", "char*", "int"), oldStyle.getParameterTypeList().stream().map(UMLType::toString).toList());
+		VariableDeclaration b = oldStyle.getParameterDeclarationList().get(1);
+		assertEquals(fileContent.indexOf("char *b;"), b.getLocationInfo().getStartOffset());
+		assertTrue(bodyContains(oldStyle, "return b[c];"));
+		assertTrue(oldStyle.getBody().getAllVariableDeclarations().stream().anyMatch(variable -> variable.getVariableName().equals("c")));
+
+		UMLOperation fastest = module.getOperations().stream().filter(operation -> operation.getName().equals("fastest")).findFirst().orElseThrow();
+		assertEquals(List.of("deflate_state*"), fastest.getParameterTypeList().stream().map(UMLType::toString).toList());
+		assertTrue(bodyContains(fastest, "return s->level;"));
+
+		UMLOperation implicit = module.getOperations().stream().filter(operation -> operation.getName().equals("implicit")).findFirst().orElseThrow();
+		assertEquals(List.of("c"), implicit.getParameterNameList());
+		assertEquals(List.of("int"), implicit.getParameterTypeList().stream().map(UMLType::toString).toList());
+
+		//not K&R: the types of the parameters, written before the names, are macros defined as empty, i.e., voidpf of zlib's zcfree once the preamble defines it
+		UMLOperation zcfree = module.getOperations().stream().filter(operation -> operation.getName().equals("zcfree")).findFirst().orElseThrow();
+		assertFalse(zcfree.getParameterNameList().contains("opaque"));
+	}
+
 	//the variants of a function defined in sibling branches of conditional groups, each with its own branch identity
 	private static List<UMLOperation> siblingVariants(List<UMLOperation> operations, String name, int count) {
 		List<UMLOperation> variants = operations.stream().filter(operation -> operation.getName().equals(name)).toList();

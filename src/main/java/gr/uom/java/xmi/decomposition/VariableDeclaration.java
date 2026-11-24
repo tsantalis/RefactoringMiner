@@ -205,6 +205,23 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.actualSignature = parameter.getRawSignature();
 	}
 
+	//a parameter of a K&R function definition, i.e., b in int f(a, b) int a; char *b; { ... }, located at its declaration after the names of the parameters,
+	//or at its name when no declaration declares it, i.e., c in f(c) { ... }, which makes it an int
+	public VariableDeclaration(String sourceFolder, String filePath, IASTNode location, String name, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator,
+			VariableDeclarationContainer container, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, location, CodeElementType.SINGLE_VARIABLE_DECLARATION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = name;
+		this.type = declSpecifier != null ? UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0) : UMLType.extractTypeObject("int", LANG);
+		this.varargsParameter = false;
+		int startOffset = locationInfo.getStartOffset();
+		int endOffset = container != null ? container.getLocationInfo().getEndOffset() : locationInfo.getEndOffset();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+		this.actualSignature = fileContent.substring(locationInfo.getStartOffset(), locationInfo.getEndOffset());
+	}
+
 	public VariableDeclaration(String sourceFolder, String filePath, IASTDeclarator declarator, IASTDeclSpecifier declSpecifier,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();

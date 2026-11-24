@@ -9,6 +9,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.IdentityHashMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -109,6 +110,8 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNamedTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
+import org.eclipse.cdt.core.dom.ast.gnu.c.ICASTKnRFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.index.IIndexFileLocation;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -173,6 +176,8 @@ public class CppFileProcessor {
 	//the function definitions parsed again with the code of the preprocessor branches that are not taken, by their start offsets in the translation unit of the file
 	private Map<Integer, IASTFunctionDefinition> conditionalBodies = Map.of();
 	private IASTTranslationUnit conditionalBodySource;
+	//the declarations of the parameters of the K&R function definitions, by the offsets of the declarators of the definitions
+	private Map<Integer, List<IASTSimpleDeclaration>> knrDeclarations = Map.of();
 
 	public CppFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
@@ -188,13 +193,14 @@ public class CppFileProcessor {
 				IASTTranslationUnit treeAst = parsed.translationUnit();
 				if (astDiff) {
 					//a single parse for the model and the AST diff tree, unless the model needs the declarations wrapped in macro calls
-					TreeContext treeContext = CppTreeGenerator.generate(fileContent, treeAst);
+					TreeContext treeContext = CppTreeGenerator.generate(fileContent, treeAst, parsed.knrDeclarations());
 					this.umlModel.getTreeContextMap().put(filePath, treeContext);
 				}
-				IASTTranslationUnit ast = withoutDeclarationMacros(treeAst, filePath, fileContent, astDiff);
+				this.knrDeclarations = parsed.knrDeclarations();
+				IASTTranslationUnit ast = withoutDeclarationMacros(treeAst, filePath, parsed.content(), astDiff);
 				this.conditionalBodySource = ast;
-				this.conditionalBodies = CppConditionalBodies.parse(ast, filePath, fileContent, astDiff, parsed.preamble());
-				CppMacroArguments.parse(ast, filePath, fileContent, astDiff, parsed.preamble());
+				this.conditionalBodies = CppConditionalBodies.parse(ast, filePath, parsed.content(), astDiff, parsed.preamble());
+				CppMacroArguments.parse(ast, filePath, parsed.content(), astDiff, parsed.preamble());
 				this.emptyMacroExpansions = emptyMacroExpansions(ast);
 				String sourceFolder = extractCppSourceFolder();
 				List<UMLComment> comments = extractInternalComments(ast.getComments(), sourceFolder, filePath, fileContent);
@@ -724,7 +730,8 @@ public class CppFileProcessor {
 	}
 
 	//the translation unit and the declarations included before the file, which are reused when parts of the file are parsed again
-	record ParsedFile(IASTTranslationUnit translationUnit, String preamble) {}
+	//with the content that was parsed, in which the declaration lists of the K&R function definitions are blanked, and the declarations of these lists
+	record ParsedFile(IASTTranslationUnit translationUnit, String preamble, String content, Map<Integer, List<IASTSimpleDeclaration>> knrDeclarations) {}
 
 	static ParsedFile parseWithPreamble(String filePath, String fileContent, boolean astDiff) throws CoreException {
 		IASTTranslationUnit translationUnit = parse(filePath, fileContent, astDiff, "");
@@ -815,7 +822,109 @@ public class CppFileProcessor {
 				preamble = extendedPreamble;
 			}
 		}
-		return new ParsedFile(translationUnit, preamble);
+		//the C++ parser cannot parse the K&R function definitions of C code, i.e., int f(a, b) int a; char *b; { ... }, so their declaration lists,
+		//found by the C parser of CDT, are blanked for the C++ parser, which then parses the definitions with the names of the parameters as their types,
+		//and the declarations of the parameters are parsed on their own at their offsets
+		String content = fileContent;
+		Map<Integer, List<IASTSimpleDeclaration>> knrDeclarations = Map.of();
+		//the problems include those of the branches that are not taken, which can hold the only K&R function definitions of the file
+		if(keywordNames(filePath) && problems(translationUnit, true) > 0) {
+			Map<Integer, List<int[]>> declarationLists = knrDeclarationLists(filePath, fileContent, preamble);
+			if(!declarationLists.isEmpty()) {
+				String blanked = blank(fileContent, declarationLists, true);
+				IASTTranslationUnit reparsed = parse(filePath, blanked, astDiff, preamble);
+				if(problems(reparsed, true) < problems(translationUnit, true)) {
+					translationUnit = reparsed;
+					content = blanked;
+					knrDeclarations = knrDeclarations(filePath, blank(fileContent, declarationLists, false), declarationLists, astDiff, preamble);
+				}
+			}
+		}
+		return new ParsedFile(translationUnit, preamble, content, knrDeclarations);
+	}
+
+	//the spans of the declarations of the parameters of the K&R function definitions, i.e., int a; and char *b; in int f(a, b) int a; char *b; { ... },
+	//by the offsets of the declarators of the definitions, i.e., f(a, b), with the definitions of the preamble included, i.e., #define local for local int f(a) int a; { ... },
+	//without which the C parser does not parse the definitions in the preprocessor branches that are not taken
+	private static Map<Integer, List<int[]>> knrDeclarationLists(String filePath, String fileContent, String preamble) throws CoreException {
+		ScannerInfo scanInfo = new ExtendedScannerInfo(new HashMap<>(), new String[0], new String[0], preamble.isEmpty() ? new String[0] : new String[] {TEMPLATES_FILE});
+		IncludeFileContentProvider includeProvider = new InternalFileContentProvider() {
+			@Override
+			public InternalFileContent getContentForInclusion(String path, IMacroDictionary macroDictionary) {
+				return path.equals(TEMPLATES_FILE) ? (InternalFileContent) FileContent.create(TEMPLATES_FILE, preamble.toCharArray()) : null;
+			}
+
+			@Override
+			public InternalFileContent getContentForInclusion(IIndexFileLocation location, String astPath) {
+				return null;
+			}
+		};
+		IASTTranslationUnit translationUnit = GCCLanguage.getDefault().getASTTranslationUnit(FileContent.create(filePath, fileContent.toCharArray()), scanInfo,
+				includeProvider, EmptyCIndex.INSTANCE, GCCLanguage.OPTION_IS_SOURCE_UNIT | GCCLanguage.OPTION_PARSE_INACTIVE_CODE, new DefaultLogService());
+		Map<Integer, List<int[]>> declarationLists = new TreeMap<>();
+		translationUnit.accept(new ASTVisitor() {
+			{
+				shouldVisitDeclarations = true;
+				includeInactiveNodes = true;
+			}
+
+			@Override
+			public int visit(IASTDeclaration declaration) {
+				if(declaration instanceof IASTFunctionDefinition function && function.getDeclarator() instanceof ICASTKnRFunctionDeclarator declarator && declarator.getFileLocation() != null) {
+					List<int[]> spans = new ArrayList<>();
+					for(IASTDeclaration parameterDeclaration : declarator.getParameterDeclarations()) {
+						IASTFileLocation location = parameterDeclaration.getFileLocation();
+						if(location == null || !parameterDeclaration.isPartOfTranslationUnitFile()) {
+							return PROCESS_SKIP;
+						}
+						spans.add(new int[] {location.getNodeOffset(), location.getNodeOffset() + location.getNodeLength()});
+					}
+					if(!spans.isEmpty()) {
+						declarationLists.put(declarator.getFileLocation().getNodeOffset(), spans);
+					}
+					return PROCESS_SKIP;
+				}
+				return PROCESS_CONTINUE;
+			}
+		});
+		return declarationLists;
+	}
+
+	//the content with the declarations of the lists blanked, or with everything else blanked, keeping the line breaks and thus the offsets
+	private static String blank(String fileContent, Map<Integer, List<int[]>> declarationLists, boolean declarations) {
+		char[] content = fileContent.toCharArray();
+		boolean[] inDeclaration = new boolean[content.length];
+		for(List<int[]> spans : declarationLists.values()) {
+			for(int[] span : spans) {
+				Arrays.fill(inDeclaration, span[0], Math.min(span[1], content.length), true);
+			}
+		}
+		for(int i = 0; i < content.length; i++) {
+			if(inDeclaration[i] == declarations && content[i] != '\n' && content[i] != '\r') {
+				content[i] = ' ';
+			}
+		}
+		return new String(content);
+	}
+
+	//the declarations of the parameters of the K&R function definitions parsed by the C++ parser in the content keeping only them,
+	//by the offsets of the declarators of the definitions
+	private static Map<Integer, List<IASTSimpleDeclaration>> knrDeclarations(String filePath, String declarationsOnly, Map<Integer, List<int[]>> declarationLists,
+			boolean astDiff, String preamble) throws CoreException {
+		IASTTranslationUnit translationUnit = parse(filePath, declarationsOnly, astDiff, preamble);
+		Map<Integer, List<IASTSimpleDeclaration>> declarations = new HashMap<>();
+		for(IASTDeclaration declaration : translationUnit.getDeclarations(true)) {
+			IASTFileLocation location = declaration.getFileLocation();
+			if(declaration instanceof IASTSimpleDeclaration simpleDeclaration && location != null && isPartOfFile(declaration)) {
+				for(Map.Entry<Integer, List<int[]>> entry : declarationLists.entrySet()) {
+					List<int[]> spans = entry.getValue();
+					if(location.getNodeOffset() >= spans.get(0)[0] && location.getNodeOffset() < spans.get(spans.size() - 1)[1]) {
+						declarations.computeIfAbsent(entry.getKey(), k -> new ArrayList<>()).add(simpleDeclaration);
+					}
+				}
+			}
+		}
+		return declarations;
 	}
 
 	//the start of a declaration of a variable whose type is a class template, i.e., ns::T<A> x = e;
@@ -1856,10 +1965,15 @@ public class CppFileProcessor {
 
 	//the number of syntax problems in the file
 	public static int problems(IASTTranslationUnit translationUnit) {
+		return problems(translationUnit, false);
+	}
+
+	private static int problems(IASTTranslationUnit translationUnit, boolean inactive) {
 		int[] problems = {0};
 		translationUnit.accept(new ASTVisitor() {
 			{
 				shouldVisitProblems = true;
+				includeInactiveNodes = inactive;
 			}
 
 			@Override
@@ -2571,7 +2685,10 @@ public class CppFileProcessor {
 			operation.setConstructor(true);
 		}
 
-		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
+		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator && knrDefinition(filePath, standardDeclarator)) {
+			addKnrParameters(standardDeclarator, sourceFolder, operation);
+		}
+		else if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
 			int index = 0;
 			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
 				String parameterDeclaratorName = parameter.getDeclarator().getName().toString();
@@ -2748,6 +2865,65 @@ public class CppFileProcessor {
 		}
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, parameter, CodeElementType.TYPE_PARAMETER, fileContent);
 		return new UMLTypeParameter(name, locationInfo);
+	}
+
+	//a function definition of C code whose parameters are only names, i.e., f(a, b) in int f(a, b) int a; char *b; { ... } or f(c) in f(c) { ... },
+	//which the C++ parser parses as unnamed parameters whose types are the names
+	public static boolean knrDefinition(String filePath, IASTStandardFunctionDeclarator declarator) {
+		if(!keywordNames(filePath) || !(declarator.getParent() instanceof IASTFunctionDefinition) || declarator.getParameters().length == 0) {
+			return false;
+		}
+		List<String> names = new ArrayList<>();
+		for(IASTParameterDeclaration parameter : declarator.getParameters()) {
+			IASTName name = knrParameterName(parameter);
+			if(name == null) {
+				return false;
+			}
+			names.add(name.toString());
+		}
+		//the parameters written as names, and not the types of parameters whose names are macros defined as empty, i.e., (voidpf opaque) with #define voidpf
+		return declarator.getRawSignature().replaceAll("\\s+", "").endsWith("(" + String.join(",", names) + ")");
+	}
+
+	public static IASTName knrParameterName(IASTParameterDeclaration parameter) {
+		IASTDeclarator declarator = parameter.getDeclarator();
+		if(parameter.getDeclSpecifier() instanceof IASTNamedTypeSpecifier named && named.getStorageClass() == IASTDeclSpecifier.sc_unspecified && !named.isConst() && !named.isVolatile()
+				&& !(named.getName() instanceof ICPPASTQualifiedName) && !(named.getName() instanceof ICPPASTTemplateId)
+				&& declarator != null && !(declarator instanceof IASTArrayDeclarator) && !(declarator instanceof IASTFunctionDeclarator) && !(declarator instanceof IASTFieldDeclarator) && declarator.getPointerOperators().length == 0
+				&& declarator.getNestedDeclarator() == null && declarator.getInitializer() == null && declarator.getName().toString().isEmpty()) {
+			return named.getName();
+		}
+		return null;
+	}
+
+	//the parameters of a K&R function definition, with the types of their declarations after the names, or int when the declarations do not declare them
+	private void addKnrParameters(IASTStandardFunctionDeclarator declarator, String sourceFolder, UMLOperation operation) {
+		List<IASTSimpleDeclaration> declarations = knrDeclarations.getOrDefault(declarator.getFileLocation().getNodeOffset(), List.of());
+		for(IASTParameterDeclaration parameter : declarator.getParameters()) {
+			IASTName name = knrParameterName(parameter);
+			IASTSimpleDeclaration declaration = null;
+			IASTDeclarator parameterDeclarator = null;
+			for(IASTSimpleDeclaration simpleDeclaration : declarations) {
+				for(IASTDeclarator candidate : simpleDeclaration.getDeclarators()) {
+					IASTDeclarator innermost = candidate;
+					while(innermost.getNestedDeclarator() != null) {
+						innermost = innermost.getNestedDeclarator();
+					}
+					if(parameterDeclarator == null && innermost.getName().toString().equals(name.toString())) {
+						declaration = simpleDeclaration;
+						parameterDeclarator = candidate;
+					}
+				}
+			}
+			VariableDeclaration variableDeclaration = parameterDeclarator != null ?
+					new VariableDeclaration(sourceFolder, filePath, declaration.getDeclarators().length == 1 ? declaration : parameterDeclarator, name.toString(),
+							declaration.getDeclSpecifier(), parameterDeclarator, operation, fileContent) :
+					new VariableDeclaration(sourceFolder, filePath, name, name.toString(), null, null, operation, fileContent);
+			variableDeclaration.setParameter(true);
+			UMLParameter umlParameter = new UMLParameter(name.toString(), variableDeclaration.getType(), "in", false);
+			umlParameter.setVariableDeclaration(variableDeclaration);
+			operation.addParameter(umlParameter);
+		}
 	}
 
 	public static String extractParameterName(IASTParameterDeclaration parameter, int index) {

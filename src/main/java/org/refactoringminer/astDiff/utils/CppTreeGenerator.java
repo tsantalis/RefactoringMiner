@@ -189,6 +189,12 @@ public class CppTreeGenerator {
 			"_Atomic", "__extension__", "noexcept");
 
 	public static TreeContext generate(String content, IASTTranslationUnit translationUnit) {
+		return generate(content, translationUnit, Map.of());
+	}
+
+	//with the declarations of the parameters of the K&R function definitions, by the offsets of the declarators of the definitions,
+	//which the translation unit does not have, as they are blanked for the C++ parser
+	public static TreeContext generate(String content, IASTTranslationUnit translationUnit, Map<Integer, List<IASTSimpleDeclaration>> knrDeclarations) {
 		TreeContext context = new TreeContext();
 		if(content.isEmpty()) {
 			Tree root = context.createTree(TypeSet.type("empty_root"));
@@ -198,6 +204,8 @@ public class CppTreeGenerator {
 			return context;
 		}
 		CppTreeGenerator generator = new CppTreeGenerator(content);
+		generator.knrDeclarations = knrDeclarations;
+		generator.filePath = translationUnit.getFilePath();
 		if(CppFileProcessor.keywordNames(translationUnit.getFilePath())) {
 			generator.keywords = CppFileProcessor.keywords(translationUnit, content);
 		}
@@ -344,6 +352,10 @@ public class CppTreeGenerator {
 	private enum NameKind {IDENTIFIER, TYPE, FIELD, NAMESPACE, LABEL}
 
 	private final String content;
+	private Map<Integer, List<IASTSimpleDeclaration>> knrDeclarations = Map.of();
+	//the source of the declarations of the parameters of the K&R function definitions, which are parsed on their own
+	private Source knrSource;
+	private String filePath = "";
 	private final int length;
 	//the start and end offsets of the comments
 	private final TreeMap<Integer, Integer> comments = new TreeMap<>();
@@ -1898,6 +1910,18 @@ public class CppTreeGenerator {
 	//the code between the offsets without the macro definitions, and with string literals instead of the macros between string literals
 	private String rewrite(int start, int end, TreeMap<Integer, String> inserted, Map<Integer, Integer> masked) {
 		StringBuilder code = new StringBuilder(withoutMacroDefinitions(start, end));
+		//the declarations of the parameters of the K&R function definitions, i.e., int a; in int f(a) int a; { ... } of a branch that is not taken,
+		//which are blanked like for the parser of the file, so that the definitions are parsed and get these declarations
+		for(List<IASTSimpleDeclaration> declarations : knrDeclarations.values()) {
+			for(IASTSimpleDeclaration declaration : declarations) {
+				IASTFileLocation location = declaration.getFileLocation();
+				for(int k = Math.max(location.getNodeOffset(), start); k < Math.min(location.getNodeOffset() + location.getNodeLength(), end); k++) {
+					if(code.charAt(k - start) != '\n' && code.charAt(k - start) != '\r') {
+						code.setCharAt(k - start, ' ');
+					}
+				}
+			}
+		}
 		List<int[]> tokens = new ArrayList<>();
 		int offset = skip(start, end);
 		while(offset < end) {
@@ -2690,6 +2714,25 @@ public class CppTreeGenerator {
 		Node declaratorNode = declarator(declarator, kind, false);
 		children.add(declaratorNode);
 		int bodyStart = declaratorNode.end;
+		//the declarations of the parameters of a K&R function definition, between its declarator and its body, i.e., int a; char *b; in int f(a, b) int a; char *b; { ... }
+		if(hasLocation(declarator)) {
+			for(IASTSimpleDeclaration declaration : knrDeclarations.getOrDefault(start(declarator), List.of())) {
+				//the declarations are parsed on their own at their offsets in the file, also when the definition is in code parsed again
+				Source previous = source;
+				if(knrSource == null) {
+					knrSource = new Source(declaration.getTranslationUnit(), 0, false);
+				}
+				source = knrSource;
+				try {
+					Node declarationNode = simpleDeclaration(declaration, Context.BLOCK);
+					children.add(declarationNode);
+					bodyStart = declarationNode.end;
+				}
+				finally {
+					source = previous;
+				}
+			}
+		}
 		if(function instanceof ICPPASTFunctionDefinition cpp) {
 			ICPPASTConstructorChainInitializer[] initializers = cpp.getMemberInitializers();
 			if(initializers.length > 0) {
@@ -3331,9 +3374,11 @@ public class CppTreeGenerator {
 		}
 		int close = matching(open, end(function));
 		List<Node> parameterNodes = new ArrayList<>();
+		//the parameters of a K&R function definition are names, i.e., (a, b) in int f(a, b) int a; char *b; { ... }
+		boolean knr = CppFileProcessor.knrDefinition(filePath, function);
 		for(IASTParameterDeclaration parameter : parameters) {
 			if(hasLocation(parameter)) {
-				parameterNodes.add(parameterDeclaration(parameter));
+				parameterNodes.add(knr ? name(CppFileProcessor.knrParameterName(parameter), NameKind.IDENTIFIER) : parameterDeclaration(parameter));
 			}
 		}
 		Node parameterList = node("parameter_list", open, close + 1, parameterNodes);

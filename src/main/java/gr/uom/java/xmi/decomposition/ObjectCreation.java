@@ -44,12 +44,30 @@ import org.jetbrains.kotlin.psi.ValueArgument;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.enums.Swc4jAstUnaryOp;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstAssignExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstAwaitExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstBinExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstClassExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCondExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMetaPropExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstOptChainExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSeqExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstThisExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsInstantiation;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsNonNullExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsTypeAssertion;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstUnaryExpr;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNull;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
@@ -439,6 +457,51 @@ public class ObjectCreation extends AbstractCall {
 	public ObjectCreation(String sourceFolder, String filePath, Swc4jAstNewExpr invocation, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container, fileContent);
 		ISwc4jAstCallee callee = invocation.getCallee();
+		boolean unwrapped = true;
+		while(unwrapped) {
+			if(callee instanceof Swc4jAstParenExpr parenExpr) {
+				callee = parenExpr.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTsAsExpr asExpr) {
+				callee = asExpr.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTsTypeAssertion assertion) {
+				callee = assertion.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr) {
+				callee = nonNullExpr.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTsInstantiation tsInstantiation) {
+				if(invocation.getTypeArgs().isEmpty() && tsInstantiation.getTypeArgs() != null) {
+					for(ISwc4jAstTsType typeArgument : tsInstantiation.getTypeArgs().getParams()) {
+						UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeArgument, 0);
+						addTypeArgument(type);
+					}
+				}
+				callee = tsInstantiation.getExpr();
+			}
+			else if(callee instanceof Swc4jAstAssignExpr assignExpr) {
+				callee = assignExpr.getRight();
+			}
+			else if(callee instanceof Swc4jAstSeqExpr seqExpr && !seqExpr.getExprs().isEmpty()) {
+				callee = seqExpr.getExprs().get(seqExpr.getExprs().size() - 1);
+			}
+			else if(callee instanceof Swc4jAstOptChainExpr optChain && optChain.getBase() instanceof ISwc4jAstExpr expr) {
+				callee = expr;
+			}
+			else if(callee instanceof Swc4jAstBinExpr binExpr) {
+				callee = binExpr.getLeft();
+			}
+			else if(callee instanceof Swc4jAstAwaitExpr awaitExpr) {
+				callee = awaitExpr.getArg();
+			}
+			else if(callee instanceof Swc4jAstCondExpr condExpr && isNullish(condExpr.getCons())) {
+				callee = condExpr.getAlt();
+			}
+			else {
+				unwrapped = false;
+			}
+		}
 		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
 			ISwc4jAstMemberProp prop = memberExpr.getProp();
 			if(prop instanceof Swc4jAstPrivateName privateName)
@@ -453,19 +516,37 @@ public class ObjectCreation extends AbstractCall {
 		else if(callee instanceof Swc4jAstIdent ident) {
 			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
 		}
-		else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr) {
-			ISwc4jAstExpr expr = nonNullExpr.getExpr();
-			if(expr instanceof Swc4jAstMemberExpr memberExpr) {
-				ISwc4jAstMemberProp prop = memberExpr.getProp();
-				if(prop instanceof Swc4jAstPrivateName privateName)
-					this.type = UMLType.extractTypeObject(privateName.getName(), LANG);
-				else if(prop instanceof Swc4jAstIdentName ident)
-					this.type = UMLType.extractTypeObject(ident.getSym(), LANG);
-				else if(prop instanceof Swc4jAstComputedPropName propName)
-					this.type = UMLType.extractTypeObject(TypeScriptVisitor.text(fileContent, propName.getExpr()), LANG);
-				ISwc4jAstExpr receiver = memberExpr.getObj();
-				this.expression = TypeScriptVisitor.text(fileContent, receiver);
+		else if(callee instanceof Swc4jAstCondExpr condExpr) {
+			this.type = UMLType.extractTypeObject(TypeScriptVisitor.text(fileContent, condExpr), LANG);
+		}
+		else if(callee instanceof Swc4jAstThisExpr) {
+			this.type = UMLType.extractTypeObject("this", LANG);
+		}
+		else if(callee instanceof Swc4jAstClassExpr classExpr) {
+			if(classExpr.getIdent().isPresent()) {
+				this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, classExpr.getIdent().get(), 0);
 			}
+			else if(classExpr.getClazz().getSuperClass().isPresent()) {
+				this.type = UMLType.extractTypeObject(TypeScriptVisitor.text(fileContent, classExpr.getClazz().getSuperClass().get()), LANG);
+			}
+			else {
+				this.type = UMLType.extractTypeObject("AnonymousClass", LANG);
+			}
+			this.anonymousClassDeclaration = TypeScriptVisitor.text(fileContent, classExpr.getClazz());
+		}
+		else if(callee instanceof Swc4jAstFnExpr fnExpr) {
+			if(fnExpr.getIdent().isPresent()) {
+				this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, fnExpr.getIdent().get(), 0);
+			}
+			else {
+				this.type = UMLType.extractTypeObject("AnonymousFunction", LANG);
+			}
+		}
+		else if(callee instanceof Swc4jAstMetaPropExpr metaPropExpr) {
+			this.type = UMLType.extractTypeObject(metaPropExpr.getKind().getName(), LANG);
+		}
+		else if(callee instanceof Swc4jAstCallExpr callExpr) {
+			this.type = UMLType.extractTypeObject(TypeScriptVisitor.text(fileContent, callExpr), LANG);
 		}
 		this.arguments = new ArrayList<String>();
 		Optional<List<Swc4jAstExprOrSpread>> args = invocation.getArgs();
@@ -489,6 +570,16 @@ public class ObjectCreation extends AbstractCall {
 				addTypeArgument(type);
 			}
 		}
+	}
+
+	private static boolean isNullish(ISwc4jAstExpr expr) {
+		if(expr instanceof Swc4jAstUnaryExpr unary && unary.getOp() == Swc4jAstUnaryOp.Void) {
+			return true;
+		}
+		if(expr instanceof Swc4jAstIdent ident && ident.getSym().equals("undefined")) {
+			return true;
+		}
+		return expr instanceof Swc4jAstNull;
 	}
 
 	//the construction of a variable with arguments, i.e., T x(a, b), T x{a, b} and T x = {a, b}, which is like T x = new T(a, b) in Java

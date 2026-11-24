@@ -128,6 +128,10 @@ public class MoveCodeRefactoring extends AbstractMoveRefactoring {
 	public RefactoringType getRefactoringType() {
 		if(moveType.equals(Type.MOVE_TO_ADDED)) {
 			if(targetContainer.isSetUpMethod() || targetContainer.isTearDownMethod()) {
+				//code of a fixture moved into a new fixture splits that fixture; from tests, helpers or fields it is extracted
+				if(sourceContainer.isSetUpMethod() || sourceContainer.isTearDownMethod()) {
+					return RefactoringType.SPLIT_FIXTURE;
+				}
 				return RefactoringType.EXTRACT_FIXTURE;
 			}
 		}

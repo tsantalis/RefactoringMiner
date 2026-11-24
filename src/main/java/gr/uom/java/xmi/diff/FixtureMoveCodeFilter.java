@@ -19,6 +19,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 
@@ -118,7 +119,7 @@ public class FixtureMoveCodeFilter {
 			//whether the fixture is new is decided by the code before the commit, not by the operation it was matched with:
 			//code moved into a new fixture is an Extract Fixture, into a fixture that existed a Move Code
 			boolean targetExisted = existedAsFixture(move.getTargetContainer());
-			boolean extract = move.getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE);
+			boolean extract = move.getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) || move.getRefactoringType().equals(RefactoringType.SPLIT_FIXTURE);
 			if(targetExisted && extract) {
 				move = retype(move, MoveCodeRefactoring.Type.MOVE_BETWEEN_EXISTING);
 			}
@@ -153,9 +154,7 @@ public class FixtureMoveCodeFilter {
 		//between classes, only code moved verbatim counts, unless it comes from the superclass (pushed down): the same edit
 		//made in sibling classes pairs statements that are alike but were never moved
 		boolean fromSuperclass = crossClass && extendsClass(target.getClassName(), sourceClass);
-		if(sourceIsFixture && !existedAsFixture(target)) {
-			return false; //code of a fixture in a new fixture: Split Fixture, or a fixture renamed, migrated or re-scoped
-		}
+		//code of a fixture in a new fixture is a Split Fixture (MoveCodeRefactoring types it), validated as any other move
 		List<String> sourceBefore = statements(source);
 		VariableDeclarationContainer sourceNext = counterpart(source, childClasses);
 		VariableDeclarationContainer targetPrevious = counterpart(target, parentClasses);
@@ -274,8 +273,13 @@ public class FixtureMoveCodeFilter {
 		if(body != null) {
 			for(AbstractCodeFragment leaf : body.getCompositeStatement().getLeaves())
 				list.add(normalize(leaf.getString()));
-			for(CompositeStatementObject node : body.getCompositeStatement().getInnerNodes())
+			for(CompositeStatementObject node : body.getCompositeStatement().getInnerNodes()) {
 				list.add(normalize(node.getString()));
+				//the expressions of a composite (an if condition), which a move code mapper can pair with a statement,
+				//i.e., if("true".equals(...)) { ... } becoming assumeTrue("true".equals(...)) in a fixture
+				for(AbstractExpression expression : node.getExpressions())
+					list.add(normalize(expression.getString()));
+			}
 		}
 		return list;
 	}

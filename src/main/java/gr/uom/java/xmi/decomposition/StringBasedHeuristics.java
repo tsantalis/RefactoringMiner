@@ -4538,22 +4538,13 @@ public class StringBasedHeuristics {
 			List<String> ternaryConditionals1 = new ArrayList<>();
 			for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
 				String condition = ternary.getCondition().getString();
-				String temp0 = new String(condition);
-				for(Replacement replacement : info.getReplacements()) {
-					temp0 = ReplacementUtil.performReplacement(temp0, replacement.getBefore(), replacement.getAfter());
-				}
+				String temp0 = ReplacementUtil.performReplacements(condition, info.getReplacements());
 				ternaryConditionals1.add(temp0);
 				String thenExpression = ternary.getThenExpression().getString();
-				String temp1 = new String(thenExpression);
-				for(Replacement replacement : info.getReplacements()) {
-					temp1 = ReplacementUtil.performReplacement(temp1, replacement.getBefore(), replacement.getAfter());
-				}
+				String temp1 = ReplacementUtil.performReplacements(thenExpression, info.getReplacements());
 				ternaryConditionals1.add(temp1);
 				String elseExpression = ternary.getElseExpression().getString();
-				String temp2 = new String(elseExpression);
-				for(Replacement replacement : info.getReplacements()) {
-					temp2 = ReplacementUtil.performReplacement(temp2, replacement.getBefore(), replacement.getAfter());
-				}
+				String temp2 = ReplacementUtil.performReplacements(elseExpression, info.getReplacements());
 				ternaryConditionals1.add(temp2);
 			}
 			List<String> ternaryConditionals2 = new ArrayList<>();

@@ -3,12 +3,15 @@ package gr.uom.java.xmi.decomposition;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gr.uom.java.xmi.Constants;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 
@@ -105,6 +108,127 @@ public class ReplacementUtil {
 			}
 		}
 		return temp;
+	}
+
+	//the replacements applied in their order like performReplacement, except that a replacement cannot match inside or partly over the text inserted by an earlier one,
+	//i.e., 0 -> 180.0 followed by 0 -> Math.PI does not turn 180.0 into 18Math.PI.0, which also compounds into exponential growth when the new text of a replacement
+	//contains the old text of a later one, i.e., t -> function(e){...t...} in minified code, while a replacement whose old text contains the whole text inserted by an earlier one
+	//is applied, i.e., - -> >= followed by f(a >= 1) -> g(), since the replacements are found on the text with the earlier replacements applied
+	public static String performReplacements(String completeString, Collection<Replacement> replacements) {
+		GuardedText text = new GuardedText(completeString);
+		for(Replacement replacement : replacements) {
+			String subString = replacement.getBefore();
+			String newText = replacement.getAfter();
+			String current = text.toString();
+			if(current.equals(subString)) {
+				text = new GuardedText(newText, text.nextRegion++);
+				continue;
+			}
+			boolean replacementDone = false;
+			for(String character : SPECIAL_CHARACTERS) {
+				if(current.contains(subString + character)) {
+					text.replace(subString + character, 0, subString.length(), newText);
+					replacementDone = true;
+				}
+			}
+			if(!replacementDone) {
+				for(String character : SPECIAL_CHARACTERS) {
+					if(current.contains(character + subString)) {
+						text.replace(character + subString, character.length(), subString.length(), newText);
+					}
+				}
+			}
+		}
+		return text.toString();
+	}
+
+	//a text whose characters remember the replacement that inserted them, as region numbers, or -1 for the characters of the original text
+	private static class GuardedText {
+		private String text;
+		private int[] regions;
+		private int nextRegion;
+
+		private GuardedText(String text) {
+			this.text = text;
+			this.regions = new int[text.length()];
+			Arrays.fill(this.regions, -1);
+		}
+
+		private GuardedText(String text, int region) {
+			this.text = text;
+			this.regions = new int[text.length()];
+			Arrays.fill(this.regions, region);
+			this.nextRegion = region + 1;
+		}
+
+		//replaces the occurrences of the pattern from left to right like String.replace, where the old text is the part of the pattern at the offset,
+		//skipping an occurrence whose old text starts or ends inside an inserted region
+		private void replace(String pattern, int offset, int length, String newText) {
+			int index = text.indexOf(pattern);
+			if(index == -1) {
+				return;
+			}
+			StringBuilder builder = new StringBuilder(text.length());
+			int[] newRegions = new int[text.length() + 16];
+			int size = 0;
+			int i = 0;
+			while(i < text.length()) {
+				if(index == i && outsideInsertedRegions(i + offset, i + offset + length)) {
+					int region = nextRegion++;
+					newRegions = ensureCapacity(newRegions, size + pattern.length() - length + newText.length());
+					for(int k = i; k < i + offset; k++) {
+						builder.append(text.charAt(k));
+						newRegions[size++] = regions[k];
+					}
+					builder.append(newText);
+					for(int k = 0; k < newText.length(); k++) {
+						newRegions[size++] = region;
+					}
+					for(int k = i + offset + length; k < i + pattern.length(); k++) {
+						builder.append(text.charAt(k));
+						newRegions[size++] = regions[k];
+					}
+					i += pattern.length();
+					index = text.indexOf(pattern, i);
+				}
+				else {
+					int end = index == i ? i + 1 : (index == -1 ? text.length() : index);
+					newRegions = ensureCapacity(newRegions, size + end - i);
+					for(int k = i; k < end; k++) {
+						builder.append(text.charAt(k));
+						newRegions[size++] = regions[k];
+					}
+					i = end;
+					if(index != -1 && index < i) {
+						index = text.indexOf(pattern, i);
+					}
+				}
+			}
+			text = builder.toString();
+			regions = Arrays.copyOf(newRegions, size);
+		}
+
+		//whether the range does not start or end inside an inserted region, so that it contains each inserted region it overlaps entirely
+		private boolean outsideInsertedRegions(int start, int end) {
+			if(start == end) {
+				return true;
+			}
+			if(start > 0 && regions[start] != -1 && regions[start - 1] == regions[start]) {
+				return false;
+			}
+			if(end < regions.length && regions[end - 1] != -1 && regions[end] == regions[end - 1]) {
+				return false;
+			}
+			return true;
+		}
+
+		private static int[] ensureCapacity(int[] array, int capacity) {
+			return capacity <= array.length ? array : Arrays.copyOf(array, Math.max(capacity, array.length * 2));
+		}
+
+		public String toString() {
+			return text;
+		}
 	}
 
 	//equivalent to s.contains(subString + suffix) without creating the concatenated string

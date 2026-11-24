@@ -1344,6 +1344,38 @@ class CppFileProcessorTest {
 		assertEquals(Visibility.PUBLIC, visible.getVisibility());
 	}
 
+	@Test
+	void processesQtClassMacros() {
+		// Q_OBJECT, Q_PROPERTY and the access specifiers with signals and slots made CDT parse the members as problems
+		String filePath = "src/catalog.h";
+		String fileContent = String.join("\n",
+				"#include <QObject>",
+				"class Catalog : public QObject {",
+				"  Q_OBJECT",
+				"  Q_PROPERTY(int count READ count NOTIFY countChanged)",
+				"public:",
+				"  Q_INVOKABLE int count() const { return count_; }",
+				"public slots:",
+				"  void drop(int id) { count_--; emit countChanged(count_); }",
+				"signals:",
+				"  void countChanged(int count);",
+				"private:",
+				"  Q_DISABLE_COPY(Catalog)",
+				"  int count_;",
+				"};",
+				"Q_DECLARE_METATYPE(Catalog*)") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLClass catalog = findClass(model.getClassList(), "Catalog");
+		assertEquals(List.of("count", "drop", "countChanged"), catalog.getOperations().stream().map(UMLOperation::getName).toList());
+		assertEquals(Visibility.PUBLIC, findOperation(catalog.getOperations(), "drop").getVisibility());
+		assertEquals(Visibility.PUBLIC, findOperation(catalog.getOperations(), "countChanged").getVisibility());
+		assertEquals(List.of("count_--;", "countChanged(count_);"), findOperation(catalog.getOperations(), "drop").getBody()
+				.getCompositeStatement().getStatements().stream().map(AbstractCodeFragment::getString).map(String::strip).toList());
+		assertEquals(Visibility.PRIVATE, findAttribute(catalog.getAttributes(), "count_").getVisibility());
+	}
+
 	private static void assertContainsLocation(List<LocationInfo> locations, int startOffset, int length) {
 		assertTrue(locations.stream().anyMatch(location ->
 				location.getStartOffset() == startOffset && location.getLength() == length),

@@ -1087,6 +1087,9 @@ public class CppFileProcessor {
 	private static final String PROTOCOL_BUFFERS_STUB = stub("/cpp-stubs/protobuf.h");
 	private static final String LINUX_KERNEL_STUB = stub("/cpp-stubs/linux.h");
 	private static final String THREAD_SAFETY_STUB = stub("/cpp-stubs/threadsafety.h");
+	private static final String QT_STUB = stub("/cpp-stubs/qt.h");
+	//the files using Qt, i.e., the classes with Q_OBJECT or Q_GADGET and the files including the headers of Qt, such as <QObject> or <QtCore/QString>
+	private static final Pattern QT_USAGE = Pattern.compile("\\bQ_(?:OBJECT|GADGET|NAMESPACE)\\b|#include\\s*[<\"](?:Qt[A-Za-z]*/)?Q[A-Z][A-Za-z]*[>\"]");
 	//the thread safety annotations of Clang without a library prefix, i.e., EXCLUSIVE_LOCKS_REQUIRED(cs_main) but not ABSL_EXCLUSIVE_LOCKS_REQUIRED(mu)
 	private static final Pattern THREAD_SAFETY_ANNOTATION = Pattern.compile("\\b(EXCLUSIVE_LOCKS_REQUIRED|SHARED_LOCKS_REQUIRED|LOCKS_EXCLUDED|GUARDED_BY|PT_GUARDED_BY|LOCK_RETURNED"
 			+ "|ACQUIRED_AFTER|ACQUIRED_BEFORE|EXCLUSIVE_LOCK_FUNCTION|SHARED_LOCK_FUNCTION|EXCLUSIVE_TRYLOCK_FUNCTION|SHARED_TRYLOCK_FUNCTION|UNLOCK_FUNCTION|ASSERT_EXCLUSIVE_LOCK)\\s*\\(");
@@ -1102,7 +1105,7 @@ public class CppFileProcessor {
 		}
 	}
 
-	//the stub of the file, with the parts of googletest and googlemock when the file includes their headers, and the parts of Abseil and Protocol Buffers when the file uses them
+	//the stub of the file, with the parts of googletest and googlemock when the file includes their headers, and the parts of Abseil, Protocol Buffers and Qt when the file uses them
 	private static String stubs(String fileContent) {
 		StringBuilder stubs = new StringBuilder(STANDARD_LIBRARY_STUB);
 		if(fileContent.contains("#include \"gtest/") || fileContent.contains("#include \"gmock/") ||
@@ -1122,6 +1125,10 @@ public class CppFileProcessor {
 		}
 		if(THREAD_SAFETY_ANNOTATION.matcher(fileContent).find()) {
 			stubs.append("\n").append(THREAD_SAFETY_STUB);
+		}
+		//only for the files using Qt, since signals, slots and emit are ordinary names elsewhere
+		if(QT_USAGE.matcher(fileContent).find()) {
+			stubs.append("\n").append(QT_STUB);
 		}
 		return stubs.toString();
 	}

@@ -112,8 +112,10 @@ public class TypeScriptFileProcessor {
 		return Swc4jMediaType.Jsx;
 	}
 
-	// Mirrors GitHub Linguist (lib/linguist/vendor.yml and lib/linguist/generated.rb)
+	// Mirrors GitHub Linguist (lib/linguist/vendor.yml)
 	private static final Pattern MINIFIED_FILE_PATTERN = Pattern.compile("[-.]min\\.js$");
+	// Mirrors GitHub Linguist (lib/linguist/generated.rb minified_files?)
+	public static final int MINIFIED_AVERAGE_LINE_LENGTH = 110;
 
 	public static boolean isMinified(String filePath, String fileContent) {
 		if (filePath == null || fileContent == null || fileContent.isEmpty()) {
@@ -123,14 +125,17 @@ public class TypeScriptFileProcessor {
 		if (MINIFIED_FILE_PATTERN.matcher(filePath).find()) {
 			return true;
 		}
-		// Linguist generated.rb (minified_files?): average line length > 110 characters
-		int lines = 1;
-		for (int i = 0; i < fileContent.length(); i++) {
-			if (fileContent.charAt(i) == '\n') {
-				lines++;
+		// Linguist generated.rb (minified_files?): average line length > 110 characters for JavaScript files
+		if (filePath.endsWith(".js")) {
+			int lines = 1;
+			for (int i = 0; i < fileContent.length(); i++) {
+				if (fileContent.charAt(i) == '\n') {
+					lines++;
+				}
 			}
+			return (fileContent.length() / lines) > MINIFIED_AVERAGE_LINE_LENGTH;
 		}
-		return (fileContent.length() / lines) > 110;
+		return false;
 	}
 
 	public void processTypeScriptFile(String filePath, String fileContent, boolean astDiff, Swc4j swc4j) {

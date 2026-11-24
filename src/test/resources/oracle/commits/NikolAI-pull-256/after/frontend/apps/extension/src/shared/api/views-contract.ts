@@ -1,0 +1,454 @@
+// AI contribution: 50%
+/**
+ * The responses behind the NikolAI tabs (UI revamp, #100). Endpoints marked SHIPPED exist; the
+ * others are PROPOSED: the shape the extension asks the backend for. Either way, this file is
+ * the runtime check that rejects anything else. The SHIPPED ones are also generated into
+ * `@nikolai/api-client` (`pnpm generate:api`), and `contract-types.test.ts` fails typecheck when
+ * a check here and the backend's type disagree.
+ *
+ *   GET  /api/repos/{owner}/{repo}/team                     → TeamOverview      (US-11, US-10, SHIPPED)
+ *   GET  /api/repos/{owner}/{repo}/pulls/{n}/insights       → PullInsights      (US-9, SHIPPED)
+ *   GET  /api/repos/{owner}/{repo}/pulls/{n}/review-ratings → PullReviewRatings (US-14.1, US-14.2, SHIPPED)
+ *   POST /api/repos/{owner}/{repo}/pulls/{n}/review-ratings → PullReviewRatings (US-14.1, US-14.2, SHIPPED)
+ *   GET  /api/repos/{owner}/{repo}/backlog-coverage         → BacklogCoverage   (US-13.2, SHIPPED)
+ *   POST /api/repos/{owner}/{repo}/backlog-coverage         → BacklogCoverage   (US-13.2, SHIPPED)
+ *   GET  /api/repos/{owner}/{repo}/issues/{n}/story-review        → StoryReview      (US-12.2, SHIPPED)
+ *   GET  /api/repos/{owner}/{repo}/issues/{n}/story-review/status → StoryReviewState (US-12.2, SHIPPED)
+ *   POST /api/repos/{owner}/{repo}/issues/{n}/story-review        → StoryReviewState (US-12.2, SHIPPED)
+ *   GET  /api/projects/{owner}/{n}/planning                 → Planning
+ *   GET  /api/repos/{owner}/{repo}/ci                       → CiAssistant
+ *   POST /api/findings/{id}/actions  {action, reason}       → 204               (US-10.4, SHIPPED)
+ *
+ * Every response names the viewer's course role. The server decides it (`can_read_team`, ADR
+ * 0001); the extension only uses it to pick the student or staff layout. Staff-only fields are
+ * null for students, so hiding them in the browser is never the access check.
+ */
+
+import type { FindingActionRequest } from "@nikolai/api-client";
+import { courseRole, isStaffRole, ROLE_LABELS, type CourseRole } from "@nikolai/api-client";
+
+import {
+  array,
+  boolean,
+  literal,
+  nullable,
+  number,
+  object,
+  refine,
+  string,
+  type Check,
+  type Infer,
+} from "./schema";
+
+export { courseRole, isStaffRole, ROLE_LABELS };
+export type { CourseRole };
+
+export const severity = literal("info", "low", "medium", "high", "critical");
+
+const viewer = object({ login: string, role: courseRole });
+const backlogStory = object({ number, title: string, url: string });
+
+/** Reject a response that hands a student a staff-only field: the server must send it as null. */
+function staffOnly<T extends { viewer: { role: CourseRole } }>(
+  check: Check<T>,
+  staffField: (value: T) => unknown,
+): Check<T> {
+  return refine(check, (value) => isStaffRole(value.viewer.role) || staffField(value) === null);
+}
+const progress = object({ name: string, due_on: string, tasks_done: number, tasks_total: number });
+
+const teamPull = object({
+  number,
+  title: string,
+  author: string,
+  updated_at: string,
+  draft: boolean,
+  checklist_open: nullable(number),
+  checklist_total: nullable(number),
+  refactorings: number,
+  review_status: literal("none", "queued", "running", "completed", "failed"),
+});
+
+const member = object({
+  login: string,
+  commits: number,
+  pulls: number,
+  reviews: nullable(number),
+  substantive_reviews: nullable(number),
+  fixes_with_evidence: nullable(number),
+  last_commit_at: nullable(string),
+});
+
+const rubricRow = object({
+  category: string,
+  suggested_level: literal("poor", "ok", "expected", "exceptional"),
+  evidence: string,
+  mark: nullable(string),
+});
+
+const teamStaff = object({
+  /** Null until a TA starts marking the iteration. */
+  marking: nullable(
+    object({
+      iteration: string,
+      state: literal("draft", "published"),
+      rubric: array(rubricRow),
+    }),
+  ),
+  attention: array(
+    object({
+      kind: literal("untested", "open-threads", "story", "ai-use", "inactive"),
+      text: string,
+      pull_number: nullable(number),
+    }),
+  ),
+  disputes: array(
+    object({
+      finding_id: string,
+      login: string,
+      finding_name: string,
+      pull_number: number,
+      reason: string,
+    }),
+  ),
+  stories_done: nullable(number),
+  stories_planned: nullable(number),
+  features_tested: nullable(number),
+  features_total: nullable(number),
+  /** Null until NikolAI reads the repository's AI declarations. */
+  ai_declared_percent: nullable(number),
+});
+
+/**
+ * SHIPPED (US-11.2): `GET /api/repos/{owner}/{repo}/team`, read for the repository whose tab is
+ * open. `pulls` are its open PRs. `refactorings` counts each open or merged PR's latest analysed
+ * push, the one its refactoring report shows, and `refactorings_this_week` the ones new in that
+ * push when it was analysed in the last 7 days. `reviewed_pulls` is how many merged PRs NikolAI
+ * reviewed. A member's `commits` are the commits in the PRs they opened. A PR's `checklist_total`
+ * is the findings of its latest completed code review and `checklist_open` those not fixed (a
+ * push review recorded the commit that fixed them); both are null until NikolAI's code review gives the PR a
+ * checklist, and the view shows "None yet". `stats.open_checklist_items` sums the open items of
+ * every open PR with a checklist, and is null when none has one. A count NikolAI doesn't
+ * measure yet (peer reviews, stories, tests) is null, never 0, and the view shows "n/a" or
+ * leaves it out; `iteration`, `badges.next` and `last_commit_at` are null and the lists
+ * empty until their stories ship. `team.course` is null for a team in no course; `team.id` names
+ * the team's planning page on the dashboard.
+ */
+export const teamOverview = staffOnly(
+  object({
+    viewer,
+    team: object({ id: string, name: string, course: nullable(string) }),
+    iteration: nullable(progress),
+    next_deliverables: array(progress),
+    stats: object({
+      open_checklist_items: nullable(number),
+      refactorings: number,
+      refactorings_this_week: number,
+      reviewed_pulls: number,
+      merged_pulls: number,
+    }),
+    pulls: array(teamPull),
+    members: array(member),
+    badges: object({
+      earned: array(object({ id: string, name: string })),
+      next: nullable(object({ name: string, progress: number, goal: number })),
+    }),
+    staff: nullable(teamStaff),
+  }),
+  (team) => team.staff,
+);
+
+const location = object({
+  file_path: string,
+  start_line: nullable(number),
+  end_line: nullable(number),
+});
+
+/**
+ * SHIPPED (US-9): `GET /api/repos/{owner}/{repo}/pulls/{n}/insights`. `checklist` has one entry per
+ * finding in `GET .../pulls/{n}`: `fixed` once a push review checked the commit, file and lines
+ * that fixed it, with those in `fixed_in` (the short SHA, and the lines of that commit's diff);
+ * otherwise `acknowledged` or `disputed` from the team's latest answer for the same item (it
+ * keeps its answer when a later review carries it over), else `open`, with `fixed_in` null.
+ * `withheld_count` is what the latest code review left out. `pushes` are the reviewed commits,
+ * newest first: a commit reviewed again is listed once, and one whose code review didn't run isn't
+ * listed. `commit` is the short SHA, `message` the PR title (GitHub's webhook doesn't send the
+ * commit message), `added` the findings in its checklist that the previous commit's didn't have,
+ * and `fixed` the items open in the previous commit's checklist that its checklist has fixed.
+ * `your_review` and `marking` are null.
+ */
+export const pullInsights = staffOnly(
+  object({
+    viewer,
+    checklist: array(
+      object({
+        finding_id: string,
+        status: literal("open", "fixed", "acknowledged", "disputed"),
+        fixed_in: nullable(object({ commit: string, location })),
+      }),
+    ),
+    withheld_count: number,
+    your_review: nullable(
+      object({
+        substantive: boolean,
+        technical_comments: number,
+        missed: array(
+          object({ name: string, severity: nullable(severity), file_path: nullable(string) }),
+        ),
+      }),
+    ),
+    pushes: array(object({ commit: string, message: string, fixed: number, added: number })),
+    marking: nullable(
+      object({
+        checks: array(object({ rule: string, met: boolean, detail: string })),
+        contributors: array(
+          object({ login: string, commits: number, additions: number, deletions: number }),
+        ),
+        ai_contribution: nullable(string),
+        confirmed_refactorings: number,
+      }),
+    ),
+  }),
+  (pull) => pull.marking,
+);
+
+/**
+ * SHIPPED (US-8): `GET /api/repos/{owner}/{repo}/pulls/{n}/refactorings`, the latest push that
+ * RefactoringMiner analysed (`commit`, null before its first run) compared with the push before
+ * it (`since_commit`). On the first analysed push there is nothing to compare with:
+ * `since_commit` and every `change` are null, as in the PR comment. RefactoringMiner doesn't
+ * always locate a refactoring, so `file_path` and `start_line` can be null.
+ *
+ * SHIPPED (US-17): `source` says who found each refactoring: RefactoringMiner, or the AI for
+ * files in languages RefactoringMiner doesn't support. `ai_check` is how that AI check of the
+ * latest push went (null when the push changed no such file): `failed` comes with a `reason`,
+ * `files` were shown to the AI and `unchecked` were too large to show. `ai_note` is the PR
+ * comment's note on the files the AI couldn't check, built once by the server (null when none).
+ *
+ * SHIPPED (US-16): `design_changes` are the design patterns introduced or removed and the
+ * architectural changes the AI found in `commit`'s diff, each with the diff's files it involves.
+ * `failed` means the push couldn't be checked, with a `reason` to show; null for a push analysed
+ * before US-16.
+ */
+export const pullRefactorings = object({
+  commit: nullable(string),
+  since_commit: nullable(string),
+  items: array(
+    object({
+      type: string,
+      description: string,
+      change: nullable(literal("new", "undone", "unchanged")),
+      file_path: nullable(string),
+      start_line: nullable(number),
+      side: literal("parent", "child"),
+      source: literal("RefactoringMiner", "AI"),
+    }),
+  ),
+  ai_check: nullable(
+    object({
+      status: literal("completed", "failed"),
+      reason: nullable(string),
+      files: array(string),
+      unchecked: array(string),
+    }),
+  ),
+  ai_note: nullable(string),
+  design_changes: nullable(
+    object({
+      status: literal("completed", "failed"),
+      reason: nullable(string),
+      items: array(
+        object({
+          kind: literal("pattern_introduced", "pattern_removed", "architecture"),
+          name: string,
+          explanation: string,
+          files: array(string),
+        }),
+      ),
+    }),
+  ),
+});
+
+/**
+ * SHIPPED (US-13.2): `GET /api/repos/{owner}/{repo}/backlog-coverage` reads the latest check and
+ * `POST` runs a new one, which replaces it, and answers with the result. `status` is `not_run`
+ * before the first check, `no_requirements` when the course has no project requirements and
+ * `no_stories` when the repository has no `user story` issue (the model isn't called for either), `failed` when NikolAI couldn't check, with `reason` saying why, otherwise
+ * `completed`. A requirement with no `stories` is uncovered. Completed checks may also include
+ * suggested epic groups and splits; story links are resolved by the backend from fetched issues.
+ */
+export const backlogCoverage = object({
+  viewer,
+  status: literal("not_run", "no_requirements", "no_stories", "completed", "failed"),
+  reason: nullable(string),
+  checked_at: nullable(string),
+  requirements: array(
+    object({
+      requirement: string,
+      stories: array(backlogStory),
+    }),
+  ),
+  epic_groups: array(object({ name: string, stories: array(backlogStory) })),
+  split_suggestions: array(object({ story: backlogStory, parts: array(string) })),
+});
+
+const reviewRating = literal("poor", "fair", "good", "excellent");
+const ratingUnavailable = literal(
+  "provider_not_configured",
+  "github_unavailable",
+  "model_error",
+  "invalid_output",
+);
+
+/**
+ * SHIPPED (US-14.1): `GET .../pulls/{n}/review-ratings` is the PR's latest rating of its human
+ * reviews, and `POST` rates them again and replaces it. `not_evaluated` is the answer before the
+ * first POST. `no_reviews` means the PR has no human reviews (bots are left out), so the model
+ * was not called. `unavailable` means the check couldn't finish and `reason` says why. A rated
+ * result names the `model` and carries one entry per review, each with 1–4 `reasons`. A reason's
+ * `reference` is set only when the server checked its file and lines against the diff, so the
+ * view links only lines that exist.
+ *
+ * SHIPPED (US-14.2): each review also lists the `missed_issues`: NikolAI's own findings on the
+ * PR that the review didn't raise, read from NikolAI's stored review, never from the model. An
+ * issue's `reference` is set only when its lines are in the current diff. `comparison` is
+ * `compared` when the reviews were compared with NikolAI's review, `not_reviewed` when NikolAI
+ * hadn't reviewed the PR's code (so nothing is listed), and null when the result isn't rated or was
+ * rated before the comparison existed. Only NikolAI's most important findings are compared;
+ * `uncompared_findings` counts the others, and is 0 unless `comparison` is `compared`.
+ */
+const lineReference = object({ file_path: string, start_line: number, end_line: number });
+
+const latestFailure = object({ reason: ratingUnavailable, failed_at: string });
+
+/**
+ * A newer evaluation that failed while the ratings were kept (F-42), or null. Servers from
+ * before F-42 leave the field out, so an extension built first still reads their answer.
+ */
+const latestFailureOrAbsent = (
+  value: unknown,
+): value is Infer<typeof latestFailure> | null | undefined =>
+  value === undefined || nullable(latestFailure)(value);
+
+export const pullReviewRatings = object({
+  status: literal("not_evaluated", "no_reviews", "rated", "unavailable"),
+  reason: nullable(ratingUnavailable),
+  model: nullable(string),
+  comparison: nullable(literal("compared", "not_reviewed")),
+  uncompared_findings: number,
+  evaluated_at: nullable(string),
+  reviews: array(
+    object({
+      review_id: number,
+      author: string,
+      rating: reviewRating,
+      reasons: array(object({ text: string, reference: nullable(lineReference) })),
+      missed_issues: array(
+        object({
+          name: string,
+          description: nullable(string),
+          severity: nullable(severity),
+          file_path: nullable(string),
+          reference: nullable(lineReference),
+        }),
+      ),
+    }),
+  ),
+  latest_failure: latestFailureOrAbsent,
+});
+
+/**
+ * SHIPPED (US-12.2): `GET /api/repos/{owner}/{repo}/issues/{n}/story-review` is the user story's
+ * latest completed check, in the shape the Story card has always read. Its sibling
+ * `.../story-review/status` says whether the latest check is `not_run`, `running`, `completed` or
+ * `failed` (with `reason`), which is how the card shows those states; `POST .../story-review`
+ * runs a check, or answers the running one instead of starting a second, and returns that state.
+ * A non-story issue is a 404 `story_review_not_found`.
+ * `format` (US-12.3) says which rules the story was checked against: the course's requirements
+ * when the course set them, NikolAI's default format otherwise. The server decides it.
+ * `requirements_truncated` says the check only saw the first part of the course requirements.
+ */
+export const storyReview = object({
+  viewer,
+  score: number,
+  max_score: number,
+  format: literal("course", "default"),
+  requirements_truncated: boolean,
+  checks: array(object({ text: string, passed: boolean })),
+  current_text: nullable(string),
+  suggested_text: nullable(string),
+  split: nullable(string),
+  requirement: nullable(string),
+  linked_pulls: array(number),
+  signed_off: nullable(boolean),
+  checked_at: string,
+});
+
+export const storyReviewState = object({
+  viewer,
+  status: literal("not_run", "running", "completed", "failed"),
+  reason: nullable(
+    literal(
+      "not_configured",
+      "model_unavailable",
+      "invalid_reply",
+      "github_unavailable",
+      "internal_error",
+    ),
+  ),
+  checked_at: nullable(string),
+});
+
+export const planning = object({
+  viewer,
+  iteration: object({ name: string, starts_on: string, ends_on: string }),
+  members: array(
+    object({ login: string, planned_hours: number, capacity_hours: number, items: array(string) }),
+  ),
+  backlog: array(
+    object({
+      issue_number: number,
+      title: string,
+      effort: string,
+      priority: literal("high", "medium", "low"),
+      reason: string,
+    }),
+  ),
+  burndown: object({
+    total: number,
+    days: number,
+    points: array(object({ day: number, remaining: number })),
+  }),
+});
+
+export const ciAssistant = object({
+  viewer,
+  detected: array(string),
+  pipelines: array(object({ name: string, exists: boolean })),
+  suggestions: array(object({ title: string, detail: string })),
+  saving_minutes: nullable(number),
+  coverage: array(object({ file_path: string, percent: number })),
+  failed_run: nullable(
+    object({ workflow: string, run_number: number, url: string, draft_title: string }),
+  ),
+});
+
+export type Viewer = Infer<typeof viewer>;
+export type TeamOverview = Infer<typeof teamOverview>;
+export type TeamStaff = Infer<typeof teamStaff>;
+export type PullInsights = Infer<typeof pullInsights>;
+export type PullRefactorings = Infer<typeof pullRefactorings>;
+export type PullReviewRatings = Infer<typeof pullReviewRatings>;
+export type BacklogCoverage = Infer<typeof backlogCoverage>;
+export type StoryReview = Infer<typeof storyReview>;
+export type StoryReviewState = Infer<typeof storyReviewState>;
+export type Planning = Infer<typeof planning>;
+export type CiAssistant = Infer<typeof ciAssistant>;
+/**
+ * SHIPPED (US-10.4): `POST /api/findings/{id}/actions` with `{action, reason}` answers 204 and
+ * stores the answer. A dispute needs a reason of at most 1000 characters; an acknowledgement
+ * carries none. `PullInsights.checklist[].status` then reports the team's latest answer, so the
+ * item stays answered after a reload. Errors carry a `detail.code`: 403 `origin_not_allowed` or
+ * `not_a_team_student`, 404 `finding_not_found`, 409 `finding_superseded`.
+ */
+export type FindingAction = FindingActionRequest["action"];

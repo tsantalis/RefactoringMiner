@@ -1708,7 +1708,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						else {
 							concat = concat + longestCommonSuffix;
 						}
-						if(anonymousClass1.getName().equals(anonymousClass2.getName()) || concat.equals(anonymousClass2.getName()) || concat.equals(anonymousClass1.getName())) {
+						if(anonymousClass1.getName().equals(anonymousClass2.getName()) ||
+								((concat.equals(anonymousClass2.getName()) || concat.equals(anonymousClass1.getName())) &&
+								!containsAnonymousWithName(anonymousClassList2, anonymousClass1.getName()) && !containsAnonymousWithName(anonymousClassList1, anonymousClass2.getName()))) {
 							UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 							anonymousClassDiff.process();
 							List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
@@ -1745,7 +1747,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						else {
 							concat = concat + longestCommonSuffix;
 						}
-						if(anonymousClass1.getName().equals(anonymousClass2.getName()) || concat.equals(anonymousClass2.getName()) || concat.equals(anonymousClass1.getName())) {
+						if(anonymousClass1.getName().equals(anonymousClass2.getName()) ||
+								((concat.equals(anonymousClass2.getName()) || concat.equals(anonymousClass1.getName())) &&
+								!containsAnonymousWithName(anonymousClassList2, anonymousClass1.getName()) && !containsAnonymousWithName(anonymousClassList1, anonymousClass2.getName()))) {
 							UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 							anonymousClassDiff.process();
 							List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
@@ -1769,6 +1773,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean containsAnonymousClassDeclarationObjectForAnonymous(List<AnonymousClassDeclarationObject> list, UMLAnonymousClass anonymousClass) {
 		for(AnonymousClassDeclarationObject object : list) {
 			if(object.getLocationInfo().equals(anonymousClass.getLocationInfo()))
+				return true;
+		}
+		return false;
+	}
+
+	//an anonymous class with a same-named counterpart is matched with it, never with a similarly named one,
+	//i.e., api.teamSchema.object must not match api.teamDetailSchema.object, since api.team + Schema.object reproduces the first name
+	private static boolean containsAnonymousWithName(List<UMLAnonymousClass> list, String name) {
+		for(UMLAnonymousClass anonymousClass : list) {
+			if(anonymousClass.getName().equals(name))
 				return true;
 		}
 		return false;

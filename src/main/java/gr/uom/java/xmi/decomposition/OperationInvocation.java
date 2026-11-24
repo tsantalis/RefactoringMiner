@@ -74,7 +74,11 @@ import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstSuper;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstImportPhase;
+import com.caoccao.javet.swc4j.ast.enums.Swc4jAstUnaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstAssignExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstAwaitExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstBinExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCondExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
@@ -82,14 +86,20 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstOptChainExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSeqExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSuperPropExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTaggedTpl;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstThisExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsInstantiation;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsNonNullExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsTypeAssertion;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstUnaryExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstYieldExpr;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNull;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
@@ -1412,7 +1422,8 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation(String sourceFolder, String filePath, Swc4jAstCallExpr invocation, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
 		ISwc4jAstCallee callee = invocation.getCallee();
-		while(true) {
+		boolean unwrapped = true;
+		while(unwrapped) {
 			if(callee instanceof Swc4jAstCallExpr callExpr) {
 				callee = callExpr.getCallee();
 			}
@@ -1432,7 +1443,24 @@ public class OperationInvocation extends AbstractCall {
 				callee = taggedTpl.getTag();
 			}
 			else if(callee instanceof Swc4jAstCondExpr condExpr) {
-				callee = condExpr.getCons();
+				if(isNullish(condExpr.getCons())) {
+					callee = condExpr.getAlt();
+				}
+				else {
+					callee = condExpr.getCons();
+				}
+			}
+			else if(callee instanceof Swc4jAstBinExpr binExpr) {
+				callee = binExpr.getLeft();
+			}
+			else if(callee instanceof Swc4jAstAwaitExpr awaitExpr) {
+				callee = awaitExpr.getArg();
+			}
+			else if(callee instanceof Swc4jAstAssignExpr assignExpr) {
+				callee = assignExpr.getRight();
+			}
+			else if(callee instanceof Swc4jAstTsInstantiation tsInstantiation) {
+				callee = tsInstantiation.getExpr();
 			}
 			else if(callee instanceof Swc4jAstOptChainExpr optChain) {
 				ISwc4jAstOptChainBase base = optChain.getBase();
@@ -1443,14 +1471,14 @@ public class OperationInvocation extends AbstractCall {
 					callee = optCall.getCallee();
 				}
 				else {
-					break;
+					unwrapped = false;
 				}
 			}
 			else if(callee instanceof Swc4jAstSeqExpr seqExpr && !seqExpr.getExprs().isEmpty()) {
 				callee = seqExpr.getExprs().get(seqExpr.getExprs().size() - 1);
 			}
 			else {
-				break;
+				unwrapped = false;
 			}
 		}
 		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
@@ -1492,6 +1520,12 @@ public class OperationInvocation extends AbstractCall {
 			//f()() is used to call a function that returns another function
 			this.methodName = "";
 		}
+		else if(callee instanceof Swc4jAstThisExpr) {
+			this.methodName = "this";
+		}
+		else if(callee instanceof Swc4jAstYieldExpr || callee instanceof Swc4jAstNewExpr) {
+			this.methodName = "";
+		}
 		this.arguments = new ArrayList<String>();
 		this.numberOfArguments = invocation.getArgs().size();
 		for(Swc4jAstExprOrSpread arg : invocation.getArgs()) {
@@ -1510,6 +1544,19 @@ public class OperationInvocation extends AbstractCall {
 				addTypeArgument(type);
 			}
 		}
+	}
+
+	private static boolean isNullish(ISwc4jAstExpr expr) {
+		if(expr instanceof Swc4jAstUnaryExpr unary && unary.getOp() == Swc4jAstUnaryOp.Void) {
+			return true;
+		}
+		if(expr instanceof Swc4jAstIdent ident && ident.getSym().equals("undefined")) {
+			return true;
+		}
+		if(expr instanceof Swc4jAstNull) {
+			return true;
+		}
+		return false;
 	}
 
 	public OperationInvocation(String sourceFolder, String filePath, IASTFunctionCallExpression invocation, VariableDeclarationContainer container, String fileContent) {

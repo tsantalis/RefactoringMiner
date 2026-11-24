@@ -69,6 +69,7 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsTypeElement;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstCatchClause;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstSwitchCase;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportAll;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultDecl;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultExpr;
@@ -897,6 +898,16 @@ public class TypeScriptOperationBody extends OperationBody {
 				LeafExpression source = new LeafExpression(sourceFolder, filePath, str, CodeElementType.STRING_LITERAL, container, fileContent);
 				export.setSource(source);
 			}
+			if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNamedExport(export);
+			}
+		}
+		//export * from "./checks", a re-export of all names of the source module, i.e., a named export without specifiers
+		else if(statement instanceof Swc4jAstExportAll exportAll) {
+			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, exportAll, CodeElementType.NAMED_EXPORT, fileContent);
+			UMLNamedExport export = new UMLNamedExport(locationInfo, new ArrayList<>());
+			LeafExpression source = new LeafExpression(sourceFolder, filePath, exportAll.getSrc(), CodeElementType.STRING_LITERAL, container, fileContent);
+			export.setSource(source);
 			if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNamedExport(export);
 			}

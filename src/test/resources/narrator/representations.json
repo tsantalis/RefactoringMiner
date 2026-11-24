@@ -1779,7 +1779,7 @@
     "description": "an enrich request from a node before 8.14 reads a null input data type, which the term query switch handles",
     "notes": [
       "The null flows from readFrom through the TransportRequest constructor into termQueryList; nothing links the three diffs, as unchanged code carries the value.",
-      "The calls kept as they are in the restructured initializer (onOrAfter, getTransportVersion, V_8_14_0 in the condition, readString in the then branch) bring dependencies that say nothing about the change."
+      "The calls of the version check kept as they are in the condition of the restructured initializer (onOrAfter, getTransportVersion, V_8_14_0) bring dependencies that say nothing about the change; readString, kept in the then branch, no longer does since the fix of Issue #1216."
     ],
     "expectations": [
       {
@@ -1799,28 +1799,27 @@
         "kind": "absent",
         "of": "dependency",
         "text": "public static final TransportVersion V_8_14_0",
-        "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+        "todo": "RM maps the declarations of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132) since the fix of Issue #1216, with the conditional expressions and the version check in their condition, but the conditional expression moves from the argument of fromTypeName to the initializer, and the unchanged version check inside it still brings its declarations"
       },
       {
         "description": "the unchanged version check kept in the restructured initializer brings no dependency on onOrAfter",
         "kind": "absent",
         "of": "dependency",
         "text": "default boolean onOrAfter(T version) {",
-        "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+        "todo": "RM maps the declarations of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132) since the fix of Issue #1216, with the conditional expressions and the version check in their condition, but the conditional expression moves from the argument of fromTypeName to the initializer, and the unchanged version check inside it still brings its declarations"
       },
       {
         "description": "the unchanged version check kept in the restructured initializer brings no dependency on getTransportVersion",
         "kind": "absent",
         "of": "dependency",
         "text": "public TransportVersion getTransportVersion() {",
-        "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+        "todo": "RM maps the declarations of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132) since the fix of Issue #1216, with the conditional expressions and the version check in their condition, but the conditional expression moves from the argument of fromTypeName to the initializer, and the unchanged version check inside it still brings its declarations"
       },
       {
         "description": "the readString call kept in the then branch of the restructured initializer brings no dependency",
         "kind": "absent",
         "of": "dependency",
-        "text": "public String readString() throws IOException {",
-        "todo": "RM (to report): RM maps neither the old nor the new declaration of inputDataType in TransportRequest#readFrom of EnrichLookupService.java (L130-132 -> L130-132; both are non-mapped leaves of the readFrom mapper, and the AST diff maps neither the statements nor their conditional expressions), though they declare the same variable in place. So the unchanged version check and the readString call, which stay in the restructured initializer and run as before, are not seen as carried over in their statement and bring their declarations"
+        "text": "public String readString() throws IOException {"
       },
       {
         "description": "the constructor calling the changed one through super(...) reads from its super( line",

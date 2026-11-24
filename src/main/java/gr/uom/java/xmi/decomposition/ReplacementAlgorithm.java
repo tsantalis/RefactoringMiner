@@ -2183,6 +2183,66 @@ public class ReplacementAlgorithm {
 			}
 		}
 
+		//whether the call with the ternary as its only argument, i.e., f(c ? a : b), has become one branch of the other ternary, i.e., c ? f(a) : b2,
+		//with the same condition and the other branch kept or replaced, where reversed means that the call is in the second statement
+		private boolean callMovedIntoTernaryBranch(AbstractCall wrappingCall, TernaryOperatorExpression wrappedTernary, TernaryOperatorExpression coveringTernary, boolean reversed) {
+			if(wrappingCall == null || wrappingCall.arguments().size() != 1) {
+				return false;
+			}
+			String argument = wrappingCall.arguments().get(0);
+			String wrapped = wrappedTernary.getString();
+			if(!argument.equals(wrapped) && !argument.equals("(" + wrapped + ")")) {
+				return false;
+			}
+			if(!wrappedTernary.getCondition().getString().equals(coveringTernary.getCondition().getString())) {
+				return false;
+			}
+			return (branchIsWrappingCall(coveringTernary.getThenExpression(), wrappingCall, wrappedTernary.getThenExpression()) &&
+					keptOrReplaced(wrappedTernary.getElseExpression(), coveringTernary.getElseExpression(), reversed)) ||
+					(branchIsWrappingCall(coveringTernary.getElseExpression(), wrappingCall, wrappedTernary.getElseExpression()) &&
+					keptOrReplaced(wrappedTernary.getThenExpression(), coveringTernary.getThenExpression(), reversed));
+		}
+
+		//whether the branch is the wrapping call with the corresponding branch of the wrapped ternary as its argument, i.e., f(a)
+		private boolean branchIsWrappingCall(AbstractCodeFragment branch, AbstractCall wrappingCall, AbstractCodeFragment wrappedBranch) {
+			for(AbstractCall call : branch.getMethodInvocations()) {
+				if(call.actualString().equals(branch.getString()) && call.identicalName(wrappingCall) && call.identicalExpression(wrappingCall) &&
+						call.arguments().size() == 1 && call.arguments().get(0).equals(wrappedBranch.getString())) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		//whether the other branch is the same, or replaced by an earlier replacement, or a literal replaced by another literal, i.e., "unknown" -> null
+		private boolean keptOrReplaced(AbstractCodeFragment wrappedBranch, AbstractCodeFragment coveringBranch, boolean reversed) {
+			String before = reversed ? coveringBranch.getString() : wrappedBranch.getString();
+			String after = reversed ? wrappedBranch.getString() : coveringBranch.getString();
+			if(before.equals(after) || (isLiteral(wrappedBranch) && isLiteral(coveringBranch))) {
+				return true;
+			}
+			for(Replacement r : replacementInfo.getReplacements()) {
+				if(r.getBefore().equals(before) && r.getAfter().equals(after)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		//whether the expression is a single literal, i.e., "unknown", 0, null or true
+		private static boolean isLiteral(AbstractCodeFragment expression) {
+			if(expression instanceof AbstractExpression e) {
+				List<LeafExpression> literals = new ArrayList<>();
+				literals.addAll(e.getStringLiterals());
+				literals.addAll(e.getCharLiterals());
+				literals.addAll(e.getNumberLiterals());
+				literals.addAll(e.getNullLiterals());
+				literals.addAll(e.getBooleanLiterals());
+				return literals.size() == 1 && literals.get(0).getString().equals(e.getString());
+			}
+			return false;
+		}
+
 		private Set<Replacement> findTernaryAndComprehensionReplacements() throws RefactoringMinerTimedOutException {
 			if(statement1.getTernaryOperatorExpressions().isEmpty() && !statement2.getTernaryOperatorExpressions().isEmpty()) {
 				if(!statement1.getNullLiterals().isEmpty()) {
@@ -2303,6 +2363,19 @@ public class ReplacementAlgorithm {
 				else if (exactMatches == 2 && !ternary1.getCondition().getString().equals(ternary2.getCondition().getString())) {
 					Replacement r = new Replacement(ternary1.getCondition().getString(), ternary2.getCondition().getString(), ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
 					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+			}
+			//a call around a ternary moved into one of its branches, i.e., f(c ? a : b) -> c ? f(a) : b2, or the opposite
+			if(statement1.getTernaryOperatorExpressions().size() == 1 && statement2.getTernaryOperatorExpressions().size() == 1 &&
+					statement1.getAnonymousClassDeclarations().isEmpty() && statement2.getAnonymousClassDeclarations().isEmpty()) {
+				TernaryOperatorExpression ternary1 = statement1.getTernaryOperatorExpressions().get(0);
+				TernaryOperatorExpression ternary2 = statement2.getTernaryOperatorExpressions().get(0);
+				if((statement2.ternaryOperatorCoveringEntireFragment() != null && callMovedIntoTernaryBranch(invocationCoveringTheEntireStatement1, ternary1, ternary2, false)) ||
+						(statement1.ternaryOperatorCoveringEntireFragment() != null && callMovedIntoTernaryBranch(invocationCoveringTheEntireStatement2, ternary2, ternary1, true))) {
+					String before = statement2.ternaryOperatorCoveringEntireFragment() != null ? invocationCoveringTheEntireStatement1.actualString() : ternary1.getString();
+					String after = statement2.ternaryOperatorCoveringEntireFragment() != null ? ternary2.getString() : invocationCoveringTheEntireStatement2.actualString();
+					replacementInfo.addReplacement(new Replacement(before, after, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CONDITIONAL_EXPRESSION));
 					return replacementInfo.getReplacements();
 				}
 			}

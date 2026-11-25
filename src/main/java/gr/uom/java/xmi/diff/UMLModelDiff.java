@@ -225,17 +225,7 @@ public class UMLModelDiff {
 	}
 
 	public UMLAbstractClass findClassInParentModel(String className) {
-		for(UMLClass umlClass : parentModel.getClassList()) {
-			if(umlClass.getName().equals(className) || umlClass.getName().equals(className + ".__module__")) {
-				return umlClass;
-			}
-		}
-		for(UMLClass umlClass : parentModel.getClassList()) {
-			if(umlClass.getName().endsWith("." + className)) {
-				return umlClass;
-			}
-		}
-		return null;
+		return findClassInModel(parentModel, className);
 	}
 
 	public UMLAbstractClass findClassInChildModel(String sourceFolder, String className) {
@@ -253,14 +243,32 @@ public class UMLModelDiff {
 	}
 
 	public UMLAbstractClass findClassInChildModel(String className) {
-		for(UMLClass umlClass : childModel.getClassList()) {
+		return findClassInModel(childModel, className);
+	}
+
+	private static UMLAbstractClass findClassInModel(UMLModel model, String className) {
+		for(UMLClass umlClass : model.getClassList()) {
 			if(umlClass.getName().equals(className) || umlClass.getName().equals(className + ".__module__")) {
 				return umlClass;
 			}
 		}
-		for(UMLClass umlClass : childModel.getClassList()) {
+		for(UMLClass umlClass : model.getClassList()) {
 			if(umlClass.getName().endsWith("." + className)) {
 				return umlClass;
+			}
+		}
+		for(UMLClass umlClass : model.getClassList()) {
+			for(UMLOperation operation : umlClass.getOperations()) {
+				for(UMLClass nestedClass : operation.getNestedClasses()) {
+					if(nestedClass.getName().equals(className) || nestedClass.getName().endsWith("." + className)) {
+						return nestedClass;
+					}
+				}
+			}
+			for(UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
+				if(anonymousClass.getName().equals(className) || anonymousClass.getName().endsWith("." + className)) {
+					return anonymousClass;
+				}
 			}
 		}
 		return null;

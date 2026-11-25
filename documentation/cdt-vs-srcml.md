@@ -271,23 +271,26 @@ int g(int x) {
 
 ### S6. Modern C++ (C++20/23)
 
-| Construct | CDT (raw; RM where noted) | srcML |
-|---|---|---|
-| `import std;` | ❌ variable declaration | ❌ declaration |
-| `concept C = requires(T a) {...};` | ❌ problem (✅ in RM since 2026-11-25; see below) | ⚠️ declaration of type `concept`, `requires(...)` as `<macro>` |
-| `template <Hashable T>` | ✅ parsed (as a typed non-type parameter) | ✅ |
-| `auto operator<=>(const P&) const = default;` | ❌ problem (✅ in RM since 2026-11-25; see below) | ✅ |
-| `co_await sleep(1);` | ❌ declaration | ❌ declaration of type `co_await` |
-| `co_return 42;` | ❌ split + problem | ⚠️ expression starting with name `co_return` |
-| `auto [k, v] = *m.begin();` | ✅ structured binding | ❌ expression with an index `[k, v]` |
-| `if constexpr (...)` | ✅ | ✅ |
-| `[](auto... xs) { return (xs + ...); }` | ✅ | ❌ lambda parameters lost, body as argument list |
-| `[]<typename U>(U u) { return u; }` | ❌ problem | ❌ flat tokens + empty statement |
-| `P p{.x = 1, .y = 2};` | ❌ problem (✅ in RM since 2026-11-25; see below) | ✅ |
-| `m \| std::views::keys \| std::views::take(3)` | ✅ | ✅ |
-| `using enum Color;` | ❌ problem | ✅ |
+| Construct | srcML | Raw CDT | RM pipeline |
+|---|---|---|---|
+| `import std;` | ❌ declaration | ❌ variable declaration | ❌ attribute `std` of type `import` |
+| `concept C = requires(T a) {...};` | ⚠️ declaration of type `concept`, `requires(...)` as `<macro>` | ❌ problem | ✅ attribute of type `concept`, `concept_definition` with a `requires_expression` (only simple requirements; see below) |
+| `template <Hashable T>` | ✅ | ✅ parsed (as a typed non-type parameter) | ✅ |
+| `auto operator<=>(const P&) const = default;` | ✅ | ❌ problem | ✅ operation `operator <=>` |
+| `co_await sleep(1);` | ❌ declaration of type `co_await` | ❌ declaration | ❌ declaration of type `co_await` |
+| `co_return 42;` | ⚠️ expression starting with name `co_return` | ❌ split + problem | ❌ split into the statements `co_return` and `42;` |
+| `auto [k, v] = *m.begin();` | ❌ expression with an index `[k, v]` | ✅ structured binding | ✅ `structured_binding_declarator` |
+| `if constexpr (...)` | ✅ | ✅ | ✅ |
+| `[](auto... xs) { return (xs + ...); }` | ❌ lambda parameters lost, body as argument list | ✅ | ⚠️ parsed, but the fold is a generic `FoldExpression` node |
+| `[]<typename U>(U u) { return u; }` | ❌ flat tokens + empty statement | ❌ problem | ❌ `ERROR` node (the model keeps the statement text) |
+| `P p{.x = 1, .y = 2};` | ✅ | ❌ problem | ✅ one declaration with an `initializer_list` |
+| `m \| std::views::keys \| std::views::take(3)` | ✅ | ✅ | ✅ |
+| `using enum Color;` | ✅ | ❌ problem | ❌ `ERROR` node (the model keeps the statement text) |
+| **Correct** | **6/13** | **5/13** | **7/13** |
 
-**Verdict: srcML slightly ahead, both incomplete.** CDT fails loudly (problem nodes, which RefactoringMiner's tree generator then re-parses as fragments: 4 error nodes remain in this file's tree). srcML fails silently with wrong shapes.
+The RM pipeline column is from the full pipeline (model, refactoring detection and AST diff) on 2026-11-25, with a before/after pair per construct in which the enclosing function is renamed and a value changes. The rename was detected in all of them, so the column describes the model and the AST diff tree. The concept, `operator<=>` and `P p{...}` rows were fixed that day; the next subsection describes how.
+
+**Verdict: RM pipeline now slightly ahead, all three incomplete.** Raw CDT fails loudly (problem nodes), and part of its C++20 support is switched off unless feature-test macros are defined, which RefactoringMiner now does. srcML fails silently with wrong shapes. RefactoringMiner's remaining gaps are modules, coroutines, template lambdas and `using enum`.
 
 #### C++20 support in RefactoringMiner's full pipeline (issue #1131)
 
@@ -324,7 +327,9 @@ The parsing cost is negligible: parsing all 765 C++ corpus files took 6.52 s per
 
 - type, compound and nested requirements in a requires-expression, i.e., `typename T::type;`, `{ t.f() } -> std::same_as<int>;` and `requires sizeof(T) > 1;`. CDT parses the requirements as statements, so these remain `ERROR` nodes inside the `requirement_seq`, while the rest of the concept is parsed.
 - abbreviated function templates with a constrained `auto`, `int k(C auto t)`
-- coroutine keywords (`co_await`, and `co_return` per the table above), which this CDT has no tokens for
+- coroutine keywords (`co_await`, and `co_return`, which is split into two statements), which this CDT has no tokens for
+- modules (`import std;`), template lambdas (`[]<typename U>(U u) {...}`) and `using enum`, per the table above
+- fold expressions, which parse but are generic `FoldExpression` nodes in the AST diff tree
 - the initializer text of a member default keeps its `=`, so the attribute prints as `p = = {.x = 1, .y = 2}`
 - `requires` and `concept` used as plain identifiers in pre-C++20 code are now problem nodes, which is what C++20 itself does; the corpus has none
 

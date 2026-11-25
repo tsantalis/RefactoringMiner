@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.diff.CodeRange;
 
 public class UMLPreprocessorStatement implements LocationInfoProvider {
-	
+
 	enum Directive {
 		DEFINE("#define"),
 		UNDEF("#undef"),
@@ -21,7 +20,7 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 		ELSE("#else"),
 		ENDIF("#endif"),
 		PRAGMA("#pragma"),
-		ERROR("#error"); 
+		ERROR("#error");
 
 		private String name;
 
@@ -39,7 +38,7 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 	private Optional<String> blockText = Optional.empty();
 	//the name of the function whose body contains the directive, which tells apart the equal directives at file scope from those in function bodies
 	private Optional<String> enclosingFunction = Optional.empty();
-	
+
 	public UMLPreprocessorStatement(LocationInfo location, Directive type) {
 		this.location = location;
 		this.type = type;

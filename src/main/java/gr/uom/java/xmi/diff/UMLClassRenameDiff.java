@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAttribute;

@@ -18,7 +18,7 @@ import java.util.Collections;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
-public class VanillaDiffView extends AbstractDiffView implements Renderable {
+public class VanillaDiffView extends AbstractDiffView {
     private final VanillaDiffHtmlBuilder rawHtmlDiff;
     private final boolean dump;
 

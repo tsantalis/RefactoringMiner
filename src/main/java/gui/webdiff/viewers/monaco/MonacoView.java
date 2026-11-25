@@ -7,7 +7,6 @@ import gui.webdiff.viewers.AbstractDiffView;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.models.ASTDiff;
-import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -23,14 +22,14 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     boolean decorate = true;
     boolean _buttons = true;
     public MonacoView(String toolName, DirComparator comparator, String routePath, int id) {
-        super(toolName, 
-            comparator.getProjectASTDiff().getMetaInfo(), 
-            comparator.getASTDiff(id).getSrcPath(), 
-            comparator.getASTDiff(id).getDstPath(), 
-            comparator.getASTDiff(id), 
-            id, 
-            comparator.getNumOfDiffs(), 
-            routePath, 
+        super(toolName,
+            comparator.getProjectASTDiff().getMetaInfo(),
+            comparator.getASTDiff(id).getSrcPath(),
+            comparator.getASTDiff(id).getDstPath(),
+            comparator.getASTDiff(id),
+            id,
+            comparator.getNumOfDiffs(),
+            routePath,
             comparator.isMoveDiff(id),
             comparator.getRemovedFilesName().stream().collect(Collectors.toList()),
             comparator.getAddedFilesName().stream().collect(Collectors.toList())
@@ -44,14 +43,14 @@ public class MonacoView extends AbstractDiffView implements Renderable {
     }
 
     public MonacoView(String toolName, DirComparator comparator, String routePath, int id, ASTDiff diff) {
-        super(toolName, 
-        		comparator.getProjectASTDiff().getMetaInfo(), 
-                diff.getSrcPath(), 
-                diff.getDstPath(), 
-                diff, 
-                id, 
-                comparator.getNumOfDiffs(), 
-                routePath, 
+        super(toolName,
+        		comparator.getProjectASTDiff().getMetaInfo(),
+                diff.getSrcPath(),
+                diff.getDstPath(),
+                diff,
+                id,
+                comparator.getNumOfDiffs(),
+                routePath,
                 false,
                 comparator.getRemovedFilesName().stream().collect(Collectors.toList()),
                 comparator.getAddedFilesName().stream().collect(Collectors.toList())

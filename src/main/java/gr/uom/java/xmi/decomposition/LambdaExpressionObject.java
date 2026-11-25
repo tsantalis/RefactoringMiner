@@ -12,7 +12,6 @@ import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
-import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.jdt.core.dom.Block;
@@ -57,7 +56,6 @@ import gr.uom.java.xmi.CppFileProcessor;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
-import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -67,7 +65,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class LambdaExpressionObject implements VariableDeclarationContainer, LocationInfoProvider {
+public class LambdaExpressionObject implements VariableDeclarationContainer {
 	private LocationInfo locationInfo;
 	private OperationBody body;
 	private AbstractExpression expression;
@@ -81,7 +79,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private List<UMLOperation> nestedOperations = new ArrayList<UMLOperation>();
 	private List<UMLClass> nestedClasses = List.of();
 	private final Constants LANG;
-	
+
 	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.owner = owner;
 		this.asString = LangVisitor.stringify(lambda);

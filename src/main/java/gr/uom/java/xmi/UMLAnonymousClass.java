@@ -5,10 +5,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UMLAnonymousClass>, Serializable, LocationInfoProvider {
+public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UMLAnonymousClass>, Serializable {
 	private String codePath;
 	private Set<VariableDeclarationContainer> parentContainers;
-	
+
 	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes, false);
         this.codePath = codePath;
@@ -45,7 +45,7 @@ public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UM
     	if(this == o) {
     		return true;
     	}
-    	
+
     	if(o instanceof UMLAnonymousClass) {
     		UMLAnonymousClass umlClass = (UMLAnonymousClass)o;
     		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && this.getSourceFile().equals(umlClass.getSourceFile());

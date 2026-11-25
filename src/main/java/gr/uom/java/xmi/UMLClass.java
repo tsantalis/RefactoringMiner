@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import org.refactoringminer.util.PathFileUtils;
 
-public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider, TypeParameterProvider {
+public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, TypeParameterProvider {
 	public enum ConditionallyCreated {
 		IF, ELSE, NO;
 	}
@@ -53,14 +53,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private List<UMLForwardDeclaration> forwardDeclarations;
     private List<UMLProblemDeclaration> problemDeclarations;
     private List<UMLStaticAssertionDeclaration> staticAssertionDeclarations;
-    
+
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes, topLevel);
         if(packageName.equals(""))
         	this.qualifiedName = name;
     	else
     		this.qualifiedName = packageName + "." + name;
-        
+
         this.sourceFile = getSourceFile();
         this.isAbstract = false;
         this.isInterface = false;
@@ -484,7 +484,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	if(this == o) {
     		return true;
     	}
-    	
+
     	if(o instanceof UMLClass) {
     		UMLClass umlClass = (UMLClass)o;
     		boolean fileMatch = this.sourceFile.equals(umlClass.sourceFile);
@@ -534,7 +534,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
 	}
-	
+
 	public double normalizedSourceFolderDistance(UMLClass c) {
 		String s1 = getSourceFolder().toLowerCase();
 		String s2 = c.getSourceFolder().toLowerCase();

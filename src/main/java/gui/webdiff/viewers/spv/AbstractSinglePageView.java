@@ -23,7 +23,7 @@ import java.util.Map;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-22*/
-public abstract class AbstractSinglePageView extends DirectoryDiffView implements Renderable {
+public abstract class AbstractSinglePageView extends DirectoryDiffView {
     protected final String JQ_UI_CSS = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
     protected final String JQ_UI_JS = "https://code.jquery.com/ui/1.12.1/jquery-ui.js";
     private final boolean enableViewedFiles;

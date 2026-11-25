@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.ExportsDirective;
 import org.eclipse.jdt.core.dom.ModulePackageAccess;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.OpensDirective;
-import org.eclipse.jdt.core.dom.ProvidesDirective;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 
@@ -18,7 +17,7 @@ public class UMLPackageAccessModuleDirective extends UMLAbstractModuleDirective 
 	private List<LeafExpression> modules;
 	private boolean exports;
 	private boolean opens;
-	
+
 	public UMLPackageAccessModuleDirective(CompilationUnit cu, String sourceFolder, String filePath, ModulePackageAccess directive) {
 		super(new LeafExpression(cu, sourceFolder, filePath, directive.getName(), CodeElementType.DIRECTIVE_NAME, null));
 		this.modules = new ArrayList<>();
@@ -32,7 +31,7 @@ public class UMLPackageAccessModuleDirective extends UMLAbstractModuleDirective 
 			codeElementType = CodeElementType.OPENS_DIRECTIVE;
 		}
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, directive, codeElementType);
-		
+
 		List<Name> implementations = directive.modules();
 		for(Name impl : implementations) {
 			LeafExpression expr = new LeafExpression(cu, sourceFolder, filePath, impl, CodeElementType.IMPLEMENTATION_NAME, null);

@@ -4,7 +4,6 @@ import com.github.gumtreediff.tree.Tree;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.diff.UMLModelDiff;
-import java.util.*;
 import javax.annotation.Nullable;
 import org.refactoringminer.util.PathFileUtils;
 

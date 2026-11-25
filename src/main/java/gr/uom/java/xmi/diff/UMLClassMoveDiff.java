@@ -3,7 +3,6 @@ package gr.uom.java.xmi.diff;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
@@ -90,7 +89,7 @@ public class UMLClassMoveDiff extends UMLClassBaseDiff {
 		if(this == o) {
     		return true;
     	}
-		
+
 		if(o instanceof UMLClassMoveDiff) {
 			UMLClassMoveDiff classMoveDiff = (UMLClassMoveDiff)o;
 			return this.originalClass.equals(classMoveDiff.originalClass) && this.nextClass.equals(classMoveDiff.nextClass);

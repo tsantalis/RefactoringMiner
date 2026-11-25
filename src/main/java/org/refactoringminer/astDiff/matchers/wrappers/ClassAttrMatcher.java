@@ -10,7 +10,6 @@ import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /* Created by pourya on 2024-05-22*/
 public class ClassAttrMatcher extends OptimizationAwareMatcher {

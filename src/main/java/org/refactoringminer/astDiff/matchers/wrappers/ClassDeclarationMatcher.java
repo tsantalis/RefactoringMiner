@@ -39,7 +39,6 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
-import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -54,7 +53,7 @@ import java.util.Set;
 import static org.refactoringminer.astDiff.utils.Helpers.findPairOfType;
 
 /* Created by pourya on 2024-05-22*/
-public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements TreeMatcher {
+public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
 
     private final UMLClassBaseDiff baseClassDiff;
     private final String IMPLEMENTS_KEYWORD_LABEL = "implements";
@@ -318,7 +317,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
-        
+
         if (classDiff.getPrimaryConstructorParameterListDiff().isPresent()) {
             Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> pairs = classDiff.getPrimaryConstructorParameterListDiff().get().getCommonParameters();
             for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> pair : pairs) {

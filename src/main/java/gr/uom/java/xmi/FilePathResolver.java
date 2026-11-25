@@ -147,7 +147,6 @@ public class FilePathResolver {
 				if (dot >= 0)
 					paths.addAll(resolveTypeScript(currentFilePath, name.substring(0, dot), umlImport.isStatic() ? name.substring(dot + 1) : null, new HashSet<>()));
 				break;
-			case C:
 			case CPP:
 				// recorded imports are using-directives/declarations and namespace aliases, which name namespaces rather than files
 				break;
@@ -203,7 +202,7 @@ public class FilePathResolver {
 			case KOTLIN -> resolveJvm(currentFilePath, importSpec, ".kt", ".java");
 			case PYTHON -> resolvePython(currentFilePath, importSpec, new HashSet<>());
 			case TYPESCRIPT -> resolveTypeScript(currentFilePath, importSpec, null, new HashSet<>());
-			case C, CPP -> resolveCppInclude(currentFilePath, importSpec);
+			case CPP -> resolveCppInclude(currentFilePath, importSpec);
 		};
 	}
 
@@ -738,7 +737,7 @@ public class FilePathResolver {
 			case PYTHON -> resolvePythonName(name, context);
 			case TYPESCRIPT -> resolveTypeScriptName(name, context);
 			// names reach their files through the includes of the file
-			case C, CPP -> new LinkedHashSet<>();
+			case CPP -> new LinkedHashSet<>();
 		};
 	}
 

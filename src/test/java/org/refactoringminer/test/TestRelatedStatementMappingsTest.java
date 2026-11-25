@@ -3,7 +3,6 @@ package org.refactoringminer.test;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
@@ -24,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.refactoringminer.api.ModelDiffRefactoringHandler;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -36,7 +34,6 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.refactoringminer.utils.Assertions.assertHasSameElementsAs;
 import static org.refactoringminer.test.TestJavadocDiff.generateClassDiff;
@@ -60,7 +57,7 @@ public class TestRelatedStatementMappingsTest {
             // public testSameBundleOnlyCachedOnce() : void -> public sameBundleOnlyCachedOnce() : void
             // line range:131-131==line range:138-138
             //"https://github.com/MrSorrow/spring-framework.git,d5ee787e1e6653257720afe31ee3f8819cd4605c",
-            
+
             "https://github.com/antlibs/ant-contrib.git,3975cfdae22ddd462f034d79f51d35e159cdd3d4",
             // Inline variant where if-body ends with return (not detected because condition is inverted!)
             "https://github.com/MrSorrow/spring-framework.git,f47bbb0d9e8023590c0fd965acb009719aea6b67",
@@ -453,7 +450,7 @@ public class TestRelatedStatementMappingsTest {
                 	assumeTrue(sh.isInteriorStylable());
                 	assertEquals(Math.toRadians(2.34), sh.getGradAngle(), 0.00001);
                 }
-            }    
+            }
         """;
         UMLModelASTReader reader = new UMLModelASTReader(Map.of("src/test/java/net/sf/latexdraw/parser/pst/TestParsingShape.java", code), Set.of("src/test/java/net/sf/latexdraw/parser/pst/TestParsingShape.java"), true);
         UMLClass umlClass = reader.getUmlModel().getClassList().get(0);

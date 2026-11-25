@@ -15,15 +15,9 @@ import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
-import gr.uom.java.xmi.diff.CodeRange;
-import gr.uom.java.xmi.diff.MethodLevelRefactoring;
-
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -543,7 +537,7 @@ public class DirectoryDiffView implements Renderable {
                         .div(class_("card card-body"));
                         //ALL refactorings checkbox
                         html
-                        .div(class_("d-flex flex-wrap")) 
+                        .div(class_("d-flex flex-wrap"))
                         .div(class_("form-check"))
                         .input(class_("form-check-input").type("checkbox").id("refactoringType").value("").checked(""))
                         .label(class_("form-check-label").for_("refactoringType")).write("ALL (" + refactorings.size() + ")")

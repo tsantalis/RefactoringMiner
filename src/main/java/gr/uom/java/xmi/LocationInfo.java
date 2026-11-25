@@ -16,7 +16,6 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
 import org.jetbrains.kotlin.com.intellij.openapi.util.TextRange;
-import org.jetbrains.kotlin.com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.kotlin.com.intellij.psi.FileViewProvider;
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.psi.KtElement;
@@ -53,7 +52,7 @@ public class LocationInfo {
 	private String sourceFolder;
 	private String filePath;
 	private int startOffset;
-	private int endOffset; 
+	private int endOffset;
 	private int length;
 	private int startLine;
 	private int startColumn;
@@ -156,7 +155,7 @@ public class LocationInfo {
 		this.startOffset = node.getStartPosition();
 		this.length = node.getLength();
 		this.endOffset = startOffset + length;
-		
+
 		//lines are 1-based
 		this.startLine = cu.getLineNumber(startOffset);
 		this.endLine = cu.getLineNumber(endOffset);
@@ -177,7 +176,7 @@ public class LocationInfo {
 		if(this.endColumn > 0) {
 			this.endColumn += 1;
 		}
-		
+
 		int cuEndOffset = cu.getStartPosition() + cu.getLength();
 		this.compilationUnitLength = cu.getLineNumber(cuEndOffset);
 		if(this.compilationUnitLength == -1) {
@@ -691,7 +690,7 @@ public class LocationInfo {
 			return false;
 		return true;
 	}
-	
+
 	public enum CodeElementType {
 		ANNOTATION_TYPE_DECLARATION,
 		ENUM_DECLARATION,
@@ -813,13 +812,13 @@ public class LocationInfo {
 		SUPER_TYPE_CALL_ENTRY,
 		KEY_EXPRESSION,
 		TUPLE_LITERAL;
-		
+
 		private final String name;
-		
+
 		private CodeElementType() {
 			this.name = null;
 		}
-		
+
 		private CodeElementType(String name) {
 			this.name = name;
 		}
@@ -827,6 +826,6 @@ public class LocationInfo {
 		public String getName() {
 			return name;
 		}
-		
+
 	}
 }

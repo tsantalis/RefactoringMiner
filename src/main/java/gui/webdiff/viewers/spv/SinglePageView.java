@@ -4,14 +4,13 @@ import gui.webdiff.dir.DirComparator;
 import gui.webdiff.viewers.monaco.MonacoCore;
 import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.rendersnake.HtmlCanvas;
-import org.rendersnake.Renderable;
 
 import java.io.IOException;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-22*/
-public class SinglePageView extends AbstractSinglePageView implements Renderable {
+public class SinglePageView extends AbstractSinglePageView {
     public SinglePageView(DirComparator comparator, DiffMetaInfo metaInfo) {
         this(comparator, metaInfo, true, true);
     }

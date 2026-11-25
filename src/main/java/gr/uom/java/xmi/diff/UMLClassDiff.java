@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAttribute;
@@ -13,7 +12,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 
 public class UMLClassDiff extends UMLClassBaseDiff {
-	
+
 	private String className;
 	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);

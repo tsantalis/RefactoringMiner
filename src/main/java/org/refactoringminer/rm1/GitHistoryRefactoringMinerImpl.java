@@ -61,7 +61,6 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.kohsuke.github.*;
-import org.kohsuke.github.GHCompare.Commit;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -88,7 +87,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private final static Logger logger = LoggerFactory.getLogger(GitHistoryRefactoringMinerImpl.class);
 	private Set<RefactoringType> refactoringTypesToConsider = null;
 	private GitHub gitHub;
-	
+
 	public GitHistoryRefactoringMinerImpl() {
 		this.setRefactoringTypesToConsider(RefactoringType.ALL);
 	}
@@ -99,7 +98,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			this.refactoringTypesToConsider.add(type);
 		}
 	}
-	
+
 	private void detect(GitService gitService, Repository repository, final RefactoringHandler handler, Iterator<RevCommit> i) {
 		int commitsCount = 0;
 		int errorCommitsCount = 0;
@@ -108,14 +107,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
 		String projectName = projectFolder.getName();
-		
+
 		long time = System.currentTimeMillis();
 		while (i.hasNext()) {
 			RevCommit currentCommit = i.next();
 			try {
 				List<Refactoring> refactoringsAtRevision = detectRefactorings(gitService, repository, handler, currentCommit);
 				refactoringsCount += refactoringsAtRevision.size();
-				
+
 			} catch (Exception e) {
 				logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().getName()), e);
 				handler.handleException(currentCommit.getId().getName(),e);
@@ -146,12 +145,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-		
+
 		populateFileContentsForCommitRange(repository, commits, fileContentsBefore, repositoryDirectoriesBefore, fileContentsCurrent, repositoryDirectoriesCurrent);
 		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
-		
+
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
 		ProjectASTDiff diff = differ.getProjectASTDiff();
@@ -174,12 +173,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-		
+
 		populateFileContentsForCommitRange(repository, commits, fileContentsBefore, repositoryDirectoriesBefore, fileContentsCurrent, repositoryDirectoriesCurrent);
 		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
 		UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-		
+
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
 		refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
@@ -207,7 +206,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> filePathsCurrent = new LinkedHashSet<String>();
 		Map<String, String> renamedFilesHint = new HashMap<String, String>();
 		gitService.fileTreeDiff(repository, parentCommit, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-		
+
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -220,7 +219,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
 			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 			UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-			
+
 			modelDiff = parentUMLModel.diff(currentUMLModel);
 			refactoringsAtRevision = modelDiff.getRefactorings();
 			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
@@ -324,7 +323,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 		fileContentsBefore.keySet().removeAll(identicalFiles.keySet());
 		fileContentsCurrent.keySet().removeAll(identicalFiles.values());
-		
+
 		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = new ArrayList<MoveSourceFolderRefactoring>();
 		for(String key : identicalFiles.keySet()) {
 			String originalPath = key;
@@ -375,7 +374,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Set<String> filePathsCur = new LinkedHashSet<String>();
 			Map<String, String> renamedFilesHint = new HashMap<String, String>();
 			gitService.fileTreeDiff(repository, commit, filePathsBef, filePathsCur, renamedFilesHint);
-			
+
 			if(commit.getParents().length > 0) {
 				RevCommit parentCommit = commit.getParent(0);
 				try (TreeWalk treeWalk = new TreeWalk(repository)) {
@@ -515,10 +514,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Map<String, String> renamedFilesHint = changedFileInfo.getRenamedFilesHint();
 			File currentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + currentCommitId);
 			File parentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + parentCommitId);
-			if (!currentFolder.exists()) {	
+			if (!currentFolder.exists()) {
 				downloadAndExtractZipFile(projectFolder, cloneURL, currentCommitId);
 			}
-			if (!parentFolder.exists()) {	
+			if (!parentFolder.exists()) {
 				downloadAndExtractZipFile(projectFolder, cloneURL, parentCommitId);
 			}
 			Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
@@ -528,7 +527,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			if (currentFolder.exists() && parentFolder.exists()) {
 				populateFileContents(currentFolder, filesCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
 				populateFileContents(parentFolder, filesBefore, fileContentsBefore, repositoryDirectoriesBefore);
-				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false); 
+				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
 				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 				modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -604,7 +603,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		private String commitAuthorName;
 
 		public ChangedFileInfo() {
-			
+
 		}
 
 		public ChangedFileInfo(String parentCommitId, List<String> filesBefore,
@@ -789,7 +788,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 		return filteredList;
 	}
-	
+
 	@Override
 	public void detectAll(Path repositoryDirectory, String branch, final RefactoringHandler handler) throws Exception {
 		GitService gitService = new GitServiceImpl() {
@@ -1022,7 +1021,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
                 .orElse("");
 		String id = rootDirBefore + " -> " + rootDirCurrent;
 		try {
-			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), false); 
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), false);
 			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 			UMLModel currentUMLModel = createModel(fileContentsAfter, repositoryDirectoriesCurrent);
 			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -1053,7 +1052,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Map<String, String> fileContentsAfter = changes.afterFiles();
 			Set<String> repositoryDirectoriesBefore = populateDirectories(fileContentsBefore);
 			Set<String> repositoryDirectoriesCurrent = populateDirectories(fileContentsAfter);
-			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), false); 
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), false);
 			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 			UMLModel currentUMLModel = createModel(fileContentsAfter, repositoryDirectoriesCurrent);
 			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -1088,7 +1087,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
 					populateFileContents(nextFile, getJavaFilePaths(nextFile), fileContentsCurrent, repositoryDirectoriesCurrent);
 					populateFileContents(previousFile, getJavaFilePaths(previousFile), fileContentsBefore, repositoryDirectoriesBefore);
-					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false); 
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
 					UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -1107,7 +1106,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
 						populateFileContents(nextFile.getParentFile(), List.of(nextFileName), fileContentsCurrent, repositoryDirectoriesCurrent);
 						populateFileContents(previousFile.getParentFile(), List.of(previousFileName), fileContentsBefore, repositoryDirectoriesBefore);
-						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false); 
+						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
 						UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 						UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -1240,7 +1239,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				return handler.skipCommit(sha1);
 			}
 		};
-		
+
 		Iterable<RevCommit> walk = gitService.createRevsWalkBetweenTags(repository, startTag, endTag);
 		detect(gitService, repository, handler, walk.iterator());
 	}
@@ -1267,7 +1266,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				return handler.skipCommit(sha1);
 			}
 		};
-		
+
 		Iterable<RevCommit> walk = gitService.createRevsWalkBetweenCommits(repository, startCommitId, endCommitId);
 		detect(gitService, repository, handler, walk.iterator());
 	}
@@ -1529,7 +1528,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
 			Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
 			Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
-			ChangedFileInfo info = populateWithGitHubAPIAndSaveFiles(cloneURL, commitId, 
+			ChangedFileInfo info = populateWithGitHubAPIAndSaveFiles(cloneURL, commitId,
 					fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, rootFolder);
 			Map<String, String> filesBefore = new LinkedHashMap<String, String>();
 			Map<String, String> filesCurrent = new LinkedHashMap<String, String>();
@@ -1566,7 +1565,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
 			Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
 			Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
-			ChangedFileInfo info = populateWithGitHubAPIAndSaveFiles(cloneURL, commitId, 
+			ChangedFileInfo info = populateWithGitHubAPIAndSaveFiles(cloneURL, commitId,
 					fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, rootFolder);
 			Map<String, String> filesBefore = new LinkedHashMap<String, String>();
 			Map<String, String> filesCurrent = new LinkedHashMap<String, String>();
@@ -1631,13 +1630,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				Set<String> filePathsBefore = new LinkedHashSet<String>();
 				Set<String> filePathsCurrent = new LinkedHashSet<String>();
 				new GitServiceImpl().fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-				
+
 				RevCommit parentCommit = currentCommit.getParent(0);
 				populateFileContentsAndSave(repository, parentCommit, filePathsBefore, filesBefore, repositoryDirectoriesBefore, rootFolder);
 				populateFileContentsAndSave(repository, currentCommit, filePathsCurrent, filesCurrent, repositoryDirectoriesCurrent, rootFolder);
-				
+
 				String parentCommitId = parentCommit.getId().getName();
-				ChangedFileInfo changedFileInfo = new ChangedFileInfo(parentCommitId, currentCommitId, 
+				ChangedFileInfo changedFileInfo = new ChangedFileInfo(parentCommitId, currentCommitId,
 						new ArrayList<>(filePathsBefore), new ArrayList<>(filePathsCurrent), repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
 				final ObjectMapper mapper = new ObjectMapper();
 				mapper.writeValue(jsonFile, changedFileInfo);
@@ -1650,9 +1649,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				Set<String> filePathsCurrent = new LinkedHashSet<String>();
 				new GitServiceImpl().fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
 				populateFileContentsAndSave(repository, currentCommit, filePathsCurrent, filesCurrent, repositoryDirectoriesCurrent, rootFolder);
-				
+
 				String parentCommitId = "0";
-				ChangedFileInfo changedFileInfo = new ChangedFileInfo(parentCommitId, currentCommitId, 
+				ChangedFileInfo changedFileInfo = new ChangedFileInfo(parentCommitId, currentCommitId,
 						new ArrayList<>(filePathsBefore), new ArrayList<>(filePathsCurrent), repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
 				final ObjectMapper mapper = new ObjectMapper();
 				mapper.writeValue(jsonFile, changedFileInfo);
@@ -2173,10 +2172,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				Map<String, String> renamedFilesHint = changedFileInfo.getRenamedFilesHint();
 				File currentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + commitId);
 				File parentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + parentCommitId);
-				if (!currentFolder.exists()) {	
+				if (!currentFolder.exists()) {
 					downloadAndExtractZipFile(projectFolder, cloneURL, commitId);
 				}
-				if (!parentFolder.exists()) {	
+				if (!parentFolder.exists()) {
 					downloadAndExtractZipFile(projectFolder, cloneURL, parentCommitId);
 				}
 				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
@@ -2213,7 +2212,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
 			Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
 			Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
-			ChangedFileInfo info = populateWithGitHubAPIAndSaveFiles(cloneURL, commitId, 
+			ChangedFileInfo info = populateWithGitHubAPIAndSaveFiles(cloneURL, commitId,
 					fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, rootFolder);
 			Map<String, String> filesBefore = new LinkedHashMap<String, String>();
 			Map<String, String> filesCurrent = new LinkedHashMap<String, String>();
@@ -2623,7 +2622,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
 					populateFileContents(nextFile, getJavaFilePaths(nextFile), fileContentsCurrent, repositoryDirectoriesCurrent);
 					populateFileContents(previousFile, getJavaFilePaths(previousFile), fileContentsBefore, repositoryDirectoriesBefore);
-					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true); 
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true);
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -2642,7 +2641,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
 						populateFileContents(nextFile.getParentFile(), List.of(nextFileName), fileContentsCurrent, repositoryDirectoriesCurrent);
 						populateFileContents(previousFile.getParentFile(), List.of(previousFileName), fileContentsBefore, repositoryDirectoriesBefore);
-						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true); 
+						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true);
 						UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 						UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -2684,12 +2683,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-		
+
 		populateWithGitHubAPIForCommitRange(cloneURL, startCommit, endCommit, fileContentsBefore, fileContentsCurrent, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
 		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
-		
+
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
 		ProjectASTDiff diff = differ.getProjectASTDiff();
@@ -2704,12 +2703,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-		
+
 		populateWithGitHubAPIForCommitRange(cloneURL, startCommit, endCommit, fileContentsBefore, fileContentsCurrent, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
 		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
 		UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-		
+
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
 		refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
@@ -2954,7 +2953,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), true);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
-		
+
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
 		ProjectASTDiff diff = differ.getProjectASTDiff();

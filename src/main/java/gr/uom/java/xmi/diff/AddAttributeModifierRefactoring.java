@@ -10,7 +10,6 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLModifier;
 
 public class AddAttributeModifierRefactoring extends ModifierRefactoring implements AttributeLevelRefactoring {

@@ -104,7 +104,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
 
-public abstract class UMLType implements Serializable, LocationInfoProvider, AnnotationProvider {
+public abstract class UMLType implements Serializable, AnnotationProvider {
 	private LocationInfo locationInfo;
 	private int arrayDimension;
 	private boolean parameterized;
@@ -195,7 +195,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 	private boolean equalTypeArguments(UMLType type) {
 		String thisTypeArguments = this.typeArgumentsToString();
 		String otherTypeArguments = type.typeArgumentsToString();
-		if((thisTypeArguments.equals("<?>") && otherTypeArguments.startsWith("<? ")) || 
+		if((thisTypeArguments.equals("<?>") && otherTypeArguments.startsWith("<? ")) ||
 				(thisTypeArguments.startsWith("<? ") && otherTypeArguments.equals("<?>"))) {
 			return true;
 		}

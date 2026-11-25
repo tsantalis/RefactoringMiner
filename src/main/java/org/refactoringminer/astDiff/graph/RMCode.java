@@ -4,7 +4,6 @@ import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.*;
 import java.util.*;
 import javax.annotation.Nullable;
-import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.util.PathFileUtils;
 
 /**

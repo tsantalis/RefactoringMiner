@@ -1,6 +1,5 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
-import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLAttribute;
@@ -12,7 +11,6 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
-import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.util.PathFileUtils;
@@ -21,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 /* Created by pourya on 2024-05-22*/
-public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements TreeMatcher {
+public class FieldDeclarationMatcher extends OptimizationAwareMatcher {
 
 
     private final UMLAttribute originalAttribute;

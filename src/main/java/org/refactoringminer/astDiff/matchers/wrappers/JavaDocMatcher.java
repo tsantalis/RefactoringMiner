@@ -11,7 +11,6 @@ import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLTagElement;
 import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.apache.commons.lang3.tuple.Pair;
-import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -23,7 +22,7 @@ import java.util.Optional;
 import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.*;
 
 /* Created by pourya on 2024-05-22*/
-public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatcher {
+public class JavaDocMatcher extends OptimizationAwareMatcher {
 
     private final UMLJavadoc srcUMLJavaDoc;
     private final UMLJavadoc dstUMLJavaDoc;

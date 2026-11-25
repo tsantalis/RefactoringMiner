@@ -32,7 +32,7 @@ import java.util.Set;
 import org.refactoringminer.util.AstUtils;
 import org.refactoringminer.util.PathFileUtils;
 
-public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer, AnnotationProvider, TypeParameterProvider {
+public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer, TypeParameterProvider {
 	private LocationInfo locationInfo;
 	private String name;
 	private Visibility visibility;
@@ -207,7 +207,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public List<UMLTypeParameter> getTypeParameters() {
 		return typeParameters;
 	}
-	
+
 	public void addTypeParameter(UMLTypeParameter typeParameter) {
 		typeParameters.add(typeParameter);
 	}
@@ -1416,7 +1416,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		if(this == o) {
             return true;
         }
-		
+
 		if(o instanceof UMLOperation) {
 			UMLOperation operation = (UMLOperation)o;
 			boolean thisEmptyBody = emptyBodyOrNoBody();
@@ -1606,7 +1606,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		sb.append(")");
 		return sb.toString();
 	}
-	
+
 	public int compareTo(UMLOperation operation) {
 		return this.toString().compareTo(operation.toString());
 	}
@@ -1619,7 +1619,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return normalized;
 	}
 
-	public boolean testMethodCheck(UMLOperation operation) { 
+	public boolean testMethodCheck(UMLOperation operation) {
 		boolean thisIsTestCase = this.hasTestAnnotation() || (this.importsTestCase && this.name.startsWith("test"));
 		boolean otherIsTestCase = operation.hasTestAnnotation() || (operation.importsTestCase && operation.getName().startsWith("test"));
 		if(thisIsTestCase && !otherIsTestCase && !operation.hasParameterizedTestAnnotation() && !operation.containsAssertion())
@@ -1693,11 +1693,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean overloadedParameterTypes(UMLOperation operation) {
 		return this.getParameterTypeList().containsAll(operation.getParameterTypeList()) || operation.getParameterTypeList().containsAll(this.getParameterTypeList());
 	}
-	
+
 	public boolean replacedParameterTypes(UMLOperation operation) {
 		List<UMLType> thisParameterTypes = this.getParameterTypeList();
 		List<UMLType> otherParameterTypes = operation.getParameterTypeList();
-		
+
 		if(thisParameterTypes.size() == otherParameterTypes.size() && thisParameterTypes.size() > 0) {
 			int commonParameterTypes = 0;
 			int differentParameterTypes = 0;

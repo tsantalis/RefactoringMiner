@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -20,7 +19,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 	private UMLAbstractClassDiff classDiff;
-	
+
 	public UMLAnonymousClassDiff(UMLAnonymousClass anonymousClass1, UMLAnonymousClass anonymousClass2, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		super(anonymousClass1, anonymousClass2, modelDiff);
 		this.classDiff = classDiff;
@@ -189,7 +188,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		for(UMLOperation operation1 : originalClass.getOperations()) {
 			for(UMLOperation operation2 : nextClass.getOperations()) {
-				if(operation1.equals(operation2) || operation1.equalSignature(operation2)) {	
+				if(operation1.equals(operation2) || operation1.equalSignature(operation2)) {
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 					int mappings = mapper.mappingsWithoutBlocks();
 					boolean emptyBodiesWithIdenticalComments = operation1.emptyBodiesWithIdenticalComments(operation2);
@@ -228,7 +227,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 							if(!operation1.getName().equals(operation2.getName()) && mappings == 1) {
 								for(AbstractCodeMapping mapping : mapper.getMappings()) {
 									String statement = mapping.getFragment1().getString();
-									if(statement.equals(LANG1.RETURN_TRUE) || statement.equals(LANG1.RETURN_FALSE) || 
+									if(statement.equals(LANG1.RETURN_TRUE) || statement.equals(LANG1.RETURN_FALSE) ||
 											statement.equals(LANG1.RETURN_THIS) || statement.equals(LANG1.RETURN_NULL) || statement.equals(LANG1.RETURN_STATEMENT)) {
 										mappings--;
 									}

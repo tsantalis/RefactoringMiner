@@ -131,7 +131,6 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamDecl;
-import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsUnionType;
 
 import gr.uom.java.xmi.CommentProvider;
@@ -1171,10 +1170,10 @@ public class TypeScriptOperationBody extends OperationBody {
 					umlClass.addAttribute(attribute);
 				}
 				else if(astProp instanceof Swc4jAstGetterProp getterProp) {
-					
+
 				}
 				else if(astProp instanceof Swc4jAstSetterProp setterProp) {
-					
+
 				}
 				else if(astProp instanceof Swc4jAstMethodProp methodProp) {
 					ISwc4jAstPropName key = methodProp.getKey();
@@ -1582,10 +1581,10 @@ public class TypeScriptOperationBody extends OperationBody {
 				umlClass.addOperation(operation);
 			}
 			else if(member instanceof Swc4jAstTsSetterSignature setterSignature) {
-				
+
 			}
 			else if(member instanceof Swc4jAstTsGetterSignature getterSignature) {
-				
+
 			}
 			else if(member instanceof Swc4jAstTsIndexSignature indexSignature) {
 				List<ISwc4jAstTsFnParam> parameters = indexSignature.getParams();
@@ -1628,7 +1627,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				}
 			}
 			else if(member instanceof Swc4jAstTsCallSignatureDecl callSignatureDecl) {
-				
+
 			}
 			else if(member instanceof Swc4jAstTsConstructSignatureDecl constructSignatureDecl) {
 

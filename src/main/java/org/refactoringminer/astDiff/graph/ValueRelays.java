@@ -8,7 +8,6 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import java.util.*;
 import java.util.function.Predicate;
 import javax.annotation.Nullable;
-import org.refactoringminer.astDiff.utils.Constants;
 
 /**
  * Values passed on unchanged (stage 3 of the TODO on data and control flow in HunkNetwork): an assignment relaying the

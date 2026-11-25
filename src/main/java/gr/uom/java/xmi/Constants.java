@@ -15,10 +15,6 @@ public enum Constants {
 	TYPESCRIPT(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", " = ", "break;\n", "continue;\n",
 			" => ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this;\n", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "null", "true", "false"),
 
-	@Deprecated
-	C(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return NULL;\n", "return this;\n", " = ", "break;\n", "continue;\n",
-			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this;\n", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "NULL", "true", "false"),
-
 	CPP(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return nullptr;\n", "return this;\n", " = ", "break;\n", "continue;\n",
 			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}", "this", "this.", "this;\n", " ? ", " : ", "assertThrows", "assertThatThrownBy", " && ", " || ", "!", "nullptr", "true", "false");
 

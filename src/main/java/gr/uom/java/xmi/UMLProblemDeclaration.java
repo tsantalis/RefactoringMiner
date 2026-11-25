@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class UMLProblemDeclaration implements Serializable, LocationInfoProvider, CommentProvider {
+public class UMLProblemDeclaration implements Serializable, CommentProvider {
 	private String packageName;
 	private String sourceFolder;
 	private LocationInfo location;

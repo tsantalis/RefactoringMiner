@@ -22,8 +22,8 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
-public interface VariableDeclarationContainer extends LocationInfoProvider, CommentProvider, AnnotationProvider {
-	
+public interface VariableDeclarationContainer extends CommentProvider, AnnotationProvider {
+
 	default List<VariableDeclaration> getAllVariableDeclarations() {
 		OperationBody operationBody = getBody();
 		if(operationBody != null) {

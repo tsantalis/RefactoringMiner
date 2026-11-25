@@ -283,11 +283,37 @@ int g(int x) {
 | `if constexpr (...)` | ✅ | ✅ |
 | `[](auto... xs) { return (xs + ...); }` | ✅ | ❌ lambda parameters lost, body as argument list |
 | `[]<typename U>(U u) { return u; }` | ❌ problem | ❌ flat tokens + empty statement |
-| `P p{.x = 1, .y = 2};` | ❌ problem (RM patches designators only in `return {...}`) | ✅ |
+| `P p{.x = 1, .y = 2};` | ❌ problem (RM handles designators in other positions; see below) | ✅ |
 | `m \| std::views::keys \| std::views::take(3)` | ✅ | ✅ |
 | `using enum Color;` | ❌ problem | ✅ |
 
 **Verdict: srcML slightly ahead, both incomplete.** CDT fails loudly (problem nodes, which RefactoringMiner's tree generator then re-parses as fragments: 4 error nodes remain in this file's tree). srcML fails silently with wrong shapes.
+
+#### C++20 support in RefactoringMiner's full pipeline (issue #1131)
+
+The table above is about the parsers. Issue #1131 asks whether RefactoringMiner as a whole supports C++20, so ten constructs were also run through the full pipeline on 2026-11-25 (HEAD 5053952e1): the C++ model (`createModelForASTDiff`), refactoring detection, and the AST diff (`diffAtFileContents`). Each case is a before/after pair of one `.cpp` file in which the enclosing function (or field) is renamed and one value inside the construct changes. The check covers whether the model keeps the construct as one statement or member, whether the rename is detected, and whether the AST diff tree has the right shape with no `ERROR` nodes and no unmapped leaves.
+
+| Construct | Model | Refactoring | AST diff tree |
+|---|---|---|---|
+| `return {.keycode = std::stoi(key)};` (the issue's example) | ✅ one statement | ✅ Rename Method | ✅ `initializer_pair` / `field_designator` |
+| `P p = {.x = 1, .y = 2};` | ✅ | ✅ | ✅ |
+| `auto p = P{.x = 1, .y = 2};` | ✅ | ✅ | ✅ |
+| `use({.x = 1, .y = 2});` | ✅ | ✅ | ✅ |
+| `p = {.x = 1, .y = 2};` (assignment) | ✅ | ✅ | ✅ `assignment_expression` with an `initializer_list` |
+| `P p = {.x = 1, .y = 2};` (member default) | ✅ attribute with initializer | ✅ Rename Attribute | ✅ |
+| `P p{.x = 1, .y = 2};` | ❌ split into the statements `P` and `p{.x = 1, .y = 2};` | ✅ | ❌ `expression_statement(P)` followed by a `compound_literal_expression` whose type is `p` |
+| `concept HasX = requires(T t) { t.x; };` | ⚠️ the concept is missing from the model; the constrained function `template<HasX T> int f(T t)` is kept | ✅ | ❌ `ERROR` node covering the concept |
+| `auto operator<=>(const P&) const = default;` | ❌ the operator is missing from the class | ✅ | ❌ `ERROR` node covering the declaration |
+| `co_await g(1);` | ⚠️ the statement text is kept | ✅ | ❌ a `declaration` of type `co_await` with declarator `g(1)` |
+
+**Designated initializers are supported in all positions except direct-list initialization.** The issue's `return {...}` example parses through `CppLanguage` (2da462a0f), which lets `parseReturnStatement` accept designators. `CppTreeGenerator` repairs `p = {...}`, which is a problem node in the raw parse. In these six cases every changed value was mapped, and the only unmapped leaves were the `+ 1` that the after version of the `return` case adds. One small gap remains: the initializer text of the member default keeps its `=`, so the attribute prints as `p = = {.x = 1, .y = 2}`.
+
+**The other constructs are wrong, even though the rename was detected in every case.** In these small functions the remaining statements were enough to match the bodies. In real commits, refactorings involving the misparsed statements would be missed or mismatched, and the AST diff shows `ERROR` subtrees or wrong node types. Still open:
+
+- direct-list initialization with designators, `P p{.x = 1}`
+- concepts and requires-expressions
+- `operator<=>`
+- coroutine keywords (`co_await`, and `co_return` per the table above)
 
 ### S7. C and GNU extensions (`.c` file)
 

@@ -41,6 +41,7 @@ import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement;
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTNodeSelector;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConceptDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
 import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
@@ -2138,6 +2139,10 @@ public class CppFileProcessor {
 			UMLOperation operation = processFunctionDefinition(cppFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 			preprocessor.addOperation(parentContainer, operation, cppFunctionDefinition, templateParameters);
 		}
+		else if(declaration instanceof ICPPASTConceptDefinition conceptDefinition) {
+			//A C++20 concept names a constraint on template arguments, i.e., template<typename T> concept C = requires(T t) { t.x; };, which is a variable template of type concept initialized with its constraint.
+			processConceptDefinition(conceptDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
+		}
 		else if(declaration instanceof CPPASTAliasDeclaration cppAliasDeclaration) {
 			//A C++ alias declaration (introduced in C++11) uses the using keyword to create a readable, interchangeable synonym for an existing type or template. It is the modern, preferred alternative to typedef.
 			processCppAliasDeclaration(cppAliasDeclaration, sourceFolder, parentContainer, templateParameters);
@@ -2806,6 +2811,34 @@ public class CppFileProcessor {
 		String importName = name.toString().replace("::", ".");
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declaration, CodeElementType.IMPORT_DECLARATION, fileContent);
 		preprocessor.addImport(parentContainer, new UMLImport(importName, onDemand, false, locationInfo), declaration);
+	}
+
+	//a concept is located from its concept keyword, which CDT leaves out of the concept, i.e., concept C = true; in template<typename T> concept C = true;
+	private void processConceptDefinition(ICPPASTConceptDefinition conceptDefinition, String packageName, String sourceFolder, UMLAbstractClass parentContainer,
+			Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
+		IASTName name = conceptDefinition.getName();
+		IASTFileLocation fileLocation = conceptDefinition.getFileLocation();
+		if(name == null || name.toString().isBlank() || fileLocation == null || !conceptDefinition.isPartOfTranslationUnitFile()) {
+			return;
+		}
+		int end = fileLocation.getNodeOffset() + fileLocation.getNodeLength();
+		int start = fileContent.lastIndexOf("concept", fileLocation.getNodeOffset());
+		if(start < 0) {
+			start = fileLocation.getNodeOffset();
+		}
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.FIELD_DECLARATION, fileContent);
+		UMLType type = UMLType.extractTypeObject("concept", PathFileUtils.getLang(filePath));
+		UMLAttribute umlAttribute = new UMLAttribute(name.toString(), type, locationInfo, packageName);
+		umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(filePath, name, type, locationInfo);
+		if(conceptDefinition.getExpression() != null) {
+			variableDeclaration.setInitializer(new AbstractExpression(sourceFolder, filePath, conceptDefinition.getExpression(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, umlAttribute, new LinkedHashMap<>(), fileContent));
+		}
+		variableDeclaration.setAttribute(true);
+		umlAttribute.setVariableDeclaration(variableDeclaration);
+		addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
+		preprocessor.addAttribute(parentContainer, umlAttribute, conceptDefinition);
+		distributeComments(comments, locationInfo, umlAttribute.getComments());
 	}
 
 	private void processCppAliasDeclaration(CPPASTAliasDeclaration aliasDeclaration, String sourceFolder, UMLAbstractClass parentContainer, ICPPASTTemplateParameter[] templateParameters) {

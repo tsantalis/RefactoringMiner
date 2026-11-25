@@ -96,6 +96,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCapture;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConceptDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorChainInitializer;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorInitializer;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConversionName;
@@ -2511,7 +2512,17 @@ public class CppTreeGenerator {
 			wrapModifiers(node);
 			return node;
 		}
+		if(declaration instanceof ICPPASTConceptDefinition concept) {
+			return conceptDefinition(concept);
+		}
 		return generic(declaration);
+	}
+
+	//a concept from its concept keyword, which CDT leaves out of the concept, like its location in the model, i.e., concept C = true; in template<typename T> concept C = true;
+	private Node conceptDefinition(ICPPASTConceptDefinition concept) {
+		int keyword = concept.getParent() != null && hasLocation(concept.getParent()) ? findLast("concept", start(concept.getParent()), start(concept)) : -1;
+		return node("concept_definition", keyword < 0 ? start(concept) : keyword, end(concept), name(concept.getName(), NameKind.IDENTIFIER),
+				concept.getExpression() == null ? null : expression(concept.getExpression()));
 	}
 
 	private Node templateDeclaration(ICPPASTTemplateDeclaration template) {
@@ -2528,8 +2539,39 @@ public class CppTreeGenerator {
 		//the macros expanded to nothing after the template parameters belong to the declaration, like the location of the declaration in the model,
 		//i.e., GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE in template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE T* Arena::CreateMaybeMessage<T>(Arena* arena) {...}
 		absorbEmptyMacros(declaration, close + 1);
+		int requires = find("requires", close + 1, declaration.start);
+		if(requires >= 0) {
+			children.add(leadingRequiresClause(requires, previousTokenEnd(requires, declaration.start)));
+		}
 		children.add(declaration);
 		return node("template_declaration", template, children);
+	}
+
+	//a requires clause after the template parameters, which CDT parses and drops, parsed again as the requires clause of a function,
+	//i.e., requires C<T> in template<typename T> requires C<T> int f();
+	private Node leadingRequiresClause(int keyword, int end) {
+		int start = nextTokenStart(keyword + "requires".length());
+		Node constraint = null;
+		String prefix = templatePreamble(start, end, Set.of()) + "void __rm_requires__() requires ";
+		String code = prefix + withoutMacroDefinitions(start, end) + ";";
+		Source previous = source;
+		try {
+			IASTTranslationUnit translationUnit = parseFragment(code);
+			source = new Source(translationUnit, start - prefix.length(), true);
+			IASTDeclaration[] declarations = translationUnit.getDeclarations(false);
+			if(declarations.length > 0 && declarations[declarations.length - 1] instanceof IASTSimpleDeclaration declaration && declaration.getDeclarators().length == 1
+					&& declaration.getDeclarators()[0] instanceof ICPPASTFunctionDeclarator function && function.getConstraintExpressions().length == 1
+					&& hasLocation(function.getConstraintExpressions()[0])) {
+				constraint = expression(function.getConstraintExpressions()[0]);
+			}
+		}
+		catch(Exception e) {
+			constraint = null;
+		}
+		finally {
+			source = previous;
+		}
+		return node("requires_clause", keyword, end, constraint == null ? inline(tokens(start, end)) : constraint);
 	}
 
 	private int templateParametersEnd(ICPPASTTemplateParameter last, int limit) {
@@ -2538,6 +2580,21 @@ public class CppTreeGenerator {
 	}
 
 	private Node templateParameter(ICPPASTTemplateParameter parameter) {
+		if(parameter instanceof ICPPASTSimpleTypeTemplateParameter simple && simple.getConstraintExpressions().length > 0
+				&& simple.getName() != null && hasLocation(simple.getName()) && end(simple.getName()) > start(simple.getName())) {
+			//a type parameter constrained by a concept is a parameter declaration with the concept as its type, like an unknown type,
+			//i.e., std::convertible_to<int> T in template<std::convertible_to<int> T>, like C T in template<C T>
+			String type = simple.isParameterPack() ? "variadic_parameter_declaration" : simple.getDefaultType() != null ? "optional_parameter_declaration" : "parameter_declaration";
+			List<Node> constraint = templateArguments(start(simple), previousTokenEnd(start(simple), start(simple.getName())));
+			List<Node> children = new ArrayList<>();
+			children.add(constraint.size() == 1 && constraint.get(0).type.equals("type_descriptor") && constraint.get(0).children.size() == 1 ? constraint.get(0).first() : inline(constraint));
+			children.add(name(simple.getName(), NameKind.IDENTIFIER));
+			if(simple.getDefaultType() != null) {
+				Node defaultType = typeDescriptor(simple.getDefaultType());
+				children.add(defaultType.children.size() == 1 ? defaultType.first() : defaultType);
+			}
+			return node(type, simple, children);
+		}
 		if(parameter instanceof ICPPASTSimpleTypeTemplateParameter simple) {
 			String type = simple.isParameterPack() ? "variadic_type_parameter_declaration" : simple.getDefaultType() != null ? "optional_type_parameter_declaration" : "type_parameter_declaration";
 			List<Node> children = new ArrayList<>();
@@ -3424,6 +3481,15 @@ public class CppTreeGenerator {
 				children.add(node("throw_specifier", throwStart, throwClose + 1, types));
 			}
 			end = suffixEnd(close + 1, limit, trailing != null && hasLocation(trailing) ? end(trailing) : -1);
+			//the trailing requires clause, i.e., requires C<T> in int f(T t) requires C<T>
+			for(IASTExpression constraint : cpp.getConstraintExpressions()) {
+				if(hasLocation(constraint)) {
+					int keyword = findLast("requires", close + 1, start(constraint));
+					Node clause = node("requires_clause", keyword, end(constraint), expression(constraint));
+					children.add(clause);
+					end = Math.max(end, clause.end);
+				}
+			}
 		}
 		if(core != null && core.type.equals("operator_cast")) {
 			//operator T() const is an operator_cast with an abstract function declarator
@@ -4406,6 +4472,9 @@ public class CppTreeGenerator {
 	}
 
 	private Node lambdaExpression(ICPPASTLambdaExpression lambda) {
+		if(tokenAt(start(lambda)).equals("requires")) {
+			return requiresExpression(lambda);
+		}
 		List<Node> children = new ArrayList<>();
 		int open = start(lambda);
 		int close = matching(open, end(lambda));
@@ -4446,6 +4515,33 @@ public class CppTreeGenerator {
 		}
 		children.add(statement(lambda.getBody()));
 		return node("lambda_expression", lambda, children);
+	}
+
+	//a requires expression, which CDT parses as a lambda with the requirements as statements, i.e., requires(T t) { t.x; }
+	private Node requiresExpression(ICPPASTLambdaExpression lambda) {
+		List<Node> children = new ArrayList<>();
+		ICPPASTFunctionDeclarator declarator = lambda.getDeclarator();
+		if(declarator != null && hasLocation(declarator) && end(declarator) > start(declarator)) {
+			Node function = functionDeclarator(declarator, null, true);
+			children.add(function.children.stream().filter(child -> child.type.equals("parameter_list")).findFirst().orElse(function));
+		}
+		IASTCompoundStatement body = lambda.getBody();
+		if(body != null && hasLocation(body)) {
+			List<Node> requirements = new ArrayList<>();
+			for(IASTStatement statement : body.getStatements()) {
+				if(!hasLocation(statement)) {
+					continue;
+				}
+				if(statement instanceof IASTExpressionStatement simple && simple.getExpression() != null) {
+					requirements.add(node("simple_requirement", simple, expression(simple.getExpression())));
+				}
+				else {
+					requirements.add(statement(statement));
+				}
+			}
+			children.add(node("requirement_seq", body, requirements));
+		}
+		return node("requires_expression", lambda, children);
 	}
 
 	//literals

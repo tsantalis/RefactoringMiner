@@ -261,6 +261,22 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.actualSignature = name.getRawSignature();
 	}
 
+	//a C++20 concept, which is a variable template of type concept located from its concept keyword, i.e., concept C = true; in template<typename T> concept C = true;
+	public VariableDeclaration(String filePath, IASTName name, UMLType type, LocationInfo locationInfo) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = locationInfo;
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = name.toString();
+		this.type = type;
+		//the scope of a concept is its translation unit or namespace, i.e., the parent of its template declaration
+		IASTNode scopeNode = name.getParent().getParent() != null && name.getParent().getParent().getParent() != null ? name.getParent().getParent().getParent() : name.getParent();
+		int startOffset = locationInfo.getStartOffset();
+		int endOffset = scopeNode.getFileLocation().getNodeOffset() + scopeNode.getFileLocation().getNodeLength();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+		this.actualSignature = name.getRawSignature();
+	}
+
 	public VariableDeclaration(String sourceFolder, String filePath, IASTEnumerator enumerator, IASTEnumerationSpecifier enumSpecifier,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();

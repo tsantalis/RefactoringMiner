@@ -28,7 +28,7 @@ Both tools are mature and actively maintained, and each is clearly better at som
 - **It marks up every preprocessor branch.** Function variants in sibling `#if`/`#else` branches all get full markup with bodies. CDT parses one configuration. RefactoringMiner recovers the other branches with an extra re-parse (`CppConditionalBodies`, issue #1218).
 - **Its heuristics often guess right without headers.** It reads `std::make_unique<Foo>(x)`, `std::vector<Item> v = ...` and `ns::convert<int>(value);` correctly without any declarations. Raw CDT gets the first two wrong. RefactoringMiner's CDT pipeline fixes them, at a cost of about 5× the raw parse time, but `ns::convert<int>(value);` stays a declaration.
 - **It handles several odd macro positions that CDT turns into problem nodes.** Examples are `if UNLIKELY (x)`, `"%09" PRId64`, `class EXPORT_MACRO Name {`, and `Q_OBJECT`. RefactoringMiner's pipeline now handles all four (`Q_OBJECT` through a Qt stub, 2026-11-24), as well as bitcoin's `EXCLUSIVE_LOCKS_REQUIRED(...)` and the declaration in `ASSIGN_OR_RETURN(auto x, e)` (✅ fixed on 2026-11-22; see sections 5, 6 and 11).
-- **It covers more modern C++ syntax.** It handles `operator<=>`, designated initializers in declarations, and `using enum`, all of which are CDT problem nodes. Both parsers have other C++20 gaps.
+- **It covers more modern C++ syntax.** It handles `operator<=>`, designated initializers in declarations, and `using enum`, all of which are problem nodes in raw CDT. RefactoringMiner now handles the first two itself (section 5, S6), so `using enum` remains a gap. Both parsers have other C++20 gaps.
 
 **Where CDT is better:**
 
@@ -271,19 +271,19 @@ int g(int x) {
 
 ### S6. Modern C++ (C++20/23)
 
-| Construct | CDT (raw = RM) | srcML |
+| Construct | CDT (raw; RM where noted) | srcML |
 |---|---|---|
 | `import std;` | ❌ variable declaration | ❌ declaration |
-| `concept C = requires(T a) {...};` | ❌ problem | ⚠️ declaration of type `concept`, `requires(...)` as `<macro>` |
+| `concept C = requires(T a) {...};` | ❌ problem (✅ in RM since 2026-11-25; see below) | ⚠️ declaration of type `concept`, `requires(...)` as `<macro>` |
 | `template <Hashable T>` | ✅ parsed (as a typed non-type parameter) | ✅ |
-| `auto operator<=>(const P&) const = default;` | ❌ problem | ✅ |
+| `auto operator<=>(const P&) const = default;` | ❌ problem (✅ in RM since 2026-11-25; see below) | ✅ |
 | `co_await sleep(1);` | ❌ declaration | ❌ declaration of type `co_await` |
 | `co_return 42;` | ❌ split + problem | ⚠️ expression starting with name `co_return` |
 | `auto [k, v] = *m.begin();` | ✅ structured binding | ❌ expression with an index `[k, v]` |
 | `if constexpr (...)` | ✅ | ✅ |
 | `[](auto... xs) { return (xs + ...); }` | ✅ | ❌ lambda parameters lost, body as argument list |
 | `[]<typename U>(U u) { return u; }` | ❌ problem | ❌ flat tokens + empty statement |
-| `P p{.x = 1, .y = 2};` | ❌ problem (RM handles designators in other positions; see below) | ✅ |
+| `P p{.x = 1, .y = 2};` | ❌ problem (✅ in RM since 2026-11-25; see below) | ✅ |
 | `m \| std::views::keys \| std::views::take(3)` | ✅ | ✅ |
 | `using enum Color;` | ❌ problem | ✅ |
 
@@ -291,29 +291,42 @@ int g(int x) {
 
 #### C++20 support in RefactoringMiner's full pipeline (issue #1131)
 
-The table above is about the parsers. Issue #1131 asks whether RefactoringMiner as a whole supports C++20, so ten constructs were also run through the full pipeline on 2026-11-25 (HEAD 5053952e1): the C++ model (`createModelForASTDiff`), refactoring detection, and the AST diff (`diffAtFileContents`). Each case is a before/after pair of one `.cpp` file in which the enclosing function (or field) is renamed and one value inside the construct changes. The check covers whether the model keeps the construct as one statement or member, whether the rename is detected, and whether the AST diff tree has the right shape with no `ERROR` nodes and no unmapped leaves.
+The table above is about the parsers. Issue #1131 asks whether RefactoringMiner as a whole supports C++20, so ten constructs were run through the full pipeline: the C++ model (`createModelForASTDiff`), refactoring detection, and the AST diff (`diffAtFileContents`). Each case is a before/after pair of one `.cpp` file in which the enclosing function (or field) is renamed and one value inside the construct changes. The check covers whether the model keeps the construct as one statement or member, whether the rename is detected, and whether the AST diff tree has the right shape with no `ERROR` nodes and no unmapped leaves.
 
-| Construct | Model | Refactoring | AST diff tree |
-|---|---|---|---|
-| `return {.keycode = std::stoi(key)};` (the issue's example) | ✅ one statement | ✅ Rename Method | ✅ `initializer_pair` / `field_designator` |
-| `P p = {.x = 1, .y = 2};` | ✅ | ✅ | ✅ |
-| `auto p = P{.x = 1, .y = 2};` | ✅ | ✅ | ✅ |
-| `use({.x = 1, .y = 2});` | ✅ | ✅ | ✅ |
-| `p = {.x = 1, .y = 2};` (assignment) | ✅ | ✅ | ✅ `assignment_expression` with an `initializer_list` |
-| `P p = {.x = 1, .y = 2};` (member default) | ✅ attribute with initializer | ✅ Rename Attribute | ✅ |
-| `P p{.x = 1, .y = 2};` | ❌ split into the statements `P` and `p{.x = 1, .y = 2};` | ✅ | ❌ `expression_statement(P)` followed by a `compound_literal_expression` whose type is `p` |
-| `concept HasX = requires(T t) { t.x; };` | ⚠️ the concept is missing from the model; the constrained function `template<HasX T> int f(T t)` is kept | ✅ | ❌ `ERROR` node covering the concept |
-| `auto operator<=>(const P&) const = default;` | ❌ the operator is missing from the class | ✅ | ❌ `ERROR` node covering the declaration |
-| `co_await g(1);` | ⚠️ the statement text is kept | ✅ | ❌ a `declaration` of type `co_await` with declarator `g(1)` |
+The first run (HEAD 5053952e1) is the "before" column. The fixes described below were then made, and the "after" column is the same run with them.
 
-**Designated initializers are supported in all positions except direct-list initialization.** The issue's `return {...}` example parses through `CppLanguage` (2da462a0f), which lets `parseReturnStatement` accept designators. `CppTreeGenerator` repairs `p = {...}`, which is a problem node in the raw parse. In these six cases every changed value was mapped, and the only unmapped leaves were the `+ 1` that the after version of the `return` case adds. One small gap remains: the initializer text of the member default keeps its `=`, so the attribute prints as `p = = {.x = 1, .y = 2}`.
+| Construct | Before: model / AST diff tree | After: model / AST diff tree |
+|---|---|---|
+| `return {.keycode = std::stoi(key)};` (the issue's example) | ✅ one statement / ✅ `initializer_pair` / `field_designator` | ✅ / ✅ |
+| `P p = {.x = 1, .y = 2};` | ✅ / ✅ | ✅ / ✅ |
+| `auto p = P{.x = 1, .y = 2};` | ✅ / ✅ | ✅ / ✅ |
+| `use({.x = 1, .y = 2});` | ✅ / ✅ | ✅ / ✅ |
+| `p = {.x = 1, .y = 2};` (assignment) | ✅ / ✅ `assignment_expression` with an `initializer_list` | ✅ / ✅ |
+| `P p = {.x = 1, .y = 2};` (member default) | ✅ attribute with initializer / ✅ | ✅ / ✅ |
+| `P p{.x = 1, .y = 2};` | ❌ split into the statements `P` and `p{.x = 1, .y = 2};` / ❌ `expression_statement(P)` and a `compound_literal_expression` of type `p` | ✅ one statement / ✅ `declaration` with an `init_declarator` and an `initializer_list` |
+| `concept HasX = requires(T t) { t.x; };` | ⚠️ the concept is missing / ❌ `ERROR` node covering the concept | ✅ attribute `HasX` of type `concept` with the constraint as initializer / ✅ `concept_definition` with a `requires_expression` |
+| `auto operator<=>(const P&) const = default;` | ❌ the operator is missing from the class / ❌ `ERROR` node | ✅ operation `operator <=>` / ✅ `operator_name` and `default_method_clause` |
+| `co_await g(1);` | ⚠️ the statement text is kept / ❌ a `declaration` of type `co_await` with declarator `g(1)` | unchanged |
 
-**The other constructs are wrong, even though the rename was detected in every case.** In these small functions the remaining statements were enough to match the bodies. In real commits, refactorings involving the misparsed statements would be missed or mismatched, and the AST diff shows `ERROR` subtrees or wrong node types. Still open:
+The rename was detected in every case, both before and after. In these small functions the remaining statements were enough to match the bodies, so the broken constructs only showed up in the model and the tree. After the fixes, the only unmapped leaves in these cases are the values the after versions add.
 
-- direct-list initialization with designators, `P p{.x = 1}`
-- concepts and requires-expressions
-- `operator<=>`
-- coroutine keywords (`co_await`, and `co_return` per the table above)
+**What was fixed (2026-11-25).**
+
+- **CDT's own C++20 support is switched on.** The bundled CDT parses concepts, requires-expressions and requires clauses only when the macro `__cpp_concepts` is defined, and lexes `<=>` only when `__cpp_impl_three_way_comparison` is defined. A compiler in C++20 mode predefines these feature-test macros, but RefactoringMiner gave CDT no such macros. `CppLanguage` now adds both through its scanner configuration, which covers every C++ parse, including the fragments parsed again by `CppTreeGenerator`. CDT's third such macro, `__cpp_char8_t`, is left off: `const char8_t*` already parses as a named type without it, and it breaks `typedef unsigned char char8_t;` in older code.
+- **CDT's concept support is completed where it was wrong.** CDT reads `template<typename T> requires C<T> int f();` as the expression `C < T > int(...)` and fails. It also allows only primary expressions in a concept, so it rejects `concept C = sizeof(T) > 1;`. `CppLanguage` parses a requires clause as the standard defines it, a conjunction or disjunction of primary expressions, and a concept's constraint as a full expression. CDT also drops a leading requires clause from its AST, so `CppTreeGenerator` parses it again as the trailing requires clause of a function.
+- **Designators in braced initializers.** `P p{.x = 1};` now allows designators, like `return {...}` did since 2da462a0f. Designators are allowed only when the brace is directly followed by `.`. In C++20 the clauses of a list are either all designated or none, and only field designators exist, whereas CDT's designator mode also accepts GNU array designators, `[i] = v`. Without that restriction, CDT read the lambda in `Config c{0, [a](int x) { ... }};` (tensorflow's `gpu_compiler.cc`) as a designator and failed.
+- **Model.** A concept is an attribute of type `concept` whose initializer is its constraint, located from its `concept` keyword, which CDT leaves out of the concept node. So renamed concepts and changed constraints are diffed like variables.
+- **AST diff.** The tree has `concept_definition`, `requires_expression` with `requirement_seq` and `simple_requirement`, and `requires_clause` after the template parameters or after a function's parameters. A type parameter constrained by a concept with arguments, `template<std::convertible_to<int> T>`, is a `parameter_declaration` with the concept as its type, like the unqualified `template<C T>` already was. The method matcher maps paired requires clauses, and the field matcher maps a concept's template keyword and parameters.
+
+The parsing cost is negligible: parsing all 765 C++ corpus files took 6.52 s per pass before and 6.59 s after, which is within noise. The corpus has no concepts, `<=>` or coroutines. The only parse change is two Hyprland `WindowRule.cpp` files, each with one problem node fewer, where `SBorderColorRule result{.…};` is now one declaration. That changed one expected file of `CppDiffTest`.
+
+**Still open:**
+
+- type, compound and nested requirements in a requires-expression, i.e., `typename T::type;`, `{ t.f() } -> std::same_as<int>;` and `requires sizeof(T) > 1;`. CDT parses the requirements as statements, so these remain `ERROR` nodes inside the `requirement_seq`, while the rest of the concept is parsed.
+- abbreviated function templates with a constrained `auto`, `int k(C auto t)`
+- coroutine keywords (`co_await`, and `co_return` per the table above), which this CDT has no tokens for
+- the initializer text of a member default keeps its `=`, so the attribute prints as `p = = {.x = 1, .y = 2}`
+- `requires` and `concept` used as plain identifiers in pre-C++20 code are now problem nodes, which is what C++20 itself does; the corpus has none
 
 ### S7. C and GNU extensions (`.c` file)
 
@@ -566,7 +579,7 @@ The last row is a switching cost, not a technical merit, and it is listed separa
 - **Span-based alignment** classifies boundary differences as one-sided items. We bucketed them explicitly ("same start or end") instead of counting them as errors, but some residual buckets ("other") were classified from samples rather than exhaustively.
 - **Sampling:** the 400-case sample of declaration/expression disagreements comes from the order of the alignment output, not a random draw. The 2,440 count of the `auto &` pattern is an independent regex count over the files.
 - **srcML macro registration** was tested only through the unexported library symbol. Correct usage might change the outcome for some macro categories, though not for the cases that need expansion.
-- **CDT version:** this is the Joern-repackaged CDT 9.3.200 core RefactoringMiner already uses. Newer CDT releases may cover more C++20, and newer srcML may fix the `auto &` misparse.
+- **CDT version:** this is the Joern-repackaged CDT 9.3.200 core RefactoringMiner already uses. Newer CDT releases may cover more C++20, and newer srcML may fix the `auto &` misparse. Part of this CDT's C++20 support is switched off unless feature-test macros are defined (section 5, S6), so the raw-CDT results depend on the macros a caller defines.
 - **Performance** was measured on one machine (Apple Silicon). Relative results are what matter.
 
 ## 11. Conclusion

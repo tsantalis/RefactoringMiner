@@ -1148,6 +1148,11 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (templateParameterLists != null) {
                 mappingStore.addMappingRecursively(templateParameterLists.first,templateParameterLists.second);
             }
+            //the requires clause after the template parameters, i.e., requires C<T> in template<typename T> requires C<T> int f(T t);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> requiresClauses = Helpers.findPairOfType(parent1, parent2,LANG1.REQUIRES_CLAUSE,LANG2.REQUIRES_CLAUSE);
+            if (requiresClauses != null) {
+                mappingStore.addMappingRecursively(requiresClauses.first,requiresClauses.second);
+            }
             parent1 = parent1.getParent();
             parent2 = parent2.getParent();
         }
@@ -1318,6 +1323,11 @@ public class MethodMatcher extends BodyMapperMatcher{
         com.github.gumtreediff.utils.Pair<Tree,Tree> noexcept = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.NOEXCEPT,LANG2.NOEXCEPT);
         if (noexcept != null) {
             mappingStore.addMappingRecursively(noexcept.first,noexcept.second);
+        }
+        //the trailing requires clause, i.e., requires C<T> in int f(T t) requires C<T>
+        com.github.gumtreediff.utils.Pair<Tree,Tree> requiresClauses = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.REQUIRES_CLAUSE,LANG2.REQUIRES_CLAUSE);
+        if (requiresClauses != null) {
+            mappingStore.addMappingRecursively(requiresClauses.first,requiresClauses.second);
         }
         com.github.gumtreediff.utils.Pair<Tree,Tree> parameter_lists = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.PARAMETER_LIST,LANG2.PARAMETER_LIST);
         if (parameter_lists != null) {

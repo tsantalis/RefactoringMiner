@@ -70,6 +70,22 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher {
         return dstFieldDeclaration;
     }
 
+    //the template declarations around two concepts, with their keywords and parameters, i.e., template<typename T> in template<typename T> concept C = true;
+    private void matchTemplateDeclarations(Tree parent1, Tree parent2, ExtendedMultiMappingStore mappingStore) {
+        if (parent1 != null && parent1.getType().name.equals(LANG1.TEMPLATE_DECLARATION) &&
+                parent2 != null && parent2.getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
+            mappingStore.addMapping(parent1, parent2);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> templates = Helpers.findPairOfType(parent1, parent2, LANG1.TEMPLATE_KEYWORD, LANG2.TEMPLATE_KEYWORD);
+            if (templates != null) {
+                mappingStore.addMapping(templates.first, templates.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> templateParameterLists = Helpers.findPairOfType(parent1, parent2, LANG1.TEMPLATE_PARAMETER_LIST, LANG2.TEMPLATE_PARAMETER_LIST);
+            if (templateParameterLists != null) {
+                mappingStore.addMappingRecursively(templateParameterLists.first, templateParameterLists.second);
+            }
+        }
+    }
+
     private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
 
         Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1);
@@ -122,6 +138,12 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher {
         }
         if (dstFieldDeclaration == null && dstAttr.getType().name.equals(LANG2.VARIABLE_DECLARATOR)) {
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.LEXICAL_DECLARATION);
+        }
+        //a C++ concept is its own declaration in its template declaration, i.e., concept C = true; in template<typename T> concept C = true;
+        if (srcFieldDeclaration == null && srcAttr.getType().name.equals(LANG1.CONCEPT_DEFINITION) && dstAttr.getType().name.equals(LANG2.CONCEPT_DEFINITION)) {
+            srcFieldDeclaration = srcAttr;
+            dstFieldDeclaration = dstAttr;
+            matchTemplateDeclarations(srcAttr.getParent(), dstAttr.getParent(), mappingStore);
         }
         //the C++ type definitions are their own declarations, i.e., typedef int T;
         if (srcFieldDeclaration == null) {

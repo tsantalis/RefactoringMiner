@@ -73,11 +73,11 @@ dependencies {
     implementation platform("io.modelcontextprotocol.sdk:mcp-bom:2.1.0")
     implementation "io.modelcontextprotocol.sdk:mcp-core"
     implementation "io.modelcontextprotocol.sdk:mcp-json-jackson2"
-    implementation 'com.caoccao.javet:swc4j:2.2.0'
-    implementation 'com.caoccao.javet:swc4j-macos-arm64:2.2.0'
-    implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.2.0'
-    implementation 'com.caoccao.javet:swc4j-linux-arm64:2.2.0'
-    implementation 'com.caoccao.javet:swc4j-windows-x86_64:2.2.0'
+    implementation 'com.caoccao.javet:swc4j:2.3.0'
+    implementation 'com.caoccao.javet:swc4j-macos-arm64:2.3.0'
+    implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.3.0'
+    implementation 'com.caoccao.javet:swc4j-linux-arm64:2.3.0'
+    implementation 'com.caoccao.javet:swc4j-windows-x86_64:2.3.0'
     implementation 'org.antlr:antlr4-runtime:4.13.2'
     implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.4.21'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:7.8.1.202611041320-r'

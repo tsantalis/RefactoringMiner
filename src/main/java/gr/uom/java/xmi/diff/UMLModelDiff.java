@@ -258,20 +258,52 @@ public class UMLModelDiff {
 			}
 		}
 		for(UMLClass umlClass : model.getClassList()) {
-			for(UMLOperation operation : umlClass.getOperations()) {
-				for(UMLClass nestedClass : operation.getNestedClasses()) {
-					if(nestedClass.getName().equals(className) || nestedClass.getName().endsWith("." + className)) {
-						return nestedClass;
-					}
-				}
-			}
-			for(UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
-				if(anonymousClass.getName().equals(className) || anonymousClass.getName().endsWith("." + className)) {
-					return anonymousClass;
-				}
+			UMLAbstractClass nestedClass = findNestedClass(umlClass, className);
+			if(nestedClass != null) {
+				return nestedClass;
 			}
 		}
 		return null;
+	}
+
+	//the classes nested in operations and the anonymous classes, at any depth (e.g., an object literal declared in a method of an object literal)
+	private static UMLAbstractClass findNestedClass(UMLAbstractClass umlClass, String className) {
+		for(UMLOperation operation : umlClass.getOperations()) {
+			for(UMLClass nestedClass : operation.getNestedClasses()) {
+				UMLAbstractClass found = matchOrFindNestedClass(nestedClass, className);
+				if(found != null) {
+					return found;
+				}
+			}
+			for(UMLAnonymousClass anonymousClass : operation.getAnonymousClassList()) {
+				UMLAbstractClass found = matchOrFindNestedClass(anonymousClass, className);
+				if(found != null) {
+					return found;
+				}
+			}
+		}
+		for(UMLAttribute attribute : umlClass.getAttributes()) {
+			for(UMLAnonymousClass anonymousClass : attribute.getAnonymousClassList()) {
+				UMLAbstractClass found = matchOrFindNestedClass(anonymousClass, className);
+				if(found != null) {
+					return found;
+				}
+			}
+		}
+		for(UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
+			UMLAbstractClass found = matchOrFindNestedClass(anonymousClass, className);
+			if(found != null) {
+				return found;
+			}
+		}
+		return null;
+	}
+
+	private static UMLAbstractClass matchOrFindNestedClass(UMLAbstractClass umlClass, String className) {
+		if(umlClass.getName().equals(className) || umlClass.getName().endsWith("." + className)) {
+			return umlClass;
+		}
+		return findNestedClass(umlClass, className);
 	}
 
 	private Set<AbstractCodeFragment> findFieldAccesses(UMLAttribute attribute, UMLModel umlModel) {

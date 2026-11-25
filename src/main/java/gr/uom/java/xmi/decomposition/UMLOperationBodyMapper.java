@@ -1691,10 +1691,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			else if(anonymousClassList1.size() < anonymousClassList2.size() &&
 					allAnonymousClassDeclarations1.size() < anonymousClassList1.size() && allAnonymousClassDeclarations2.size() < anonymousClassList2.size()) {
+				Set<UMLAnonymousClass> matched1 = new HashSet<>();
+				Set<UMLAnonymousClass> matched2 = new HashSet<>();
+				collectMatchedAnonymousClasses(matched1, matched2);
 				for(int i=0; i<anonymousClassList1.size(); i++) {
 					UMLAnonymousClass anonymousClass1 = anonymousClassList1.get(i);
-					for(int j=0; j<anonymousClassList2.size(); j++) {
-						UMLAnonymousClass anonymousClass2 = anonymousClassList2.get(j);
+					if(matched1.contains(anonymousClass1)) {
+						continue;
+					}
+					for(UMLAnonymousClass anonymousClass2 : preferInsideMappedStatements(anonymousClass1, anonymousClassList2, true)) {
+						if(matched1.contains(anonymousClass1) || matched2.contains(anonymousClass2)) {
+							continue;
+						}
 						if(containsAnonymousClassDeclarationObjectForAnonymous(allAnonymousClassDeclarations1, anonymousClass1) ||
 								containsAnonymousClassDeclarationObjectForAnonymous(allAnonymousClassDeclarations2, anonymousClass2)) {
 							continue;
@@ -1717,6 +1725,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(matchedOperationMappers.size() > 0 || anonymousClassDiff.getCommonAtrributes().size() > 0) {
 								this.refactorings.addAll(anonymousClassDiff.getRefactorings());
 								this.anonymousClassDiffs.add(anonymousClassDiff);
+								matched1.add(anonymousClass1);
+								matched2.add(anonymousClass2);
 								if(classDiff != null) {
 									classDiff.anonymousClassesMatched(anonymousClass1, anonymousClass2);
 								}
@@ -1730,10 +1740,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			else if(anonymousClassList1.size() > anonymousClassList2.size() &&
 					allAnonymousClassDeclarations1.size() < anonymousClassList1.size() && allAnonymousClassDeclarations2.size() < anonymousClassList2.size()) {
+				Set<UMLAnonymousClass> matched1 = new HashSet<>();
+				Set<UMLAnonymousClass> matched2 = new HashSet<>();
+				collectMatchedAnonymousClasses(matched1, matched2);
 				for(int j=0; j<anonymousClassList2.size(); j++) {
 					UMLAnonymousClass anonymousClass2 = anonymousClassList2.get(j);
-					for(int i=0; i<anonymousClassList1.size(); i++) {
-						UMLAnonymousClass anonymousClass1 = anonymousClassList1.get(i);
+					if(matched2.contains(anonymousClass2)) {
+						continue;
+					}
+					for(UMLAnonymousClass anonymousClass1 : preferInsideMappedStatements(anonymousClass2, anonymousClassList1, false)) {
+						if(matched1.contains(anonymousClass1) || matched2.contains(anonymousClass2)) {
+							continue;
+						}
 						if(containsAnonymousClassDeclarationObjectForAnonymous(allAnonymousClassDeclarations1, anonymousClass1) ||
 								containsAnonymousClassDeclarationObjectForAnonymous(allAnonymousClassDeclarations2, anonymousClass2)) {
 							continue;
@@ -1756,6 +1774,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(matchedOperationMappers.size() > 0 || anonymousClassDiff.getCommonAtrributes().size() > 0) {
 								this.refactorings.addAll(anonymousClassDiff.getRefactorings());
 								this.anonymousClassDiffs.add(anonymousClassDiff);
+								matched1.add(anonymousClass1);
+								matched2.add(anonymousClass2);
 								if(classDiff != null) {
 									classDiff.anonymousClassesMatched(anonymousClass1, anonymousClass2);
 								}
@@ -1768,6 +1788,39 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	//the anonymous classes already matched by this mapper, i.e., through the mapped statements declaring them, are not matched again by their names
+	private void collectMatchedAnonymousClasses(Set<UMLAnonymousClass> matched1, Set<UMLAnonymousClass> matched2) {
+		for(UMLAnonymousClassDiff anonymousClassDiff : this.anonymousClassDiffs) {
+			matched1.add((UMLAnonymousClass)anonymousClassDiff.getOriginalClass());
+			matched2.add((UMLAnonymousClass)anonymousClassDiff.getNextClass());
+		}
+	}
+
+	//the same-named anonymous classes declared in the statement mapped with the statement declaring the anonymous class come first,
+	//i.e., the object literals of the same test, when several tests declare object literals with the same name
+	private List<UMLAnonymousClass> preferInsideMappedStatements(UMLAnonymousClass anonymousClass, List<UMLAnonymousClass> candidates, boolean anonymousClassIsBefore) {
+		List<UMLAnonymousClass> inside = new ArrayList<>();
+		List<UMLAnonymousClass> others = new ArrayList<>();
+		for(UMLAnonymousClass candidate : candidates) {
+			UMLAnonymousClass anonymousClass1 = anonymousClassIsBefore ? anonymousClass : candidate;
+			UMLAnonymousClass anonymousClass2 = anonymousClassIsBefore ? candidate : anonymousClass;
+			boolean found = false;
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment1().getLocationInfo().subsumes(anonymousClass1.getLocationInfo()) &&
+						mapping.getFragment2().getLocationInfo().subsumes(anonymousClass2.getLocationInfo())) {
+					found = true;
+					break;
+				}
+			}
+			if(found)
+				inside.add(candidate);
+			else
+				others.add(candidate);
+		}
+		inside.addAll(others);
+		return inside;
 	}
 
 	private boolean containsAnonymousClassDeclarationObjectForAnonymous(List<AnonymousClassDeclarationObject> list, UMLAnonymousClass anonymousClass) {

@@ -1240,6 +1240,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					//check if operation1 has anonymous with equal signature
 					if(anonymousClass != null) {
 						for(UMLAnonymousClass otherAnonymousClass : operation1.getAnonymousClassList()) {
+							if(!declaredInReplacedExpression(otherAnonymousClass, getFragment1(), before)) {
+								continue;
+							}
 							UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(otherAnonymousClass, anonymousClass, classDiff, classDiff != null ? classDiff.getModelDiff() : null);
 							anonymousClassDiff.process();
 							List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
@@ -1253,6 +1256,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				else {
 					//check if operation2 has anonymous with equal signature
 					for(UMLAnonymousClass otherAnonymousClass : operation2.getAnonymousClassList()) {
+						if(!declaredInReplacedExpression(otherAnonymousClass, getFragment2(), before)) {
+							continue;
+						}
 						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass, otherAnonymousClass, classDiff, classDiff != null ? classDiff.getModelDiff() : null);
 						anonymousClassDiff.process();
 						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
@@ -1262,6 +1268,17 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
+			}
+		}
+		return false;
+	}
+
+	//the anonymous class matched with the one of the variable initializer must be declared in the replaced expression of the mapped statement,
+	//i.e., Runnable r = new Runnable() {...}; exec(r); -> exec(new Runnable() {...}), never in another statement of the container
+	private static boolean declaredInReplacedExpression(UMLAnonymousClass anonymousClass, AbstractCodeFragment fragment, String replacedExpression) {
+		for(AnonymousClassDeclarationObject anonymousDeclaration : fragment.getAnonymousClassDeclarations()) {
+			if(anonymousDeclaration.getLocationInfo().equals(anonymousClass.getLocationInfo()) && replacedExpression.contains(anonymousDeclaration.toString())) {
+				return true;
 			}
 		}
 		return false;

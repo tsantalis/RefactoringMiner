@@ -6,6 +6,8 @@ import com.github.gumtreediff.utils.Pair;
 
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
+import gr.uom.java.xmi.diff.UMLClassMergeDiff;
+import gr.uom.java.xmi.diff.UMLClassRenameDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLModuleDiff;
 import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
@@ -84,6 +86,8 @@ public class ProjectASTDiffer
 		makeASTDiffForModuleInfos(modelDiff.getModuleDiffList(),false);
 		makeASTDiff(withCorrectOrder(modelDiff.getClassRenameDiffList()),false);
 		makeASTDiff(withCorrectOrder(modelDiff.getClassMoveDiffList()),false);
+		//each class merged into another class is diffed with the merged class, as a renamed class
+		makeASTDiffForMergedClasses();
 		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
 		makeASTDiff(getExtraDiffs(),true);
 		//Process the ModelDiffRefactorings once at the end
@@ -171,6 +175,24 @@ public class ProjectASTDiffer
 		return null;
 	}
 
+	//each class merged into another class is diffed with the merged class as a renamed class, in its own diff of the file pair,
+	//without the refactorings of the other classes merged into the same class, i.e., the same variable extracted in each of them
+	private void makeASTDiffForMergedClasses() {
+		for (UMLClassMergeDiff classMergeDiff : modelDiff.getClassMergeDiffList()) {
+			for (UMLClassRenameDiff classDiff : classMergeDiff.getClassRenameDiffs()) {
+				Set<String> otherMergedClassPaths = new HashSet<>();
+				for (UMLClassRenameDiff otherClassDiff : classMergeDiff.getClassRenameDiffs())
+					if (otherClassDiff != classDiff)
+						otherMergedClassPaths.add(otherClassDiff.getOriginalClass().getLocationInfo().getFilePath());
+				List<Refactoring> refactorings = new ArrayList<>();
+				for (Refactoring refactoring : modelDiffRefactorings)
+					if (refactoring.getInvolvedClassesBeforeRefactoring().stream().noneMatch(pair -> otherMergedClassPaths.contains(pair.getLeft())))
+						refactorings.add(refactoring);
+				makeASTDiff(List.of(classDiff), false, true, refactorings);
+			}
+		}
+	}
+
 	private List<? extends UMLAbstractClassDiff> getExtraDiffs() {
 		List<UMLAbstractClassDiff> extraDiffs = new ArrayList<>();
 		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
@@ -203,11 +225,16 @@ public class ProjectASTDiffer
 	}
 
 	private void makeASTDiff(List<? extends UMLAbstractClassDiff> umlClassBaseDiffList, boolean mergeFlag){
+		makeASTDiff(umlClassBaseDiffList, mergeFlag, false, modelDiffRefactorings);
+	}
+
+	//the classes merged into the same class have their own file diffs with the file of the merged class, so they are appended only to a diff of the same file pair
+	private void makeASTDiff(List<? extends UMLAbstractClassDiff> umlClassBaseDiffList, boolean mergeFlag, boolean sameFilePair, List<Refactoring> refactorings){
 		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
-			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), classDiff.getOriginalClass().getSourceFile(), classDiff.getNextClass().getSourceFile(), false);
+			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), classDiff.getOriginalClass().getSourceFile(), classDiff.getNextClass().getSourceFile(), sameFilePair);
 			boolean decision = (!appends.isEmpty()) || mergeFlag;
 			classDiffsBySrcPath.computeIfAbsent(classDiff.getOriginalClass().getLocationInfo().getFilePath(), k -> new ArrayList<>()).add(classDiff);
-			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision, appends);
+			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision, appends, refactorings);
 			if (!appends.isEmpty()) {
 				for (ASTDiff append : appends) {
 					append.getAllMappings().mergeMappings(classASTDiff.getAllMappings());
@@ -216,7 +243,7 @@ public class ProjectASTDiffer
 			else {
 				projectASTDiff.addASTDiff(classASTDiff);
 			}
-			makeASTDiff(classDiff.getNestedClassDiffList(), mergeFlag);
+			makeASTDiff(classDiff.getNestedClassDiffList(), mergeFlag, sameFilePair, refactorings);
 		}
 	}
 
@@ -275,7 +302,7 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair, boolean mergeFlag, Collection<ASTDiff> appends){
+	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair, boolean mergeFlag, Collection<ASTDiff> appends, List<Refactoring> refactorings){
 		Tree srcTree = treeContextPair.first.getRoot();
 		Tree dstTree = treeContextPair.second.getRoot();
 		String srcPath = classDiff.getOriginalClass().getLocationInfo().getFilePath();
@@ -308,7 +335,7 @@ public class ProjectASTDiffer
 				}
 			}
 		}
-		new ClassDiffMatcher(optimizationData, classDiff, mergeFlag, modelDiffRefactorings, astDiff.LANG1, astDiff.LANG2).match(srcTree, dstTree, mappingStore);
+		new ClassDiffMatcher(optimizationData, classDiff, mergeFlag, refactorings, astDiff.LANG1, astDiff.LANG2).match(srcTree, dstTree, mappingStore);
 		return astDiff;
 	}
 

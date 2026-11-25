@@ -211,7 +211,11 @@ public class UnifiedModelDiffRefactoringsMatcher {
     }
 
     private void findDiffsAndApplyMatcher(String srcPath, String dstPath, OptimizationAwareMatcher matcher) {
-        Collection<ASTDiff> diffs = findAppends(diffSet, srcPath, dstPath, false);
+        //a diff of the same file pair, i.e., of a class merged into another class, takes the mappings alone,
+        //as the diffs of the other classes merged into the same class share only its destination file
+        Collection<ASTDiff> diffs = findAppends(diffSet, srcPath, dstPath, true);
+        if (diffs.isEmpty())
+            diffs = findAppends(diffSet, srcPath, dstPath, false);
         if (diffs.isEmpty()) {
             //This means that the there is no astDiff associated with the refactoring,
             //It could be a case of move from a deleted file to an added file which neither of them have an equivalent file in the other side.

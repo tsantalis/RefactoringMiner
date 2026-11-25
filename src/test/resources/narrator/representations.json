@@ -3366,7 +3366,7 @@
     "base_commit": "7ed972d070f9c1f8d89cc226568e61e3b5f2a6f5",
     "description": "epoll drops edge-triggered mode: every read loop ends with shouldStopReading/clearEpollIn instead of epollInFinally; EpollMode and its setters are deprecated no-ops; the ET/LT variants of six tests are merged into one test each, and those of the busy-wait echo test are deleted",
     "notes": [
-      "RM reports each ET/LT pair of tests as a Merge Class into one EpollSocket*Test, but its AST diff maps only the moved newFactories(): the class declarations, the license header, the package and the imports of both merged classes are unmapped, so each family prints as two whole deleted files and one whole added file (about 120 lines for a 9-line change), where the raw diff shows the ET test renamed with configure() removed.",
+      "RM reports each ET/LT pair of tests as a Merge Class into one EpollSocket*Test, and its AST diff reads the merged test against each merged class (Issue #1217): each family prints the class renamed and configure() removed once per merged class, where the raw diff shows the ET test renamed with configure() removed and the LT test deleted. Narrator follow-up: the rename of the LT test is printed as moved to the rename of the ET test (moved_to), as two files diffed with the same file read as a move between them.",
       "The five read loop bodies (four epollInReady and EpollDomainSocketChannel#epollInReadFd) are printed whole, as their changes reach from their first statements to their finally blocks.",
       "shouldStopReading, whose comment and condition come from the else branch of the removed epollInFinally (RM maps that branch to the new if statements of its callers), reads in one diff with the removed epollInBefore, epollInFinally and executeEpollInReadyRunnable it replaces, as code moved within one class.",
       "The unchanged callers of the changed maybeMoreDataToRead (the maybeMoreDataSupplier of EpollRecvByteAllocatorHandle) and the readers of the now no-op getEpollMode (the spliceTo checks) are usages; the location of the supplier names its method (#get), not the field declaring the anonymous class.",
@@ -3418,31 +3418,34 @@
         "after": "allocHandle.attemptedBytesRead(1);"
       },
       {
-        "description": "the production code reads before the merged tests",
+        "description": "the production code reads before the merged tests (the ET test merged)",
         "kind": "order",
         "before": "LOGGER.debug(\"Changing the EpollMode is not supported anymore, this is just a no-op\");",
-        "after": "public class EpollSocketReadPendingTest extends SocketReadPendingTest {"
+        "after": "-public class EpollETSocketReadPendingTest extends SocketReadPendingTest {\n+public class EpollSocketReadPendingTest extends SocketReadPendingTest {"
+      },
+      {
+        "description": "the production code reads before the merged tests (the LT test merged)",
+        "kind": "order",
+        "before": "LOGGER.debug(\"Changing the EpollMode is not supported anymore, this is just a no-op\");",
+        "after": "-public class EpollLTSocketReadPendingTest extends SocketReadPendingTest {\n+public class EpollSocketReadPendingTest extends SocketReadPendingTest {"
       },
       {
         "description": "the unchanged newFactories() of a merged test is not marked as changed",
         "kind": "unchanged",
         "file": "transport-native-epoll/src/test/java/io/netty/channel/epoll/EpollSocketAutoReadTest.java",
-        "code": "return EpollSocketTestPermutation.INSTANCE.socketWithFastOpen();",
-        "todo": "RM (to report): ProjectASTDiffer makes no AST diff for the class rename diffs of a UMLClassMergeDiff (UMLModelDiff.classMergeDiffList, not exposed), so for the Merge Class [EpollETSocketAutoReadTest, EpollLTSocketAutoReadTest] -> EpollSocketAutoReadTest only the move diffs of newFactories() exist: their roots, type declarations, license comments, package declarations and identical imports are unmapped (deleted from each source, inserted in the target)"
+        "code": "return EpollSocketTestPermutation.INSTANCE.socketWithFastOpen();"
       },
       {
         "description": "the license header of a merged test is not printed as added whole",
         "kind": "absent",
         "text": "+/*\n+ * Copyright 2016 The Netty Project",
-        "of": "diff",
-        "todo": "RM (to report): the license comment of EpollSocketAutoReadTest (and of the five other merged tests) is inserted in the move diffs of its Merge Class instead of mapped to the comments of the merged classes, as the merged classes have no AST diff (see the newFactories() expectation)"
+        "of": "diff"
       },
       {
         "description": "a merged test reads as the class renamed and configure() removed against each merged class",
         "kind": "contains",
         "text": "-public class EpollLTSocketAutoReadTest extends SocketAutoReadTest {\n+public class EpollSocketAutoReadTest extends SocketAutoReadTest {",
-        "of": "diff",
-        "todo": "RM (to report): the type declarations of the classes of a Merge Class are not mapped to the merged class (see the newFactories() expectation)"
+        "of": "diff"
       },
       {
         "description": "the maybeMoreDataSupplier calling the changed maybeMoreDataToRead is a usage",

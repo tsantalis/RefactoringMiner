@@ -416,6 +416,10 @@ public class UMLModelDiff {
 		return classRenameDiffList;
 	}
 
+	public List<UMLClassMergeDiff> getClassMergeDiffList() {
+		return classMergeDiffList;
+	}
+
 	public List<UMLAttributeDiff> getMovedAttributeDiffList() {
 		return movedAttributeDiffList;
 	}

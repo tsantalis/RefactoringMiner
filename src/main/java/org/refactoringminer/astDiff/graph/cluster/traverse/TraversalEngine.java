@@ -435,13 +435,13 @@ public class TraversalEngine {
             Set<Node> mappings = new HashSet<>();
             mappings.addAll(util.getMappingSources(c1Node));
             mappings.addAll(util.getMappingTargets(c1Node));
-            Optional<Node> optionalMapping = mappings.stream().findFirst();
-            if (optionalMapping.isEmpty()) {
-                continue;
+            // a node may have several mappings, i.e., the merged class mapped to each class merged into it, and only one of them may be in the other contexts
+            for (Node mapping : mappings) {
+                int idx = c2.indexOf(mapping);
+                if (idx != -1 && (c2Idx == -1 || idx < c2Idx)) {
+                    c2Idx = idx;
+                }
             }
-
-            Node mapping = optionalMapping.get();
-            c2Idx = c2.indexOf(mapping);
             if (c2Idx != -1) {
                 c1Idx = i;
                 break;

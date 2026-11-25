@@ -24,11 +24,18 @@ public class TypeScriptCalleeUnwrappingTest {
 				"const res8 = (target = fnTarget)(args);\n" +
 				"const res9 = genericFn<string>(args);\n" +
 				"const res10 = (Foo == null ? void 0 : Foo.m)();\n" +
-				"const res11 = new Function()();\n";
+				"const res11 = new Function()();\n" +
+				"const res12 = (<any>fn)(args);\n" +
+				"const res13 = (cond ? fnA : fnB)(args);\n" +
+				"const res14 = (this)(args);\n" +
+				"const res15 = (getFn?.())(args);\n" +
+				"const res16 = getFn()(args);\n" +
+				"async function a() { return (await fetchFn)(args); }\n" +
+				"function* g() { return (yield genFn)(args); }\n";
 		UMLModel model = GitHistoryRefactoringMinerImpl.createModel(Map.of("src/test.ts", code), Set.of("src"));
 		UMLClass moduleClass = model.getClassList().get(0);
 		List<AbstractCall> calls = moduleClass.getContainer().get().getAllOperationInvocations();
-		assertEquals(11, calls.size());
+		assertEquals(17, calls.size());
 		assertEquals("ParseErrorEnum", calls.get(0).getName());
 		assertEquals("some", calls.get(1).getName());
 		assertEquals("fn", calls.get(2).getName());
@@ -40,5 +47,15 @@ public class TypeScriptCalleeUnwrappingTest {
 		assertEquals("genericFn", calls.get(8).getName());
 		assertEquals("m", calls.get(9).getName());
 		assertEquals("", calls.get(10).getName());
+		assertEquals("fn", calls.get(11).getName());
+		assertEquals("fnA", calls.get(12).getName());
+		assertEquals("this", calls.get(13).getName());
+		assertEquals("getFn", calls.get(14).getName());
+		assertEquals("getFn", calls.get(15).getName());
+		assertEquals("getFn", calls.get(16).getName());
+		UMLOperation a = moduleClass.getOperations().get(0);
+		assertEquals("fetchFn", a.getAllOperationInvocations().get(0).getName());
+		UMLOperation g = moduleClass.getOperations().get(1);
+		assertEquals("", g.getAllOperationInvocations().get(0).getName());
 	}
 }

@@ -82,6 +82,14 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.enums.Swc4jAstUnaryOp;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCondExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstOptChainExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSeqExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsTypeAssertion;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstUnaryExpr;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNull;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSuperPropExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsNonNullExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
@@ -1410,6 +1418,29 @@ public class OperationInvocation extends AbstractCall {
 		if(callee instanceof Swc4jAstCallExpr callExpr) {
 			callee = callExpr.getCallee();
 		}
+		//the function wrapped in parentheses, type assertions or the expressions of transpiled code is the function,
+		//i.e., fn in (fn as any)(args), fn!(args) and (0, fn)(args), and m in (Foo == null ? void 0 : Foo.m)() and (plugins?.m)(args)
+		boolean parenthesized = false;
+		while(true) {
+			if(callee instanceof Swc4jAstParenExpr parenExpr) {
+				parenthesized = true;
+				callee = parenExpr.getExpr();
+			}
+			else if(callee instanceof Swc4jAstTsAsExpr asExpr)
+				callee = asExpr.getExpr();
+			else if(callee instanceof Swc4jAstTsTypeAssertion assertion)
+				callee = assertion.getExpr();
+			else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr)
+				callee = nonNullExpr.getExpr();
+			else if(callee instanceof Swc4jAstSeqExpr seqExpr && !seqExpr.getExprs().isEmpty())
+				callee = seqExpr.getExprs().get(seqExpr.getExprs().size() - 1);
+			else if(callee instanceof Swc4jAstOptChainExpr optChain && optChain.getBase() instanceof Swc4jAstMemberExpr memberExpr)
+				callee = memberExpr;
+			else if(callee instanceof Swc4jAstCondExpr condExpr && nullish(condExpr.getCons()))
+				callee = condExpr.getAlt();
+			else
+				break;
+		}
 		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
 			ISwc4jAstMemberProp prop = memberExpr.getProp();
 			if(prop instanceof Swc4jAstPrivateName privateName)
@@ -1421,36 +1452,12 @@ public class OperationInvocation extends AbstractCall {
 			ISwc4jAstExpr receiver = memberExpr.getObj();
 			this.expression = TypeScriptVisitor.text(fileContent, receiver);
 		}
-		else if(callee instanceof Swc4jAstParenExpr parenExpr) {
-			ISwc4jAstExpr expr = parenExpr.getExpr();
-			if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
-				//self-invoking asynchronous arrow function (also known as an Immediately Invoked Function Expression, or IIFE)
-			}
-			this.methodName = "";
-		}
 		else if(callee instanceof Swc4jAstIdent ident) {
 			this.methodName = ident.getSym();
 		}
-		else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr) {
-			ISwc4jAstExpr expr = nonNullExpr.getExpr();
-			if(expr instanceof Swc4jAstMemberExpr memberExpr) {
-				ISwc4jAstMemberProp prop = memberExpr.getProp();
-				if(prop instanceof Swc4jAstPrivateName privateName)
-					this.methodName = privateName.getName();
-				else if(prop instanceof Swc4jAstIdentName ident)
-					this.methodName = ident.getSym();
-				else if(prop instanceof Swc4jAstComputedPropName propName)
-					this.methodName = TypeScriptVisitor.text(fileContent, propName.getExpr());
-				ISwc4jAstExpr receiver = memberExpr.getObj();
-				this.expression = TypeScriptVisitor.text(fileContent, receiver);
-			}
-			else if(expr instanceof Swc4jAstIdent ident) {
-				this.methodName = ident.getSym();
-			}
-			else if(expr instanceof Swc4jAstCallExpr) {
-				//f()!() is used to call a function that returns another function
-				this.methodName = "";
-			}
+		else if(callee instanceof Swc4jAstArrowExpr || callee instanceof Swc4jAstCallExpr) {
+			//self-invoking arrow function (also known as an Immediately Invoked Function Expression, or IIFE), and f()!() calling a function returned by a function
+			this.methodName = "";
 		}
 		else if(callee instanceof Swc4jAstImport astImport) {
 			Swc4jAstImportPhase phase = astImport.getPhase();
@@ -1473,9 +1480,10 @@ public class OperationInvocation extends AbstractCall {
 			//f()() is used to call a function that returns another function
 			this.methodName = "";
 		}
-		//any other function expression is named by its code, i.e., template.expression`BASE(REF, PROP)[PROP]` in template.expression`BASE(REF, PROP)[PROP]`({ ... })
+		//any other function expression is named by its code, i.e., template.expression`BASE(REF, PROP)[PROP]` in template.expression`BASE(REF, PROP)[PROP]`({ ... }),
+		//except in parentheses, i.e., (fn1 || fn2)(args)
 		if(this.methodName == null) {
-			this.methodName = TypeScriptVisitor.text(fileContent, callee);
+			this.methodName = parenthesized ? "" : TypeScriptVisitor.text(fileContent, callee);
 		}
 		this.arguments = new ArrayList<String>();
 		this.numberOfArguments = invocation.getArgs().size();
@@ -1495,6 +1503,13 @@ public class OperationInvocation extends AbstractCall {
 				addTypeArgument(type);
 			}
 		}
+	}
+
+	//undefined, null or void 0, i.e., the first branch of Foo == null ? void 0 : Foo.m in transpiled optional chaining
+	private static boolean nullish(ISwc4jAstExpr expr) {
+		return expr instanceof Swc4jAstUnaryExpr unary && unary.getOp() == Swc4jAstUnaryOp.Void
+				|| expr instanceof Swc4jAstIdent ident && ident.getSym().equals("undefined")
+				|| expr instanceof Swc4jAstNull;
 	}
 
 	public OperationInvocation(String sourceFolder, String filePath, IASTFunctionCallExpression invocation, VariableDeclarationContainer container, String fileContent) {

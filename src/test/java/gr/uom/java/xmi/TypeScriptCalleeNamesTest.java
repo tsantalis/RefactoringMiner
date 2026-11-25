@@ -11,7 +11,7 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
 
-//the names of the constructors and functions of TypeScript calls whose callee is not a name, which were null (PR #1228, babel 0f68471ef7 and 3caeeb1883)
+//the names of the constructors and functions of TypeScript calls whose callee is not a name, which were null or empty (PR #1228 and #1229)
 public class TypeScriptCalleeNamesTest {
 	@Test
 	public void testObjectCreationNames() throws Exception {
@@ -39,6 +39,22 @@ public class TypeScriptCalleeNamesTest {
 				"const t2 = tag`x`();\n";
 		List<AbstractCall> invocations = module(code).getContainer().get().getAllOperationInvocations();
 		assertEquals(List.of("template.expression`BASE(REF)`", "tag`x`"), invocations.stream().map(AbstractCall::getName).toList());
+	}
+
+	@Test
+	public void testWrappedOperationInvocationNames() throws Exception {
+		String code = "const r1 = (0, fn)(args);\n" +
+				"const r2 = (fn as any)(args);\n" +
+				"const r3 = (<any>fn)(args);\n" +
+				"const r4 = fn!(args);\n" +
+				"const r5 = (Foo == null ? void 0 : Foo.m)();\n" +
+				"const r6 = (plugins?.some)(args);\n" +
+				"const r7 = (fn1 || fn2)(args);\n" +
+				"const r8 = (() => 1)();\n";
+		List<AbstractCall> invocations = module(code).getContainer().get().getAllOperationInvocations();
+		assertEquals(List.of("fn", "fn", "fn", "fn", "m", "some", "", ""), invocations.stream().map(AbstractCall::getName).toList());
+		assertEquals("Foo", invocations.get(4).getExpression());
+		assertEquals("plugins", invocations.get(5).getExpression());
 	}
 
 	private static UMLClass module(String code) throws Exception {

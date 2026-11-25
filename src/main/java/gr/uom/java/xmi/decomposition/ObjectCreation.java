@@ -44,12 +44,18 @@ import org.jetbrains.kotlin.psi.ValueArgument;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstClassExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsInstantiation;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsNonNullExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsTypeAssertion;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
@@ -439,6 +445,24 @@ public class ObjectCreation extends AbstractCall {
 	public ObjectCreation(String sourceFolder, String filePath, Swc4jAstNewExpr invocation, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container, fileContent);
 		ISwc4jAstCallee callee = invocation.getCallee();
+		//the class wrapped in parentheses, type assertions or type arguments is the class, i.e., Foo in new (Foo as any)(), new Foo!() and new (Foo<string>)()
+		Optional<Swc4jAstTsTypeParamInstantiation> calleeTypeArgs = Optional.empty();
+		while(true) {
+			if(callee instanceof Swc4jAstParenExpr parenExpr)
+				callee = parenExpr.getExpr();
+			else if(callee instanceof Swc4jAstTsAsExpr asExpr)
+				callee = asExpr.getExpr();
+			else if(callee instanceof Swc4jAstTsTypeAssertion assertion)
+				callee = assertion.getExpr();
+			else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr)
+				callee = nonNullExpr.getExpr();
+			else if(callee instanceof Swc4jAstTsInstantiation instantiation) {
+				calleeTypeArgs = Optional.of(instantiation.getTypeArgs());
+				callee = instantiation.getExpr();
+			}
+			else
+				break;
+		}
 		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
 			ISwc4jAstMemberProp prop = memberExpr.getProp();
 			if(prop instanceof Swc4jAstPrivateName privateName)
@@ -453,19 +477,16 @@ public class ObjectCreation extends AbstractCall {
 		else if(callee instanceof Swc4jAstIdent ident) {
 			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
 		}
-		else if(callee instanceof Swc4jAstTsNonNullExpr nonNullExpr) {
-			ISwc4jAstExpr expr = nonNullExpr.getExpr();
-			if(expr instanceof Swc4jAstMemberExpr memberExpr) {
-				ISwc4jAstMemberProp prop = memberExpr.getProp();
-				if(prop instanceof Swc4jAstPrivateName privateName)
-					this.type = UMLType.extractTypeObject(privateName.getName(), LANG);
-				else if(prop instanceof Swc4jAstIdentName ident)
-					this.type = UMLType.extractTypeObject(ident.getSym(), LANG);
-				else if(prop instanceof Swc4jAstComputedPropName propName)
-					this.type = UMLType.extractTypeObject(TypeScriptVisitor.text(fileContent, propName.getExpr()), LANG);
-				ISwc4jAstExpr receiver = memberExpr.getObj();
-				this.expression = TypeScriptVisitor.text(fileContent, receiver);
-			}
+		//a class or function expression is named by its name, or its keyword when it has none, and not by its body, i.e., Named in new class Named {}() and class in new class {}()
+		else if(callee instanceof Swc4jAstClassExpr classExpr) {
+			this.type = UMLType.extractTypeObject(classExpr.getIdent().map(Swc4jAstIdent::getSym).orElse("class"), LANG);
+		}
+		else if(callee instanceof Swc4jAstFnExpr fnExpr) {
+			this.type = UMLType.extractTypeObject(fnExpr.getIdent().map(Swc4jAstIdent::getSym).orElse("function"), LANG);
+		}
+		//any other constructor expression is named by its code, i.e., canUseWeakSet ? WeakSet : Set in new (canUseWeakSet ? WeakSet : Set)(), getCtor() in new (getCtor())() and new.target in new new.target()
+		if(this.type == null) {
+			this.type = UMLType.extractTypeObject(TypeScriptVisitor.text(fileContent, callee), LANG);
 		}
 		this.arguments = new ArrayList<String>();
 		Optional<List<Swc4jAstExprOrSpread>> args = invocation.getArgs();
@@ -481,7 +502,7 @@ public class ObjectCreation extends AbstractCall {
 				this.arguments.add(s);
 			}
 		}
-		Optional<Swc4jAstTsTypeParamInstantiation> typeArgs = invocation.getTypeArgs();
+		Optional<Swc4jAstTsTypeParamInstantiation> typeArgs = invocation.getTypeArgs().isPresent() ? invocation.getTypeArgs() : calleeTypeArgs;
 		if(typeArgs.isPresent()) {
 			List<ISwc4jAstTsType> typeArguments = typeArgs.get().getParams();
 			for(ISwc4jAstTsType typeArgument : typeArguments) {

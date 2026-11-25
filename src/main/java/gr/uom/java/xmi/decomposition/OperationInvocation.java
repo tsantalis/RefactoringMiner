@@ -1473,6 +1473,10 @@ public class OperationInvocation extends AbstractCall {
 			//f()() is used to call a function that returns another function
 			this.methodName = "";
 		}
+		//any other function expression is named by its code, i.e., template.expression`BASE(REF, PROP)[PROP]` in template.expression`BASE(REF, PROP)[PROP]`({ ... })
+		if(this.methodName == null) {
+			this.methodName = TypeScriptVisitor.text(fileContent, callee);
+		}
 		this.arguments = new ArrayList<String>();
 		this.numberOfArguments = invocation.getArgs().size();
 		for(Swc4jAstExprOrSpread arg : invocation.getArgs()) {

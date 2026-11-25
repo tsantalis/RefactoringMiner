@@ -1393,12 +1393,14 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 			else if(parent instanceof Swc4jAstVarDeclarator declarator) {
 				List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
-				String fieldName = identifiers.get(0).getId().getSym();
-				if(name.isEmpty()) {
-					name = fieldName;
-				}
-				else {
-					name = fieldName + "." + name;
+				if(!identifiers.isEmpty()) {
+					String fieldName = identifiers.get(0).getId().getSym();
+					if(name.isEmpty()) {
+						name = fieldName;
+					}
+					else {
+						name = fieldName + "." + name;
+					}
 				}
 			}
 			else if(parent instanceof Swc4jAstKeyValueProp keyValueProp) {

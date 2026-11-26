@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import gr.uom.java.xmi.PythonFileProcessor;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLCommentGroup;
+import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -491,7 +493,11 @@ public class UMLCommentListDiff {
 	//may be mapped by another such mapper
 	private boolean isCommentNestedInNonMappedStatement(UMLComment comment, boolean before) {
 		if(operationBodyMapper != null && !operationBodyMapper.isMoveCode() && !sharesBodyWithParentMapper(before)) {
-			List<AbstractCodeFragment> nonMappedLeaves = before ? operationBodyMapper.getNonMappedLeavesT1() : operationBodyMapper.getNonMappedLeavesT2();
+			List<AbstractCodeFragment> nonMappedLeaves = new ArrayList<>(before ? operationBodyMapper.getNonMappedLeavesT1() : operationBodyMapper.getNonMappedLeavesT2());
+			//the comments of the test callbacks are matched by the comment diff of the module, while their statements are matched by the callback mappers
+			if(operationBodyMapper.getContainer1() instanceof ModuleContainer && operationBodyMapper.getContainer2() instanceof ModuleContainer) {
+				collectNonMappedLeavesOfLambdaMappers(operationBodyMapper, before, nonMappedLeaves, Collections.newSetFromMap(new IdentityHashMap<>()));
+			}
 			for(AbstractCodeFragment leaf : nonMappedLeaves) {
 				if(withinLines(List.of(comment), leaf.getLocationInfo())) {
 					return true;
@@ -499,6 +505,19 @@ public class UMLCommentListDiff {
 			}
 		}
 		return false;
+	}
+
+	private static void collectNonMappedLeavesOfLambdaMappers(UMLOperationBodyMapper mapper, boolean before, List<AbstractCodeFragment> nonMappedLeaves, Set<UMLOperationBodyMapper> visited) {
+		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<>(mapper.getLambdaMappers());
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			lambdaMappers.addAll(mapping.getLambdaMappers());
+		}
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			if(visited.add(lambdaMapper)) {
+				nonMappedLeaves.addAll(before ? lambdaMapper.getNonMappedLeavesT1() : lambdaMapper.getNonMappedLeavesT2());
+				collectNonMappedLeavesOfLambdaMappers(lambdaMapper, before, nonMappedLeaves, visited);
+			}
+		}
 	}
 
 	private boolean sharesBodyWithParentMapper(boolean before) {

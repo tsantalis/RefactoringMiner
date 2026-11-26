@@ -5,6 +5,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -22,6 +23,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.Constants;
@@ -972,7 +974,45 @@ public class VariableReplacementAnalysis {
 				return true;
 			}
 		}
+		//the innermost container matched by a nested mapper, whose counterpart does not contain the other scope,
+		//i.e., dataIdFromObject: (obj: any) => {...} in the object literals of different tests, matched by the mappers of the test callbacks of a module
+		Pair<LocationInfo, LocationInfo> innermost = null;
+		for(Pair<LocationInfo, LocationInfo> pair : nestedMatchedContainers()) {
+			if(pair.getLeft().subsumes(scope1.getLocationInfo()) && (innermost == null || innermost.getLeft().subsumes(pair.getLeft()))) {
+				innermost = pair;
+			}
+		}
+		if(innermost != null && !innermost.getRight().subsumes(scope2.getLocationInfo())) {
+			return true;
+		}
 		return false;
+	}
+
+	private List<Pair<LocationInfo, LocationInfo>> nestedMatchedContainers;
+
+	//the containers matched by the lambda mappers of the mapper and of its mappings, and by the operation mappers of its anonymous class diffs, at any depth
+	private List<Pair<LocationInfo, LocationInfo>> nestedMatchedContainers() {
+		if(nestedMatchedContainers == null) {
+			nestedMatchedContainers = new ArrayList<>();
+			collectNestedMatchedContainers(mapper, Collections.newSetFromMap(new IdentityHashMap<>()));
+		}
+		return nestedMatchedContainers;
+	}
+
+	private void collectNestedMatchedContainers(UMLOperationBodyMapper parent, Set<UMLOperationBodyMapper> visited) {
+		List<UMLOperationBodyMapper> nestedMappers = new ArrayList<>(parent.getLambdaMappers());
+		for(AbstractCodeMapping mapping : parent.getMappings()) {
+			nestedMappers.addAll(mapping.getLambdaMappers());
+		}
+		for(UMLAnonymousClassDiff anonymousClassDiff : parent.getAnonymousClassDiffs()) {
+			nestedMappers.addAll(anonymousClassDiff.getOperationBodyMapperList());
+		}
+		for(UMLOperationBodyMapper nestedMapper : nestedMappers) {
+			if(visited.add(nestedMapper)) {
+				nestedMatchedContainers.add(Pair.of(nestedMapper.getContainer1().getLocationInfo(), nestedMapper.getContainer2().getLocationInfo()));
+				collectNestedMatchedContainers(nestedMapper, visited);
+			}
+		}
 	}
 
 	private boolean mappedStatementWithinVariableScopes(VariableDeclaration removedVariable, VariableDeclaration addedVariable) {

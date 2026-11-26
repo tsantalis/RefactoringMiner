@@ -121,6 +121,7 @@ public enum RefactoringType {
 	REPLACE_ASSERTION_WITH_ASSUMPTION("Replace Assertion With Assumption", "Replace Assertion With Assumption (.+) to (.+) in method (.+) from class (.+)"),
 	REPLACE_IGNORE_WITH_ASSUMPTION("Replace Ignore With Assumption", "Replace Ignore With Assumption (.+) to (.+) in method (.+) from class (.+)"),
 	EXTRACT_FIXTURE("Extract Fixture", "Extract Fixture (.+) extracted from (.+) in class (.+)"),
+	SPLIT_FIXTURE("Split Fixture", "Split Fixture (.+) split from (.+) in class (.+)"),
 	MOVE_ANNOTATION("Move Annotation", "Move Annotation (.+) from (.+) to (.+)");
 
 	private String displayName;
@@ -236,6 +237,7 @@ public enum RefactoringType {
 		REPLACE_ASSERTION_WITH_ASSUMPTION,
 		REPLACE_IGNORE_WITH_ASSUMPTION,
 		EXTRACT_FIXTURE,
+		SPLIT_FIXTURE,
 		MOVE_ANNOTATION
 	};
 

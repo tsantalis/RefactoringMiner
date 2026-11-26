@@ -151,6 +151,17 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		if(importsType("junit.framework.TestCase")) {
 			operation.setImportsTestCase(true);
 		}
+		boolean importsJUnit3 = false, importsAnnotationTestFramework = false;
+		for(UMLImport imported : importedTypes) {
+			String importedName = imported.getName();
+			if(importedName.startsWith("junit.framework")) {
+				importsJUnit3 = true;
+			}
+			else if(importedName.startsWith("org.junit") || importedName.startsWith("org.testng")) {
+				importsAnnotationTestFramework = true;
+			}
+		}
+		operation.setTestFrameworkImports(importsJUnit3, importsAnnotationTestFramework, getSuperclass() != null);
 		List<String> signature = operation.getSignatureIdentifiers();
 		if(operationIdentifierSignatureMap.containsKey(signature)) {
 			operationIdentifierSignatureMap.put(signature, operationIdentifierSignatureMap.get(signature) + 1);

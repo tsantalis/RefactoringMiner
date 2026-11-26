@@ -25,7 +25,13 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 
 	private static boolean addClassName(AnnotationProvider provider, RefactoringType refactoringType) {
 		return !(provider instanceof UMLAbstractClass) && !refactoringType.equals(RefactoringType.MOVE_RENAME_ATTRIBUTE) &&
-				!refactoringType.equals(RefactoringType.MOVE_CODE) && !refactoringType.equals(RefactoringType.EXTRACT_FIXTURE);
+				!refactoringType.equals(RefactoringType.MOVE_CODE) && !refactoringType.equals(RefactoringType.EXTRACT_FIXTURE) &&
+				!refactoringType.equals(RefactoringType.SPLIT_FIXTURE);
+	}
+
+	//Extract Fixture and Split Fixture name the new fixture first, then the method its code came from
+	private boolean isFixtureExtraction() {
+		return getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) || getRefactoringType().equals(RefactoringType.SPLIT_FIXTURE);
 	}
 
 	public String toString() {
@@ -46,7 +52,7 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 		if(getRefactoringType().equals(RefactoringType.MOVE_CODE)) {
 			sb.append("from ");
 		}
-		String codeElementDescription1 = codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderAfter() : getProviderBefore());
+		String codeElementDescription1 = codeElementDescription(isFixtureExtraction() ? getProviderAfter() : getProviderBefore());
 		if(decorator.equals(Decorator.HTML)) {
 			codeElementDescription1 = escapeHTML(codeElementDescription1);
 		}
@@ -60,7 +66,7 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 			sb.append(decorator.LINK_OPEN).append(getProviderBefore().getClassName()).append(decorator.LINK_CLOSE);
 		}
 		appendTextBetweenMovedElements(sb);
-		String codeElementDescription2 = codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderBefore() : getProviderAfter());
+		String codeElementDescription2 = codeElementDescription(isFixtureExtraction() ? getProviderBefore() : getProviderAfter());
 		if(decorator.equals(Decorator.HTML)) {
 			codeElementDescription2 = escapeHTML(codeElementDescription2);
 		}
@@ -69,7 +75,7 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 			sb.append(" from class ");
 			sb.append(decorator.LINK_OPEN).append(getProviderAfter().getClassName()).append(decorator.LINK_CLOSE);
 		}
-		else if(getRefactoringType().equals(RefactoringType.MOVE_CODE) || getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE)) {
+		else if(getRefactoringType().equals(RefactoringType.MOVE_CODE) || isFixtureExtraction()) {
 			sb.append(" in class ");
 			sb.append(decorator.LINK_OPEN).append(getProviderAfter().getClassName()).append(decorator.LINK_CLOSE);
 		}
@@ -95,6 +101,8 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 			sb.append(" renamed to ");
 		else if(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE))
 			sb.append(" extracted from ");
+		else if(getRefactoringType().equals(RefactoringType.SPLIT_FIXTURE))
+			sb.append(" split from ");
 		else
 			sb.append(" to ");
 	}

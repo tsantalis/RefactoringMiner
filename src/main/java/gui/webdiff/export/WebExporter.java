@@ -7,19 +7,37 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import gui.webdiff.WebDiff;
 import org.refactoringminer.astDiff.models.ASTDiff;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystemAlreadyExistsException;
+import java.nio.file.FileSystemNotFoundException;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /* Created by pourya on 2025-02-12*/
 public class WebExporter {
@@ -42,6 +60,11 @@ public class WebExporter {
     List<String> addedFiles = List.of();
     final String contentFolder = "content";
 
+    @FunctionalInterface
+    private interface ExportTarget {
+        void write(String relativePath, byte[] content) throws IOException;
+    }
+
     public void setViewers_path(Set<String> viewers_path) {
         this.viewers_path = viewers_path;
     }
@@ -63,20 +86,64 @@ public class WebExporter {
         this.webDiff = webDiff;
     }
 
-    public void export(String exportPath){
-        if (!exportPath.endsWith(File.separator))
-            exportPath += File.separator;
-        exportPath = exportPath + baseFolder + File.separator;
+    public void export(String exportPath) {
+        Objects.requireNonNull(webDiff, "webDiff must not be null");
+        Path rootPath = Paths.get(exportPath, baseFolder);
         deletedFiles = new ArrayList<>(webDiff.getComparator().getRemovedFilesName());
         addedFiles = new ArrayList<>(webDiff.getComparator().getAddedFilesName());
-        exportViewers(exportPath);
-        exportOthersPages(exportPath);
-        exportContentPages(exportPath);
-        exportResources(exportPath + File.separator, resourcePath + webDiff.getResources());
-        exportInfo(exportPath);
+        try {
+            exportAll((relativePath, content) -> {
+                Path targetFile = rootPath.resolve(relativePath);
+                Path parent = targetFile.getParent();
+                if (parent != null) {
+                    Files.createDirectories(parent);
+                }
+                Files.write(targetFile, content);
+            }, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void exportInfo(String exportPath) {
+    /**
+     * Exports all static AST diff pages, resources, and {@code info.json} directly into an
+     * in-memory ZIP archive under {@code web/} without creating any local files.
+     *
+     * @return the complete ZIP archive bytes
+     * @throws IOException if fetching a page, reading web resources, or writing the ZIP fails
+     */
+    public byte[] exportToZip() throws IOException {
+        Objects.requireNonNull(webDiff, "webDiff must not be null");
+        deletedFiles = new ArrayList<>(webDiff.getComparator().getRemovedFilesName());
+        addedFiles = new ArrayList<>(webDiff.getComparator().getAddedFilesName());
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             ZipOutputStream zos = new ZipOutputStream(baos)) {
+            Set<String> writtenEntries = new HashSet<>();
+            ExportTarget zipTarget = (relativePath, content) -> {
+                String entryName = normalizeRelativePath(baseFolder + "/" + relativePath);
+                if (!writtenEntries.add(entryName)) {
+                    return;
+                }
+                ZipEntry entry = new ZipEntry(entryName);
+                zos.putNextEntry(entry);
+                zos.write(content);
+                zos.closeEntry();
+            };
+            exportAll(zipTarget, true);
+            zos.finish();
+            return baos.toByteArray();
+        }
+    }
+
+    private void exportAll(ExportTarget target, boolean failOnPageFetchError) throws IOException {
+        exportViewers(target, failOnPageFetchError);
+        exportOthersPages(target, failOnPageFetchError);
+        exportContentPages(target, failOnPageFetchError);
+        exportResources(target, resourcePath + webDiff.getResources());
+        exportInfo(target);
+    }
+
+    private void exportInfo(ExportTarget target) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         ArrayNode jsonArray = objectMapper.createArrayNode();
@@ -89,28 +156,23 @@ public class WebExporter {
             jsonNode.put("id", id++);
             jsonArray.add(jsonNode);
         }
-        try {
-            ObjectNode jsonNode = objectMapper.createObjectNode();
-            jsonNode.put("diffInfos", jsonArray);
-            objectMapper.writeValue(new File(exportPath + File.separator + "info.json"), jsonNode);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ObjectNode jsonNode = objectMapper.createObjectNode();
+        jsonNode.set("diffInfos", jsonArray);
+        target.write("info.json", objectMapper.writeValueAsBytes(jsonNode));
     }
 
-    private void exportOthersPages(String exportPath) {
+    private void exportOthersPages(ExportTarget target, boolean failOnPageFetchError) throws IOException {
         for (String otherPage : otherPages) {
             String url = String.format("%s:%d/%s", baseURL, webDiff.port, otherPage);
-            export(exportPath, otherPage, url);
+            exportPage(target, otherPage, url, failOnPageFetchError);
         }
     }
 
-    private void exportViewers(String exportPath) {
-        String url;
+    private void exportViewers(ExportTarget target, boolean failOnPageFetchError) throws IOException {
         for (int i = 0; i < webDiff.getComparator().getNumOfDiffs(); i++) {
             for (String viewer_path : viewers_path) {
-                url = String.format("%s:%d/%s/%d", baseURL, webDiff.port, viewer_path, i);
-                export(exportPath, viewer_path + File.separator + i, url);
+                String url = String.format("%s:%d/%s/%d", baseURL, webDiff.port, viewer_path, i);
+                exportPage(target, viewer_path + "/" + i, url, failOnPageFetchError);
             }
         }
     }
@@ -118,43 +180,34 @@ public class WebExporter {
     // Deleted/added files have no AST diff and so no /monaco-page/<id> page; the
     // live server serves them on demand from /content?side=&path=. Materialize
     // each one as a static page so the export works offline / on GitHub Pages.
-    private void exportContentPages(String exportPath) {
-        exportContentSide(exportPath, "deleted", deletedFiles);
-        exportContentSide(exportPath, "added", addedFiles);
+    private void exportContentPages(ExportTarget target, boolean failOnPageFetchError) throws IOException {
+        exportContentSide(target, "deleted", deletedFiles, failOnPageFetchError);
+        exportContentSide(target, "added", addedFiles, failOnPageFetchError);
     }
 
-    private void exportContentSide(String exportPath, String side, List<String> files) {
+    private void exportContentSide(ExportTarget target, String side, List<String> files, boolean failOnPageFetchError)
+            throws IOException {
         for (int i = 0; i < files.size(); i++) {
             String encodedPath = URLEncoder.encode(files.get(i), StandardCharsets.UTF_8);
             String url = String.format("%s:%d/content?side=%s&path=%s", baseURL, webDiff.port, side, encodedPath);
             // Folder "content/<side>/<i>" sits three levels below the export root,
-            // so export() computes nestingLevel 3 and the right "../../../" prefix.
-            export(exportPath, contentFolder + File.separator + side + File.separator + i, url);
+            // so exportPage() computes nestingLevel 3 and the right "../../../" prefix.
+            exportPage(target, contentFolder + "/" + side + "/" + i, url, failOnPageFetchError);
         }
     }
 
-    private void export(String exportPath, String folderPath, String url) {
-        int nestingLevel = folderPath.length() - folderPath.replace(File.separator, "").length() + 1;
-        String content = getPage(url);
-        String filePath = exportPath + folderPath;
-        Path path = Path.of(filePath);
-        try {
-            Files.createDirectories(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileWriter writer = new FileWriter(filePath + "/index.html")) {
-            String modifiedContent = doProperReplacement(content, nestingLevel);
-            writer.write(modifiedContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    private void exportPage(ExportTarget target, String folderPath, String url, boolean failOnPageFetchError)
+            throws IOException {
+        String normalizedFolder = normalizeRelativePath(folderPath);
+        int nestingLevel = normalizedFolder.length() - normalizedFolder.replace("/", "").length() + 1;
+        String content = failOnPageFetchError ? fetchPage(url) : getPage(url);
+        String modifiedContent = doProperReplacement(content, nestingLevel);
+        target.write(normalizedFolder + "/index.html", modifiedContent.getBytes(StandardCharsets.UTF_8));
     }
 
     String doProperReplacement(String content, int nestingLevel) {
-        String baseAddon = (".." + File.separator).repeat(nestingLevel);
-        String baseAddonWithResources = baseAddon + resourceFolderNameInFinalExport + File.separator;
+        String baseAddon = "../".repeat(nestingLevel);
+        String baseAddonWithResources = baseAddon + resourceFolderNameInFinalExport + "/";
         Pattern pattern = Pattern.compile("(?<=\\b(href|src)=['\"])(/?)(?!https:)([^'\"]+)(?=['\"])");
 
 
@@ -238,47 +291,100 @@ public class WebExporter {
         return null;
     }
 
-    private void exportResources(String destDir, String resourcesPath) {
+    private void exportResources(ExportTarget target, String resourcesPath) throws IOException {
         Path sourcePath = Paths.get(resourcesPath);
-        if (!new File(String.valueOf(sourcePath)).exists()) return;
-        Path destPath = Paths.get(destDir + resourceFolderNameInFinalExport);
-        try {
-            Files.createDirectories(destPath);
-
-            // Copy the resources recursively
-            Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    Path targetFile = destPath.resolve(sourcePath.relativize(file));
-                    // Ensure the parent directories exist for the target file
-                    Files.createDirectories(targetFile.getParent());
-                    Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING);
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (Files.exists(sourcePath)) {
+            walkAndWriteResources(sourcePath, target);
+            return;
         }
+        String classpathRoot = webDiff.getResources();
+        if (classpathRoot == null || classpathRoot.isEmpty()) {
+            return;
+        }
+        if (!classpathRoot.startsWith("/")) {
+            classpathRoot = "/" + classpathRoot;
+        }
+        if (classpathRoot.length() > 1 && classpathRoot.endsWith("/")) {
+            classpathRoot = classpathRoot.substring(0, classpathRoot.length() - 1);
+        }
+        URL resourceUrl = WebExporter.class.getResource(classpathRoot);
+        if (resourceUrl == null) {
+            return;
+        }
+        URI uri;
+        try {
+            uri = resourceUrl.toURI();
+        } catch (URISyntaxException e) {
+            throw new IOException("Invalid web resource URI: " + resourceUrl, e);
+        }
+        if ("file".equals(uri.getScheme())) {
+            walkAndWriteResources(Paths.get(uri), target);
+        } else if ("jar".equals(uri.getScheme())) {
+            FileSystem fs = null;
+            boolean createdFs = false;
+            try {
+                try {
+                    fs = FileSystems.getFileSystem(uri);
+                } catch (FileSystemNotFoundException e) {
+                    try {
+                        fs = FileSystems.newFileSystem(uri, Map.of());
+                        createdFs = true;
+                    } catch (FileSystemAlreadyExistsException alreadyExists) {
+                        fs = FileSystems.getFileSystem(uri);
+                    }
+                }
+                walkAndWriteResources(fs.getPath(classpathRoot), target);
+            } finally {
+                if (createdFs && fs != null) {
+                    fs.close();
+                }
+            }
+        }
+    }
+
+    private void walkAndWriteResources(Path sourcePath, ExportTarget target) throws IOException {
+        Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                String relative = normalizeRelativePath(sourcePath.relativize(file).toString());
+                target.write(resourceFolderNameInFinalExport + "/" + relative, Files.readAllBytes(file));
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
+
+    private static String normalizeRelativePath(String path) {
+        String normalized = path.replace('\\', '/');
+        while (normalized.startsWith("/")) {
+            normalized = normalized.substring(1);
+        }
+        return normalized;
     }
 
     private static String getPage(String url) {
         try {
-            URL pageUrl = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) pageUrl.openConnection();
-            connection.setRequestMethod("GET");
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream()));
+            return fetchPage(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "<html><body><h1>Failed to load page</h1></body></html>";
+        }
+    }
+
+    private static String fetchPage(String url) throws IOException {
+        URL pageUrl = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) pageUrl.openConnection();
+        connection.setRequestMethod("GET");
+        try (BufferedReader in = new BufferedReader(
+                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
             int inputChar;
             StringBuilder response = new StringBuilder();
             while ((inputChar = in.read()) != -1) {
                 //This must be a char, not a line, as the HTML content will break when the code contains breaking whitespaces/lines
-                response.append((char)inputChar);
+                response.append((char) inputChar);
             }
-            in.close();
             return response.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "<html><body><h1>Failed to load page</h1></body></html>";
+        } finally {
+            connection.disconnect();
         }
     }
 }

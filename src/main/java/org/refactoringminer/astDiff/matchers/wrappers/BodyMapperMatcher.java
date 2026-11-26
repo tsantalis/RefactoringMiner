@@ -1445,6 +1445,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
                     processBodyMapper(srcTree, dstTree, lambdaMapper, mappingStore, isPartOfExtractedMethod);
                 }
+                //the rest of the statement around the lambdas, i.e., return new ApolloClient({ link: new ApolloLink((operation) => ...) }),
+                //without the bodies of all its lambdas, as some of them have no mapper, i.e., the callbacks of .then() and .finally()
+                matchLeavesOutsideLambdas(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore, true);
                 matchParentStatements(srcStatementNode, dstStatementNode, abstractCodeMapping, bodyMapper, mappingStore);
                 return;
             }
@@ -1867,8 +1870,26 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     //the leaves of a statement matched through its lambda mappers that are outside the lambda bodies, i.e., the lambdas, their parameters
     //and the arguments of the call other than the callbacks, while the leaves within the lambda bodies are left to the lambda mappers
     private void matchLeavesOutsideLambdas(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
+        matchLeavesOutsideLambdas(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore, false);
+    }
+
+    //allLambdaBodies: the bodies of all lambdas of the statements are excluded, not only the ones of the lambda mappers,
+    //while otherwise the leaves within the bodies of the lambdas without signature diff are matched, i.e., the story callbacks of storiesOf().add()
+    private void matchLeavesOutsideLambdas(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean allLambdaBodies) {
         List<LocationInfo> lambdas1 = new ArrayList<>();
         List<LocationInfo> lambdas2 = new ArrayList<>();
+        if(allLambdaBodies) {
+            for(LambdaExpressionObject lambda : abstractCodeMapping.getFragment1().getLambdas()) {
+                LocationInfo body = bodyLocation(lambda);
+                if(body != null)
+                    lambdas1.add(body);
+            }
+            for(LambdaExpressionObject lambda : abstractCodeMapping.getFragment2().getLambdas()) {
+                LocationInfo body = bodyLocation(lambda);
+                if(body != null)
+                    lambdas2.add(body);
+            }
+        }
         for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
             if(lambdaMapper.getOperationSignatureDiff().isPresent()) {
                 LocationInfo body1 = bodyLocation(lambdaMapper.getOperationSignatureDiff().get().getRemovedOperation());

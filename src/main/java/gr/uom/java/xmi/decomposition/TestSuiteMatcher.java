@@ -297,8 +297,13 @@ class TestSuiteMatcher {
 		if(classDiff == null || lambda1.getNestedOperations().isEmpty() || lambda2.getNestedOperations().isEmpty()) {
 			return;
 		}
-		Map<String, List<UMLOperation>> operations1 = groupByName(lambda1.getNestedOperations(), UMLOperation::getName);
-		Map<String, List<UMLOperation>> operations2 = groupByName(lambda2.getNestedOperations(), UMLOperation::getName);
+		mapper.setNestedOperationMappers(matchNestedOperations(lambda1.getNestedOperations(), lambda2.getNestedOperations(), classDiff));
+	}
+
+	//the functions declared in the matched functions, i.e., function watch() {...} declared in function setup() {...}, are matched the same way
+	private static List<UMLOperationBodyMapper> matchNestedOperations(List<UMLOperation> nestedOperations1, List<UMLOperation> nestedOperations2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		Map<String, List<UMLOperation>> operations1 = groupByName(nestedOperations1, UMLOperation::getName);
+		Map<String, List<UMLOperation>> operations2 = groupByName(nestedOperations2, UMLOperation::getName);
 		List<UMLOperationBodyMapper> mappers = new ArrayList<>();
 		for(String name : operations1.keySet()) {
 			if(operations1.get(name).size() == 1 && operations2.containsKey(name) && operations2.get(name).size() == 1) {
@@ -308,11 +313,14 @@ class TestSuiteMatcher {
 					UMLOperationBodyMapper nestedMapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 					//the matched variables (i.e., the parameters) of the mapper, which are computed with the refactorings within the body
 					nestedMapper.computeRefactoringsWithinBody();
+					if(!operation1.getNestedOperations().isEmpty() && !operation2.getNestedOperations().isEmpty()) {
+						nestedMapper.setNestedOperationMappers(matchNestedOperations(operation1.getNestedOperations(), operation2.getNestedOperations(), classDiff));
+					}
 					mappers.add(nestedMapper);
 				}
 			}
 		}
-		mapper.setNestedOperationMappers(mappers);
+		return mappers;
 	}
 
 	//the types declared in the callbacks (and not classes of the module) are matched by their names, when each name is declared once in each callback

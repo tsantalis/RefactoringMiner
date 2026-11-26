@@ -3065,11 +3065,11 @@ Mapping state for Move Method refactoring purity:
                 }
 
             } else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
-                String classBeforeString = ((UMLOperation) ((InlineOperationRefactoring) (refactoring)).getTargetOperationBeforeInline()).getNonQualifiedClassName();
+                String classBeforeString = ((InlineOperationRefactoring) (refactoring)).getTargetOperationBeforeInline().getNonQualifiedClassName();
                 String classAfterString = ((InlineOperationRefactoring) (refactoring)).getInlinedOperation().getNonQualifiedClassName();
                 classBefore.add(classBeforeString);
                 classAfter.add(classAfterString);
-                originalOperation = ((UMLOperation) ((InlineOperationRefactoring) (refactoring)).getTargetOperationBeforeInline());
+                originalOperation = ((InlineOperationRefactoring) (refactoring)).getTargetOperationBeforeInline();
                 refactoredOperation = ((InlineOperationRefactoring) (refactoring)).getInlinedOperation();
 
                 UMLAbstractClass classInChildModel = modelDiff.findClassInChildModel(classAfterString);
@@ -3100,11 +3100,11 @@ Mapping state for Move Method refactoring purity:
                 refactoredOperation = ((PullUpOperationRefactoring) (refactoring)).getMovedOperation();
 
             } else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
-                String classBeforeString = ((UMLOperation) ((ExtractOperationRefactoring) (refactoring)).getSourceOperationBeforeExtraction()).getNonQualifiedClassName();
+                String classBeforeString = ((ExtractOperationRefactoring) (refactoring)).getSourceOperationBeforeExtraction().getNonQualifiedClassName();
                 String classAfterString = ((ExtractOperationRefactoring) (refactoring)).getExtractedOperation().getNonQualifiedClassName();
                 classBefore.add(classBeforeString);
                 classAfter.add(classAfterString);
-                originalOperation = ((UMLOperation) ((ExtractOperationRefactoring) (refactoring)).getSourceOperationBeforeExtraction());
+                originalOperation = ((ExtractOperationRefactoring) (refactoring)).getSourceOperationBeforeExtraction();
                 refactoredOperation = ((ExtractOperationRefactoring) (refactoring)).getExtractedOperation();
 
                 UMLAbstractClass classInChildModel = modelDiff.findClassInChildModel(classAfterString);
@@ -3267,9 +3267,9 @@ Mapping state for Move Method refactoring purity:
         if (refactoring instanceof MoveOperationRefactoring) {
             originalOperation = ((MoveOperationRefactoring) refactoring).getOriginalOperation();
         } else if (refactoring instanceof ExtractOperationRefactoring) {
-            originalOperation = (UMLOperation) (((ExtractOperationRefactoring) refactoring).getSourceOperationBeforeExtraction());
+            originalOperation = ((ExtractOperationRefactoring) refactoring).getSourceOperationBeforeExtraction();
         } else if (refactoring instanceof InlineOperationRefactoring) {
-            originalOperation = (UMLOperation) (((InlineOperationRefactoring) refactoring).getTargetOperationBeforeInline());
+            originalOperation = ((InlineOperationRefactoring) refactoring).getTargetOperationBeforeInline();
         }
 
 

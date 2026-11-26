@@ -74,6 +74,7 @@ import gr.uom.java.xmi.diff.UMLParameterDiff;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
@@ -2988,6 +2989,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	void processCompositeStatements(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2, List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2)
 			throws RefactoringMinerTimedOutException {
+		//the bodies of the callbacks whose calls are removed from (or added to) the test, i.e., await waitFor(() => {...}) replaced with its statements,
+		//which are matched after the statements of the test, so that the statements of the test keep their identical counterparts
+		Set<AbstractCodeFragment> callbackLeaves1 = new LinkedHashSet<>(), callbackLeaves2 = new LinkedHashSet<>();
+		Set<CompositeStatementObject> callbackInnerNodes1 = new LinkedHashSet<>(), callbackInnerNodes2 = new LinkedHashSet<>();
+		if(testCallbackMapper) {
+			expandCallbacksOfRemovedCalls(leaves1, innerNodes1, leaves2, callbackLeaves1, callbackInnerNodes1, anonymousClassList1(), codeFragmentOperationMap1, container1);
+			expandCallbacksOfRemovedCalls(leaves2, innerNodes2, leaves1, callbackLeaves2, callbackInnerNodes2, anonymousClassList2(), codeFragmentOperationMap2, container2);
+		}
 		Set<AbstractCodeFragment> streamAPIStatements1 = StreamAPIMatcher.statementsWithStreamAPICalls(leaves1, LANG1);
 		Set<AbstractCodeFragment> streamAPIStatements2 = StreamAPIMatcher.statementsWithStreamAPICalls(leaves2, LANG2);
 		if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
@@ -3019,6 +3028,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() == 0) {
 			new StreamAPIMatcher(this).processStreamAPIStatements(leaves1, leaves2, streamAPIStatements1, innerNodes2);
 		}
+		if(!callbackLeaves1.isEmpty() || !callbackLeaves2.isEmpty()) {
+			List<AbstractCodeFragment> remainingLeaves1 = new ArrayList<>(callbackLeaves1);
+			List<AbstractCodeFragment> remainingLeaves2 = new ArrayList<>(callbackLeaves2);
+			for(AbstractCodeFragment leaf1 : leaves1) {
+				if(!alreadyMatched1(leaf1))
+					remainingLeaves1.add(leaf1);
+			}
+			for(AbstractCodeFragment leaf2 : leaves2) {
+				if(!alreadyMatched2(leaf2))
+					remainingLeaves2.add(leaf2);
+			}
+			List<CompositeStatementObject> remainingInnerNodes1 = new ArrayList<>(callbackInnerNodes1);
+			List<CompositeStatementObject> remainingInnerNodes2 = new ArrayList<>(callbackInnerNodes2);
+			for(CompositeStatementObject innerNode1 : innerNodes1) {
+				if(!alreadyMatched1(innerNode1))
+					remainingInnerNodes1.add(innerNode1);
+			}
+			for(CompositeStatementObject innerNode2 : innerNodes2) {
+				if(!alreadyMatched2(innerNode2))
+					remainingInnerNodes2.add(innerNode2);
+			}
+			processLeaves(remainingLeaves1, remainingLeaves2, new LinkedHashMap<String, String>(), false);
+			processInnerNodes(remainingInnerNodes1, remainingInnerNodes2, remainingLeaves1, remainingLeaves2, new LinkedHashMap<String, String>(), false, false);
+			leaves1.addAll(callbackLeaves1);
+			leaves2.addAll(callbackLeaves2);
+			for(CompositeStatementObject innerNode1 : callbackInnerNodes1) {
+				if(!alreadyMatched1(innerNode1))
+					innerNodes1.add(innerNode1);
+			}
+			for(CompositeStatementObject innerNode2 : callbackInnerNodes2) {
+				if(!alreadyMatched2(innerNode2))
+					innerNodes2.add(innerNode2);
+			}
+			innerNodes1.removeIf(this::alreadyMatched1);
+			innerNodes2.removeIf(this::alreadyMatched2);
+		}
 		
 		updateNonMappedLeavesT1(leaves1);
 		updateNonMappedLeavesT2(leaves2);
@@ -3030,6 +3075,38 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
 			inlinedVariableAssignment(statement, nonMappedLeavesT2);
+		}
+	}
+
+	//the statements with a single callback with a body, whose (innermost) call is not called by any statement of the other side
+	private void expandCallbacksOfRemovedCalls(List<AbstractCodeFragment> leaves, List<CompositeStatementObject> innerNodes, List<AbstractCodeFragment> otherLeaves,
+			Set<AbstractCodeFragment> callbackLeaves, Set<CompositeStatementObject> callbackInnerNodes,
+			List<UMLAnonymousClass> anonymousClassList, Map<AbstractCodeFragment, VariableDeclarationContainer> map, VariableDeclarationContainer container) {
+		for(AbstractCodeFragment leaf : new ArrayList<>(leaves)) {
+			if(leaf.getLambdas().size() != 1 || leaf.getLambdas().get(0).getBody() == null) {
+				continue;
+			}
+			LambdaExpressionObject lambda = leaf.getLambdas().get(0);
+			AbstractCall wrappingCall = null;
+			for(AbstractCall call : leaf.getMethodInvocations()) {
+				if(call.getLocationInfo().subsumes(lambda.getLocationInfo()) && (wrappingCall == null || wrappingCall.getLocationInfo().subsumes(call.getLocationInfo()))) {
+					wrappingCall = call;
+				}
+			}
+			if(wrappingCall == null) {
+				continue;
+			}
+			boolean called = false;
+			for(AbstractCodeFragment otherLeaf : otherLeaves) {
+				if(otherLeaf.getString().contains(wrappingCall.getName() + "(")) {
+					called = true;
+					break;
+				}
+			}
+			if(!called) {
+				//expanded into copies, as the statements of the callback are matched in a second pass
+				expandAnonymousAndLambdas(leaf, new ArrayList<>(leaves), new ArrayList<>(innerNodes), callbackLeaves, callbackInnerNodes, anonymousClassList, map, container, true);
+			}
 		}
 	}
 

@@ -40,6 +40,8 @@ import com.caoccao.javet.swc4j.ast.program.Swc4jAstScript;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsCallSignatureDecl;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConstructSignatureDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParamProp;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
@@ -363,16 +365,35 @@ public class TypeScriptFileProcessor {
 
 	public static UMLOperation processFunctionSignature(String sourceFolder, String filePath, Swc4jAstTsMethodSignature methodSignature,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
+		return processFunctionSignature(sourceFolder, filePath, methodSignature, memberName(methodSignature.getKey(), methodSignature.isComputed(), fileContent),
+				methodSignature.getParams(), methodSignature.getTypeAnn(), methodSignature.getTypeParams(), activeVariableDeclarations, fileContent, className);
+	}
+
+	//the call signatures (i.e., (error: ErrorResponse): void) and construct signatures (i.e., new (x: X): T) of interfaces and type literals,
+	//which have no name, are operations named call and new
+	public static UMLOperation processCallSignature(String sourceFolder, String filePath, Swc4jAstTsCallSignatureDecl callSignature,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
+		return processFunctionSignature(sourceFolder, filePath, callSignature, "call",
+				callSignature.getParams(), callSignature.getTypeAnn(), callSignature.getTypeParams(), activeVariableDeclarations, fileContent, className);
+	}
+
+	public static UMLOperation processConstructSignature(String sourceFolder, String filePath, Swc4jAstTsConstructSignatureDecl constructSignature,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
+		return processFunctionSignature(sourceFolder, filePath, constructSignature, "new",
+				constructSignature.getParams(), constructSignature.getTypeAnn(), constructSignature.getTypeParams(), activeVariableDeclarations, fileContent, className);
+	}
+
+	private static UMLOperation processFunctionSignature(String sourceFolder, String filePath, ISwc4jAst methodSignature, String name,
+			List<ISwc4jAstTsFnParam> params, Optional<Swc4jAstTsTypeAnn> returnType, Optional<Swc4jAstTsTypeParamDecl> typeParams,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, methodSignature, CodeElementType.METHOD_DECLARATION, fileContent);
-		UMLOperation operation = new UMLOperation(memberName(methodSignature.getKey(), methodSignature.isComputed(), fileContent), location, className);
+		UMLOperation operation = new UMLOperation(name, location, className);
 		operation.setVisibility(Visibility.PUBLIC);
-		Optional<Swc4jAstTsTypeAnn> returnType = methodSignature.getTypeAnn();
 		if(returnType.isPresent()) {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, returnType.get().getTypeAnn(), 0);
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			operation.addParameter(returnParameter);
 		}
-		Optional<Swc4jAstTsTypeParamDecl> typeParams = methodSignature.getTypeParams();
 		if(typeParams.isPresent()) {
 			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
 			for(Swc4jAstTsTypeParam param : list) {
@@ -381,7 +402,7 @@ public class TypeScriptFileProcessor {
 				operation.addTypeParameter(umlTypeParameter);
 			}
 		}
-		for(ISwc4jAstTsFnParam param : methodSignature.getParams()) {
+		for(ISwc4jAstTsFnParam param : params) {
 			ISwc4jAstPat pat = null;
 			if(param instanceof Swc4jAstArrayPat arrayPat) {
 				pat = arrayPat;

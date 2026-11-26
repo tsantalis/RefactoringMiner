@@ -36,9 +36,11 @@ public class Constants {
                 treeType.equals(FRIEND_DECLARATION) || treeType.equals(INIT_DECLARATOR) || isFieldDefinition(treeType);
     }
 
-    //the methods without a body of the classes and interfaces, i.e., public abstract read(query: ReadOptions): T | null;
+    //the methods without a body of the classes and interfaces, i.e., public abstract read(query: ReadOptions): T | null;,
+    //and the call and construct signatures of the interfaces, i.e., (error: ErrorResponse): void;
     public boolean isMethodSignature(String treeType) {
-        return treeType.equals(METHOD_SIGNATURE) || treeType.equals(ABSTRACT_METHOD_SIGNATURE);
+        return treeType.equals(METHOD_SIGNATURE) || treeType.equals(ABSTRACT_METHOD_SIGNATURE) ||
+                treeType.equals(CALL_SIGNATURE) || treeType.equals(CONSTRUCT_SIGNATURE);
     }
 
     //function () {...} and function* () {...}, i.e., the methods of the object literals
@@ -654,6 +656,8 @@ public class Constants {
     public final String MEMBER_EXPRESSION = "member_expression";
     public final String METHOD_SIGNATURE = "method_signature";
     public final String ABSTRACT_METHOD_SIGNATURE = "abstract_method_signature";
+    public final String CALL_SIGNATURE = "call_signature";
+    public final String CONSTRUCT_SIGNATURE = "construct_signature";
     public final String FUNCTION_SIGNATURE = "function_signature";
     public final String OPTIONAL_KEYWORD = "?";
     public final String UNION = "|";

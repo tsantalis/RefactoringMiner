@@ -1625,6 +1625,14 @@ public class TypeScriptOperationBody extends OperationBody {
 				UMLOperation operation = TypeScriptFileProcessor.processFunctionSignature(sourceFolder, filePath, methodSignature, activeVariableDeclarations, fileContent, className);
 				umlClass.addOperation(operation);
 			}
+			else if(member instanceof Swc4jAstTsCallSignatureDecl callSignature) {
+				UMLOperation operation = TypeScriptFileProcessor.processCallSignature(sourceFolder, filePath, callSignature, activeVariableDeclarations, fileContent, container.getClassName());
+				umlClass.addOperation(operation);
+			}
+			else if(member instanceof Swc4jAstTsConstructSignatureDecl constructSignature) {
+				UMLOperation operation = TypeScriptFileProcessor.processConstructSignature(sourceFolder, filePath, constructSignature, activeVariableDeclarations, fileContent, container.getClassName());
+				umlClass.addOperation(operation);
+			}
 			else if(member instanceof Swc4jAstTsSetterSignature setterSignature) {
 
 			}

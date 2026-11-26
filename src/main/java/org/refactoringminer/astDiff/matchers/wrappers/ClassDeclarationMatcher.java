@@ -664,6 +664,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
             if(ambient1 != null && ambient2 != null && ambient1.getType().name.equals(LANG1.AMBIENT_DECLARATION) && ambient2.getType().name.equals(LANG2.AMBIENT_DECLARATION)) {
                 processAmbientDeclaration(ambient1, ambient2, mappingStore, LANG1, LANG2);
             }
+            //export namespace X {...}
+            else if(ambient1 != null && ambient2 != null && ambient1.getType().name.equals(LANG1.EXPORT_STATEMENT) && ambient2.getType().name.equals(LANG2.EXPORT_STATEMENT)) {
+                mappingStore.addMapping(ambient1, ambient2);
+                Pair<Tree, Tree> exports = Helpers.findPairOfType(ambient1, ambient2, LANG1.EXPORT_KEYWORD, LANG2.EXPORT_KEYWORD);
+                if(exports != null) {
+                    mappingStore.addMapping(exports.first, exports.second);
+                }
+            }
         }
         else if(block1.getType().name.equals(LANG1.AMBIENT_DECLARATION) && block2.getType().name.equals(LANG2.AMBIENT_DECLARATION)) {
             processAmbientDeclaration(block1, block2, mappingStore, LANG1, LANG2);
@@ -1880,17 +1888,22 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
         for (org.apache.commons.lang3.tuple.Pair<UMLNamedExport, UMLNamedExport> namedExportPair : namedExportListDiff.getCommonExports()) {
             Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, namedExportPair.getLeft().getLocationInfo(), LANG1);
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, namedExportPair.getRight().getLocationInfo(), LANG2);
-            if (srcSubTree == null || dstSubTree == null) return;
+            if (srcSubTree == null || dstSubTree == null) continue;
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
         }
         for (UMLNamedExportDiff diff : namedExportListDiff.getChangedExports()) {
             Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, diff.getOriginalNamedExport().getLocationInfo(), LANG1);
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, diff.getNextNamedExport().getLocationInfo(), LANG2);
-            if (srcSubTree == null || dstSubTree == null) return;
+            if (srcSubTree == null || dstSubTree == null) continue;
             mappingStore.addMapping(srcSubTree,dstSubTree);
             Pair<Tree, Tree> exports = Helpers.findPairOfType(srcSubTree,dstSubTree, LANG1.EXPORT_KEYWORD, LANG2.EXPORT_KEYWORD);
             if(exports != null) {
                 mappingStore.addMapping(exports.first, exports.second);
+            }
+            //export type { ... } from "..."
+            Pair<Tree, Tree> types = Helpers.findPairOfType(srcSubTree,dstSubTree, LANG1.TYPE_KEYWORD, LANG2.TYPE_KEYWORD);
+            if(types != null) {
+                mappingStore.addMapping(types.first, types.second);
             }
             Pair<Tree, Tree> export_clauses = Helpers.findPairOfType(srcSubTree,dstSubTree, LANG1.EXPORT_CLAUSE, LANG2.EXPORT_CLAUSE);
             if(export_clauses != null) {

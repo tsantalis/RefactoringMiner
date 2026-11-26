@@ -30,17 +30,18 @@ public class UMLNamedExportListDiff {
 						commonExports.add(pair);
 					}
 				}
-				else {
-					boolean matchFound = false;
-					for(UMLNamedExport newExport : newExports) {
-						if(oldExport.getSource() != null && newExport.getSource() != null && oldExport.getSource().getString().equals(newExport.getSource().getString())) {
-							UMLNamedExportDiff diff = new UMLNamedExportDiff(oldExport, newExport);
-							changedExports.add(diff);
-							matchFound = true;
-							break;
-						}
+			}
+			Set<UMLNamedExport> commonNewExports = new LinkedHashSet<>();
+			for(Pair<UMLNamedExport, UMLNamedExport> pair : commonExports) {
+				commonNewExports.add(pair.getRight());
+			}
+			for(UMLNamedExport oldExport : oldExports) {
+				if(newExports.indexOf(oldExport) == -1) {
+					UMLNamedExport newExport = counterpartWithSameSource(oldExport, newExports, commonNewExports);
+					if(newExport != null) {
+						changedExports.add(new UMLNamedExportDiff(oldExport, newExport));
 					}
-					if(!matchFound) {
+					else {
 						removedNamedExports.add(oldExport);
 					}
 				}
@@ -56,22 +57,52 @@ public class UMLNamedExportListDiff {
 						commonExports.add(pair);
 					}
 				}
-				else {
-					boolean matchFound = false;
-					for(UMLNamedExport oldExport : oldExports) {
-						if(oldExport.getSource() != null && newExport.getSource() != null && oldExport.getSource().getString().equals(newExport.getSource().getString())) {
-							UMLNamedExportDiff diff = new UMLNamedExportDiff(oldExport, newExport);
-							changedExports.add(diff);
-							matchFound = true;
-							break;
-						}
+			}
+			Set<UMLNamedExport> commonOldExports = new LinkedHashSet<>();
+			for(Pair<UMLNamedExport, UMLNamedExport> pair : commonExports) {
+				commonOldExports.add(pair.getLeft());
+			}
+			for(UMLNamedExport newExport : newExports) {
+				if(oldExports.indexOf(newExport) == -1) {
+					UMLNamedExport oldExport = counterpartWithSameSource(newExport, oldExports, commonOldExports);
+					if(oldExport != null) {
+						changedExports.add(new UMLNamedExportDiff(oldExport, newExport));
 					}
-					if(!matchFound) {
+					else {
 						addedNamedExports.add(newExport);
 					}
 				}
 			}
 		}
+	}
+
+	//the export with the same source sharing the most specifiers, other than the counterparts of the unchanged exports,
+	//i.e., export { fromError, throwServerError } from "x" -> export { throwServerError } from "x", and not the unchanged export type { ServerError } from "x"
+	private static UMLNamedExport counterpartWithSameSource(UMLNamedExport export, List<UMLNamedExport> candidates, Set<UMLNamedExport> excluded) {
+		if(export.getSource() == null) {
+			return null;
+		}
+		UMLNamedExport best = null;
+		int bestCommonSpecifiers = -1;
+		for(UMLNamedExport candidate : candidates) {
+			if(excluded.contains(candidate) || candidate.getSource() == null || !export.getSource().getString().equals(candidate.getSource().getString())) {
+				continue;
+			}
+			int commonSpecifiers = 0;
+			for(var specifier : export.getSpecifiers()) {
+				for(var candidateSpecifier : candidate.getSpecifiers()) {
+					if(specifier.getString().equals(candidateSpecifier.getString())) {
+						commonSpecifiers++;
+						break;
+					}
+				}
+			}
+			if(commonSpecifiers > bestCommonSpecifiers) {
+				best = candidate;
+				bestCommonSpecifiers = commonSpecifiers;
+			}
+		}
+		return best;
 	}
 
 	public List<UMLNamedExport> getRemovedNamedExports() {

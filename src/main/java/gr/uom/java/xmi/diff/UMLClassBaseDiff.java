@@ -275,6 +275,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForInlinedOperations();
 		checkForOperationsSplitByConfiguration();
 		List<UMLOperationBodyMapper> extractedbodyMappers = checkForExtractedOperations();
+		checkForOperationsMovedToNestedOperations(extractedbodyMappers);
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForInlinedOperationsToExtractedOperations(extractedbodyMappers);
 		checkForMovedCodeBetweenOperations();
@@ -2332,6 +2333,39 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		return false;
+	}
+
+	//a function of the class (module) moved into a function of the same class as a nested function, the opposite of checkForNestedOperationsMovedToContainer,
+	//i.e., the functions wrapped in the extracted function applyDecs2203Factory() { function memberDec(...) {...} ... }, before they are checked as inlined to the extracted function
+	private void checkForOperationsMovedToNestedOperations(List<UMLOperationBodyMapper> extractedBodyMappers) throws RefactoringMinerTimedOutException {
+		if(modelDiff == null || removedOperations.isEmpty()) {
+			return;
+		}
+		List<UMLOperation> containers = new ArrayList<>(addedOperations);
+		for(UMLOperationBodyMapper mapper : extractedBodyMappers) {
+			if(mapper.getOperation2() != null && !containers.contains(mapper.getOperation2())) {
+				containers.add(mapper.getOperation2());
+			}
+		}
+		for(UMLOperation removedOperation : new ArrayList<>(removedOperations)) {
+			for(UMLOperation container : containers) {
+				MoveOperationRefactoring refactoring = null;
+				for(UMLOperation nestedOperation : container.getNestedOperations()) {
+					if(nestedOperation.equalSignature(removedOperation)) {
+						refactoring = modelDiff.operationMovedToNestedOperation(removedOperation, nestedOperation, this);
+						if(refactoring != null) {
+							break;
+						}
+					}
+				}
+				if(refactoring != null) {
+					refactorings.add(refactoring);
+					refactorings.addAll(refactoring.getBodyMapper().getRefactorings());
+					removedOperations.remove(removedOperation);
+					break;
+				}
+			}
+		}
 	}
 
 	//a nested function moved out of the function nesting it to the class (module), with the same Move Method logic as for a nested function of a moved method,

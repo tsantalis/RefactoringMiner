@@ -3769,6 +3769,18 @@ public class UMLModelDiff {
 		return null;
 	}
 
+	//a function moved into a function nesting it, with the same Move Method logic as for a nested function moved to its container,
+	//i.e., the functions of a module wrapped in the function applyDecs2203Factory() { function memberDec(...) {...} ... }
+	public MoveOperationRefactoring operationMovedToNestedOperation(UMLOperation operation, UMLOperation nestedOperation, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		if(operation.getName().equals(nestedOperation.getName())) {
+			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, nestedOperation, classDiff);
+			if(movedMethodSignature(operation, nestedOperation, mapper, false) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(operation, nestedOperation)) {
+				return new MoveOperationRefactoring(mapper);
+			}
+		}
+		return null;
+	}
+
 	private static boolean callsOperation(VariableDeclarationContainer container, String name) {
 		for(AbstractCall invocation : container.getAllOperationInvocations()) {
 			if(invocation.getName().equals(name) && invocation.getExpression() == null) {

@@ -17,6 +17,7 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCondExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstClassExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
@@ -369,6 +370,14 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 			stringLiterals.add(literal);
 		}
 		return super.visitTpl(node);
+	}
+
+	//a class expression is an anonymous class of the statement, like an object literal
+	public Swc4jAstVisitorResponse visitClassExpr(Swc4jAstClassExpr node) {
+		TypeScriptOperationBody.createAnonymousClass(node, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
+		AnonymousClassDeclarationObject anonymousClass = new AnonymousClassDeclarationObject(sourceFolder, filePath, node, fileContent);
+		anonymousClassDeclarations.add(anonymousClass);
+		return super.visitClassExpr(node);
 	}
 
 	public Swc4jAstVisitorResponse visitObjectLit(Swc4jAstObjectLit node) {

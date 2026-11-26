@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstClassExpr;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 
 import extension.ast.node.LangASTNode;
@@ -71,6 +72,12 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, objectLiteral, CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
 		this.astNodeString = TypeScriptVisitor.text(fileContent, objectLiteral);
 		this.objectLiteral = true;
+	}
+
+	//a class expression of JavaScript and TypeScript, i.e., class { static {...} } in return class { static {...} }, _decorated_class;
+	public AnonymousClassDeclarationObject(String sourceFolder, String filePath, Swc4jAstClassExpr classExpression, String fileContent) {
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, classExpression, CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
+		this.astNodeString = TypeScriptVisitor.text(fileContent, classExpression);
 	}
 
 	public AnonymousClassDeclarationObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode dictionary, String fileContent) {

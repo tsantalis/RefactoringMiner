@@ -34,6 +34,8 @@ public class MoveOperationRefactoring extends AbstractMoveRefactoring {
 				UMLOperation operationWithTheSameSignature = bodyMapper.getOperation2().nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
 				if(operationWithTheSameSignature != null) {
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, bodyMapper.getClassDiff());
+					//the matched variables, i.e., the parameters of the nested functions, are computed with the refactorings of the mapper, like for the mappers of the class diffs
+					mapper.getRefactorings();
 					addNestedMapper(mapper);
 				}
 			}

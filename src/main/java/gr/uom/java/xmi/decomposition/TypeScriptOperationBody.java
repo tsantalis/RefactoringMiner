@@ -481,6 +481,11 @@ public class TypeScriptOperationBody extends OperationBody {
 				child.setFinallyClause(finallyBlockStatementObject);
 				parent.addStatement(finallyBlockStatementObject);
 				finallyBlockStatementObject.setTryContainer(child);
+				//the statements of the finally block, like in Java, i.e., decoratorFinishedRef.v = true; in finally { decoratorFinishedRef.v = true; }
+				addStatementInVariableScopes(finallyBlockStatementObject);
+				for(ISwc4jAstStmt blockStatement : finallyClause.get().getStmts()) {
+					processStatement(sourceFolder, filePath, finallyBlockStatementObject, blockStatement, fileContent);
+				}
 			}
 		}
 		else if(statement instanceof Swc4jAstWhileStmt whileStatement) {
@@ -1357,6 +1362,33 @@ public class TypeScriptOperationBody extends OperationBody {
 		}
 	}
 
+	//a class expression is an anonymous class of the statement, like an object literal, i.e., return class { static {...} }, _decorated_class;
+	public static UMLAnonymousClass createAnonymousClass(Swc4jAstClassExpr node, String sourceFolder, String filePath, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, node, CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
+		for(UMLAnonymousClass anonymous : container.getAnonymousClassList()) {
+			if(anonymous.getLocationInfo().equals(location)) {
+				return anonymous;
+			}
+		}
+		String codePath = node.getIdent().isPresent() ? node.getIdent().get().getSym() : getAnonymousCodePath(node, fileContent);
+		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(container.getClassName(), codePath, codePath, location, new ArrayList<>());
+		processClassMembers(sourceFolder, filePath, fileContent, anonymousClass, node.getClazz().getBody(), typeDeclarations, commentList(container), container, activeVariableDeclarations);
+		//registered like the anonymous classes of the object literals
+		if(container instanceof LambdaExpressionObject lambda) {
+			VariableDeclarationContainer owner = lambda.getOwner();
+			owner.getAnonymousClassList().add(anonymousClass);
+			while(owner instanceof LambdaExpressionObject parentLambda && parentLambda.getOwner() != null) {
+				parentLambda.getOwner().getAnonymousClassList().add(anonymousClass);
+				owner = parentLambda.getOwner();
+			}
+		}
+		else {
+			container.getAnonymousClassList().add(anonymousClass);
+		}
+		anonymousClass.addParentContainer(container);
+		return anonymousClass;
+	}
+
 	public static UMLAnonymousClass createAnonymousClass(Swc4jAstObjectLit node, String sourceFolder, String filePath, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, node, CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
 		UMLAnonymousClass anonymousClass = null;
@@ -1390,7 +1422,7 @@ public class TypeScriptOperationBody extends OperationBody {
 		return anonymousClass;
 	}
 
-	private static String getAnonymousCodePath(Swc4jAstObjectLit node, String fileContent) {
+	private static String getAnonymousCodePath(ISwc4jAst node, String fileContent) {
 		String name = "";
 		ISwc4jAst parent = node.getParent();
 		while(parent != null) {
@@ -1698,6 +1730,13 @@ public class TypeScriptOperationBody extends OperationBody {
 
 	private void processClassMembers(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,
 			List<ISwc4jAstClassMember> members, List<UMLClass> typeDeclarations, List<UMLComment> comments) {
+		processClassMembers(sourceFolder, filePath, fileContent, umlClass, members, typeDeclarations, comments, container, activeVariableDeclarations);
+	}
+
+	//the members of a class declaration or of a class expression (an anonymous class of the statement, i.e., return class { static {...} })
+	private static void processClassMembers(String sourceFolder, String filePath, String fileContent, UMLAbstractClass umlClass,
+			List<ISwc4jAstClassMember> members, List<UMLClass> typeDeclarations, List<UMLComment> comments,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations) {
 		for(ISwc4jAstClassMember member : members) {
 			if(member instanceof Swc4jAstClassMethod classMethod) {
 				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, classMethod, activeVariableDeclarations, fileContent, umlClass.getName(), comments);

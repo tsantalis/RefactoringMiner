@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
@@ -183,17 +184,42 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		}
 		else if(matchingOperations.size() > 1) {
 			int minDistance = StringDistance.editDistance(matchingOperations.get(0).toString(), operation.toString());
+			int minBodyDistance = bodyDistance(matchingOperations.get(0), operation);
 			UMLOperation matchingOperation = matchingOperations.get(0);
 			for(int i=1; i<matchingOperations.size(); i++) {
 				int distance = StringDistance.editDistance(matchingOperations.get(i).toString(), operation.toString());
-				if(distance < minDistance) {
+				int bodyDistance = bodyDistance(matchingOperations.get(i), operation);
+				//the nested operations with the same signature, i.e., the functions assigned to get in get = function () {...}, are told apart by their bodies
+				if(distance < minDistance || (distance == minDistance && bodyDistance < minBodyDistance)) {
 					minDistance = distance;
+					minBodyDistance = bodyDistance;
 					matchingOperation = matchingOperations.get(i);
 				}
 			}
 			return matchingOperation;
 		}
 		return null;
+	}
+
+	private static int bodyDistance(UMLOperation operation1, UMLOperation operation2) {
+		if(operation1.getBody() == null || operation2.getBody() == null) {
+			return 0;
+		}
+		//the statements are compared by their text, which does not depend on the indentation, i.e., the functions wrapped in another function
+		String body1 = bodyText(operation1);
+		String body2 = bodyText(operation2);
+		if(body1.equals(body2)) {
+			return 0;
+		}
+		return 1 + StringDistance.editDistance(body1, body2);
+	}
+
+	private static String bodyText(UMLOperation operation) {
+		StringBuilder sb = new StringBuilder();
+		for(AbstractCodeFragment leaf : operation.getBody().getCompositeStatement().getLeaves()) {
+			sb.append(leaf.getString());
+		}
+		return sb.toString();
 	}
 
 	public String getActualSignature() {

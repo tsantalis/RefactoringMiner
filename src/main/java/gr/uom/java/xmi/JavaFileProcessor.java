@@ -168,7 +168,14 @@ public class JavaFileProcessor {
 		parser.setStatementsRecovery(true);
 		char[] charArray = methodBody.toCharArray();
 		parser.setSource(charArray);
-		ASTNode node = parser.createAST(null);
+		ASTNode node;
+		try {
+			node = parser.createAST(null);
+		}
+		catch(IllegalArgumentException e) {
+			//the statement recovery of JDT can compute a negative source range for text that is not Java code, e.g., a comment with a JSDoc @example
+			return null;
+		}
 		ASTNode methodBodyBlock = null;
 		if(node instanceof Block) {
 			Block extraBlockAddedByParser = (Block)node;

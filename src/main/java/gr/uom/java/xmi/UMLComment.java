@@ -25,7 +25,7 @@ public class UMLComment extends UMLAbstractDocumentation {
 	private boolean markdown;
 	private List<LocationInfo> previousLineLocations = new ArrayList<>();
 	private static final Pattern EMPTY_LINES = Pattern.compile("(^\\s*$\\r?\\n)+", Pattern.MULTILINE);
-	//the comment parsed as a Java statement, which the mappers of the operations containing the comment compare with their unmatched statements
+	//the comment parsed as a Java or Python statement, which the mappers of the operations containing the comment compare with their unmatched statements
 	private Optional<String> codeStatement;
 
 	public UMLComment(String text, LocationInfo locationInfo) {
@@ -70,16 +70,22 @@ public class UMLComment extends UMLAbstractDocumentation {
 
 	public Optional<String> getCodeStatement() {
 		if(codeStatement == null) {
+			String filePath = getLocationInfo().getFilePath();
 			String text = getText();
-			if(PathFileUtils.isPythonFile(getLocationInfo().getFilePath())) {
-				codeStatement = pythonCodeStatement(getLocationInfo().getFilePath(), text);
-				return codeStatement;
+			if(PathFileUtils.isPythonFile(filePath)) {
+				codeStatement = pythonCodeStatement(filePath, text);
 			}
-			if(text.startsWith("//")) {
-				text = text.substring(2);
+			else if(PathFileUtils.isJavaFile(filePath)) {
+				if(text.startsWith("//")) {
+					text = text.substring(2);
+				}
+				ASTNode node = JavaFileProcessor.processJavaBlock(text.trim());
+				codeStatement = node != null ? Optional.of(Visitor.stringify(node)) : Optional.empty();
 			}
-			ASTNode node = JavaFileProcessor.processJavaBlock(text.trim());
-			codeStatement = node != null ? Optional.of(Visitor.stringify(node)) : Optional.empty();
+			else {
+				//commented code is supported only for Java and Python; the comments of other languages are not parsed as Java code
+				codeStatement = Optional.empty();
+			}
 		}
 		return codeStatement;
 	}

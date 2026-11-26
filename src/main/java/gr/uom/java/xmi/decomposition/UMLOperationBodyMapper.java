@@ -89,6 +89,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
@@ -272,6 +273,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(VariableDeclarationContainer removedOperation, UMLOperationBodyMapper mapper2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		this(removedOperation, mapper2, classDiff, f -> false);
+	}
+
+	//the statements of mapper2 for which excluded2 holds are not matched, i.e., the statements declaring a class moved from another file
+	public UMLOperationBodyMapper(VariableDeclarationContainer removedOperation, UMLOperationBodyMapper mapper2, UMLAbstractClassDiff classDiff, Predicate<AbstractCodeFragment> excluded2) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		this.container1 = removedOperation;
@@ -287,17 +293,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.parameterNameList2 = container2.getParameterNameList();
 		this.moveCode = true;
 		OperationBody body1 = removedOperation.getBody();
-		if(body1 != null) {
-			List<AbstractCodeFragment> leaves1 = new ArrayList<>(body1.getCompositeStatement().getLeaves());
+		//the top-level statements of a deleted module, which has no body
+		ModuleContainer module1 = removedOperation instanceof ModuleContainer m ? m : null;
+		if(body1 != null || module1 != null) {
+			List<AbstractCodeFragment> leaves1 = new ArrayList<>(body1 != null ? body1.getCompositeStatement().getLeaves() : module1.getLeaves());
 			List<AbstractCodeFragment> leaves2 = new ArrayList<>(mapper2.getNonMappedLeavesT2());
-			List<CompositeStatementObject> innerNodes1 = new ArrayList<>(body1.getCompositeStatement().getInnerNodes());
+			List<CompositeStatementObject> innerNodes1 = new ArrayList<>(body1 != null ? body1.getCompositeStatement().getInnerNodes() : module1.getInnerNodes());
 			List<CompositeStatementObject> innerNodes2 = new ArrayList<>(mapper2.getNonMappedInnerNodesT2());
+			List<AbstractCodeFragment> excludedLeaves2 = leaves2.stream().filter(excluded2).toList();
+			List<CompositeStatementObject> excludedInnerNodes2 = innerNodes2.stream().filter(excluded2).toList();
+			leaves2.removeAll(excludedLeaves2);
+			innerNodes2.removeAll(excludedInnerNodes2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false, false);
 			updateNonMappedLeavesT1(leaves1);
 			updateNonMappedLeavesT2(leaves2);
+			nonMappedLeavesT2.addAll(excludedLeaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
+			nonMappedInnerNodesT2.addAll(excludedInnerNodes2);
 			if(mapper2.commentListDiff != null) {
 				checkUnmatchedStatementsBeingCommented(container1.getComments(), mapper2.commentListDiff.getAddedComments());
 				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), mapper2.commentListDiff.getAddedComments(), this);

@@ -4,6 +4,7 @@ import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -4803,6 +4804,7 @@ public class UMLModelDiff {
 		}
 		checkForMovedCodeBetweenTestFixtures();
 		checkForMovedCodeWithoutCalls();
+		checkForMovedCodeFromRemovedModules();
 		List<MoveAttributeRefactoring> moveAttributeRefactorings = new ArrayList<MoveAttributeRefactoring>();
 		moveAttributeRefactorings.addAll(checkForAttributeMovesBetweenCommonClasses(renameMap, refactorings));
 		moveAttributeRefactorings.addAll(checkForAttributeMovesIncludingAddedClasses(renameMap, refactorings));
@@ -8533,6 +8535,76 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	//the top-level statements of a deleted JavaScript/TypeScript module moved to an existing module,
+	//i.e., a test fixture file merged into another fixture file of the same kind
+	private void checkForMovedCodeFromRemovedModules() throws RefactoringMinerTimedOutException {
+		for(UMLClass removedClass : removedClasses) {
+			if(!removedClass.isModule() || removedClass.getContainer().isEmpty() || !PathFileUtils.isTypeScriptFile(removedClass.getSourceFile())) {
+				continue;
+			}
+			ModuleContainer container1 = removedClass.getContainer().get();
+			if(container1.getStatementList().isEmpty() || !container1.getDescribeMap().isEmpty()) {
+				continue;
+			}
+			String fileName1 = removedClass.getSourceFile().substring(removedClass.getSourceFile().lastIndexOf('/') + 1);
+			UMLOperationBodyMapper bestMapper = null;
+			boolean bestSameFileName = false;
+			for(UMLClassDiff classDiff : commonClassDiffList) {
+				if(!classDiff.getNextClass().isModule()) {
+					continue;
+				}
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer2() instanceof ModuleContainer && mapper.nonMappedElementsT2() > 0) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(container1, mapper, classDiff, f -> declaresClassMovedFromAnotherFile(f, removedClass.getSourceFile()));
+						if(allTopLevelStatementsMapped(container1, moveCodeMapper)) {
+							String nextFile = classDiff.getNextClass().getSourceFile();
+							boolean sameFileName = nextFile.substring(nextFile.lastIndexOf('/') + 1).equals(fileName1);
+							//the target with the most mappings, or the one with the same file name among equal ones
+							if(bestMapper == null || moveCodeMapper.getMappings().size() > bestMapper.getMappings().size() ||
+									(moveCodeMapper.getMappings().size() == bestMapper.getMappings().size() && sameFileName && !bestSameFileName)) {
+								bestMapper = moveCodeMapper;
+								bestSameFileName = sameFileName;
+							}
+						}
+					}
+				}
+			}
+			if(bestMapper != null) {
+				refactorings.add(new MoveCodeRefactoring(bestMapper.getContainer1(), bestMapper.getContainer2(), bestMapper, Type.MOVE_BETWEEN_FILES));
+			}
+		}
+	}
+
+	//the statement declares a class moved from another file, i.e., an object literal of another deleted fixture merged into the same file
+	private boolean declaresClassMovedFromAnotherFile(AbstractCodeFragment fragment2, String filePath1) {
+		List<UMLClassBaseDiff> classDiffs = new ArrayList<>();
+		classDiffs.addAll(classMoveDiffList);
+		classDiffs.addAll(innerClassMoveDiffList);
+		classDiffs.addAll(classRenameDiffList);
+		for(UMLClassBaseDiff classDiff : classDiffs) {
+			if(!classDiff.getOriginalClass().getSourceFile().equals(filePath1) &&
+					classDiff.getNextClass().getSourceFile().equals(fragment2.getLocationInfo().getFilePath()) &&
+					fragment2.getLocationInfo().subsumes(classDiff.getNextClass().getLocationInfo())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//the whole deleted module is moved, so that a few statements matching by chance are not reported as moved code
+	private static boolean allTopLevelStatementsMapped(ModuleContainer container1, UMLOperationBodyMapper moveCodeMapper) {
+		Set<AbstractCodeFragment> mapped = new HashSet<>();
+		for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+			mapped.add(mapping.getFragment1());
+		}
+		for(AbstractStatement statement : container1.getStatementList()) {
+			if(!mapped.contains(statement)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void checkForMovedCodeBetweenTestFixtures() throws RefactoringMinerTimedOutException {

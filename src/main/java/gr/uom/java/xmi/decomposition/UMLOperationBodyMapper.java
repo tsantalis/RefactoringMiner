@@ -11899,7 +11899,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							break;
 						}
 					}
-					if(!extractedWithinLambda && minStatementMapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
+					//the variable extracted in an operation of an anonymous class of the statement, i.e., in a method of the returned object literal, is not declared by the statement
+					boolean extractedWithinAnonymous = false;
+					for(AnonymousClassDeclarationObject anonymous : minStatementMapping.getFragment2().getAnonymousClassDeclarations()) {
+						if(anonymous.getLocationInfo().subsumes(extract.getVariableDeclaration().getLocationInfo())) {
+							extractedWithinAnonymous = true;
+							break;
+						}
+					}
+					if(!extractedWithinLambda && !extractedWithinAnonymous && minStatementMapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
 						if(ownedByLambda1 == ownedByLambda2) {
 							conflictingMappingFound = true;
 						}

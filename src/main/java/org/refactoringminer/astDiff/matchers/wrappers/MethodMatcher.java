@@ -210,6 +210,8 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if (identifiers != null) {
                     mappingStore.addMapping(identifiers.first, identifiers.second);
                 }
+                //get [_computedKey]() {...}
+                matchComputedPropertyNames(srcOperationNode, dstOperationNode, mappingStore);
                 com.github.gumtreediff.utils.Pair<Tree,Tree> private_identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIVATE_PROPERTY_IDENTIFIER,LANG2.PRIVATE_PROPERTY_IDENTIFIER);
                 if (private_identifiers != null) {
                     mappingStore.addMapping(private_identifiers.first, private_identifiers.second);

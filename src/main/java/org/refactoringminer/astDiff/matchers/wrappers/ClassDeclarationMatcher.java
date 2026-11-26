@@ -1657,6 +1657,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
                         mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
                     }
                 }
+                else if(extendClause2 == null && TreeUtilFunctions.findChildByType(classHeritage.first, LANG1.EXTENDS_CLAUSE) == null) {
+                    //the JavaScript class_heritage has the extends keyword as a child, i.e., class A extends B {} -> class A extends B {}
+                    Pair<Tree, Tree> extendKeywords = Helpers.findPairOfType(classHeritage.first, classHeritage.second, LANG1.EXTENDS_KEYWORD, LANG2.EXTENDS_KEYWORD);
+                    if(extendKeywords != null) {
+                        mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
+                    }
+                }
             }
         }
     }

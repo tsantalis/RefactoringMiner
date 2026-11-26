@@ -3110,6 +3110,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	//the fragments of the second side matched by the mappers of test callbacks below the mapper (lambda mappers of the mapper and of its mappings, at any depth),
+	//while the statements matched by the mappers of other lambdas can be the inlined code, i.e., ifPresent(throwable -> {...}) replacing ifPresent(this::pruneStackTrace)
+	private static void collectFragmentsMatchedInLambdaMappers2(UMLOperationBodyMapper mapper, Set<AbstractCodeFragment> fragments, Set<UMLOperationBodyMapper> visited) {
+		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<>(mapper.getLambdaMappers());
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			lambdaMappers.addAll(mapping.getLambdaMappers());
+		}
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			if(visited.add(lambdaMapper)) {
+				if(lambdaMapper.isTestCallbackMapper()) {
+					for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
+						fragments.add(mapping.getFragment2());
+					}
+				}
+				collectFragmentsMatchedInLambdaMappers2(lambdaMapper, fragments, visited);
+			}
+		}
+	}
+
 	private List<UMLAnonymousClass> anonymousClassList1() {
 		return container1.getAnonymousClassList();
 	}
@@ -4278,6 +4297,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(fragment, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, childMapper.anonymousClassList2(), codeFragmentOperationMap2, container2, false);
 					}
 				}
+			}
+			//the statements of the expanded test callbacks already matched by their mappers are not inlined code,
+			//i.e., the statements of the test callbacks of a module, whose it(...) calls are mapped with replacements
+			Set<AbstractCodeFragment> matchedInLambdaMappers2 = new HashSet<>();
+			collectFragmentsMatchedInLambdaMappers2(operationBodyMapper, matchedInLambdaMappers2, Collections.newSetFromMap(new IdentityHashMap<>()));
+			if(!matchedInLambdaMappers2.isEmpty()) {
+				leaves2.removeIf(leaf -> addedLeaves2.contains(leaf) && matchedInLambdaMappers2.contains(leaf));
+				innerNodes2.removeIf(node -> addedInnerNodes2.contains(node) && matchedInLambdaMappers2.contains(node));
+				addedLeaves2.removeIf(matchedInLambdaMappers2::contains);
+				addedInnerNodes2.removeIf(matchedInLambdaMappers2::contains);
 			}
 			List<CompositeStatementObject> innerNodes1 = removedOperationBody != null ? removedOperationBody.getCompositeStatement().getInnerNodes() : new ArrayList<>();
 			Set<AbstractCodeFragment> addedLeaves1 = new LinkedHashSet<AbstractCodeFragment>();

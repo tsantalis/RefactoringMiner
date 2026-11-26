@@ -237,7 +237,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(t1,t2);
                 }
             }
-            if(srcOperationNode.getType().name.equals(LANG1.PUBLIC_FIELD_DEFINITION) && dstOperationNode.getType().name.equals(LANG2.PUBLIC_FIELD_DEFINITION)) {
+            if(LANG1.isFieldDefinition(srcOperationNode.getType().name) && LANG2.isFieldDefinition(dstOperationNode.getType().name)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PROPERTY_IDENTIFIER,LANG2.PROPERTY_IDENTIFIER);
                 if (identifiers != null) {
                     mappingStore.addMapping(identifiers.first, identifiers.second);
@@ -645,12 +645,14 @@ public class MethodMatcher extends BodyMapperMatcher{
             }
             }
         } else {
-            //Static Initializers
-            if(srcTree.getType().name.equals(LANG1.MODULE) || srcTree.getType().name.equals(LANG1.PROGRAM))
+            //Static Initializers, and the module containers whose node is the root of the tree
+            //(not the static blocks of the JavaScript and TypeScript classes, which are initializers within the program)
+            boolean initializers = umlOperationBodyMapper.getContainer1() instanceof UMLInitializer && umlOperationBodyMapper.getContainer2() instanceof UMLInitializer;
+            if(!initializers && (srcTree.getType().name.equals(LANG1.MODULE) || srcTree.getType().name.equals(LANG1.PROGRAM)))
                 srcOperationNode = srcTree;
             else
                 srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getContainer1().getLocationInfo(), LANG1);
-            if(dstTree.getType().name.equals(LANG2.MODULE) || dstTree.getType().name.equals(LANG2.PROGRAM))
+            if(!initializers && (dstTree.getType().name.equals(LANG2.MODULE) || dstTree.getType().name.equals(LANG2.PROGRAM)))
                 dstOperationNode = dstTree;
             else
                 dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getContainer2().getLocationInfo(), LANG2);
@@ -671,6 +673,11 @@ public class MethodMatcher extends BodyMapperMatcher{
                             Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.MODIFIER);
                             if (srcModifier != null && dstModifier != null)
                                 mappingStore.addMapping(srcModifier, dstModifier);
+                            //the static keyword of the class_static_block of JavaScript and TypeScript
+                            Tree srcStatic = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.STATIC);
+                            Tree dstStatic = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.STATIC);
+                            if (srcStatic != null && dstStatic != null)
+                                mappingStore.addMapping(srcStatic, dstStatic);
                         }
                         if (initializer1.getJavadoc() != null && initializer2.getJavadoc() != null) {
                             //Javadoc

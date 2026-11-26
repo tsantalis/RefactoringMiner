@@ -33,7 +33,7 @@ public class Constants {
         return isNamedMethod(treeType) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(LEXICAL_DECLARATION) ||
                 treeType.equals(METHOD_SIGNATURE) || treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(PAIR) ||
                 isFunctionExpression(treeType) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(POINTER_DECLARATOR) ||
-                treeType.equals(FRIEND_DECLARATION) || treeType.equals(INIT_DECLARATOR) || treeType.equals(PUBLIC_FIELD_DEFINITION);
+                treeType.equals(FRIEND_DECLARATION) || treeType.equals(INIT_DECLARATOR) || isFieldDefinition(treeType);
     }
 
     //function () {...} and function* () {...}, i.e., the methods of the object literals
@@ -180,7 +180,7 @@ public class Constants {
 			PACKAGE_DECLARATION = "";
 			FIELD_DECLARATION = "";
 			MODIFIER = "";
-			INITIALIZER = "";
+			INITIALIZER = "class_static_block";
 			CONSTRUCTOR_INVOCATION = "";
 			ENUM_DECLARATION = "enum_declaration";
 			ANNOTATION_TYPE_DECLARATION = "class_declaration";
@@ -626,6 +626,12 @@ public class Constants {
     public final String METHOD_DEFINITION = "method_definition";
     public final String ACCESSIBILITY_MODIFIER = "accessibility_modifier";
     public final String PUBLIC_FIELD_DEFINITION = "public_field_definition";
+    public final String FIELD_DEFINITION = "field_definition";
+
+    //the class fields of TypeScript (public_field_definition) and JavaScript (field_definition), i.e., static getA = () => this;
+    public boolean isFieldDefinition(String treeType) {
+        return treeType.equals(PUBLIC_FIELD_DEFINITION) || treeType.equals(FIELD_DEFINITION);
+    }
     public final String OBJECT_PATTERN = "object_pattern";
     public final String IMPLEMENTS_CLAUSE = "implements_clause";
     public final String IMPLEMENTS_KEYWORD = "implements";

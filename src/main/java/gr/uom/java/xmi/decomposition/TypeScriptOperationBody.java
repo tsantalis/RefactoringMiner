@@ -18,6 +18,7 @@ import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstAutoAccessor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClass;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstStaticBlock;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
@@ -145,6 +146,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLImport;
+import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLNamedExport;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
@@ -1777,6 +1779,14 @@ public class TypeScriptOperationBody extends OperationBody {
 					}
 					umlClass.addAttribute(attribute);
 				}
+			}
+			else if(member instanceof Swc4jAstStaticBlock staticBlock) {
+				//static { ... } is a static initializer of the class, like in Java
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, staticBlock, CodeElementType.INITIALIZER, fileContent);
+				UMLInitializer initializer = new UMLInitializer(umlClass.getNonQualifiedName(), locationInfo, umlClass.getName());
+				initializer.setStatic(true);
+				initializer.setBody(new TypeScriptOperationBody(sourceFolder, filePath, staticBlock.getBody(), initializer, activeVariableDeclarations, fileContent));
+				umlClass.addInitializer(initializer);
 			}
 			else if(member instanceof Swc4jAstPrivateProp privateProp) {
 				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, privateProp, container, activeVariableDeclarations, fileContent, typeDeclarations);

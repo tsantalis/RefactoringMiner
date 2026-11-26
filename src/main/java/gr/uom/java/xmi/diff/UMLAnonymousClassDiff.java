@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -209,9 +210,33 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 							addedOperations.remove(operation2);
 						}
 					}
+					else if(!isPartOfMethodExtracted(operation1, operation2) && uniqueObjectLiteralMembers(operation1, operation2)) {
+						//the members of the JavaScript and TypeScript object literals are identified by their keys, like the attributes,
+						//so the members with the same signature are matched even when their bodies have nothing in common, i.e., value: () => A -> value: () => _class
+						addOperationBodyMapper(mapper);
+						removedOperations.remove(operation1);
+						addedOperations.remove(operation2);
+					}
 				}
 			}
 		}
+	}
+
+	private boolean uniqueObjectLiteralMembers(UMLOperation operation1, UMLOperation operation2) {
+		if(!PathFileUtils.isTypeScriptFile(originalClass.getSourceFile()) || !PathFileUtils.isTypeScriptFile(nextClass.getSourceFile()) || !operation1.equalSignature(operation2)) {
+			return false;
+		}
+		int sameName1 = 0;
+		for(UMLOperation operation : originalClass.getOperations()) {
+			if(operation.getName().equals(operation1.getName()))
+				sameName1++;
+		}
+		int sameName2 = 0;
+		for(UMLOperation operation : nextClass.getOperations()) {
+			if(operation.getName().equals(operation2.getName()))
+				sameName2++;
+		}
+		return sameName1 == 1 && sameName2 == 1;
 	}
 
 	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {

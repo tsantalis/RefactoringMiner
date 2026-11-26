@@ -213,7 +213,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher {
         }
         ClassDeclarationMatcher.processParentInternalModule(srcFieldDeclaration, dstFieldDeclaration, mappingStore, LANG1, LANG2);
         if((srcAttr.getType().name.equals(LANG1.PROPERTY_SIGNATURE) && dstAttr.getType().name.equals(LANG2.PROPERTY_SIGNATURE)) ||
-                (srcAttr.getType().name.equals(LANG1.PUBLIC_FIELD_DEFINITION) && dstAttr.getType().name.equals(LANG2.PUBLIC_FIELD_DEFINITION)) ||
+                (LANG1.isFieldDefinition(srcAttr.getType().name) && LANG2.isFieldDefinition(dstAttr.getType().name)) ||
                 (srcAttr.getType().name.equals(LANG1.SHORTHAND_PROPERTY_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.SHORTHAND_PROPERTY_IDENTIFIER)) ||
                 (srcAttr.getType().name.equals(LANG1.PAIR) && dstAttr.getType().name.equals(LANG2.PAIR)) ||
                 (srcAttr.getType().name.equals(LANG1.ENUM_ASSIGNMENT) && dstAttr.getType().name.equals(LANG2.ENUM_ASSIGNMENT)) ||

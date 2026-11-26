@@ -3097,10 +3097,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(wrappingCall == null) {
 				continue;
 			}
+			//the calls of the other side, which may have type arguments, i.e., it.each<FetchPolicy>([...])("...", async () => {...})
 			boolean called = false;
 			for(AbstractCodeFragment otherLeaf : otherLeaves) {
-				if(otherLeaf.getString().contains(wrappingCall.getName() + "(")) {
-					called = true;
+				for(AbstractCall otherCall : otherLeaf.getMethodInvocations()) {
+					if(otherCall.getName().equals(wrappingCall.getName())) {
+						called = true;
+						break;
+					}
+				}
+				if(called) {
 					break;
 				}
 			}

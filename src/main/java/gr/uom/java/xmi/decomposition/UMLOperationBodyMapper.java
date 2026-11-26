@@ -72,10 +72,13 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
@@ -5041,6 +5044,63 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				nonMappedLeafCount++;
 		}
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
+	}
+
+	//the statements within the lambdas of container1 left unmapped, which the non-mapped lists exclude after expanding the lambdas for matching,
+	//while their mapped statements count as mappings, i.e., the useCallback callback of a React hook inlined to its caller
+	public int nonMappedLambdaElementsT1() {
+		Map<AbstractCodeFragment, AbstractCodeFragment> counterparts = new HashMap<>();
+		for(AbstractCodeMapping mapping : mappings) {
+			counterparts.put(mapping.getFragment1(), mapping.getFragment2());
+		}
+		return container1 != null && container1.getBody() != null ? nonMappedLambdaElements(container1.getBody().getCompositeStatement(), counterparts, nonMappedLeavesT1, nonMappedInnerNodesT1) : 0;
+	}
+
+	//the lambdas of an unmapped statement, i.e., return useSyncExternalStore(useCallback((forceUpdate) => {...}), ...),
+	//of a statement mapped to one without lambdas, i.e., subscribeTimeoutRef.current = setTimeout(() => {...}) and previousVariables.current = variables,
+	//and the lambdas without mapped statements (besides their body block) of a statement mapped to one with lambda bodies are not compared with the other side,
+	//while the lambda of a statement mapped to another statement with lambdas is compared together with that statement, i.e., $(e).change((e1, param1) -> {...});
+	//or replaced with a method reference, i.e., cart -> {...} and this::validateForm; the nested lambdas are checked in both cases
+	private static int nonMappedLambdaElements(CompositeStatementObject body, Map<AbstractCodeFragment, AbstractCodeFragment> counterparts,
+			List<AbstractCodeFragment> nonMappedLeaves, List<CompositeStatementObject> nonMappedInnerNodes) {
+		Deque<Pair<LambdaExpressionObject, Boolean>> lambdas = new ArrayDeque<>();
+		List<AbstractCodeFragment> statements = new ArrayList<>(body.getLeaves());
+		statements.addAll(body.getInnerNodes());
+		for(AbstractCodeFragment statement : statements) {
+			addLambdas(statement, counterparts, lambdas);
+		}
+		int count = 0;
+		Set<LambdaExpressionObject> visited = Collections.newSetFromMap(new IdentityHashMap<>());
+		while(!lambdas.isEmpty()) {
+			Pair<LambdaExpressionObject, Boolean> pair = lambdas.poll();
+			LambdaExpressionObject lambda = pair.getLeft();
+			if(!visited.add(lambda) || lambda.getBody() == null) {
+				continue;
+			}
+			CompositeStatementObject lambdaBody = lambda.getBody().getCompositeStatement();
+			List<AbstractCodeFragment> fragments = new ArrayList<>(lambdaBody.getLeaves());
+			fragments.addAll(lambdaBody.getInnerNodes());
+			fragments.remove(lambdaBody);
+			for(AbstractCodeFragment fragment : fragments) {
+				if(pair.getRight() && !counterparts.containsKey(fragment) && !nonMappedLeaves.contains(fragment) && !nonMappedInnerNodes.contains(fragment) && fragment.countableStatement()) {
+					count++;
+				}
+				addLambdas(fragment, counterparts, lambdas);
+			}
+		}
+		return count;
+	}
+
+	//each lambda of the fragment, with whether it is compared with the other side
+	private static void addLambdas(AbstractCodeFragment fragment, Map<AbstractCodeFragment, AbstractCodeFragment> counterparts, Deque<Pair<LambdaExpressionObject, Boolean>> lambdas) {
+		AbstractCodeFragment counterpart = counterparts.get(fragment);
+		for(LambdaExpressionObject lambda : fragment.getLambdas()) {
+			boolean uncompared = counterpart == null || counterpart.getLambdas().isEmpty() ||
+					(lambda.getBody() != null && counterpart.getLambdas().stream().anyMatch(other -> other.getBody() != null) &&
+					lambda.getBody().getCompositeStatement().getLeaves().stream().noneMatch(counterparts::containsKey) &&
+					lambda.getBody().getCompositeStatement().getInnerNodes().stream().noneMatch(node -> node != lambda.getBody().getCompositeStatement() && counterparts.containsKey(node)));
+			lambdas.add(Pair.of(lambda, uncompared));
+		}
 	}
 
 	public int nonMappedLeafElementsT1() {

@@ -2970,7 +2970,9 @@ public class UMLModelDiff {
 		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-				if(mapper.getOperation1() != null && mapper.getContainer1().getBody() != null && mapper.getContainer2().getBody() == null) {
+				//an arrow function with an expression body is not abstract, i.e., const refetch = useCallback((variables) => subscription.refetch(variables), ...)
+				if(mapper.getOperation1() != null && mapper.getContainer1().getBody() != null && mapper.getContainer2().getBody() == null &&
+						!(mapper.getOperation2() != null && mapper.getOperation2().getDefaultExpression() != null)) {
 					removedOperations.add(mapper.getOperation1());
 				}
 			}
@@ -6306,7 +6308,7 @@ public class UMLModelDiff {
 			}
 		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1()-delegateStatements;
+		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1()+operationBodyMapper.nonMappedLambdaElementsT1()-delegateStatements;
 		for(AbstractCodeMapping mapping : mappingList) {
 			if(mapping.getFragment1() instanceof AbstractExpression) {
 				if(mapping.getFragment1().getVariables().size() == 1 && mapping.getFragment1().getString().equals(mapping.getFragment1().getVariables().get(0).getString())) {

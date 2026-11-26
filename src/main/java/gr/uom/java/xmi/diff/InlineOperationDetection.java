@@ -323,7 +323,7 @@ public class InlineOperationDetection {
 			}
 		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1()-delegateStatements;
+		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1()+operationBodyMapper.nonMappedLambdaElementsT1()-delegateStatements;
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 			List<VariableDeclaration> variableDeclarations = mapping.getFragment1().getVariableDeclarations();

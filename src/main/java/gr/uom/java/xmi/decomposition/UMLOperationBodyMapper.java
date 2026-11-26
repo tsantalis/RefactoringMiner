@@ -11,6 +11,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.ListCompositeType;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAbstractClass;
@@ -3112,19 +3113,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	//the fragments of the second side matched by the mappers of test callbacks below the mapper (lambda mappers of the mapper and of its mappings, at any depth),
 	//while the statements matched by the mappers of other lambdas can be the inlined code, i.e., ifPresent(throwable -> {...}) replacing ifPresent(this::pruneStackTrace)
-	private static void collectFragmentsMatchedInLambdaMappers2(UMLOperationBodyMapper mapper, Set<AbstractCodeFragment> fragments, Set<UMLOperationBodyMapper> visited) {
+	private static void collectFragmentsMatchedInLambdaMappers2(UMLOperationBodyMapper mapper, Set<AbstractCodeFragment> fragments, List<LocationInfo> identicallyMatchedStatements, Set<UMLOperationBodyMapper> visited) {
 		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<>(mapper.getLambdaMappers());
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			lambdaMappers.addAll(mapping.getLambdaMappers());
 		}
 		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 			if(visited.add(lambdaMapper)) {
-				if(lambdaMapper.isTestCallbackMapper()) {
-					for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
+				for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
+					if(lambdaMapper.isTestCallbackMapper()) {
 						fragments.add(mapping.getFragment2());
 					}
+					//an identically mapped statement contains no inlined code, i.e., an unchanged it(...) test without a callback mapper
+					if(mapping.getFragment2() instanceof StatementObject && mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+						identicallyMatchedStatements.add(mapping.getFragment2().getLocationInfo());
+					}
 				}
-				collectFragmentsMatchedInLambdaMappers2(lambdaMapper, fragments, visited);
+				collectFragmentsMatchedInLambdaMappers2(lambdaMapper, fragments, identicallyMatchedStatements, visited);
 			}
 		}
 	}
@@ -4300,13 +4305,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			//the statements of the expanded test callbacks already matched by their mappers are not inlined code,
 			//i.e., the statements of the test callbacks of a module, whose it(...) calls are mapped with replacements
+			//as well as the fragments within the statements matched identically by them, whose lambdas have no mapper,
+			//i.e., () => new Observable((o) => o.error(standardError)) in an unchanged const linkStub = jest.fn(...) of a test
 			Set<AbstractCodeFragment> matchedInLambdaMappers2 = new HashSet<>();
-			collectFragmentsMatchedInLambdaMappers2(operationBodyMapper, matchedInLambdaMappers2, Collections.newSetFromMap(new IdentityHashMap<>()));
-			if(!matchedInLambdaMappers2.isEmpty()) {
-				leaves2.removeIf(leaf -> addedLeaves2.contains(leaf) && matchedInLambdaMappers2.contains(leaf));
-				innerNodes2.removeIf(node -> addedInnerNodes2.contains(node) && matchedInLambdaMappers2.contains(node));
-				addedLeaves2.removeIf(matchedInLambdaMappers2::contains);
-				addedInnerNodes2.removeIf(matchedInLambdaMappers2::contains);
+			List<LocationInfo> identicallyMatchedStatements2 = new ArrayList<>();
+			collectFragmentsMatchedInLambdaMappers2(operationBodyMapper, matchedInLambdaMappers2, identicallyMatchedStatements2, Collections.newSetFromMap(new IdentityHashMap<>()));
+			if(!matchedInLambdaMappers2.isEmpty() || !identicallyMatchedStatements2.isEmpty()) {
+				Predicate<AbstractCodeFragment> accountedFor = fragment -> matchedInLambdaMappers2.contains(fragment) ||
+						identicallyMatchedStatements2.stream().anyMatch(location -> location.subsumes(fragment.getLocationInfo()));
+				leaves2.removeIf(leaf -> addedLeaves2.contains(leaf) && accountedFor.test(leaf));
+				innerNodes2.removeIf(node -> addedInnerNodes2.contains(node) && accountedFor.test(node));
+				addedLeaves2.removeIf(accountedFor);
+				addedInnerNodes2.removeIf(accountedFor);
 			}
 			List<CompositeStatementObject> innerNodes1 = removedOperationBody != null ? removedOperationBody.getCompositeStatement().getInnerNodes() : new ArrayList<>();
 			Set<AbstractCodeFragment> addedLeaves1 = new LinkedHashSet<AbstractCodeFragment>();

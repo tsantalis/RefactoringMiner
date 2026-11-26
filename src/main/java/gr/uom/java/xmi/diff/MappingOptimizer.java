@@ -1,6 +1,10 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import gr.uom.java.xmi.decomposition.StatementObject;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -183,21 +187,68 @@ public class MappingOptimizer {
 					}
 				}
 			}
+			//the mappings of the parent mapper, and of the mappers of the test callbacks below it, which match the statements of the tests of a module
+			Map<AbstractCodeMapping, UMLOperationBodyMapper> parentMappings = new LinkedHashMap<>();
 			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+				parentMappings.put(mapping, parentMapper);
+			}
+			List<AbstractCodeMapping> identicalStatementMappings = new ArrayList<>();
+			collectTestCallbackMappings(parentMapper, parentMappings, identicalStatementMappings, Collections.newSetFromMap(new IdentityHashMap<>()));
+			Set<AbstractCodeFragment> childKeys = new LinkedHashSet<>(oneToManyMappings.keySet());
+			for(Map.Entry<AbstractCodeMapping, UMLOperationBodyMapper> entry : parentMappings.entrySet()) {
+				AbstractCodeMapping mapping = entry.getKey();
+				UMLOperationBodyMapper mapper = entry.getValue();
 				if(oneToManyMappings.containsKey(mapping.getFragment2())) {
 					oneToManyMappings.get(mapping.getFragment2()).add(mapping);
-					oneToManyMappers.get(mapping.getFragment2()).add(parentMapper);
+					oneToManyMappers.get(mapping.getFragment2()).add(mapper);
 				}
 				else {
-					List<AbstractCodeMapping> mappings = new ArrayList<>();
-					List<UMLOperationBodyMapper> mappers = new ArrayList<>();
-					mappings.add(mapping);
-					mappers.add(parentMapper);
-					oneToManyMappings.put(mapping.getFragment2(), mappings);
-					oneToManyMappers.put(mapping.getFragment2(), mappers);
+					//the child mappings within a statement mapped identically below the parent mapper, which contains no inlined code,
+					//i.e., new Observable((o) => o.error(e)) in an unchanged jest.fn(() => ...), or the statements of an unchanged it(...) test
+					boolean containsChildFragment = false;
+					if(identicalStatementMappings.contains(mapping)) {
+						for(AbstractCodeFragment key : childKeys) {
+							if(!key.equals(mapping.getFragment2()) && mapping.getFragment2().getLocationInfo().subsumes(key.getLocationInfo())) {
+								oneToManyMappings.get(key).add(mapping);
+								oneToManyMappers.get(key).add(mapper);
+								containsChildFragment = true;
+							}
+						}
+					}
+					if(!containsChildFragment) {
+						List<AbstractCodeMapping> mappings = new ArrayList<>();
+						List<UMLOperationBodyMapper> mappers = new ArrayList<>();
+						mappings.add(mapping);
+						mappers.add(mapper);
+						oneToManyMappings.put(mapping.getFragment2(), mappings);
+						oneToManyMappers.put(mapping.getFragment2(), mappers);
+					}
 				}
 			}
 			optimizeDuplicateMappings(oneToManyMappings, oneToManyMappers, refactorings);
+		}
+	}
+
+	//the mappings of the test callback mappers below the mapper, and the identical statement mappings of the mapper and of all lambda mappers below it
+	private static void collectTestCallbackMappings(UMLOperationBodyMapper mapper, Map<AbstractCodeMapping, UMLOperationBodyMapper> mappings,
+			List<AbstractCodeMapping> identicalStatementMappings, Set<UMLOperationBodyMapper> visited) {
+		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<>(mapper.getLambdaMappers());
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			lambdaMappers.addAll(mapping.getLambdaMappers());
+			if(mapping.getFragment2() instanceof StatementObject && mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				identicalStatementMappings.add(mapping);
+				mappings.putIfAbsent(mapping, mapper);
+			}
+		}
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			if(visited.add(lambdaMapper)) {
+				if(lambdaMapper.isTestCallbackMapper()) {
+					for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
+						mappings.putIfAbsent(mapping, lambdaMapper);
+					}
+				}
+				collectTestCallbackMappings(lambdaMapper, mappings, identicalStatementMappings, visited);
+			}
 		}
 	}
 
@@ -245,6 +296,7 @@ public class MappingOptimizer {
 					}
 				}
 			}
+			Set<AbstractCodeFragment> childKeys = new LinkedHashSet<>(oneToManyMappings.keySet());
 			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
 				AbstractExpression expressionOfComposite = null;
 				if(oneToManyMappings.containsKey(mapping.getFragment1())) {
@@ -267,6 +319,30 @@ public class MappingOptimizer {
 					mappers.add(parentMapper);
 					oneToManyMappings.put(mapping.getFragment1(), mappings);
 					oneToManyMappers.put(mapping.getFragment1(), mappers);
+				}
+			}
+			//the mappings of the test callback mappers below the parent mapper, which match the statements of the tests of a module,
+			//and the statements mapped identically below it, which contain no extracted code, i.e., const defaultContext = {}; of a test
+			Map<AbstractCodeMapping, UMLOperationBodyMapper> nestedMappings = new LinkedHashMap<>();
+			List<AbstractCodeMapping> identicalStatementMappings = new ArrayList<>();
+			collectTestCallbackMappings(parentMapper, nestedMappings, identicalStatementMappings, Collections.newSetFromMap(new IdentityHashMap<>()));
+			for(Map.Entry<AbstractCodeMapping, UMLOperationBodyMapper> entry : nestedMappings.entrySet()) {
+				AbstractCodeMapping mapping = entry.getKey();
+				UMLOperationBodyMapper mapper = entry.getValue();
+				if(mapper == parentMapper) {
+					continue;
+				}
+				if(childKeys.contains(mapping.getFragment1())) {
+					oneToManyMappings.get(mapping.getFragment1()).add(mapping);
+					oneToManyMappers.get(mapping.getFragment1()).add(mapper);
+				}
+				else if(identicalStatementMappings.contains(mapping)) {
+					for(AbstractCodeFragment key : childKeys) {
+						if(mapping.getFragment1().getLocationInfo().subsumes(key.getLocationInfo())) {
+							oneToManyMappings.get(key).add(mapping);
+							oneToManyMappers.get(key).add(mapper);
+						}
+					}
 				}
 			}
 			optimizeDuplicateMappings(oneToManyMappings, oneToManyMappers, refactorings);

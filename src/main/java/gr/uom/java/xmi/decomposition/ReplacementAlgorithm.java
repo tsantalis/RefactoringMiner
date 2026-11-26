@@ -5191,7 +5191,8 @@ public class ReplacementAlgorithm {
 					s1.contains(LANG1.OPEN_ARRAY_INITIALIZER) && s1.contains(LANG1.CLOSE_ARRAY_INITIALIZER)) {
 				String args1 = s1.substring(s1.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, s1.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 				String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
-				if(args1.equals(args2)) {
+				//empty elements match empty arguments of any call, i.e., const defaultContext = {}; and finishWaitingForOwnResult();
+				if(args1.equals(args2) && !args1.isEmpty()) {
 					r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
@@ -5202,7 +5203,8 @@ public class ReplacementAlgorithm {
 				String arrayInitializer = creationCoveringTheEntireStatement1.getAnonymousClassDeclaration();
 				String args1 = arrayInitializer.substring(arrayInitializer.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 				String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
-				if(args1.equals(args2)) {
+				//empty elements match empty arguments of any call, i.e., const defaultContext = {}; and finishWaitingForOwnResult();
+				if(args1.equals(args2) && !args1.isEmpty()) {
 					r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
@@ -5213,7 +5215,8 @@ public class ReplacementAlgorithm {
 					s2.contains(LANG1.OPEN_ARRAY_INITIALIZER) && s2.contains(LANG1.CLOSE_ARRAY_INITIALIZER)) {
 				String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 				String args2 = s2.substring(s2.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, s2.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
-				if(args1.equals(args2)) {
+				//empty elements match empty arguments of any call, i.e., const defaultContext = {}; and finishWaitingForOwnResult();
+				if(args1.equals(args2) && !args1.isEmpty()) {
 					r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
@@ -5224,7 +5227,8 @@ public class ReplacementAlgorithm {
 				String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 				String arrayInitializer = creationCoveringTheEntireStatement2.getAnonymousClassDeclaration();
 				String args2 = arrayInitializer.substring(arrayInitializer.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, arrayInitializer.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
-				if(args1.equals(args2)) {
+				//empty elements match empty arguments of any call, i.e., const defaultContext = {}; and finishWaitingForOwnResult();
+				if(args1.equals(args2) && !args1.isEmpty()) {
 					r = new Replacement(args1, args2, ReplacementType.ARRAY_INITIALIZER_REPLACED_WITH_METHOD_INVOCATION_ARGUMENTS);
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();

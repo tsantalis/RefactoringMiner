@@ -71,15 +71,24 @@ public class UMLComment extends UMLAbstractDocumentation {
 	public Optional<String> getCodeStatement() {
 		if(codeStatement == null) {
 			String text = getText();
-			if(PathFileUtils.isPythonFile(getLocationInfo().getFilePath())) {
-				codeStatement = pythonCodeStatement(getLocationInfo().getFilePath(), text);
+			String filePath = getLocationInfo().getFilePath();
+			if(PathFileUtils.isPythonFile(filePath)) {
+				codeStatement = pythonCodeStatement(filePath, text);
 				return codeStatement;
 			}
-			if(text.startsWith("//")) {
-				text = text.substring(2);
+			if(PathFileUtils.isTypeScriptFile(filePath)) {
+				codeStatement = typeScriptCodeStatement(filePath, text);
+				return codeStatement;
 			}
-			ASTNode node = JavaFileProcessor.processJavaBlock(text.trim());
-			codeStatement = node != null ? Optional.of(Visitor.stringify(node)) : Optional.empty();
+			if(PathFileUtils.isJavaFile(filePath)) {
+				if(text.startsWith("//")) {
+					text = text.substring(2);
+				}
+				ASTNode node = JavaFileProcessor.processJavaBlock(text.trim());
+				codeStatement = node != null ? Optional.of(Visitor.stringify(node)) : Optional.empty();
+				return codeStatement;
+			}
+			codeStatement = Optional.empty();
 		}
 		return codeStatement;
 	}
@@ -90,7 +99,19 @@ public class UMLComment extends UMLAbstractDocumentation {
 		if(code.isEmpty()) {
 			return Optional.empty();
 		}
-		List<UMLOperation> operations = PythonFileProcessor.parseOperations(filePath, "def __commented_code__():\n    " + code.replace("\n", "\n    ") + "\n");
+		return singleOperationStatement(PythonFileProcessor.parseOperations(filePath, "def __commented_code__():\n    " + code.replace("\n", "\n    ") + "\n"));
+	}
+
+	//the TypeScript/JavaScript statement commented out, as the model represents it, or empty if the comment is not a single statement
+	public static Optional<String> typeScriptCodeStatement(String filePath, String text) {
+		String code = text.trim();
+		if(code.isEmpty()) {
+			return Optional.empty();
+		}
+		return singleOperationStatement(TypeScriptFileProcessor.parseOperations(filePath, "async function __commented_code__() {\n" + code + "\n}\n"));
+	}
+
+	private static Optional<String> singleOperationStatement(List<UMLOperation> operations) {
 		if(operations != null && operations.size() == 1 && operations.get(0).getBody() != null) {
 			List<AbstractStatement> statements = operations.get(0).getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject statement) {

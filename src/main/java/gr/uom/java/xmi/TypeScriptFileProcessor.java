@@ -161,38 +161,7 @@ public class TypeScriptFileProcessor {
 				this.umlModel.getTreeContextMap().put(filePath, treeContext);
 			}
 			if(output.getProgram() instanceof Swc4jAstModule module) {
-				List<ISwc4jAstModuleItem> list = module.getBody();
-				List<UMLImport> imports = new ArrayList<>();
-				String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
-				int extensionLength = filePath.endsWith(".tsx") || filePath.endsWith(".jsx") ? 4 : 3;
-				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - extensionLength) : filePath.substring(0, filePath.length() - extensionLength);
-				LocationInfo location = new LocationInfo(sourceFolder, filePath, module, CodeElementType.TYPE_DECLARATION, fileContent);
-				List<UMLComment> commentList = extractComments(comments, sourceFolder, filePath, fileContent);
-				UMLClass moduleClass = new UMLClass(moduleName, "__module__", location, true, imports);
-				moduleClass.setModule(true);
-				ModuleContainer moduleContainer = new ModuleContainer(location, moduleName);
-				moduleContainer.addComments(commentList);
-				OperationBody opBody = new TypeScriptOperationBody(
-						module,
-						sourceFolder,
-						filePath,
-						list,
-						moduleContainer,
-						fileContent
-						);
-				moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
-				if(moduleContainer.hasNestedClassesDeclaredInCallbacks()) {
-					Map<String, Integer> typeDeclarations = new HashMap<>();
-					countTypeDeclarations(module, typeDeclarations);
-					moduleContainer.addNestedClassesDeclaredInCallbacks(typeDeclarations);
-				}
-				moduleClass.setContainer(moduleContainer);
-				moduleClass.setVisibility(Visibility.PUBLIC);
-				moduleClass.operations.addAll(moduleContainer.getNestedOperations());
-				moduleClass.attributes.addAll(moduleContainer.getNestedAttributes());
-				moduleClass.getImportedTypes().addAll(moduleContainer.getNestedImports());
-				umlModel.getClassList().addAll(moduleContainer.getNestedClasses());
-				umlModel.addClass(moduleClass);
+				processModule(module, comments, filePath, fileContent);
 			}
 			else if(output.getProgram() instanceof Swc4jAstScript script) {
 				List<ISwc4jAstStmt> list = script.getBody();
@@ -201,6 +170,67 @@ public class TypeScriptFileProcessor {
 		catch(IOException | Swc4jCoreException e) {
 			
 		}
+	}
+
+	private void processModule(Swc4jAstModule module, Swc4jComments comments, String filePath, String fileContent) {
+		List<ISwc4jAstModuleItem> list = module.getBody();
+		List<UMLImport> imports = new ArrayList<>();
+		String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
+		int extensionLength = filePath.endsWith(".tsx") || filePath.endsWith(".jsx") ? 4 : 3;
+		String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - extensionLength) : filePath.substring(0, filePath.length() - extensionLength);
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, module, CodeElementType.TYPE_DECLARATION, fileContent);
+		List<UMLComment> commentList = comments != null ? extractComments(comments, sourceFolder, filePath, fileContent) : List.of();
+		UMLClass moduleClass = new UMLClass(moduleName, "__module__", location, true, imports);
+		moduleClass.setModule(true);
+		ModuleContainer moduleContainer = new ModuleContainer(location, moduleName);
+		moduleContainer.addComments(commentList);
+		OperationBody opBody = new TypeScriptOperationBody(
+				module,
+				sourceFolder,
+				filePath,
+				list,
+				moduleContainer,
+				fileContent
+				);
+		moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
+		if(moduleContainer.hasNestedClassesDeclaredInCallbacks()) {
+			Map<String, Integer> typeDeclarations = new HashMap<>();
+			countTypeDeclarations(module, typeDeclarations);
+			moduleContainer.addNestedClassesDeclaredInCallbacks(typeDeclarations);
+		}
+		moduleClass.setContainer(moduleContainer);
+		moduleClass.setVisibility(Visibility.PUBLIC);
+		moduleClass.operations.addAll(moduleContainer.getNestedOperations());
+		moduleClass.attributes.addAll(moduleContainer.getNestedAttributes());
+		moduleClass.getImportedTypes().addAll(moduleContainer.getNestedImports());
+		umlModel.getClassList().addAll(moduleContainer.getNestedClasses());
+		umlModel.addClass(moduleClass);
+	}
+
+	public static List<UMLOperation> parseOperations(String filePath, String code) {
+		try {
+			Swc4jParseOptions options = new Swc4jParseOptions()
+					.setSpecifier(Path.of(filePath).toUri().toURL())
+					.setMediaType(mediaType(filePath))
+					.setCaptureAst(true)
+					.setCaptureComments(false)
+					.setParseMode(Swc4jParseMode.Module);
+			Swc4jParseOutput output = new Swc4j().parse(utf16Source(code), options);
+			if(output.getProgram() instanceof Swc4jAstModule module) {
+				UMLModel model = new UMLModel(Set.of());
+				TypeScriptFileProcessor processor = new TypeScriptFileProcessor(model);
+				processor.processModule(module, null, filePath, code);
+				List<UMLOperation> operations = new ArrayList<>();
+				for(UMLClass umlClass : model.getClassList()) {
+					operations.addAll(umlClass.getOperations());
+				}
+				return operations;
+			}
+		}
+		catch(IOException | Swc4jCoreException e) {
+			return null;
+		}
+		return null;
 	}
 
 	private List<UMLComment> extractComments(Swc4jComments comments, String sourceFolder, String filePath, String fileContent) {

@@ -467,7 +467,9 @@ public class VariableReplacementAnalysis {
 						if(body1 != null && body2 != null) {
 							List<VariableDeclaration> declarations1 = op1.getParameterDeclarationList();
 							List<VariableDeclaration> declarations2 = op2.getParameterDeclarationList();
-							if(declarations1.toString().equals(declarations2.toString())) {
+							//the anonymous classes are paired by position, so the operations with the same parameters are also paired by name,
+							//i.e., touchIllegally: (_, _v, _c) => ... is not paired with hasBeenIllegallyTouched: (_, _v, _c) => ... of another object literal
+							if(declarations1.toString().equals(declarations2.toString()) && op1.getName().equals(op2.getName())) {
 								processVariableDeclarationsInIdenticalOperations(declarations1, declarations2);
 							}
 							if(body1.getBodyHashCode() == body2.getBodyHashCode()) {
@@ -525,7 +527,8 @@ public class VariableReplacementAnalysis {
 				VariableDeclaration removedVariable = removedVariableIterator.next();
 				VariableDeclaration addedVariable = addedVariableIterator.next();
 				Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-				if(!matchedVariables.contains(pair) && removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
+				//the variables are listed in the same order of names, but not necessarily of scopes, i.e., (_, _v, _c) => ... of reordered callbacks
+				if(!matchedVariables.contains(pair) && removedVariable.getVariableName().equals(addedVariable.getVariableName()) && !declaredInDifferentNestedScopes(removedVariable, addedVariable)) {
 					removedVariablesToBeRemoved.add(removedVariable);
 					addedVariablesToBeRemoved.add(addedVariable);
 					matchedVariables.add(pair);

@@ -4550,7 +4550,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMatchedVariables() {
-		if(matchedVariables.isEmpty() && container1.hasEmptyBody() && container2.hasEmptyBody() && operationSignatureDiff != null) {
+		//the parameters of empty bodies and of signatures without body, i.e., push(client: ApolloClient<any>): void in a type literal
+		if(matchedVariables.isEmpty() && (container1.hasEmptyBody() || container1.getBody() == null) && (container2.hasEmptyBody() || container2.getBody() == null) && operationSignatureDiff != null) {
 			return operationSignatureDiff.getCommonParameters();
 		}
 		return matchedVariables;

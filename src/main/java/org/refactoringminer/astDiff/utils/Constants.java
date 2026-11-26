@@ -31,9 +31,14 @@ public class Constants {
 
     public boolean isMethod(String treeType) {
         return isNamedMethod(treeType) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(LEXICAL_DECLARATION) ||
-                treeType.equals(METHOD_SIGNATURE) || treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(PAIR) ||
+                isMethodSignature(treeType) || treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(PAIR) ||
                 isFunctionExpression(treeType) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(POINTER_DECLARATOR) ||
                 treeType.equals(FRIEND_DECLARATION) || treeType.equals(INIT_DECLARATOR) || isFieldDefinition(treeType);
+    }
+
+    //the methods without a body of the classes and interfaces, i.e., public abstract read(query: ReadOptions): T | null;
+    public boolean isMethodSignature(String treeType) {
+        return treeType.equals(METHOD_SIGNATURE) || treeType.equals(ABSTRACT_METHOD_SIGNATURE);
     }
 
     //function () {...} and function* () {...}, i.e., the methods of the object literals
@@ -648,6 +653,7 @@ public class Constants {
     public final String EXTENDS_KEYWORD = "extends";
     public final String MEMBER_EXPRESSION = "member_expression";
     public final String METHOD_SIGNATURE = "method_signature";
+    public final String ABSTRACT_METHOD_SIGNATURE = "abstract_method_signature";
     public final String FUNCTION_SIGNATURE = "function_signature";
     public final String OPTIONAL_KEYWORD = "?";
     public final String UNION = "|";

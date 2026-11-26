@@ -369,10 +369,14 @@ public class MethodMatcher extends BodyMapperMatcher{
                     }
                 }
             }
-            if(srcOperationNode.getType().name.equals(LANG1.METHOD_SIGNATURE) && dstOperationNode.getType().name.equals(LANG2.METHOD_SIGNATURE)) {
+            if(LANG1.isMethodSignature(srcOperationNode.getType().name) && LANG2.isMethodSignature(dstOperationNode.getType().name)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> accessibility_modifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.ACCESSIBILITY_MODIFIER,LANG2.ACCESSIBILITY_MODIFIER);
                 if (accessibility_modifiers != null) {
                     mappingStore.addMappingRecursively(accessibility_modifiers.first, accessibility_modifiers.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> abstractKeywords = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.ABSTRACT,LANG2.ABSTRACT);
+                if (abstractKeywords != null) {
+                    mappingStore.addMapping(abstractKeywords.first, abstractKeywords.second);
                 }
                 com.github.gumtreediff.utils.Pair<Tree,Tree> identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PROPERTY_IDENTIFIER,LANG2.PROPERTY_IDENTIFIER);
                 if (identifiers != null) {

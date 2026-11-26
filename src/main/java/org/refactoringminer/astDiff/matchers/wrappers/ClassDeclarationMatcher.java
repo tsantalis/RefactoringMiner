@@ -1010,7 +1010,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
                 }
             }
         }
-        if (srcTypeDeclaration.getType().name.equals(LANG1.CLASS_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.CLASS_DECLARATION)) {
+        //the TypeScript abstract classes have their own node type, with the same class body
+        if ((srcTypeDeclaration.getType().name.equals(LANG1.CLASS_DECLARATION) || srcTypeDeclaration.getType().name.equals(LANG1.ABSTRACT_CLASS_DECLARATION)) &&
+                (dstTypeDeclaration.getType().name.equals(LANG2.CLASS_DECLARATION) || dstTypeDeclaration.getType().name.equals(LANG2.ABSTRACT_CLASS_DECLARATION))) {
             Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.CLASS_KEYWORD, LANG2.CLASS_KEYWORD);
             if(types != null) {
                 mappingStore.addMapping(types.first, types.second);

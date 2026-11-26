@@ -43,6 +43,28 @@
   "firstEndPos" : 17,
   "secondEndPos" : 285
 }, {
+  "firstType" : "class_body",
+  "secondType" : "class_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "abstract_class_declaration",
+  "firstPos" : 18,
+  "secondPos" : 346,
+  "firstEndPos" : 2329,
+  "secondEndPos" : 2943
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "class_body",
+  "secondParentType" : "class_body",
+  "firstPos" : 18,
+  "secondPos" : 346,
+  "firstEndPos" : 19,
+  "secondEndPos" : 347
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/**\n   * @param {HttpClient} client HTTPClient object.\n   * @param {\"default\" | \"safe\" | \"mixed\" | \"bigint\" | undefined} intDecoding The method to use\n   *   for decoding integers from this request's response. See the setIntDecoding method for more\n   *   details.\n   */",
@@ -779,6 +801,50 @@
   "secondPos" : 863,
   "firstEndPos" : 436,
   "secondEndPos" : 864
+}, {
+  "firstType" : "method_definition",
+  "secondType" : "abstract_method_signature",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_body",
+  "secondParentType" : "class_body",
+  "firstPos" : 575,
+  "secondPos" : 920,
+  "firstEndPos" : 653,
+  "secondEndPos" : 943
+}, {
+  "firstType" : "formal_parameters",
+  "secondType" : "formal_parameters",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "method_definition",
+  "secondParentType" : "abstract_method_signature",
+  "firstPos" : 580,
+  "secondPos" : 933,
+  "firstEndPos" : 582,
+  "secondEndPos" : 935
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 580,
+  "secondPos" : 933,
+  "firstEndPos" : 581,
+  "secondEndPos" : 934
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 581,
+  "secondPos" : 934,
+  "firstEndPos" : 582,
+  "secondEndPos" : 935
 }, {
   "firstType" : "method_definition",
   "secondType" : "method_definition",
@@ -2825,4 +2891,15 @@
   "secondPos" : 2940,
   "firstEndPos" : 2327,
   "secondEndPos" : 2941
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "class_body",
+  "secondParentType" : "class_body",
+  "firstPos" : 2328,
+  "secondPos" : 2942,
+  "firstEndPos" : 2329,
+  "secondEndPos" : 2943
 } ]

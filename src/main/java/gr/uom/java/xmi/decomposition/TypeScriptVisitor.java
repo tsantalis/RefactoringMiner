@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -163,6 +164,17 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		return super.visitThisExpr(node);
 	}
 
+	//the classes of the module declared before the statement, i.e., class Foo {...} before expect(Foo.foo).toBe(42);
+	private boolean declaredClass(String name) {
+		List<UMLClass> classes = !typeDeclarations.isEmpty() ? typeDeclarations : container instanceof ModuleContainer module ? module.getNestedClasses() : Collections.emptyList();
+		for(UMLClass typeDeclaration : classes) {
+			if(typeDeclaration.getNonQualifiedName().equals(name) && !typeDeclaration.isObject()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Swc4jAstVisitorResponse visitIdent(Swc4jAstIdent node) {
 		String identifier = node.getSym();
 		//the key of a type literal member is not a variable, i.e., member in { member: GuildMember, error: Error }[]
@@ -174,6 +186,11 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 				LeafExpression memberExpr = new LeafExpression(sourceFolder, filePath, node.getParent(), CodeElementType.SIMPLE_NAME, container, fileContent);
 				variables.add(memberExpr);
 			}
+		}
+		else if(node.getParent() instanceof Swc4jAstMemberExpr memberExpr && memberExpr.getObj() == node && declaredClass(identifier)) {
+			//a class used as a value is like a variable, i.e., Foo in Foo.foo, which can be extracted to a variable (const oldFoo = Foo;)
+			LeafExpression name = new LeafExpression(sourceFolder, filePath, node, CodeElementType.SIMPLE_NAME, container, fileContent);
+			variables.add(name);
 		}
 		else if(node.getParent() instanceof Swc4jAstExprOrSpread expr && expr.getParent() instanceof Swc4jAstCallExpr call && call.getArgs().contains(expr)) {
 			//identifier is argument of call

@@ -1021,4 +1021,114 @@
   "secondPos" : 253,
   "firstEndPos" : 213,
   "secondEndPos" : 254
+}, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 214,
+  "secondPos" : 255,
+  "firstEndPos" : 233,
+  "secondEndPos" : 280
+}, {
+  "firstType" : "assignment_expression",
+  "secondType" : "assignment_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 214,
+  "secondPos" : 255,
+  "firstEndPos" : 232,
+  "secondEndPos" : 279
+}, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 214,
+  "secondPos" : 255,
+  "firstEndPos" : 222,
+  "secondEndPos" : 266
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 217,
+  "secondPos" : 261,
+  "firstEndPos" : 218,
+  "secondEndPos" : 262
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "qux2",
+  "secondLabel" : "qux2",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 218,
+  "secondPos" : 262,
+  "firstEndPos" : 222,
+  "secondEndPos" : 266
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 223,
+  "secondPos" : 267,
+  "firstEndPos" : 224,
+  "secondEndPos" : 268
+}, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 225,
+  "secondPos" : 269,
+  "firstEndPos" : 232,
+  "secondEndPos" : 279
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 228,
+  "secondPos" : 275,
+  "firstEndPos" : 229,
+  "secondEndPos" : 276
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "qux",
+  "secondLabel" : "qux",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 229,
+  "secondPos" : 276,
+  "firstEndPos" : 232,
+  "secondEndPos" : 279
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 232,
+  "secondPos" : 279,
+  "firstEndPos" : 233,
+  "secondEndPos" : 280
 } ]

@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.TypeScriptFlattener;
 import gr.uom.java.xmi.decomposition.CppVisitor;
 
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
@@ -80,6 +81,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsInferType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTplLitType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsOptionalType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParenthesizedType;
@@ -815,6 +817,10 @@ public abstract class UMLType implements Serializable, AnnotationProvider {
 			return leafType;
 		}
 		else if(type instanceof Swc4jAstTsLitType literalType) {
+			//a template literal type has no text of its own (its toString is the identity of the node), so it is printed, i.e., `"${AssumptionName}"`
+			if(literalType.getLit() instanceof Swc4jAstTsTplLitType templateLiteralType) {
+				return extractTypeObject(TypeScriptFlattener.flatten(templateLiteralType, fileContent), PathFileUtils.getLang(filePath));
+			}
 			UMLType leafType = extractTypeObject("'" + literalType.getLit().toString() + "'", PathFileUtils.getLang(filePath));
 			return leafType;
 		}

@@ -30,6 +30,8 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
+import org.refactoringminer.util.PathFileUtils;
+import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLPreprocessorStatement;
 import gr.uom.java.xmi.UMLComment;
@@ -2260,7 +2262,30 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	public boolean samePackage() {
-		return originalClass.getPackageName().equals(nextClass.getPackageName());
+		if(!originalClass.getPackageName().equals(nextClass.getPackageName()))
+			return false;
+		//the package of a TypeScript or JavaScript class is the name of its file, so the classes of same-named files in different directories, i.e., output.js, are in different modules,
+		//unless the file itself moved, i.e., with its folder (Move Source Folder)
+		String file1 = originalClass.getSourceFile();
+		String file2 = nextClass.getSourceFile();
+		if(modelDiff != null && PathFileUtils.isTypeScriptFile(file1) && PathFileUtils.isTypeScriptFile(file2) && !directory(file1).equals(directory(file2))) {
+			return !containsFile(modelDiff.getChildModel(), file1) && !containsFile(modelDiff.getParentModel(), file2);
+		}
+		return true;
+	}
+
+	private static String directory(String filePath) {
+		return filePath.contains("/") ? filePath.substring(0, filePath.lastIndexOf('/')) : "";
+	}
+
+	private static boolean containsFile(UMLModel model, String filePath) {
+		if(model == null)
+			return false;
+		for(UMLClass umlClass : model.getClassList()) {
+			if(umlClass.getSourceFile().equals(filePath))
+				return true;
+		}
+		return false;
 	}
 
 	protected boolean differentParameterNames(UMLOperation operation1, UMLOperation operation2) {

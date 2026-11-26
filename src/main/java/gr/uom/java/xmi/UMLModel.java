@@ -74,13 +74,21 @@ public class UMLModel {
     }
 
     public UMLClass getClass(UMLClass umlClassFromOtherModel) {
-        ListIterator<UMLClass> it = classList.listIterator();
-        while(it.hasNext()) {
-            UMLClass umlClass = it.next();
+        List<UMLClass> matches = new ArrayList<>();
+        for(UMLClass umlClass : classList) {
             if(umlClass.equals(umlClassFromOtherModel))
-                return umlClass;
+                matches.add(umlClass);
         }
-        return null;
+        if(matches.size() <= 1)
+            return matches.isEmpty() ? null : matches.get(0);
+        //the declarations merged under the same name, i.e., class Printer {...} and interface Printer extends GeneratorFunctions {} of TypeScript,
+        //are matched with the declaration of the same kind
+        List<UMLClass> sameKind = new ArrayList<>();
+        for(UMLClass umlClass : matches) {
+            if(umlClass.isInterface() == umlClassFromOtherModel.isInterface())
+                sameKind.add(umlClass);
+        }
+        return sameKind.isEmpty() ? matches.get(0) : sameKind.get(0);
     }
 
     public UMLPackageInfo getPackageInfo(UMLPackageInfo packageInfoFromOtherModel) {

@@ -1063,6 +1063,11 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
             if(types != null) {
                 mappingStore.addMapping(types.first, types.second);
             }
+            //const enum X {...} of TypeScript
+            Pair<Tree, Tree> constKeywords = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.CONST_KEYWORD, LANG2.CONST_KEYWORD);
+            if(constKeywords != null) {
+                mappingStore.addMapping(constKeywords.first, constKeywords.second);
+            }
             Pair<Tree, Tree> colons = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.COLON, LANG2.COLON);
             if(colons != null) {
                 mappingStore.addMapping(colons.first, colons.second);

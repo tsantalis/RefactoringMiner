@@ -217,6 +217,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher {
                 (srcAttr.getType().name.equals(LANG1.SHORTHAND_PROPERTY_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.SHORTHAND_PROPERTY_IDENTIFIER)) ||
                 (srcAttr.getType().name.equals(LANG1.PAIR) && dstAttr.getType().name.equals(LANG2.PAIR)) ||
                 (srcAttr.getType().name.equals(LANG1.ENUM_ASSIGNMENT) && dstAttr.getType().name.equals(LANG2.ENUM_ASSIGNMENT)) ||
+                //the TypeScript enum members without initializers, i.e., LEADING in enum COMMENT_TYPE { LEADING, INNER, TRAILING }
+                (enumMemberName(srcAttr, LANG1) && enumMemberName(dstAttr, LANG2)) ||
                 (srcAttr.getType().name.equals(LANG1.SPREAD_ELEMENT) && dstAttr.getType().name.equals(LANG2.SPREAD_ELEMENT)) ||
                 (srcAttr.getType().name.equals(LANG1.INIT_DECLARATOR) && dstAttr.getType().name.equals(LANG2.INIT_DECLARATOR)) ||
                 (srcAttr.getType().name.equals(LANG1.ARRAY_DECLARATOR) && dstAttr.getType().name.equals(LANG2.ARRAY_DECLARATOR)) ||
@@ -452,4 +454,9 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher {
         List<Tree> children = childrenAfterComments(tree, LANG);
         return children.isEmpty() ? null : children.get(0);
     }
+
+    private static boolean enumMemberName(Tree attribute, Constants LANG) {
+        return attribute.getType().name.equals(LANG.PROPERTY_IDENTIFIER) && attribute.getParent() != null && attribute.getParent().getType().name.equals(LANG.ENUM_BODY);
+    }
+
 }

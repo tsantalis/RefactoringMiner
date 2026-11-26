@@ -140,11 +140,18 @@ public class TypeScriptFileProcessor {
 		return false;
 	}
 
-	public void processTypeScriptFile(String filePath, String fileContent, boolean astDiff, Swc4j swc4j) {
-		//skip minified JavaScript files
-		if(isMinified(filePath, fileContent)) {
-			return;
+	//the operations of a code snippet, as the model represents them, i.e., the function wrapping a commented statement
+	public static List<UMLOperation> parseOperations(String filePath, String code) {
+		UMLModel model = new UMLModel(Set.of());
+		new TypeScriptFileProcessor(model).processTypeScriptFile(filePath, code, false, new Swc4j());
+		List<UMLOperation> operations = new ArrayList<UMLOperation>();
+		for(UMLClass umlClass : model.getClassList()) {
+			operations.addAll(umlClass.getOperations());
 		}
+		return operations;
+	}
+
+	public void processTypeScriptFile(String filePath, String fileContent, boolean astDiff, Swc4j swc4j) {
 		try {
 			Swc4jMediaType mediaType = mediaType(filePath);
 			URL specifier = Path.of(filePath).toUri().toURL();

@@ -73,6 +73,10 @@ public class UMLModelASTReader {
 				processor.processKotlinFile(filePath, fileContent, astDiff, factory);
 			}
 			else if(PathFileUtils.isTypeScriptFile(filePath)) {
+				//skip minified JavaScript files
+				if(TypeScriptFileProcessor.isMinified(filePath, fileContent)) {
+					continue;
+				}
 				TypeScriptFileProcessor processor = new TypeScriptFileProcessor(umlModel);
 				processor.processTypeScriptFile(filePath, fileContent, astDiff, swc4j);
 			}

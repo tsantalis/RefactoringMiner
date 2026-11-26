@@ -25,7 +25,7 @@ public class UMLComment extends UMLAbstractDocumentation {
 	private boolean markdown;
 	private List<LocationInfo> previousLineLocations = new ArrayList<>();
 	private static final Pattern EMPTY_LINES = Pattern.compile("(^\\s*$\\r?\\n)+", Pattern.MULTILINE);
-	//the comment parsed as a Java or Python statement, which the mappers of the operations containing the comment compare with their unmatched statements
+	//the comment parsed as a Java, Python, TypeScript or JavaScript statement, which the mappers of the operations containing the comment compare with their unmatched statements
 	private Optional<String> codeStatement;
 
 	public UMLComment(String text, LocationInfo locationInfo) {
@@ -75,6 +75,9 @@ public class UMLComment extends UMLAbstractDocumentation {
 			if(PathFileUtils.isPythonFile(filePath)) {
 				codeStatement = pythonCodeStatement(filePath, text);
 			}
+			else if(PathFileUtils.isTypeScriptFile(filePath)) {
+				codeStatement = typeScriptCodeStatement(filePath, text);
+			}
 			else if(PathFileUtils.isJavaFile(filePath)) {
 				if(text.startsWith("//")) {
 					text = text.substring(2);
@@ -83,7 +86,7 @@ public class UMLComment extends UMLAbstractDocumentation {
 				codeStatement = node != null ? Optional.of(Visitor.stringify(node)) : Optional.empty();
 			}
 			else {
-				//commented code is supported only for Java and Python; the comments of other languages are not parsed as Java code
+				//commented code is supported only for Java, Python, TypeScript and JavaScript; the comments of other languages are not parsed as Java code
 				codeStatement = Optional.empty();
 			}
 		}
@@ -96,7 +99,20 @@ public class UMLComment extends UMLAbstractDocumentation {
 		if(code.isEmpty()) {
 			return Optional.empty();
 		}
-		List<UMLOperation> operations = PythonFileProcessor.parseOperations(filePath, "def __commented_code__():\n    " + code.replace("\n", "\n    ") + "\n");
+		return singleStatement(PythonFileProcessor.parseOperations(filePath, "def __commented_code__():\n    " + code.replace("\n", "\n    ") + "\n"));
+	}
+
+	//the TypeScript/JavaScript statement commented out, as the model represents it, i.e., // this.status = 400; or empty if the comment is not a single statement
+	//the async wrapper function accepts commented await expressions
+	public static Optional<String> typeScriptCodeStatement(String filePath, String text) {
+		String code = text.trim();
+		if(code.isEmpty()) {
+			return Optional.empty();
+		}
+		return singleStatement(TypeScriptFileProcessor.parseOperations(filePath, "async function __commented_code__() {\n" + code + "\n}\n"));
+	}
+
+	private static Optional<String> singleStatement(List<UMLOperation> operations) {
 		if(operations != null && operations.size() == 1 && operations.get(0).getBody() != null) {
 			List<AbstractStatement> statements = operations.get(0).getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject statement) {

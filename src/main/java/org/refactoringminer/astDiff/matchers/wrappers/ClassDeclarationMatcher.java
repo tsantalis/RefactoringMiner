@@ -1447,6 +1447,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
         if (identifiers != null) {
             mappingStore.addMapping(identifiers.first, identifiers.second);
         }
+        //the object literal assigned to a destructuring pattern, i.e., var [x] = { [Symbol.iterator]: function* () {...} }
+        for (String patternType : List.of(LANG1.ARRAY_PATTERN, LANG1.OBJECT_PATTERN)) {
+            Pair<Tree,Tree> patterns = Helpers.findPairOfType(tree1,tree2,patternType,patternType);
+            if (patterns != null && TreeUtilFunctions.isIsomorphicTo(patterns.first, patterns.second)) {
+                mappingStore.addMappingRecursively(patterns.first, patterns.second);
+            }
+        }
         Pair<Tree,Tree> equals = Helpers.findPairOfType(tree1,tree2,LANG1.EQUAL_OPERATOR,LANG2.EQUAL_OPERATOR);
         if (equals != null) {
             mappingStore.addMapping(equals.first, equals.second);

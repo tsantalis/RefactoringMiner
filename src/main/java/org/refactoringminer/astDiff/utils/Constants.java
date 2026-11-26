@@ -32,8 +32,13 @@ public class Constants {
     public boolean isMethod(String treeType) {
         return isNamedMethod(treeType) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(LEXICAL_DECLARATION) ||
                 treeType.equals(METHOD_SIGNATURE) || treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(PAIR) ||
-                treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(POINTER_DECLARATOR) ||
+                isFunctionExpression(treeType) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(POINTER_DECLARATOR) ||
                 treeType.equals(FRIEND_DECLARATION) || treeType.equals(INIT_DECLARATOR) || treeType.equals(PUBLIC_FIELD_DEFINITION);
+    }
+
+    //function () {...} and function* () {...}, i.e., the methods of the object literals
+    public boolean isFunctionExpression(String treeType) {
+        return treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(GENERATOR_FUNCTION);
     }
 
     // TODO: FUNCTION_EXPRESSION may have a name, or it may be assigned to a variable which can act as a name (VARIABLE_DECLARATION)
@@ -604,6 +609,7 @@ public class Constants {
     public final String OBJECT_TYPE = "object_type";
     public final String PROPERTY_SIGNATURE = "property_signature";
     public final String PROPERTY_IDENTIFIER = "property_identifier";
+    public final String COMPUTED_PROPERTY_NAME = "computed_property_name";
     public final String PRIVATE_PROPERTY_IDENTIFIER = "private_property_identifier";
     public final String INTERSECTION_TYPE = "intersection_type";
     public final String UNION_TYPE = "union_type";
@@ -657,6 +663,7 @@ public class Constants {
     public final String SHORTHAND_PROPERTY_IDENTIFIER = "shorthand_property_identifier";
     public final String PAIR = "pair";
     public final String FUNCTION_EXPRESSION = "function_expression";
+    public final String GENERATOR_FUNCTION = "generator_function";
     public final String ASSIGNMENT_EXPRESSION = "assignment_expression";
     public final String UPDATE_EXPRESSION = "update_expression";
     public final String SPREAD_ELEMENT = "spread_element";

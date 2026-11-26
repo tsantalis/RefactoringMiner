@@ -585,8 +585,9 @@ public class TypeScriptOperationBody extends OperationBody {
 							((ModuleContainer)container).addNestedOperation(operation);
 						}
 					}
-					else if(declarator.getInit().get() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
-						//List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+					//an object literal assigned to a pattern without names, i.e., var [] = { [Symbol.iterator]: () => {} }, is not a named class, but an anonymous class of the statement
+					else if(declarator.getInit().get() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0 &&
+							!VariableDeclaration.extractVariables(declarator.getName()).isEmpty()) {
 						//the class is the object literal, as in the AST; the declaration is a statement of the container
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, objectLiteral, CodeElementType.TYPE_DECLARATION, fileContent);
 						List<UMLImport> imports = new ArrayList<>();
@@ -595,7 +596,10 @@ public class TypeScriptOperationBody extends OperationBody {
 						umlClass.setObject(true);
 						umlClass.setVisibility(Visibility.PUBLIC);
 						processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, objectLiteral, umlClass);
-						if(PathFileUtils.isJavaScriptFile(umlClass.getSourceFile()) && umlClass.getOperations().size() > 0) {
+						//the object literals declared in the callbacks of the module statements are not classes (see addToContainer), so they remain statements,
+						//and the declarations with more declarators remain statements, i.e., var _Symbol$iterator = {...}, _Symbol$iterator2 = slicedToArray(_Symbol$iterator, 0);
+						if(PathFileUtils.isJavaScriptFile(umlClass.getSourceFile()) && umlClass.getOperations().size() > 0 && !declaredInModuleCallback(container) &&
+								variableDecl.getDecls().size() == 1) {
 							addToContainer(container, umlClass);
 						}
 						else {
@@ -608,7 +612,8 @@ public class TypeScriptOperationBody extends OperationBody {
 						}
 						return;
 					}
-					else if(declarator.getInit().get() instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getRight() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
+					else if(declarator.getInit().get() instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getRight() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0 &&
+							!VariableDeclaration.extractVariables(declarator.getName()).isEmpty()) {
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, objectLiteral, CodeElementType.TYPE_DECLARATION, fileContent);
 						List<UMLImport> imports = new ArrayList<>();
 						String codePath = getAnonymousCodePath(objectLiteral, fileContent);
@@ -1319,6 +1324,10 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 			((ModuleContainer)container).addNestedAttribute(attribute);
 		}
+	}
+
+	private static boolean declaredInModuleCallback(VariableDeclarationContainer container) {
+		return container instanceof LambdaExpressionObject lambda && !(lambda.getOwner() instanceof UMLOperation);
 	}
 
 	private static void addToContainer(VariableDeclarationContainer container, UMLClass umlClass) {

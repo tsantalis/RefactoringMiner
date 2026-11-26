@@ -2765,15 +2765,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			collectMatchedComments(this, matchedComments);
 			if(modelDiff != null) {
-				//the classes of the module can be common, moved, or renamed (e.g., when the file is renamed)
+				//the classes of the module can be common, moved, or renamed (e.g., when the file is renamed),
+				//or moved from or to another file, i.e., an object literal of a deleted file merged into this file
 				List<UMLClassBaseDiff> classDiffs = new ArrayList<UMLClassBaseDiff>();
 				classDiffs.addAll(modelDiff.getCommonClassDiffList());
 				classDiffs.addAll(modelDiff.getClassMoveDiffList());
 				classDiffs.addAll(modelDiff.getInnerClassMoveDiffList());
 				classDiffs.addAll(modelDiff.getClassRenameDiffList());
 				for(UMLClassBaseDiff nestedClassDiff : classDiffs) {
-					if(nestedClassDiff != classDiff && nestedClassDiff.getOriginalClass().getSourceFile().equals(container1.getLocationInfo().getFilePath()) &&
-							nestedClassDiff.getNextClass().getSourceFile().equals(container2.getLocationInfo().getFilePath())) {
+					if(nestedClassDiff != classDiff && (nestedClassDiff.getOriginalClass().getSourceFile().equals(container1.getLocationInfo().getFilePath()) ||
+							nestedClassDiff.getNextClass().getSourceFile().equals(container2.getLocationInfo().getFilePath()))) {
 						collectMatchedComments(nestedClassDiff, matchedComments);
 					}
 				}

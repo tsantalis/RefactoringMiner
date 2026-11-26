@@ -186,6 +186,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if (identifiers != null) {
                     mappingStore.addMapping(identifiers.first, identifiers.second);
                 }
+                matchComputedPropertyNames(srcOperationNode, dstOperationNode, mappingStore);
                 com.github.gumtreediff.utils.Pair<Tree,Tree> colons = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.COLON,LANG2.COLON);
                 if (colons != null) {
                     mappingStore.addMapping(colons.first, colons.second);
@@ -265,7 +266,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(t1,t2);
                 }
             }
-            if(srcOperationNode.getType().name.equals(LANG1.FUNCTION_EXPRESSION) && dstOperationNode.getType().name.equals(LANG2.FUNCTION_EXPRESSION)) {
+            if(LANG1.isFunctionExpression(srcOperationNode.getType().name) && LANG2.isFunctionExpression(dstOperationNode.getType().name)) {
                 if(srcOperationNode.getParent().getType().name.equals(LANG1.PAIR) && dstOperationNode.getParent().getType().name.equals(LANG2.PAIR)) {
                     Tree parent1 = srcOperationNode.getParent();
                     Tree parent2 = dstOperationNode.getParent();
@@ -274,6 +275,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if (identifiers != null) {
                         mappingStore.addMapping(identifiers.first, identifiers.second);
                     }
+                    matchComputedPropertyNames(parent1, parent2, mappingStore);
                     com.github.gumtreediff.utils.Pair<Tree,Tree> colons = Helpers.findPairOfType(parent1,parent2,LANG1.COLON,LANG2.COLON);
                     if (colons != null) {
                         mappingStore.addMapping(colons.first, colons.second);
@@ -874,6 +876,14 @@ public class MethodMatcher extends BodyMapperMatcher{
         com.github.gumtreediff.utils.Pair<Tree,Tree> positionalSeparators = Helpers.findPairOfType(srcParameters, dstParameters, LANG1.POSITIONAL_SEPARATOR, LANG2.POSITIONAL_SEPARATOR);
         if (positionalSeparators != null) {
             mappingStore.addMappingRecursively(positionalSeparators.first, positionalSeparators.second);
+        }
+    }
+
+    //the identical computed keys of the object literal members, i.e., [Symbol.iterator]: function* () {...}
+    private void matchComputedPropertyNames(Tree pair1, Tree pair2, ExtendedMultiMappingStore mappingStore) {
+        com.github.gumtreediff.utils.Pair<Tree,Tree> computedNames = Helpers.findPairOfType(pair1,pair2,LANG1.COMPUTED_PROPERTY_NAME,LANG2.COMPUTED_PROPERTY_NAME);
+        if (computedNames != null && TreeUtilFunctions.isIsomorphicTo(computedNames.first, computedNames.second)) {
+            mappingStore.addMappingRecursively(computedNames.first, computedNames.second);
         }
     }
 

@@ -4591,6 +4591,13 @@ public class StringBasedHeuristics {
 			String OR1 = LANG1.OR.strip();
 			String AND2 = LANG2.AND.strip();
 			String OR2 = LANG2.OR.strip();
+			//statement1 only declares variables without initializers, i.e., the hoisted var a, b; of generated JavaScript,
+			//so the sub-conditions of s1 come only from its variables replaced with conditional expressions
+			List<VariableDeclaration> declarations1 = statement1.getVariableDeclarations();
+			if(!declarations1.isEmpty() && declarations1.stream().allMatch(v -> v.getInitializer() == null) &&
+					(s1.contains(OR1) || s1.contains(AND1)) && !statement1.getString().contains(OR1) && !statement1.getString().contains(AND1)) {
+				return false;
+			}
 			boolean containLogicalOperator = s1.contains(OR1) || s1.contains(AND1) || s2.contains(OR2) || s2.contains(AND2);
 			boolean containsNotOperator = containsNotOperator(s1, statement1, LANG1) != containsNotOperator(s2, statement2, LANG2);
 			if(call1 == null)

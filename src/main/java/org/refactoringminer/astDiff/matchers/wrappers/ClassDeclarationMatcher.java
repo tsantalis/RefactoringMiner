@@ -4,8 +4,10 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 
 import gr.uom.java.xmi.ListCompositeType;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLForwardDeclaration;
 import gr.uom.java.xmi.UMLJavadoc;
@@ -21,6 +23,7 @@ import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
+import gr.uom.java.xmi.diff.UMLAttributeDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
 import gr.uom.java.xmi.diff.UMLClassRenameDiff;
@@ -46,6 +49,7 @@ import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -1963,6 +1967,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
         }
         mappingStore.addMapping(composite1, composite2);
         if(!pairableMembers(composite1, composite2)) {
+            if(processObjectTypeMembersByAttributes(composite1, composite2, mappingStore)) {
+                return;
+            }
             Pair<Tree, Tree> objectTypes = Helpers.findPairOfType(composite1, composite2, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
             if(objectTypes != null) {
                 processObjectTypePair(objectTypes.first, objectTypes.second, mappingStore);
@@ -2030,6 +2037,105 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
             composite = TreeUtilFunctions.findChildByType(typeAlias, lang.UNION_TYPE);
         }
         return composite != null ? TreeUtilFunctions.findChildByType(composite, lang.OBJECT_TYPE) : null;
+    }
+
+    //the object type members of nested intersections or unions are paired by the attributes the model matched in them, with their braces and the preceding | or &,
+    //i.e., { type: 'connected'; ... } | { type: 'disconnected' } | { type: 'update-namespace'; ... } and { type: 'connected'; ... } | { type: 'disconnected' },
+    //which are the binary trees ((| A) | B) | C and (| A) | B
+    private boolean processObjectTypeMembersByAttributes(Tree composite1, Tree composite2, ExtendedMultiMappingStore mappingStore) {
+        List<Tree> objectTypes1 = new ArrayList<>();
+        List<Tree> objectTypes2 = new ArrayList<>();
+        collectObjectTypeMembers(composite1, composite1.getType().name, LANG1, objectTypes1);
+        collectObjectTypeMembers(composite2, composite2.getType().name, LANG2, objectTypes2);
+        List<org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute>> attributePairs = new ArrayList<>(baseClassDiff.getCommonAtrributes());
+        for(UMLAttributeDiff attributeDiff : baseClassDiff.getAttributeDiffList()) {
+            attributePairs.add(org.apache.commons.lang3.tuple.Pair.of(attributeDiff.getRemovedAttribute(), attributeDiff.getAddedAttribute()));
+        }
+        int[][] votes = new int[objectTypes1.size()][objectTypes2.size()];
+        for(org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> attributePair : attributePairs) {
+            int index1 = indexOfEnclosing(objectTypes1, attributePair.getLeft().getLocationInfo());
+            int index2 = indexOfEnclosing(objectTypes2, attributePair.getRight().getLocationInfo());
+            if(index1 != -1 && index2 != -1) {
+                votes[index1][index2]++;
+            }
+        }
+        boolean paired = false;
+        Set<Integer> paired2 = new HashSet<>();
+        List<Tree> pairedObjectTypes1 = new ArrayList<>();
+        List<Tree> pairedObjectTypes2 = new ArrayList<>();
+        for(int i = 0; i < objectTypes1.size(); i++) {
+            int best = -1;
+            for(int j = 0; j < objectTypes2.size(); j++) {
+                if(!paired2.contains(j) && votes[i][j] > 0 && (best == -1 || votes[i][j] > votes[i][best])) {
+                    best = j;
+                }
+            }
+            if(best != -1) {
+                paired2.add(best);
+                paired = true;
+                Tree objectType1 = objectTypes1.get(i);
+                Tree objectType2 = objectTypes2.get(best);
+                pairedObjectTypes1.add(objectType1);
+                pairedObjectTypes2.add(objectType2);
+                processObjectTypePair(objectType1, objectType2, mappingStore);
+                Tree parent1 = objectType1.getParent();
+                Tree parent2 = objectType2.getParent();
+                int position1 = parent1.getChildPosition(objectType1);
+                int position2 = parent2.getChildPosition(objectType2);
+                if(position1 > 0 && position2 > 0) {
+                    Tree operator1 = parent1.getChild(position1 - 1);
+                    Tree operator2 = parent2.getChild(position2 - 1);
+                    if(operator1.getType().name.equals(operator2.getType().name) && operator1.getLabel().equals(operator2.getLabel())) {
+                        mappingStore.addMapping(operator1, operator2);
+                        //the union of a leading |, i.e., | { type: 'connected'; ... }
+                        if(position1 == 1 && position2 == 1 && parent1.getChildren().size() == 2 && parent2.getChildren().size() == 2 && parent1 != composite1 && parent2 != composite2) {
+                            mappingStore.addMapping(parent1, parent2);
+                        }
+                    }
+                }
+            }
+        }
+        //the nested composites holding the paired members correspond, so that the composite of a removed or added member is deleted or inserted,
+        //i.e., (| A) | B of the old ((| A) | B) | C corresponds to the new (| A) | B
+        if(pairedObjectTypes1.size() > 1) {
+            Tree holder1 = commonComposite(pairedObjectTypes1, composite1);
+            Tree holder2 = commonComposite(pairedObjectTypes2, composite2);
+            if(holder1 != composite1 || holder2 != composite2) {
+                mappingStore.removeMapping(composite1, composite2);
+                mappingStore.addMapping(holder1, holder2);
+            }
+        }
+        return paired;
+    }
+
+    //the innermost composite under the given one holding all the members
+    private static Tree commonComposite(List<Tree> members, Tree composite) {
+        Tree holder = members.get(0).getParent();
+        while(holder != composite && !holder.getDescendants().containsAll(members)) {
+            holder = holder.getParent();
+        }
+        return holder;
+    }
+
+    private static void collectObjectTypeMembers(Tree composite, String compositeType, Constants lang, List<Tree> objectTypes) {
+        for(Tree child : composite.getChildren()) {
+            if(child.getType().name.equals(compositeType)) {
+                collectObjectTypeMembers(child, compositeType, lang, objectTypes);
+            }
+            else if(child.getType().name.equals(lang.OBJECT_TYPE)) {
+                objectTypes.add(child);
+            }
+        }
+    }
+
+    private static int indexOfEnclosing(List<Tree> trees, LocationInfo locationInfo) {
+        for(int i = 0; i < trees.size(); i++) {
+            Tree tree = trees.get(i);
+            if(tree.getPos() <= locationInfo.getStartOffset() && locationInfo.getEndOffset() <= tree.getEndPos()) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     //the members correspond by position only when each pair is identical, or two object types, or the same generic type, since nested intersections and unions

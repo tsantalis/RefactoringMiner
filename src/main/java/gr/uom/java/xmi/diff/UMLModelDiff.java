@@ -967,7 +967,10 @@ public class UMLModelDiff {
 		if(removedClasses.size() <= addedClasses.size()) {
 			for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 				UMLClass removedClass = removedClassIterator.next();
-				TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(new ClassMoveComparator(prevalentPattern()));
+				ClassMoveComparator comparator = new ClassMoveComparator(prevalentPattern());
+				TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(comparator);
+				//the tree set keeps only the first of the candidates the comparator ties
+				List<UMLClassMoveDiff> candidates = new ArrayList<UMLClassMoveDiff>();
 				for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
 					UMLClass addedClass = addedClassIterator.next();
 					String removedClassSourceFile = removedClass.getSourceFile();
@@ -991,6 +994,7 @@ public class UMLModelDiff {
 						if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
 							UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
 							diffSet.add(classMoveDiff);
+							candidates.add(classMoveDiff);
 						}
 						else {
 							UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
@@ -1000,7 +1004,7 @@ public class UMLModelDiff {
 					}
 				}
 				if(!diffSet.isEmpty()) {
-					UMLClassMoveDiff minClassMoveDiff = diffSet.first();
+					UMLClassMoveDiff minClassMoveDiff = tiedCandidateInFileOfMatchingClasses(diffSet.first(), candidates, comparator);
 					TreeSet<UMLClassRenameDiff> renameDiffSet = new TreeSet<>();
 					if(matcher instanceof UMLClassMatcher.RelaxedMove) {
 						renameDiffSet = findRenameMatchesForRemovedClass(removedClass, new UMLClassMatcher.RelaxedRename());
@@ -1114,6 +1118,46 @@ public class UMLModelDiff {
 			}
 		}
 		this.classMoveDiffList.removeAll(innerClassMoveDiffList);
+	}
+
+	//among the candidates tied with the first one, the one in the file where the other classes of the file of the removed class are renamed to, i.e., the module of
+	//update-bar-renderer.jsx and its MESSAGE move to editing-footer.jsx, where its class UpdateBarRenderer becomes EditingFooter, not to deleting-footer.jsx,
+	//which declares the same constants (compass 84110392)
+	private UMLClassMoveDiff tiedCandidateInFileOfMatchingClasses(UMLClassMoveDiff first, List<UMLClassMoveDiff> candidates, ClassMoveComparator comparator) throws RefactoringMinerTimedOutException {
+		List<UMLClassMoveDiff> tied = new ArrayList<UMLClassMoveDiff>();
+		for(UMLClassMoveDiff candidate : candidates) {
+			if(!candidate.equals(first) && comparator.compare(first, candidate) == 0) {
+				tied.add(candidate);
+			}
+		}
+		if(tied.isEmpty()) {
+			return first;
+		}
+		tied.add(0, first);
+		//the files the other removed classes of the file are renamed to
+		UMLClass removedClass = first.getOriginalClass();
+		Map<String, Integer> renamedClassesPerFile = new LinkedHashMap<String, Integer>();
+		for(UMLClass otherRemovedClass : new ArrayList<UMLClass>(removedClasses)) {
+			if(!otherRemovedClass.equals(removedClass) && otherRemovedClass.getSourceFile().equals(removedClass.getSourceFile()) && !otherRemovedClass.isModule()) {
+				TreeSet<UMLClassRenameDiff> renameDiffSet = findRenameMatchesForRemovedClass(otherRemovedClass, new UMLClassMatcher.Rename());
+				if(!renameDiffSet.isEmpty()) {
+					renamedClassesPerFile.merge(renameDiffSet.first().getRenamedClass().getSourceFile(), 1, Integer::sum);
+				}
+			}
+		}
+		UMLClassMoveDiff best = null;
+		int max = 0;
+		for(UMLClassMoveDiff candidate : tied) {
+			int renamedClasses = renamedClassesPerFile.getOrDefault(candidate.getMovedClass().getSourceFile(), 0);
+			if(renamedClasses > max) {
+				best = candidate;
+				max = renamedClasses;
+			}
+			else if(renamedClasses == max) {
+				best = null;
+			}
+		}
+		return best != null ? best : first;
 	}
 
 	private boolean existingInnerClassMove(UMLClass removedClass, UMLClass addedClass) {

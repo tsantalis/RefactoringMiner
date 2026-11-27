@@ -58,6 +58,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.Visibility;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -4036,7 +4037,8 @@ public abstract class UMLAbstractClassDiff {
 		}
 		UMLOperation previouslyRemovedOperation = null;
 		for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
-			if(mapper.getOperation1().isLifecycleMethod() || mapper.getOperation2().isLifecycleMethod()) {
+			//a private method is never a test of JUnit or TestNG, i.e., the helper prepareExistingServiceBindings() is not parameterized as testHandleApplicationEnv(...) (multiapps-controller 3f729b51)
+			if(mapper.getOperation1().isLifecycleMethod() || mapper.getOperation2().isLifecycleMethod() || mapper.getOperation1().getVisibility() == Visibility.PRIVATE) {
 				continue;
 			}
 			//a removed test with parameters was already data-driven, i.e., the JUnit 4 theory testParamGradlines(Tuple<String,String> cmd, int gradlines) -> testParamGradlines(Tuple<String,String> cmd),

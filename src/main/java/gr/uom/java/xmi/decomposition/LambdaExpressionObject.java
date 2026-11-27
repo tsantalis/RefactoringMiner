@@ -300,7 +300,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer {
 			}
 		}
 		else if(body instanceof Swc4jAstBlockStmt blockStatement) {
-			this.body = new TypeScriptOperationBody(sourceFolder, filePath, blockStatement, this, activeVariableDeclarations, fileContent);
+			this.body = new TypeScriptOperationBody(sourceFolder, filePath, blockStatement, this, activeVariableDeclarations, fileContent, typeDeclarations);
 		}
 	}
 
@@ -346,7 +346,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer {
 		}
 		Optional<Swc4jAstBlockStmt> body = function.getBody();
 		if(body.isPresent()) {
-			this.body = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), this, activeVariableDeclarations, fileContent);
+			this.body = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), this, activeVariableDeclarations, fileContent, typeDeclarations);
 		}
 	}
 

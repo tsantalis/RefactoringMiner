@@ -1201,13 +1201,13 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
-  "secondLabel" : "_class",
+  "secondLabel" : "Foo",
   "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
+  "secondParentType" : "assignment_expression",
   "firstPos" : 257,
-  "secondPos" : 279,
+  "secondPos" : 219,
   "firstEndPos" : 260,
-  "secondEndPos" : 285
+  "secondEndPos" : 222
 }, {
   "firstType" : ",",
   "secondType" : ",",
@@ -1619,13 +1619,13 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
-  "secondLabel" : "_class",
+  "secondLabel" : "Foo",
   "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
+  "secondParentType" : "assignment_expression",
   "firstPos" : 324,
-  "secondPos" : 349,
+  "secondPos" : 219,
   "firstEndPos" : 327,
-  "secondEndPos" : 355
+  "secondEndPos" : 222
 }, {
   "firstType" : ")",
   "secondType" : ")",

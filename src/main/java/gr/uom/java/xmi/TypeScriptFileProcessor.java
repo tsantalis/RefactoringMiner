@@ -249,40 +249,40 @@ public class TypeScriptFileProcessor {
 		}
 	}
 
-	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstFnDecl functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
+	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstFnDecl functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments, List<UMLClass> typeDeclarations) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getIdent().getSym(), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
-		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments);
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, typeDeclarations);
 	}
 
-	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstClassMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
+	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstClassMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments, List<UMLClass> typeDeclarations) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(memberName(functionDecl.getKey(), fileContent), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
-		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments);
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, typeDeclarations);
 	}
 
-	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstPrivateMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
+	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstPrivateMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments, List<UMLClass> typeDeclarations) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getKey().getName(), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
-		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments);
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, typeDeclarations);
 	}
 
 	public static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
-			UMLOperation operation, List<UMLComment> comments) {
-		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, true);
+			UMLOperation operation, List<UMLComment> comments, List<UMLClass> typeDeclarations) {
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, true, typeDeclarations);
 	}
 
 	//leadingComment: whether the function takes the comment in the line before it
 	public static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
-			UMLOperation operation, List<UMLComment> comments, boolean leadingComment) {
+			UMLOperation operation, List<UMLComment> comments, boolean leadingComment, List<UMLClass> typeDeclarations) {
 		TypeScriptOperationBody.processComments(comments, operation, leadingComment);
 		Optional<Swc4jAstTsTypeAnn> returnType = function.getReturnType();
 		if(returnType.isPresent()) {
@@ -315,7 +315,7 @@ public class TypeScriptFileProcessor {
 		}
 		Optional<Swc4jAstBlockStmt> body = function.getBody();
 		if(body.isPresent()) {
-			OperationBody operationBody = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
+			OperationBody operationBody = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent, typeDeclarations);
 			operation.setBody(operationBody);
 		}
 		int startSignatureOffset = function.getSpan().getStart();
@@ -328,7 +328,7 @@ public class TypeScriptFileProcessor {
 	}
 
 	public static UMLOperation processConstructor(String sourceFolder, String filePath, Swc4jAstConstructor functionDecl,
-			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments, List<UMLClass> typeDeclarations) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
 		TypeScriptOperationBody.processComments(comments, operation);
@@ -358,7 +358,7 @@ public class TypeScriptFileProcessor {
 		}
 		Optional<Swc4jAstBlockStmt> body = functionDecl.getBody();
 		if(body.isPresent()) {
-			OperationBody operationBody = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
+			OperationBody operationBody = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent, typeDeclarations);
 			operation.setBody(operationBody);
 		}
 		int startSignatureOffset = functionDecl.getSpan().getStart();

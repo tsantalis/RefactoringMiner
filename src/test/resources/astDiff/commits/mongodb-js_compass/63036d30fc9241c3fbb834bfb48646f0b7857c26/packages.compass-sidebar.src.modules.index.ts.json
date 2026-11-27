@@ -296,6 +296,28 @@
   "firstEndPos" : 121,
   "secondEndPos" : 121
 }, {
+  "firstType" : "export_statement",
+  "secondType" : "export_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 117,
+  "secondPos" : 2156,
+  "firstEndPos" : 153,
+  "secondEndPos" : 2179
+}, {
+  "firstType" : "export",
+  "secondType" : "export",
+  "firstLabel" : "export",
+  "secondLabel" : "export",
+  "firstParentType" : "export_statement",
+  "secondParentType" : "export_statement",
+  "firstPos" : 117,
+  "secondPos" : 2156,
+  "firstEndPos" : 123,
+  "secondEndPos" : 2162
+}, {
   "firstType" : "type",
   "secondType" : "type",
   "firstLabel" : "type",
@@ -306,6 +328,17 @@
   "secondPos" : 122,
   "firstEndPos" : 126,
   "secondEndPos" : 126
+}, {
+  "firstType" : "default",
+  "secondType" : "default",
+  "firstLabel" : "default",
+  "secondLabel" : "default",
+  "firstParentType" : "export_statement",
+  "secondParentType" : "export_statement",
+  "firstPos" : 124,
+  "secondPos" : 2163,
+  "firstEndPos" : 131,
+  "secondEndPos" : 2170
 }, {
   "firstType" : "import_clause",
   "secondType" : "import_clause",
@@ -362,6 +395,17 @@
   "firstEndPos" : 142,
   "secondEndPos" : 142
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "InstanceLoadedStatus",
+  "secondLabel" : "reducer",
+  "firstParentType" : "export_statement",
+  "secondParentType" : "export_statement",
+  "firstPos" : 132,
+  "secondPos" : 2171,
+  "firstEndPos" : 152,
+  "secondEndPos" : 2178
+}, {
   "firstType" : ",",
   "secondType" : ",",
   "firstLabel" : ",",
@@ -394,6 +438,17 @@
   "secondPos" : 144,
   "firstEndPos" : 159,
   "secondEndPos" : 159
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "export_statement",
+  "secondParentType" : "export_statement",
+  "firstPos" : 152,
+  "secondPos" : 2178,
+  "firstEndPos" : 153,
+  "secondEndPos" : 2179
 }, {
   "firstType" : "}",
   "secondType" : "}",

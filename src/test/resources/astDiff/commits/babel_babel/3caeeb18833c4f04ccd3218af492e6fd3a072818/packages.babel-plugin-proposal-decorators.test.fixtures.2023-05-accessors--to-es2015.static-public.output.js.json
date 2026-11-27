@@ -2719,13 +2719,13 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
-  "secondLabel" : "_class",
+  "secondLabel" : "Foo",
   "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
+  "secondParentType" : "assignment_expression",
   "firstPos" : 790,
-  "secondPos" : 812,
+  "secondPos" : 716,
   "firstEndPos" : 793,
-  "secondEndPos" : 818
+  "secondEndPos" : 719
 }, {
   "firstType" : ",",
   "secondType" : ",",
@@ -3269,13 +3269,13 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
-  "secondLabel" : "_class",
+  "secondLabel" : "Foo",
   "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
+  "secondParentType" : "assignment_expression",
   "firstPos" : 872,
-  "secondPos" : 897,
+  "secondPos" : 716,
   "firstEndPos" : 875,
-  "secondEndPos" : 903
+  "secondEndPos" : 719
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -3577,6 +3577,17 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
+  "secondLabel" : "Foo",
+  "firstParentType" : "arguments",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 930,
+  "secondPos" : 716,
+  "firstEndPos" : 933,
+  "secondEndPos" : 719
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Foo",
   "secondLabel" : "_class",
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
@@ -3826,6 +3837,17 @@
   "secondPos" : 1014,
   "firstEndPos" : 984,
   "secondEndPos" : 1015
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Foo",
+  "secondLabel" : "Foo",
+  "firstParentType" : "arguments",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 984,
+  "secondPos" : 716,
+  "firstEndPos" : 987,
+  "secondEndPos" : 719
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -4101,6 +4123,17 @@
   "secondPos" : 1086,
   "firstEndPos" : 1053,
   "secondEndPos" : 1087
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Foo",
+  "secondLabel" : "Foo",
+  "firstParentType" : "arguments",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 1053,
+  "secondPos" : 716,
+  "firstEndPos" : 1056,
+  "secondEndPos" : 719
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",

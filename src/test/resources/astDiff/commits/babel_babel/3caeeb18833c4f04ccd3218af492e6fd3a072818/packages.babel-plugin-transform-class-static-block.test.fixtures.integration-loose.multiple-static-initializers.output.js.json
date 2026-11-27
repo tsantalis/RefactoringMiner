@@ -728,13 +728,13 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
-  "secondLabel" : "_class",
+  "secondLabel" : "Foo",
   "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
+  "secondParentType" : "assignment_expression",
   "firstPos" : 164,
-  "secondPos" : 190,
+  "secondPos" : 105,
   "firstEndPos" : 167,
-  "secondEndPos" : 196
+  "secondEndPos" : 108
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -860,13 +860,13 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
-  "secondLabel" : "_class",
+  "secondLabel" : "Foo",
   "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
+  "secondParentType" : "assignment_expression",
   "firstPos" : 214,
-  "secondPos" : 243,
+  "secondPos" : 105,
   "firstEndPos" : 217,
-  "secondEndPos" : 249
+  "secondEndPos" : 108
 }, {
   "firstType" : ",",
   "secondType" : ",",
@@ -981,13 +981,13 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
-  "secondLabel" : "_class",
+  "secondLabel" : "Foo",
   "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
+  "secondParentType" : "assignment_expression",
   "firstPos" : 234,
-  "secondPos" : 266,
+  "secondPos" : 105,
   "firstEndPos" : 237,
-  "secondEndPos" : 272
+  "secondEndPos" : 108
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -1036,13 +1036,13 @@
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Foo",
-  "secondLabel" : "_class",
+  "secondLabel" : "Foo",
   "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
+  "secondParentType" : "assignment_expression",
   "firstPos" : 245,
-  "secondPos" : 280,
+  "secondPos" : 105,
   "firstEndPos" : 248,
-  "secondEndPos" : 286
+  "secondEndPos" : 108
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -1275,6 +1275,17 @@
   "firstEndPos" : 282,
   "secondEndPos" : 323
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Foo",
+  "secondLabel" : "Foo",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 274,
+  "secondPos" : 105,
+  "firstEndPos" : 277,
+  "secondEndPos" : 108
+}, {
   "firstType" : ".",
   "secondType" : ".",
   "firstLabel" : ".",
@@ -1318,6 +1329,17 @@
   "secondPos" : 326,
   "firstEndPos" : 292,
   "secondEndPos" : 336
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Foo",
+  "secondLabel" : "Foo",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 285,
+  "secondPos" : 105,
+  "firstEndPos" : 288,
+  "secondEndPos" : 108
 }, {
   "firstType" : ".",
   "secondType" : ".",

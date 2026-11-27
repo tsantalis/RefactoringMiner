@@ -208,6 +208,17 @@
   "firstEndPos" : 34,
   "secondEndPos" : 63
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Foo",
+  "secondLabel" : "Foo",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 27,
+  "secondPos" : 34,
+  "firstEndPos" : 30,
+  "secondEndPos" : 37
+}, {
   "firstType" : ".",
   "secondType" : ".",
   "firstLabel" : ".",
@@ -251,6 +262,17 @@
   "secondPos" : 66,
   "firstEndPos" : 44,
   "secondEndPos" : 76
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Foo",
+  "secondLabel" : "Foo",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 37,
+  "secondPos" : 34,
+  "firstEndPos" : 40,
+  "secondEndPos" : 37
 }, {
   "firstType" : ".",
   "secondType" : ".",

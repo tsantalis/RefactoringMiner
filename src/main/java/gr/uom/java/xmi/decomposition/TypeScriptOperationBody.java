@@ -159,12 +159,15 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
 public class TypeScriptOperationBody extends OperationBody {
 	private static final List<String> jsExtension = List.of("extend", "inherits", "register");
+	//the classes and type aliases of the module, which the statements of its functions refer to, i.e., Foo in Foo.foo or the type of action: IsColumnstoreAction
+	private List<UMLClass> moduleClasses;
 
 	public TypeScriptOperationBody(Swc4jAstModule module, String sourceFolder, String filePath, List<? extends ISwc4jAstModuleItem> statements, VariableDeclarationContainer container, String fileContent) {
 		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, module, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
 		this.comments = commentList(container);
 		this.container = container;
+		this.moduleClasses = container instanceof ModuleContainer moduleContainer ? moduleContainer.getNestedClasses() : Collections.emptyList();
 		this.bodyHashCode = statements.stream()
 				.map(statement -> fileContent.substring(statement.getSpan().getStart(), statement.getSpan().getEnd()))
 				.collect(Collectors.joining()).hashCode();
@@ -175,12 +178,13 @@ public class TypeScriptOperationBody extends OperationBody {
 		this.activeVariableDeclarations = null;
 	}
 
-	public TypeScriptOperationBody(String sourceFolder, String filePath, Swc4jAstBlockStmt block, VariableDeclarationContainer container, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+	public TypeScriptOperationBody(String sourceFolder, String filePath, Swc4jAstBlockStmt block, VariableDeclarationContainer container, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, block, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
 		this.comments = commentList(container);
 		this.container = container;
 		this.bodyHashCode = fileContent.substring(block.getSpan().getStart(), block.getSpan().getEnd()).hashCode();
+		this.moduleClasses = typeDeclarations;
 		this.activeVariableDeclarations = new HashMap<>(activeVariableDeclarations);
 		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
 		for(ISwc4jAstStmt statement : block.getStmts()) {
@@ -205,7 +209,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				}
 			}
 		}
-		List<UMLClass> typeDeclarations = container instanceof ModuleContainer moduleContainer ? moduleContainer.getNestedClasses() : Collections.emptyList();
+		List<UMLClass> typeDeclarations = moduleClasses;
 		if(statement instanceof Swc4jAstBlockStmt block) {
 			List<ISwc4jAstStmt> blockStatements = block.getStmts();
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, block, parent.getDepth()+1, CodeElementType.BLOCK, fileContent);
@@ -216,22 +220,22 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 		}
 		else if(statement instanceof Swc4jAstBreakStmt breakStatement) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, breakStatement, parent.getDepth()+1, CodeElementType.BREAK_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, breakStatement, parent.getDepth()+1, CodeElementType.BREAK_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof Swc4jAstContinueStmt continueStatement) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, continueStatement, parent.getDepth()+1, CodeElementType.CONTINUE_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, continueStatement, parent.getDepth()+1, CodeElementType.CONTINUE_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof Swc4jAstEmptyStmt emptyStatement) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, emptyStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, emptyStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof Swc4jAstReturnStmt returnStatement) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
@@ -245,7 +249,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				UMLOperation nested = new UMLOperation(name, location, className);
 				nested.setVisibility(Visibility.PUBLIC);
 				Swc4jAstFunction function = functionExpr.getFunction();
-				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments);
+				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments, typeDeclarations);
 				if(container instanceof UMLOperation) {
 					((UMLOperation)container).addNestedOperation(nested);
 				}
@@ -266,7 +270,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				UMLOperation nested = new UMLOperation(name, location, className);
 				nested.setVisibility(Visibility.PUBLIC);
 				Swc4jAstFunction function = functionExpr.getFunction();
-				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments);
+				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments, typeDeclarations);
 				if(container instanceof UMLOperation) {
 					((UMLOperation)container).addNestedOperation(nested);
 				}
@@ -301,7 +305,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			else if(expressionStatement.getExpr() instanceof Swc4jAstAssignExpr assignment && assignment.getRight() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
 				UMLAnonymousClass anonymous = createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 				if(anonymous.getOperations().isEmpty()) {
-					StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+					StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 					parent.addStatement(child);
 					addStatementInVariableScopes(child);
 				}
@@ -312,24 +316,24 @@ public class TypeScriptOperationBody extends OperationBody {
 				//object._set('name', {...}) is processed like object.name = {...}
 				UMLAnonymousClass anonymous = createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 				if(anonymous.getOperations().isEmpty()) {
-					StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+					StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 					parent.addStatement(child);
 					addStatementInVariableScopes(child);
 				}
 			}
 			else {
-				StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+				StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 				parent.addStatement(child);
 				addStatementInVariableScopes(child);
 			}
 		}
 		else if(statement instanceof Swc4jAstDebuggerStmt debuggerStatement) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, debuggerStatement, parent.getDepth()+1, CodeElementType.DEBUGGER_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, debuggerStatement, parent.getDepth()+1, CodeElementType.DEBUGGER_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof Swc4jAstThrowStmt throwStatement) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, throwStatement, parent.getDepth()+1, CodeElementType.THROW_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, throwStatement, parent.getDepth()+1, CodeElementType.THROW_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
@@ -575,7 +579,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						}
 						Swc4jAstFunction function = functionExpr.getFunction();
 						//a function declared in a statement of an operation does not take the comment in the line before the statement, like in Java
-						TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, container instanceof ModuleContainer);
+						TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, container instanceof ModuleContainer, typeDeclarations);
 						if(container instanceof UMLOperation) {
 							((UMLOperation)container).addNestedOperation(operation);
 						}
@@ -612,7 +616,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						}
 						else {
 							addToContainer(container, umlClass);
-							StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+							StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 							parent.addStatement(child);
 							addStatementInVariableScopes(child);
 							addAllInActiveVariableDeclarations(child.getVariableDeclarations());
@@ -630,7 +634,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						umlClass.setVisibility(Visibility.PUBLIC);
 						processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, objectLiteral, umlClass);
 						addToContainer(container, umlClass);
-						StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+						StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 						parent.addStatement(child);
 						addStatementInVariableScopes(child);
 						addAllInActiveVariableDeclarations(child.getVariableDeclarations());
@@ -695,7 +699,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					}
 				}
 			}
-			StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
@@ -703,7 +707,7 @@ public class TypeScriptOperationBody extends OperationBody {
 		}
 		//using x = ...; and await using x = ...; dispose the value at the end of the scope
 		else if(statement instanceof Swc4jAstUsingDecl usingDecl) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, usingDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, usingDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
@@ -711,7 +715,7 @@ public class TypeScriptOperationBody extends OperationBody {
 		}
 		else if(statement instanceof Swc4jAstFnDecl functionDecl) {
 			String className = container.getClassName();
-			UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, functionDecl, activeVariableDeclarations, fileContent, className, comments);
+			UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, functionDecl, activeVariableDeclarations, fileContent, className, comments, typeDeclarations);
 			if(functionDecl.getParent() instanceof Swc4jAstExportDecl || container.getName().contains("exports")) {
 				nested.setVisibility(Visibility.PUBLIC);
 			}
@@ -933,7 +937,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				UMLOperation nested = new UMLOperation(name, location, className);
 				nested.setVisibility(Visibility.PUBLIC);
 				Swc4jAstFunction function = functionExpr.getFunction();
-				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments);
+				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments, typeDeclarations);
 				if(container instanceof UMLOperation) {
 					((UMLOperation)container).addNestedOperation(nested);
 				}
@@ -974,7 +978,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 		}
 		else if(statement instanceof Swc4jAstExportDefaultExpr exportDefaultExpr) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, exportDefaultExpr, parent.getDepth()+1, CodeElementType.EXPORT_STATEMENT, container, activeVariableDeclarations, fileContent);
+			StatementObject child = new StatementObject(sourceFolder, filePath, exportDefaultExpr, parent.getDepth()+1, CodeElementType.EXPORT_STATEMENT, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}
@@ -1134,7 +1138,7 @@ public class TypeScriptOperationBody extends OperationBody {
 		}
 		ISwc4jAstBlockStmtOrExpr body = arrowExpr.getBody();
 		if(body instanceof Swc4jAstBlockStmt blockStmt) {
-			OperationBody operationBody = new TypeScriptOperationBody(sourceFolder, filePath, blockStmt, operation, activeVariableDeclarations, fileContent);
+			OperationBody operationBody = new TypeScriptOperationBody(sourceFolder, filePath, blockStmt, operation, activeVariableDeclarations, fileContent, typeDeclarations);
 			operation.setBody(operationBody);
 		}
 		else if(body instanceof ISwc4jAstExpr expr) {
@@ -1200,7 +1204,7 @@ public class TypeScriptOperationBody extends OperationBody {
 					}
 					nested.setVisibility(Visibility.PUBLIC);
 					Swc4jAstFunction function = methodProp.getFunction();
-					TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments);
+					TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments, typeDeclarations);
 					umlClass.addOperation(nested);
 				}
 				else if(astProp instanceof Swc4jAstKeyValueProp keyValueProp) {
@@ -1229,7 +1233,7 @@ public class TypeScriptOperationBody extends OperationBody {
 							operation.setAnonymousClassContainer(anonymous);
 						}
 						Swc4jAstFunction function = functionExpr.getFunction();
-						TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments);
+						TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, typeDeclarations);
 						umlClass.addOperation(operation);
 					}
 					else if (key instanceof Swc4jAstIdentName identName) {
@@ -1767,11 +1771,11 @@ public class TypeScriptOperationBody extends OperationBody {
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations) {
 		for(ISwc4jAstClassMember member : members) {
 			if(member instanceof Swc4jAstClassMethod classMethod) {
-				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, classMethod, activeVariableDeclarations, fileContent, umlClass.getName(), comments);
+				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, classMethod, activeVariableDeclarations, fileContent, umlClass.getName(), comments, typeDeclarations);
 				umlClass.addOperation(nested);
 			}
 			else if(member instanceof Swc4jAstConstructor constructor) {
-				UMLOperation nested = TypeScriptFileProcessor.processConstructor(sourceFolder, filePath, constructor, activeVariableDeclarations, fileContent, umlClass.getName(), comments);
+				UMLOperation nested = TypeScriptFileProcessor.processConstructor(sourceFolder, filePath, constructor, activeVariableDeclarations, fileContent, umlClass.getName(), comments, typeDeclarations);
 				//JavaScript is a dynamically typed language, assigning a value to a property using this.propertyName inside the constructor automatically creates and initializes that property on the object instance.
 				if(nested.getBody() != null) {
 					for(VariableDeclaration vd : nested.getBody().getAllVariableDeclarations()) {
@@ -1852,7 +1856,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, staticBlock, CodeElementType.INITIALIZER, fileContent);
 				UMLInitializer initializer = new UMLInitializer(umlClass.getNonQualifiedName(), locationInfo, umlClass.getName());
 				initializer.setStatic(true);
-				initializer.setBody(new TypeScriptOperationBody(sourceFolder, filePath, staticBlock.getBody(), initializer, activeVariableDeclarations, fileContent));
+				initializer.setBody(new TypeScriptOperationBody(sourceFolder, filePath, staticBlock.getBody(), initializer, activeVariableDeclarations, fileContent, typeDeclarations));
 				umlClass.addInitializer(initializer);
 			}
 			else if(member instanceof Swc4jAstPrivateProp privateProp) {
@@ -1886,7 +1890,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				umlClass.addAttribute(attribute);
 			}
 			else if(member instanceof Swc4jAstPrivateMethod privateMethod) {
-				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, privateMethod, activeVariableDeclarations, fileContent, umlClass.getName(), comments);
+				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, privateMethod, activeVariableDeclarations, fileContent, umlClass.getName(), comments, typeDeclarations);
 				umlClass.addOperation(nested);
 			}
 		}

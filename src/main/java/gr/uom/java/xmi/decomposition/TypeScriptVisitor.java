@@ -166,6 +166,18 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		return super.visitThisExpr(node);
 	}
 
+	//a class referenced as a value, unlike the callee of new C() or C() and the name of the class declaration
+	private static boolean classUsedAsValue(Swc4jAstIdent node) {
+		ISwc4jAst parent = node.getParent();
+		if(parent instanceof Swc4jAstNewExpr newExpr && newExpr.getCallee() == node) {
+			return false;
+		}
+		if(parent instanceof Swc4jAstCallExpr call && call.getCallee() == node) {
+			return false;
+		}
+		return !(parent instanceof com.caoccao.javet.swc4j.ast.stmt.Swc4jAstClassDecl) && !(parent instanceof Swc4jAstClassExpr);
+	}
+
 	//the classes of the module declared before the statement, i.e., class Foo {...} before expect(Foo.foo).toBe(42);
 	private boolean declaredClass(String name) {
 		List<UMLClass> classes = !typeDeclarations.isEmpty() ? typeDeclarations : container instanceof ModuleContainer module ? module.getNestedClasses() : Collections.emptyList();
@@ -208,8 +220,9 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 				}
 			}
 		}
-		else if(node.getParent() instanceof Swc4jAstMemberExpr memberExpr && memberExpr.getObj() == node && declaredClass(identifier)) {
-			//a class used as a value is like a variable, i.e., Foo in Foo.foo, which can be extracted to a variable (const oldFoo = Foo;)
+		else if(declaredClass(identifier) && classUsedAsValue(node)) {
+			//a class used as a value is like a variable, i.e., Foo in Foo.foo, which can be extracted to a variable (const oldFoo = Foo;),
+			//or C in [C, C] and _class = C, where babel extracts C to _class (babel 3caeeb18)
 			LeafExpression name = new LeafExpression(sourceFolder, filePath, node, CodeElementType.SIMPLE_NAME, container, fileContent);
 			variables.add(name);
 		}

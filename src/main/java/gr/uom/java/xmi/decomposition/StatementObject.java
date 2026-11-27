@@ -31,6 +31,7 @@ import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultExpr;
 import extension.ast.node.LangASTNode;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.ast.visitor.LangVisitor;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -274,9 +275,9 @@ public class StatementObject extends AbstractStatement {
 
 	public StatementObject(String sourceFolder, String filePath,
 			ISwc4jAstStmt statement, int depth, CodeElementType codeElementType,
-			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		super(new LocationInfo(sourceFolder, filePath, statement, codeElementType, fileContent));
-		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
+		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		statement.visit(visitor);
 		this.variables = compact(visitor.getVariables());
 		this.types = compact(visitor.getTypes());
@@ -318,9 +319,9 @@ public class StatementObject extends AbstractStatement {
 
 	public StatementObject(String sourceFolder, String filePath,
 			Swc4jAstExportDefaultExpr statement, int depth, CodeElementType codeElementType,
-			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		super(new LocationInfo(sourceFolder, filePath, statement, codeElementType, fileContent));
-		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
+		TypeScriptVisitor visitor = new TypeScriptVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		statement.visit(visitor);
 		this.variables = compact(visitor.getVariables());
 		this.types = compact(visitor.getTypes());

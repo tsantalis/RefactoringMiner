@@ -1632,6 +1632,27 @@ public class UMLModelDiff {
 		return classMatch.isMatch() && classMatch.getMatchedOperations() + classMatch.getMatchedAttributes() > counterpartMatch.getMatchedOperations() + counterpartMatch.getMatchedAttributes();
 	}
 
+	//the members of a type alias are its structure, so two type aliases whose members with the same name all have different types share only member names,
+	//i.e., type: 'update-namespace' and namespace: Namespace of type Action in home.tsx, and type: WorkspacesActions.FetchCollectionTabInfo and namespace: string
+	//of the new type FetchCollectionInfoAction in workspaces.ts
+	private static boolean onlyRetypedTypeAliasMembers(UMLClass typeAlias1, UMLClass typeAlias2) {
+		if(!typeAlias1.isTypeAlias() || !typeAlias2.isTypeAlias()) {
+			return false;
+		}
+		boolean sameName = false;
+		for(UMLAttribute attribute1 : typeAlias1.getAttributes()) {
+			for(UMLAttribute attribute2 : typeAlias2.getAttributes()) {
+				if(attribute1.getName().equals(attribute2.getName())) {
+					if(attribute1.getType().equals(attribute2.getType())) {
+						return false;
+					}
+					sameName = true;
+				}
+			}
+		}
+		return sameName;
+	}
+
 	private TreeSet<UMLClassRenameDiff> findRenameMatchesForAddedClass(UMLClass addedClass, UMLClassMatcher matcher) {
 		TreeSet<UMLClassRenameDiff> diffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 		for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
@@ -1677,7 +1698,8 @@ public class UMLModelDiff {
 				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
 				//an unchanged class was neither renamed nor split, i.e., the type alias AtlasSignInCancelAction = { type: AtlasSignInActions.Cancel } of compass 63036d30
 				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && !classDiff.isEmpty() &&
-						(classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size() || betterMatchThanCounterpart(addedClass, classDiff.getOriginalClass(), classDiff.getNextClass(), matcher))) {
+						(classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size() ||
+								(betterMatchThanCounterpart(addedClass, classDiff.getOriginalClass(), classDiff.getNextClass(), matcher) && !onlyRetypedTypeAliasMembers(classDiff.getOriginalClass(), addedClass)))) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(classDiff.getOriginalClass(), addedClass);
 						if(processedClassPairs.contains(pair)) {
@@ -3470,7 +3492,8 @@ public class UMLModelDiff {
 				subclassExtraction = true;
 			}
 		}
-		if(commonOperations.size() > threshold || commonAttributes.size() > threshold || ((innerClassExtracted || subclassExtraction) && commonOperations.size() + commonAttributes.size() >= 1)) {
+		if((commonOperations.size() > threshold || commonAttributes.size() > threshold || ((innerClassExtracted || subclassExtraction) && commonOperations.size() + commonAttributes.size() >= 1)) &&
+				!onlyRetypedTypeAliasMembers(classDiff.getOriginalClass(), umlClass)) {
 			ExtractClassRefactoring extractClassRefactoring = new ExtractClassRefactoring(umlClass, classDiff, commonOperations, commonAttributes, attributeOfExtractedClassType);
 			Set<UMLAttributeDiff> diffsToBeRemoved = new LinkedHashSet<UMLAttributeDiff>();
 			for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {

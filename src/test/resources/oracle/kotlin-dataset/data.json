@@ -8720,6 +8720,13 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute refWatcher : Inferred to objectWatcher : Inferred in class leakcanary.LeakSentry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Change Attribute Access Modifier",
         "description": "Change Attribute Access Modifier public to private in attribute private objectWatcher : Inferred from class leakcanary.ObjectWatcherTest",
         "comment": null,

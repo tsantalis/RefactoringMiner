@@ -307,11 +307,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **November 1, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 26, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2104  |  4  |  0  | 0.998  | 1.000|
+|**Total**|2105  |  4  |  0  | 0.998  | 1.000|
 |Extract Method|10  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
@@ -340,7 +340,7 @@ As of **November 1, 2026** the precision and recall of RefactoringMiner on this 
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|64  |  0  |  0  | 1.000  | 1.000|
 |Rename Parameter|76  |  0  |  0  | 1.000  | 1.000|
-|Rename Attribute|79  |  1  |  0  | 0.988  | 1.000|
+|Rename Attribute|80  |  1  |  0  | 0.988  | 1.000|
 |Merge Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 3  |  0  |  0  | 1.000  | 1.000|

@@ -40,6 +40,13 @@ public abstract class SourceAnnotation {
         return implementations.containsKey(annotation.getTypeName());
     }
 
+    //a composed annotation of a custom arguments provider, meta-annotated with @ArgumentsSource, whose values cannot be read,
+    //i.e., @LdapServersSource, @BooleanSource or @ConfigurationParameterSource("basedir") on a @ParameterizedTest
+    public static boolean isCustomSourceAnnotation(UMLAnnotation annotation) {
+        String typeName = annotation.getTypeName();
+        return !implementations.containsKey(typeName) && (typeName.endsWith("Source") || typeName.endsWith("Sources"));
+    }
+
     public static SourceAnnotation create(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
         if (implementations.containsKey(annotation.getTypeName())) {
             return implementations.get(annotation.getTypeName()).apply(annotation, operation, declaringClasses);

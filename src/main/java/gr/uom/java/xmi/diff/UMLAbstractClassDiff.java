@@ -4707,7 +4707,7 @@ public abstract class UMLAbstractClassDiff {
 			return false;
 		}
 		List<String> parameterNames = addedOperation.getParameterNameList();
-		if(parameterNames.isEmpty() || addedOperation.getAnnotations().stream().noneMatch(SourceAnnotation::isSourceAnnotation)) {
+		if(parameterNames.isEmpty() || addedOperation.getAnnotations().stream().noneMatch(a -> SourceAnnotation.isSourceAnnotation(a) || SourceAnnotation.isCustomSourceAnnotation(a))) {
 			return false;
 		}
 		List<String> removedParameterNames = removedOperation.getParameterNameList();

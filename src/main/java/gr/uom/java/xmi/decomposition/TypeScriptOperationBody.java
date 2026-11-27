@@ -130,6 +130,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsSetterSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeLit;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeRef;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsUnionType;
@@ -996,7 +997,8 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 			else if(typeAnnotation instanceof Swc4jAstTsIntersectionType intersectionType) {
 				for(ISwc4jAstTsType type : intersectionType.getTypes()) {
-					if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
+					Swc4jAstTsTypeLit typeLiteral = memberTypeLiteral(type);
+					if(typeLiteral != null) {
 						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
 					}
 				}
@@ -1005,7 +1007,8 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 			else if(typeAnnotation instanceof Swc4jAstTsUnionType unionType) {
 				for(ISwc4jAstTsType type : unionType.getTypes()) {
-					if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
+					Swc4jAstTsTypeLit typeLiteral = memberTypeLiteral(type);
+					if(typeLiteral != null) {
 						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
 					}
 				}
@@ -1585,6 +1588,23 @@ public class TypeScriptOperationBody extends OperationBody {
 		List<ISwc4jAstClassMember> typeElements = clazz.getBody();
 		//the members take their comments from the class
 		processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations, umlClass.getComments());
+	}
+
+	//the utility types that keep the properties of their type literal as members, only optional, required or read-only
+	private static final Set<String> MEMBER_UTILITY_TYPES = Set.of("Partial", "Required", "Readonly");
+
+	//the type literal whose properties are members of the type alias, i.e., { namespace: string } and { sourceName: string; ... }
+	//in type ConfigureStoreOptions = { namespace: string } & Partial<{ sourceName: string; ... }>
+	private static Swc4jAstTsTypeLit memberTypeLiteral(ISwc4jAstTsType type) {
+		if(type instanceof Swc4jAstTsTypeLit typeLiteral) {
+			return typeLiteral;
+		}
+		if(type instanceof Swc4jAstTsTypeRef typeRef && typeRef.getTypeName() instanceof Swc4jAstIdent ident && MEMBER_UTILITY_TYPES.contains(ident.getSym()) &&
+				typeRef.getTypeParams().isPresent() && typeRef.getTypeParams().get().getParams().size() == 1 &&
+				typeRef.getTypeParams().get().getParams().get(0) instanceof Swc4jAstTsTypeLit typeLiteral) {
+			return typeLiteral;
+		}
+		return null;
 	}
 
 	private void processTypeLiteral(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,

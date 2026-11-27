@@ -928,45 +928,11 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
             else {
                 Pair<Tree, Tree> intersection_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.INTERSECTION_TYPE, LANG2.INTERSECTION_TYPE);
                 if(intersection_types != null) {
-                    if(intersection_types.first.isIsoStructuralTo(intersection_types.second)) {
-                        mappingStore.addMappingRecursively(intersection_types.first, intersection_types.second);
-                    }
-                    else {
-                        mappingStore.addMapping(intersection_types.first, intersection_types.second);
-                        object_types = Helpers.findPairOfType(intersection_types.first, intersection_types.second, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
-                        if (object_types != null) {
-                            mappingStore.addMapping(object_types.first, object_types.second);
-                            Pair<Tree,Tree> opening = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
-                            if (opening != null) {
-                                mappingStore.addMapping(opening.first,opening.second);
-                            }
-                            Pair<Tree,Tree> closing = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
-                            if (closing != null) {
-                                mappingStore.addMapping(closing.first,closing.second);
-                            }
-                        }
-                    }
+                    processTypeAliasMembers(intersection_types.first, intersection_types.second, mappingStore);
                 }
                 Pair<Tree, Tree> union_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.UNION_TYPE, LANG2.UNION_TYPE);
                 if(union_types != null) {
-                    if(union_types.first.isIsoStructuralTo(union_types.second)) {
-                        mappingStore.addMappingRecursively(union_types.first, union_types.second);
-                    }
-                    else {
-                        mappingStore.addMapping(union_types.first, union_types.second);
-                        object_types = Helpers.findPairOfType(union_types.first, union_types.second, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
-                        if (object_types != null) {
-                            mappingStore.addMapping(object_types.first, object_types.second);
-                            Pair<Tree,Tree> opening = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
-                            if (opening != null) {
-                                mappingStore.addMapping(opening.first,opening.second);
-                            }
-                            Pair<Tree,Tree> closing = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
-                            if (closing != null) {
-                                mappingStore.addMapping(closing.first,closing.second);
-                            }
-                        }
-                    }
+                    processTypeAliasMembers(union_types.first, union_types.second, mappingStore);
                 }
                 Pair<Tree, Tree> generic_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.GENERIC_TYPE, LANG2.GENERIC_TYPE);
                 if(generic_types != null) {
@@ -1981,6 +1947,90 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
                     dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG2.MODIFIERS)) {
                 mappingStore.addMapping(srcClassAnnotationTree.getParent(), dstClassAnnotationTree.getParent());
             }
+        }
+    }
+
+    //the intersection or union of a type alias, whose members are paired by position when both have the same number of them,
+    //i.e., { namespace: string } & Partial<{ sourceName: string; ... }>, or else only the first object types are paired
+    private void processTypeAliasMembers(Tree composite1, Tree composite2, ExtendedMultiMappingStore mappingStore) {
+        if(composite1.isIsoStructuralTo(composite2)) {
+            mappingStore.addMappingRecursively(composite1, composite2);
+            return;
+        }
+        mappingStore.addMapping(composite1, composite2);
+        if(!pairableMembers(composite1, composite2)) {
+            Pair<Tree, Tree> objectTypes = Helpers.findPairOfType(composite1, composite2, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
+            if(objectTypes != null) {
+                processObjectTypePair(objectTypes.first, objectTypes.second, mappingStore);
+            }
+            return;
+        }
+        for(int i = 0; i < composite1.getChildren().size(); i++) {
+            Tree member1 = composite1.getChild(i);
+            Tree member2 = composite2.getChild(i);
+            if(!member1.getType().name.equals(member2.getType().name)) {
+                continue;
+            }
+            if(member1.isIsoStructuralTo(member2)) {
+                mappingStore.addMappingRecursively(member1, member2);
+            }
+            else if(member1.getType().name.equals(LANG1.OBJECT_TYPE)) {
+                processObjectTypePair(member1, member2, mappingStore);
+            }
+            else if(member1.getType().name.equals(LANG1.GENERIC_TYPE)) {
+                //a utility type of a type literal, i.e., Partial<{ ... }>
+                Tree name1 = TreeUtilFunctions.findChildByType(member1, LANG1.TYPE_IDENTIFIER);
+                Tree name2 = TreeUtilFunctions.findChildByType(member2, LANG2.TYPE_IDENTIFIER);
+                Tree arguments1 = TreeUtilFunctions.findChildByType(member1, LANG1.TYPE_ARGUMENTS);
+                Tree arguments2 = TreeUtilFunctions.findChildByType(member2, LANG2.TYPE_ARGUMENTS);
+                if(name1 == null || name2 == null || !name1.getLabel().equals(name2.getLabel()) || arguments1 == null || arguments2 == null ||
+                        arguments1.getChildren().size() != arguments2.getChildren().size()) {
+                    continue;
+                }
+                mappingStore.addMapping(member1, member2);
+                mappingStore.addMapping(name1, name2);
+                mappingStore.addMapping(arguments1, arguments2);
+                for(int j = 0; j < arguments1.getChildren().size(); j++) {
+                    Tree argument1 = arguments1.getChild(j);
+                    Tree argument2 = arguments2.getChild(j);
+                    if(argument1.isIsoStructuralTo(argument2)) {
+                        mappingStore.addMappingRecursively(argument1, argument2);
+                    }
+                    else if(argument1.getType().name.equals(LANG1.OBJECT_TYPE) && argument2.getType().name.equals(LANG2.OBJECT_TYPE)) {
+                        processObjectTypePair(argument1, argument2, mappingStore);
+                    }
+                }
+            }
+        }
+    }
+
+    //the members correspond by position only when each pair is identical, or two object types, or the same generic type, since nested intersections and unions
+    //are binary trees, i.e., Tone | "info" and ("success" | ... | "info") | "neutral" have the same number of members, but "info" is not "neutral"
+    private boolean pairableMembers(Tree composite1, Tree composite2) {
+        if(composite1.getChildren().size() != composite2.getChildren().size()) {
+            return false;
+        }
+        for(int i = 0; i < composite1.getChildren().size(); i++) {
+            Tree member1 = composite1.getChild(i);
+            Tree member2 = composite2.getChild(i);
+            boolean objectTypes = member1.getType().name.equals(LANG1.OBJECT_TYPE) && member2.getType().name.equals(LANG2.OBJECT_TYPE);
+            boolean genericTypes = member1.getType().name.equals(LANG1.GENERIC_TYPE) && member2.getType().name.equals(LANG2.GENERIC_TYPE);
+            if(!member1.isIsoStructuralTo(member2) && !objectTypes && !genericTypes) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void processObjectTypePair(Tree objectType1, Tree objectType2, ExtendedMultiMappingStore mappingStore) {
+        mappingStore.addMapping(objectType1, objectType2);
+        Pair<Tree,Tree> opening = Helpers.findPairOfType(objectType1, objectType2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+        if (opening != null) {
+            mappingStore.addMapping(opening.first, opening.second);
+        }
+        Pair<Tree,Tree> closing = Helpers.findPairOfType(objectType1, objectType2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+        if (closing != null) {
+            mappingStore.addMapping(closing.first, closing.second);
         }
     }
 }

@@ -536,6 +536,9 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 			return false;
 		for(UMLOperation originalOperation : operations) {
 			String originalOperationName = originalOperation.getName();
+			if(renamedWithFileNamePattern(originalOperationName, operation.getName(), pattern)) {
+				return true;
+			}
 			if(originalOperationName.contains(pattern.getBefore()) && !pattern.getBefore().isEmpty()) {
 				String originalOperationNameAfterReplacement = originalOperationName.replace(pattern.getBefore(), pattern.getAfter());
 				if(originalOperationNameAfterReplacement.equals(operation.getName()))
@@ -750,11 +753,31 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		return false;
 	}
 
+	//the rename pattern of a module file name written in kebab case applies to its member names in any case, i.e., is-columnstore.ts renamed to has-columnstore-projection.ts
+	//renames TOGGLE_IS_COLUMNSTORE to TOGGLE_HAS_COLUMNSTORE_PROJECTION and toggleIsColumnstore to toggleHasColumnstoreProjection (compass 5f1e7cdb)
+	private static boolean renamedWithFileNamePattern(String name1, String name2, RenamePattern pattern) {
+		if(!pattern.getBefore().contains("-") && !pattern.getAfter().contains("-")) {
+			return false;
+		}
+		String before = withoutCaseAndSeparators(pattern.getBefore());
+		String after = withoutCaseAndSeparators(pattern.getAfter());
+		String normalizedName1 = withoutCaseAndSeparators(name1);
+		//a member named after the file itself does not follow the rename of the file, i.e., the component WorkspaceContent of workspace-content.tsx is not Collections of collections.tsx
+		return !before.isEmpty() && normalizedName1.length() > before.length() && normalizedName1.contains(before) && normalizedName1.replace(before, after).equals(withoutCaseAndSeparators(name2));
+	}
+
+	private static String withoutCaseAndSeparators(String name) {
+		return name.replace("-", "").replace("_", "").toLowerCase();
+	}
+
 	public boolean containsAttributeWithTheSameRenamePattern(UMLAttribute attribute, RenamePattern pattern) {
 		if(pattern == null)
 			return false;
 		for(UMLAttribute originalAttribute : attributes) {
 			String originalAttributeName = originalAttribute.getName();
+			if(renamedWithFileNamePattern(originalAttributeName, attribute.getName(), pattern)) {
+				return true;
+			}
 			if(originalAttributeName.contains(pattern.getBefore()) && !pattern.getBefore().isEmpty()) {
 				String originalAttributeNameAfterReplacement = originalAttributeName.replace(pattern.getBefore(), pattern.getAfter());
 				if(originalAttributeNameAfterReplacement.equals(attribute.getName()))
@@ -769,6 +792,9 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		}
 		for(UMLAttribute originalAttribute : enumConstants) {
 			String originalAttributeName = originalAttribute.getName();
+			if(renamedWithFileNamePattern(originalAttributeName, attribute.getName(), pattern)) {
+				return true;
+			}
 			if(originalAttributeName.contains(pattern.getBefore()) && !pattern.getBefore().isEmpty()) {
 				String originalAttributeNameAfterReplacement = originalAttributeName.replace(pattern.getBefore(), pattern.getAfter());
 				if(originalAttributeNameAfterReplacement.equals(attribute.getName()))
@@ -935,6 +961,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	umlClass.name.substring(beginIndexS2, endIndexS2);
 			pattern = new RenamePattern(diff1, diff2);
 		}
+		RenamePattern fileNamePattern = moduleFileNamePattern(umlClass);
 		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
 		List<UMLOperation> commonConstructors = new ArrayList<UMLOperation>();
 		List<UMLOperation> identicalOperations = new ArrayList<UMLOperation>();
@@ -952,7 +979,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 				}
 				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(umlClass.containsOperationWithIdenticalComments(operation) && !operation.hasTestAnnotation()) ||
-						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
+						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse())) ||
+						(fileNamePattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, fileNamePattern.reverse()))) {
 					if(!operation.getName().equals("module.exports"))
 						commonOperations.add(operation);
 				}
@@ -1001,7 +1029,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 				}
 				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(this.containsOperationWithIdenticalComments(operation) && !operation.hasTestAnnotation()) ||
-						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
+						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern)) ||
+						(fileNamePattern != null && this.containsOperationWithTheSameRenamePattern(operation, fileNamePattern))) {
 					if(!operation.getName().equals("module.exports"))
 						commonOperations.add(operation);
 				}
@@ -1049,7 +1078,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
 					umlClass.containsRenamedAttributeWithIdenticalTypeAndInitializer(attribute) ||
 					umlClass.containsAttributeWithTheSameNameIgnoringCase(attribute) ||
-					(pattern != null && umlClass.containsAttributeWithTheSameRenamePattern(attribute, pattern.reverse()))) {
+					(pattern != null && umlClass.containsAttributeWithTheSameRenamePattern(attribute, pattern.reverse())) ||
+					(fileNamePattern != null && umlClass.containsAttributeWithTheSameRenamePattern(attribute, fileNamePattern.reverse()))) {
 				commonAttributes.add(attribute);
 				if(umlClass.containsIdenticalAttributeIncludingAnnotation(attribute)) {
 					identicalAttributes.add(attribute);
@@ -1067,7 +1097,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
 					this.containsRenamedAttributeWithIdenticalTypeAndInitializer(attribute) ||
 					this.containsAttributeWithTheSameNameIgnoringCase(attribute) ||
-					(pattern != null && this.containsAttributeWithTheSameRenamePattern(attribute, pattern))) {
+					(pattern != null && this.containsAttributeWithTheSameRenamePattern(attribute, pattern)) ||
+					(fileNamePattern != null && this.containsAttributeWithTheSameRenamePattern(attribute, fileNamePattern))) {
 				commonAttributes.add(attribute);
 				if(this.containsIdenticalAttributeIncludingAnnotation(attribute)) {
 					identicalAttributes.add(attribute);
@@ -1256,6 +1287,22 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 		}
 		return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
+	}
+
+	//the rename of the files of two modules, i.e., is-columnstore -> has-columnstore-projection for is-columnstore.ts renamed to has-columnstore-projection.ts
+	private RenamePattern moduleFileNamePattern(UMLAbstractClass umlClass) {
+		if(!(this instanceof UMLClass class1) || !class1.isModule() || !(umlClass instanceof UMLClass class2) || !class2.isModule() ||
+				this.getSourceFile().equals(umlClass.getSourceFile())) {
+			return null;
+		}
+		String fileName1 = fileNameWithoutExtension(this.getSourceFile());
+		String fileName2 = fileNameWithoutExtension(umlClass.getSourceFile());
+		return fileName1.equals(fileName2) ? null : new RenamePattern(fileName1, fileName2);
+	}
+
+	private static String fileNameWithoutExtension(String filePath) {
+		String fileName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1) : filePath;
+		return fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName;
 	}
 
 	private static boolean containsToken(String input, String[] tokens) {

@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -314,7 +315,7 @@ class CppFileProcessorTest {
 	}
 
 	@Test
-	void prefersActiveCppClassOverInactiveSiblingPreprocessorBranch() {
+	void keepsAttributesOfCppSiblingClassVariants() {
 		String filePath = "src/config.cpp";
 		String fileContent = String.join("\n",
 				"#if defined(UNDEFINED_FEATURE)",
@@ -327,13 +328,10 @@ class CppFileProcessorTest {
 				"};",
 				"#endif") + "\n";
 
-		UMLModel model = processCppModel(filePath, fileContent);
+		List<UMLClass> settingsClasses = classVariants(processCppModel(filePath, fileContent).getClassList(), "Settings", 2);
 
-		List<UMLClass> settingsClasses = model.getClassList().stream()
-				.filter(umlClass -> umlClass.getName().endsWith("Settings"))
-				.toList();
-		assertEquals(1, settingsClasses.size());
-		assertEquals("long", findAttribute(settingsClasses.get(0).getAttributes(), "cacheSize").getType().toString());
+		assertEquals("int", findAttribute(settingsClasses.get(0).getAttributes(), "cacheSize").getType().toString());
+		assertEquals("long", findAttribute(settingsClasses.get(1).getAttributes(), "cacheSize").getType().toString());
 	}
 
 	@Test
@@ -357,7 +355,7 @@ class CppFileProcessorTest {
 	}
 
 	@Test
-	void mergesInactiveOnlyMembersIntoActiveCppSiblingClass() {
+	void keepsMembersOfCppSiblingClassVariantsInTheirVariant() {
 		String filePath = "src/backend.cpp";
 		String fileContent = String.join("\n",
 				"#if defined(UNDEFINED_PLATFORM)",
@@ -372,19 +370,14 @@ class CppFileProcessorTest {
 				"};",
 				"#endif") + "\n";
 
-		UMLModel model = processCppModel(filePath, fileContent);
-		List<UMLClass> backends = model.getClassList().stream()
-				.filter(umlClass -> umlClass.getName().equals("Backend") || umlClass.getName().endsWith(".Backend"))
-				.toList();
+		List<UMLClass> backends = classVariants(processCppModel(filePath, fileContent).getClassList(), "Backend", 2);
 
-		assertEquals(1, backends.size(), model.getClassList().stream().map(UMLClass::getName).toList().toString());
-		List<String> operationNames = backends.get(0).getOperations().stream()
-				.map(UMLOperation::getName)
-				.toList();
-		assertEquals(4, operationNames.size());
-		assertTrue(operationNames.containsAll(List.of("common", "windowsOnly", "posixOnly")));
-		List<UMLOperation> commons = siblingVariants(backends.get(0).getOperations(), "common", 2);
-		assertEquals(1, commons.stream().filter(operation -> bodyContains(operation, "return 2")).count());
+		assertEquals("#if defined(UNDEFINED_PLATFORM)[0]", backends.get(0).getPreprocessorBranch());
+		assertEquals("#if defined(UNDEFINED_PLATFORM)[1]", backends.get(1).getPreprocessorBranch());
+		assertEquals(List.of("common", "windowsOnly"), backends.get(0).getOperations().stream().map(UMLOperation::getName).toList());
+		assertEquals(List.of("common", "posixOnly"), backends.get(1).getOperations().stream().map(UMLOperation::getName).toList());
+		assertTrue(bodyContains(findOperation(backends.get(0).getOperations(), "common"), "return 1"));
+		assertTrue(bodyContains(findOperation(backends.get(1).getOperations(), "common"), "return 2"));
 	}
 
 	@Test
@@ -655,7 +648,7 @@ class CppFileProcessorTest {
 	}
 
 	@Test
-	void keepsVisibilityStateSeparateAcrossMergedCppClassAlternatives() {
+	void keepsVisibilityStateSeparateAcrossCppClassVariants() {
 		String filePath = "src/access.cpp";
 		String fileContent = String.join("\n",
 				"#if 0",
@@ -670,14 +663,14 @@ class CppFileProcessorTest {
 				"};",
 				"#endif") + "\n";
 
-		UMLClass access = findClass(processCppModel(filePath, fileContent).getClassList(), "Access");
+		List<UMLClass> variants = classVariants(processCppModel(filePath, fileContent).getClassList(), "Access", 2);
 
-		assertEquals(Visibility.PRIVATE, findOperation(access.getOperations(), "activeOnly").getVisibility());
-		assertEquals(Visibility.PUBLIC, findOperation(access.getOperations(), "inactiveOnly").getVisibility());
+		assertEquals(Visibility.PUBLIC, findOperation(variants.get(0).getOperations(), "inactiveOnly").getVisibility());
+		assertEquals(Visibility.PRIVATE, findOperation(variants.get(1).getOperations(), "activeOnly").getVisibility());
 	}
 
 	@Test
-	void usesPrivateDefaultVisibilityForMergedCppClassAlternative() {
+	void usesPrivateDefaultVisibilityForCppClassVariant() {
 		String filePath = "src/class-access.cpp";
 		String fileContent = String.join("\n",
 				"#if 0",
@@ -691,14 +684,14 @@ class CppFileProcessorTest {
 				"};",
 				"#endif") + "\n";
 
-		UMLClass access = findClass(processCppModel(filePath, fileContent).getClassList(), "Access");
+		List<UMLClass> variants = classVariants(processCppModel(filePath, fileContent).getClassList(), "Access", 2);
 
-		assertEquals(Visibility.PUBLIC, findOperation(access.getOperations(), "activeOnly").getVisibility());
-		assertEquals(Visibility.PRIVATE, findOperation(access.getOperations(), "inactiveOnly").getVisibility());
+		assertEquals(Visibility.PRIVATE, findOperation(variants.get(0).getOperations(), "inactiveOnly").getVisibility());
+		assertEquals(Visibility.PUBLIC, findOperation(variants.get(1).getOperations(), "activeOnly").getVisibility());
 	}
 
 	@Test
-	void keepsDefaultVisibilitySpecificToEachMergedCppCompositeAlternative() {
+	void keepsDefaultVisibilitySpecificToEachCppCompositeVariant() {
 		String filePath = "src/mixed-composite-access.cpp";
 		String fileContent = String.join("\n",
 				"#if 0",
@@ -712,10 +705,42 @@ class CppFileProcessorTest {
 				"};",
 				"#endif") + "\n";
 
-		UMLClass access = findClass(processCppModel(filePath, fileContent).getClassList(), "Access");
+		List<UMLClass> variants = classVariants(processCppModel(filePath, fileContent).getClassList(), "Access", 2);
 
-		assertEquals(Visibility.PUBLIC, findOperation(access.getOperations(), "activeOnly").getVisibility());
-		assertEquals(Visibility.PUBLIC, findOperation(access.getOperations(), "inactiveOnly").getVisibility());
+		assertEquals(Visibility.PUBLIC, findOperation(variants.get(0).getOperations(), "inactiveOnly").getVisibility());
+		assertEquals(Visibility.PUBLIC, findOperation(variants.get(1).getOperations(), "activeOnly").getVisibility());
+	}
+
+	@Test
+	void namesUnnamedEnumsAndKeepsVariablesOfTypeDefinitions() {
+		// B-021: linux de0d3dc0e8 atari_pamsnet.c enum {UNKNOWN1=3, READPKT=8, ...}; and static struct nic_pkt_s {...} *nic_packet = 0;
+		String filePath = "drivers/net/types.c";
+		String fileContent = String.join("\n",
+				"enum {UNKNOWN1=3, READPKT=8, UNKNOWN2};",
+				"typedef enum {T1, T2} T;",
+				"enum {V1, V2} v;",
+				"static struct nic_pkt_s {",
+				"	unsigned char buffer[2048];",
+				"} *nic_packet = 0;",
+				"typedef struct { int y; } TS;",
+				"#ifdef X",
+				"enum E {A, B};",
+				"#else",
+				"enum E {A, C};",
+				"#endif") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		assertEquals(List.of("UNKNOWN1", "READPKT", "UNKNOWN2"), findClass(model.getClassList(), "UNKNOWN1").getEnumConstants().stream().map(UMLEnumConstant::getName).toList());
+		assertEquals(List.of("T1", "T2"), findClass(model.getClassList(), "T").getEnumConstants().stream().map(UMLEnumConstant::getName).toList());
+		assertEquals(List.of("V1", "V2"), findClass(model.getClassList(), "v").getEnumConstants().stream().map(UMLEnumConstant::getName).toList());
+		UMLClass module = model.getClassList().stream().filter(UMLClass::isModule).findFirst().orElseThrow();
+		assertEquals(List.of("v", "nic_packet"), module.getAttributes().stream().map(UMLAttribute::getName).toList());
+		assertEquals("struct nic_pkt_s*", findAttribute(module.getAttributes(), "nic_packet").getType().toString());
+		assertTrue(findAttribute(module.getAttributes(), "nic_packet").isStatic());
+		List<UMLClass> enums = classVariants(model.getClassList(), "E", 2);
+		assertEquals(List.of("A", "B"), enums.get(0).getEnumConstants().stream().map(UMLEnumConstant::getName).toList());
+		assertEquals(List.of("A", "C"), enums.get(1).getEnumConstants().stream().map(UMLEnumConstant::getName).toList());
 	}
 
 	@Test
@@ -734,10 +759,12 @@ class CppFileProcessorTest {
 				"};",
 				"#endif") + "\n";
 
-		UMLClass reader = findClass(processCppModel(filePath, fileContent).getClassList(), "Reader");
+		List<UMLClass> readers = classVariants(processCppModel(filePath, fileContent).getClassList(), "Reader", 2);
 
-		assertEquals(2, reader.getOperations().stream().filter(operation -> operation.getName().equals("value")).count());
-		assertEquals(2, reader.getOperations().stream().filter(operation -> operation.getName().equals("access")).count());
+		for(UMLClass reader : readers) {
+			assertEquals(1, reader.getOperations().stream().filter(operation -> operation.getName().equals("value")).count());
+			assertEquals(1, reader.getOperations().stream().filter(operation -> operation.getName().equals("access")).count());
+		}
 	}
 
 	@Test
@@ -1617,6 +1644,17 @@ class CppFileProcessorTest {
 
 	private static boolean bodyContains(UMLOperation operation, String text) {
 		return operation.getBody().getCompositeStatement().getLeaves().stream().anyMatch(leaf -> leaf.getString().contains(text));
+	}
+
+	//the variants of a class in sibling preprocessor branches, in their order in the file, each identified by its branch
+	private static List<UMLClass> classVariants(List<UMLClass> classes, String name, int count) {
+		List<UMLClass> variants = classes.stream()
+				.filter(umlClass -> umlClass.getName().equals(name) || umlClass.getName().endsWith("." + name))
+				.sorted(Comparator.comparingInt(umlClass -> umlClass.getLocationInfo().getStartOffset()))
+				.toList();
+		assertEquals(count, variants.size(), classes.stream().map(UMLClass::getName).toList().toString());
+		assertEquals(count, variants.stream().map(UMLClass::getPreprocessorBranch).filter(Objects::nonNull).distinct().count());
+		return variants;
 	}
 
 	private static UMLClass findClass(List<UMLClass> classes, String name) {

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.refactoringminer.util.PathFileUtils;
@@ -48,6 +49,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private List<UMLTypeAlias> typeAliasList;
     private String actualSignature;
     private ConditionallyCreated conditionallyCreated = ConditionallyCreated.NO;
+    //the enclosing branches of a C/C++ type defined in sibling branches of a conditional group, i.e., #ifdef X[0] for struct Q {...} in #ifdef X struct Q {...} #else struct Q {...} #endif
+    private String preprocessorBranch;
     private Optional<AbstractStatement> parentStatement;
     private List<UMLPreprocessorStatement> preprocessorStatements;
     private List<UMLForwardDeclaration> forwardDeclarations;
@@ -114,6 +117,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setConditionallyCreated(ConditionallyCreated conditionallyCreated) {
 		this.conditionallyCreated = conditionallyCreated;
+	}
+
+	public String getPreprocessorBranch() {
+		return preprocessorBranch;
+	}
+
+	public void setPreprocessorBranch(String preprocessorBranch) {
+		this.preprocessorBranch = preprocessorBranch;
 	}
 
 	public String getActualSignature() {
@@ -485,17 +496,32 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     		return true;
     	}
 
-    	if(o instanceof UMLClass) {
-    		UMLClass umlClass = (UMLClass)o;
-    		boolean fileMatch = this.sourceFile.equals(umlClass.sourceFile);
-    		if(!this.LANG.equals(umlClass.LANG)) {
-    			String path1 = PathFileUtils.filePathWithoutExtension(this.getSourceFile());
-    			String path2 = PathFileUtils.filePathWithoutExtension(umlClass.getSourceFile());
-				fileMatch = path1.equals(path2);
-    		}
-    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && fileMatch && this.conditionallyCreated.equals(umlClass.conditionallyCreated);
+    	if(o instanceof UMLClass umlClass) {
+    		return equalsIgnoringPreprocessorBranch(umlClass) && Objects.equals(this.preprocessorBranch, umlClass.preprocessorBranch);
     	}
     	return false;
+    }
+
+    //the same class, possibly defined in other preprocessor branches, i.e., struct Q {...} of #ifdef X[0] and of #ifdef X[1]
+    public boolean equalsIgnoringPreprocessorBranch(UMLClass umlClass) {
+    	boolean fileMatch = this.sourceFile.equals(umlClass.sourceFile);
+    	if(!this.LANG.equals(umlClass.LANG)) {
+    		String path1 = PathFileUtils.filePathWithoutExtension(this.getSourceFile());
+    		String path2 = PathFileUtils.filePathWithoutExtension(umlClass.getSourceFile());
+    		fileMatch = path1.equals(path2);
+    	}
+    	return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && fileMatch && this.conditionallyCreated.equals(umlClass.conditionallyCreated);
+    }
+
+    //the number of enclosing preprocessor branches the classes have in common, from the outermost one
+    public int commonPreprocessorBranches(UMLClass umlClass) {
+    	String[] branches1 = preprocessorBranch == null ? new String[0] : preprocessorBranch.split(" > ");
+    	String[] branches2 = umlClass.preprocessorBranch == null ? new String[0] : umlClass.preprocessorBranch.split(" > ");
+    	int common = 0;
+    	while(common < branches1.length && common < branches2.length && branches1[common].equals(branches2[common])) {
+    		common++;
+    	}
+    	return common;
     }
 
     public int hashCode() {
@@ -505,6 +531,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((sourceFile == null) ? 0 : sourceFile.hashCode());
 		result = prime * result + conditionallyCreated.hashCode();
+		result = prime * result + ((preprocessorBranch == null) ? 0 : preprocessorBranch.hashCode());
 		return result;
 	}
 

@@ -2485,8 +2485,9 @@ public class CppFileProcessor {
 			umlClass.setActualSignature(rawSignature);
 			preprocessor.processDeclarationGroups(packageName + "." + className, sourceFolder, umlClass, simpleDeclaration, comments,
 					templateParameters, inactiveContainerAlternatives);
-			this.umlModel.addClass(umlClass);
+			preprocessor.addClass(this.umlModel, umlClass, simpleDeclaration);
 			distributeComments(comments, locationInfo, umlClass.getComments());
+			processDefinitionDeclarators(simpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 		}
 		else if(declSpecifier instanceof ICPPASTElaboratedTypeSpecifier elaboratedTypeSpecifier && !elaboratedTypeSpecifier.isFriend() && declaresVariables(simpleDeclaration)) {
 			//the variables of an elaborated type, i.e., static struct kmem_cache *cachep; or static const struct ctl_table table[] = {...};, like the variables of other types
@@ -2530,6 +2531,14 @@ public class CppFileProcessor {
 				return;
 			}
 			String className = enumSpecifier.getName().toString();
+			//an unnamed enum is named after its only declarator, like the unnamed structs, i.e., T in typedef enum {A, B} T;,
+			//or else after its first constant, which is unique in its scope, i.e., UNKNOWN1 in enum {UNKNOWN1=3, READPKT=8};
+			if(className.isBlank() && simpleDeclaration.getDeclarators().length == 1 && !simpleDeclaration.getDeclarators()[0].getName().toString().isBlank()) {
+				className = simpleDeclaration.getDeclarators()[0].getName().toString();
+			}
+			else if(className.isBlank() && enumSpecifier.getEnumerators().length > 0) {
+				className = enumSpecifier.getEnumerators()[0].getName().toString();
+			}
 			if(className.isBlank()) {
 				return;
 			}
@@ -2566,8 +2575,9 @@ public class CppFileProcessor {
 				preprocessor.addEnumConstant(umlClass, umlAttribute, name);
 				distributeComments(comments, locationInfo, umlAttribute.getComments());
 			}
-			this.umlModel.addClass(umlClass);
+			preprocessor.addClass(this.umlModel, umlClass, simpleDeclaration);
 			distributeComments(comments, locationInfo, umlClass.getComments());
+			processDefinitionDeclarators(simpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 		}
 		else if(declSpecifier instanceof IASTSimpleDeclSpecifier simpleDeclSpecifier) {
 			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
@@ -2589,6 +2599,21 @@ public class CppFileProcessor {
 					UMLOperation operation = processFunctionDeclSpecifier(namedTypeSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 					preprocessor.addOperation(parentContainer, operation, functionDeclarator, templateParameters);
 				}
+			}
+		}
+	}
+
+	//the variables declared with the definition of their type are attributes, i.e., nic_packet in static struct nic_pkt_s {...} *nic_packet = 0; or v in enum {A, B} v;,
+	//while the names declared by a typedef are types, i.e., T in typedef enum {A, B} T;, and the variables of a function body are its statements
+	private void processDefinitionDeclarators(IASTSimpleDeclaration simpleDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer,
+			Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
+		IASTDeclSpecifier declSpecifier = simpleDeclaration.getDeclSpecifier();
+		if(declSpecifier.getStorageClass() == IASTDeclSpecifier.sc_typedef || simpleDeclaration.getParent() instanceof IASTDeclarationStatement) {
+			return;
+		}
+		for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+			if(!(declarator instanceof IASTFunctionDeclarator)) {
+				processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, declSpecifier, declarator, templateParameters);
 			}
 		}
 	}

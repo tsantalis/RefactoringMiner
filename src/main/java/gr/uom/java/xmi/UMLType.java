@@ -15,6 +15,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTEnumerationSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
 import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
@@ -946,8 +948,13 @@ public abstract class UMLType implements Serializable, AnnotationProvider {
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator, int extraDimensions) {
 		//a type written as an argument of a function-like macro, whose text is the call of the macro, i.e., unsigned long in SYSCALL_DEFINE1(unshare, unsigned long, unshare_flags)
 		boolean expanded = inMacroCall(declSpecifier);
+		String rawType = declSpecifier.getRawSignature();
+		//the type of the variables declared with the definition of their type is the head of the definition, i.e., struct S in static struct S {...} *p = 0;
+		if((declSpecifier instanceof IASTCompositeTypeSpecifier || declSpecifier instanceof IASTEnumerationSpecifier) && rawType.contains("{")) {
+			rawType = rawType.substring(0, rawType.indexOf('{'));
+		}
 		StringBuilder type = new StringBuilder(expanded ? cleanTypeText(expandedText(declSpecifier)) :
-			cleanTypeText(withoutSpecifierMacros(CppVisitor.singleLine(declSpecifier.getRawSignature()), declSpecifier)));
+			cleanTypeText(withoutSpecifierMacros(CppVisitor.singleLine(rawType), declSpecifier)));
 		if(type.isEmpty() && declarator instanceof CASTDeclarator cDeclarator) {
 			type = new StringBuilder(cleanTypeText(cDeclarator.getName().toString()));
 		}

@@ -7,6 +7,9 @@ import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -177,14 +180,56 @@ public class UMLModel {
     	return null;
     }
 
+	//the C/C++ types without an equal class in the other model, paired with their variants in the closest preprocessor branches, i.e., struct Q {...} of #ifdef X[0]
+	//with the one of #ifdef X[0], or a struct Q {...} without a branch with the first of its variants, like the variants of the functions
+	private Map<UMLClass, UMLClass> preprocessorVariants(UMLModel umlModel) {
+		Map<UMLClass, UMLClass> pairs = new IdentityHashMap<>();
+		if(classList.stream().allMatch(c -> c.getPreprocessorBranch() == null) && umlModel.classList.stream().allMatch(c -> c.getPreprocessorBranch() == null)) {
+			return pairs;
+		}
+		Set<UMLClass> classes1 = new HashSet<>(classList);
+		Set<UMLClass> classes2 = new HashSet<>(umlModel.classList);
+		List<UMLClass> unmatched2 = new ArrayList<>();
+		for(UMLClass otherClass : umlModel.classList) {
+			if(!classes1.contains(otherClass)) {
+				unmatched2.add(otherClass);
+			}
+		}
+		List<UMLClass[]> candidates = new ArrayList<>();
+		for(UMLClass umlClass : classList) {
+			if(classes2.contains(umlClass)) {
+				continue;
+			}
+			for(UMLClass otherClass : unmatched2) {
+				if(umlClass.equalsIgnoringPreprocessorBranch(otherClass) && (umlClass.getPreprocessorBranch() != null || otherClass.getPreprocessorBranch() != null)) {
+					candidates.add(new UMLClass[] {umlClass, otherClass});
+				}
+			}
+		}
+		if(candidates.isEmpty()) {
+			return pairs;
+		}
+		//the closest variants are paired first, and the variants in branches equally close are paired in their order
+		candidates.sort(Comparator.comparingInt((UMLClass[] pair) -> -pair[0].commonPreprocessorBranches(pair[1])));
+		Set<UMLClass> pairedClasses = Collections.newSetFromMap(new IdentityHashMap<>());
+		for(UMLClass[] pair : candidates) {
+			if(!pairs.containsKey(pair[0]) && !pairedClasses.contains(pair[1])) {
+				pairs.put(pair[0], pair[1]);
+				pairedClasses.add(pair[1]);
+			}
+		}
+		return pairs;
+	}
+
 	public UMLModelDiff diff(UMLModel umlModel) throws RefactoringMinerTimedOutException {
     	UMLModelDiff modelDiff = new UMLModelDiff(this, umlModel);
+    	Map<UMLClass, UMLClass> preprocessorVariants = preprocessorVariants(umlModel);
     	for(UMLClass umlClass : classList) {
-    		if(!umlModel.classList.contains(umlClass))
+    		if(!umlModel.classList.contains(umlClass) && !preprocessorVariants.containsKey(umlClass))
     			modelDiff.reportRemovedClass(umlClass);
     	}
     	for(UMLClass umlClass : umlModel.classList) {
-    		if(!this.classList.contains(umlClass))
+    		if(!this.classList.contains(umlClass) && !preprocessorVariants.containsValue(umlClass))
     			modelDiff.reportAddedClass(umlClass);
     	}
     	modelDiff.checkForMovedClasses(umlModel.repositoryDirectories, new UMLClassMatcher.Move());
@@ -260,8 +305,9 @@ public class UMLModel {
     	//the removed and added operations of all classes are known before the bodies of the operations are mapped
     	List<UMLClassDiff> classDiffs = new ArrayList<>();
     	for(UMLClass umlClass : list) {
-    		if(umlModel.classList.contains(umlClass)) {
-    			UMLClassDiff classDiff = new UMLClassDiff(umlClass, umlModel.getClass(umlClass), modelDiff);
+    		UMLClass otherClass = umlModel.classList.contains(umlClass) ? umlModel.getClass(umlClass) : preprocessorVariants.get(umlClass);
+    		if(otherClass != null) {
+    			UMLClassDiff classDiff = new UMLClassDiff(umlClass, otherClass, modelDiff);
     			classDiff.processOperationsBeforeBodies();
     			modelDiff.addClassDiffWithProcessedOperations(classDiff);
     			classDiffs.add(classDiff);

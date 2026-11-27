@@ -53,6 +53,7 @@ public class CppPreprocessor {
 	private final Map<UMLOperation, List<String>> operationCanonicalParameterTypes = new IdentityHashMap<>();
 	private final Map<UMLOperation, String> operationQualifierIdentities = new IdentityHashMap<>();
 	private final Map<UMLAttribute, IASTNode> attributeOrigins = new IdentityHashMap<>();
+	private final Map<UMLClass, IASTNode> classOrigins = new IdentityHashMap<>();
 	private final Map<UMLImport, IASTNode> importOrigins = new IdentityHashMap<>();
 	private final Map<UMLTypeAlias, IASTNode> typeAliasOrigins = new IdentityHashMap<>();
 	private final Map<UMLForwardDeclaration, IASTNode> forwardDeclarationOrigins = new IdentityHashMap<>();
@@ -157,15 +158,10 @@ public class CppPreprocessor {
 		}
 	}
 
+	//the namespaces and the linkage specifications in sibling branches are merged, i.e., extern "C" { in #ifdef __cplusplus, while the types in sibling branches
+	//are variants identified by their branches, like the functions, i.e., struct Q {...} in #ifdef X struct Q {...} #else struct Q {...} #endif
 	private String containerKey(IASTDeclaration declaration) {
 		IASTDeclaration unwrapped = unwrapDeclaration(declaration);
-		if(unwrapped instanceof IASTSimpleDeclaration simpleDeclaration &&
-				simpleDeclaration.getDeclSpecifier() instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier &&
-				compositeTypeSpecifier.getName() != null && !compositeTypeSpecifier.getName().toString().isBlank()) {
-			// Keep class-template parameter names in the key. Merging alpha-renamed class alternatives
-			// would otherwise attach inactive members that refer to U to an active class that declares T.
-			return "type " + compositeTypeSpecifier.getName() + templateParameterIdentity(declaration, true);
-		}
 		if(unwrapped instanceof CPPASTNamespaceDefinition namespaceDefinition) {
 			return "namespace " + namespaceDefinition.getName();
 		}
@@ -173,18 +169,6 @@ public class CppPreprocessor {
 			return "linkage " + linkageSpecification.getLiteral();
 		}
 		return null;
-	}
-
-	private String templateParameterIdentity(IASTDeclaration declaration, boolean includeNames) {
-		if(declaration instanceof CPPASTTemplateDeclaration templateDeclaration) {
-			return templateParameterIdentity(templateDeclaration.getTemplateParameters(), includeNames) +
-					templateParameterIdentity(templateDeclaration.getDeclaration(), includeNames);
-		}
-		if(declaration instanceof CPPASTTemplateSpecialization templateSpecialization) {
-			return templateParameterIdentity(templateSpecialization.getTemplateParameters(), includeNames) +
-					templateParameterIdentity(templateSpecialization.getDeclaration(), includeNames);
-		}
-		return "";
 	}
 
 	private String templateParameterIdentity(ICPPASTTemplateParameter[] parameters, boolean includeNames) {
@@ -407,6 +391,23 @@ public class CppPreprocessor {
 			sb.append(conditionalGroupDirectives.getOrDefault(group, "#if")).append("[").append(branches.get(group)).append("]");
 		}
 		return sb.toString();
+	}
+
+	//a type defined in sibling branches of a conditional group is kept in every branch, i.e., #ifdef X struct Q {...} #else struct Q {...} #endif,
+	//and each variant is identified by its enclosing branches, like the variants of the functions
+	void addClass(UMLModel umlModel, UMLClass umlClass, IASTNode origin) {
+		for(Map.Entry<UMLClass, IASTNode> existing : classOrigins.entrySet()) {
+			UMLClass existingClass = existing.getKey();
+			if(existingClass.getPackageName().equals(umlClass.getPackageName()) && existingClass.getName().equals(umlClass.getName()) &&
+					areSiblingBranches(existing.getValue(), origin)) {
+				if(existingClass.getPreprocessorBranch() == null) {
+					existingClass.setPreprocessorBranch(preprocessorBranch(existing.getValue()));
+				}
+				umlClass.setPreprocessorBranch(preprocessorBranch(origin));
+			}
+		}
+		classOrigins.put(umlClass, origin);
+		umlModel.addClass(umlClass);
 	}
 
 	void addOperation(UMLAbstractClass parentContainer, UMLOperation operation, IASTNode origin,

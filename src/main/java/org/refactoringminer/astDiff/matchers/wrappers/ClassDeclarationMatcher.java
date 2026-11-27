@@ -926,6 +926,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
                 }
             }
             else {
+                Pair<Tree, Tree> wrappedObjectTypes = objectTypeWrappedInComposite(srcTypeDeclaration, dstTypeDeclaration);
+                if(wrappedObjectTypes != null) {
+                    processObjectTypePair(wrappedObjectTypes.first, wrappedObjectTypes.second, mappingStore);
+                }
                 Pair<Tree, Tree> intersection_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.INTERSECTION_TYPE, LANG2.INTERSECTION_TYPE);
                 if(intersection_types != null) {
                     processTypeAliasMembers(intersection_types.first, intersection_types.second, mappingStore);
@@ -2002,6 +2006,30 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
                 }
             }
         }
+    }
+
+    //a type literal that became, or stopped being, a member of an intersection or union, i.e., { id: string; ... } and { id: string; ... } & Omit<...>
+    private Pair<Tree, Tree> objectTypeWrappedInComposite(Tree typeAlias1, Tree typeAlias2) {
+        Tree objectType1 = TreeUtilFunctions.findChildByType(typeAlias1, LANG1.OBJECT_TYPE);
+        Tree objectType2 = TreeUtilFunctions.findChildByType(typeAlias2, LANG2.OBJECT_TYPE);
+        if(objectType1 != null && objectType2 == null) {
+            objectType2 = compositeObjectType(typeAlias2, LANG2);
+        }
+        else if(objectType1 == null && objectType2 != null) {
+            objectType1 = compositeObjectType(typeAlias1, LANG1);
+        }
+        else {
+            return null;
+        }
+        return objectType1 != null && objectType2 != null ? new Pair<>(objectType1, objectType2) : null;
+    }
+
+    private static Tree compositeObjectType(Tree typeAlias, Constants lang) {
+        Tree composite = TreeUtilFunctions.findChildByType(typeAlias, lang.INTERSECTION_TYPE);
+        if(composite == null) {
+            composite = TreeUtilFunctions.findChildByType(typeAlias, lang.UNION_TYPE);
+        }
+        return composite != null ? TreeUtilFunctions.findChildByType(composite, lang.OBJECT_TYPE) : null;
     }
 
     //the members correspond by position only when each pair is identical, or two object types, or the same generic type, since nested intersections and unions

@@ -9811,6 +9811,28 @@
   "firstEndPos" : 3456,
   "secondEndPos" : 3921
 }, {
+  "firstType" : "object_type",
+  "secondType" : "object_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "union_type",
+  "secondParentType" : "type_alias_declaration",
+  "firstPos" : 3464,
+  "secondPos" : 11360,
+  "firstEndPos" : 3514,
+  "secondEndPos" : 11461
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object_type",
+  "secondParentType" : "object_type",
+  "firstPos" : 3464,
+  "secondPos" : 11360,
+  "firstEndPos" : 3465,
+  "secondEndPos" : 11361
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// eslint-disable-next-line @typescript-eslint/no-unused-vars",
@@ -9865,6 +9887,17 @@
   "secondPos" : 11423,
   "firstEndPos" : 3502,
   "secondEndPos" : 11424
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object_type",
+  "secondParentType" : "object_type",
+  "firstPos" : 3513,
+  "secondPos" : 11460,
+  "firstEndPos" : 3514,
+  "secondEndPos" : 11461
 }, {
   "firstType" : ";",
   "secondType" : ";",

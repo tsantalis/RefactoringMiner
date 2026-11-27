@@ -1473,6 +1473,28 @@
   "firstEndPos" : 625,
   "secondEndPos" : 586
 }, {
+  "firstType" : "object_type",
+  "secondType" : "object_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "intersection_type",
+  "secondParentType" : "type_alias_declaration",
+  "firstPos" : 626,
+  "secondPos" : 587,
+  "firstEndPos" : 723,
+  "secondEndPos" : 1205
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object_type",
+  "secondParentType" : "object_type",
+  "firstPos" : 626,
+  "secondPos" : 587,
+  "firstEndPos" : 627,
+  "secondEndPos" : 588
+}, {
   "firstType" : "property_signature",
   "secondType" : "property_signature",
   "firstLabel" : "",
@@ -1824,6 +1846,17 @@
   "secondPos" : 1202,
   "firstEndPos" : 721,
   "secondEndPos" : 1203
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object_type",
+  "secondParentType" : "object_type",
+  "firstPos" : 722,
+  "secondPos" : 1204,
+  "firstEndPos" : 723,
+  "secondEndPos" : 1205
 }, {
   "firstType" : ";",
   "secondType" : ";",

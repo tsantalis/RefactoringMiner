@@ -320,6 +320,11 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if (members != null) {
                         mappingStore.addMappingRecursively(members.first, members.second);
                     }
+                    //the computed names of functions assigned to subscripts, i.e., t["assert" + type] = function (node, opts) {...}
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> subscripts = Helpers.findPairOfType(parent1, parent2,LANG1.SUBSCRIPT_EXPRESSION,LANG2.SUBSCRIPT_EXPRESSION);
+                    if (subscripts != null && subscripts.first.isIsomorphicTo(subscripts.second)) {
+                        mappingStore.addMappingRecursively(subscripts.first, subscripts.second);
+                    }
                     com.github.gumtreediff.utils.Pair<Tree,Tree> equals = Helpers.findPairOfType(parent1, parent2,LANG1.EQUAL_OPERATOR,LANG2.EQUAL_OPERATOR);
                     if (equals != null) {
                         mappingStore.addMapping(equals.first, equals.second);

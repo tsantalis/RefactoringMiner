@@ -1605,6 +1605,127 @@
   "firstEndPos" : 784,
   "secondEndPos" : 859
 }, {
+  "firstType" : "subscript_expression",
+  "secondType" : "subscript_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 575,
+  "secondPos" : 650,
+  "firstEndPos" : 593,
+  "secondEndPos" : 668
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "t",
+  "secondLabel" : "t",
+  "firstParentType" : "subscript_expression",
+  "secondParentType" : "subscript_expression",
+  "firstPos" : 575,
+  "secondPos" : 650,
+  "firstEndPos" : 576,
+  "secondEndPos" : 651
+}, {
+  "firstType" : "[",
+  "secondType" : "[",
+  "firstLabel" : "[",
+  "secondLabel" : "[",
+  "firstParentType" : "subscript_expression",
+  "secondParentType" : "subscript_expression",
+  "firstPos" : 576,
+  "secondPos" : 651,
+  "firstEndPos" : 577,
+  "secondEndPos" : 652
+}, {
+  "firstType" : "binary_expression",
+  "secondType" : "binary_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "subscript_expression",
+  "secondParentType" : "subscript_expression",
+  "firstPos" : 577,
+  "secondPos" : 652,
+  "firstEndPos" : 592,
+  "secondEndPos" : 667
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 577,
+  "secondPos" : 652,
+  "firstEndPos" : 585,
+  "secondEndPos" : 660
+}, {
+  "firstType" : "\"",
+  "secondType" : "\"",
+  "firstLabel" : "\"",
+  "secondLabel" : "\"",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 577,
+  "secondPos" : 652,
+  "firstEndPos" : 578,
+  "secondEndPos" : 653
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "assert",
+  "secondLabel" : "assert",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 578,
+  "secondPos" : 653,
+  "firstEndPos" : 584,
+  "secondEndPos" : 659
+}, {
+  "firstType" : "\"",
+  "secondType" : "\"",
+  "firstLabel" : "\"",
+  "secondLabel" : "\"",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 584,
+  "secondPos" : 659,
+  "firstEndPos" : 585,
+  "secondEndPos" : 660
+}, {
+  "firstType" : "+",
+  "secondType" : "+",
+  "firstLabel" : "+",
+  "secondLabel" : "+",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 586,
+  "secondPos" : 661,
+  "firstEndPos" : 587,
+  "secondEndPos" : 662
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 588,
+  "secondPos" : 663,
+  "firstEndPos" : 592,
+  "secondEndPos" : 667
+}, {
+  "firstType" : "]",
+  "secondType" : "]",
+  "firstLabel" : "]",
+  "secondLabel" : "]",
+  "firstParentType" : "subscript_expression",
+  "secondParentType" : "subscript_expression",
+  "firstPos" : 592,
+  "secondPos" : 667,
+  "firstEndPos" : 593,
+  "secondEndPos" : 668
+}, {
   "firstType" : "=",
   "secondType" : "=",
   "firstLabel" : "=",

@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.JarURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -19,8 +20,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
-import java.nio.file.FileSystemAlreadyExistsException;
-import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -29,9 +28,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -118,12 +115,8 @@ public class WebExporter {
         addedFiles = new ArrayList<>(webDiff.getComparator().getAddedFilesName());
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
              ZipOutputStream zos = new ZipOutputStream(baos)) {
-            Set<String> writtenEntries = new HashSet<>();
             ExportTarget zipTarget = (relativePath, content) -> {
                 String entryName = normalizeRelativePath(baseFolder + "/" + relativePath);
-                if (!writtenEntries.add(entryName)) {
-                    return;
-                }
                 ZipEntry entry = new ZipEntry(entryName);
                 zos.putNextEntry(entry);
                 zos.write(content);
@@ -320,24 +313,16 @@ public class WebExporter {
         if ("file".equals(uri.getScheme())) {
             walkAndWriteResources(Paths.get(uri), target);
         } else if ("jar".equals(uri.getScheme())) {
-            FileSystem fs = null;
-            boolean createdFs = false;
+            Path jarPath;
             try {
-                try {
-                    fs = FileSystems.getFileSystem(uri);
-                } catch (FileSystemNotFoundException e) {
-                    try {
-                        fs = FileSystems.newFileSystem(uri, Map.of());
-                        createdFs = true;
-                    } catch (FileSystemAlreadyExistsException alreadyExists) {
-                        fs = FileSystems.getFileSystem(uri);
-                    }
-                }
+                jarPath = Paths.get(((JarURLConnection) resourceUrl.openConnection()).getJarFileURL().toURI());
+            } catch (URISyntaxException e) {
+                throw new IOException("Invalid web resource JAR: " + resourceUrl, e);
+            }
+            // A private (unregistered) zip file system: closing it cannot affect other
+            // users of the same JAR, so concurrent exports are safe.
+            try (FileSystem fs = FileSystems.newFileSystem(jarPath)) {
                 walkAndWriteResources(fs.getPath(classpathRoot), target);
-            } finally {
-                if (createdFs && fs != null) {
-                    fs.close();
-                }
             }
         }
     }

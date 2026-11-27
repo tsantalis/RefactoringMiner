@@ -7351,7 +7351,7 @@ public class UMLModelDiff {
 		if(operationBodyMapper.getContainer2().getBodyHashCode() == parentMapper.getContainer2().getBodyHashCode()) {
 			return false;
 		}
-		int mappings = operationBodyMapper.mappingsWithoutBlocks();
+		int mappings = operationBodyMapper.mappingsWithoutBlocks() - operationBodyMapper.lambdaShellMappings();
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();

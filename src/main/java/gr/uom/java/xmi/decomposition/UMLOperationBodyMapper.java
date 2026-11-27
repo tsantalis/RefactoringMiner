@@ -5032,6 +5032,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
+	//the mappings of statements calling lambdas with non-empty bodies, which share no other mapped statement than their nested shells and blocks,
+	//i.e., useEffect(() => { return () => { suspenseCache.remove(query, variables); }; }, []); and useEffect(() => { clearTimeout(timeout); return () => { timeout = setTimeout(cleanup); }; }, []);
+	public int lambdaShellMappings() {
+		int count = 0;
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping instanceof LeafMapping && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() && lambdaShell(mapping))
+				count++;
+		}
+		return count;
+	}
+
+	private boolean lambdaShell(AbstractCodeMapping mapping) {
+		List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas().stream().filter(lambda -> lambda.getBody() != null).toList();
+		List<LambdaExpressionObject> lambdas2 = mapping.getFragment2().getLambdas().stream().filter(lambda -> lambda.getBody() != null).toList();
+		if(lambdas1.isEmpty() || lambdas2.isEmpty() || lambdas1.stream().allMatch(lambda -> lambda.getBody().getCompositeStatement().getStatements().isEmpty()))
+			return false;
+		for(AbstractCodeMapping other : getMappings()) {
+			if(other != mapping && other.getFragment1().countableStatement() && other.getFragment2().countableStatement() &&
+					lambdas1.stream().anyMatch(lambda -> lambda.getLocationInfo().subsumes(other.getFragment1().getLocationInfo())) &&
+					lambdas2.stream().anyMatch(lambda -> lambda.getLocationInfo().subsumes(other.getFragment2().getLocationInfo())) &&
+					!(other instanceof LeafMapping && lambdaShell(other)))
+				return false;
+		}
+		return true;
+	}
+
 	public int nonMappedElementsT1() {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {

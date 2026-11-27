@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PathFileUtils;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLInitializer;
@@ -131,13 +132,29 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     	}
 	}
 
+	//the equal attribute not paired yet, since an object literal can have the same name more than once, i.e., actions and ...actions in { store, actions, ...actions, ...state }
+	private static UMLAttribute unpairedEqualAttribute(UMLAttribute attribute, UMLAbstractClass candidates, Map<UMLAttribute, UMLAttribute> paired) {
+		UMLAttribute matchingAttribute = candidates.containsAttribute(attribute);
+		if(matchingAttribute == null || !paired.containsKey(matchingAttribute)) {
+			return matchingAttribute;
+		}
+		for(UMLAttribute candidate : candidates.getAttributes()) {
+			if(candidate.equals(attribute) && !paired.containsKey(candidate)) {
+				return candidate;
+			}
+		}
+		return null;
+	}
+
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
 		//the pairs of the attributes matched from the original to the next class, whose diffs are not created again from the next to the original class
 		Map<UMLAttribute, UMLAttribute> matchedAttributes = new IdentityHashMap<>();
+		Map<UMLAttribute, UMLAttribute> matchedNextAttributes = new IdentityHashMap<>();
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
-			UMLAttribute matchingAttribute = nextClass.containsAttribute(attribute);
+			UMLAttribute matchingAttribute = unpairedEqualAttribute(attribute, nextClass, matchedNextAttributes);
     		if(matchingAttribute != null) {
     			matchedAttributes.put(attribute, matchingAttribute);
+    			matchedNextAttributes.put(matchingAttribute, attribute);
     			UMLAttributeDiff attributeDiff = classDiff != null ?
     					new UMLAttributeDiff(attribute, matchingAttribute, classDiff, modelDiff) :
     					new UMLAttributeDiff(attribute, matchingAttribute, operationBodyMapperList);
@@ -159,10 +176,10 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     		}
     	}
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
-    		UMLAttribute matchingAttribute = originalClass.containsAttribute(attribute);
+    		if(matchedNextAttributes.containsKey(attribute))
+    			continue;
+    		UMLAttribute matchingAttribute = unpairedEqualAttribute(attribute, originalClass, matchedAttributes);
     		if(matchingAttribute != null) {
-    			if(matchedAttributes.get(matchingAttribute) == attribute)
-    				continue;
     			UMLAttributeDiff attributeDiff = classDiff != null ?
     					new UMLAttributeDiff(matchingAttribute, attribute, classDiff, modelDiff) :
     					new UMLAttributeDiff(matchingAttribute, attribute, operationBodyMapperList);

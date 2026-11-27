@@ -89,7 +89,24 @@ public class ImportMatcher implements TreeMatcher {
                 if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
                         !mappingStore.isSrcMapped(srcImportStatement.getParent()) && !mappingStore.isDstMapped(dstImportStatement.getParent()))
                     handleParent(mappingStore, srcImportStatement, dstImportStatement);
+                //the other names of the import statement, whose parent is mapped with the first name, i.e., the comma after dropDatabase in
+                //import { createDatabase, dropDatabase, ... } from '../../modules/databases' -> from '../modules/databases'
+                else if (srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
+                        mappingStore.getDsts(srcImportStatement.getParent()) != null && mappingStore.getDsts(srcImportStatement.getParent()).contains(dstImportStatement.getParent()))
+                    mapFollowingComma(mappingStore, srcImportStatement, dstImportStatement);
             }
+        }
+    }
+
+    //the comma following the name in its import statement
+    private void mapFollowingComma(ExtendedMultiMappingStore mappingStore, Tree srcImportStatement, Tree dstImportStatement) {
+        Tree parent1 = srcImportStatement.getParent();
+        Tree parent2 = dstImportStatement.getParent();
+        int index1 = parent1.getChildPosition(srcImportStatement);
+        int index2 = parent2.getChildPosition(dstImportStatement);
+        if(parent1.getChildren().size() > index1+1 && parent1.getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                parent2.getChildren().size() > index2+1 && parent2.getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+            mappingStore.addMapping(parent1.getChild(index1+1), parent2.getChild(index2+1));
         }
     }
 

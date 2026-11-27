@@ -77,15 +77,18 @@ public class UMLNamedExportListDiff {
 	}
 
 	//the export with the same source sharing the most specifiers, other than the counterparts of the unchanged exports,
-	//i.e., export { fromError, throwServerError } from "x" -> export { throwServerError } from "x", and not the unchanged export type { ServerError } from "x"
+	//i.e., export { fromError, throwServerError } from "x" -> export { throwServerError } from "x", and not the unchanged export type { ServerError } from "x";
+	//an export without source, i.e., export { Accordion, ... }, pairs only with an export without source sharing at least one specifier
 	private static UMLNamedExport counterpartWithSameSource(UMLNamedExport export, List<UMLNamedExport> candidates, Set<UMLNamedExport> excluded) {
-		if(export.getSource() == null) {
-			return null;
-		}
+		boolean local = export.getSource() == null;
 		UMLNamedExport best = null;
-		int bestCommonSpecifiers = -1;
+		int bestCommonSpecifiers = local ? 0 : -1;
 		for(UMLNamedExport candidate : candidates) {
-			if(excluded.contains(candidate) || candidate.getSource() == null || !export.getSource().getString().equals(candidate.getSource().getString())) {
+			if(excluded.contains(candidate)) {
+				continue;
+			}
+			if(local ? candidate.getSource() != null :
+					candidate.getSource() == null || !export.getSource().getString().equals(candidate.getSource().getString())) {
 				continue;
 			}
 			int commonSpecifiers = 0;

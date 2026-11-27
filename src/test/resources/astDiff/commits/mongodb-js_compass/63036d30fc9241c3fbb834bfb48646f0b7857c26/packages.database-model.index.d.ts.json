@@ -6620,4 +6620,114 @@
   "secondPos" : 1592,
   "firstEndPos" : 1329,
   "secondEndPos" : 1593
+}, {
+  "firstType" : "export_statement",
+  "secondType" : "export_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 1330,
+  "secondPos" : 1594,
+  "firstEndPos" : 1374,
+  "secondEndPos" : 1653
+}, {
+  "firstType" : "export",
+  "secondType" : "export",
+  "firstLabel" : "export",
+  "secondLabel" : "export",
+  "firstParentType" : "export_statement",
+  "secondParentType" : "export_statement",
+  "firstPos" : 1330,
+  "secondPos" : 1594,
+  "firstEndPos" : 1336,
+  "secondEndPos" : 1600
+}, {
+  "firstType" : "export_clause",
+  "secondType" : "export_clause",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "export_statement",
+  "secondParentType" : "export_statement",
+  "firstPos" : 1337,
+  "secondPos" : 1601,
+  "firstEndPos" : 1373,
+  "secondEndPos" : 1652
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "export_clause",
+  "secondParentType" : "export_clause",
+  "firstPos" : 1337,
+  "secondPos" : 1601,
+  "firstEndPos" : 1338,
+  "secondEndPos" : 1602
+}, {
+  "firstType" : "export_specifier",
+  "secondType" : "export_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "export_clause",
+  "secondParentType" : "export_clause",
+  "firstPos" : 1339,
+  "secondPos" : 1603,
+  "firstEndPos" : 1371,
+  "secondEndPos" : 1635
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DatabaseCollection",
+  "secondLabel" : "DatabaseCollection",
+  "firstParentType" : "export_specifier",
+  "secondParentType" : "export_specifier",
+  "firstPos" : 1339,
+  "secondPos" : 1603,
+  "firstEndPos" : 1357,
+  "secondEndPos" : 1621
+}, {
+  "firstType" : "as",
+  "secondType" : "as",
+  "firstLabel" : "as",
+  "secondLabel" : "as",
+  "firstParentType" : "export_specifier",
+  "secondParentType" : "export_specifier",
+  "firstPos" : 1358,
+  "secondPos" : 1622,
+  "firstEndPos" : 1360,
+  "secondEndPos" : 1624
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Collection",
+  "secondLabel" : "Collection",
+  "firstParentType" : "export_specifier",
+  "secondParentType" : "export_specifier",
+  "firstPos" : 1361,
+  "secondPos" : 1625,
+  "firstEndPos" : 1371,
+  "secondEndPos" : 1635
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "export_clause",
+  "secondParentType" : "export_clause",
+  "firstPos" : 1372,
+  "secondPos" : 1651,
+  "firstEndPos" : 1373,
+  "secondEndPos" : 1652
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "export_statement",
+  "secondParentType" : "export_statement",
+  "firstPos" : 1373,
+  "secondPos" : 1652,
+  "firstEndPos" : 1374,
+  "secondEndPos" : 1653
 } ]

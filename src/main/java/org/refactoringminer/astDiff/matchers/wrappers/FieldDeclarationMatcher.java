@@ -335,6 +335,10 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher {
                 com.github.gumtreediff.utils.Pair<Tree, Tree> equalOperators = Helpers.findPairOfType(srcVarDeclaration,dstVarDeclaration, LANG1.EQUAL_OPERATOR, LANG2.EQUAL_OPERATOR);
                 if (equalOperators != null)
                     mappingStore.addMapping(equalOperators.first,equalOperators.second);
+                //the name of a class field follows its modifiers, i.e., propTypes in static propTypes = {...} (compass 5f1e7cdb create-index-modal.jsx)
+                com.github.gumtreediff.utils.Pair<Tree, Tree> propertyNames = Helpers.findPairOfType(srcVarDeclaration,dstVarDeclaration, LANG1.PROPERTY_IDENTIFIER, LANG2.PROPERTY_IDENTIFIER);
+                if (propertyNames != null)
+                    mappingStore.addMapping(propertyNames.first,propertyNames.second);
             }
             else
                 new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,mappingStore);

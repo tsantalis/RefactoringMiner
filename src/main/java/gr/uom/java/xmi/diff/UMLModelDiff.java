@@ -1697,7 +1697,8 @@ public class UMLModelDiff {
 				UMLType superType1 = classDiff.getOldSuperclass();
 				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
 				//an unchanged class was neither renamed nor split, i.e., the type alias AtlasSignInCancelAction = { type: AtlasSignInActions.Cancel } of compass 63036d30
-				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && !classDiff.isEmpty() &&
+				//a class extending the added class had the added class extracted as its parent, i.e., interface Database extends DatabaseProps of compass 63036d30
+				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && !classDiff.isEmpty() && !classDiff.getNextClass().isSubTypeOf(addedClass) &&
 						(classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size() ||
 								(betterMatchThanCounterpart(addedClass, classDiff.getOriginalClass(), classDiff.getNextClass(), matcher) && !onlyRetypedTypeAliasMembers(classDiff.getOriginalClass(), addedClass)))) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
@@ -2460,6 +2461,8 @@ public class UMLModelDiff {
 				refactorings.remove(conflictingRefactoring);
 				UMLAttributeDiff conflictingAttributeDiff = conflictingRefactoring.getAttributeDiff().get();
 				pastRefactorings.removeAll(conflictingAttributeDiff.getRefactorings());
+				//the AST diff maps the moved attribute diffs, i.e., Database._id moved to CollectionProps instead of pulled up to DatabaseProps of compass 63036d30
+				movedAttributeDiffList.remove(conflictingAttributeDiff);
 				refactorings.addAll(candidates);
 				for(MoveAttributeRefactoring moveAttributeRefactoring : candidates) {
 					UMLAttributeDiff attributeDiff = moveAttributeRefactoring.getAttributeDiff().get();
@@ -2508,18 +2511,12 @@ public class UMLModelDiff {
 				(addedAttribute.getType().equals(removedAttribute.getType()) || (removedAttribute instanceof UMLEnumConstant && addedAttribute instanceof UMLEnumConstant))) {
 			if(isSubclassOf(removedAttribute.getClassName(), addedAttribute.getClassName())) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList); 
-				if(!movedAttributeDiffList.contains(attributeDiff)) {
-					movedAttributeDiffList.add(attributeDiff);
-				}
 				PullUpAttributeRefactoring pullUpAttribute = new PullUpAttributeRefactoring(attributeDiff);
 				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return pullUpAttribute;
 			}
 			else if(isSubclassOf(addedAttribute.getClassName(), removedAttribute.getClassName())) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList); 
-				if(!movedAttributeDiffList.contains(attributeDiff)) {
-					movedAttributeDiffList.add(attributeDiff);
-				}
 				PushDownAttributeRefactoring pushDownAttribute = new PushDownAttributeRefactoring(attributeDiff);
 				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return pushDownAttribute;
@@ -2527,9 +2524,6 @@ public class UMLModelDiff {
 			else if(removedAttribute.getLocationInfo().getFilePath().equals(addedAttribute.getLocationInfo().getFilePath()) &&
 					!removedAttribute.getClassName().equals(addedAttribute.getClassName())) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList);
-				if(!movedAttributeDiffList.contains(attributeDiff)) {
-					movedAttributeDiffList.add(attributeDiff);
-				}
 				MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(attributeDiff);
 				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return moveAttribute;
@@ -2558,9 +2552,6 @@ public class UMLModelDiff {
 						}
 					}
 					if(!initializerWithMethodCallReplacement) {
-						if(!movedAttributeDiffList.contains(attributeDiff)) {
-							movedAttributeDiffList.add(attributeDiff);
-						}
 						MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(attributeDiff);
 						checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 						return moveAttribute;
@@ -2577,9 +2568,6 @@ public class UMLModelDiff {
 				UMLClassBaseDiff classDiff2 = getUMLClassDiff(addedAttribute.getClassName());
 				boolean sameClass = classDiff1 != null && classDiff2 != null && classDiff1.equals(classDiff2);
 				if(!sameClass) {
-					if(!movedAttributeDiffList.contains(attributeDiff)) {
-						movedAttributeDiffList.add(attributeDiff);
-					}
 					Set<CandidateAttributeRefactoring> candidates = renameMap.get(rename);
 					MoveAndRenameAttributeRefactoring moveAttribute = new MoveAndRenameAttributeRefactoring(attributeDiff, candidates);
 					checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);

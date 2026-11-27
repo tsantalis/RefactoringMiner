@@ -18083,6 +18083,72 @@
   "firstEndPos" : 4600,
   "secondEndPos" : 4873
 }, {
+  "firstType" : "lexical_declaration",
+  "secondType" : "lexical_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 4605,
+  "secondPos" : 4878,
+  "firstEndPos" : 4636,
+  "secondEndPos" : 4907
+}, {
+  "firstType" : "variable_declarator",
+  "secondType" : "variable_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 4611,
+  "secondPos" : 4882,
+  "firstEndPos" : 4635,
+  "secondEndPos" : 4906
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "newQueue",
+  "secondLabel" : "newQueue",
+  "firstParentType" : "variable_declarator",
+  "secondParentType" : "variable_declarator",
+  "firstPos" : 4611,
+  "secondPos" : 4882,
+  "firstEndPos" : 4619,
+  "secondEndPos" : 4890
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "variable_declarator",
+  "secondParentType" : "variable_declarator",
+  "firstPos" : 4620,
+  "secondPos" : 4891,
+  "firstEndPos" : 4621,
+  "secondEndPos" : 4892
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "originalQueue",
+  "secondLabel" : "originalQueue",
+  "firstParentType" : "variable_declarator",
+  "secondParentType" : "variable_declarator",
+  "firstPos" : 4622,
+  "secondPos" : 4893,
+  "firstEndPos" : 4635,
+  "secondEndPos" : 4906
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 4635,
+  "secondPos" : 4906,
+  "firstEndPos" : 4636,
+  "secondEndPos" : 4907
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",

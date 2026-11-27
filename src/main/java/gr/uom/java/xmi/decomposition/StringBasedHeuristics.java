@@ -1279,7 +1279,7 @@ public class StringBasedHeuristics {
 	protected static boolean differOnlyInFinalModifier(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
 		return differOnlyInPrefix(s1, s2, "for(", "for(final ", "for(final ") ||
 				differOnlyInPrefix(s1, s2, "catch(", "catch(final ", "catch(final ") ||
-				variableDeclarationDifferInFinalModifer(s1, s2, variableDeclarations1, variableDeclarations2) ||
+				variableDeclarationDifferInFinalModifer(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				catchDifferInFinalModifierAndExceptionName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				enhancedForDifferInFinalModifierAndFormalParameterName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
 	}
@@ -1304,12 +1304,43 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	private static boolean variableDeclarationDifferInFinalModifer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
-		if(differOnlyInPrefix(s1, s2, "", "final ", "final ")) {
+	//the declaration keywords of JavaScript/TypeScript, i.e., let data = req.body; and const data = req.body;
+	private static final List<String> DECLARATION_KEYWORDS = List.of("var ", "let ", "const ");
+
+	private static boolean variableDeclarationDifferInFinalModifer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+		if(differOnlyInPrefix(s1, s2, "", "final ", "final ") ||
+				(differOnlyInDeclarationKeyword(s1, s2) && !reassignedWithOriginalInitializer(variableDeclarations1, replacementInfo))) {
 			if(variableDeclarations1.size() > 0 && variableDeclarations1.size() == variableDeclarations2.size()) {
 				VariableDeclaration v1 = variableDeclarations1.get(0);
 				VariableDeclaration v2 = variableDeclarations2.get(0);
 				if(v1.getType().equals(v2.getType())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	//the declaration is split into a declaration with another initializer and a later assignment of the original initializer,
+	//i.e., const startFloor = resolvedFloor; and let startFloor = preferredStartFloor; ... startFloor = resolvedFloor;
+	private static boolean reassignedWithOriginalInitializer(List<VariableDeclaration> variableDeclarations1, ReplacementInfo replacementInfo) {
+		if(variableDeclarations1.size() == 1 && variableDeclarations1.get(0).getInitializer() != null && !replacementInfo.getReplacements().isEmpty()) {
+			VariableDeclaration declaration = variableDeclarations1.get(0);
+			String assignment = declaration.getVariableName() + " = " + declaration.getInitializer().getString() + ";";
+			for(AbstractCodeFragment statement : replacementInfo.getStatements2()) {
+				if(statement.getString().strip().equals(assignment)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private static boolean differOnlyInDeclarationKeyword(String s1, String s2) {
+		for(String keyword1 : DECLARATION_KEYWORDS) {
+			for(String keyword2 : DECLARATION_KEYWORDS) {
+				if(!keyword1.equals(keyword2) && s1.startsWith(keyword1) && s2.startsWith(keyword2) &&
+						s1.substring(keyword1.length()).equals(s2.substring(keyword2.length()))) {
 					return true;
 				}
 			}

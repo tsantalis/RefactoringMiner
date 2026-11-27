@@ -8710,7 +8710,7 @@ public class UMLModelDiff {
 				continue;
 			}
 			ModuleContainer container1 = removedClass.getContainer().get();
-			if(container1.getStatementList().isEmpty() || !container1.getDescribeMap().isEmpty()) {
+			if(container1.getStatementList().isEmpty() || !container1.getDescribeMap().isEmpty() || !allOperationsMoved(removedClass)) {
 				continue;
 			}
 			String fileName1 = removedClass.getSourceFile().substring(removedClass.getSourceFile().lastIndexOf('/') + 1);
@@ -8740,6 +8740,24 @@ public class UMLModelDiff {
 				refactorings.add(new MoveCodeRefactoring(bestMapper.getContainer1(), bestMapper.getContainer2(), bestMapper, Type.MOVE_BETWEEN_FILES));
 			}
 		}
+	}
+
+	//the functions of the deleted module are part of it too, so that a module whose functions are deleted is not moved because of its few top-level statements,
+	//i.e., const debug = Debug('compass-e2e-tests').extend('keychain') of the deleted keychain.ts and the new const debug = Debug('import-export-connections') of a test
+	private boolean allOperationsMoved(UMLClass removedClass) {
+		for(UMLOperation operation : removedClass.getOperations()) {
+			boolean moved = false;
+			for(Refactoring r : refactorings) {
+				if(r instanceof MoveOperationRefactoring move && move.getOriginalOperation().equals(operation)) {
+					moved = true;
+					break;
+				}
+			}
+			if(!moved) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	//the statement declares a class moved from another file, i.e., an object literal of another deleted fixture merged into the same file

@@ -406,28 +406,6 @@
   "firstEndPos" : 100,
   "secondEndPos" : 100
 }, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "program",
-  "secondParentType" : "program",
-  "firstPos" : 97,
-  "secondPos" : 580,
-  "firstEndPos" : 157,
-  "secondEndPos" : 629
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 97,
-  "secondPos" : 580,
-  "firstEndPos" : 102,
-  "secondEndPos" : 585
-}, {
   "firstType" : "}",
   "secondType" : "}",
   "firstLabel" : "}",
@@ -438,28 +416,6 @@
   "secondPos" : 101,
   "firstEndPos" : 102,
   "secondEndPos" : 102
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 103,
-  "secondPos" : 586,
-  "firstEndPos" : 156,
-  "secondEndPos" : 628
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "debug",
-  "secondLabel" : "debug",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 103,
-  "secondPos" : 586,
-  "firstEndPos" : 108,
-  "secondEndPos" : 591
 }, {
   "firstType" : "from",
   "secondType" : "from",
@@ -504,39 +460,6 @@
   "secondPos" : 109,
   "firstEndPos" : 127,
   "secondEndPos" : 127
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 109,
-  "secondPos" : 592,
-  "firstEndPos" : 110,
-  "secondEndPos" : 593
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 111,
-  "secondPos" : 594,
-  "firstEndPos" : 137,
-  "secondEndPos" : 628
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "Debug",
-  "secondLabel" : "Debug",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 111,
-  "secondPos" : 594,
-  "firstEndPos" : 116,
-  "secondEndPos" : 599
 }, {
   "firstType" : "'",
   "secondType" : "'",
@@ -637,61 +560,6 @@
   "firstEndPos" : 150,
   "secondEndPos" : 150
 }, {
-  "firstType" : "arguments",
-  "secondType" : "arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 144,
-  "secondPos" : 599,
-  "firstEndPos" : 156,
-  "secondEndPos" : 628
-}, {
-  "firstType" : "(",
-  "secondType" : "(",
-  "firstLabel" : "(",
-  "secondLabel" : "(",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 144,
-  "secondPos" : 599,
-  "firstEndPos" : 145,
-  "secondEndPos" : 600
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 145,
-  "secondPos" : 600,
-  "firstEndPos" : 155,
-  "secondEndPos" : 627
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 145,
-  "secondPos" : 600,
-  "firstEndPos" : 146,
-  "secondEndPos" : 601
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "keychain",
-  "secondLabel" : "import-export-connections",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 146,
-  "secondPos" : 601,
-  "firstEndPos" : 154,
-  "secondEndPos" : 626
-}, {
   "firstType" : ",",
   "secondType" : ",",
   "firstLabel" : ",",
@@ -724,39 +592,6 @@
   "secondPos" : 152,
   "firstEndPos" : 162,
   "secondEndPos" : 162
-}, {
-  "firstType" : "'",
-  "secondType" : "'",
-  "firstLabel" : "'",
-  "secondLabel" : "'",
-  "firstParentType" : "string",
-  "secondParentType" : "string",
-  "firstPos" : 154,
-  "secondPos" : 626,
-  "firstEndPos" : 155,
-  "secondEndPos" : 627
-}, {
-  "firstType" : ")",
-  "secondType" : ")",
-  "firstLabel" : ")",
-  "secondLabel" : ")",
-  "firstParentType" : "arguments",
-  "secondParentType" : "arguments",
-  "firstPos" : 155,
-  "secondPos" : 627,
-  "firstEndPos" : 156,
-  "secondEndPos" : 628
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 156,
-  "secondPos" : 628,
-  "firstEndPos" : 157,
-  "secondEndPos" : 629
 }, {
   "firstType" : ",",
   "secondType" : ",",

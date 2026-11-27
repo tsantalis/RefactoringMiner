@@ -2056,10 +2056,22 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         return true;
     }
 
+    private static boolean containsObjectPattern(Tree tree, Constants LANG) {
+        for(Tree descendant : tree.getDescendants()) {
+            if(descendant.getType().name.equals(LANG.OBJECT_PATTERN)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void processArrowFunction(Tree srcStatementNode, Tree dstStatementNode,
             ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
         Pair<Tree, Tree> formal_parameters = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FORMAL_PARAMETERS, LANG2.FORMAL_PARAMETERS);
-        if(formal_parameters != null && formal_parameters.first.isIsoStructuralTo(formal_parameters.second)) {
+        //the properties of an object pattern correspond by name, not by position, i.e., { tabs, activeTab, onSelectTab, ..., onTabChange } and
+        //{ tabs, activeTab, collectionInfo, onSelectTab, ... }, so they are matched by the parameters of the model, unless identical
+        if(formal_parameters != null && formal_parameters.first.isIsoStructuralTo(formal_parameters.second) &&
+                (!containsObjectPattern(formal_parameters.first, LANG1) || TreeUtilFunctions.isIsomorphicTo(formal_parameters.first, formal_parameters.second))) {
             mappingStore.addMappingRecursively(formal_parameters.first, formal_parameters.second);
         }
         else if(formal_parameters != null) {

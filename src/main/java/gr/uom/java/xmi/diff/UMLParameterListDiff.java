@@ -99,7 +99,11 @@ public class UMLParameterListDiff {
 				boolean typeParameterRename = removedParameter.getType() != null && addedParameter.getType() != null && map.containsKey(removedParameter.getType().toString()) && map.get(removedParameter.getType().toString()).equals(addedParameter.getType().toString());
 				//a type that is not declared is weaker evidence than a rename in the body
 				boolean declaredTypes = removedParameter.hasDeclaredType() && addedParameter.hasDeclaredType();
-				if((removedParameter.equalQualifiedType(addedParameter) || typeParameterRename) && (declaredTypes || !renamedOtherwise(removedParameter, addedParameter))) {
+				//the parameters destructured from an object pattern are the properties of an object, so without declared types they must also be renamed in the body,
+				//i.e., not the removed callback onTabChange and the added data collectionInfo of the destructured props of a React component
+				boolean destructured = removedParameter.isDestructuredFromObjectPattern() && addedParameter.isDestructuredFromObjectPattern();
+				if((removedParameter.equalQualifiedType(addedParameter) || typeParameterRename) && (declaredTypes ||
+						(!renamedOtherwise(removedParameter, addedParameter) && (!destructured || renamedInBody(removedParameter, addedParameter))))) {
 					if(!existsAnotherAddedParameterWithTheSameType(removedOperation, addedOperation, addedParameter)) {
 						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
 						if(!parameterDiff.isEmpty()) {
@@ -229,6 +233,18 @@ public class UMLParameterListDiff {
 			index++;
 		}
 		return -1;
+	}
+
+	//a statement of the body replaces the removed parameter with the added one
+	private boolean renamedInBody(VariableDeclaration removedParameter, VariableDeclaration addedParameter) {
+		for(AbstractCodeMapping mapping : mappings) {
+			for(Replacement r : mapping.getReplacements()) {
+				if(r.getType().equals(ReplacementType.VARIABLE_NAME) && r.getBefore().equals(removedParameter.getVariableName()) && r.getAfter().equals(addedParameter.getVariableName())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	//the body renames one of the parameters to, or from, another parameter, i.e., zero_pad=False, scope=s -> variable_scope=s renames scope

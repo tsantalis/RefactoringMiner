@@ -1612,7 +1612,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(parent instanceof Swc4jAstAssignPat assignPat && assignPat.getLeft() == objectPattern) {
 			parent = assignPat.getParent();
 		}
-		if(parent instanceof ISwc4jAstPat || parent instanceof ISwc4jAstObjectPatProp) {
+		//a nested pattern, but not an arrow function, which is also a pattern in swc4j, i.e., ({ x, y }) => x + y
+		if((parent instanceof ISwc4jAstPat && !(parent instanceof Swc4jAstArrowExpr)) || parent instanceof ISwc4jAstObjectPatProp) {
 			return;
 		}
 		this.objectPatternOffset = objectPattern.getSpan().getStart();

@@ -72,7 +72,8 @@ public class TestBuilder {
 		int[] c = new int[5];
 	}
 
-	private void count(int type, String refactoring) {
+	//the commits are processed in parallel, so the counters are updated by one thread at a time
+	private synchronized void count(int type, String refactoring) {
 		c.c[type]++;
 		RefactoringType refType = RefactoringType.extractFromDescription(refactoring);
 		Counter refTypeCounter = cMap.get(refType);

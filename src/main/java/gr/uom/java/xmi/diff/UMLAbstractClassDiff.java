@@ -3835,12 +3835,56 @@ public abstract class UMLAbstractClassDiff {
 		}
 	}
 
+	//a removed test paired with several parameterized tests leaves a target when another target is closer to it on both sides: it keeps every method call of the removed test
+	//the target keeps, it adds no method call the target does not add, and it is closer on one side, i.e., greaterThan() calling constraint.greaterThan(100) and isTrue()
+	//leaves invalidLessThan(int value) calling lessThan instead of greaterThan for invalidGreaterThan(int value), while it stays with validGreaterThan(int value) (yavi 44199198),
+	//and testBasicMovement() stays with testBasicMove(...), although testCollidingMoveBlock(...) also keeps the calls testBasicMove(...) loses, since it adds collision calls (litiengine 5c20ffa6);
+	//the parameterized test with the name of the removed test always stays, and a test that is not parameterized is not a candidate next to a parameterized one
+	private static void keepTargetsWithClosestCalls(Set<UMLOperationBodyMapper> mappers) {
+		//per removed test, the method calls of the removed test each target loses and the method calls each target adds
+		Map<VariableDeclarationContainer, Map<UMLOperationBodyMapper, List<Set<String>>>> callDifferencesByRemovedTest = new LinkedHashMap<>();
+		for(UMLOperationBodyMapper mapper : mappers) {
+			if(!(mapper.getContainer2() instanceof UMLOperation operation2) || !operation2.hasParameterizedTestAnnotation()) {
+				continue;
+			}
+			Set<String> calls1 = new HashSet<>();
+			for(AbstractCall call : mapper.getContainer1().getAllOperationInvocations()) {
+				calls1.add(call.getName());
+			}
+			Set<String> calls2 = new HashSet<>();
+			for(AbstractCall call : mapper.getContainer2().getAllOperationInvocations()) {
+				calls2.add(call.getName());
+			}
+			Set<String> lostCalls = new HashSet<>(calls1);
+			lostCalls.removeAll(calls2);
+			Set<String> addedCalls = new HashSet<>(calls2);
+			addedCalls.removeAll(calls1);
+			callDifferencesByRemovedTest.computeIfAbsent(mapper.getContainer1(), k -> new LinkedHashMap<>()).put(mapper, List.of(lostCalls, addedCalls));
+		}
+		for(Map.Entry<VariableDeclarationContainer, Map<UMLOperationBodyMapper, List<Set<String>>>> removedTest : callDifferencesByRemovedTest.entrySet()) {
+			Map<UMLOperationBodyMapper, List<Set<String>>> differences = removedTest.getValue();
+			mappers.removeIf(mapper -> mapper.getContainer1().equals(removedTest.getKey()) && !mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) &&
+					(!differences.containsKey(mapper) || differences.values().stream().anyMatch(other -> closerOnBothSides(other, differences.get(mapper)))));
+		}
+	}
+
+	private static boolean closerOnBothSides(List<Set<String>> differences, List<Set<String>> otherDifferences) {
+		Set<String> lostCalls = differences.get(0), addedCalls = differences.get(1);
+		Set<String> otherLostCalls = otherDifferences.get(0), otherAddedCalls = otherDifferences.get(1);
+		return otherLostCalls.containsAll(lostCalls) && otherAddedCalls.containsAll(addedCalls) &&
+				(otherLostCalls.size() > lostCalls.size() || otherAddedCalls.size() > addedCalls.size());
+	}
+
 	private void checkForParameterizedTest(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
 			UMLOperation addedOperation, TreeSet<UMLOperationBodyMapper> mapperSet,
 			boolean firstMapperWithIdenticalMethodName, List<List<String>> parameterValues,
 			Consumer<UMLOperationBodyMapper> removedOperationHandler,
 			Runnable addedOperationHandler)
 			throws RefactoringMinerTimedOutException {
+		//the number of candidates before the pruning tells whether the removed test had a single candidate
+		int candidates = mapperSet.size();
+		mapperSet = new TreeSet<>(mapperSet);
+		keepTargetsWithClosestCalls(mapperSet);
 		Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
 		int mappersWithIdenticalRightSide = 0;
 		for(UMLOperationBodyMapper mapper : mapperSet) {
@@ -4009,11 +4053,14 @@ public abstract class UMLAbstractClassDiff {
 			}
 			//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
 			mapDataProviderValues(refactoring, addedOperation, removedOperations);
-			if(mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
+			if(candidates == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
 				this.addOperationBodyMapper(mapper);
 			}
 		}
-		if(overallMaxMatchingTestParameters > -1 || mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
+		//the parameterized test is taken only when it is paired, since another removed test may become it, i.e., testValueTargetValueToUpValueConversion() is not paired with
+		//the first parameterized test testKeyConversion() was compared with, but with testValueTargetValueToUpValueConversion(String key, String value) (beacon-chain-java 9a4aac2a)
+		if((overallMaxMatchingTestParameters > -1 || candidates == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) &&
+				filteredMapperSet2.stream().anyMatch(mapper -> mapper.getContainer2().equals(addedOperation))) {
 			addedOperationHandler.run();
 		}
 	}

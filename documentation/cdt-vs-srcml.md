@@ -368,7 +368,16 @@ int g(int *p) {
 | madler/zlib e9d5486e66 (K&R → ANSI, 24 files) | 49.3k/54.1k unmapped nodes; e.g., 0/16 bodies in `deflate.c` | 31.5k/29.2k unmapped nodes; 16/16 bodies |
 | torvalds/linux de0d3dc0e8 (`atari_pamsnet.c`, 11 K&R → ANSI) | 10/22 bodies; 1,371/1,783 unmapped nodes | 22/22 bodies; 101/53 unmapped nodes; Remove Parameter `fp` (an undeclared, implicit-`int` K&R parameter) |
 
-The Linux commit is a `CppDiffTest` case. It was found by scanning v2.6.12, where only 11 files still had K&R definitions; the kernel commits titled "old-style function definition" change `f()` to `f(void)`. Still open, and not K&R: a macro between the return type and the name (zlib's `int ZEXPORT deflate(...)`) is a problem in both versions, and `public` defined as empty (`less.h`) is a C++ keyword, which the re-parse with unknown declaration macros does not define.
+The Linux commit is a `CppDiffTest` case. It was found by scanning v2.6.12, where only 11 files still had K&R definitions; the kernel commits titled "old-style function definition" change `f()` to `f(void)`. Two problems of the same commits that are not K&R are ✅ **fixed (2026-11-26)**:
+- A macro between the return type and the name of a function, i.e., zlib's `int ZEXPORT deflate(...) {...}` or `const z_crc_t FAR * ZEXPORT get_crc_table(void) {...}`, made the definition a problem. For a problem declaration shaped like a function head, the re-parse with unknown declaration macros now defines as empty the macro names (written in capitals) between the return type and the name. The return type is the first word that is not a keyword, unless keywords are the return type, i.e., `ZEXPORT` in `unsigned long ZEXPORT crc32(...)`. In the AST diff tree the macro is an `identifier` child of the `function_definition`, as in tree-sitter-c.
+- `public` defined as empty in `less.h`, i.e., `public int in_mca() {...}`, is a C++ keyword, so the re-parse with unknown declaration macros skipped it, and the keyword re-parse defined it as a name. In `.c` and `.h` files, an access keyword (`public`, `private`, `protected`) at the start of a line and followed by a name, which is in a problem, is now defined as empty instead of as a name. Like the other macros expanded to nothing before a declaration, it is an `identifier` child of the declaration in the AST diff tree.
+
+| Commit | Before | After |
+|---|---|---|
+| madler/zlib e9d5486e66 | 104/106 bodies; 31.5k/29.2k unmapped nodes; e.g., 16/16 bodies in `deflate.c` | 170/172 bodies; 19.7k/17.4k unmapped nodes; 30/30 bodies in `deflate.c` |
+| gwsw/less 8a6b818555 | 13/15 bodies; 34/134 of 6,527/6,632 nodes unmapped | 19/21 bodies; 34/134 of 7,840/7,945 nodes unmapped (all the recovered definitions are mapped); the same 3 refactorings |
+
+Still open in zlib: `zlib.h` declares the functions with `ZEXTERN int ZEXPORT deflate OF((z_streamp strm, int flush));`, where `OF` is a function-like macro defined in `zconf.h`, and a variant of `crc32_z` in the branch of `#ifdef ARMCRC32` that is not taken now has its body parsed, where the AST diff tree parses `z_word_t crc1, crc2;` as an expression while the model has a declaration, so 4 statements have no tree node (like `UPDATE_HASH` in `deflate.c` before). Still open in less: `extern void constant *ml_search;`, where `constant` is a macro of a header that is not available.
 
 ### S8. Error recovery
 

@@ -2316,7 +2316,9 @@ public class CppTreeGenerator {
 				for(int[] expansion : source.expansions) {
 					if(expansion[0] >= previousEnd && expansion[1] <= node.start && skip(expansion[1], node.start) == node.start && !inExtra(expansion[0])) {
 						List<Node> tokens = tokens(expansion[0], expansion[1]);
-						Node macro = tokens.size() == 1 && tokens.get(0).type.equals("identifier") ? tokens.get(0) : macroCall(expansion[0], expansion[1]);
+						//a keyword of C++ defined as empty in C code is the name of a macro, i.e., public in public int f() {...} with #define public
+						Node macro = tokens.size() == 1 && isIdentifierStart(content.charAt(tokens.get(0).start)) ? leaf("identifier", tokens.get(0).start, tokens.get(0).end)
+								: macroCall(expansion[0], expansion[1]);
 						if(macro != null) {
 							node.children.add(0, macro);
 							macro.parent = node;

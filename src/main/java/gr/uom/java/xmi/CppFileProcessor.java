@@ -1387,11 +1387,60 @@ public class CppFileProcessor {
 							definitions.add("#define " + name);
 						}
 					}
+					//the unknown macros between the return type and the name of a function that CDT did not parse, i.e., ZEXPORT in int ZEXPORT f(int x) {...}
+					//or FAR and ZEXPORT in const z_crc_t FAR * ZEXPORT f(void) {...}
+					if(declaration instanceof IASTProblemDeclaration) {
+						for(String name : functionHeadMacros(fileContent, location.getNodeOffset())) {
+							if(!expanded.contains(name)) {
+								definitions.add("#define " + name);
+							}
+						}
+					}
 				}
 				return PROCESS_CONTINUE;
 			}
 		});
 		return String.join("\n", definitions);
+	}
+
+	//the head of a function up to the parenthesis after its name, with the words and the pointers before the name, i.e., const z_crc_t FAR * ZEXPORT f(
+	private static final Pattern FUNCTION_HEAD = Pattern.compile("((?:[A-Za-z_][A-Za-z0-9_]*[\\s*]+)+)[A-Za-z_][A-Za-z0-9_]*\\s*\\(");
+	private static final Pattern WORD = Pattern.compile("[A-Za-z_][A-Za-z0-9_]*");
+	//the keywords that are types on their own
+	private static final Set<String> TYPE_KEYWORDS = Set.of("void", "bool", "char", "char8_t", "char16_t", "char32_t", "wchar_t", "short", "int", "long", "signed", "unsigned",
+			"float", "double", "auto", "_Bool");
+
+	//the macro names between the return type and the name of a function, i.e., FAR and ZEXPORT in const z_crc_t FAR * ZEXPORT f(, where the return type is
+	//the first word that is not a keyword, unless the keywords are the return type, i.e., ZEXPORT in unsigned long ZEXPORT f(
+	private static List<String> functionHeadMacros(String fileContent, int offset) {
+		Matcher head = FUNCTION_HEAD.matcher(fileContent);
+		head.region(offset, fileContent.length());
+		if(!head.lookingAt()) {
+			return List.of();
+		}
+		List<String> macros = new ArrayList<>();
+		boolean type = false;
+		boolean tag = false;
+		Matcher word = WORD.matcher(head.group(1));
+		while(word.find()) {
+			String name = word.group();
+			if(KEYWORDS.contains(name)) {
+				type |= TYPE_KEYWORDS.contains(name);
+				//the name of a struct, enum or union is a type, i.e., struct node in struct node *f(
+				tag = name.equals("struct") || name.equals("enum") || name.equals("union");
+			}
+			else if(!type || tag) {
+				type = true;
+				tag = false;
+			}
+			else if(isMacroName(name)) {
+				macros.add(name);
+			}
+			else {
+				return List.of();
+			}
+		}
+		return macros;
 	}
 
 	//whether a name starts at the offset, and not in the middle of a name, i.e., the problem of CDT at e of T in DUCKDB_API virtual T f();
@@ -1465,6 +1514,7 @@ public class CppFileProcessor {
 	//the keywords of C++ that are not keywords of C, and can be the names of the variables, the parameters, the fields, the functions and the types of C code
 	private static final Set<String> CPP_ONLY_KEYWORDS = Set.of("bool", "catch", "class", "delete", "explicit", "false", "friend", "mutable", "namespace", "new",
 			"operator", "private", "protected", "public", "template", "this", "throw", "true", "try", "typename", "using", "virtual");
+	private static final Set<String> ACCESS_KEYWORDS = Set.of("public", "private", "protected");
 	//the suffix of the names that the keywords used as names are defined as, i.e., #define new new__rm_keyword_name
 	private static final String KEYWORD_NAME_SUFFIX = "__rm_keyword_name";
 	private static final Field CPP_NAME_CHARS = nameField();
@@ -1491,7 +1541,13 @@ public class CppFileProcessor {
 			if(definitions.length() > 0) {
 				definitions.append("\n");
 			}
-			definitions.append("#define ").append(keyword).append(" ").append(keyword).append(KEYWORD_NAME_SUFFIX);
+			//an access keyword before the declarations is a macro of C code defined as empty, i.e., public in public int f() {...} with #define public in a header
+			if(ACCESS_KEYWORDS.contains(keyword) && Pattern.compile("(?m)^[ \\t]*" + keyword + "\\s+[A-Za-z_]").matcher(fileContent).find()) {
+				definitions.append("#define ").append(keyword);
+			}
+			else {
+				definitions.append("#define ").append(keyword).append(" ").append(keyword).append(KEYWORD_NAME_SUFFIX);
+			}
 		}
 		return definitions.toString();
 	}

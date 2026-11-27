@@ -1176,6 +1176,28 @@
   "firstEndPos" : 485,
   "secondEndPos" : 485
 }, {
+  "firstType" : "lexical_declaration",
+  "secondType" : "lexical_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 489,
+  "secondPos" : 489,
+  "firstEndPos" : 616,
+  "secondEndPos" : 631
+}, {
+  "firstType" : "const",
+  "secondType" : "const",
+  "firstLabel" : "const",
+  "secondLabel" : "const",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 489,
+  "secondPos" : 489,
+  "firstEndPos" : 494,
+  "secondEndPos" : 494
+}, {
   "firstType" : "variable_declarator",
   "secondType" : "variable_declarator",
   "firstLabel" : "",
@@ -1637,6 +1659,17 @@
   "secondPos" : 629,
   "firstEndPos" : 615,
   "secondEndPos" : 630
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 615,
+  "secondPos" : 630,
+  "firstEndPos" : 616,
+  "secondEndPos" : 631
 }, {
   "firstType" : "try_statement",
   "secondType" : "try_statement",

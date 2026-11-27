@@ -809,11 +809,13 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if(typeAnnotations != null) {
                         mappingStore.addMappingRecursively(typeAnnotations.first, typeAnnotations.second);
                     }
-                    if(declarator1.getParent().getType().name.equals(LANG1.VARIABLE_DECLARATION) && declarator2.getParent().getType().name.equals(LANG2.VARIABLE_DECLARATION)) {
+                    //the declaration with its keyword, i.e., var x = f({...}); or const CollectionModel = AmpersandModel.extend(..., {...});
+                    if(isVariableDeclaration(declarator1.getParent(), LANG1) && isVariableDeclaration(declarator2.getParent(), LANG2)) {
                         mappingStore.addMapping(declarator1.getParent(), declarator2.getParent());
-                        com.github.gumtreediff.utils.Pair<Tree,Tree> var_keywords = Helpers.findPairOfType(declarator1.getParent(),declarator2.getParent(),LANG1.VAR_KEYWORD,LANG2.VAR_KEYWORD);
-                        if(var_keywords != null) {
-                            mappingStore.addMapping(var_keywords.first, var_keywords.second);
+                        Tree keyword1 = declarator1.getParent().getChild(0);
+                        Tree keyword2 = declarator2.getParent().getChild(0);
+                        if(isDeclarationKeyword(keyword1, LANG1) && isDeclarationKeyword(keyword2, LANG2)) {
+                            mappingStore.addMapping(keyword1, keyword2);
                         }
                         com.github.gumtreediff.utils.Pair<Tree,Tree> semicolons = Helpers.findPairOfType(declarator1.getParent(),declarator2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
                         if(semicolons != null) {
@@ -1676,6 +1678,16 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
             }
         }
+    }
+
+    private static boolean isVariableDeclaration(Tree node, Constants LANG) {
+        String type = node.getType().name;
+        return type.equals(LANG.VARIABLE_DECLARATION) || type.equals(LANG.LEXICAL_DECLARATION);
+    }
+
+    private static boolean isDeclarationKeyword(Tree node, Constants LANG) {
+        String type = node.getType().name;
+        return type.equals(LANG.VAR_KEYWORD) || type.equals(LANG.CONST_KEYWORD) || type.equals(LANG.LET_KEYWORD);
     }
 
     private static boolean isReturnTypeAnnotation(Tree node, Constants LANG) {

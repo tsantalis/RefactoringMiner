@@ -9822,6 +9822,28 @@
   "firstEndPos" : 2686,
   "secondEndPos" : 2686
 }, {
+  "firstType" : "lexical_declaration",
+  "secondType" : "lexical_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 2688,
+  "secondPos" : 2688,
+  "firstEndPos" : 8177,
+  "secondEndPos" : 8046
+}, {
+  "firstType" : "const",
+  "secondType" : "const",
+  "firstLabel" : "const",
+  "secondLabel" : "const",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 2688,
+  "secondPos" : 2688,
+  "firstEndPos" : 2693,
+  "secondEndPos" : 2693
+}, {
   "firstType" : "variable_declarator",
   "secondType" : "variable_declarator",
   "firstLabel" : "",
@@ -25222,6 +25244,39 @@
   "firstEndPos" : 8176,
   "secondEndPos" : 8045
 }, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 8176,
+  "secondPos" : 8045,
+  "firstEndPos" : 8177,
+  "secondEndPos" : 8046
+}, {
+  "firstType" : "lexical_declaration",
+  "secondType" : "lexical_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 8179,
+  "secondPos" : 8048,
+  "firstEndPos" : 10083,
+  "secondEndPos" : 9952
+}, {
+  "firstType" : "const",
+  "secondType" : "const",
+  "firstLabel" : "const",
+  "secondLabel" : "const",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 8179,
+  "secondPos" : 8048,
+  "firstEndPos" : 8184,
+  "secondEndPos" : 8053
+}, {
   "firstType" : "variable_declarator",
   "secondType" : "variable_declarator",
   "firstLabel" : "",
@@ -29423,6 +29478,17 @@
   "secondPos" : 9950,
   "firstEndPos" : 10082,
   "secondEndPos" : 9951
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 10082,
+  "secondPos" : 9951,
+  "firstEndPos" : 10083,
+  "secondEndPos" : 9952
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",

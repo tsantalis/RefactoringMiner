@@ -10,6 +10,7 @@ import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstAssignExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstBinExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
@@ -176,6 +177,19 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		return false;
 	}
 
+	private static final Set<String> TYPESCRIPT_PRIMITIVE_TYPES = Set.of("Inferred", "string", "number", "boolean", "bigint", "symbol", "any", "unknown", "object", "void", "never", "undefined", "null");
+
+	//the variable is declared with a type reference, i.e., action: IsColumnstoreAction, unlike a variable of an inferred, primitive or array type
+	private boolean declaredWithTypeReference(String variable) {
+		for(VariableDeclaration declaration : activeVariableDeclarations.get(variable)) {
+			gr.uom.java.xmi.UMLType type = declaration.getType();
+			if(type != null && !TYPESCRIPT_PRIMITIVE_TYPES.contains(type.getClassType()) && type.getArrayDimension() == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Swc4jAstVisitorResponse visitIdent(Swc4jAstIdent node) {
 		String identifier = node.getSym();
 		//the key of a type literal member is not a variable, i.e., member in { member: GuildMember, error: Error }[]
@@ -186,6 +200,12 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 			if(node.getParent() instanceof Swc4jAstMemberExpr && !(node.getParent().getParent() instanceof Swc4jAstCallExpr)) {
 				LeafExpression memberExpr = new LeafExpression(sourceFolder, filePath, node.getParent(), CodeElementType.SIMPLE_NAME, container, fileContent);
 				variables.add(memberExpr);
+				//the name of the property of a variable declared with a type reference, like the name of a field access in Java, i.e., isColumnstore in return action.isColumnstore
+				//for action: IsColumnstoreAction, replaced by hasColumnstoreProjection when the property is renamed (compass 5f1e7cdb is-columnstore.ts)
+				if(((Swc4jAstMemberExpr)node.getParent()).getProp() instanceof Swc4jAstIdentName propName && declaredWithTypeReference(identifier)) {
+					LeafExpression property = new LeafExpression(sourceFolder, filePath, propName, CodeElementType.SIMPLE_NAME, container, fileContent);
+					variables.add(property);
+				}
 			}
 		}
 		else if(node.getParent() instanceof Swc4jAstMemberExpr memberExpr && memberExpr.getObj() == node && declaredClass(identifier)) {

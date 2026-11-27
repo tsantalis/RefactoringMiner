@@ -1593,7 +1593,8 @@ public class UMLModelDiff {
 			for(UMLClassDiff classDiff : commonClassDiffList) {
 				UMLType superType2 = classDiff.getNewSuperclass();
 				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
-				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() &&
+				//an unchanged class was neither renamed nor split, i.e., the type alias AtlasSignInCancelAction = { type: AtlasSignInActions.Cancel } of compass 63036d30
+				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && !classDiff.isEmpty() &&
 						(classDiff.getAddedOperations().size() >= classDiff.getOperationBodyMapperList().size() || betterMatchThanCounterpart(removedClass, classDiff.getNextClass(), classDiff.getOriginalClass(), matcher))) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, classDiff.getNextClass());
@@ -1674,7 +1675,8 @@ public class UMLModelDiff {
 			for(UMLClassDiff classDiff : commonClassDiffList) {
 				UMLType superType1 = classDiff.getOldSuperclass();
 				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
-				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() &&
+				//an unchanged class was neither renamed nor split, i.e., the type alias AtlasSignInCancelAction = { type: AtlasSignInActions.Cancel } of compass 63036d30
+				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && !classDiff.isEmpty() &&
 						(classDiff.getRemovedOperations().size() > classDiff.getOperationBodyMapperList().size() || betterMatchThanCounterpart(addedClass, classDiff.getOriginalClass(), classDiff.getNextClass(), matcher))) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(classDiff.getOriginalClass(), addedClass);
@@ -3649,6 +3651,24 @@ public class UMLModelDiff {
 		return count;
 	}
 
+	//the move of a member to a class of the parent refactoring: up to an extracted superclass, down to an extracted subclass,
+	//or else to another class, i.e., the class extracted from, merged into or split from the original class
+	private static MoveOperationRefactoring moveOperationRefactoring(UMLOperationBodyMapper mapper, RefactoringType parentType) throws RefactoringMinerTimedOutException {
+		return switch(parentType) {
+			case EXTRACT_SUPERCLASS -> new PullUpOperationRefactoring(mapper);
+			case EXTRACT_SUBCLASS -> new PushDownOperationRefactoring(mapper);
+			default -> new MoveOperationRefactoring(mapper);
+		};
+	}
+
+	private static MoveAttributeRefactoring moveAttributeRefactoring(UMLAttributeDiff attributeDiff, RefactoringType parentType) {
+		return switch(parentType) {
+			case EXTRACT_SUPERCLASS -> new PullUpAttributeRefactoring(attributeDiff);
+			case EXTRACT_SUBCLASS -> new PushDownAttributeRefactoring(attributeDiff);
+			default -> new MoveAttributeRefactoring(attributeDiff);
+		};
+	}
+
 	private void detectSubRefactorings(UMLClassBaseDiff classDiff, UMLClass addedClass, RefactoringType parentType) throws RefactoringMinerTimedOutException {
 		int refactoringsBefore = refactorings.size();
 		Constants LANG1 = classDiff.LANG1;
@@ -3679,16 +3699,7 @@ public class UMLModelDiff {
 					if(!parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
 						classDiff.getRemovedOperations().remove(removedOperation);
 					}
-					MoveOperationRefactoring ref = null;
-					if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
-						ref = new PullUpOperationRefactoring(mapper);
-					}
-					else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
-						ref = new MoveOperationRefactoring(mapper);
-					}
-					else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
-						ref = new PushDownOperationRefactoring(mapper);
-					}
+					MoveOperationRefactoring ref = moveOperationRefactoring(mapper, parentType);
 					this.refactorings.add(ref);
 					refactorings.addAll(mapper.getRefactorings());
 					for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
@@ -3752,18 +3763,9 @@ public class UMLModelDiff {
 					classDiff.getAttributeDiffList().remove(renameDiff);
 					classDiff.getAddedAttributes().add(renameDiff.getAddedAttribute());
 				}
-				Refactoring ref = null;
 				ArrayList<UMLOperationBodyMapper> operationBodyMapperList = new ArrayList<>();
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList);
-				if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
-					ref = new PullUpAttributeRefactoring(attributeDiff);
-				}
-				else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
-					ref = new MoveAttributeRefactoring(attributeDiff);
-				}
-				else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
-					ref = new PushDownAttributeRefactoring(attributeDiff);
-				}
+				Refactoring ref = moveAttributeRefactoring(attributeDiff, parentType);
 				Set<Refactoring> conflictingRefactorings = movedAttributeRenamed(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), new LinkedHashSet<>(classDiff.getRefactoringsBeforePostProcessing()));
 				if(!conflictingRefactorings.isEmpty()) {
 					classDiff.getRefactoringsBeforePostProcessing().removeAll(conflictingRefactorings);
@@ -3774,15 +3776,7 @@ public class UMLModelDiff {
 					movedAttributeDiffList.add(attributeDiff);
 					for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 						if(mapper.getContainer1().getPropertyAccessor().isPresent() && mapper.getContainer2().getPropertyAccessor().isPresent()) {
-							if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
-								this.refactorings.add(new PullUpOperationRefactoring(mapper));
-							}
-							else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
-								this.refactorings.add(new MoveOperationRefactoring(mapper));
-							}
-							else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
-								this.refactorings.add(new PushDownOperationRefactoring(mapper));
-							}
+							this.refactorings.add(moveOperationRefactoring(mapper, parentType));
 						}
 					}
 				}

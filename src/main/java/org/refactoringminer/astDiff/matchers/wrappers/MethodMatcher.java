@@ -1654,8 +1654,8 @@ public class MethodMatcher extends BodyMapperMatcher{
             else if(!srcNode.getType().name.equals(LANG1.METHOD_DECLARATION) && !dstNode.getType().name.equals(LANG2.METHOD_DECLARATION)) {
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
             }
-            if((srcNode.getParent().getType().name.equals(LANG1.TYPE_ANNOTATION) || srcNode.getParent().getType().name.equals(LANG1.TYPE_PREDICATE_ANNOTATION)) && 
-                    (dstNode.getParent().getType().name.equals(LANG2.TYPE_ANNOTATION) || dstNode.getParent().getType().name.equals(LANG2.TYPE_PREDICATE_ANNOTATION))) {
+            //the return type annotation with its colon, i.e., : T, : x is T, or : asserts x is T
+            if(isReturnTypeAnnotation(srcNode.getParent(), LANG1) && isReturnTypeAnnotation(dstNode.getParent(), LANG2)) {
                 mappingStore.addMapping(srcNode.getParent(), dstNode.getParent());
                 com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcNode.getParent(),dstNode.getParent(),LANG1.COLON,LANG2.COLON);
                 if (matched != null) {
@@ -1676,6 +1676,11 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
             }
         }
+    }
+
+    private static boolean isReturnTypeAnnotation(Tree node, Constants LANG) {
+        String type = node.getType().name;
+        return type.equals(LANG.TYPE_ANNOTATION) || type.equals(LANG.TYPE_PREDICATE_ANNOTATION) || type.equals(LANG.ASSERTS_ANNOTATION);
     }
 
     private void processMethodParameters(Tree srcTree, Tree dstTree, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {

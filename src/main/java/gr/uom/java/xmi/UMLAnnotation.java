@@ -320,7 +320,8 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 
 	//@RunWith(Parameterized.class), @RunWith(value = Parameterized.class) or with qualified names
 	public boolean isParameterizedRunner() {
-		if(typeName.equals("RunWith") || typeName.endsWith(".RunWith")) {
+		//or the runner used as the extension of a JUnit 5 class, i.e., @ExtendWith(value = Parameterized.class) of a test class with a constructor taking the configuration (DNC 0b901273)
+		if(typeName.equals("RunWith") || typeName.endsWith(".RunWith") || typeName.equals("ExtendWith") || typeName.endsWith(".ExtendWith")) {
 			AbstractExpression value = this.value != null ? this.value : memberValuePairs.get("value");
 			if(value != null) {
 				String runner = value.getString();

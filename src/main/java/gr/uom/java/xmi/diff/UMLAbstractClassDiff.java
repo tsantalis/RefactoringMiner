@@ -4586,6 +4586,29 @@ public abstract class UMLAbstractClassDiff {
 		removedOperations.removeAll(parameterizedTests);
 	}
 
+	//a test becoming a parameterized test without a change of its signature, so it is mapped with the methods of the same signature instead of being paired as a removed and an added test,
+	//i.e., @Test f0_sfa() -> @ParameterizedTest(name = "[{arguments}]") @ArgumentsSource(DncTestArguments.class) f0_sfa(), which reads the configuration injected through the constructor of its class (DNC 3783aea8)
+	protected void checkForTestsParameterizedWithTheSameSignature() {
+		Set<UMLOperation> parameterizedTests = new HashSet<>();
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof ParameterizeTestRefactoring parameterize) {
+				parameterizedTests.add(parameterize.getParameterizedTestOperation());
+			}
+		}
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			UMLOperation operation1 = mapper.getOperation1();
+			UMLOperation operation2 = mapper.getOperation2();
+			if(operation1 == null || operation2 == null || parameterizedTests.contains(operation2) || !operation1.equalSignature(operation2) ||
+					!operation1.hasTestAnnotation() || operation1.hasParameterizedTestAnnotation() || !operation2.hasParameterizedTestAnnotation() ||
+					operation1.isLifecycleMethod() || operation2.isLifecycleMethod() || operation1.getVisibility() == Visibility.PRIVATE ||
+					operation2.getAnnotations().stream().noneMatch(a -> SourceAnnotation.isSourceAnnotation(a) || SourceAnnotation.isCustomSourceAnnotation(a))) {
+				continue;
+			}
+			boolean migrated = alreadyDataDriven(operation1) || (!operation1.getParameterNameList().isEmpty() && !junit5Test(operation1));
+			refactorings.add(new ParameterizeTestRefactoring(mapper, migrated));
+		}
+	}
+
 	//each call to the helper is mapped to the statement adding a row with the same values, as the call and the row differ in the name and the expression of the call,
 	//i.e., this.All(Linq.singleton(0), isEvenFunc, true) -> argsList.add(Linq.singleton(0), isEvenFunc, true)
 	private static void mapHelperCallsToRows(UMLOperationBodyMapper mapper, List<AbstractCall> helperCalls, UMLOperation provider) {

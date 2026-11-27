@@ -7,3 +7,10 @@ line range:34-34==line range:27-27
 line range:35-35==line range:27-27
 line range:36-36==line range:27-27
 line range:37-37==line range:27-27
+public array_Null_failure(testcaseName String, arg1 Object, arg2 Object) : void -> public array_Null_failure(testcaseName String, arg1 Object, arg2 Object) : void
+line range:35-35==line range:35-35
+line range:36-36==line range:36-36
+public permittedTypeSuccess(subject Object) : void -> public permittedTypeSuccess(subject Object) : void
+line range:111-111==line range:108-108
+public notPermittedTypeFailure(subject Object) : void -> public notPermittedTypeFailure(subject Object) : void
+line range:117-117==line range:115-115

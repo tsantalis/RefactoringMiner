@@ -218,6 +218,12 @@ com.iluwatar.specification.creature.CreatureTest -> com.iluwatar.specification.c
 @RunWith(Parameterized.class)==null
 public testGetName() : void -> public testGetName(testedCreature Creature, name String) : void
 line range:104-104==line range:58-58
+public testGetSize() : void -> public testGetSize(testedCreature Creature, name String, size Size) : void
+line range:109-109==line range:64-64
+public testGetMovement() : void -> public testGetMovement(testedCreature Creature, name String, size Size, movement Movement) : void
+line range:114-114==line range:70-70
+public testGetColor() : void -> public testGetColor(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
+line range:119-119==line range:76-76
 public testToString() : void -> public testToString(testedCreature Creature, name String, size Size, movement Movement, color Color) : void
 line range:124-124==line range:83-83
 public data() : Collection<Object[]> -> public dataProvider() : Collection<Object[]>

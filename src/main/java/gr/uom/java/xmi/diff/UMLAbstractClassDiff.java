@@ -20,6 +20,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -4699,7 +4700,7 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	//a test parameterized with values that cannot be read, i.e., the objects created by its provider in @MethodSource("encodingProviders") test(EncodingProvider encodingProvider),
-	//when it has a source annotation and uses each of its new parameters in its body, so the parameterization is reported without the links to the values,
+	//when it has a source annotation and uses each of its new parameters in its body (some of them for a port of a data-driven test), so the parameterization is reported without the links to the values,
 	//but not a test that already had these parameters, i.e., the JUnit 4 theory quotaDependencyTest(ActionType actionType) -> quotaDependency(ActionType actionType)
 	private boolean parameterizedWithUnreadableValues(UMLOperation removedOperation, UMLOperation addedOperation) {
 		if(!addedOperation.hasParameterizedTestAnnotation() || removedOperation.hasParameterizedTestAnnotation() || removedOperation.isLifecycleMethod() || addedOperation.isLifecycleMethod()) {
@@ -4714,12 +4715,11 @@ public abstract class UMLAbstractClassDiff {
 			return false;
 		}
 		List<String> variables = addedOperation.getAllVariables();
-		for(String parameterName : parameterNames) {
-			if(variables.stream().noneMatch(v -> v.equals(parameterName) || v.startsWith(parameterName + "."))) {
-				return false;
-			}
-		}
-		return getParameterValues(addedOperation).isEmpty();
+		Predicate<String> used = parameterName -> variables.stream().anyMatch(v -> v.equals(parameterName) || v.startsWith(parameterName + "."));
+		//the port of a JUnit 4 Parameterized test receives every value of the former @Parameter fields, while each test uses only some of them,
+		//i.e., testValidateDiskWithSnapshots(disk, sd, isValidForCloned, isValidForNew, isValidForSnapshots) uses only disk, sd and isValidForSnapshots (ovirt-engine 6dfe2277)
+		boolean parametersUsed = alreadyDataDriven(removedOperation) ? parameterNames.stream().anyMatch(used) : parameterNames.stream().allMatch(used);
+		return parametersUsed && getParameterValues(addedOperation).isEmpty();
 	}
 
 	public List<List<String>> getParameterValues(UMLOperation addedOperation) {

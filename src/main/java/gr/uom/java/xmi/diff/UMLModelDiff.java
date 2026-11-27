@@ -3683,11 +3683,14 @@ public class UMLModelDiff {
 					if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
 						ref = new PullUpOperationRefactoring(mapper);
 					}
-					else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
+					else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS) || parentType.equals(RefactoringType.SPLIT_CLASS)) {
 						ref = new MoveOperationRefactoring(mapper);
 					}
 					else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
 						ref = new PushDownOperationRefactoring(mapper);
+					}
+					else {
+						throw new IllegalArgumentException("Unsupported parentType: " + parentType);
 					}
 					this.refactorings.add(ref);
 					refactorings.addAll(mapper.getRefactorings());
@@ -3758,11 +3761,14 @@ public class UMLModelDiff {
 				if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
 					ref = new PullUpAttributeRefactoring(attributeDiff);
 				}
-				else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
+				else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS) || parentType.equals(RefactoringType.SPLIT_CLASS)) {
 					ref = new MoveAttributeRefactoring(attributeDiff);
 				}
 				else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
 					ref = new PushDownAttributeRefactoring(attributeDiff);
+				}
+				else {
+					throw new IllegalArgumentException("Unsupported parentType: " + parentType);
 				}
 				Set<Refactoring> conflictingRefactorings = movedAttributeRenamed(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), new LinkedHashSet<>(classDiff.getRefactoringsBeforePostProcessing()));
 				if(!conflictingRefactorings.isEmpty()) {
@@ -3777,11 +3783,14 @@ public class UMLModelDiff {
 							if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
 								this.refactorings.add(new PullUpOperationRefactoring(mapper));
 							}
-							else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
+							else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS) || parentType.equals(RefactoringType.SPLIT_CLASS)) {
 								this.refactorings.add(new MoveOperationRefactoring(mapper));
 							}
 							else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
 								this.refactorings.add(new PushDownOperationRefactoring(mapper));
+							}
+							else {
+								throw new IllegalArgumentException("Unsupported parentType: " + parentType);
 							}
 						}
 					}

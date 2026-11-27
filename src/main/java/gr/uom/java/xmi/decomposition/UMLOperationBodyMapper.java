@@ -812,6 +812,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 				}
 			}
+			//the body became the body of the only lambda of the other side, i.e., { const listeners = []; return {...}; } -> { return () => { const listeners = []; return {...}; }; }
+			//of compass 63036d30 createElectronFileInputBackend, whose anonymous classes are in the lambda
+			else if(leaves2.size() == 1 && innerNodes2.isEmpty() && lambdasWithBody2 == 1 && anonymous2.size() == 0 && anonymous1.size() > 0 && nestedAnonymous2.size() >= anonymous1.size() &&
+					leaves2.get(0).getLambdas().size() == 1 && leaves2.get(0).getLambdas().get(0).getBody() != null) {
+				expandAnonymousAndLambdas(leaves2.get(0), leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
+			}
+			else if(leaves1.size() == 1 && innerNodes1.isEmpty() && lambdasWithBody1 == 1 && anonymous1.size() == 0 && anonymous2.size() > 0 && nestedAnonymous1.size() >= anonymous2.size() &&
+					leaves1.get(0).getLambdas().size() == 1 && leaves1.get(0).getLambdas().get(0).getBody() != null) {
+				expandAnonymousAndLambdas(leaves1.get(0), leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+			}
 			else if(anonymous1.size() != anonymous2.size() && nestedAnonymous1.size() != nestedAnonymous2.size()) {
 				if(lambdas1.size() + nestedLambdas1.size() > lambdas2.size() + nestedLambdas2.size()) {
 					for(LambdaExpressionObject lambda1 : lambdas1) {

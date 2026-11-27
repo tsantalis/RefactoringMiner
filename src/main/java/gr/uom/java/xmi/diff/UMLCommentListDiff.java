@@ -298,9 +298,62 @@ public class UMLCommentListDiff {
 			processRemainingComments(deletedComments, addedComments);
 		}
 		else {
+			//the groups whose identical lines are the most with each other, and with no other group, are modified versions of each other,
+			//i.e., // Use as: ... // const backend = createElectronFileInputBackend(electronRemote, 'save', { ... }); ... of compass 63036d30
+			for(UMLCommentGroup groupBefore : groupsBefore) {
+				UMLCommentGroup groupAfter = uniqueGroupWithMostIdenticalLines(groupBefore, groupsAfter, groupsAfterToBeRemoved);
+				if(groupAfter != null && uniqueGroupWithMostIdenticalLines(groupAfter, groupsBefore, groupsBeforeToBeRemoved) == groupBefore) {
+					UMLCommentListDiff diff = new UMLCommentListDiff(groupBefore, groupAfter);
+					for(Pair<UMLComment, UMLComment> pair : diff.getCommonComments()) {
+						commonComments.add(pair);
+						deletedComments.remove(pair.getLeft());
+						addedComments.remove(pair.getRight());
+					}
+					groupsBeforeToBeRemoved.add(groupBefore);
+					groupsAfterToBeRemoved.add(groupAfter);
+				}
+			}
 			this.deletedComments.addAll(deletedComments);
 			this.addedComments.addAll(addedComments);
 		}
+	}
+
+	//the group sharing the most identical non-blank lines with the group, or null when none or several groups share the most
+	private static UMLCommentGroup uniqueGroupWithMostIdenticalLines(UMLCommentGroup group, List<UMLCommentGroup> candidates, List<UMLCommentGroup> excluded) {
+		UMLCommentGroup best = null;
+		int bestCount = 0;
+		boolean tie = false;
+		for(UMLCommentGroup candidate : candidates) {
+			if(excluded.contains(candidate)) {
+				continue;
+			}
+			int count = identicalLines(group, candidate);
+			if(count > bestCount) {
+				best = candidate;
+				bestCount = count;
+				tie = false;
+			}
+			else if(count == bestCount && count > 0) {
+				tie = true;
+			}
+		}
+		return tie ? null : best;
+	}
+
+	private static int identicalLines(UMLCommentGroup group1, UMLCommentGroup group2) {
+		int count = 0;
+		for(UMLComment comment1 : group1.getGroup()) {
+			if(comment1.getText().isBlank()) {
+				continue;
+			}
+			for(UMLComment comment2 : group2.getGroup()) {
+				if(comment1.getText().equals(comment2.getText())) {
+					count++;
+					break;
+				}
+			}
+		}
+		return count;
 	}
 
 	private void matchGroupsWithSameText(List<UMLCommentGroup> groupsBefore, List<UMLCommentGroup> groupsAfter,

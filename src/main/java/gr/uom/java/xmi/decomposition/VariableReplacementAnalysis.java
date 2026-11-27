@@ -2364,6 +2364,7 @@ public class VariableReplacementAnalysis {
 					actualReferences.addAll(additionalReferences);
 					RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, actualReferences, insideExtractedOrInlinedMethod);
 					if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) && !existsConflictingParameter(ref) &&
+							!replacedWithPreexistingParameterOfNestedFunction(variableDeclaration1, operation1, variableDeclaration2, operation2) &&
 							variableDeclaration1.isVarargsParameter() == variableDeclaration2.isVarargsParameter() && matchedEnhancedForLoopFormalParameter(variableDeclaration1, variableDeclaration2)) {
 						variableRenames.add(ref);
 						removedVariables.remove(variableDeclaration1);
@@ -2410,6 +2411,14 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+	}
+
+	//a local variable of a function nested in the mapped container replaced with a parameter the function already had is not a rename, i.e., chartEvent -> e
+	//in eventHandler(e) of Chart.js 312773ba, where var chartEvent = Chart.platform.createEvent(e, me.chart); is inlined
+	private boolean replacedWithPreexistingParameterOfNestedFunction(VariableDeclaration variableDeclaration1, VariableDeclarationContainer function1,
+			VariableDeclaration variableDeclaration2, VariableDeclarationContainer function2) {
+		return !variableDeclaration1.isParameter() && variableDeclaration2.isParameter() && !function2.equals(this.operation2) &&
+				function1 != null && function1.getParameterNameList().contains(variableDeclaration2.getVariableName());
 	}
 
 	//the variable is replaced with an attribute in the scope of its replaced declarations, but still used before them, i.e., dataset = dataset.prefetch(...) -> self._dataset = self._dataset.prefetch(...)
@@ -3683,6 +3692,18 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+		//a parameter of the function declaring the statements of the replacement, which is nested in the mapped container (see getVariableDeclaration2)
+		if(set.isEmpty()) {
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getReplacements().contains(replacement) && mapping.getOperation1() != null && !mapping.getOperation1().equals(operation1)) {
+					for(VariableDeclaration parameter : mapping.getOperation1().getParameterDeclarationList()) {
+						if(parameter.getVariableName().equals(replacement.getBefore())) {
+							set.add(new SimpleEntry<>(parameter, mapping.getOperation1()));
+						}
+					}
+				}
+			}
+		}
 		for(VariableDeclaration parameter : operation1.getParameterDeclarationList()) {
 			if(parameter.getVariableName().equals(replacement.getBefore())) {
 				set.add(new SimpleEntry<>(parameter, operation1));
@@ -3756,6 +3777,17 @@ public class VariableReplacementAnalysis {
 				VariableDeclaration vd = mapping.getFragment2().searchVariableDeclaration(replacement.getAfter());
 				if(vd != null) {
 					return new SimpleEntry<>(vd, mapping.getOperation2());
+				}
+			}
+		}
+		//a parameter of the function declaring the statements of the replacement, which is nested in the mapped container, i.e., options of the method
+		//openFileChooser(options: FileChooserOptions) of an object literal in the lambda of compass 63036d30 createElectronFileInputBackend
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getReplacements().contains(replacement) && mapping.getOperation2() != null && !mapping.getOperation2().equals(operation2)) {
+				for(VariableDeclaration parameter : mapping.getOperation2().getParameterDeclarationList()) {
+					if(parameter.getVariableName().equals(replacement.getAfter())) {
+						return new SimpleEntry<>(parameter, mapping.getOperation2());
+					}
 				}
 			}
 		}

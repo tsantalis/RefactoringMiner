@@ -2215,6 +2215,7 @@ public class UMLModelDiff {
 	private List<MoveAttributeRefactoring> checkForAttributeMoves(List<UMLAttribute> addedAttributes, List<UMLAttribute> removedAttributes,
 			Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
 		List<MoveAttributeRefactoring> refactorings = new ArrayList<MoveAttributeRefactoring>();
+		List<List<MoveAttributeRefactoring>> ambiguousCandidates = new ArrayList<>();
 		if(addedAttributes.size() <= removedAttributes.size()) {
 			for(UMLAttribute addedAttribute : addedAttributes) {
 				List<MoveAttributeRefactoring> candidates = new ArrayList<MoveAttributeRefactoring>();
@@ -2237,7 +2238,9 @@ public class UMLModelDiff {
 						candidates.add(candidate);
 					}
 				}
-				processCandidates(candidates, refactorings, pastRefactorings);
+				if(!processCandidates(candidates, refactorings, pastRefactorings)) {
+					ambiguousCandidates.add(candidates);
+				}
 			}
 		}
 		else {
@@ -2262,10 +2265,43 @@ public class UMLModelDiff {
 						candidates.add(candidate);
 					}
 				}
-				processCandidates(candidates, refactorings, pastRefactorings);
+				if(!processCandidates(candidates, refactorings, pastRefactorings)) {
+					ambiguousCandidates.add(candidates);
+				}
+			}
+		}
+		for(List<MoveAttributeRefactoring> candidates : ambiguousCandidates) {
+			MoveAttributeRefactoring candidate = candidateFromClassOfOtherMovedAttributes(candidates, refactorings);
+			if(candidate != null) {
+				processCandidates(List.of(candidate), refactorings, pastRefactorings);
 			}
 		}
 		return refactorings;
+	}
+
+	//among candidates without other evidence, the one moved from the class from which the most other attributes moved to the same class, i.e., context_
+	//of PersistentCache and not of LocalCache, when stats_ and stats_mutex_ moved from PersistentCache to TieredCache, or none when no class has the most
+	private static MoveAttributeRefactoring candidateFromClassOfOtherMovedAttributes(List<MoveAttributeRefactoring> candidates, List<MoveAttributeRefactoring> movedAttributes) {
+		MoveAttributeRefactoring best = null;
+		int bestCount = 0;
+		boolean tie = false;
+		for(MoveAttributeRefactoring candidate : candidates) {
+			int count = 0;
+			for(MoveAttributeRefactoring moved : movedAttributes) {
+				if(moved.getSourceClassName().equals(candidate.getSourceClassName()) && moved.getTargetClassName().equals(candidate.getTargetClassName())) {
+					count++;
+				}
+			}
+			if(count > bestCount) {
+				best = candidate;
+				bestCount = count;
+				tie = false;
+			}
+			else if(count == bestCount && count > 0) {
+				tie = true;
+			}
+		}
+		return tie ? null : best;
 	}
 
 	//after all refactorings are detected, so that the detection decisions and the matching of the other statements stay as they are
@@ -2344,7 +2380,8 @@ public class UMLModelDiff {
 		return filtered;
 	}
 
-	private void processCandidates(List<MoveAttributeRefactoring> candidates, List<MoveAttributeRefactoring> refactorings, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
+	//false when several candidates have no evidence of compatibility, so that none of them is chosen
+	private boolean processCandidates(List<MoveAttributeRefactoring> candidates, List<MoveAttributeRefactoring> refactorings, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
 		if(candidates.size() > 1) {
 			TreeMap<Integer, List<MoveAttributeRefactoring>> map = new TreeMap<Integer, List<MoveAttributeRefactoring>>();
 			for(MoveAttributeRefactoring candidate : candidates) {
@@ -2368,6 +2405,9 @@ public class UMLModelDiff {
 					}
 					pastRefactorings.addAll(attributeDiff.getRefactorings());
 				}
+			}
+			else {
+				return false;
 			}
 		}
 		else if(candidates.size() == 1) {
@@ -2406,6 +2446,7 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		return true;
 	}
 
 	private MoveAttributeRefactoring processPairOfAttributes(UMLAttribute addedAttribute, UMLAttribute removedAttribute, Map<Replacement,

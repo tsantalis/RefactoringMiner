@@ -3817,11 +3817,24 @@ public class UMLModelDiff {
 		List<Refactoring> refactorings = new ArrayList<Refactoring>();
 		List<UMLClass> addedClassesToBeRemoved = new ArrayList<>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
-			for(UMLAnonymousClass anonymousClass : classDiff.getRemovedAnonymousClasses()) {
+			//the mappers of the parent containers, including the operations of object literals already replaced with module-level objects
+			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>(classDiff.getOperationBodyMapperList());
+			//the object literals nested in the operations of other removed object literals come after them, so that their parent mappers exist
+			List<UMLAnonymousClass> removedAnonymousClasses = new ArrayList<>(classDiff.getRemovedAnonymousClasses());
+			List<UMLAnonymousClass> nestedObjectLiterals = new ArrayList<>();
+			for(UMLAnonymousClass anonymousClass : removedAnonymousClasses) {
+				if(PathFileUtils.isTypeScriptFile(anonymousClass.getSourceFile()) &&
+						removedAnonymousClasses.stream().anyMatch(other -> other != anonymousClass && other.getLocationInfo().subsumes(anonymousClass.getLocationInfo()))) {
+					nestedObjectLiterals.add(anonymousClass);
+				}
+			}
+			removedAnonymousClasses.removeAll(nestedObjectLiterals);
+			removedAnonymousClasses.addAll(nestedObjectLiterals);
+			for(UMLAnonymousClass anonymousClass : removedAnonymousClasses) {
 				List<UMLAnonymousToClassDiff> matchingDiffs = new ArrayList<>();
 				for(UMLClass addedClass : addedClasses) {
 					MatchResult matchResult = anonymousClass.hasSameAttributesAndOperations(addedClass);
-					if(matchResult.getMatchedOperations() > 0 || matchResult.getMatchedAttributes() > 0) {
+					if(matchResult.getMatchedOperations() > 0 || matchResult.getMatchedAttributes() > 0 || objectLiteralReferenceFound(parentMappers, anonymousClass, addedClass)) {
 						UMLAnonymousToClassDiff diff = new UMLAnonymousToClassDiff(anonymousClass, addedClass, this);
 						diff.process();
 						List<UMLOperationBodyMapper> matchedOperationMappers = diff.getOperationBodyMapperList();
@@ -3830,9 +3843,20 @@ public class UMLModelDiff {
 						}
 					}
 				}
+				if(matchingDiffs.size() > 1) {
+					List<UMLAnonymousToClassDiff> referencedDiffs = new ArrayList<>();
+					for(UMLAnonymousToClassDiff diff : matchingDiffs) {
+						if(objectLiteralReferenceFound(parentMappers, anonymousClass, diff.getNextClass())) {
+							referencedDiffs.add(diff);
+						}
+					}
+					if(referencedDiffs.size() == 1) {
+						matchingDiffs = referencedDiffs;
+					}
+				}
 				if(matchingDiffs.size() == 1) {
 					UMLAnonymousToClassDiff diff = matchingDiffs.get(0);
-					if((diff.containsStatementMappings() && constructorCallFound(classDiff, diff)) || diff.identicalAttributesAndAllMethodsMatched()) {
+					if((diff.containsStatementMappings() && (constructorCallFound(classDiff, diff) || objectLiteralReferenceFound(parentMappers, anonymousClass, diff.getNextClass()))) || diff.identicalAttributesAndAllMethodsMatched()) {
 						List<Refactoring> anonymousClassDiffRefactorings = diff.getRefactorings();
 						Set<Refactoring> toBeRemoved = new LinkedHashSet<>();
 						for(Refactoring r : anonymousClassDiffRefactorings) {
@@ -3857,6 +3881,7 @@ public class UMLModelDiff {
 						refactorings.addAll(anonymousClassDiffRefactorings);
 						refactorings.add(refactoring);
 						addedClassesToBeRemoved.add(diff.getNextClass());
+						parentMappers.addAll(diff.getOperationBodyMapperList());
 					}
 				}
 				else if(matchingDiffs.size() > 1) {
@@ -3894,6 +3919,36 @@ public class UMLModelDiff {
 		}
 		addedClasses.removeAll(addedClassesToBeRemoved);
 		return refactorings;
+	}
+
+	//a JavaScript object literal replaced with a module-level object, which the parent container references by name, i.e., traverse(node, { enter: function (node) {...} }) and traverse(node, traverser)
+	private static boolean objectLiteralReferenceFound(List<UMLOperationBodyMapper> parentMappers, UMLAnonymousClass anonymousClass, UMLClass addedClass) {
+		if(!PathFileUtils.isTypeScriptFile(anonymousClass.getSourceFile()) || !anonymousClass.getSourceFile().equals(addedClass.getSourceFile())) {
+			return false;
+		}
+		//the innermost mapped container enclosing the object literal, i.e., a function or the operation of an enclosing object literal
+		UMLOperationBodyMapper parentMapper = null;
+		for(UMLOperationBodyMapper mapper : parentMappers) {
+			LocationInfo location1 = mapper.getContainer1().getLocationInfo();
+			if(location1.getFilePath().equals(anonymousClass.getSourceFile()) && location1.subsumes(anonymousClass.getLocationInfo()) &&
+					(parentMapper == null || parentMapper.getContainer1().getLocationInfo().subsumes(location1))) {
+				parentMapper = mapper;
+			}
+		}
+		String name = addedClass.getNonQualifiedName();
+		return parentMapper != null && referencesName(parentMapper.getContainer2(), name) && !referencesName(parentMapper.getContainer1(), name);
+	}
+
+	private static boolean referencesName(VariableDeclarationContainer container, String name) {
+		if(container.getAllVariables().contains(name)) {
+			return true;
+		}
+		for(AbstractCall call : container.getAllOperationInvocations()) {
+			if(call.arguments().contains(name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean nameCompatibility(UMLAnonymousToClassDiff anonymousToClassDiff) {

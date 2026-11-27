@@ -1583,7 +1583,9 @@ public abstract class UMLAbstractClassDiff {
 		List<Refactoring> originalRefactorings = new ArrayList<Refactoring>(this.refactorings);
 		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
 		if(!originalClass.getTypeDeclarationKind().equals(nextClass.getTypeDeclarationKind())) {
-			boolean anonymousToClass = originalClass.getTypeDeclarationKind().endsWith("class") && nextClass.getTypeDeclarationKind().endsWith("class");
+			//an object literal replaced with a module-level object, i.e., traverse(node, { enter: function (node) {...} }) and var traverser = { enter: function (node) {...} };
+			boolean anonymousToClass = originalClass.getTypeDeclarationKind().endsWith("class") && (nextClass.getTypeDeclarationKind().endsWith("class") ||
+					(originalClass instanceof UMLAnonymousClass && nextClass.getTypeDeclarationKind().equals("object") && PathFileUtils.isTypeScriptFile(nextClass.getSourceFile())));
 			if(!anonymousToClass) {
 				ChangeTypeDeclarationKindRefactoring ref = new ChangeTypeDeclarationKindRefactoring(originalClass.getTypeDeclarationKind(), nextClass.getTypeDeclarationKind(), originalClass, nextClass);
 				refactorings.add(ref);

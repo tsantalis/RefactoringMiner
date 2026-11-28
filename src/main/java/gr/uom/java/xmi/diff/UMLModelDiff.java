@@ -6133,7 +6133,13 @@ public class UMLModelDiff {
 					continue;
 				}
 			}
+			boolean localFunction = localFunction(removedOperation);
 			for(UMLOperationBodyMapper mapper : mappers) {
+				//a local function is visible only inside the function declaring it, so a call with its name in another file calls something else,
+				//i.e., the prop setConnectionStringUrl(connectionStringUrl) of ConnectStringInput in connection-string-input.tsx, not the function setConnectionStringUrl declared inside useConnectForm in use-connect-form.ts (compass 199d4255)
+				if(localFunction && !mapper.getContainer1().getLocationInfo().getFilePath().equals(removedOperation.getLocationInfo().getFilePath())) {
+					continue;
+				}
 				if((mapper.nonMappedElementsT2() > 0 || includesReplacementInvolvingRemovedMethod(mapper.getReplacementsInvolvingMethodInvocation(), removedOperation, mapper.getContainer1(), mapper.getClassDiff())) && !mapper.containsInlineOperationRefactoring(removedOperation)) {
 					List<AbstractCall> operationInvocations = mapper.getContainer1().getAllOperationInvocations();
 					List<AbstractCall> removedOperationInvocations = new ArrayList<AbstractCall>();
@@ -6362,6 +6368,21 @@ public class UMLModelDiff {
 						invocation = leaf1.assignmentInvocationCoveringEntireStatement();
 					}
 					if(invocation != null && invocation.getName().equals("build")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	//a function declared inside another function of the parent model, i.e., function setConnectionStringUrl(connectionStringUrl) inside export function useConnectForm(...)
+	private boolean localFunction(UMLOperation operation) {
+		String filePath = operation.getLocationInfo().getFilePath();
+		for(UMLClass umlClass : parentModel.getClassList()) {
+			if(umlClass.getSourceFile().equals(filePath)) {
+				for(UMLOperation enclosingOperation : umlClass.getOperations()) {
+					if(enclosingOperation.getNestedOperations().contains(operation)) {
 						return true;
 					}
 				}

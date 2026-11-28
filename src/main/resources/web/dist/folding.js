@@ -84,3 +84,54 @@ function setAllFoldings(config, leftEditor, rightEditor) {
         monaco.languages.registerFoldingRangeProvider(languageId, foldingRangeProvider);
     }
 }
+
+//expanding collapsed code in one side expands the code mapped to it in the other side, so that the two sides do not drift apart
+function syncFoldings(config, leftEditor, rightEditor) {
+    const editors = [leftEditor, rightEditor];
+    const foldingModels = [];
+    let syncing = false;
+    editors.forEach((editor, index) => {
+        const folding = editor.getContribution('editor.contrib.folding');
+        if (!folding || !folding.getFoldingModel) return;
+        Promise.resolve(folding.getFoldingModel()).then(foldingModel => {
+            if (!foldingModel) return;
+            foldingModels[index] = foldingModel;
+            foldingModel.onDidChange(event => {
+                const other = foldingModels[1 - index];
+                if (syncing || !other || !event.collapseStateChanged) return;
+                const expanded = event.collapseStateChanged.filter(region => !region.isCollapsed);
+                if (expanded.length === 0) return;
+                const lines = mappedLines(config.mappings, index, expanded);
+                const regions = other.regions;
+                const toExpand = [];
+                for (let i = 0; i < regions.length; i++) {
+                    const start = regions.getStartLineNumber(i);
+                    const end = regions.getEndLineNumber(i);
+                    if (regions.isCollapsed(i) && lines.some(([from, to]) => from <= end && start <= to)) {
+                        toExpand.push(regions.toRegion(i));
+                    }
+                }
+                if (toExpand.length === 0) return;
+                syncing = true;
+                try {
+                    other.toggleCollapseState(toExpand);
+                }
+                finally {
+                    syncing = false;
+                }
+            });
+        });
+    });
+}
+//the lines, in the other side, of the code mapped to the code within the given regions of the side at the given index
+function mappedLines(mappings, index, regions) {
+    const lines = [];
+    mappings.forEach(mapping => {
+        const src = mapping[index];
+        const dst = mapping[1 - index];
+        if (regions.some(region => region.startLineNumber <= src.startLineNumber && src.endLineNumber <= region.endLineNumber)) {
+            lines.push([dst.startLineNumber, dst.endLineNumber]);
+        }
+    });
+    return lines;
+}

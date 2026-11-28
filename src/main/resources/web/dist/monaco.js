@@ -40,6 +40,7 @@ function mymonaco(config) {
             rightEditor.onMouseDown(editorMouseDown(config, rightEditor, leftEditor, 1, 0));
 
             setAllFoldings(config, leftEditor, rightEditor);
+            syncFoldings(config, leftEditor, rightEditor);
 
 
             if (config.spv === true) {

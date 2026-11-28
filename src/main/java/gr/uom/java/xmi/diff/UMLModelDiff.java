@@ -1637,9 +1637,12 @@ public class UMLModelDiff {
 			for(UMLClassDiff classDiff : commonClassDiffList) {
 				UMLType superType2 = classDiff.getNewSuperclass();
 				boolean sameSuperType = superType1 != null && superType2 != null && superType1.equalClassType(superType2);
-				//an unchanged class was neither renamed nor split, i.e., the type alias AtlasSignInCancelAction = { type: AtlasSignInActions.Cancel } of compass 63036d30
+				//an unchanged class was neither renamed nor split, i.e., the type alias AtlasSignInCancelAction = { type: AtlasSignInActions.Cancel } of compass 63036d30,
+				//and a class without added members received none of the removed class, i.e., the type alias ConnectedConnectionTreeItem of tree-data.ts,
+				//whose only change is the type of connectionStatus, was not split from the removed type Action of connections-store.tsx (compass 00209272)
+				boolean addedMembers = !classDiff.getAddedOperations().isEmpty() || !classDiff.getAddedAttributes().isEmpty();
 				if(!sameSuperType && !classDiff.getOriginalClass().isModule() && !classDiff.getNextClass().isModule() && !classDiff.isEmpty() &&
-						(classDiff.getAddedOperations().size() >= classDiff.getOperationBodyMapperList().size() || betterMatchThanCounterpart(removedClass, classDiff.getNextClass(), classDiff.getOriginalClass(), matcher))) {
+						((addedMembers && classDiff.getAddedOperations().size() >= classDiff.getOperationBodyMapperList().size()) || betterMatchThanCounterpart(removedClass, classDiff.getNextClass(), classDiff.getOriginalClass(), matcher))) {
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
 						Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, classDiff.getNextClass());
 						if(processedClassPairs.contains(pair)) {

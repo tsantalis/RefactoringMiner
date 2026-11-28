@@ -6,6 +6,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
@@ -405,6 +406,12 @@ public class OperationInvocation extends AbstractCall {
 		if(!equalName && !constructorCall) {
     		return false;
     	}
+    	//a function of a TypeScript or JavaScript module is called on the property of an object only when the file of the caller imports it, i.e., this.props.toggleIsColumnstore(...)
+    	//of a component connected to the imported toggleIsColumnstore (compass 5f1e7cdb), but result.current.connect(connectionInfo) calls the connect of the hook result,
+    	//not the function connect of connections-store-redux.ts, which connections-store.spec.tsx does not import (compass 00209272)
+    	if(expression != null && expression.contains(".") && moduleFunction(operation, modelDiff) && !importedByCallerFile(operation, callerOperation, modelDiff)) {
+    		return false;
+    	}
     	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
     	Map<String, VariableDeclaration> parentFieldDeclarationMap = null;
     	Map<String, VariableDeclaration> childFieldDeclarationMap = null;
@@ -700,6 +707,33 @@ public class OperationInvocation extends AbstractCall {
 			return true;
 		}
 		return result;
+	}
+
+	private static boolean moduleFunction(VariableDeclarationContainer operation, UMLModelDiff modelDiff) {
+		if(modelDiff == null || !(operation instanceof UMLOperation) || !PathFileUtils.isTypeScriptFile(operation.getLocationInfo().getFilePath())) {
+			return false;
+		}
+		UMLAbstractClass childClass = modelDiff.findClassInChildModel(operation.getClassName());
+		UMLAbstractClass parentClass = modelDiff.findClassInParentModel(operation.getClassName());
+		return (childClass instanceof UMLClass class2 && class2.isModule() && class2.getOperations().contains(operation)) ||
+				(parentClass instanceof UMLClass class1 && class1.isModule() && class1.getOperations().contains(operation));
+	}
+
+	private static boolean importedByCallerFile(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
+		String filePath = callerOperation.getLocationInfo().getFilePath();
+		String importedName = operation.getClassName() + "." + operation.getName();
+		for(UMLModel model : List.of(modelDiff.getParentModel(), modelDiff.getChildModel())) {
+			for(UMLClass umlClass : model.getClassList()) {
+				if(umlClass.isModule() && umlClass.getSourceFile().equals(filePath)) {
+					for(UMLImport imp : umlClass.getImportedTypes()) {
+						if(imp.getName().equals(importedName) || imp.getName().endsWith("/" + importedName)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean importMatch(UMLImport imp, VariableDeclarationContainer operation) {

@@ -8383,6 +8383,41 @@
     "author": null,
     "time": "11/29/17 09:39 AM",
     "refactorings": [{
+        "type": "Localize Parameter",
+        "description": "Localize Parameter mini_batch to minibatch in method public train_qnet() from class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public train(feed_dict) moved from class modules.q_networks.basic_components.MLPNetwork to class agents.nature_dqn_agent.NatureDQNAgent & inlined to public train_qnet()",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method public train(mini_batch) moved from class modules.q_networks.natrue_q_network.NatrueQNetwork to class agents.nature_dqn_agent.NatureDQNAgent & inlined to public train_qnet()",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public sess : tf.Session from class modules.q_networks.basic_components.MLPNetwork to public sess : tf.Session from class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute update_period from class modules.q_networks.natrue_q_network.NatrueQNetwork to update_period from class agents.nature_dqn_agent.NatureDQNAgent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter q_value to qvalue in method public l2_loss(qvalue, action_input, y_input, kwargs) from class losses.dqn_losses.__module__",
         "comment": null,

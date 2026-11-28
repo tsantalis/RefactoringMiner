@@ -4953,7 +4953,10 @@ public class UMLModelDiff {
 		List<UMLOperation> operationsInRemovedClasses = getOperationsInRemovedClasses();
 		if(operationsInRemovedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
 			checkForMovedAndInlinedOperations(getOperationBodyMappersInCommonClasses(), operationsInRemovedClasses);
-			checkForMovedAndInlinedOperationsOfRemovedSuperclasses(operationsInRemovedClasses);
+			//the operations of a removed class inlined into a moved or renamed class, i.e., the constructor of the removed superclass Scheduler inlined into the constructor of MuteScheduler,
+			//moved from MuteScheduler.js to MuteScheduler.ts (yuudachi e00f37b6), and train(mini_batch) of the removed NatrueQNetwork inlined into train_qnet() of NatureDQNAgent,
+			//renamed from DeepQNetwork (texar f5a2b259)
+			checkForMovedAndInlinedOperations(getOperationBodyMappersInMovedAndRenamedClasses(), operationsInRemovedClasses);
 		}
 		checkForExtractedOperationsWithinMovedAndInlinedOperations();
 		List<UMLOperation> allOperationsInAddedClasses = getOperationsInAddedClasses();
@@ -6136,29 +6139,22 @@ public class UMLModelDiff {
 		return false;
 	}
 
-	//the operations of a removed superclass inlined into a moved or renamed subclass, which absorbed its superclass (Collapse Hierarchy),
-	//i.e., the constructor of the removed Scheduler inlined into the constructor of MuteScheduler, moved from MuteScheduler.js to MuteScheduler.ts (yuudachi e00f37b6),
-	//and the constructor of the removed AbstractMergePolicyProvider inlined into the constructor of TieredMergePolicyProvider, renamed to MergePolicyConfig (elasticsearch f77804da)
-	private void checkForMovedAndInlinedOperationsOfRemovedSuperclasses(List<UMLOperation> operationsInRemovedClasses) throws RefactoringMinerTimedOutException {
-		List<UMLClassBaseDiff> classDiffs = new ArrayList<UMLClassBaseDiff>();
-		classDiffs.addAll(classMoveDiffList);
-		classDiffs.addAll(innerClassMoveDiffList);
-		classDiffs.addAll(classRenameDiffList);
-		for(UMLClassBaseDiff classDiff : classDiffs) {
-			UMLType superclass = classDiff.getOriginalClass().getSuperclass();
-			if(superclass == null) {
-				continue;
-			}
-			List<UMLOperation> superclassOperations = new ArrayList<UMLOperation>();
-			for(UMLOperation operation : operationsInRemovedClasses) {
-				if(looksLikeSameType(superclass.getClassType(), operation.getClassName()) && getRemovedClass(operation.getClassName()) != null) {
-					superclassOperations.add(operation);
-				}
-			}
-			if(!superclassOperations.isEmpty()) {
-				checkForMovedAndInlinedOperations(classDiff.getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs(), superclassOperations);
-			}
+	//super.m(args) calls an operation of an ancestor of the caller's class, so it cannot call the operation of another class, i.e., super.registerAttributes(resourceRegistration)
+	//in TransportResourceDefinition, which extends SimpleResourceDefinition, does not call registerAttributes(registry) of the removed SubsystemWriteAttributeHandler (infinispan 8f446b6d)
+	private boolean superCallOutsideAncestors(AbstractCall invocation, UMLOperation removedOperation, VariableDeclarationContainer caller) {
+		if(!invocation.isSuperCall() || invocation.getName().equals("super")) {
+			return false;
 		}
+		UMLAbstractClass umlClass = findClassInParentModel(caller.getClassName());
+		Set<UMLAbstractClass> visited = new HashSet<UMLAbstractClass>();
+		while(umlClass instanceof UMLClass subclass && subclass.getSuperclass() != null && visited.add(subclass)) {
+			String superclass = subclass.getSuperclass().getClassType();
+			if(looksLikeSameType(superclass, removedOperation.getClassName())) {
+				return false;
+			}
+			umlClass = findClassInParentModel(superclass);
+		}
+		return true;
 	}
 
 	//super(args) calls the constructor of the superclass of the caller's class, i.e., super(client, model, { checkRate }) in the constructor of MuteScheduler,
@@ -6208,7 +6204,8 @@ public class UMLModelDiff {
 					List<AbstractCall> operationInvocations = mapper.getContainer1().getAllOperationInvocations();
 					List<AbstractCall> removedOperationInvocations = new ArrayList<AbstractCall>();
 					for(AbstractCall invocation : operationInvocations) {
-						if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), mapper.getClassDiff(), this) || superConstructorCall(invocation, removedOperation, mapper.getContainer1())) {
+						if((invocation.matchesOperation(removedOperation, mapper.getContainer1(), mapper.getClassDiff(), this) && !superCallOutsideAncestors(invocation, removedOperation, mapper.getContainer1())) ||
+								superConstructorCall(invocation, removedOperation, mapper.getContainer1())) {
 							removedOperationInvocations.add(invocation);
 						}
 					}
@@ -6567,6 +6564,26 @@ public class UMLModelDiff {
 		return moved.size();
 	}
 
+	//the returned value replaces the call of the inlined operation, so the return of an operation with a non-boolean return type cannot become a condition,
+	//i.e., return (name != null) ? SERVICE_NAME.append(name) : SERVICE_NAME; of getServiceName(name) : ServiceName
+	//-> the condition (defaultStack != null) && !defaultStack.equals(ProtocolStackServiceNameFactory.DEFAULT_STACK) (infinispan 8f446b6d)
+	private static boolean nonBooleanReturnMappedToCondition(AbstractCodeMapping mapping, VariableDeclarationContainer inlinedOperation, Constants LANG1) {
+		if(!(inlinedOperation instanceof UMLOperation operation) || operation.getReturnParameter() == null || operation.getReturnParameter().getType() == null) {
+			return false;
+		}
+		if(!mapping.getFragment1().getString().startsWith(LANG1.RETURN_SPACE)) {
+			return false;
+		}
+		CodeElementType type = mapping.getFragment2().getLocationInfo().getCodeElementType();
+		if(!type.equals(CodeElementType.IF_STATEMENT_CONDITION) && !type.equals(CodeElementType.WHILE_STATEMENT_CONDITION) && !type.equals(CodeElementType.DO_STATEMENT_CONDITION) &&
+				!type.equals(CodeElementType.FOR_STATEMENT_CONDITION) && !type.equals(CodeElementType.TERNARY_OPERATOR_CONDITION)) {
+			return false;
+		}
+		//the types that may hold a boolean value
+		String returnType = operation.getReturnParameter().getType().getClassType();
+		return !Set.of("boolean", "Boolean", "bool", "Object", "any", "unknown", "Inferred").contains(returnType);
+	}
+
 	private boolean moveAndInlineMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
 		List<AbstractCodeMapping> mappingList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 		if((operationBodyMapper.getContainer1().isGetter() || operationBodyMapper.getContainer1().isDelegate() != null) && mappingList.size() == 1) {
@@ -6621,8 +6638,11 @@ public class UMLModelDiff {
 					(mapping.getFragment2().getString().endsWith("++") || mapping.getFragment2().getString().contains(" == "))) {
 				mappings--;
 			}
-			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject &&
+			else if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject &&
 					mapping.getFragment1().getArrayAccesses().size() != mapping.getFragment2().getArrayAccesses().size()) {
+				mappings--;
+			}
+			else if(nonBooleanReturnMappedToCondition(mapping, operationBodyMapper.getContainer1(), operationBodyMapper.LANG1)) {
 				mappings--;
 			}
 		}

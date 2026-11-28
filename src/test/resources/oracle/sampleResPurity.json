@@ -16630,6 +16630,16 @@
   "sha1" : "430fa65bf2ba5098fc02e563cfe84533268def2d",
   "url" : "https://github.com/GwtMaterialDesign/gwt-material/commit/430fa65bf2ba5098fc02e563cfe84533268def2d",
   "refactorings" : [ {
+    "type" : "Move And Inline Method",
+    "description" : "Move And Inline Method\tpublic setAllowBlank(allowBlank boolean) : void moved from class gwt.material.design.client.base.mixin.BlankValidatorMixin to class gwt.material.design.client.base.AbstractValueWidget & inlined to public setAllowBlank(allowBlank boolean) : void",
+    "purity" : {
+      "purityValue" : "0",
+      "purityValidation" : "-",
+      "purityComment" : "",
+      "mappingState" : "",
+      "validationComment" : ""
+    }
+  }, {
     "type" : "Rename Class",
     "description" : "Rename Class\tgwt.material.design.client.base.ValueBoxBase renamed to gwt.material.design.client.base.AbstractValueWidget",
     "purity" : {

@@ -234,14 +234,14 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **November 20, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 28, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1165  |  3  |  2  | 0.997  | 0.998|
+|**Total**|1168  |  3  |  2  | 0.997  | 0.998|
 |Extract Method|39  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
-|Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
+|Move Attribute| 7  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|141  |  0  |  1  | 1.000  | 0.993|
 |Inline Method| 6  |  0  |  0  | 1.000  | 1.000|
 |Move Method|23  |  0  |  0  | 1.000  | 1.000|
@@ -265,7 +265,7 @@ As of **November 20, 2026** the precision and recall of RefactoringMiner on this
 |Replace Variable With Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|17  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter|10  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter|11  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Variable Type|33  |  2  |  0  | 0.943  | 1.000|
 |Add Method Annotation|26  |  0  |  0  | 1.000  | 1.000|

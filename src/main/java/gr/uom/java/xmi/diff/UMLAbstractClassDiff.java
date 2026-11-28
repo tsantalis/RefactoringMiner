@@ -5170,7 +5170,8 @@ public abstract class UMLAbstractClassDiff {
 					//the only operation with this name before and after, whose parameters changed and whose body grew around most of its identical statements
 					(uniqueOperationName(removedOperation, addedOperation) && mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
 							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
-							compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)))) {
+							compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) ||
+					uniqueModuleFunctionName(removedOperation, addedOperation))) {
 				mapperSet.add(operationBodyMapper);
 			}
 			//the only operation with this name before and after, with the same declared return type, whose parameters changed and which delegated to another removed operation,
@@ -5439,6 +5440,15 @@ public abstract class UMLAbstractClassDiff {
 				mapperSet.add(operationBodyMapper);
 			}
 		}
+	}
+
+	//a function of a TypeScript or JavaScript module is identified by its name, as the name is unique in the module,
+	//i.e., ConnectStringInput({ connectionString, setConnectionStringError, setConnectionStringUrl }) -> ConnectStringInput({ connectionString, enableEditingConnectionString, ... })
+	//with its useReducer state replaced by useState, leaving fewer mapped than non-mapped statements (compass 199d4255)
+	private boolean uniqueModuleFunctionName(UMLOperation removedOperation, UMLOperation addedOperation) {
+		return originalClass instanceof UMLClass class1 && class1.isModule() && nextClass instanceof UMLClass class2 && class2.isModule() &&
+				PathFileUtils.isTypeScriptFile(class1.getSourceFile()) && PathFileUtils.isTypeScriptFile(class2.getSourceFile()) &&
+				uniqueOperationName(removedOperation, addedOperation);
 	}
 
 	private boolean uniqueOperationName(UMLOperation removedOperation, UMLOperation addedOperation) {

@@ -74,13 +74,14 @@ public class UMLClassRenameDiff extends UMLClassBaseDiff {
     	}
 	}
 
-	//the attribute of the class equal to the given attribute, among the attributes that can be paired when the class is a union type alias
+	//the attribute of the class equal to the given attribute, or among the attributes that can be paired when the class is a union type alias, the one with the same name,
+	//since the member of the union is the counterpart of the other type, i.e., type: 'oidc-attempt-connect-notify-device-auth' -> type: ActionTypes.OidcNotifyDeviceAuth
 	private static UMLAttribute matchingAttribute(UMLAbstractClass umlClass, UMLAttribute otherAttribute, Set<UMLAttribute> pairableAttributes) {
 		if(pairableAttributes == null) {
 			return umlClass.containsAttribute(otherAttribute);
 		}
 		for(UMLAttribute attribute : pairableAttributes) {
-			if(attribute.equals(otherAttribute)) {
+			if(attribute.getName().equals(otherAttribute.getName())) {
 				return attribute;
 			}
 		}
@@ -92,7 +93,7 @@ public class UMLClassRenameDiff extends UMLClassBaseDiff {
 	//{ type: 'oidc-attempt-connect-notify-device-auth'; connectionInfo; verificationUrl; userCode } of Action for OidcNotifyDeviceAuthAction = { type; connectionId; verificationUrl; userCode },
 	//or none, when other members declare as many, i.e., the members { type; connectionInfo } of 'attempt-connect', 'connection-attempt-succeeded', 'edit-connection' and others
 	//for ConnectionAttemptStartAction = { type; connectionInfo } (compass 00209272)
-	private static Set<UMLAttribute> pairableUnionAttributes(UMLAbstractClass unionClass, UMLAbstractClass otherClass) {
+	static Set<UMLAttribute> pairableUnionAttributes(UMLAbstractClass unionClass, UMLAbstractClass otherClass) {
 		Map<Integer, Set<UMLAttribute>> members = new LinkedHashMap<>();
 		for(UMLAttribute attribute : unionClass.getAttributes()) {
 			if(attribute.getUnionMember() >= 0) {

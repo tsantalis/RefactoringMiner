@@ -1449,6 +1449,39 @@ public class UMLModelDiff {
 		return commonNames;
 	}
 
+	//a union type alias split into the types of its members: the added type aliases matching uniquely one member each, i.e., the member
+	//{ type: 'oidc-attempt-connect-notify-device-auth'; connectionInfo; verificationUrl; userCode } of Action in connections-store.tsx became
+	//OidcNotifyDeviceAuthAction = { type; connectionId; verificationUrl; userCode } of connections-store-redux.ts, while ConnectionAttemptStartAction = { type; connectionInfo }
+	//matches the members of 'attempt-connect', 'connection-attempt-succeeded' and others equally (compass 00209272)
+	private TreeSet<UMLClassRenameDiff> unionMemberSplit(UMLClass removedClass, TreeSet<UMLClassRenameDiff> diffSet) {
+		TreeSet<UMLClassRenameDiff> split = new TreeSet<>();
+		if(!removedClass.isTypeAlias() || removedClass.getAttributes().stream().noneMatch(attribute -> attribute.getUnionMember() >= 0)) {
+			return split;
+		}
+		//the added type aliases each member is the unique best counterpart of
+		Map<Integer, Set<UMLClass>> typesPerMember = new LinkedHashMap<>();
+		for(UMLClass addedClass : addedClasses) {
+			if(addedClass.isTypeAlias()) {
+				Set<UMLAttribute> memberAttributes = UMLClassRenameDiff.pairableUnionAttributes(removedClass, addedClass);
+				if(memberAttributes != null && !memberAttributes.isEmpty()) {
+					typesPerMember.computeIfAbsent(memberAttributes.iterator().next().getUnionMember(), k -> new LinkedHashSet<>()).add(addedClass);
+				}
+			}
+		}
+		//a member that is the unique best counterpart of several types has no counterpart among them,
+		//i.e., the member { type: 'connected'; connectionInfo } of Action in home.tsx for both SaveConnectionInfoAction and ConnectionAttemptStartAction
+		for(UMLClassRenameDiff renameDiff : diffSet) {
+			if(renameDiff.getOriginalClass().equals(removedClass)) {
+				for(Set<UMLClass> types : typesPerMember.values()) {
+					if(types.size() == 1 && types.contains(renameDiff.getRenamedClass())) {
+						split.add(renameDiff);
+					}
+				}
+			}
+		}
+		return split;
+	}
+
 	private void removedClassesInOuterLoop(UMLClassMatcher matcher) throws RefactoringMinerTimedOutException {
 		Set<UMLClass> mergedClassesToBeRemoved = new HashSet<UMLClass>();
 		for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
@@ -1489,7 +1522,18 @@ public class UMLModelDiff {
 					if(!containsOriginalClass(consistentUnion, removedClass)) {
 						consistentUnion = new TreeSet<>();
 					}
-					if(sameRenamedClass(consistentUnion) && !inheritanceRelationshipBetweenMergedClasses(consistentUnion) && !partialModel()) {
+					TreeSet<UMLClassRenameDiff> memberSplit = unionMemberSplit(removedClass, diffSet);
+					if(!memberSplit.isEmpty() && !partialModel()) {
+						UMLClassSplitDiff splitDiff = new UMLClassSplitDiff(memberSplit);
+						classSplitDiffList.add(splitDiff);
+						for(UMLClassRenameDiff renameDiff : memberSplit) {
+							addedClasses.remove(renameDiff.getRenamedClass());
+						}
+						mergedClassesToBeRemoved.add(removedClass);
+						removedClassIterator.remove();
+						splitFound = true;
+					}
+					else if(sameRenamedClass(consistentUnion) && !inheritanceRelationshipBetweenMergedClasses(consistentUnion) && !partialModel()) {
 						UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(consistentUnion);
 						classMergeDiffList.add(mergeDiff);
 						for(UMLClassRenameDiff renameDiff : consistentUnion) {
@@ -3846,6 +3890,16 @@ public class UMLModelDiff {
 		}
 		for(UMLAttribute addedAttribute : addedClass.getAttributes()) {
 			UMLAttribute removedAttribute = classDiff.containsRemovedAttributeWithTheSameSignature(addedAttribute);
+			//the attribute with the same name the class diff paired with the added attribute, and not another one with the same name, i.e., type: 'oidc-attempt-connect-notify-device-auth'
+			//of the member of the union Action that became OidcNotifyDeviceAuthAction, and not type: 'attempt-connect' of another member (compass 00209272)
+			if(removedAttribute == null) {
+				for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {
+					if(diff.getAddedAttribute().equals(addedAttribute) && !diff.isRenamed() && diff.getRemovedAttribute().getUnionMember() >= 0) {
+						removedAttribute = diff.getRemovedAttribute();
+						break;
+					}
+				}
+			}
 			if(parentType.equals(RefactoringType.MERGE_CLASS) && removedAttribute == null) {
 				removedAttribute = classDiff.getOriginalClass().attributeWithTheSameSignature(addedAttribute);
 			}

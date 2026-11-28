@@ -1408,6 +1408,47 @@ public class UMLModelDiff {
 		this.classMoveDiffList.removeAll(innerClassMoveDiffList);
 	}
 
+	//the members of a type alias are its structure, so a type alias sharing its member names equally with two added type aliases of the same size has no counterpart among them,
+	//i.e., type Action = { type: 'connected'; connectionInfo: ConnectionInfo } | { type: 'disconnected' } of home.tsx shares type and connectionInfo with both
+	//SaveConnectionInfoAction = { type: ActionTypes.SaveConnectionInfo; connectionInfo: ConnectionInfo } and
+	//ConnectionAttemptStartAction = { type: ActionTypes.ConnectionAttemptStart; connectionInfo: ConnectionInfo } of connections-store-redux.ts (compass 00209272)
+	private boolean ambiguousTypeAliasMatch(TreeSet<UMLClassRenameDiff> diffSet) {
+		if(diffSet.isEmpty()) {
+			return false;
+		}
+		UMLClass originalClass = diffSet.first().getOriginalClass();
+		UMLClass renamedClass = diffSet.first().getRenamedClass();
+		if(!originalClass.isTypeAlias() || !renamedClass.isTypeAlias()) {
+			return false;
+		}
+		Set<String> commonNames = commonAttributeNames(originalClass, renamedClass);
+		if(commonNames.isEmpty()) {
+			return false;
+		}
+		for(UMLClass addedClass : addedClasses) {
+			if(addedClass != renamedClass && addedClass.isTypeAlias() && addedClass.getAttributes().size() == renamedClass.getAttributes().size() &&
+					commonAttributeNames(originalClass, addedClass).equals(commonNames)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//the names of the attributes of the second class declared also by the first class
+	private static Set<String> commonAttributeNames(UMLClass class1, UMLClass class2) {
+		Set<String> names1 = new HashSet<String>();
+		for(UMLAttribute attribute : class1.getAttributes()) {
+			names1.add(attribute.getName());
+		}
+		Set<String> commonNames = new HashSet<String>();
+		for(UMLAttribute attribute : class2.getAttributes()) {
+			if(names1.contains(attribute.getName())) {
+				commonNames.add(attribute.getName());
+			}
+		}
+		return commonNames;
+	}
+
 	private void removedClassesInOuterLoop(UMLClassMatcher matcher) throws RefactoringMinerTimedOutException {
 		Set<UMLClass> mergedClassesToBeRemoved = new HashSet<UMLClass>();
 		for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
@@ -1479,7 +1520,7 @@ public class UMLModelDiff {
 						conflictFound = true;
 					}
 				}
-				if(!mergeFound && !splitFound && !conflictFound) {
+				if(!mergeFound && !splitFound && !conflictFound && !ambiguousTypeAliasMatch(diffSet)) {
 					if(!renameDiffSet.isEmpty() && !(renameDiffSet.first().getOriginalClass().equals(minClassRenameDiff.getOriginalClass()) &&
 							renameDiffSet.first().getRenamedClass().equals(minClassRenameDiff.getRenamedClass()))) {
 						UMLClassRenameDiff minClassRenameDiff2 = renameDiffSet.first();
@@ -1555,7 +1596,7 @@ public class UMLModelDiff {
 						conflictFound = true;
 					}
 				}
-				if(!mergeFound && !splitFound && !conflictFound) {
+				if(!mergeFound && !splitFound && !conflictFound && !ambiguousTypeAliasMatch(diffSet)) {
 					if(!renameDiffSet.isEmpty() && !(renameDiffSet.first().getOriginalClass().equals(minClassRenameDiff.getOriginalClass()) &&
 							renameDiffSet.first().getRenamedClass().equals(minClassRenameDiff.getRenamedClass()))) {
 						UMLClassRenameDiff minClassRenameDiff2 = renameDiffSet.first();

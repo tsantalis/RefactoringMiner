@@ -1010,10 +1010,17 @@ public class TypeScriptOperationBody extends OperationBody {
 				umlClass.setFunctionType(type);
 			}
 			else if(typeAnnotation instanceof Swc4jAstTsUnionType unionType) {
+				int unionMember = 0;
 				for(ISwc4jAstTsType type : unionType.getTypes()) {
 					Swc4jAstTsTypeLit typeLiteral = memberTypeLiteral(type);
 					if(typeLiteral != null) {
+						int attributes = umlClass.getAttributes().size();
 						processTypeLiteral(sourceFolder, filePath, fileContent, umlClass, typeLiteral);
+						//the attributes of each member of the union keep their member, since several members declare attributes with the same name
+						for(int i=attributes; i<umlClass.getAttributes().size(); i++) {
+							umlClass.getAttributes().get(i).setUnionMember(unionMember);
+						}
+						unionMember++;
 					}
 				}
 				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation, 0);

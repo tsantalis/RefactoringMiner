@@ -1,7 +1,13 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
@@ -22,8 +28,10 @@ public class UMLClassRenameDiff extends UMLClassBaseDiff {
 	}
 
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
+		Set<UMLAttribute> pairableAttributes1 = pairableUnionAttributes(originalClass, nextClass);
+		Set<UMLAttribute> pairableAttributes2 = pairableUnionAttributes(nextClass, originalClass);
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
-			UMLAttribute matchingAttribute = nextClass.containsAttribute(attribute);
+			UMLAttribute matchingAttribute = pairableAttributes1 != null && !pairableAttributes1.contains(attribute) ? null : matchingAttribute(nextClass, attribute, pairableAttributes2);
     		if(matchingAttribute == null) {
     			this.reportRemovedAttribute(attribute);
     		}
@@ -44,7 +52,7 @@ public class UMLClassRenameDiff extends UMLClassBaseDiff {
     		}
     	}
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
-    		UMLAttribute matchingAttribute = originalClass.containsAttribute(attribute);
+    		UMLAttribute matchingAttribute = pairableAttributes2 != null && !pairableAttributes2.contains(attribute) ? null : matchingAttribute(originalClass, attribute, pairableAttributes1);
     		if(matchingAttribute == null) {
     			this.reportAddedAttribute(attribute);
     		}
@@ -64,6 +72,63 @@ public class UMLClassRenameDiff extends UMLClassBaseDiff {
     			}
     		}
     	}
+	}
+
+	//the attribute of the class equal to the given attribute, among the attributes that can be paired when the class is a union type alias
+	private static UMLAttribute matchingAttribute(UMLAbstractClass umlClass, UMLAttribute otherAttribute, Set<UMLAttribute> pairableAttributes) {
+		if(pairableAttributes == null) {
+			return umlClass.containsAttribute(otherAttribute);
+		}
+		for(UMLAttribute attribute : pairableAttributes) {
+			if(attribute.equals(otherAttribute)) {
+				return attribute;
+			}
+		}
+		return null;
+	}
+
+	//the attributes of a union type alias that can be paired with the attributes of a type without union members, since several members declare attributes with the same name:
+	//the attributes of the member declaring the most attribute names of the other type, when no other member declares as many, i.e., the member
+	//{ type: 'oidc-attempt-connect-notify-device-auth'; connectionInfo; verificationUrl; userCode } of Action for OidcNotifyDeviceAuthAction = { type; connectionId; verificationUrl; userCode },
+	//or none, when other members declare as many, i.e., the members { type; connectionInfo } of 'attempt-connect', 'connection-attempt-succeeded', 'edit-connection' and others
+	//for ConnectionAttemptStartAction = { type; connectionInfo } (compass 00209272)
+	private static Set<UMLAttribute> pairableUnionAttributes(UMLAbstractClass unionClass, UMLAbstractClass otherClass) {
+		Map<Integer, Set<UMLAttribute>> members = new LinkedHashMap<>();
+		for(UMLAttribute attribute : unionClass.getAttributes()) {
+			if(attribute.getUnionMember() >= 0) {
+				members.computeIfAbsent(attribute.getUnionMember(), k -> new LinkedHashSet<>()).add(attribute);
+			}
+		}
+		if(members.isEmpty()) {
+			return null;
+		}
+		Set<String> otherNames = new LinkedHashSet<>();
+		for(UMLAttribute attribute : otherClass.getAttributes()) {
+			if(attribute.getUnionMember() >= 0) {
+				return null;
+			}
+			otherNames.add(attribute.getName());
+		}
+		Set<UMLAttribute> best = new LinkedHashSet<>();
+		int max = 0;
+		boolean unique = false;
+		for(Set<UMLAttribute> member : members.values()) {
+			int common = 0;
+			for(UMLAttribute attribute : member) {
+				if(otherNames.contains(attribute.getName())) {
+					common++;
+				}
+			}
+			if(common > max) {
+				max = common;
+				best = member;
+				unique = true;
+			}
+			else if(common == max) {
+				unique = false;
+			}
+		}
+		return max > 0 && unique ? best : new LinkedHashSet<>();
 	}
 
 	public String toString() {

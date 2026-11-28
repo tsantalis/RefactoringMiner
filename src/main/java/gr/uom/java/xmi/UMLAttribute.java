@@ -35,6 +35,9 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private boolean isVolatile;
 	private boolean isInline;
 	private boolean isConstexpr;
+	//the index of the member of a union type alias declaring the attribute, i.e., 0 for type, connectionInfo and isAutoConnect of
+	//type Action = { type: 'attempt-connect'; connectionInfo: ConnectionInfo; isAutoConnect: boolean } | { type: 'connection-attempt-succeeded'; ... }, or -1 outside unions
+	private int unionMember = -1;
 	private List<UMLTypeParameter> typeParameters;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private VariableDeclaration variableDeclaration;
@@ -312,6 +315,14 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public void setFinal(boolean isFinal) {
 		this.isFinal = isFinal;
+	}
+
+	public int getUnionMember() {
+		return unionMember;
+	}
+
+	public void setUnionMember(int unionMember) {
+		this.unionMember = unionMember;
 	}
 
 	public boolean isStatic() {

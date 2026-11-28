@@ -4586,8 +4586,9 @@ public abstract class UMLAbstractClassDiff {
 		removedOperations.removeAll(parameterizedTests);
 	}
 
-	//a test becoming a parameterized test without a change of its signature, so it is mapped with the methods of the same signature instead of being paired as a removed and an added test,
-	//i.e., @Test f0_sfa() -> @ParameterizedTest(name = "[{arguments}]") @ArgumentsSource(DncTestArguments.class) f0_sfa(), which reads the configuration injected through the constructor of its class (DNC 3783aea8)
+	//a test becoming a parameterized test without a change of its name, so it is mapped with the methods of the same name instead of being paired as a removed and an added test,
+	//i.e., @Test f0_sfa() -> @ParameterizedTest(name = "[{arguments}]") @ArgumentsSource(DncTestArguments.class) f0_sfa(), which reads the configuration injected through the constructor of its class (DNC 3783aea8),
+	//or @Test statisticsFile_containsExpectedStats(@TempDir File tempDir) -> @ParameterizedTest @EnumSource(RepairStrategy.class) statisticsFile_containsExpectedStats(RepairStrategy repairStrategy, @TempDir File tempDir) (sorald ceb2aa42)
 	protected void checkForTestsParameterizedWithTheSameSignature() {
 		Set<UMLOperation> parameterizedTests = new HashSet<>();
 		for(Refactoring refactoring : refactorings) {
@@ -4598,7 +4599,7 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			UMLOperation operation1 = mapper.getOperation1();
 			UMLOperation operation2 = mapper.getOperation2();
-			if(operation1 == null || operation2 == null || parameterizedTests.contains(operation2) || !operation1.equalSignature(operation2) ||
+			if(operation1 == null || operation2 == null || parameterizedTests.contains(operation2) || !operation1.getName().equals(operation2.getName()) ||
 					!operation1.hasTestAnnotation() || operation1.hasParameterizedTestAnnotation() || !operation2.hasParameterizedTestAnnotation() ||
 					operation1.isLifecycleMethod() || operation2.isLifecycleMethod() || operation1.getVisibility() == Visibility.PRIVATE ||
 					operation2.getAnnotations().stream().noneMatch(a -> SourceAnnotation.isSourceAnnotation(a) || SourceAnnotation.isCustomSourceAnnotation(a))) {

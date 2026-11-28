@@ -8074,8 +8074,13 @@ public class ReplacementAlgorithm {
 				}
 			}
 			boolean identicalPreviousComment = previousComment1 != null && previousComment2 != null && previousComment1.getText().equals(previousComment2.getText());
-			if((mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) || identicalPreviousComment ||
-					(nonMappedElementsT1 == 0 && !methodReference1) || (nonMappedElementsT2 == 0 && !methodReference2) ||
+			//callbacks with different parameters, whose only mappings are returns of entirely different expressions, share nothing but their shape,
+			//i.e., (connectionInfo) => { return (<Sidebar ... />); } and (connection) => { return (connection.status === 'connected' || ...); } (compass 00209272),
+			//unlike function MockPluginWithContext(props: T) { return (...); } whose returned element is wrapped in another element (compass 63036d30)
+			boolean sameParameters = !lambda1.getParameterNameList().isEmpty() && lambda1.getParameterNameList().equals(lambda2.getParameterNameList());
+			boolean onlyReplacedReturns = !sameParameters && onlyReturnsOfReplacedExpressions(mapper);
+			if((!onlyReplacedReturns && ((mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
+					(nonMappedElementsT1 == 0 && !methodReference1) || (nonMappedElementsT2 == 0 && !methodReference2))) || identicalPreviousComment ||
 					(classDiff != null && (classDiff.isPartOfMethodExtracted(lambda1, lambda2) || classDiff.isPartOfMethodInlined(lambda1, lambda2) || isPartOfLambdaMovedToParentMapper(mapper)))) {
 				operationBodyMapper.addAllMappings(mapper.getMappings());
 				operationBodyMapper.getNonMappedInnerNodesT1().addAll(mapper.getNonMappedInnerNodesT1());
@@ -8102,6 +8107,22 @@ public class ReplacementAlgorithm {
 				operationBodyMapper.getRefactoringsAfterPostProcessing().addAll(mapper.getOperationSignatureDiff().get().getRefactorings());
 			}
 		}
+	}
+
+	//the mappings of the statements, apart from the blocks, are returns whose entire expression is replaced, i.e., return hookResult; -> return !!wrapperState.connectionsStore...;
+	private static boolean onlyReturnsOfReplacedExpressions(UMLOperationBodyMapper mapper) {
+		int returns = 0;
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			String fragment1 = mapping.getFragment1().getString();
+			if(fragment1.equals(mapper.LANG1.OPEN_BLOCK)) {
+				continue;
+			}
+			if(!UMLOperationBodyMapper.returnOfReplacedExpression(mapping, mapper.LANG1, mapper.LANG2)) {
+				return false;
+			}
+			returns++;
+		}
+		return returns > 0;
 	}
 
 	//the body of the lambda consists only of call statements, i.e., function(label) { appendLabel(scaleLabelMoments, label); }

@@ -7579,7 +7579,8 @@ public class UMLModelDiff {
 		if(operationBodyMapper.getContainer2().getBodyHashCode() == parentMapper.getContainer2().getBodyHashCode()) {
 			return false;
 		}
-		int mappings = operationBodyMapper.mappingsWithoutBlocks() - operationBodyMapper.lambdaShellMappings();
+		//a return of an entirely different expression from a nested function is no evidence of the extraction, i.e., return queryStorage; -> return !!wrapperState.connectionsStore...; (compass 00209272)
+		int mappings = operationBodyMapper.mappingsWithoutBlocks() - operationBodyMapper.lambdaShellMappings() - operationBodyMapper.nestedReplacedReturnMappings();
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();

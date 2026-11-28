@@ -3389,6 +3389,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	//a return whose entire expression is replaced, i.e., return hookResult; -> return !!wrapperState.connectionsStore.getState().connections.byId[info.id];
+	public static boolean returnOfReplacedExpression(AbstractCodeMapping mapping, Constants LANG1, Constants LANG2) {
+		String fragment1 = mapping.getFragment1().getString();
+		String fragment2 = mapping.getFragment2().getString();
+		if(mapping.getReplacements().size() != 1 || !fragment1.startsWith(LANG1.RETURN_SPACE) || !fragment2.startsWith(LANG2.RETURN_SPACE)) {
+			return false;
+		}
+		Replacement replacement = mapping.getReplacements().iterator().next();
+		return fragment1.equals(LANG1.RETURN_SPACE + replacement.getBefore() + LANG1.STATEMENT_TERMINATION) &&
+				fragment2.equals(LANG2.RETURN_SPACE + replacement.getAfter() + LANG2.STATEMENT_TERMINATION);
+	}
+
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
 			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, AbstractCall operationInvocation, boolean nested, Optional<List<AbstractCodeFragment>> leaves1Sublist, Optional<UMLModelDiff> modelDiff) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
@@ -5040,6 +5052,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				count++;
 		}
 		return count;
+	}
+
+	//the mappings of returns whose entire expression is replaced, when one of them returns from a function nested in the container, i.e., a callback or an object method,
+	//which share only the return with the other statement, i.e., return queryStorage; of getStorage() -> return !!wrapperState...; of every((info) => {...}) (compass 00209272),
+	//unlike the returns of the containers themselves, i.e., return !halt.get(); -> return firing; of the extracted isFiring() (drools 1bf2875e)
+	public int nestedReplacedReturnMappings() {
+		int count = 0;
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(returnOfReplacedExpression(mapping, LANG1, LANG2) &&
+					(!ownStatement(container1, mapping.getFragment1()) || !ownStatement(container2, mapping.getFragment2()))) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	//a statement of the container itself, not of a function nested in it
+	private static boolean ownStatement(VariableDeclarationContainer container, AbstractCodeFragment fragment) {
+		if(container.getBody() != null) {
+			return container.getBody().getCompositeStatement().getLeaves().contains(fragment);
+		}
+		if(container instanceof ModuleContainer module) {
+			return module.getLeaves().contains(fragment);
+		}
+		return true;
 	}
 
 	//the mappings of statements calling lambdas with non-empty bodies, which share no other mapped statement than their nested shells and blocks,

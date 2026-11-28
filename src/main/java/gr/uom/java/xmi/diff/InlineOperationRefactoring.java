@@ -330,7 +330,10 @@ public class InlineOperationRefactoring extends ChangeTypeRefactoring {
 		if (!getTargetOperationBeforeInline().getClassName().equals(getInlinedOperation().getClassName()))
 			return RefactoringType.MOVE_AND_INLINE_OPERATION;
 		if (bodyMapper.getClassDiff() != null) {
-			if(!bodyMapper.getClassDiff().getNextClassName().equals(getTargetOperationAfterInline().getClassName()))
+			//the top-level code of a module has the name of the module without the __module__ suffix of its class, i.e., plugin.spec of plugin.spec.__module__ (compass 00209272)
+			String nextClassName = bodyMapper.getClassDiff().getNextClassName();
+			String targetClassName = getTargetOperationAfterInline().getClassName();
+			if(!nextClassName.equals(targetClassName) && !nextClassName.equals(targetClassName + ".__module__"))
 				return RefactoringType.MOVE_AND_INLINE_OPERATION;
 		}
 		return RefactoringType.INLINE_OPERATION;

@@ -71,7 +71,12 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	}
 
 	private static boolean isTestCall(AbstractCall call) {
-		return call != null && (call.getName().startsWith("describe") || (call.getName().equals("add") && call.getExpression() != null && call.getExpression().startsWith("storiesOf("))) && call.arguments().size() > 0;
+		return call != null && (isTestSuiteName(call.getName()) || (call.getName().equals("add") && call.getExpression() != null && call.getExpression().startsWith("storiesOf("))) && call.arguments().size() > 0;
+	}
+
+	//context(...) is the alias of describe(...) in Mocha, i.e., context('when providing a namespace', function () {...}) in store.spec.ts (compass 00209272)
+	private static boolean isTestSuiteName(String name) {
+		return name.startsWith("describe") || name.equals("context");
 	}
 
 	private static boolean containsDescribe(List<AbstractStatement> statements) {
@@ -117,7 +122,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
 				for(AbstractStatement s : statements) {
 					AbstractCall call = s.invocationCoveringEntireFragment();
-					if(call != null && call.getName().startsWith("describe") && call.arguments().size() > 0) {
+					if(call != null && isTestSuiteName(call.getName()) && call.arguments().size() > 0) {
 						nestedDescribeMap.put(call.arguments().get(0), s);
 					}
 				}

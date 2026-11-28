@@ -4,14 +4,8 @@ function getLinesToFold(config, model, margin = 5) {
     const lineCount = model.getLineCount();
     const linesToKeepVisible = new Set();
 
-    let deleted = false;
-    let inserted = false;
     decorations.forEach(decoration => {
         if (model.moved){
-            if (decoration.options.className === "inserted")
-                inserted = true;
-            if (decoration.options.className === "deleted")
-                deleted = true;
             if (decoration.options.className === "inserted" || decoration.options.className === "deleted")
             {
                 return;
@@ -26,9 +20,8 @@ function getLinesToFold(config, model, margin = 5) {
 
     if(config.moved) {
         mappings = config.mappings;
-        const index = deleted ? 0 : 1;
         mappings.forEach(mapping => {
-            for(let line = mapping[index].startLineNumber; line <= mapping[index].endLineNumber; line++) {
+            for(let line = mapping[model.side].startLineNumber; line <= mapping[model.side].endLineNumber; line++) {
                 linesToKeepVisible.add(line);
             }
         });

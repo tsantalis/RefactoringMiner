@@ -6,6 +6,7 @@ import static gr.uom.java.xmi.ModuleContainer.nestedItMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -341,8 +342,8 @@ class TestSuiteMatcher {
 		}
 	}
 
-	//the objects not nested in other objects (i.e., the rows of it.each([...]) tables) of a mapped statement pair are aligned in order
-	//by the similarity of their tokens, and the changed ones are diffed, so that their properties are matched by their keys
+	//the objects (i.e., the rows of it.each([...]) tables), nested ones included, of a mapped statement pair are paired by their shared keys,
+	//and the changed ones are diffed, so that their properties are matched by their keys
 	private void diffDataObjects(AbstractCodeFragment statement1, AbstractCodeFragment statement2) throws RefactoringMinerTimedOutException {
 		if(statement1.getString().equals(statement2.getString())) {
 			return;
@@ -353,7 +354,7 @@ class TestSuiteMatcher {
 		List<UMLAnonymousClass> classes2 = new ArrayList<>();
 		for(AnonymousClassDeclarationObject declaration : statement1.getAnonymousClassDeclarations()) {
 			UMLAnonymousClass anonymousClass = mapper.findAnonymousClass1(declaration);
-			if(anonymousClass != null && anonymousClass.getOperations().isEmpty() && !ReplacementAlgorithm.nestedInAnotherAnonymousClass(statement1, declaration) && !insideLambda(statement1, declaration)) {
+			if(anonymousClass != null && anonymousClass.getOperations().isEmpty() && !insideLambda(statement1, declaration)) {
 				objects1.add(declaration);
 				classes1.add(anonymousClass);
 			}
@@ -363,7 +364,7 @@ class TestSuiteMatcher {
 		}
 		for(AnonymousClassDeclarationObject declaration : statement2.getAnonymousClassDeclarations()) {
 			UMLAnonymousClass anonymousClass = mapper.findAnonymousClass2(declaration);
-			if(anonymousClass != null && anonymousClass.getOperations().isEmpty() && !ReplacementAlgorithm.nestedInAnotherAnonymousClass(statement2, declaration) && !insideLambda(statement2, declaration)) {
+			if(anonymousClass != null && anonymousClass.getOperations().isEmpty() && !insideLambda(statement2, declaration)) {
 				objects2.add(declaration);
 				classes2.add(anonymousClass);
 			}
@@ -383,36 +384,31 @@ class TestSuiteMatcher {
 				}
 			}
 		}
-		//the order-preserving alignment of the objects sharing keys, maximizing the total of the shared keys
-		int[][] score = new int[n+1][m+1];
-		for(int i=n-1; i>=0; i--) {
-			for(int j=m-1; j>=0; j--) {
-				int best = Math.max(score[i+1][j], score[i][j+1]);
+		//the pairs sharing the most keys first, and then in the order of the objects, so that the pairs may cross when the objects are restructured,
+		//i.e., the arguments { currentTab: 'none', ... } and { connectionOptions: {...}, ... } merged into { action: { currentTab: 'none', ... }, connectionOptions: {...} }
+		//are paired with the nested and with the merged object (compass 199d4255), while the rows of a table keep their order
+		List<int[]> candidates = new ArrayList<>();
+		for(int i=0; i<n; i++) {
+			for(int j=0; j<m; j++) {
 				if(shared[i][j] > 0) {
-					best = Math.max(best, shared[i][j] + score[i+1][j+1]);
+					candidates.add(new int[] {shared[i][j], i, j});
 				}
-				score[i][j] = best;
 			}
 		}
+		candidates.sort((c1, c2) -> c1[0] != c2[0] ? Integer.compare(c2[0], c1[0]) : c1[1] != c2[1] ? Integer.compare(c1[1], c2[1]) : Integer.compare(c1[2], c2[2]));
 		UMLAbstractClassDiff classDiff = mapper.getClassDiff();
 		UMLModelDiff modelDiff = mapper.getModelDiff();
-		int i = 0, j = 0;
-		while(i < n && j < m) {
-			if(shared[i][j] > 0 && score[i][j] == shared[i][j] + score[i+1][j+1]) {
-				if(!objects1.get(i).toString().equals(objects2.get(j).toString())) {
-					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(classes1.get(i), classes2.get(j), classDiff, modelDiff);
-					anonymousClassDiff.process();
-					mapper.addPendingAnonymousClassDiff(anonymousClassDiff, statement1, statement2);
-				}
-				i++;
-				j++;
+		Set<Integer> paired1 = new HashSet<>(), paired2 = new HashSet<>();
+		for(int[] candidate : candidates) {
+			int i = candidate[1], j = candidate[2];
+			if(paired1.contains(i) || paired2.contains(j)) {
+				continue;
 			}
-			else if(score[i][j] == score[i+1][j]) {
-				i++;
-			}
-			else {
-				j++;
-			}
+			paired1.add(i);
+			paired2.add(j);
+			UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(classes1.get(i), classes2.get(j), classDiff, modelDiff);
+			anonymousClassDiff.process();
+			mapper.addPendingAnonymousClassDiff(anonymousClassDiff, statement1, statement2);
 		}
 	}
 

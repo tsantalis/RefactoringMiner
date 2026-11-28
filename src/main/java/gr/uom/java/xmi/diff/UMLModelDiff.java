@@ -2524,6 +2524,16 @@ public class UMLModelDiff {
 		return true;
 	}
 
+	//a variable with a value is not moved to a member of a type alias or interface without a value, as the member declares only the type of a value,
+	//i.e., const logger = createNoopLogger() of import.spec.ts -> logger: Logger of type ThunkExtraArg in connections-store-redux.ts (compass 00209272)
+	private static boolean valueMovedIntoTypeMember(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLAbstractClass addedClass) {
+		if(removedAttribute.getVariableDeclaration() == null || removedAttribute.getVariableDeclaration().getInitializer() == null ||
+				addedAttribute.getVariableDeclaration() == null || addedAttribute.getVariableDeclaration().getInitializer() != null) {
+			return false;
+		}
+		return addedClass instanceof UMLClass umlClass && (umlClass.isTypeAlias() || umlClass.isInterface());
+	}
+
 	private MoveAttributeRefactoring processPairOfAttributes(UMLAttribute addedAttribute, UMLAttribute removedAttribute, Map<Replacement,
 			Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
 		Set<Refactoring> conflictingRefactorings = movedAttributeRenamed(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), pastRefactorings);
@@ -3463,7 +3473,9 @@ public class UMLModelDiff {
 		for(UMLAttribute attribute : classDiff.getRemovedAttributes()) {
 			UMLAttribute matchedAttribute = umlClass.attributeWithTheSameNameIgnoringChangedType(attribute);
 			if(matchedAttribute != null) {
-				commonAttributes.put(attribute, matchedAttribute);
+				if(!valueMovedIntoTypeMember(attribute, matchedAttribute, umlClass)) {
+					commonAttributes.put(attribute, matchedAttribute);
+				}
 			}
 			else if(attributeOfExtractedClassType != null) {
 				for(UMLAttribute addedClassAttribute : umlClass.getAttributes()) {

@@ -4,6 +4,7 @@ function mymonaco(config) {
     require.config({paths: {'vs': MONACO_VS_URL}});
     require(['vs/editor/editor.main'], function () {
         pinCodiconFont();
+        openMoveLinksInPlace();
         initializeEditors();
     });
     function initializeEditors() {
@@ -40,6 +41,7 @@ function mymonaco(config) {
             rightEditor.onMouseDown(editorMouseDown(config, rightEditor, leftEditor, 1, 0));
 
             setAllFoldings(config, leftEditor, rightEditor);
+            syncFoldings(config, leftEditor, rightEditor);
 
 
             if (config.spv === true) {

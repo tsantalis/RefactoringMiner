@@ -96,6 +96,19 @@ function getTooltipDecorations(ranges, editor) {
     });
     return decorations;
 }
+//the tooltips of code moved to/from another file link to the diff of the move (MonacoCore requestPath), which Monaco opens in a new window;
+//where the page is embedded (i.e., in an iframe of a VS Code webview) new windows are blocked, so open them in the same window instead
+function openMoveLinksInPlace() {
+    if (window.moveLinkOpener || !monaco.editor.registerLinkOpener || window.self === window.top) return;
+    window.moveLinkOpener = monaco.editor.registerLinkOpener({
+        open(resource) {
+            const url = new URL(resource.toString(true));
+            if (url.origin !== window.location.origin) return false;
+            window.location.href = url.href;
+            return true;
+        }
+    });
+}
 function getDecoration(range, pos, endPos) {
     return {
         range: new monaco.Range(pos.lineNumber, pos.column, endPos.lineNumber, endPos.column),

@@ -48,12 +48,22 @@ function getLanguage(config) {
             return undefined;
     }
 }
-function getEditColor(edit) {
-    let color = 'black';
-    if (edit === "inserted") color = 'green';
-    else if (edit === "deleted") color = 'red';
-    else if (edit === "updated") color = 'yellow';
-    else if (edit === "moved") color = 'blue';
-    else if (edit === "mm" || "mm updOnTop") color = 'purple';
-    return color
+//the color of the marks of the given kind (i.e., "deleted", "mm updOnTop") in the scroll bar, from monaco.css, so that the code, the scroll bar
+//and the legend, which shows the same classes, use one palette; the scroll bar uses the stronger --ruler-color of the kind, as the pale
+//backgrounds of the marks hardly show on it
+const editColors = new Map();
+function getEditColor(kind) {
+    if (!editColors.has(kind)) {
+        const mark = document.createElement('span');
+        mark.className = kind;
+        document.body.appendChild(mark);
+        const style = getComputedStyle(mark);
+        const color = style.getPropertyValue('--ruler-color').trim() || style.backgroundColor;
+        mark.remove();
+        if (!color || color === 'rgba(0, 0, 0, 0)' || color === 'transparent') {
+            return 'black';
+        }
+        editColors.set(kind, color);
+    }
+    return editColors.get(kind);
 }

@@ -1611,7 +1611,7 @@ public class UMLModelDiff {
 					}
 				}
 			}
-			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
+			if((matchResult.isMatch() || matchingMovedInnerClasses > 0) && !onlyRetypedTypeAliasMembers(removedClass, addedClass)) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 					boolean renamedTypeScriptModule = PathFileUtils.isTypeScriptFile(classRenameDiff.getOriginalClass().getSourceFile()) && classRenameDiff.getOriginalClass().isModule() && !classRenameDiff.getOriginalClass().getPackageName().equals(classRenameDiff.getRenamedClass().getPackageName());
@@ -1678,9 +1678,10 @@ public class UMLModelDiff {
 
 	//the members of a type alias are its structure, so two type aliases whose members with the same name all have different types share only member names,
 	//i.e., type: 'update-namespace' and namespace: Namespace of type Action in home.tsx, and type: WorkspacesActions.FetchCollectionTabInfo and namespace: string
-	//of the new type FetchCollectionInfoAction in workspaces.ts
+	//of the new type FetchCollectionInfoAction in workspaces.ts, or type: 'enable-editing-connection-string' of the removed type Action in connection-string-input.tsx
+	//and type: 'update-connection-string' of the new interface UpdateConnectionStringAction in use-connect-form.ts (compass 199d4255)
 	private static boolean onlyRetypedTypeAliasMembers(UMLClass typeAlias1, UMLClass typeAlias2) {
-		if(!typeAlias1.isTypeAlias() || !typeAlias2.isTypeAlias()) {
+		if(!(typeAlias1.isTypeAlias() || typeAlias2.isTypeAlias()) || !(typeAlias1.isTypeAlias() || typeAlias1.isInterface()) || !(typeAlias2.isTypeAlias() || typeAlias2.isInterface())) {
 			return false;
 		}
 		boolean sameName = false;
@@ -1723,7 +1724,7 @@ public class UMLModelDiff {
 					}
 				}
 			}
-			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
+			if((matchResult.isMatch() || matchingMovedInnerClasses > 0) && !onlyRetypedTypeAliasMembers(removedClass, addedClass)) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 					boolean renamedTypeScriptModule = PathFileUtils.isTypeScriptFile(classRenameDiff.getOriginalClass().getSourceFile()) && classRenameDiff.getOriginalClass().isModule() && !classRenameDiff.getOriginalClass().getPackageName().equals(classRenameDiff.getRenamedClass().getPackageName());

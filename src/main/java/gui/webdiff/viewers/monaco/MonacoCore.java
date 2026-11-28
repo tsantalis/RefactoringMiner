@@ -148,7 +148,7 @@ public class MonacoCore {
                     appendRange(b, t, "moved", null);
                 if (c.getUpdatedSrcs().contains(t))
                     appendRange(b, t, "updated", null);
-                if (c.getDeletedSrcs().contains(t))
+                if (c.getDeletedSrcs().contains(t) && (!isMoved || insideTheMove(t, c.getMovedSrcs(), c.getSrcMoveOutTreeMap().keySet(), c.getMultiMapSrc().keySet())))
                     appendRange(b, t, "deleted", null);
                 if (c.getSrcMoveOutTreeMap().containsKey(t)) {
                     List<Action> actions = c.getSrcMoveOutTreeMap().get(t);
@@ -210,7 +210,7 @@ public class MonacoCore {
                     appendRange(b, t, "moved", null);
                 if (c.getUpdatedDsts().contains(t))
                     appendRange(b, t, "updated", null);
-                if (c.getInsertedDsts().contains(t))
+                if (c.getInsertedDsts().contains(t) && (!isMoved || insideTheMove(t, c.getMovedDsts(), c.getDstMoveInTreeMap().keySet(), c.getMultiMapDst().keySet())))
                     appendRange(b, t, "inserted", null);
                 if (c.getDstMoveInTreeMap().containsKey(t)) {
                     List<Action> actions = c.getDstMoveInTreeMap().get(t);
@@ -294,6 +294,20 @@ public class MonacoCore {
             b.append("]").append(",");
             return b.toString();
         }
+    }
+
+    //a move diff (i.e., CustomerProfile.java -> Address.java) shows only the code moved between the two files, so the rest of each file
+    //is not deleted or inserted, it is just not part of the move; only the deleted/inserted code within the moved code is marked,
+    //and code around the moved code (i.e., the new method receiving statements in Extract and Move Method) shows in its own file's diff
+    @SafeVarargs
+    private static boolean insideTheMove(Tree t, Collection<Tree>... moves) {
+        for (Tree parent : t.getParents()) {
+            for (Collection<Tree> move : moves) {
+                if (move.contains(parent))
+                    return true;
+            }
+        }
+        return false;
     }
 
     private boolean isInterfile(ASTDiff astDiff, Tree t, Tree dst) {

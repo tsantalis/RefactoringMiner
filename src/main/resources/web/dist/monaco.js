@@ -94,4 +94,7 @@ function varInits(config, rightEditor, leftEditor) {
     leftEditor.getModel().moved = config.moved;
     rightEditor.getModel().id = config.id
     leftEditor.getModel().id = config.id
+    //the index of each side in config.mappings
+    leftEditor.getModel().side = 0;
+    rightEditor.getModel().side = 1;
 }

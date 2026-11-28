@@ -3,6 +3,7 @@
 	background-color: MediumSeaGreen;
 	background-color: #dafbe1;*/
 	background-color: #aceebb;
+	--ruler-color: #2da44e;
 }
 
 .deleted {
@@ -10,21 +11,25 @@
 	background-color: IndianRed;
 	background-color: #ffebe9;*/
 	background-color: #ffcecb;
+	--ruler-color: #cf222e;
 }
 
 .moved {
 	/*border: 1px solid black;*/
 	background-color: #edeae0;
+	--ruler-color: #a39a7d;
 }
 
 .updated {
 	/*border: 1px solid black;*/
 	background-color: #cceeff;
+	--ruler-color: #3b9edb;
 	font-weight: bold;
 }
 .mm {
 	/*border: 1px solid black;*/
 	background-color: #edeae0;
+	--ruler-color: #a39a7d;
 }
 .mm.updOnTop.selected {
 	background-color: Gold;
@@ -34,6 +39,7 @@
 .mm.updOnTop
 {
 	background-color: #cceeff;
+	--ruler-color: #3b9edb;
 	/*border: 1px solid black;*/
 	font-weight: bold;
 }
@@ -87,7 +93,8 @@ div {
 	max-width: none;
 }
 .monaco-editor, .monaco-diff-editor, .monaco-component  {
-	--vscode-editor-foldBackground: #c0ebf8 !important;
+	/*neutral, so that collapsed unchanged code does not look like updated code*/
+	--vscode-editor-foldBackground: rgba(128, 128, 128, 0.15) !important;
 	position: absolute !important; 
 }
 .disabled {

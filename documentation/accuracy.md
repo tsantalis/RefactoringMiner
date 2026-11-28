@@ -10,11 +10,11 @@
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **November 20, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **November 28, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12725  | 13  | 211  | 0.999  | 0.984|
+|**Total**|12726  | 13  | 211  | 0.999  | 0.984|
 |Extract Method|1021  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|260  |  0  |  8  | 1.000  | 0.970|
@@ -36,7 +36,7 @@ As of **November 20, 2026** the precision and recall of RefactoringMiner on this
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|109  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|138  |  0  | 59  | 1.000  | 0.701|
-|Move And Inline Method|12  |  0  |  4  | 1.000  | 0.750|
+|Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|

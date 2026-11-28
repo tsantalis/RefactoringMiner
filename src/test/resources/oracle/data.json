@@ -3568,6 +3568,13 @@
         "detectionTools": "RefactoringMiner, GumTreeDiff, RMiner-1x",
         "validators": null
     }, {
+        "type": "Move And Inline Method",
+        "description": "Move And Inline Method protected AbstractMergePolicyProvider(store Store) moved from class org.elasticsearch.index.merge.policy.AbstractMergePolicyProvider to class org.elasticsearch.index.shard.MergePolicyConfig & inlined to public MergePolicyConfig(logger ESLogger, indexSettings Settings)",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Move Class",
         "description": "Move Class org.elasticsearch.index.merge.policy.ElasticsearchMergePolicy moved to org.elasticsearch.index.shard.ElasticsearchMergePolicy",
         "comment": "Agreement",

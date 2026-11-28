@@ -4953,6 +4953,7 @@ public class UMLModelDiff {
 		List<UMLOperation> operationsInRemovedClasses = getOperationsInRemovedClasses();
 		if(operationsInRemovedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
 			checkForMovedAndInlinedOperations(getOperationBodyMappersInCommonClasses(), operationsInRemovedClasses);
+			checkForMovedAndInlinedOperationsOfRemovedSuperclasses(operationsInRemovedClasses);
 		}
 		checkForExtractedOperationsWithinMovedAndInlinedOperations();
 		List<UMLOperation> allOperationsInAddedClasses = getOperationsInAddedClasses();
@@ -6135,6 +6136,54 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	//the operations of a removed superclass inlined into a moved or renamed subclass, which absorbed its superclass (Collapse Hierarchy),
+	//i.e., the constructor of the removed Scheduler inlined into the constructor of MuteScheduler, moved from MuteScheduler.js to MuteScheduler.ts (yuudachi e00f37b6),
+	//and the constructor of the removed AbstractMergePolicyProvider inlined into the constructor of TieredMergePolicyProvider, renamed to MergePolicyConfig (elasticsearch f77804da)
+	private void checkForMovedAndInlinedOperationsOfRemovedSuperclasses(List<UMLOperation> operationsInRemovedClasses) throws RefactoringMinerTimedOutException {
+		List<UMLClassBaseDiff> classDiffs = new ArrayList<UMLClassBaseDiff>();
+		classDiffs.addAll(classMoveDiffList);
+		classDiffs.addAll(innerClassMoveDiffList);
+		classDiffs.addAll(classRenameDiffList);
+		for(UMLClassBaseDiff classDiff : classDiffs) {
+			UMLType superclass = classDiff.getOriginalClass().getSuperclass();
+			if(superclass == null) {
+				continue;
+			}
+			List<UMLOperation> superclassOperations = new ArrayList<UMLOperation>();
+			for(UMLOperation operation : operationsInRemovedClasses) {
+				if(looksLikeSameType(superclass.getClassType(), operation.getClassName()) && getRemovedClass(operation.getClassName()) != null) {
+					superclassOperations.add(operation);
+				}
+			}
+			if(!superclassOperations.isEmpty()) {
+				checkForMovedAndInlinedOperations(classDiff.getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs(), superclassOperations);
+			}
+		}
+	}
+
+	//super(args) calls the constructor of the superclass of the caller's class, i.e., super(client, model, { checkRate }) in the constructor of MuteScheduler,
+	//which extends Scheduler, calls constructor(client, model, { checkRate = 5 * 60 * 1000 } = {}) of Scheduler (yuudachi e00f37b6)
+	private boolean superConstructorCall(AbstractCall invocation, UMLOperation removedOperation, VariableDeclarationContainer caller) {
+		if(!invocation.getName().equals("super") || invocation.getExpression() != null || !removedOperation.isConstructor()) {
+			return false;
+		}
+		UMLAbstractClass callerClass = findClassInParentModel(caller.getClassName());
+		if(callerClass instanceof UMLClass umlClass && umlClass.getSuperclass() != null && looksLikeSameType(umlClass.getSuperclass().getClassType(), removedOperation.getClassName())) {
+			//among overloaded constructors, the one with as many parameters as the arguments
+			UMLClass removedClass = getRemovedClass(removedOperation.getClassName());
+			int constructors = 0;
+			if(removedClass != null) {
+				for(UMLOperation operation : removedClass.getOperations()) {
+					if(operation.isConstructor()) {
+						constructors++;
+					}
+				}
+			}
+			return constructors <= 1 || invocation.arguments().size() == removedOperation.getParametersWithoutReturnType().size();
+		}
+		return false;
+	}
+
 	private void checkForMovedAndInlinedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
 		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 			UMLOperation removedOperation = removedOperationIterator.next();
@@ -6159,7 +6208,7 @@ public class UMLModelDiff {
 					List<AbstractCall> operationInvocations = mapper.getContainer1().getAllOperationInvocations();
 					List<AbstractCall> removedOperationInvocations = new ArrayList<AbstractCall>();
 					for(AbstractCall invocation : operationInvocations) {
-						if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), mapper.getClassDiff(), this)) {
+						if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), mapper.getClassDiff(), this) || superConstructorCall(invocation, removedOperation, mapper.getContainer1())) {
 							removedOperationInvocations.add(invocation);
 						}
 					}

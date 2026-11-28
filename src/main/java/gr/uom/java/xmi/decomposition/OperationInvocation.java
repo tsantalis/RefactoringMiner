@@ -1508,7 +1508,10 @@ public class OperationInvocation extends AbstractCall {
 			else if(superProp instanceof Swc4jAstComputedPropName propName) {
 				propertyName = TypeScriptVisitor.text(fileContent, propName.getExpr());
 			}
-			this.methodName = "super." + propertyName;
+			//a call of a superclass method has super as its receiver, like in Java, so that it matches the method it calls,
+			//i.e., super.cancelSchedule(mute.id) calls cancelSchedule(id) of the superclass Scheduler (yuudachi e00f37b6)
+			this.methodName = propertyName;
+			this.expression = "super";
 		}
 		else if(callee instanceof Swc4jAstFnExpr functionExpr) {
 			//f()() is used to call a function that returns another function

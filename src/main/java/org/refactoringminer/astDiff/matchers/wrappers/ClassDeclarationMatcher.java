@@ -8,6 +8,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLForwardDeclaration;
 import gr.uom.java.xmi.UMLJavadoc;
@@ -634,7 +635,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
             .match(srcTree, dstTree, mappingStore);
         }
         processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
-        processClassBlock(srcTypeDeclaration, dstTypeDeclaration, mappingStore);
+        processClassBlock(srcTypeDeclaration, dstTypeDeclaration, classDiff, mappingStore);
     }
 
     public static void processParentInternalModule(Tree t1, Tree t2, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
@@ -872,6 +873,17 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
         }
     }
 
+    //the type aliases have the same aliased object type without attributes, i.e., the same mapped type { [P in keyof T]?: T[P] }, whose members are not paired by the model
+    private static boolean sameMemberlessObjectType(UMLClassBaseDiff classDiff) {
+        UMLClass originalClass = classDiff.getOriginalClass();
+        UMLClass nextClass = classDiff.getNextClass();
+        if (!originalClass.getAttributes().isEmpty() || !nextClass.getAttributes().isEmpty())
+            return false;
+        Optional<UMLType> type1 = originalClass.getFunctionType();
+        Optional<UMLType> type2 = nextClass.getFunctionType();
+        return type1.isPresent() && type2.isPresent() && !(type1.get() instanceof InferredType) && type1.get().equals(type2.get());
+    }
+
     private static Tree root(Tree tree) {
         while (tree.getParent() != null)
             tree = tree.getParent();
@@ -901,7 +913,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
         return new String[] {LANG.TYPE_DECLARATION, LANG.ABSTRACT_CLASS_DECLARATION};
     }
 
-    private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore) {
+    private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         Tree srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, LANG1.CLASS_BLOCK);
         Tree dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, LANG2.CLASS_BLOCK);
         if (srcTypeDeclaration.getType().name.equals(LANG1.TYPE_DECLARATION) && (dstTypeDeclaration.getType().name.equals(LANG2.CLASS_DECLARATION) || dstTypeDeclaration.getType().name.equals(LANG2.OBJECT_DECLARATION)) && dstBlock != null && srcBlock == null) {
@@ -918,7 +930,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
         }
         if (srcTypeDeclaration.getType().name.equals(LANG1.TYPE_ALIAS_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.TYPE_ALIAS_DECLARATION)) {
             Pair<Tree, Tree> object_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
-            if (object_types != null) {
+            if (object_types != null && sameMemberlessObjectType(classDiff) && object_types.first.isIsomorphicTo(object_types.second)) {
+                mappingStore.addMappingRecursively(object_types.first, object_types.second);
+            }
+            else if (object_types != null) {
                 mappingStore.addMapping(object_types.first, object_types.second);
                 Pair<Tree,Tree> opening = Helpers.findPairOfType(object_types.first,object_types.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
                 if (opening != null) {

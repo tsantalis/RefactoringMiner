@@ -83,6 +83,7 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsInferType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIntersectionType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsKeywordType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsLitType;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMappedType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTplLitType;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsOptionalType;
@@ -904,6 +905,10 @@ public abstract class UMLType implements Serializable, AnnotationProvider {
 			ISwc4jAstTsType operatorType = optionalType.getTypeAnn();
 			UMLType umlType = extractTypeObject(operatorType, sourceFolder, filePath, fileContent);
 			return umlType;
+		}
+		else if(type instanceof Swc4jAstTsMappedType mappedType) {
+			//a mapped type has no name, so it is its printed text, i.e., { [P in keyof T]?: T[P] }
+			return new LeafType(TypeScriptFlattener.flatten(mappedType, fileContent), PathFileUtils.getLang(filePath));
 		}
 		//TODO this should return null, when all type kinds are supported
 		return new InferredType();

@@ -1988,6 +1988,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
             else if(member1.getType().name.equals(LANG1.OBJECT_TYPE)) {
                 processObjectTypePair(member1, member2, mappingStore);
             }
+            else if(nestedComposite(composite1, member1) && nestedComposite(composite2, member2)) {
+                processTypeAliasMembers(member1, member2, mappingStore);
+            }
             else if(member1.getType().name.equals(LANG1.GENERIC_TYPE)) {
                 //a utility type of a type literal, i.e., Partial<{ ... }>
                 Tree name1 = TreeUtilFunctions.findChildByType(member1, LANG1.TYPE_IDENTIFIER);
@@ -2149,11 +2152,18 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher {
             Tree member2 = composite2.getChild(i);
             boolean objectTypes = member1.getType().name.equals(LANG1.OBJECT_TYPE) && member2.getType().name.equals(LANG2.OBJECT_TYPE);
             boolean genericTypes = member1.getType().name.equals(LANG1.GENERIC_TYPE) && member2.getType().name.equals(LANG2.GENERIC_TYPE);
-            if(!member1.isIsoStructuralTo(member2) && !objectTypes && !genericTypes) {
+            //the nested intersection or union of the binary tree, whose members are pairable the same way, i.e., ({ ... } & { ... }) & { ... } of (A & B) & C
+            boolean nestedComposites = nestedComposite(composite1, member1) && nestedComposite(composite2, member2) && pairableMembers(member1, member2);
+            if(!member1.isIsoStructuralTo(member2) && !objectTypes && !genericTypes && !nestedComposites) {
                 return false;
             }
         }
         return true;
+    }
+
+    //a member of an intersection or union that is an intersection or union of the same kind, i.e., A & B of (A & B) & C
+    private static boolean nestedComposite(Tree composite, Tree member) {
+        return member.getType().name.equals(composite.getType().name);
     }
 
     private void processObjectTypePair(Tree objectType1, Tree objectType2, ExtendedMultiMappingStore mappingStore) {

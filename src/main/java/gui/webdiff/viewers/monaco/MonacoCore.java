@@ -297,7 +297,8 @@ public class MonacoCore {
     }
 
     //a move diff (i.e., CustomerProfile.java -> Address.java) shows only the code moved between the two files, so the rest of each file
-    //is not deleted or inserted, it is just not part of the move; only the deleted/inserted code within the moved code is marked
+    //is not deleted or inserted, it is just not part of the move; only the deleted/inserted code within the moved code is marked,
+    //and code around the moved code (i.e., the new method receiving statements in Extract and Move Method) shows in its own file's diff
     @SafeVarargs
     private static boolean insideTheMove(Tree t, Collection<Tree>... moves) {
         for (Tree parent : t.getParents()) {

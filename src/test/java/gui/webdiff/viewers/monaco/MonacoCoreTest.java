@@ -31,6 +31,7 @@ class MonacoCoreTest {
 			"    }",
 			"",
 			"    public String formatAddress(String street, String city) {",
+			"        System.out.println(street);",
 			"        String line = street + \", \" + city;",
 			"        return line.trim();",
 			"    }",
@@ -66,6 +67,9 @@ class MonacoCoreTest {
 			"    }",
 			"",
 			"    public String formatAddress(String street, String city) {",
+			"        if (city.isEmpty()) {",
+			"            return street;",
+			"        }",
 			"        String line = street + \", \" + city;",
 			"        return line.trim();",
 			"    }",
@@ -107,13 +111,14 @@ class MonacoCoreTest {
 		return ranges;
 	}
 
+	//the moved method lost a statement and gained another during the move, which stay marked
 	private static void assertOnlyTheMoveIsMarked(List<Range> ranges, String kind) {
 		List<Range> moves = ranges.stream().filter(r -> MOVES.contains(r.kind())).toList();
 		assertFalse(moves.isEmpty(), "the moved method is not marked");
-		for (Range r : ranges) {
-			if (r.kind().equals(kind)) {
-				assertTrue(moves.stream().anyMatch(r::within), kind + " outside the moved code: " + r);
-			}
+		List<Range> marked = ranges.stream().filter(r -> r.kind().equals(kind)).toList();
+		assertFalse(marked.isEmpty(), "the code " + kind + " within the moved method is not marked");
+		for (Range r : marked) {
+			assertTrue(moves.stream().anyMatch(r::within), kind + " outside the moved code: " + r);
 		}
 	}
 

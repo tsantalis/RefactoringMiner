@@ -2918,6 +2918,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this(lambda1, lambda2, parentMapper, false);
 	}
 
+	//a mapper of two callbacks only to compare them, i.e., the callbacks of two tests that may be renamed, whose anonymous class diffs are not added to this mapper
+	UMLOperationBodyMapper callbackMapperForComparison(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2) throws RefactoringMinerTimedOutException {
+		Set<UMLAnonymousClassDiff> anonymousClassDiffsBefore = new LinkedHashSet<>(anonymousClassDiffs);
+		UMLOperationBodyMapper callbackMapper = new UMLOperationBodyMapper(lambda1, lambda2, this, false);
+		anonymousClassDiffs.retainAll(anonymousClassDiffsBefore);
+		return callbackMapper;
+	}
+
 	//testCallback: the lambdas are the callbacks of a test it('...', () => {...}), i.e., the bodies of the test, matched as the bodies of operations
 	UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper, boolean testCallback) throws RefactoringMinerTimedOutException {
 		this.parentMapper = parentMapper;

@@ -6,7 +6,6 @@ import static gr.uom.java.xmi.ModuleContainer.nestedItMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -14,14 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAnonymousClass;
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
@@ -34,16 +32,13 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
  * test by test, within the mapper of a module or of the callback of a matched test suite.
  * <p>
  * A matched test suite is a statement mapping of the module, and its callback, when it changed, is matched by a suite mapper:
- * the nested test suites and the tests are matched by their names, then the renamed ones by the similarity of their callbacks,
+ * the nested test suites and the tests are matched by their names, then the renamed ones by the mappers of their callbacks,
  * and the tests moved into (or out of) the test suites added (or removed) in the suite, while the changed tests are matched within their callbacks.
  * The functions and the types declared in the callbacks are matched by their names, and the data objects (i.e., object literals)
  * of the mapped statements are diffed once the statements are matched, as their diffs are skipped while matching the statements.
  * The mappings are kept in the lambda mappers of the statement mappings, i.e., not added to the mapper of the module, whose processing is costly.
  */
 class TestSuiteMatcher {
-	private static final double RENAMED_TEST_SIMILARITY = 0.5;
-	private static final double DATA_OBJECT_SIMILARITY = 0.5;
-	private static final Pattern TOKEN = Pattern.compile("[A-Za-z_$][\\w$]*|\\d+|'[^'\\n]*'|\"[^\"\\n]*\"|`[^`]*`");
 
 	private final UMLOperationBodyMapper mapper;
 
@@ -228,33 +223,29 @@ class TestSuiteMatcher {
 		nonMappedLeavesT2.removeIf(paired2::contains);
 	}
 
-	//the renamed tests are matched by the similarity of their callbacks, the most similar first,
-	//i.e., it('skips dart:async', ...) -> it('absorbs dart:async with empty-files sentinel', ...)
+	//the renamed tests are matched by the mappers of their callbacks, accepted as the callbacks of a statement are (at least as many mapped statements as non-mapped statements on each side),
+	//the pairs with the most identical statements (and then the most mapped statements) first, i.e., it('skips dart:async', ...) -> it('absorbs dart:async with empty-files sentinel', ...)
 	private void matchRenamedTests(List<AbstractStatement> unpaired1, List<AbstractStatement> unpaired2,
 			Set<AbstractStatement> paired1, Set<AbstractStatement> paired2, boolean testSuites) throws RefactoringMinerTimedOutException {
-		List<AbstractStatement> tests1 = unpaired1.stream().filter(t -> !paired1.contains(t)).toList();
-		List<AbstractStatement> tests2 = unpaired2.stream().filter(t -> !paired2.contains(t)).toList();
+		List<AbstractStatement> tests1 = unpaired1.stream().filter(t -> !paired1.contains(t) && t.getLambdas().size() > 0).toList();
+		List<AbstractStatement> tests2 = unpaired2.stream().filter(t -> !paired2.contains(t) && t.getLambdas().size() > 0).toList();
 		if(tests1.isEmpty() || tests2.isEmpty()) {
 			return;
 		}
-		List<Map<String, Integer>> tokens2 = new ArrayList<>();
-		for(AbstractStatement test2 : tests2) {
-			tokens2.add(tokens(callbackCode(test2)));
-		}
-		List<double[]> candidates = new ArrayList<>();
+		List<int[]> candidates = new ArrayList<>();
 		for(int i = 0; i < tests1.size(); i++) {
-			Map<String, Integer> tokens1 = tokens(callbackCode(tests1.get(i)));
 			for(int j = 0; j < tests2.size(); j++) {
-				double similarity = dice(tokens1, tokens2.get(j));
-				if(similarity >= RENAMED_TEST_SIMILARITY) {
-					candidates.add(new double[] {similarity, i, j});
+				UMLOperationBodyMapper callbackMapper = mapper.callbackMapperForComparison(tests1.get(i).getLambdas().get(0), tests2.get(j).getLambdas().get(0));
+				int mappings = callbackMapper.mappingsWithoutBlocks();
+				if(mappings > 0 && mappings >= callbackMapper.nonMappedElementsT1() && mappings >= callbackMapper.nonMappedElementsT2()) {
+					candidates.add(new int[] {callbackMapper.getExactMatches().size(), mappings, i, j});
 				}
 			}
 		}
-		candidates.sort((c1, c2) -> Double.compare(c2[0], c1[0]));
-		for(double[] candidate : candidates) {
-			AbstractStatement test1 = tests1.get((int)candidate[1]);
-			AbstractStatement test2 = tests2.get((int)candidate[2]);
+		candidates.sort((c1, c2) -> c1[0] != c2[0] ? Integer.compare(c2[0], c1[0]) : Integer.compare(c2[1], c1[1]));
+		for(int[] candidate : candidates) {
+			AbstractStatement test1 = tests1.get(candidate[2]);
+			AbstractStatement test2 = tests2.get(candidate[3]);
 			if(!paired1.contains(test1) && !paired2.contains(test2)) {
 				matchTest(test1, test2, testSuites);
 				paired1.add(test1);
@@ -381,27 +372,24 @@ class TestSuiteMatcher {
 			return;
 		}
 		int n = objects1.size(), m = objects2.size();
-		List<Map<String, Integer>> tokens1 = new ArrayList<>();
-		List<Map<String, Integer>> tokens2 = new ArrayList<>();
-		for(AnonymousClassDeclarationObject object : objects1) {
-			tokens1.add(tokens(object.toString()));
-		}
-		for(AnonymousClassDeclarationObject object : objects2) {
-			tokens2.add(tokens(object.toString()));
-		}
-		double[][] similarity = new double[n][m];
+		//the objects sharing keys, the shared keys with the same value counted twice, i.e., { name: 'a', type: 'x' } and { name: 'a', type: 'y' } share 3,
+		//and the identical objects once more, as the spread elements of other expressions than names are not keys, i.e., { ...mocks[1].result, error: undefined } (apollo-client 932252b0)
+		int[][] shared = new int[n][m];
 		for(int i=0; i<n; i++) {
 			for(int j=0; j<m; j++) {
-				similarity[i][j] = dice(tokens1.get(i), tokens2.get(j));
+				shared[i][j] = sharedKeys(classes1.get(i), classes2.get(j));
+				if(shared[i][j] > 0 && objects1.get(i).toString().equals(objects2.get(j).toString())) {
+					shared[i][j]++;
+				}
 			}
 		}
-		//the order-preserving alignment maximizing the total similarity of the aligned objects
-		double[][] score = new double[n+1][m+1];
+		//the order-preserving alignment of the objects sharing keys, maximizing the total of the shared keys
+		int[][] score = new int[n+1][m+1];
 		for(int i=n-1; i>=0; i--) {
 			for(int j=m-1; j>=0; j--) {
-				double best = Math.max(score[i+1][j], score[i][j+1]);
-				if(similarity[i][j] >= DATA_OBJECT_SIMILARITY) {
-					best = Math.max(best, similarity[i][j] + score[i+1][j+1]);
+				int best = Math.max(score[i+1][j], score[i][j+1]);
+				if(shared[i][j] > 0) {
+					best = Math.max(best, shared[i][j] + score[i+1][j+1]);
 				}
 				score[i][j] = best;
 			}
@@ -410,7 +398,7 @@ class TestSuiteMatcher {
 		UMLModelDiff modelDiff = mapper.getModelDiff();
 		int i = 0, j = 0;
 		while(i < n && j < m) {
-			if(similarity[i][j] >= DATA_OBJECT_SIMILARITY && score[i][j] == similarity[i][j] + score[i+1][j+1]) {
+			if(shared[i][j] > 0 && score[i][j] == shared[i][j] + score[i+1][j+1]) {
 				if(!objects1.get(i).toString().equals(objects2.get(j).toString())) {
 					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(classes1.get(i), classes2.get(j), classDiff, modelDiff);
 					anonymousClassDiff.process();
@@ -426,6 +414,25 @@ class TestSuiteMatcher {
 				j++;
 			}
 		}
+	}
+
+	//the keys of the objects with the same name, plus those with the same value
+	private static int sharedKeys(UMLAnonymousClass object1, UMLAnonymousClass object2) {
+		int shared = 0;
+		for(UMLAttribute attribute1 : object1.getAttributes()) {
+			for(UMLAttribute attribute2 : object2.getAttributes()) {
+				if(attribute1.getName().equals(attribute2.getName())) {
+					shared++;
+					AbstractExpression value1 = attribute1.getVariableDeclaration().getInitializer();
+					AbstractExpression value2 = attribute2.getVariableDeclaration().getInitializer();
+					if(value1 != null && value2 != null && value1.getString().equals(value2.getString())) {
+						shared++;
+					}
+					break;
+				}
+			}
+		}
+		return shared;
 	}
 
 	//the objects in the callbacks of the statement, i.e., of it(...), are matched by the mappers of the callbacks
@@ -476,30 +483,5 @@ class TestSuiteMatcher {
 			}
 		}
 		return false;
-	}
-
-	//the code of the callback of a test
-	private static String callbackCode(AbstractStatement test) {
-		return test.getLambdas().size() > 0 ? test.getLambdas().get(0).toString() : test.getString();
-	}
-
-	//the tokens of the code (identifiers, numbers, string literals), with their occurrences
-	private static Map<String, Integer> tokens(String code) {
-		Map<String, Integer> tokens = new HashMap<>();
-		Matcher matcher = TOKEN.matcher(code);
-		while(matcher.find()) {
-			tokens.merge(matcher.group(), 1, Integer::sum);
-		}
-		return tokens;
-	}
-
-	private static double dice(Map<String, Integer> tokens1, Map<String, Integer> tokens2) {
-		int size1 = 0, size2 = 0, common = 0;
-		for(int count : tokens1.values()) size1 += count;
-		for(int count : tokens2.values()) size2 += count;
-		for(Map.Entry<String, Integer> entry : tokens1.entrySet()) {
-			common += Math.min(entry.getValue(), tokens2.getOrDefault(entry.getKey(), 0));
-		}
-		return size1 + size2 == 0 ? 0 : 2.0 * common / (size1 + size2);
 	}
 }

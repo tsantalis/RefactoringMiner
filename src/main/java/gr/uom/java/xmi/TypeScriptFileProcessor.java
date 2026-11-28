@@ -331,6 +331,9 @@ public class TypeScriptFileProcessor {
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments, List<UMLClass> typeDeclarations) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
+		//the constructor of the class, so that it is paired with the constructor of the same class and not moved to another class with a constructor,
+		//i.e., constructor(ipcRenderer, getInitialAutoConnectPreferences) of CompassRendererConnectionStorage was moved to MockDataService (compass 00209272)
+		operation.setConstructor(true);
 		TypeScriptOperationBody.processComments(comments, operation);
 		operation.setVisibility(Visibility.PRIVATE);
 		for(ISwc4jAstParamOrTsParamProp param : functionDecl.getParams()) {

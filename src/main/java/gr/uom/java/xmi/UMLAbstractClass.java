@@ -834,12 +834,19 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		return null;
 	}
 
+	//a constructor named after its class (Java, Kotlin, C++, with the destructors), compared through the names of the classes, while the constructors of the other languages
+	//have the same name in every class (constructor in TypeScript and JavaScript, __init__ in Python) and are compared as the other operations,
+	//i.e., constructor(c, roundNumber) of class Block in block.js and in block.ts (algorand 65ef211b)
+	private static boolean constructorNamedAfterClass(UMLOperation operation) {
+		return operation.isConstructor() && !operation.getName().equals("constructor") && !operation.getName().equals("__init__");
+	}
+
 	public MatchResult hasAttributesAndOperationsWithCommonNames(UMLAbstractClass umlClass) {
 		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
 		List<UMLOperation> identicalOperations = new ArrayList<UMLOperation>();
 		int totalOperations = 0;
 		for(UMLOperation operation : operations) {
-			if(!operation.isConstructor() && !operation.overridesObject()) {
+			if(!constructorNamedAfterClass(operation) && !operation.overridesObject()) {
 				totalOperations++;
 	    		if(umlClass.containsOperationWithTheSameName(operation)) {
 	    			commonOperations.add(operation);
@@ -850,7 +857,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 			}
 		}
 		for(UMLOperation operation : umlClass.operations) {
-			if(!operation.isConstructor() && !operation.overridesObject()) {
+			if(!constructorNamedAfterClass(operation) && !operation.overridesObject()) {
 				totalOperations++;
 	    		if(this.containsOperationWithTheSameName(operation)) {
 	    			commonOperations.add(operation);
@@ -969,7 +976,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		int totalDefaultOperations = 0;
 		int totalAbstractOperations = 0;
 		for(UMLOperation operation : operations) {
-			if(!operation.isConstructor() && !operation.overridesObject()) {
+			if(!constructorNamedAfterClass(operation) && !operation.overridesObject()) {
 				totalOperations++;
 				if(operation.isAbstract()) {
 					totalAbstractOperations++;
@@ -1019,7 +1026,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 			}
 		}
 		for(UMLOperation operation : umlClass.operations) {
-			if(!operation.isConstructor() && !operation.overridesObject()) {
+			if(!constructorNamedAfterClass(operation) && !operation.overridesObject()) {
 				totalOperations++;
 				if(operation.isAbstract()) {
 					totalAbstractOperations++;
@@ -1510,7 +1517,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		List<UMLOperation> identicalOperations = new ArrayList<UMLOperation>();
 		int totalOperations = 0;
 		for(UMLOperation operation : operations) {
-			if(!operation.isConstructor() && !operation.overridesObject()) {
+			if(!constructorNamedAfterClass(operation) && !operation.overridesObject()) {
 				totalOperations++;
 				if(umlClass.containsOperationWithTheSameSignature(operation)) {
 					commonOperations.add(operation);
@@ -1521,7 +1528,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 			}
 		}
 		for(UMLOperation operation : umlClass.operations) {
-			if(!operation.isConstructor() && !operation.overridesObject()) {
+			if(!constructorNamedAfterClass(operation) && !operation.overridesObject()) {
 				totalOperations++;
 				if(this.containsOperationWithTheSameSignature(operation)) {
 					commonOperations.add(operation);

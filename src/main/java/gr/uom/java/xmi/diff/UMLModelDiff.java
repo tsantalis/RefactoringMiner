@@ -9498,7 +9498,9 @@ public class UMLModelDiff {
 			UMLAbstractClass class2 = findClassInChildModel(addedOperation.getClassName());
 			boolean commonSuperclass = class1 != null && class2 != null && class1.getSuperclass() != null && class2.getSuperclass() != null &&
 					class1.getSuperclass().equals(class2.getSuperclass());
-			if(!commonSuperclass)
+			//the constructor of a moved class, i.e., constructor(c, roundNumber) of class Block in block.js and in block.ts, which extends JSONRequest (algorand 65ef211b)
+			boolean sameClassName = class1 != null && class2 != null && class1.getNonQualifiedName().equals(class2.getNonQualifiedName());
+			if(!commonSuperclass && !sameClassName)
 				return false;
 		}
 		boolean equalReturnTypeAndTypeParameter = (addedOperation.equalReturnParameter(removedOperation) || addedOperation.equalReturnParameterWithPluralClassType(removedOperation)) &&

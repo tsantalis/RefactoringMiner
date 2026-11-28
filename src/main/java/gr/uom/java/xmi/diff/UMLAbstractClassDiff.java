@@ -5297,8 +5297,10 @@ public abstract class UMLAbstractClassDiff {
 					mapperSet.add(operationBodyMapper);
 				}
 			}
-			// in Python only one constructor is allowed
-			else if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && removedOperation.isConstructor() && addedOperation.isConstructor()) {
+			//in Python, TypeScript and JavaScript only one constructor is allowed, i.e., constructor(ipcRenderer, getInitialAutoConnectPreferences) { super(); }
+			//-> constructor(ipcRenderer) {} of CompassRendererConnectionStorage, which no longer extends a class (compass 00209272)
+			else if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON) || (LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT))) &&
+					removedOperation.isConstructor() && addedOperation.isConstructor()) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else {

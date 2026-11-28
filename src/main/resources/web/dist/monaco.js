@@ -4,6 +4,7 @@ function mymonaco(config) {
     require.config({paths: {'vs': MONACO_VS_URL}});
     require(['vs/editor/editor.main'], function () {
         pinCodiconFont();
+        openMoveLinksInPlace();
         initializeEditors();
     });
     function initializeEditors() {
